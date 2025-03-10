@@ -15,7 +15,7 @@ export default function Header() {
             alt="RealTechee Logo" 
             width={180} 
             height={45} 
-            priority 
+            style={{ height: 'auto' }}
           />
         </Link>
 
@@ -26,11 +26,7 @@ export default function Header() {
           <Link href="#portfolio" className="text-gray-800 hover:text-gray-900 font-medium">Portfolio</Link>
           <Link href="#contact" className="text-gray-800 hover:text-gray-900 font-medium">Contact</Link>
           <button 
-            className="px-5 py-2 rounded-lg font-semibold"
-            style={{
-              backgroundColor: "var(--accent-color)",
-              color: "white"
-            }}
+            className="px-5 py-2 rounded-lg font-semibold bg-accent text-white hover:bg-accent-hover"
           >
             Get Started
           </button>
@@ -59,11 +55,7 @@ export default function Header() {
             <li><Link href="#contact" className="block px-6 py-3 text-gray-800 font-medium">Contact</Link></li>
             <li className="px-6 py-3">
               <button 
-                className="w-full px-5 py-2 rounded-lg font-semibold"
-                style={{
-                  backgroundColor: "var(--accent-color)",
-                  color: "white"
-                }}
+                className="w-full px-5 py-2 rounded-lg font-semibold bg-accent text-white hover:bg-accent-hover"
               >
                 Get Started
               </button>
