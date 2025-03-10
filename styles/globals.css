@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Root Variables */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #FFFFFF;
+  --accent-color: #FF5F45; /* Reddish-orange color from design plan */
+  --accent-color-hover: #E54935;
+  --text-gray: #6E6E73;
+  --background-light: #F8F8F8;
+  /* Additional accent colors from the design plan */
+  --accent-red: #E1271A;
+  --accent-coral: #FF7F59;
+  --accent-yellow: #FFB81C;
+  --accent-teal: #4CD5B1;
+  --accent-blue: #1D70B7;
+}
+
+/* Typography */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-gray);
+}
+
+/* Button Styling */
+button {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* Image Styling */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Section Padding */
+section {
+  padding: 50px 0;
+}

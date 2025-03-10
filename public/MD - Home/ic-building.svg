@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg data-bbox="4.334 4.368 15.179 16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25" data-type="color">
+    <g>
+        <path fill="#2A2B2E" d="M13.359 4.368h-2.872v4.103h2.872V4.368Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M18.897 4.368H14.59v4.103h4.102V5.599h.205a.62.62 0 0 0 .616-.615.62.62 0 0 0-.616-.616Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M13.359 9.702h-2.872v2.871h2.872V9.702Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M9.256 9.702H5.154v2.871h4.102V9.702Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M18.692 9.702H14.59v2.871h4.102V9.702Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M5.154 8.47h4.102V4.369H4.95a.62.62 0 0 0-.616.616.62.62 0 0 0 .616.615h.205v2.87Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M5.154 19.753a.62.62 0 0 0 .615.615h2.667v-3.897c0-.788.648-1.436 1.436-1.436h4.102c.788 0 1.436.648 1.436 1.436v3.897h2.667a.62.62 0 0 0 .615-.615v-5.949H5.154v5.949Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M9.667 16.47v3.898h1.64v-4.102H9.873a.203.203 0 0 0-.205.205Z" data-color="1"/>
+        <path fill="#2A2B2E" d="M13.974 16.266h-1.436v4.102h1.642v-3.897a.203.203 0 0 0-.206-.205Z" data-color="1"/>
+    </g>
+</svg>
