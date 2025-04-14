@@ -1,77 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Root Variables */
 :root {
-  --primary-color: #000000;
+  --primary-color: #333333;
   --secondary-color: #FFFFFF;
-  --accent-color: #FF5F45; /* Reddish-orange color from design plan */
-  --accent-color-hover: #E54935;
-  --text-gray: #6E6E73;
-  --background-light: #F8F8F8;
-  /* Additional accent colors from the design plan */
-  --accent-red: #E1271A;
-  --accent-coral: #FF7F59;
-  --accent-yellow: #FFB81C;
-  --accent-teal: #4CD5B1;
-  --accent-blue: #1D70B7;
+  --accent-color: #FF5F45;
+  --accent-hover: #E54935;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --background-light: #F5F5F5;
+  --background-dark: #333333;
+  --border-color: #EEEEEE;
 }
 
-/* Typography */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Nunito Sans', sans-serif;
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text-gray);
-}
-
-/* Button Styling */
-button {
-  font-family: 'Nunito Sans', sans-serif;
   font-weight: 600;
-  cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
+/* Custom utility classes */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, var(--accent-color), #FF8A70);
 }
 
-/* Links */
-a {
-  text-decoration: none;
-  color: inherit;
+.bg-gradient {
+  background-image: linear-gradient(to right, var(--accent-color), #FF8A70);
 }
 
-a:hover {
-  color: var(--accent-color);
+.shadow-custom {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Image Styling */
-img {
-  max-width: 100%;
-  height: auto;
+.shadow-custom-lg {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Section Padding */
-section {
-  padding: 50px 0;
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-[#FF5F45] text-white hover:bg-[#E54935];
+}
+
+.btn-secondary {
+  @apply bg-[#333333] text-white hover:bg-[#222222];
+}
+
+.btn-outline {
+  @apply border border-[#333333] text-[#333333] hover:bg-gray-100;
+}
+
+/* Form elements */
+.form-input {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF5F45] focus:border-transparent transition-colors;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* Mobile menu animations */
+.mobile-menu-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.mobile-menu-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.mobile-menu-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mobile-menu-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 150ms ease-in, transform 150ms ease-in;
 }

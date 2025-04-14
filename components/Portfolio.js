@@ -1,93 +1,116 @@
+import { useState } from 'react';
 import Image from 'next/image';
 
-export default function Portfolio() {
+// Navigation button component
+const NavButton = ({ direction, onClick, disabled }) => {
   return (
-    <section id="portfolio" className="bg-white py-16 px-6 md:px-12 text-center">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900">Before and After Renovation Projects</h2>
-        <p className="text-lg text-gray-700 mt-2">
-          See the transformation of properties before and after RealTechee's renovations.
-        </p>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-10 h-10 rounded-full flex items-center justify-center border ${
+        disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-gray-300 text-gray-700 hover:bg-gray-100'
+      }`}
+    >
+      {direction === 'prev' ? (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      ) : (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 5L16 12L9 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      )}
+    </button>
+  );
+};
 
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+export default function Portfolio() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const projects = [
+    {
+      id: 1,
+      title: "Living Room Transformation",
+      beforeImage: "/portfolio/before-1.jpg",
+      afterImage: "/portfolio/after-1.jpg",
+      valueIncrease: 97000
+    },
+    {
+      id: 2,
+      title: "Kitchen Renovation",
+      beforeImage: "/portfolio/before-2.jpg",
+      afterImage: "/portfolio/after-2.jpg",
+      valueIncrease: 105000
+    },
+    {
+      id: 3,
+      title: "Master Bathroom Update",
+      beforeImage: "/portfolio/before-3.jpg",
+      afterImage: "/portfolio/after-3.jpg",
+      valueIncrease: 65000
+    }
+  ];
 
-          {/* Before and After 1 */}
-          <div className="relative overflow-hidden rounded-lg shadow-lg group">
-            <Image 
-              src="/MD - Home/IMG_3629.jpg" 
-              alt="Before renovation - Living Room" 
-              width={600} 
-              height={400} 
-              className="w-full h-auto"
-            />
-            <div className="absolute top-4 left-4 bg-white shadow-md p-3 rounded-lg">
-              <p className="text-sm font-semibold" style={{color: "var(--accent-red)"}}>Before</p>
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <p className="text-white font-semibold px-4 py-2 rounded-lg" style={{backgroundColor: "var(--accent-color)"}}>View Project</p>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg shadow-lg group">
-            <Image 
-              src="/MD - Home/IMG_6917.jpg" 
-              alt="After renovation - Living Room" 
-              width={600} 
-              height={400}
-              className="w-full h-auto" 
-            />
-            <div className="absolute top-4 left-4 bg-white shadow-md p-3 rounded-lg">
-              <p className="text-sm font-semibold" style={{color: "var(--accent-teal)"}}>After</p>
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <p className="text-white font-semibold px-4 py-2 rounded-lg" style={{backgroundColor: "var(--accent-color)"}}>View Project</p>
-            </div>
-          </div>
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+  };
 
-          {/* Before and After 2 */}
-          <div className="relative overflow-hidden rounded-lg shadow-lg group">
-            <Image 
-              src="/MD - Home/IMG_0014.jpg" 
-              alt="Before renovation - Kitchen" 
-              width={600} 
-              height={400}
-              className="w-full h-auto" 
-            />
-            <div className="absolute top-4 left-4 bg-white shadow-md p-3 rounded-lg">
-              <p className="text-sm font-semibold" style={{color: "var(--accent-red)"}}>Before</p>
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <p className="text-white font-semibold px-4 py-2 rounded-lg" style={{backgroundColor: "var(--accent-color)"}}>View Project</p>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg shadow-lg group">
-            <Image 
-              src="/MD - Home/IMG_6158.jpg" 
-              alt="After renovation - Kitchen" 
-              width={600} 
-              height={400}
-              className="w-full h-auto" 
-            />
-            <div className="absolute top-4 left-4 bg-white shadow-md p-3 rounded-lg">
-              <p className="text-sm font-semibold" style={{color: "var(--accent-teal)"}}>After</p>
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <p className="text-white font-semibold px-4 py-2 rounded-lg" style={{backgroundColor: "var(--accent-color)"}}>View Project</p>
-            </div>
-          </div>
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+  };
 
+  return (
+    <section className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <p className="text-sm font-medium text-[#FF5F45] uppercase tracking-wider mb-2">PORTFOLIO</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Before and After Renovation Projects</h2>
         </div>
         
-        <div className="mt-10">
-          <button 
-            className="px-6 py-3 rounded-lg font-semibold"
-            style={{
-              backgroundColor: "var(--accent-color)",
-              color: "white"
-            }}
-          >
-            View all projects →
-          </button>
+        <div className="bg-gray-50 rounded-lg p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Before Image */}
+            <div className="relative h-64 md:h-96 overflow-hidden rounded-lg">
+              <div className="absolute top-4 left-4 bg-white py-1 px-3 rounded-md text-gray-800 font-medium z-10">
+                Before
+              </div>
+              <Image
+                src={projects[currentSlide].beforeImage}
+                alt={`Before - ${projects[currentSlide].title}`}
+                fill
+                className="object-cover"
+              />
+            </div>
+            
+            {/* After Image */}
+            <div className="relative h-64 md:h-96 overflow-hidden rounded-lg">
+              <div className="absolute top-4 left-4 bg-white py-1 px-3 rounded-md text-[#FF5F45] font-medium z-10">
+                After
+              </div>
+              <Image
+                src={projects[currentSlide].afterImage}
+                alt={`After - ${projects[currentSlide].title}`}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          
+          <div className="mt-8 flex items-center justify-between">
+            <div>
+              <p className="text-xl font-bold text-gray-900">
+                Value increased by <span className="text-[#FF5F45]">${projects[currentSlide].valueIncrease.toLocaleString()}</span>
+              </p>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <p className="text-gray-600 mr-4">{currentSlide + 1}/{projects.length}</p>
+              <div className="flex space-x-2">
+                <NavButton direction="prev" onClick={handlePrev} disabled={false} />
+                <NavButton direction="next" onClick={handleNext} disabled={false} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,35 +1,76 @@
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+// Counter animation hook
+const useCounter = (end, duration = 2000, start = 0, delay = 0) => {
+  const [count, setCount] = useState(start);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    if (!inView) return;
+
+    let startTime;
+    let animationFrame;
+    
+    const startAnimation = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsedTime = timestamp - startTime;
+      
+      if (elapsedTime > delay) {
+        const progress = Math.min((elapsedTime - delay) / duration, 1);
+        setCount(Math.floor(progress * (end - start) + start));
+      }
+      
+      if (elapsedTime < duration + delay) {
+        animationFrame = requestAnimationFrame(startAnimation);
+      } else {
+        setCount(end);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(startAnimation);
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [inView, end, duration, start, delay]);
+
+  return [count, ref];
+};
+
 export default function Stats() {
-    return (
-      <section id="stats" className="bg-gray-50 py-16 px-6 md:px-12 text-center">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900">RealTechee By the Numbers</h2>
-          <p className="text-lg text-gray-700 mt-2">See how we help agents and homeowners maximize their property value.</p>
-  
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-10">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-center justify-center mb-4">
-                <img src="/MD - Home/ic-building.svg" alt="Building icon" className="h-12 w-12" />
-              </div>
-              <p className="text-4xl font-bold" style={{color: "var(--accent-red)"}}>1,500+</p>
-              <p className="text-gray-700 mt-2">Renovation Projects</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-center justify-center mb-4">
-                <img src="/MD - Home/ic-dollar-circle.svg" alt="Dollar icon" className="h-12 w-12" />
-              </div>
-              <p className="text-4xl font-bold" style={{color: "var(--accent-teal)"}}>$50M+</p>
-              <p className="text-gray-700 mt-2">Value Added to Properties</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="flex items-center justify-center mb-4">
-                <img src="/MD - Home/ic-chart.svg" alt="Chart icon" className="h-12 w-12" />
-              </div>
-              <p className="text-4xl font-bold" style={{color: "var(--accent-yellow)"}}>2x</p>
-              <p className="text-gray-700 mt-2">Faster Selling Time</p>
-            </div>
+  const [projectsCount, projectsRef] = useCounter(985);
+  const [clientsCount, clientsRef] = useCounter(2462, 2500);
+  const [yearsCount, yearsRef] = useCounter(15, 1500);
+
+  return (
+    <section className="bg-gray-900 text-white py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          {/* Projects Counter */}
+          <div ref={projectsRef} className="py-6">
+            <h2 className="text-5xl font-bold mb-2">{projectsCount}</h2>
+            <p className="text-gray-300">Successful Projects</p>
+          </div>
+          
+          {/* Clients Counter */}
+          <div ref={clientsRef} className="py-6">
+            <h2 className="text-5xl font-bold mb-2">{clientsCount}</h2>
+            <p className="text-gray-300">Happy Clients</p>
+          </div>
+          
+          {/* Years Counter */}
+          <div ref={yearsRef} className="py-6">
+            <h2 className="text-5xl font-bold mb-2">{yearsCount}Y</h2>
+            <p className="text-gray-300">Years of Experience</p>
           </div>
         </div>
-      </section>
-    );
-  }  
+      </div>
+    </section>
+  );
+}

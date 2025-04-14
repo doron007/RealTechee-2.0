@@ -1,61 +1,48 @@
 import Image from 'next/image';
 
 export default function Partners() {
+  const partners = [
+    {
+      name: "Sync",
+      logo: "/logos/sync.png",
+      width: 120
+    },
+    {
+      name: "Equity Union Real Estate",
+      logo: "/logos/equity-union.png",
+      width: 150
+    },
+    {
+      name: "American Society of Interior Designers",
+      logo: "/logos/asid.png",
+      width: 100
+    },
+    {
+      name: "National Kitchen & Bath Association",
+      logo: "/logos/nkba.png",
+      width: 130
+    }
+  ];
+
   return (
-    <section id="partners" className="bg-gray-50 py-16 px-6 md:px-12 text-center">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900">Our Trusted Partners</h2>
-        <p className="text-lg text-gray-700 mt-2">
-          We collaborate with top industry professionals and organizations to bring you the best.
-        </p>
-
-        {/* Partners Logos */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10 items-center justify-center">
-
-          {/* Partner 1 */}
-          <div>
-            <Image 
-              src="/MD - Home/NKBA.png" 
-              alt="National Kitchen & Bath Association" 
-              width={150} 
-              height={50} 
-              className="mx-auto"
-            />
-          </div>
-
-          {/* Partner 2 */}
-          <div>
-            <Image 
-              src="/MD - Home/Equity Union Real Estate.png" 
-              alt="Equity Union Real Estate" 
-              width={150} 
-              height={50} 
-              className="mx-auto"
-            />
-          </div>
-
-          {/* Partner 3 */}
-          <div>
-            <Image 
-              src="/MD - Home/ASID.png" 
-              alt="American Society of Interior Designers" 
-              width={150} 
-              height={50} 
-              className="mx-auto"
-            />
-          </div>
-
-          {/* Partner 4 */}
-          <div>
-            <Image 
-              src="/MD - Home/sync.png" 
-              alt="Sync Partnership" 
-              width={150} 
-              height={50} 
-              className="mx-auto"
-            />
-          </div>
-
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">Collaborating with Industry Leaders</h2>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+          {partners.map((partner, index) => (
+            <div key={index} className="flex justify-center items-center px-4 py-2">
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={partner.width}
+                height={50}
+                className="object-contain h-10 md:h-12 grayscale hover:grayscale-0 transition-all duration-300"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
