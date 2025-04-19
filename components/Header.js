@@ -1,10 +1,21 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { 
+  NavLink, 
+  DropdownButton, 
+  DropdownLink, 
+  MobileDropdownLink, 
+  PrimaryActionButton,
+  productCategories,
+  contactOptions
+} from '../utils/componentUtils';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+  const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,87 +35,105 @@ export default function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
+        <div className="flex justify-between items-center h-[80px]">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <Image
-                src="/logo/realtechee_horizontal_no_border.png"
-                alt="RealTechee Logo"
-                width={180}
-                height={38}
-                priority
-              />
+              <div className="border border-gray-200 p-1 rounded">
+                <Image
+                  src="/logo/realtechee_horizontal_no_border.png"
+                  alt="RealTechee Logo"
+                  width={160}
+                  height={32}
+                  className="w-[120px] h-auto sm:w-[140px] md:w-[160px] lg:w-[180px]"
+                  priority
+                />
+              </div>
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <div className="relative group">
-              <Link 
-                href="/products" 
-                className="font-medium text-gray-900 hover:text-[#FF5F45] transition-colors"
-              >
-                Products
-              </Link>
-            </div>
-
-            <div className="relative group">
-              <Link 
-                href="/projects" 
-                className="font-medium text-gray-900 hover:text-[#FF5F45] transition-colors"
-              >
-                Projects
-              </Link>
-            </div>
-
-            <div className="relative group">
-              <Link 
-                href="/about" 
-                className="font-medium text-gray-900 hover:text-[#FF5F45] transition-colors"
-              >
-                About
-              </Link>
-            </div>
-
-            <div className="relative group">
-              <Link 
-                href="/contact" 
-                className="font-medium text-gray-900 hover:text-[#FF5F45] transition-colors"
-              >
-                Contact
-              </Link>
-            </div>
-
-            <div className="ml-4 flex items-center space-x-3">
-              <Link 
-                href="/login" 
-                className="px-3 py-2 font-medium text-gray-900 hover:text-[#FF5F45] transition-colors"
-              >
-                Login
-              </Link>
+          {/* Main Navigation (Left Side) */}
+          <div className="hidden md:flex flex-1 items-center justify-start ml-4 lg:ml-8 space-x-4 lg:space-x-8">
+            {/* Products Dropdown */}
+            <div 
+              className="relative group"
+              onMouseEnter={() => setProductsDropdownOpen(true)}
+              onMouseLeave={() => setProductsDropdownOpen(false)}
+            >
+              <DropdownButton 
+                text="Products" 
+                isOpen={productsDropdownOpen} 
+                onClick={() => setProductsDropdownOpen(!productsDropdownOpen)} 
+              />
               
-              <Link 
-                href="/get-estimate" 
-                className="px-4 py-2 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 transition-colors flex items-center"
-              >
-                <span>Get Estimate</span>
-                <svg 
-                  className="ml-2 h-4 w-4" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M14 5l7 7m0 0l-7 7m7-7H3" 
-                  />
-                </svg>
-              </Link>
+              {/* Products Dropdown Menu */}
+              {productsDropdownOpen && (
+                <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200" style={{ top: "calc(100%)" }}>
+                  <div className="py-2">
+                    {productCategories.map((category, index) => (
+                      <DropdownLink 
+                        key={index}
+                        href={category.href} 
+                        text={category.text}
+                        onClick={() => setProductsDropdownOpen(false)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </nav>
+
+            {/* Projects */}
+            <div className="relative group">
+              <NavLink href="/projects" text="Projects" />
+            </div>
+
+            {/* About */}
+            <div className="relative group">
+              <NavLink href="/about" text="About" />
+            </div>
+
+            {/* Contact Dropdown */}
+            <div 
+              className="relative group"
+              onMouseEnter={() => setContactDropdownOpen(true)}
+              onMouseLeave={() => setContactDropdownOpen(false)}
+            >
+              <DropdownButton 
+                text="Contact" 
+                isOpen={contactDropdownOpen} 
+                onClick={() => setContactDropdownOpen(!contactDropdownOpen)} 
+              />
+              
+              {/* Contact Dropdown Menu */}
+              {contactDropdownOpen && (
+                <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200" style={{ top: "calc(100%)" }}>
+                  <div className="py-2">
+                    {contactOptions.map((option, index) => (
+                      <DropdownLink 
+                        key={index}
+                        href={option.href} 
+                        text={option.text}
+                        onClick={() => setContactDropdownOpen(false)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Right Side Navigation (Login and Get Estimate) */}
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+            <Link 
+              href="/login" 
+              className="px-2 lg:px-3 py-2 font-medium text-sm lg:text-base text-gray-900 hover:text-accent transition-colors underline"
+            >
+              Login
+            </Link>
+            
+            <PrimaryActionButton href="/get-estimate" text="Get Estimate" />
+          </div>
           
           {/* Mobile Menu Button */}
           <div className="md:hidden">
@@ -115,13 +144,9 @@ export default function Header() {
             >
               <span className="sr-only">Open main menu</span>
               {isOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <Image src="/icons/close.svg" alt="Close Menu" width={24} height={24} />
               ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <Image src="/icons/menu.svg" alt="Open Menu" width={24} height={24} />
               )}
             </button>
           </div>
@@ -130,15 +155,38 @@ export default function Header() {
       
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden">
+        <div className="md:hidden bg-white">
           <div className="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200">
-            <Link 
-              href="/products" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
-              onClick={() => setIsOpen(false)}
-            >
-              Products
-            </Link>
+            {/* Products Section */}
+            <div>
+              <button
+                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
+                onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
+              >
+                Products
+                <Image 
+                  src="/icons/chevron-down.svg" 
+                  alt="Dropdown" 
+                  width={20} 
+                  height={20} 
+                  className={`transform ${productsDropdownOpen ? 'rotate-180' : ''}`} 
+                />
+              </button>
+              
+              {productsDropdownOpen && (
+                <div className="pl-4 space-y-1 mt-1">
+                  {productCategories.map((category, index) => (
+                    <MobileDropdownLink 
+                      key={index}
+                      href={category.href} 
+                      text={category.text}
+                      onClick={() => setIsOpen(false)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <Link 
               href="/projects" 
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
@@ -146,6 +194,7 @@ export default function Header() {
             >
               Projects
             </Link>
+            
             <Link 
               href="/about" 
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
@@ -153,27 +202,48 @@ export default function Header() {
             >
               About
             </Link>
-            <Link 
-              href="/contact" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </Link>
+            
+            {/* Contact Section */}
+            <div>
+              <button
+                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
+                onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
+              >
+                Contact
+                <Image 
+                  src="/icons/chevron-down.svg" 
+                  alt="Dropdown" 
+                  width={20} 
+                  height={20} 
+                  className={`transform ${contactDropdownOpen ? 'rotate-180' : ''}`} 
+                />
+              </button>
+              
+              {contactDropdownOpen && (
+                <div className="pl-4 space-y-1 mt-1">
+                  {contactOptions.map((option, index) => (
+                    <MobileDropdownLink 
+                      key={index}
+                      href={option.href} 
+                      text={option.text}
+                      onClick={() => setIsOpen(false)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <Link 
               href="/login" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 underline"
               onClick={() => setIsOpen(false)}
             >
               Login
             </Link>
-            <Link 
-              href="/get-estimate" 
-              className="block w-full text-center px-4 py-2 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Get Estimate
-            </Link>
+            
+            <div className="mt-3">
+              <PrimaryActionButton href="/get-estimate" text="Get Estimate" mobile={true} />
+            </div>
           </div>
         </div>
       )}

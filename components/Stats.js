@@ -1,73 +1,71 @@
-import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-
-// Counter animation hook
-const useCounter = (end, duration = 2000, start = 0, delay = 0) => {
-  const [count, setCount] = useState(start);
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  useEffect(() => {
-    if (!inView) return;
-
-    let startTime;
-    let animationFrame;
-    
-    const startAnimation = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsedTime = timestamp - startTime;
-      
-      if (elapsedTime > delay) {
-        const progress = Math.min((elapsedTime - delay) / duration, 1);
-        setCount(Math.floor(progress * (end - start) + start));
-      }
-      
-      if (elapsedTime < duration + delay) {
-        animationFrame = requestAnimationFrame(startAnimation);
-      } else {
-        setCount(end);
-      }
-    };
-    
-    animationFrame = requestAnimationFrame(startAnimation);
-    
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [inView, end, duration, start, delay]);
-
-  return [count, ref];
-};
+import { useCounter } from '../utils/animationUtils';
+import StatItem from './StatItem';
 
 export default function Stats() {
-  const [projectsCount, projectsRef] = useCounter(985);
-  const [clientsCount, clientsRef] = useCounter(2462, 2500);
-  const [yearsCount, yearsRef] = useCounter(15, 1500);
+  const statsData = [
+    {
+      value: 985,
+      label: "Successful Projects",
+      suffix: "",
+      delay: 0
+    },
+    {
+      value: 2462,
+      label: "Happy Clients",
+      suffix: "",
+      delay: 200
+    },
+    {
+      value: 15,
+      label: "Years of Experience",
+      suffix: "Y",
+      delay: 400
+    }
+  ];
 
   return (
-    <section className="bg-gray-900 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          {/* Projects Counter */}
-          <div ref={projectsRef} className="py-6">
-            <h2 className="text-5xl font-bold mb-2">{projectsCount}</h2>
-            <p className="text-gray-300">Successful Projects</p>
+    <section 
+      className="bg-black text-white w-full" 
+      style={{ 
+        height: "200px",
+        maxHeight: "200px",
+        display: "grid",
+        alignSelf: "stretch",
+        justifySelf: "stretch",
+        gridArea: "3/1/4/2",
+        position: "relative"
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full">
+        <div className="h-full w-full grid grid-cols-3 items-center">
+          {/* Left stat */}
+          <div className="flex justify-start">
+            <StatItem
+              value={statsData[0].value}
+              label={statsData[0].label}
+              suffix={statsData[0].suffix}
+              delay={statsData[0].delay}
+            />
           </div>
           
-          {/* Clients Counter */}
-          <div ref={clientsRef} className="py-6">
-            <h2 className="text-5xl font-bold mb-2">{clientsCount}</h2>
-            <p className="text-gray-300">Happy Clients</p>
+          {/* Middle stat */}
+          <div className="flex justify-center">
+            <StatItem
+              value={statsData[1].value}
+              label={statsData[1].label}
+              suffix={statsData[1].suffix}
+              delay={statsData[1].delay}
+            />
           </div>
           
-          {/* Years Counter */}
-          <div ref={yearsRef} className="py-6">
-            <h2 className="text-5xl font-bold mb-2">{yearsCount}Y</h2>
-            <p className="text-gray-300">Years of Experience</p>
+          {/* Right stat */}
+          <div className="flex justify-end">
+            <StatItem
+              value={statsData[2].value}
+              label={statsData[2].label}
+              suffix={statsData[2].suffix}
+              delay={statsData[2].delay}
+            />
           </div>
         </div>
       </div>
