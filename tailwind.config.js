@@ -7,34 +7,78 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#333333",
+        // Updated brand colors from Figma
+        "black": "#151515",
+        "dark-gray": "#2A2B2E",
+        "medium-gray": "#6E6E73",
+        "light-gray": "#919191",
+        "very-light-gray": "#E4E4E4",
+        "off-white": "#F9F4F3",
+        
+        // Primary/Secondary colors
+        primary: "#151515", 
         secondary: "#FFFFFF",
-        accent: "#FF5F45",
-        "accent-hover": "#E54935",
-        "accent-light": "#FF8A70",
-        "text-primary": "#333333",
-        "text-secondary": "#666666",
-        "text-muted": "#999999",
-        "bg-light": "#F5F5F5",
-        "bg-dark": "#333333",
-        "border-color": "#EEEEEE",
-        // Additional brand colors
-        "accent-red": "#E1271A",
-        "accent-coral": "#FF7F59",
-        "accent-yellow": "#FFB81C",
-        "accent-teal": "#4CD5B1",
-        "accent-blue": "#1D70B7",
+        "neutral-light": "#D2CAC8",
+        
+        // Accent colors
+        "accent-1": "#D11919", // Red
+        "accent-2": "#E9664A", // Coral/Orange
+        "accent-3": "#FFB900", // Yellow
+        "accent-4": "#3BE8B0", // Teal
+        "accent-5": "#17619C", // Blue
+        
+        // Button states
+        "btn-normal": "#CE635E",
+        "btn-hover": "#A54F4B",
+        "btn-pressed": "#7C3B38",
+        "btn-disabled": "#F0CFCD",
+        
+        // Keep existing structure 
+        accent: "#2A2B2E",
+        "accent-hover": "#151515",
+        "accent-light": "#6E6E73",
+        "text-primary": "#151515",
+        "text-secondary": "#2A2B2E",
+        "text-muted": "#6E6E73",
+        "bg-light": "#F9F4F3",
+        "bg-dark": "#151515",
+        "border-color": "#E4E4E4",
+        
+        // Additional colors
+        "accent-red": "#D11919",
+        "accent-coral": "#E9664A",
+        "accent-yellow": "#FFB900",
+        "accent-teal": "#3BE8B0",
+        "accent-blue": "#17619C",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["Inter", "Nunito Sans", "Roboto", "sans-serif"],
+        heading: ["Nunito Sans", "sans-serif"],
+        body: ["Roboto", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        playfair: ["Playfair Display", "serif"]
       },
       fontSize: {
-        "2xs": "0.625rem",
-        "3xl": "1.875rem",
-        "4xl": "2.25rem",
-        "5xl": "3rem",
-        "6xl": "3.75rem",
-        "7xl": "4.5rem",
+        // Font scale from Figma specs
+        'xs': '13pt', // P3
+        'sm': '0.875rem',
+        'base': '16pt', // P2 / H6
+        'lg': '1.125rem',
+        'xl': '20pt', // P1 / H5
+        '2xl': '25pt', // H4
+        '3xl': '31pt', // H3
+        '4xl': '39pt', // H2
+        '5xl': '48pt', // H1
+        '6xl': '3.75rem',
+        '7xl': '4.5rem',
+        '2xs': '0.625rem',
+      },
+      lineHeight: {
+        'tight': '1.2', // 120%
+        'normal': '1.4', // 140%
+        'relaxed': '1.5', // 150%
+        'loose': '1.6',  // 160%
+        'extra-loose': '1.8', // 180%
       },
       spacing: {
         "72": "18rem",

@@ -1,35 +1,219 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary-color: #333333;
-  --secondary-color: #FFFFFF;
-  --accent-color: #FF5F45;
-  --accent-hover: #E54935;
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-muted: #999999;
-  --background-light: #F5F5F5;
-  --background-dark: #333333;
-  --border-color: #EEEEEE;
+/* Font imports */
+/* Nunito Sans */
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/fonts/NunitoSans/NunitoSans_10pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-html {
-  scroll-behavior: smooth;
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/fonts/NunitoSans/NunitoSans_10pt-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/fonts/NunitoSans/NunitoSans_10pt-SemiBold.ttf') format('truetype');
   font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/fonts/NunitoSans/NunitoSans_10pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('/fonts/NunitoSans/NunitoSans_10pt-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Roboto */
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter/Inter-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Playfair Display */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/PlayfairDisplay/PlayfairDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/PlayfairDisplay/PlayfairDisplay-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/PlayfairDisplay/PlayfairDisplay-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/PlayfairDisplay/PlayfairDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback to Google Fonts if local files aren't available */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* Heading Styles */
+.heading-1 {
+  @apply font-['Nunito_Sans'] text-5xl font-normal leading-[57.60px] text-black;
+}
+
+.heading-2 {
+  @apply font-['Nunito_Sans'] text-4xl font-normal leading-10 text-black;
+}
+
+.heading-3 {
+  @apply font-['Nunito_Sans'] text-3xl font-normal leading-9 text-black;
+}
+
+.heading-4 {
+  @apply font-['Nunito_Sans'] text-2xl font-normal leading-[120px] text-black;
+}
+
+.heading-5 {
+  @apply font-['Nunito_Sans'] text-xl font-normal leading-normal text-black;
+}
+
+.heading-6 {
+  @apply font-['Nunito_Sans'] text-base font-normal leading-tight text-black;
+}
+
+/* Paragraph Styles */
+.paragraph-1 {
+  @apply font-['Roboto'] text-xl font-normal leading-loose text-black;
+}
+
+.paragraph-2 {
+  @apply font-['Roboto'] text-base font-normal leading-relaxed text-black;
+}
+
+.paragraph-3 {
+  @apply font-['Roboto'] text-xs font-normal leading-tight text-black;
+}
+
+/* Brand Typography */
+.brand-title {
+  @apply font-inter text-4xl font-bold text-black;
+}
+
+.brand-subtitle {
+  @apply font-inter text-lg font-normal text-neutral-400;
+}
+
+.brand-identity {
+  @apply font-playfair text-sm font-normal text-neutral-400;
+}
+
+/* Button Typography */
+.btn-text {
+  @apply font-inter text-base font-medium;
+}
+
+.menu-text {
+  @apply font-inter text-sm font-medium;
+}
+
+.cta-text {
+  @apply font-inter text-base font-medium text-white;
+}
+
+.secondary-text {
+  @apply font-inter text-base font-medium text-neutral-900;
+}
+
+/* Content Styles */
+.content-title {
+  @apply font-heading text-5xl font-semibold text-black;
+}
+
+.content-body {
+  @apply font-body text-xl font-normal leading-loose text-black;
 }
 
 /* Custom utility classes */
@@ -37,11 +221,11 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  background-image: linear-gradient(to right, var(--accent-color), #FF8A70);
+  background-image: linear-gradient(to right, #151515, #2A2B2E);
 }
 
 .bg-gradient {
-  background-image: linear-gradient(to right, var(--accent-color), #FF8A70);
+  background-image: linear-gradient(to right, #151515, #2A2B2E);
 }
 
 .shadow-custom {
@@ -83,24 +267,44 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom button styles */
 .btn {
-  @apply inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition-all duration-300;
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition-all duration-300 btn-text;
 }
 
 .btn-primary {
-  @apply bg-[#FF5F45] text-white hover:bg-[#E54935];
+  @apply bg-black text-white hover:bg-dark-gray;
 }
 
 .btn-secondary {
-  @apply bg-[#333333] text-white hover:bg-[#222222];
+  @apply bg-dark-gray text-white hover:bg-black;
 }
 
 .btn-outline {
-  @apply border border-[#333333] text-[#333333] hover:bg-gray-100;
+  @apply border border-black text-black hover:bg-very-light-gray;
+}
+
+.btn-accent-1 {
+  @apply bg-accent-1 text-white hover:opacity-90;
+}
+
+.btn-accent-2 {
+  @apply bg-accent-2 text-white hover:opacity-90;
+}
+
+.btn-accent-3 {
+  @apply bg-accent-3 text-black hover:opacity-90;
+}
+
+.btn-accent-4 {
+  @apply bg-accent-4 text-black hover:opacity-90;
+}
+
+.btn-accent-5 {
+  @apply bg-accent-5 text-white hover:opacity-90;
 }
 
 /* Form elements */
 .form-input {
-  @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF5F45] focus:border-transparent transition-colors;
+  @apply w-full px-4 py-3 border border-very-light-gray rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-colors;
 }
 
 .form-label {
