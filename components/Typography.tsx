@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-export default function Typography(): JSX.Element {
+export default function Typography(): ReactElement {
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
       <h1 className="text-4xl font-bold mb-10 font-heading">RealTechee Typography Guide</h1>
