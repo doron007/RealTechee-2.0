@@ -34,14 +34,25 @@ This document provides an overview of the project structure and organization.
   - `/components` - Type definitions for components
 
 - `/utils` - Utility functions and helpers
-  - `componentUtils.js` - Utility functions for components
-  - `animationUtils.js` - Animation-related utilities
+  - `componentUtils.ts` - Utility functions for components
+  - `animationUtils.ts` - Animation-related utilities
+
+- `/scripts` - Utility scripts for the project
+  - `convertToTypeScript.js` - Script used for JS to TS conversion
+
+## TypeScript Configuration
+
+The project uses TypeScript for type safety and better development experience. Key TypeScript files:
+
+- `tsconfig.json` - TypeScript configuration
+- `next-env.d.ts` - Next.js TypeScript declarations
+- `types/index.d.ts` - Project-wide type declarations
 
 ## Import Conventions
 
-Components are exported through index.js barrel files in each directory, enabling cleaner imports:
+Components are exported through index.ts barrel files in each directory, enabling cleaner imports:
 
-```javascript
+```typescript
 // Instead of:
 import Button from '../components/common/buttons/Buttons';
 
@@ -54,8 +65,8 @@ import { Button } from '../components/common/buttons';
 When adding new features:
 
 1. Place components in the appropriate directory based on their purpose
-2. Update the corresponding index.js barrel file
-3. If it's a TypeScript component, add type definitions in the `/types` directory
+2. Update the corresponding index.ts barrel file
+3. Add type definitions in the `/types` directory
 4. Use the existing folder structure for organizing related assets
 
 ## Documentation
