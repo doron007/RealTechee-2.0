@@ -26,7 +26,7 @@ export default function Testimonials(props: TestimonialsProps) {
               {/* Static Image */}
               <div className={`absolute inset-0 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100 z-10'}`}>
                 <img
-                  src="/realtechee_testimonial_image.png"
+                  src="/videos/realtechee_testimonial_image.png"
                   alt="Testimonial video thumbnail"
                   className="object-cover w-full h-full"
                 />
@@ -60,7 +60,7 @@ export default function Testimonials(props: TestimonialsProps) {
                 <video
                   ref={videoRef}
                   className="w-full h-full object-cover"
-                  poster="/realtechee_testimonial_image.png"
+                  poster="/videos/realtechee_testimonial_image.png"
                   controls={isPlaying}
                   onEnded={handleVideoEnded}
                   onLoadedData={handleVideoLoaded}
@@ -68,7 +68,7 @@ export default function Testimonials(props: TestimonialsProps) {
                   playsInline
                   preload="auto"
                 >
-                  <source src="/realtechee_testimonial.mp4" type="video/mp4" />
+                  <source src="/videos/realtechee_testimonial.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -77,7 +77,17 @@ export default function Testimonials(props: TestimonialsProps) {
           
           {/* Testimonial Text */}
           <div>
-            <p className="text-xl text-gray-700 mb-6 leading-relaxed">
+            <p 
+              className="text-medium-gray font-body"
+              style={{
+                fontSize: "clamp(16px, 1.2vw, 18px)",
+                lineHeight: "1.6em",
+                textAlign: "start",
+                width: "100%",
+                marginBottom: "24px",
+                mixBlendMode: "normal"
+              }}
+            >
               We helped hundreds of clients to improve their living space and increase value to their properties. Here is how we help our clients.
             </p>
           </div>

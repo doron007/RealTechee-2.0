@@ -7,6 +7,9 @@ import Stats from './Stats';
 import StatsSection from './StatsSection';
 import Testimonials from './Testimonials';
 import CtaSection from './CtaSection';
+import AboutSection from './AboutSection';
+import Portfolio from './Portfolio';
+import Milestones from './Milestones';
 
 export {
   Hero,
@@ -16,5 +19,8 @@ export {
   Stats,
   StatsSection,
   Testimonials,
-  CtaSection
+  CtaSection,
+  AboutSection,
+  Portfolio,
+  Milestones
 };

@@ -5,6 +5,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1200px',  // Changed from 1280px to 1200px
+      '2xl': '1400px', // Added 1400px breakpoint
+      '3xl': '1536px',
+    },
     extend: {
       colors: {
         // Updated brand colors from Figma

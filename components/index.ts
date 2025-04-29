@@ -9,9 +9,6 @@ export * from './common';
 // Re-export home page components
 export * from './home';
 
-// Re-export about page components
-export * from './about';
-
 // Re-export style guide components
 export * from './style-guide';
 

@@ -1,3 +1,4 @@
+// filepath: /Users/doron/Projects/RealTechee 2.0/components/home/AboutSection.tsx
 import Image from 'next/image';
 
 export default function AboutSection(props: any) {

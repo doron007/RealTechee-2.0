@@ -2,11 +2,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-  NavLink, 
-  DropdownButton, 
   DropdownLink, 
   MobileDropdownLink, 
-  PrimaryActionButton,
   productCategories,
   contactOptions
 } from '../../../utils/componentUtils';
@@ -41,144 +38,168 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
-      {/* Full width container without max-width constraint */}
-      <div className="w-full">
-        {/* 6-column layout using grid */}
-        <div className="grid grid-cols-[6vw_max-content_max-content_auto_max-content_6vw] items-center h-[80px]">
-          {/* Column 1: Left margin (6vw) - empty */}
-          <div></div>
-          
-          {/* Column 2: Logo (max-content) */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
-              <div className="border border-very-light-gray p-1 rounded">
-                <Image
-                  src="/logo/realtechee_horizontal_no_border.png"
-                  alt="RealTechee Logo"
-                  width={160}
-                  height={32}
-                  className="w-[120px] h-auto sm:w-[140px] md:w-[160px] lg:w-[180px]"
-                  priority
-                />
+      <div className="w-full h-[80px] flex items-center px-6 lg:px-10 xl:px-[60px] 2xl:px-[120px] py-[32px]">
+        {/* Logo - reduced size */}
+        <div className="flex-shrink-0 h-[45px] flex items-center">
+          <Link href="/" className="flex items-center h-full">
+            <div className="border border-very-light-gray p-1 rounded h-full flex items-center">
+              <Image
+                src="/logo/realtechee_horizontal_no_border.png"
+                alt="RealTechee Logo"
+                width={160}
+                height={28}
+                className="h-[35px] w-auto"
+                priority
+              />
+            </div>
+          </Link>
+        </div>
+        
+        {/* Menu bar - adjusted for responsiveness */}
+        <div className="hidden xl:flex items-center ml-[30px] 2xl:ml-[50px] w-auto xl:w-[377px] h-[26px] gap-[20px] xl:gap-[30px] 2xl:gap-[38px] rounded-[30px]">
+          {/* Products Dropdown */}
+          <div 
+            className="relative group"
+            onMouseEnter={() => setProductsDropdownOpen(true)}
+            onMouseLeave={() => setProductsDropdownOpen(false)}
+          >
+            <button 
+              className="text-zinc-800 text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap"
+              onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
+            >
+              Products
+              <Image 
+                src="/icons/chevron-down.svg" 
+                alt="Dropdown" 
+                width={16} 
+                height={16} 
+                className={`ml-1 transform ${productsDropdownOpen ? 'rotate-180' : ''}`} 
+              />
+            </button>
+            
+            {/* Products Dropdown Menu */}
+            {productsDropdownOpen && (
+              <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-very-light-gray" style={{ top: "calc(100%)" }}>
+                <div className="py-2">
+                  {productCategories.map((category, index) => (
+                    <DropdownLink 
+                      key={index}
+                      href={category.href} 
+                      text={category.text}
+                      onClick={() => setProductsDropdownOpen(false)}
+                    />
+                  ))}
+                </div>
               </div>
+            )}
+          </div>
+
+          {/* Projects */}
+          <div className="relative group">
+            <Link href="/projects" className="text-zinc-800 text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap">
+              Projects
             </Link>
           </div>
-          
-          {/* Column 3: Menu bar (max-content) */}
-          <div className="hidden md:flex items-center ml-4 lg:ml-8 space-x-4 lg:space-x-8">
-            {/* Products Dropdown */}
-            <div 
-              className="relative group"
-              onMouseEnter={() => setProductsDropdownOpen(true)}
-              onMouseLeave={() => setProductsDropdownOpen(false)}
-            >
-              <DropdownButton 
-                text="Products" 
-                isOpen={productsDropdownOpen} 
-                onClick={() => setProductsDropdownOpen(!productsDropdownOpen)} 
-              />
-              
-              {/* Products Dropdown Menu */}
-              {productsDropdownOpen && (
-                <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-very-light-gray" style={{ top: "calc(100%)" }}>
-                  <div className="py-2">
-                    {productCategories.map((category, index) => (
-                      <DropdownLink 
-                        key={index}
-                        href={category.href} 
-                        text={category.text}
-                        onClick={() => setProductsDropdownOpen(false)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
 
-            {/* Projects */}
-            <div className="relative group">
-              <NavLink href="/projects" text="Projects" />
-            </div>
-
-            {/* About */}
-            <div className="relative group">
-              <NavLink href="/about" text="About" />
-            </div>
-
-            {/* Contact Dropdown */}
-            <div 
-              className="relative group"
-              onMouseEnter={() => setContactDropdownOpen(true)}
-              onMouseLeave={() => setContactDropdownOpen(false)}
-            >
-              <DropdownButton 
-                text="Contact" 
-                isOpen={contactDropdownOpen} 
-                onClick={() => setContactDropdownOpen(!contactDropdownOpen)} 
-              />
-              
-              {/* Contact Dropdown Menu */}
-              {contactDropdownOpen && (
-                <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-very-light-gray" style={{ top: "calc(100%)" }}>
-                  <div className="py-2">
-                    {contactOptions.map((option, index) => (
-                      <DropdownLink 
-                        key={index}
-                        href={option.href} 
-                        text={option.text}
-                        onClick={() => setContactDropdownOpen(false)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Column 4: Login (auto) */}
-          <div className="hidden md:flex items-center justify-end">
-            <Link 
-              href="/login" 
-              className="px-2 lg:px-3 py-2 font-medium text-sm lg:text-base text-dark-gray hover:text-black transition-colors underline"
-            >
-              Login
+          {/* About */}
+          <div className="relative group">
+            <Link href="/about" className="text-zinc-800 text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap">
+              About
             </Link>
           </div>
-          
-          {/* Column 5: Get Estimate button (max-content) */}
-          <div className="hidden md:flex items-center">
-            <PrimaryActionButton href="/get-estimate" text="Get Estimate" />
+
+          {/* Contact Dropdown */}
+          <div 
+            className="relative group"
+            onMouseEnter={() => setContactDropdownOpen(true)}
+            onMouseLeave={() => setContactDropdownOpen(false)}
+          >
+            <button 
+              className="text-zinc-800 text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap"
+              onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
+            >
+              Contact
+              <Image 
+                src="/icons/chevron-down.svg" 
+                alt="Dropdown" 
+                width={16} 
+                height={16} 
+                className={`ml-1 transform ${contactDropdownOpen ? 'rotate-180' : ''}`} 
+              />
+            </button>
+            
+            {/* Contact Dropdown Menu */}
+            {contactDropdownOpen && (
+              <div className="absolute left-0 w-64 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-very-light-gray" style={{ top: "calc(100%)" }}>
+                <div className="py-2">
+                  {contactOptions.map((option, index) => (
+                    <DropdownLink 
+                      key={index}
+                      href={option.href} 
+                      text={option.text}
+                      onClick={() => setContactDropdownOpen(false)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+        </div>
+        
+        {/* Spacer to push action buttons to the right */}
+        <div className="flex-grow"></div>
+        
+        {/* Action Buttons Container */}
+        <div className="hidden xl:flex items-center gap-3 2xl:gap-4">
+          {/* Login Button */}
+          <Link 
+            href="/login" 
+            className="h-[45px] 2xl:h-[51px] py-[12px] 2xl:py-[16px] px-[18px] 2xl:px-[24px] rounded-[4px] text-zinc-800 text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed flex items-center justify-center whitespace-nowrap"
+          >
+            Login
+          </Link>
           
-          {/* Column 6: Right margin (6vw) - used for mobile menu button on small screens */}
-          <div className="flex justify-end">
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-medium-gray hover:text-black hover:bg-off-white focus:outline-none"
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                <span className="sr-only">Open main menu</span>
-                {isOpen ? (
-                  <Image src="/icons/close.svg" alt="Close Menu" width={24} height={24} />
-                ) : (
-                  <Image src="/icons/menu.svg" alt="Open Menu" width={24} height={24} />
-                )}
-              </button>
-            </div>
-          </div>
+          {/* Get an Estimate Button */}
+          <Link 
+            href="/get-estimate" 
+            className="h-[45px] 2xl:h-[51px] py-[12px] 2xl:py-[16px] px-[18px] 2xl:px-[24px] rounded-[4px] bg-black text-white flex items-center justify-center whitespace-nowrap"
+          >
+            <Image 
+              src="/icons/arrow-right.svg" 
+              alt="Arrow Right" 
+              width={18} 
+              height={18} 
+              className="mr-2 2xl:mr-3 invert" 
+            />
+            <span className="text-white text-[14px] xl:text-[15px] 2xl:text-base font-body font-normal leading-relaxed">Get an Estimate</span>
+          </Link>
+        </div>
+        
+        {/* Mobile Menu Button - now shows below 1200px (xl breakpoint) */}
+        <div className="xl:hidden ml-auto">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center p-2 rounded-md text-medium-gray hover:text-black hover:bg-off-white focus:outline-none"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className="sr-only">Open main menu</span>
+            {isOpen ? (
+              <Image src="/icons/close.svg" alt="Close Menu" width={24} height={24} />
+            ) : (
+              <Image src="/icons/menu.svg" alt="Open Menu" width={24} height={24} />
+            )}
+          </button>
         </div>
       </div>
       
-      {/* Mobile Menu */}
+      {/* Mobile Menu - now applies below 1200px (xl breakpoint) */}
       {isOpen && (
-        <div className="md:hidden bg-white">
+        <div className="xl:hidden bg-white">
           <div className="px-[6vw] pt-2 pb-3 space-y-1 border-t border-very-light-gray">
             {/* Products Section */}
             <div>
               <button
-                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-dark-gray hover:bg-off-white"
+                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-body font-normal text-dark-gray hover:bg-off-white"
                 onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
               >
                 Products
@@ -207,7 +228,7 @@ export default function Header(props: HeaderProps) {
             
             <Link 
               href="/projects" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-dark-gray hover:bg-off-white"
+              className="block px-3 py-2 rounded-md text-base font-body font-normal text-dark-gray hover:bg-off-white"
               onClick={() => setIsOpen(false)}
             >
               Projects
@@ -215,7 +236,7 @@ export default function Header(props: HeaderProps) {
             
             <Link 
               href="/about" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-dark-gray hover:bg-off-white"
+              className="block px-3 py-2 rounded-md text-base font-body font-normal text-dark-gray hover:bg-off-white"
               onClick={() => setIsOpen(false)}
             >
               About
@@ -224,7 +245,7 @@ export default function Header(props: HeaderProps) {
             {/* Contact Section */}
             <div>
               <button
-                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-medium text-dark-gray hover:bg-off-white"
+                className="flex justify-between w-full px-3 py-2 rounded-md text-base font-body font-normal text-dark-gray hover:bg-off-white"
                 onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
               >
                 Contact
@@ -253,14 +274,27 @@ export default function Header(props: HeaderProps) {
             
             <Link 
               href="/login" 
-              className="block px-3 py-2 rounded-md text-base font-medium text-dark-gray hover:bg-off-white underline"
+              className="block px-3 py-2 rounded-md text-base font-body font-normal text-dark-gray hover:bg-off-white"
               onClick={() => setIsOpen(false)}
             >
               Login
             </Link>
             
             <div className="mt-3">
-              <PrimaryActionButton href="/get-estimate" text="Get Estimate" mobile={true} />
+              <Link 
+                href="/get-estimate" 
+                className="flex items-center justify-center w-full px-4 py-2 bg-black text-white rounded-md"
+                onClick={() => setIsOpen(false)}
+              >
+                <Image 
+                  src="/icons/arrow-right.svg" 
+                  alt="Arrow Right" 
+                  width={16} 
+                  height={16} 
+                  className="mr-2 h-4 w-4 invert" 
+                />
+                <span className="text-white text-base font-body font-normal">Get an Estimate</span>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,10 +1,7 @@
 // About page components barrel file
-import AboutSection from './AboutSection';
-import Milestones from './Milestones';
-import Portfolio from './Portfolio';
+// This file is now empty as all components have been moved to the home folder
+// If new about-specific components are added in the future, they should be exported from here
 
 export {
-  AboutSection,
-  Milestones,
-  Portfolio
+  // No components currently
 };

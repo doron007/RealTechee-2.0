@@ -2,13 +2,26 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/common/layout/Layout';
 import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import type { NextPage } from 'next';
+import type { ReactElement } from 'react';
 
-function MyApp({ Component, pageProps }) {
+// Define types for pages with custom layouts
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactElement;
+};
+
+// Define extended AppProps that include the custom layout component
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   // Analytics page view tracking
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {
       // Send pageview to analytics service if needed
       window.scrollTo(0, 0);
     };

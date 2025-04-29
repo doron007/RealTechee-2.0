@@ -1,9 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FeaturesProps } from '@types/components/home';
+import type { FeaturesProps } from '../../types/components/home';
+
+// Feature card component interface
+interface FeatureCardProps {
+  icon: string;
+  title: string;
+  description: string;
+  highlight?: boolean;
+}
 
 // Feature card component
-const FeatureCard = ({ icon, title, description, highlight = false }) => {
+const FeatureCard = ({ icon, title, description, highlight = false }: FeatureCardProps) => {
   return (
     <div className={`p-6 rounded-lg ${highlight ? 'bg-red-50 border border-red-100' : ''}`}>
       <div className="flex items-start mb-4">

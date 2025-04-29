@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
 import Layout from '../components/common/layout/Layout';
 
@@ -16,15 +16,15 @@ export default function Contact(props: any) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitStatus, setSubmitStatus] = useState<any>(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
@@ -188,7 +188,7 @@ export default function Contact(props: any) {
                     <textarea
                       id="message"
                       name="message"
-                      rows="4"
+                      rows={4}
                       value={formData.message}
                       onChange={handleChange}
                       className="form-input"

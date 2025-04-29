@@ -65,7 +65,7 @@ export const DropdownLink = (props: DropdownLinkProps) => {
     Link,
     { 
       href, 
-      className: "block px-4 py-2 text-sm text-medium-gray hover:bg-off-white hover:text-black",
+      className: "block px-4 py-2 text-sm font-body text-medium-gray hover:bg-off-white hover:text-black",
       onClick 
     },
     text
@@ -81,7 +81,7 @@ export const MobileDropdownLink = (props: DropdownLinkProps) => {
     Link,
     { 
       href, 
-      className: "block px-3 py-2 rounded-md text-sm font-medium text-medium-gray hover:bg-off-white hover:text-black",
+      className: "block px-3 py-2 rounded-md text-sm font-body font-medium text-medium-gray hover:bg-off-white hover:text-black",
       onClick 
     },
     text
