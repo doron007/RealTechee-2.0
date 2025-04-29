@@ -2,9 +2,8 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ['res.cloudinary.com', 'unsplash.com'], // Add external image domains if needed
+      domains: ['res.cloudinary.com', 'unsplash.com', 'placehold.co'], // Added placehold.co to fix build error
     },
   };
   
   module.exports = nextConfig;
-  

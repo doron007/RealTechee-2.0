@@ -75,7 +75,7 @@ export default function HowItWorks(props: HowItWorksProps) {
   ];
 
   return (
-    <section className="py-16 bg-gray-900 relative overflow-hidden">
+    <section className="py-16 bg-[#FCF9F8] relative overflow-hidden">
       {/* Background pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <svg width="100%" height="100%" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">

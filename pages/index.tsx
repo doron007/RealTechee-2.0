@@ -9,12 +9,12 @@ import {
   Portfolio, 
   Testimonials, 
   CtaSection,
-  AboutSection 
+  AboutSection,
+  DealBreakers
 } from '../components/home';
 // These components don't exist yet
 // import PartnerSection from '../components/PartnerSection';
 // import ClientSection from '../components/ClientSection';
-// import DealBreakers from '../components/DealBreakers';
 import Footer from '../components/common/layout/Footer';
 import type { NextPage } from 'next';
 
@@ -27,8 +27,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      <Header />
       
       <main className="flex-grow">
         <Hero />
@@ -36,7 +34,7 @@ const Home: NextPage = () => {
         <Testimonials />
         <Portfolio />
         <Features />
-        {/* <DealBreakers /> */}
+        <DealBreakers />
         <AboutSection />
         {/* <ClientSection /> */}
         <HowItWorks />
@@ -44,8 +42,6 @@ const Home: NextPage = () => {
         {/* <PartnerSection /> */}
         <CtaSection />
       </main>
-      
-      <Footer />
     </div>
   );
 };

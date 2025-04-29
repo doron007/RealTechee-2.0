@@ -10,6 +10,7 @@ import CtaSection from './CtaSection';
 import AboutSection from './AboutSection';
 import Portfolio from './Portfolio';
 import Milestones from './Milestones';
+import DealBreakers from './DealBreakers';
 
 export {
   Hero,
@@ -22,5 +23,6 @@ export {
   CtaSection,
   AboutSection,
   Portfolio,
-  Milestones
+  Milestones,
+  DealBreakers
 };

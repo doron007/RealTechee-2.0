@@ -1,87 +1,200 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FeaturesProps } from '../../types/components/home';
+import { ActionButton } from '../../utils/componentUtils';
 
 // Feature card component interface
 interface FeatureCardProps {
-  icon: string;
   title: string;
   description: string;
-  highlight?: boolean;
+  isActive?: boolean;
 }
 
 // Feature card component
-const FeatureCard = ({ icon, title, description, highlight = false }: FeatureCardProps) => {
+const FeatureCard = ({ title, description, isActive = false }: FeatureCardProps) => {
   return (
-    <div className={`p-6 rounded-lg ${highlight ? 'bg-red-50 border border-red-100' : ''}`}>
-      <div className="flex items-start mb-4">
-        <div className="flex-shrink-0 mr-3">
-          <Image 
-            src={icon} 
-            alt={title} 
-            width={24} 
-            height={24}
-          />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900">{title}</h3>
+    <div data-status={isActive ? "active" : "normal"} className="w-[541px] p-6 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-stone-200 inline-flex justify-start items-start gap-2">
+      <div className="min-w-[24px] min-h-[24px] w-[24px] h-[24px] mr-2 flex-shrink-0">
+        <Image
+          src="/icons/vuesax-bold-tick-circle.svg"
+          alt="Feature icon"
+          width={24}
+          height={24}
+          style={{ width: '24px', height: '24px' }}
+        />
       </div>
-      <p className="text-gray-700 text-sm">{description}</p>
+      <div className="inline-flex flex-col justify-start items-start gap-2">
+        <div 
+          className="self-stretch text-black font-extrabold font-['Roboto']"
+          style={{
+            fontSize: "clamp(18px, 1.4vw, 21px)",
+            lineHeight: "1.4em",
+            textAlign: "start",
+            width: "100%",
+            marginBottom: "8px",
+          }}
+        >
+          {title}
+        </div>
+        <div 
+          className="text-medium-gray font-body" 
+          style={{
+            fontSize: "clamp(16px, 1.2vw, 18px)",
+            lineHeight: "1.6em",
+            textAlign: "start",
+            width: "100%",
+            mixBlendMode: "normal"
+          }}
+        >
+          {description}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default function Features(props: FeaturesProps) {
+// Milestone item component
+const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <p className="text-sm font-medium text-[#FF5F45] uppercase tracking-wider mb-2">FEATURES</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Powerful Features to<br />Win More Deals</h2>
+    isCompleted ? (
+      <div className="self-stretch inline-flex justify-start items-start gap-2">
+        <div className="w-6 h-6 relative">
+          <Image
+            src="/icons/ic-tick-circle.svg"
+            alt="Completed milestone"
+            width={24}
+            height={24}
+            className="left-[0px] top-[0px] absolute"
+          />
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            {/* Feature 1 */}
+        <div className="flex-1 h-6 bg-neutral-500 rounded-[48px]" />
+      </div>
+    ) : (
+      <div className="self-stretch inline-flex justify-start items-start gap-2">
+        <div className="w-6 h-6 relative overflow-hidden">
+          <Image
+            src="/icons/ic-circle.svg"
+            alt="Pending milestone"
+            width={24}
+            height={24}
+            className="left-[0px] top-[0px] absolute"
+          />
+        </div>
+        <div className="flex-1 h-6 rounded-[48px] border-[3px] border-neutral-300" />
+      </div>
+    )
+  );
+};
+
+export default function Features(props: FeaturesProps) {
+  // Define project images to avoid any dynamic string concatenation issues
+  const mainImageSrc = "/images/project-image5.png";
+  const thumbnailImages = [
+    "/images/project-image1.png",
+    "/images/project-image2.png",
+    "/images/project-image3.png",
+    "/images/project-image4.png"
+  ];
+
+  return (
+    <section className="pt-20 pr-[120px] pl-[120px] pb-20 bg-stone-50 flex flex-col">
+      <div className="w-[1200px] mx-auto mb-8">
+        <p className="text-sm font-medium text-[#FF5F45] uppercase tracking-wider mb-2">FEATURES</p>
+        <h2 
+          className="text-dark-gray font-bold font-heading mb-[32px]"
+          style={{
+            fontSize: "clamp(37px, 3.5vw, 43px)",
+            lineHeight: "1.4em",
+            textAlign: "start",
+            width: "100%",
+            mixBlendMode: "normal"
+          }}
+        >
+          Powerful Features to Win More Deals
+        </h2>
+      
+        <div className="flex justify-between items-start gap-8">
+          <div className="inline-flex flex-col justify-start items-start gap-8 w-[541px]">
+            {/* Feature cards */}
             <FeatureCard
-              icon="/icons/overview-icon.svg"
               title="Project Overview at a Glance"
               description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
             />
             
-            {/* Feature 2 */}
             <FeatureCard
-              icon="/icons/scope-icon.svg"
               title="Detailed Project Scope"
-              description="Gain access to detailed project scopes that include descriptions, property details, and transparent price breakdowns. Empowering you and your client with the necessary information to make informed decisions and effectively manage your projects."
+              description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
             />
             
-            {/* Feature 3 */}
             <FeatureCard
-              icon="/icons/updates-icon.svg"
               title="Real-Time Project Updates with Photo Interaction"
               description="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects. Enjoy seamless communication and enhance collaboration to ensure the projects meet and exceed their expectations"
-              highlight={true}
             />
             
-            <div className="mt-8">
-              <Link
-                href="/learn-more"
-                className="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 transition-colors"
-              >
-                Learn More
-              </Link>
-            </div>
+            {/* Learn More button */}
+            <ActionButton href="/learn-more" text="Learn More" primary={true} />
           </div>
           
-          {/* Right side image */}
-          <div className="relative">
-            <Image
-              src="/images/project-dashboard.png"
-              alt="Project dashboard interface"
-              width={600}
-              height={500}
-              className="rounded-lg shadow-lg"
+          {/* Right side - images and milestone widget - exact positioning from Figma, adjusted to align with middle card */}
+          <div className="w-[720px] self-stretch relative overflow-hidden">
+            <div className="w-96 h-96 left-[230px] top-[290.50px] absolute rounded-full border border-red-400 border-dashed" />
+            
+            {/* Main image - using the exact positioning from Figma, moved up ~100px */}
+            <Image 
+              className="w-[505px] h-96 left-[51px] top-[134.50px] absolute rounded-md object-cover" 
+              src={mainImageSrc}
+              alt="Project overview" 
+              width={505}
+              height={384}
+              priority
             />
+            
+            {/* Image thumbnails - using the exact positioning from Figma, moved up ~100px */}
+            <div className="w-[505.08px] h-16 left-[51px] top-[515.50px] absolute rounded-md">
+              <Image 
+                className="w-24 h-16 left-0 top-0 absolute rounded-tl-md rounded-bl-md object-cover" 
+                src={thumbnailImages[0]} 
+                alt="Thumbnail 1" 
+                width={97} 
+                height={65} 
+              />
+              <Image 
+                className="w-24 h-16 left-[101.14px] top-0 absolute object-cover" 
+                src={thumbnailImages[1]} 
+                alt="Thumbnail 2" 
+                width={99} 
+                height={65} 
+              />
+              <Image 
+                className="w-24 h-16 left-[203.97px] top-0 absolute object-cover" 
+                src={thumbnailImages[2]} 
+                alt="Thumbnail 3" 
+                width={97} 
+                height={65} 
+              />
+              <Image 
+                className="w-24 h-16 left-[305.11px] top-0 absolute object-cover" 
+                src={thumbnailImages[3]} 
+                alt="Thumbnail 4" 
+                width={99} 
+                height={65} 
+              />
+            </div>
+            
+            {/* Milestones widget - using the exact positioning from Figma, moved up ~100px */}
+            <div className="w-80 px-6 pt-6 pb-8 left-[345px] top-[443.50px] absolute bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-[2px] inline-flex flex-col justify-start items-start gap-4 overflow-hidden">
+              <div className="justify-start text-zinc-800 text-xl font-extrabold font-['Roboto'] leading-loose">Milestones</div>
+              <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                  <MilestoneItem isCompleted={true} />
+                </div>
+                <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                  <MilestoneItem isCompleted={true} />
+                </div>
+                <MilestoneItem />
+                <MilestoneItem />
+              </div>
+            </div>
           </div>
         </div>
       </div>
