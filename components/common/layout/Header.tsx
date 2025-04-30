@@ -38,7 +38,7 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
-      <div className="w-full h-[80px] flex items-center px-6 lg:px-10 xl:px-[60px] 2xl:px-[120px] py-[32px]">
+      <div className="w-[1600px] mx-auto  h-[80px] flex items-center px-6 lg:px-10 xl:px-[60px] 2xl:px-[120px] py-[32px]">
         {/* Logo - reduced size */}
         <div className="flex-shrink-0 h-[45px] flex items-center">
           <Link href="/" className="flex items-center h-full">

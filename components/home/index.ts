@@ -11,6 +11,8 @@ import AboutSection from './AboutSection';
 import Portfolio from './Portfolio';
 import Milestones from './Milestones';
 import DealBreakers from './DealBreakers';
+import ClientSection from './ClientSection';
+import WhoWeAre from './WhoWeAre';
 
 export {
   Hero,
@@ -24,5 +26,7 @@ export {
   AboutSection,
   Portfolio,
   Milestones,
-  DealBreakers
+  DealBreakers,
+  ClientSection,
+  WhoWeAre
 };

@@ -10,7 +10,9 @@ import {
   Testimonials, 
   CtaSection,
   AboutSection,
-  DealBreakers
+  DealBreakers,
+  ClientSection,
+  WhoWeAre
 } from '../components/home';
 // These components don't exist yet
 // import PartnerSection from '../components/PartnerSection';
@@ -36,10 +38,10 @@ const Home: NextPage = () => {
         <Features />
         <DealBreakers />
         <AboutSection />
-        {/* <ClientSection /> */}
+        <ClientSection />
         <HowItWorks />
         <Partners />
-        {/* <PartnerSection /> */}
+        <WhoWeAre />
         <CtaSection />
       </main>
     </div>
