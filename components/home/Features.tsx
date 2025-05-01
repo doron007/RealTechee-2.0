@@ -1,7 +1,12 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { 
+  SectionLabel,
+  Heading2,
+  CardTitle,
+  CardText
+} from '../Typography';
+import Button from '../common/buttons/Buttons';
 import type { FeaturesProps } from '../../types/components/home';
-import { ActionButton } from '../../utils/componentUtils';
 
 // Feature card component interface
 interface FeatureCardProps {
@@ -24,30 +29,8 @@ const FeatureCard = ({ title, description, isActive = false }: FeatureCardProps)
         />
       </div>
       <div className="inline-flex flex-col justify-start items-start gap-2">
-        <div 
-          className="self-stretch text-black font-extrabold font-['Roboto']"
-          style={{
-            fontSize: "clamp(18px, 1.4vw, 21px)",
-            lineHeight: "1.4em",
-            textAlign: "start",
-            width: "100%",
-            marginBottom: "8px",
-          }}
-        >
-          {title}
-        </div>
-        <div 
-          className="text-medium-gray font-body" 
-          style={{
-            fontSize: "clamp(16px, 1.2vw, 18px)",
-            lineHeight: "1.6em",
-            textAlign: "start",
-            width: "100%",
-            mixBlendMode: "normal"
-          }}
-        >
-          {description}
-        </div>
+        <CardTitle>{title}</CardTitle>
+        <CardText>{description}</CardText>
       </div>
     </div>
   );
@@ -99,19 +82,10 @@ export default function Features(props: FeaturesProps) {
   return (
     <section className="pt-20 pr-[120px] pl-[120px] pb-20 bg-stone-50 flex flex-col">
       <div className="w-[1200px] mx-auto mb-8">
-        <p className="text-sm font-medium text-[#FF5F45] uppercase tracking-wider mb-2">FEATURES</p>
-        <h2 
-          className="text-dark-gray font-bold font-heading mb-[32px]"
-          style={{
-            fontSize: "clamp(37px, 3.5vw, 43px)",
-            lineHeight: "1.4em",
-            textAlign: "start",
-            width: "100%",
-            mixBlendMode: "normal"
-          }}
-        >
+        <SectionLabel className="mb-2">FEATURES</SectionLabel>
+        <Heading2 className="mb-[32px]">
           Powerful Features to Win More Deals
-        </h2>
+        </Heading2>
       
         <div className="flex justify-between items-start gap-8">
           <div className="inline-flex flex-col justify-start items-start gap-8 w-[541px]">
@@ -131,8 +105,13 @@ export default function Features(props: FeaturesProps) {
               description="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects. Enjoy seamless communication and enhance collaboration to ensure the projects meet and exceed their expectations"
             />
             
-            {/* Learn More button */}
-            <ActionButton href="/learn-more" text="Learn More" primary={true} />
+            {/* Learn More button - Updated to use standardized Button component */}
+            <Button
+              variant="primary"
+              href="/learn-more"
+              text="Learn More"
+              showArrow={true}
+            />
           </div>
           
           {/* Right side - images and milestone widget - exact positioning from Figma, adjusted to align with middle card */}

@@ -139,101 +139,123 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-/* Heading Styles */
-.heading-1 {
-  @apply font-['Nunito_Sans'] text-5xl font-normal leading-[57.60px] text-black;
-}
+/* RealTechee 2.0 Typography System - Based on Figma */
+@layer components {
+  /* Heading Styles - Using Nunito Sans */
+  .heading-1 {
+    @apply font-heading text-5xl font-extrabold leading-tight text-dark-gray;
+    /* 48px, line-height: 1.2em */
+  }
 
-.heading-2 {
-  @apply font-['Nunito_Sans'] text-4xl font-normal leading-10 text-black;
-}
+  .heading-2 {
+    @apply font-heading text-4xl font-extrabold leading-tight text-dark-gray;
+    /* 39px, line-height: 1.2em */
+  }
 
-.heading-3 {
-  @apply font-['Nunito_Sans'] text-3xl font-normal leading-9 text-black;
-}
+  .heading-3 {
+    @apply font-heading text-3xl font-bold leading-normal text-dark-gray;
+    /* 31px, line-height: 1.3em */
+  }
 
-.heading-4 {
-  @apply font-['Nunito_Sans'] text-2xl font-normal leading-[120px] text-black;
-}
+  .heading-4 {
+    @apply font-heading text-2xl font-bold leading-normal text-dark-gray;
+    /* 25px, line-height: 1.3em */
+  }
 
-.heading-5 {
-  @apply font-['Nunito_Sans'] text-xl font-normal leading-normal text-black;
-}
+  .heading-5 {
+    @apply font-heading text-xl font-bold leading-normal text-dark-gray;
+    /* 20px, line-height: 1.4em */
+  }
 
-.heading-6 {
-  @apply font-['Nunito_Sans'] text-base font-normal leading-tight text-black;
-}
+  .heading-6 {
+    @apply font-heading text-base font-bold leading-normal text-dark-gray;
+    /* 16px, line-height: 1.4em */
+  }
 
-/* Paragraph Styles */
-.paragraph-1 {
-  @apply font-['Roboto'] text-xl font-normal leading-loose text-black;
-}
+  /* Section Label - Red text above headings */
+  .section-label {
+    @apply font-heading text-sm font-bold uppercase tracking-[0.18em] text-accent-coral;
+    /* 14px, line-height: 1.4em, letter-spacing: 18% */
+  }
 
-.paragraph-2 {
-  @apply font-['Roboto'] text-base font-normal leading-relaxed text-black;
-}
+  /* Subtitle Pill */
+  .subtitle-pill {
+    @apply inline-block bg-[#FFF7F5] rounded-[20px] px-4 py-2 text-accent-coral text-sm font-normal;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6em;
+  }
 
-.paragraph-3 {
-  @apply font-['Roboto'] text-xs font-normal leading-tight text-black;
-}
+  /* Body Text */
+  .body-text {
+    @apply font-body text-base font-normal leading-loose text-dark-gray;
+    /* 16px, line-height: 1.6em */
+  }
 
-/* Brand Typography */
-.brand-title {
-  @apply font-inter text-4xl font-bold text-black;
-}
+  .body-text-secondary {
+    @apply font-body text-base font-normal leading-loose text-dark-gray opacity-70;
+    /* 16px, line-height: 1.6em, opacity: 70% */
+  }
 
-.brand-subtitle {
-  @apply font-inter text-lg font-normal text-neutral-400;
-}
+  /* Card Typography */
+  .card-title {
+    @apply font-heading text-2xl font-bold leading-normal text-dark-gray;
+    /* 24-28px, line-height: 1.3em */
+  }
 
-.brand-identity {
-  @apply font-playfair text-sm font-normal text-neutral-400;
-}
+  .card-subtitle {
+    @apply font-heading text-lg font-semibold leading-normal text-dark-gray;
+    /* 18px, line-height: 1.4em */
+  }
 
-/* Button Typography */
-.btn-text {
-  @apply font-inter text-base font-medium;
-}
+  .card-text {
+    @apply font-body text-base font-normal leading-relaxed text-dark-gray;
+    /* 16px, line-height: 1.5em */
+  }
 
-.menu-text {
-  @apply font-inter text-sm font-medium;
-}
+  /* Button Typography */
+  .btn-primary {
+    @apply bg-dark-gray text-white px-6 py-4 rounded inline-flex items-center justify-center gap-4 hover:bg-opacity-90 transition-all;
+  }
 
-.cta-text {
-  @apply font-inter text-base font-medium text-white;
-}
+  .btn-primary-text {
+    @apply font-heading text-base font-extrabold leading-tight text-white;
+    /* 16px, line-height: 1.2em */
+  }
 
-.secondary-text {
-  @apply font-inter text-base font-medium text-neutral-900;
-}
+  .btn-secondary {
+    @apply bg-transparent border border-dark-gray text-dark-gray px-6 py-4 rounded hover:bg-gray-100 transition-all;
+  }
 
-/* Content Styles */
-.content-title {
-  @apply font-heading text-5xl font-semibold text-black;
-}
+  .btn-secondary-text {
+    @apply font-heading text-base font-extrabold leading-tight text-dark-gray;
+    /* 16px, line-height: 1.2em */
+  }
 
-.content-body {
-  @apply font-body text-xl font-normal leading-loose text-black;
-}
+  /* Card Styles */
+  .card {
+    @apply bg-white border border-[#F0E4DF] rounded-md p-6;
+  }
 
-/* Custom utility classes */
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(to right, #151515, #2A2B2E);
-}
+  .card-hover {
+    @apply hover:shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] transition-shadow duration-300;
+  }
 
-.bg-gradient {
-  background-image: linear-gradient(to right, #151515, #2A2B2E);
-}
+  /* Section Containers */
+  .section-container {
+    @apply px-4 py-16 md:px-8 lg:px-20 xl:px-[120px] xl:py-20;
+  }
 
-.shadow-custom {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+  .section-container-light {
+    @apply bg-white;
+  }
 
-.shadow-custom-lg {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 5px 10px rgba(0, 0, 0, 0.05);
+  .section-container-off-white {
+    @apply bg-[#FCF9F8];
+  }
+
+  .section-container-dark {
+    @apply bg-dark-gray text-white;
+  }
 }
 
 /* Animation classes */
@@ -265,50 +287,13 @@
   }
 }
 
-/* Custom button styles */
-.btn {
-  @apply inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition-all duration-300 btn-text;
-}
-
-.btn-primary {
-  @apply bg-black text-white hover:bg-dark-gray;
-}
-
-.btn-secondary {
-  @apply bg-dark-gray text-white hover:bg-black;
-}
-
-.btn-outline {
-  @apply border border-black text-black hover:bg-very-light-gray;
-}
-
-.btn-accent-1 {
-  @apply bg-accent-1 text-white hover:opacity-90;
-}
-
-.btn-accent-2 {
-  @apply bg-accent-2 text-white hover:opacity-90;
-}
-
-.btn-accent-3 {
-  @apply bg-accent-3 text-black hover:opacity-90;
-}
-
-.btn-accent-4 {
-  @apply bg-accent-4 text-black hover:opacity-90;
-}
-
-.btn-accent-5 {
-  @apply bg-accent-5 text-white hover:opacity-90;
-}
-
 /* Form elements */
 .form-input {
-  @apply w-full px-4 py-3 border border-very-light-gray rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-colors;
+  @apply w-full px-4 py-3 border border-very-light-gray rounded-md focus:outline-none focus:ring-2 focus:ring-dark-gray focus:border-transparent transition-colors;
 }
 
 .form-label {
-  @apply block text-sm font-medium text-gray-700 mb-1;
+  @apply block text-sm font-medium text-dark-gray mb-1;
 }
 
 /* Mobile menu animations */

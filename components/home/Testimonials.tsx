@@ -1,4 +1,5 @@
 import { useVideoPlayer } from '../../utils/componentUtils';
+import { BodyText } from '../Typography';
 
 // Define TestimonialsProps interface directly in the file
 interface TestimonialsProps {
@@ -16,11 +17,11 @@ export default function Testimonials(props: TestimonialsProps) {
   } = useVideoPlayer();
 
   return (
-    <section className="py-16 bg-[#FCF9F8]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Video Testimonial */}
-          <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+    <section className="py-[88px] bg-[#FCF9F8]">
+      <div className="max-w-[1440px] mx-auto px-[120px]">
+        <div className="flex flex-col md:flex-row gap-[64px] items-center">
+          {/* Video Testimonial - Fixed dimensions to match Figma design */}
+          <div className="relative w-full md:w-[628px] h-[432px] rounded-lg overflow-hidden shadow-lg flex-shrink-0">
             {/* Video Thumbnail with Play Button Overlay */}
             <div className="relative w-full h-full">
               {/* Static Image */}
@@ -42,7 +43,7 @@ export default function Testimonials(props: TestimonialsProps) {
                     className="group"
                     aria-label="Play testimonial video"
                   >
-                    <div className="w-[50px] h-[50px] flex items-center justify-center rounded-full bg-transparent border-4 border-white group-hover:scale-110 group-hover:bg-white group-hover:bg-opacity-20 transition-all duration-300">
+                    <div className="w-[76px] h-[76px] flex items-center justify-center rounded-full bg-transparent border-4 border-white group-hover:scale-110 group-hover:bg-white group-hover:bg-opacity-20 transition-all duration-300">
                       {/* Using regular img tag instead of Next.js Image to properly render SVG colors */}
                       <img 
                         src="/assets/icons/play.svg" 
@@ -75,21 +76,13 @@ export default function Testimonials(props: TestimonialsProps) {
             </div>
           </div>
           
-          {/* Testimonial Text */}
-          <div>
-            <p 
-              className="text-medium-gray font-body"
-              style={{
-                fontSize: "clamp(16px, 1.2vw, 18px)",
-                lineHeight: "1.6em",
-                textAlign: "start",
-                width: "100%",
-                marginBottom: "24px",
-                mixBlendMode: "normal"
-              }}
-            >
-              We helped hundreds of clients to improve their living space and increase value to their properties. Here is how we help our clients.
-            </p>
+          {/* Testimonial Text - Fixed width to match Figma design */}
+          <div className="w-full md:w-[628px] flex items-center h-[432px]">
+            <div className="max-w-[628px]">
+              <p className="text-[20px] leading-[1.6em] text-[#2A2B2E] font-body">
+                RealTechee was founded with a vision: to provide turn-key tools and technology to various industries, including automated programs, virtual walk-throughs, CRM, and UI. Our goal is to enhance user experience and execution for professionals and their clients, driving improved performance, conversion rates, and value.
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 // Define ButtonProps interface directly in the file
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'dark';
+  variant?: 'primary' | 'secondary' | 'outline' | 'text';
   href?: string;
   text?: string;
   showArrow?: boolean;
@@ -17,40 +17,36 @@ interface ButtonProps {
 // SVG Arrow Icon Component
 const ArrowIcon = () => (
   <svg 
-    data-bbox="2.625 4.448 12.75 9.105" 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 18 18" 
-    height="18" 
-    width="18"
+    width="20" 
+    height="20" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <g>
-      <path 
-        strokeLinejoin="round" 
-        strokeLinecap="round" 
-        strokeMiterlimit="10" 
-        strokeWidth="1.5" 
-        stroke="#ffffff" 
-        d="M10.822 4.448 15.375 9l-4.553 4.553" 
-        fill="none"
-      />
-      <path 
-        strokeLinejoin="round" 
-        strokeLinecap="round" 
-        strokeMiterlimit="10" 
-        strokeWidth="1.5" 
-        stroke="#ffffff" 
-        d="M2.625 9h12.623" 
-        fill="none"
-      />
-    </g>
+    <path 
+      d="M14.4301 5.93005L20.5001 12.0001L14.4301 18.0701" 
+      stroke="currentColor" 
+      strokeWidth="1.5" 
+      strokeMiterlimit="10" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M3.5 12H20.33" 
+      stroke="currentColor" 
+      strokeWidth="1.5" 
+      strokeMiterlimit="10" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 /**
- * Button component following the brand guidelines
+ * Button component following the brand guidelines from Figma design
  * 
  * @param {Object} props - Component props
- * @param {string} props.variant - Button variant: 'primary', 'secondary', or 'dark'
+ * @param {string} props.variant - Button variant: 'primary', 'secondary', 'outline', or 'text'
  * @param {string} props.href - URL for the button to link to
  * @param {string} props.text - Button text content
  * @param {boolean} props.showArrow - Whether to show the arrow icon
@@ -63,44 +59,61 @@ const Button = ({
   variant = 'primary',
   href, 
   text, 
-  showArrow = true,
+  showArrow = false,
   disabled = false,
   className = '',
   onClick,
   children,
   ...props
 }: ButtonProps) => {
-  // Define button styles based on variant (following brand guidelines)
+  // Define button styles based on variant (following brand guidelines from Figma)
   const getButtonClass = () => {
     switch (variant) {
       case 'primary':
         return 'btn-primary';
       case 'secondary':
         return 'btn-secondary';
-      case 'dark':
-        return 'btn-dark';
+      case 'outline':
+        return 'bg-transparent border border-dark-gray text-dark-gray px-6 py-4 rounded hover:bg-gray-100 transition-all';
+      case 'text':
+        return 'bg-transparent text-dark-gray px-6 py-2 hover:bg-gray-50 transition-all';
       default:
         return 'btn-primary';
+    }
+  };
+
+  // Get text style based on variant
+  const getTextClass = () => {
+    switch (variant) {
+      case 'primary':
+        return 'btn-primary-text';
+      case 'secondary':
+        return 'btn-secondary-text';
+      case 'outline':
+      case 'text':
+        return 'font-heading text-base font-extrabold leading-tight text-dark-gray';
+      default:
+        return 'btn-primary-text';
     }
   };
 
   // Button content
   const buttonContent = (
     <>
-      <span>{text || children}</span>
+      <span className={getTextClass()}>{text || children}</span>
       {showArrow && (
-        <span className="ml-2">
+        <span className="arrow-icon">
           <ArrowIcon />
         </span>
       )}
     </>
   );
 
-  // If disabled, render button element
+  // If disabled, render button element with disabled styles
   if (disabled) {
     return (
       <button
-        className={`${getButtonClass()} ${className}`}
+        className={`inline-flex items-center justify-center gap-4 opacity-60 cursor-not-allowed ${getButtonClass()} ${className}`}
         disabled
         {...props}
       >
@@ -113,7 +126,7 @@ const Button = ({
   if (onClick) {
     return (
       <button
-        className={`${getButtonClass()} ${className}`}
+        className={`inline-flex items-center justify-center gap-4 ${getButtonClass()} ${className}`}
         onClick={onClick}
         {...props}
       >
@@ -126,7 +139,7 @@ const Button = ({
   return (
     <Link
       href={href || '#'}
-      className={`${getButtonClass()} ${className}`}
+      className={`inline-flex items-center justify-center gap-4 ${getButtonClass()} ${className}`}
       {...props}
     >
       {buttonContent}

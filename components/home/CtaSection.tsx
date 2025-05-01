@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Define CtaSectionProps interface directly in the file
 interface CtaSectionProps {
@@ -7,12 +7,40 @@ interface CtaSectionProps {
   className?: string;
 }
 
+// SVG Arrow Icon Component for left-positioned arrow
+const LeftArrowIcon = () => (
+  <svg 
+    width="20" 
+    height="20" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path 
+      d="M14.4301 5.93005L20.5001 12.0001L14.4301 18.0701" 
+      stroke="#2A2B2E" 
+      strokeWidth="1.5" 
+      strokeMiterlimit="10" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+    <path 
+      d="M3.5 12H20.33" 
+      stroke="#2A2B2E" 
+      strokeWidth="1.5" 
+      strokeMiterlimit="10" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export default function CtaSection(props: CtaSectionProps) {
   return (
     <section className="relative bg-[#2A2B2E] overflow-hidden">
       {/* Background image with darker overlay effect */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <div className="absolute inset-0 bg-[#1A1B1E] opacity-50 z-[1]"></div>
+        <div className="absolute inset-0 bg-[#1A1B1E] opacity-80 z-[1]"></div>
         <Image 
           src="/assets/images/shared_cta-background.jpg" 
           alt="Background" 
@@ -34,15 +62,15 @@ export default function CtaSection(props: CtaSectionProps) {
           </p>
         </div>
 
+        {/* Custom styled button with left-positioned arrow to match Figma design */}
         <Link
           href="/get-estimate"
-          className="inline-flex items-center justify-center gap-[16px] px-[24px] py-[16px] bg-white text-[#2A2B2E] rounded-[4px] font-['Nunito_Sans'] font-extrabold text-[16px] leading-[1.2] hover:bg-gray-100 transition-colors"
+          className="inline-flex items-center justify-center gap-4 px-6 py-4 bg-white text-[#2A2B2E] border border-[#2A2B2E] rounded hover:bg-gray-100 transition-all"
         >
-          Get an Estimate
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.4301 5.93005L20.5001 12.0001L14.4301 18.0701" stroke="#2A2B2E" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M3.5 12H20.33" stroke="#2A2B2E" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <LeftArrowIcon />
+          <span className="font-heading text-base font-extrabold leading-tight text-dark-gray">
+            Get an Estimate
+          </span>
         </Link>
       </div>
     </section>
