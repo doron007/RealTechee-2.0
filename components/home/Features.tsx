@@ -160,14 +160,14 @@ export default function Features(props: FeaturesProps) {
               />
             </div>
             
-            {/* Milestones widget - using the exact positioning from Figma, moved up ~100px */}
-            <div className="w-80 px-6 pt-6 pb-8 left-[345px] top-[443.50px] absolute bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-[2px] inline-flex flex-col justify-start items-start gap-4 overflow-hidden">
+            {/* Milestones widget - adjusted positioning and width to prevent being cut off */}
+            <div className="w-[280px] px-6 pt-6 pb-8 left-[325px] top-[443.50px] absolute bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-[2px] inline-flex flex-col justify-start items-start gap-4">
               <div className="justify-start text-zinc-800 text-xl font-extrabold font-['Roboto'] leading-loose">Milestones</div>
-              <div className="self-stretch flex flex-col justify-start items-start gap-4">
-                <div className="self-stretch flex flex-col justify-start items-start gap-4">
+              <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
+                <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
                   <MilestoneItem isCompleted={true} />
                 </div>
-                <div className="self-stretch flex flex-col justify-start items-start gap-4">
+                <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
                   <MilestoneItem isCompleted={true} />
                 </div>
                 <MilestoneItem />

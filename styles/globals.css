@@ -198,8 +198,8 @@
 
   /* Card Typography */
   .card-title {
-    @apply font-heading text-2xl font-bold leading-normal text-dark-gray;
-    /* 24-28px, line-height: 1.3em */
+    @apply font-body text-xl font-extrabold leading-relaxed text-dark-gray;
+    /* Updated to 20px (text-xl), font-extrabold (800), leading-relaxed (1.6em), and font-body (Roboto) */
   }
 
   .card-subtitle {
@@ -208,8 +208,8 @@
   }
 
   .card-text {
-    @apply font-body text-base font-normal leading-relaxed text-dark-gray;
-    /* 16px, line-height: 1.5em */
+    @apply font-body text-base font-normal leading-loose text-dark-gray;
+    /* Updated to leading-loose (1.6em) to match Figma */
   }
 
   /* Button Typography */

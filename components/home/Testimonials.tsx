@@ -20,16 +20,17 @@ export default function Testimonials(props: TestimonialsProps) {
     <section className="py-[88px] bg-[#FCF9F8]">
       <div className="max-w-[1440px] mx-auto px-[120px]">
         <div className="flex flex-col md:flex-row gap-[64px] items-center">
-          {/* Video Testimonial - Fixed dimensions to match Figma design */}
-          <div className="relative w-full md:w-[628px] h-[432px] rounded-lg overflow-hidden shadow-lg flex-shrink-0">
+          {/* Video Testimonial - Using auto height to display naturally */}
+          <div className="relative w-full md:w-[628px] overflow-hidden shadow-lg flex-shrink-0">
             {/* Video Thumbnail with Play Button Overlay */}
-            <div className="relative w-full h-full">
-              {/* Static Image */}
-              <div className={`absolute inset-0 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100 z-10'}`}>
+            <div className="relative w-full">
+              {/* Static Image - No rounded corners as per Figma and using natural height */}
+              <div className={`transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100 z-10'}`}>
                 <img
                   src="/videos/realtechee_testimonial_image.png"
                   alt="Testimonial video thumbnail"
-                  className="object-cover w-full h-full"
+                  className="w-full h-auto"
+                  style={{ display: 'block' }}
                 />
               </div>
               
@@ -44,7 +45,6 @@ export default function Testimonials(props: TestimonialsProps) {
                     aria-label="Play testimonial video"
                   >
                     <div className="w-[76px] h-[76px] flex items-center justify-center rounded-full bg-transparent border-4 border-white group-hover:scale-110 group-hover:bg-white group-hover:bg-opacity-20 transition-all duration-300">
-                      {/* Using regular img tag instead of Next.js Image to properly render SVG colors */}
                       <img 
                         src="/assets/icons/play.svg" 
                         alt="Play" 
@@ -56,11 +56,11 @@ export default function Testimonials(props: TestimonialsProps) {
                 </div>
               )}
               
-              {/* Video Element */}
+              {/* Video Element - No rounded corners as per Figma */}
               <div className={`absolute inset-0 transition-opacity duration-300 ${isPlaying ? 'opacity-100 z-30' : 'opacity-0'}`}>
                 <video
                   ref={videoRef}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto"
                   poster="/videos/realtechee_testimonial_image.png"
                   controls={isPlaying}
                   onEnded={handleVideoEnded}
@@ -76,13 +76,11 @@ export default function Testimonials(props: TestimonialsProps) {
             </div>
           </div>
           
-          {/* Testimonial Text - Fixed width to match Figma design */}
-          <div className="w-full md:w-[628px] flex items-center h-[432px]">
-            <div className="max-w-[628px]">
-              <p className="text-[20px] leading-[1.6em] text-[#2A2B2E] font-body">
-                RealTechee was founded with a vision: to provide turn-key tools and technology to various industries, including automated programs, virtual walk-throughs, CRM, and UI. Our goal is to enhance user experience and execution for professionals and their clients, driving improved performance, conversion rates, and value.
-              </p>
-            </div>
+          {/* Testimonial Text - Using exact text from Figma design */}
+          <div className="w-full md:w-[628px] flex items-center justify-center">
+            <p className="text-[20px] leading-[1.6em] text-[#2A2B2E] font-body text-center">
+              We helped 368 clients to improve their living space and increase value to their properties. Here is how we help our clients.
+            </p>
           </div>
         </div>
       </div>
