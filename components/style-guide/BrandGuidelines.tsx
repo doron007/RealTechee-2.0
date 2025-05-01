@@ -98,7 +98,7 @@ export default function BrandGuidelines(props: any) {
               <div className="w-full h-44 left-0 top-[38px] absolute bg-white overflow-hidden">
                 <div className="absolute left-0 top-0 hidden md:block">
                   <Image 
-                    src="/brand-assets/sunflower_pattern_left.png" 
+                    src="/assets/images/brand_patterns_sunflower_pattern_left.png" 
                     alt="Left sunflower pattern" 
                     width={345} 
                     height={176} 
@@ -108,7 +108,7 @@ export default function BrandGuidelines(props: any) {
                 
                 <div className="absolute right-0 top-0 hidden md:block">
                   <Image 
-                    src="/brand-assets/sunflower_pattern_right.png" 
+                    src="/assets/images/brand_patterns_sunflower_pattern_right.png" 
                     alt="Right sunflower pattern" 
                     width={345} 
                     height={176} 
@@ -136,7 +136,7 @@ export default function BrandGuidelines(props: any) {
                   <div className="flex-1 px-3 md:px-6 py-2 bg-white rounded-tl-md rounded-tr-md shadow-[0px_4px_4px_0px_rgba(0,0,0,0.03)] flex justify-between items-center">
                     <div className="h-5 flex justify-center items-center gap-2.5 overflow-hidden">
                       <Image 
-                        src="/brand-assets/Small logo 118x16.png" 
+                        src="/assets/logos/web_Small logo 118x16.png" 
                         alt="RealTechee Small Logo" 
                         width={118} 
                         height={16} 
@@ -358,7 +358,7 @@ export default function BrandGuidelines(props: any) {
         <div className="w-full h-[513px] mb-16 relative overflow-hidden">
           <div className="w-52 h-64 left-0 top-0 absolute">
             <Image 
-              src="/brand-assets/moodboard 206x252.png" 
+              src="/assets/images/brand_moodboard_moodboard 206x252.png" 
               alt="Moodboard Image 1" 
               width={206} 
               height={252} 
@@ -367,7 +367,7 @@ export default function BrandGuidelines(props: any) {
           </div>
           <div className="w-44 h-64 left-[206px] top-0 absolute">
             <Image 
-              src="/brand-assets/moodboard 178x252.png" 
+              src="/assets/images/brand_moodboard_moodboard 178x252.png" 
               alt="Moodboard Image 2" 
               width={178} 
               height={252} 
@@ -376,7 +376,7 @@ export default function BrandGuidelines(props: any) {
           </div>
           <div className="w-40 h-72 left-[522px] top-[219px] absolute">
             <Image 
-              src="/brand-assets/moodboard 166x294.png" 
+              src="/assets/images/brand_moodboard_moodboard 166x294.png" 
               alt="Moodboard Image 3" 
               width={166} 
               height={294} 
@@ -385,7 +385,7 @@ export default function BrandGuidelines(props: any) {
           </div>
           <div className="w-44 h-64 left-0 top-[252px] absolute">
             <Image 
-              src="/brand-assets/moodboard 174x261.png" 
+              src="/assets/images/brand_moodboard_moodboard 174x261.png" 
               alt="Moodboard Image 4" 
               width={174} 
               height={261} 
@@ -394,7 +394,7 @@ export default function BrandGuidelines(props: any) {
           </div>
           <div className="w-80 h-64 left-[174px] top-[252px] absolute">
             <Image 
-              src="/brand-assets/moodboard 348x261.png" 
+              src="/assets/images/brand_moodboard_moodboard 348x261.png" 
               alt="Moodboard Image 5" 
               width={348} 
               height={261} 
@@ -403,7 +403,7 @@ export default function BrandGuidelines(props: any) {
           </div>
           <div className="w-80 h-64 left-[384px] top-0 absolute">
             <Image 
-              src="/brand-assets/moodboard 338x252.png" 
+              src="/assets/images/brand_moodboard_moodboard 338x252.png" 
               alt="Moodboard Image 6" 
               width={338} 
               height={252} 

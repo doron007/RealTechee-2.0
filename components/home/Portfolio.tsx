@@ -11,22 +11,22 @@ export default function Portfolio() {
       id: 1,
       location: '15333 Culver Dr #410, Irvine, CA',
       valueIncrease: '22%',
-      beforeImage: '/MD - Home/before-1.jpg',
-      afterImage: '/MD - Home/after-1.webp'
+      beforeImage: '/assets/images/pages_home_portfolio_before-1.jpg',
+      afterImage: '/assets/images/pages_home_portfolio_after-1.webp'
     },
     {
       id: 2,
       location: '2487 Pacific Ave, San Francisco, CA',
       valueIncrease: '18%',
-      beforeImage: '/MD - Home/before-2.jpg',
-      afterImage: '/MD - Home/after-2.jpg'
+      beforeImage: '/assets/images/pages_home_portfolio_before-2.jpg',
+      afterImage: '/assets/images/pages_home_portfolio_after-2.jpg'
     },
     {
       id: 3,
       location: '983 Sunset Blvd, Los Angeles, CA',
       valueIncrease: '25%',
-      beforeImage: '/MD - Home/before-3.jpg',
-      afterImage: '/MD - Home/after-3.jpg'
+      beforeImage: '/assets/images/pages_home_portfolio_before-3.jpg',
+      afterImage: '/assets/images/pages_home_portfolio_after-3.jpg'
     }
   ];
   

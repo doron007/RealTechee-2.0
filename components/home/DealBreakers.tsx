@@ -57,23 +57,23 @@ const Card: React.FC<CardProps> = ({ icon, title, description, isWhiteIcon = fal
 const DealBreakers: React.FC = () => {
   const cards = [
     {
-      icon: '/icons/top-experts.svg',
+      icon: '/assets/icons/top-experts.svg',
       title: 'Access to Top Experts',
       description: 'Unlock access to suppliers, contractors, designers, lenders, and other industry experts. By tapping into this valuable resource pool,',
       isWhiteIcon: true
     },
     {
-      icon: '/icons/home-value.svg',
+      icon: '/assets/icons/home-value.svg',
       title: 'Maximize Home Value',
       description: 'Our experts work closely with you to create a custom renovation plan that maximizes the value of the property investment while minimizing cost.'
     },
     {
-      icon: '/icons/live-update.svg',
+      icon: '/assets/icons/live-update.svg',
       title: 'Live Updates',
       description: 'Stay informed with pictures and progress reports to ensure your project stays on schedule and meets your standards. Have open discussions with our experts, ensuring you have real-time updates and can ask questions.'
     },
     {
-      icon: '/icons/renovation-cost.svg',
+      icon: '/assets/icons/renovation-cost.svg',
       title: 'Minimize Renovation Cost',
       description: 'Our automated programs will determine the renovations that will cost the least for your client while increasing the value of their home the most. Buyers can expedite home purchases by including renovation costs within budget and timeline.'
     }

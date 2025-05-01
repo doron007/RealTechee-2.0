@@ -18,7 +18,7 @@ export default function Footer(props: FooterProps) {
           <div className="col-span-1">
             <Link href="/">
               <Image
-                src="/logo/realtechee_horizontal_no_border.png"
+                src="/assets/logos/web_realtechee_horizontal_no_border.png"
                 alt="RealTechee Logo"
                 width={180}
                 height={38}

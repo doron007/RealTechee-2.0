@@ -4,19 +4,19 @@ export default function Partners(props: any) {
   const partners = [
     {
       name: "Partner 1",
-      logo: "/images/partner-logo-1.png",
+      logo: "/assets/images/pages_home_partners_partner-logo-1.png",
     },
     {
       name: "Partner 2",
-      logo: "/images/partner-logo-2.png",
+      logo: "/assets/images/pages_home_partners_partner-logo-2.png",
     },
     {
       name: "Partner 3",
-      logo: "/images/partner-logo-3.png",
+      logo: "/assets/images/pages_home_partners_partner-logo-3.png",
     },
     {
       name: "Partner 4",
-      logo: "/images/partner-logo-4.png",
+      logo: "/assets/images/pages_home_partners_partner-logo-4.png",
     }
   ];
 

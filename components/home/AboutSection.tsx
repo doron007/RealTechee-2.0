@@ -40,7 +40,7 @@ export default function AboutSection({ className = '' }: AboutSectionProps) {
           {!isPlaying ? (
             <>
               <Image 
-                src="/MD - Home/howItWorks.png" 
+                src="/assets/images/pages_home_howItWorks.png" 
                 alt="About RealTechee" 
                 width={600} 
                 height={400}

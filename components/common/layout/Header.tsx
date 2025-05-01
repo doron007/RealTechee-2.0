@@ -44,7 +44,7 @@ export default function Header(props: HeaderProps) {
           <Link href="/" className="flex items-center h-full">
             <div className="border border-very-light-gray p-1 rounded h-full flex items-center">
               <Image
-                src="/logo/realtechee_horizontal_no_border.png"
+                src="/assets/logos/web_realtechee_horizontal_no_border.png"
                 alt="RealTechee Logo"
                 width={160}
                 height={28}
@@ -69,7 +69,7 @@ export default function Header(props: HeaderProps) {
             >
               Products
               <Image 
-                src="/icons/chevron-down.svg" 
+                src="/assets/icons/chevron-down.svg" 
                 alt="Dropdown" 
                 width={16} 
                 height={16} 
@@ -120,7 +120,7 @@ export default function Header(props: HeaderProps) {
             >
               Contact
               <Image 
-                src="/icons/chevron-down.svg" 
+                src="/assets/icons/chevron-down.svg" 
                 alt="Dropdown" 
                 width={16} 
                 height={16} 
@@ -165,7 +165,7 @@ export default function Header(props: HeaderProps) {
             className="h-[45px] 2xl:h-[51px] py-[12px] 2xl:py-[16px] px-[18px] 2xl:px-[24px] rounded-[4px] bg-black text-white flex items-center justify-center whitespace-nowrap"
           >
             <Image 
-              src="/icons/arrow-right.svg" 
+              src="/assets/icons/arrow-right.svg" 
               alt="Arrow Right" 
               width={18} 
               height={18} 
@@ -184,9 +184,9 @@ export default function Header(props: HeaderProps) {
           >
             <span className="sr-only">Open main menu</span>
             {isOpen ? (
-              <Image src="/icons/close.svg" alt="Close Menu" width={24} height={24} />
+              <Image src="/assets/icons/close.svg" alt="Close Menu" width={24} height={24} />
             ) : (
-              <Image src="/icons/menu.svg" alt="Open Menu" width={24} height={24} />
+              <Image src="/assets/icons/menu.svg" alt="Open Menu" width={24} height={24} />
             )}
           </button>
         </div>
@@ -204,7 +204,7 @@ export default function Header(props: HeaderProps) {
               >
                 Products
                 <Image 
-                  src="/icons/chevron-down.svg" 
+                  src="/assets/icons/chevron-down.svg" 
                   alt="Dropdown" 
                   width={20} 
                   height={20} 
@@ -250,7 +250,7 @@ export default function Header(props: HeaderProps) {
               >
                 Contact
                 <Image 
-                  src="/icons/chevron-down.svg" 
+                  src="/assets/icons/chevron-down.svg" 
                   alt="Dropdown" 
                   width={20} 
                   height={20} 
@@ -287,7 +287,7 @@ export default function Header(props: HeaderProps) {
                 onClick={() => setIsOpen(false)}
               >
                 <Image 
-                  src="/icons/arrow-right.svg" 
+                  src="/assets/icons/arrow-right.svg" 
                   alt="Arrow Right" 
                   width={16} 
                   height={16} 

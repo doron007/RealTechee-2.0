@@ -83,7 +83,7 @@ export default function Contact(props: any) {
             
             <div className="mt-8">
               <img 
-                src="/MD - Home/Frame 427321849.png" 
+                src="/assets/images/pages_contact_Frame 427321849.png" 
                 alt="RealTechee Property Transformation" 
                 className="rounded-lg shadow-md"
               />

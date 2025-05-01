@@ -57,14 +57,14 @@ export default function Layout({ children, title, description }: LayoutProps) {
         <meta property="og:url" content="https://realtechee.com/" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="/images/realtechee-social-share.jpg" />
+        <meta property="og:image" content="/assets/images/shared_realtechee-social-share.jpg" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://realtechee.com/" />
         <meta property="twitter:title" content={pageTitle} />
         <meta property="twitter:description" content={pageDescription} />
-        <meta property="twitter:image" content="/images/realtechee-social-share.jpg" />
+        <meta property="twitter:image" content="/assets/images/shared_realtechee-social-share.jpg" />
         
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />

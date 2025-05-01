@@ -16,7 +16,7 @@ export default function BrandIdentitySection(props: any) {
         </div>
         <div className="w-full h-12 flex items-center">
           <Image 
-            src="/brand-assets/realtechee-horizontal.png" 
+            src="/assets/images/brand_logos_realtechee-horizontal.png" 
             alt="RealTechee Logo" 
             width={353} 
             height={48} 
@@ -30,7 +30,7 @@ export default function BrandIdentitySection(props: any) {
         <div className="text-neutral-400 text-lg font-normal font-inter">Logo alternative</div>
         <div className="h-12 flex items-center">
           <Image 
-            src="/brand-assets/Logo alternative 39x48.png" 
+            src="/assets/images/brand_logos_web_Logo alternative 39x48.png" 
             alt="RealTechee Logo Alternative" 
             width={39} 
             height={48} 

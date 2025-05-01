@@ -33,17 +33,17 @@ interface WhoWeAreProps {
 export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
   const services = [
     {
-      icon: '/icons/who-we-serve/brokerage-icon.svg',
+      icon: '/assets/icons/brokerage-icon.svg',
       title: 'Real Estate Brokerages',
       description: 'Get the tools and support needed to optimize operations, enhance client experiences, and increase profitability. From streamlined project management to real-time communication, we empower your team to excel in the competitive real estate market & ensure client satisfaction.'
     },
     {
-      icon: '/icons/who-we-serve/agent-icon.svg',
+      icon: '/assets/icons/agent-icon.svg',
       title: 'Real Estate Agents',
       description: 'Receive cutting-edge resources to showcase properties, deliver exceptional customer service, and confidently close deals. Access real-time project updates, collaborate seamlessly with clients, and unlock the potential to sell properties faster and at higher prices.'
     },
     {
-      icon: '/icons/who-we-serve/architect-icon.svg',
+      icon: '/assets/icons/architect-icon.svg',
       title: 'Architects/Designers',
       description: 'Collaborate effortlessly with clients, streamline project management, and bring your design visions to life with our platform. From concept to execution, our real-time communication and project tracking tools ensure that your projects stay on schedule and exceed client expectations.'
     }

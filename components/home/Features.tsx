@@ -16,7 +16,7 @@ const FeatureCard = ({ title, description, isActive = false }: FeatureCardProps)
     <div data-status={isActive ? "active" : "normal"} className="w-[541px] p-6 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-stone-200 inline-flex justify-start items-start gap-2">
       <div className="min-w-[24px] min-h-[24px] w-[24px] h-[24px] mr-2 flex-shrink-0">
         <Image
-          src="/icons/vuesax-bold-tick-circle.svg"
+          src="/assets/icons/vuesax-bold-tick-circle.svg"
           alt="Feature icon"
           width={24}
           height={24}
@@ -60,7 +60,7 @@ const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
       <div className="self-stretch inline-flex justify-start items-start gap-2">
         <div className="w-6 h-6 relative">
           <Image
-            src="/icons/ic-tick-circle.svg"
+            src="/assets/icons/ic-tick-circle.svg"
             alt="Completed milestone"
             width={24}
             height={24}
@@ -73,7 +73,7 @@ const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
       <div className="self-stretch inline-flex justify-start items-start gap-2">
         <div className="w-6 h-6 relative overflow-hidden">
           <Image
-            src="/icons/ic-circle.svg"
+            src="/assets/icons/ic-circle.svg"
             alt="Pending milestone"
             width={24}
             height={24}
@@ -88,12 +88,12 @@ const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
 
 export default function Features(props: FeaturesProps) {
   // Define project images to avoid any dynamic string concatenation issues
-  const mainImageSrc = "/images/project-image5.png";
+  const mainImageSrc = "/assets/images/shared_projects_project-image5.png";
   const thumbnailImages = [
-    "/images/project-image1.png",
-    "/images/project-image2.png",
-    "/images/project-image3.png",
-    "/images/project-image4.png"
+    "/assets/images/shared_projects_project-image1.png",
+    "/assets/images/shared_projects_project-image2.png",
+    "/assets/images/shared_projects_project-image3.png",
+    "/assets/images/shared_projects_project-image4.png"
   ];
 
   return (

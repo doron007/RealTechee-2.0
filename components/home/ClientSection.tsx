@@ -38,7 +38,7 @@ export default function ClientSection({ className = '' }: ClientSectionProps) {
             <div className="h-[280px] md:h-auto">
               <div className="relative w-full h-full">
                 <Image 
-                  src="/images/seller-home.jpg" 
+                  src="/assets/images/pages_sellers_seller-home.jpg" 
                   alt="For Sellers" 
                   fill
                   className="object-cover"
@@ -53,7 +53,7 @@ export default function ClientSection({ className = '' }: ClientSectionProps) {
             <div className="h-[280px] md:h-auto order-2 md:order-1">
               <div className="relative w-full h-full">
                 <Image 
-                  src="/images/buyer-home.jpg" 
+                  src="/assets/images/pages_buyers_buyer-home.jpg" 
                   alt="For Buyers" 
                   fill
                   className="object-cover"

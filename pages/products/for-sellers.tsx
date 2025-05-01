@@ -70,7 +70,7 @@ export default function ForSellers(props: any) {
             </div>
             <div className="animate-on-scroll">
               <Image 
-                src="/images/seller-renovation.jpg" 
+                src="/assets/images/products_seller-renovation.jpg" 
                 alt="Seller renovation service" 
                 width={600} 
                 height={400}
@@ -171,7 +171,7 @@ export default function ForSellers(props: any) {
                 </div>
                 <div className="flex justify-center items-center order-1 md:order-2">
                   <Image 
-                    src="/images/property-assessment.jpg" 
+                    src="/assets/images/products_property-assessment.jpg" 
                     alt="Property assessment" 
                     width={300} 
                     height={200}
@@ -191,7 +191,7 @@ export default function ForSellers(props: any) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                 <div className="flex justify-center items-center">
                   <Image 
-                    src="/images/renovation-plan.jpg" 
+                    src="/assets/images/products_renovation-plan.jpg" 
                     alt="Renovation plan" 
                     width={300} 
                     height={200}
@@ -223,7 +223,7 @@ export default function ForSellers(props: any) {
                 </div>
                 <div className="flex justify-center items-center order-1 md:order-2">
                   <Image 
-                    src="/images/renovation-execution.jpg" 
+                    src="/assets/images/products_renovation-execution.jpg" 
                     alt="Renovation execution" 
                     width={300} 
                     height={200}
@@ -251,7 +251,7 @@ export default function ForSellers(props: any) {
               <div className="flex items-start mb-6">
                 <div className="mr-4">
                   <Image 
-                    src="/testimonials/testimonial-1.jpg" 
+                    src="/assets/images/testimonials_testimonial-1.jpg" 
                     alt="Client testimonial" 
                     width={60} 
                     height={60}
@@ -280,7 +280,7 @@ export default function ForSellers(props: any) {
               <div className="flex items-start mb-6">
                 <div className="mr-4">
                   <Image 
-                    src="/testimonials/testimonial-2.jpg" 
+                    src="/assets/images/testimonials_testimonial-2.jpg" 
                     alt="Real estate agent testimonial" 
                     width={60} 
                     height={60}

@@ -16,7 +16,7 @@ export default function Milestones(props: any) {
           {/* Milestone Example 1 */}
           <div className="relative">
             <Image 
-              src="/MD - Home/Real-time project updates.png" 
+              src="/assets/images/pages_home_milestones_Real-time project updates.png" 
               alt="Project progress" 
               width={600} 
               height={400} 
@@ -24,7 +24,7 @@ export default function Milestones(props: any) {
             />
             <div className="absolute bottom-4 left-4 bg-white shadow-lg p-3 rounded-lg">
               <Image 
-                src="/MD - Home/Project Overview at a glance.png" 
+                src="/assets/images/pages_home_milestones_features.png" 
                 alt="Project timeline" 
                 width={300} 
                 height={200} 
@@ -35,7 +35,7 @@ export default function Milestones(props: any) {
           {/* Milestone Example 2 */}
           <div className="relative">
             <Image 
-              src="/MD - Home/detailed project scope.png" 
+              src="/assets/images/pages_home_milestones_features-2.png" 
               alt="Detailed scope" 
               width={600} 
               height={400} 
@@ -43,7 +43,7 @@ export default function Milestones(props: any) {
             />
             <div className="absolute bottom-4 left-4 bg-white shadow-lg p-3 rounded-lg">
               <Image 
-                src="/MD - Home/arrow-right.svg" 
+                src="/assets/images/pages_home_milestones_arrow-right.svg" 
                 alt="Next milestone" 
                 width={50} 
                 height={50} 

@@ -116,8 +116,8 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "hero-pattern": "url('/images/hero-pattern.svg')",
-        "cta-pattern": "url('/images/cta-pattern.svg')",
+        "hero-pattern": "url('/assets/images/shared_hero-pattern.svg')",
+        "cta-pattern": "url('/assets/images/shared_cta-pattern.svg')",
       },
     },
   },

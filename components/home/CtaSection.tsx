@@ -14,7 +14,7 @@ export default function CtaSection(props: CtaSectionProps) {
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div className="absolute inset-0 bg-[#1A1B1E] opacity-50 z-[1]"></div>
         <Image 
-          src="/images/cta-background.jpg" 
+          src="/assets/images/shared_cta-background.jpg" 
           alt="Background" 
           fill 
           priority

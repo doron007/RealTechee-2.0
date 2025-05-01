@@ -45,37 +45,37 @@ export default function HowItWorks(props: HowItWorksProps) {
   const steps = [
     {
       step: 1,
-      icon: "/icons/step1-icon.svg",
+      icon: "/assets/icons/step1-icon.svg",
       title: "Quickly & Easily Submit Your Request",
       description: "Share your information and project needs. Our representative will contact you within 48 hours to coordinate our services."
     },
     {
       step: 2,
-      icon: "/icons/step2-icon.svg",
+      icon: "/assets/icons/step2-icon.svg",
       title: "We Define the Scope",
       description: "Collaborate with our experts to maximize your customer's investment value. We'll tailor a renovation plan to meet their needs and goals."
     },
     {
       step: 3,
-      icon: "/icons/step3-icon.svg",
+      icon: "/assets/icons/step3-icon.svg",
       title: "Review and Sign the Agreement",
       description: "Formalize the project with a detailed agreement, including the scope of work, payment terms, and timeline."
     },
     {
       step: 4,
-      icon: "/icons/step4-icon.svg",
+      icon: "/assets/icons/step4-icon.svg",
       title: "Execute the Plan with Ease",
       description: "Our team manages the entire project, providing on-site supervision and quality assurance. Enjoy real-time visibility and constant communication."
     },
     {
       step: 5,
-      icon: "/icons/step5-icon.svg",
+      icon: "/assets/icons/step5-icon.svg",
       title: "Realize the Enhanced Value",
       description: "Achieve a higher property value. Sell more, sell faster, and command higher prices."
     },
     {
       step: 6,
-      icon: "/icons/step6-icon.svg",
+      icon: "/assets/icons/step6-icon.svg",
       title: "Access Financial Tools for Success",
       description: "Leverage our financial tools for timely support, even with zero upfront payment."
     }

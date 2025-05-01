@@ -45,7 +45,7 @@ export default function Testimonials(props: TestimonialsProps) {
                     <div className="w-[50px] h-[50px] flex items-center justify-center rounded-full bg-transparent border-4 border-white group-hover:scale-110 group-hover:bg-white group-hover:bg-opacity-20 transition-all duration-300">
                       {/* Using regular img tag instead of Next.js Image to properly render SVG colors */}
                       <img 
-                        src="/icons/play.svg" 
+                        src="/assets/icons/play.svg" 
                         alt="Play" 
                         width="32" 
                         height="32"
