@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
 import { 
   SectionLabel,
   Heading2,
@@ -13,24 +14,31 @@ interface FeatureCardProps {
   title: string;
   description: string;
   isActive?: boolean;
+  delay?: number;
+  isVisible?: boolean;
 }
 
 // Feature card component
-const FeatureCard = ({ title, description, isActive = false }: FeatureCardProps) => {
+const FeatureCard = ({ title, description, isActive = false, delay = 0, isVisible = false }: FeatureCardProps) => {
   return (
-    <div data-status={isActive ? "active" : "normal"} className="w-[541px] p-6 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-stone-200 inline-flex justify-start items-start gap-2">
-      <div className="min-w-[24px] min-h-[24px] w-[24px] h-[24px] mr-2 flex-shrink-0">
+    <div 
+      data-status={isActive ? "active" : "normal"} 
+      className={`w-full p-4 sm:p-5 md:p-6 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-stone-200 
+      flex justify-start items-start gap-2 transition-all duration-700 ease-out ${delay ? `delay-${delay}` : ''} 
+      ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+    >
+      <div className="min-w-[20px] min-h-[20px] w-[20px] h-[20px] sm:min-w-[24px] sm:min-h-[24px] sm:w-[24px] sm:h-[24px] mr-2 flex-shrink-0 text-accent">
         <Image
           src="/assets/icons/vuesax-bold-tick-circle.svg"
           alt="Feature icon"
           width={24}
           height={24}
-          style={{ width: '24px', height: '24px' }}
+          className="w-full h-full"
         />
       </div>
       <div className="inline-flex flex-col justify-start items-start gap-2">
-        <CardTitle>{title}</CardTitle>
-        <CardText>{description}</CardText>
+        <CardTitle className="text-base sm:text-lg md:text-xl">{title}</CardTitle>
+        <CardText className="text-sm sm:text-base">{description}</CardText>
       </div>
     </div>
   );
@@ -40,36 +48,41 @@ const FeatureCard = ({ title, description, isActive = false }: FeatureCardProps)
 const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
   return (
     isCompleted ? (
-      <div className="self-stretch inline-flex justify-start items-start gap-2">
-        <div className="w-6 h-6 relative">
+      <div className="self-stretch inline-flex justify-start items-center gap-2">
+        <div className="w-5 h-5 sm:w-6 sm:h-6 relative text-accent">
           <Image
             src="/assets/icons/ic-tick-circle.svg"
             alt="Completed milestone"
             width={24}
             height={24}
-            className="left-[0px] top-[0px] absolute"
+            className="w-full h-full"
           />
         </div>
-        <div className="flex-1 h-6 bg-neutral-500 rounded-[48px]" />
+        <div className="flex-1 h-2 sm:h-3 bg-accent rounded-[48px]" />
       </div>
     ) : (
-      <div className="self-stretch inline-flex justify-start items-start gap-2">
-        <div className="w-6 h-6 relative overflow-hidden">
+      <div className="self-stretch inline-flex justify-start items-center gap-2">
+        <div className="w-5 h-5 sm:w-6 sm:h-6 relative overflow-hidden">
           <Image
             src="/assets/icons/ic-circle.svg"
             alt="Pending milestone"
             width={24}
             height={24}
-            className="left-[0px] top-[0px] absolute"
+            className="w-full h-full"
           />
         </div>
-        <div className="flex-1 h-6 rounded-[48px] border-[3px] border-neutral-300" />
+        <div className="flex-1 h-2 sm:h-3 rounded-[48px] border border-neutral-300" />
       </div>
     )
   );
 };
 
 export default function Features(props: FeaturesProps) {
+  // State for animation visibility
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isRightVisible, setIsRightVisible] = useState<boolean>(false);
+  const featuresRef = useRef<HTMLDivElement>(null);
+
   // Define project images to avoid any dynamic string concatenation issues
   const mainImageSrc = "/assets/images/shared_projects_project-image5.png";
   const thumbnailImages = [
@@ -79,99 +92,143 @@ export default function Features(props: FeaturesProps) {
     "/assets/images/shared_projects_project-image4.png"
   ];
 
+  // Animation on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          // Add a small delay before showing the right column
+          setTimeout(() => setIsRightVisible(true), 300);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+    if (featuresRef.current) {
+      observer.observe(featuresRef.current);
+    }
+
+    return () => {
+      if (featuresRef.current) {
+        observer.unobserve(featuresRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="pt-20 pr-[120px] pl-[120px] pb-20 bg-stone-50 flex flex-col">
-      <div className="w-[1200px] mx-auto mb-8">
-        <SectionLabel className="mb-2">FEATURES</SectionLabel>
-        <Heading2 className="mb-[32px]">
-          Powerful Features to Win More Deals
-        </Heading2>
-      
-        <div className="flex justify-between items-start gap-8">
-          <div className="inline-flex flex-col justify-start items-start gap-8 w-[541px]">
-            {/* Feature cards */}
-            <FeatureCard
-              title="Project Overview at a Glance"
-              description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
-            />
-            
-            <FeatureCard
-              title="Detailed Project Scope"
-              description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
-            />
-            
-            <FeatureCard
-              title="Real-Time Project Updates with Photo Interaction"
-              description="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects. Enjoy seamless communication and enhance collaboration to ensure the projects meet and exceed their expectations"
-            />
-            
-            {/* Learn More button - Updated to use standardized Button component */}
-            <Button
-              variant="primary"
-              href="/learn-more"
-              text="Learn More"
-              showArrow={true}
-            />
-          </div>
-          
-          {/* Right side - images and milestone widget - exact positioning from Figma, adjusted to align with middle card */}
-          <div className="w-[720px] self-stretch relative overflow-hidden">
-            <div className="w-96 h-96 left-[230px] top-[290.50px] absolute rounded-full border border-red-400 border-dashed" />
-            
-            {/* Main image - using the exact positioning from Figma, moved up ~100px */}
-            <Image 
-              className="w-[505px] h-96 left-[51px] top-[134.50px] absolute rounded-md object-cover" 
-              src={mainImageSrc}
-              alt="Project overview" 
-              width={505}
-              height={384}
-              priority
-            />
-            
-            {/* Image thumbnails - using the exact positioning from Figma, moved up ~100px */}
-            <div className="w-[505.08px] h-16 left-[51px] top-[515.50px] absolute rounded-md">
-              <Image 
-                className="w-24 h-16 left-0 top-0 absolute rounded-tl-md rounded-bl-md object-cover" 
-                src={thumbnailImages[0]} 
-                alt="Thumbnail 1" 
-                width={97} 
-                height={65} 
+    <section className="section-container bg-stone-50 py-10 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden">
+      <div className="section-content">
+        <div ref={featuresRef} className="w-full max-w-[1200px] mx-auto mb-6 sm:mb-8">
+          <SectionLabel className={`mb-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            FEATURES
+          </SectionLabel>
+          <Heading2 className={`mb-6 sm:mb-8 md:mb-[32px] text-2xl sm:text-3xl md:text-4xl transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Powerful Features to Win More Deals
+          </Heading2>
+        
+          {/* Main content flex container - improved responsive layout */}
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-6 xl:gap-8">
+            {/* Left column - feature cards */}
+            <div className="flex flex-col justify-start items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 w-full lg:w-[45%] xl:w-[541px]">
+              {/* Feature cards with staggered animations */}
+              <FeatureCard
+                title="Project Overview at a Glance"
+                description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
+                isVisible={isVisible}
+                delay={200}
               />
-              <Image 
-                className="w-24 h-16 left-[101.14px] top-0 absolute object-cover" 
-                src={thumbnailImages[1]} 
-                alt="Thumbnail 2" 
-                width={99} 
-                height={65} 
+              
+              <FeatureCard
+                title="Detailed Project Scope"
+                description="Define clear project parameters with comprehensive scope documents that outline all aspects of the renovation. Prevent scope creep and maintain transparency with clients by having detailed documentation readily available."
+                isVisible={isVisible}
+                delay={300}
               />
-              <Image 
-                className="w-24 h-16 left-[203.97px] top-0 absolute object-cover" 
-                src={thumbnailImages[2]} 
-                alt="Thumbnail 3" 
-                width={97} 
-                height={65} 
+              
+              <FeatureCard
+                title="Real-Time Project Updates with Photo Interaction"
+                description="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects."
+                isVisible={isVisible}
+                delay={400}
               />
-              <Image 
-                className="w-24 h-16 left-[305.11px] top-0 absolute object-cover" 
-                src={thumbnailImages[3]} 
-                alt="Thumbnail 4" 
-                width={99} 
-                height={65} 
-              />
+              
+              {/* Learn More button - Updated to use standardized Button component */}
+              <div className={`mt-4 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <Button
+                  variant="primary"
+                  href="/features"
+                  text="Explore All Features"
+                  showArrow={true}
+                />
+              </div>
             </div>
             
-            {/* Milestones widget - adjusted positioning and width to prevent being cut off */}
-            <div className="w-[280px] px-6 pt-6 pb-8 left-[325px] top-[443.50px] absolute bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-[2px] inline-flex flex-col justify-start items-start gap-4">
-              <div className="justify-start text-zinc-800 text-xl font-extrabold font-['Roboto'] leading-loose">Milestones</div>
-              <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
-                <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
+            {/* Right side - images and milestone widget - Enhanced responsive behavior */}
+            <div className={`w-full lg:w-[50%] xl:w-[650px] h-[350px] xs:h-[380px] sm:h-[450px] md:h-[520px] lg:h-[600px] relative overflow-hidden mt-8 lg:mt-0 transition-all duration-1000 ${isRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+              {/* Circle decoration - hidden on xs, visible on sm and up */}
+              <div className="hidden sm:block w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 absolute right-0 sm:right-4 md:right-8 lg:right-16 bottom-4 sm:bottom-8 lg:bottom-20 rounded-full border border-accent border-dashed animate-pulse-slow opacity-60" />
+              
+              {/* Main image - better responsive positioning */}
+              <div className="relative sm:absolute w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-auto sm:h-56 md:h-64 lg:h-96 mx-auto sm:mx-0 sm:left-0 sm:top-[10%] md:top-[15%] lg:top-[20%] shadow-lg rounded-lg overflow-hidden">
+                <Image 
+                  className="w-full h-auto rounded-md object-cover hover:scale-105 transition-transform duration-700" 
+                  src={mainImageSrc}
+                  alt="Project overview dashboard showing renovation progress" 
+                  width={505}
+                  height={384}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 505px"
+                  priority
+                />
+              </div>
+              
+              {/* Image thumbnails - responsive grid, hidden on xs, visible on sm and up */}
+              <div className="hidden sm:flex w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-10 sm:h-12 md:h-16 absolute left-0 sm:left-0 sm:bottom-[30%] md:bottom-[25%] lg:bottom-[20%] gap-1 md:gap-[3px]">
+                {thumbnailImages.map((src, index) => (
+                  <div key={index} className="w-1/4 h-full overflow-hidden rounded-md">
+                    <Image 
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                      src={src} 
+                      alt={`Project thumbnail ${index + 1} showing renovation progress`} 
+                      width={99} 
+                      height={65} 
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Milestones widget - hidden on xs, visible on sm and up, better positioning */}
+              <div className="hidden sm:flex w-[200px] md:w-[220px] lg:w-[280px] px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6 md:pb-8 absolute right-0 sm:right-0 sm:bottom-[40%] md:bottom-[35%] lg:bottom-[30%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
+                <div className="justify-start text-zinc-800 text-base sm:text-lg md:text-xl font-bold font-['Roboto'] leading-loose">Project Milestones</div>
+                <div className="self-stretch w-full flex flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
                   <MilestoneItem isCompleted={true} />
-                </div>
-                <div className="self-stretch w-full flex flex-col justify-start items-start gap-4">
                   <MilestoneItem isCompleted={true} />
+                  <MilestoneItem />
+                  <MilestoneItem />
                 </div>
-                <MilestoneItem />
-                <MilestoneItem />
+                {/* Added status label */}
+                <div className="mt-1 sm:mt-2 py-1 px-2 sm:px-3 bg-green-100 rounded-full text-xs text-green-700 font-medium">
+                  50% Complete
+                </div>
+              </div>
+              
+              {/* Mobile view milestone indicators - only visible on xs screens */}
+              <div className="flex sm:hidden w-full justify-center mt-4">
+                <div className="flex gap-2 items-center py-2 px-3 bg-white rounded-full shadow-sm">
+                  <div className="w-4 h-4 relative text-accent">
+                    <Image
+                      src="/assets/icons/ic-tick-circle.svg"
+                      alt="Milestone status"
+                      width={16}
+                      height={16}
+                      className="w-full h-full"
+                    />
+                  </div>
+                  <span className="text-xs font-medium">2/4 Milestones Complete</span>
+                </div>
               </div>
             </div>
           </div>

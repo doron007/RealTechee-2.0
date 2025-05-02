@@ -242,7 +242,15 @@
 
   /* Section Containers */
   .section-container {
-    @apply px-4 py-16 md:px-8 lg:px-20 xl:px-[120px] xl:py-20;
+    @apply relative w-full overflow-hidden;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    box-sizing: border-box;
+  }
+
+  .section-content {
+    @apply w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-[120px];
+    max-width: 1536px;
   }
 
   .section-container-light {

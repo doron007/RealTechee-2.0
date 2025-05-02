@@ -13,20 +13,20 @@ const Card: React.FC<CardProps> = ({ icon, title, description, isWhiteIcon = fal
 
   return (
     <div 
-      className={`self-stretch p-12 rounded-[30px] inline-flex flex-col justify-start items-start gap-6 overflow-hidden transition-colors duration-300 ${
+      className={`self-stretch p-6 sm:p-8 md:p-10 lg:p-12 rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-[30px] inline-flex flex-col justify-start items-start gap-4 sm:gap-5 md:gap-6 overflow-hidden transition-colors duration-300 ${
         isHovered ? 'bg-zinc-800' : 'bg-white'
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="w-10 h-10 relative overflow-hidden flex items-center justify-center">
+      <div className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 relative overflow-hidden flex items-center justify-center">
         {isWhiteIcon ? (
           <Image 
             src={icon} 
             alt={title}
             width={26}
             height={26}
-            className={`${isHovered ? '' : 'brightness-0'} transition-all duration-300`}
+            className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${isHovered ? '' : 'brightness-0'} transition-all duration-300`}
           />
         ) : (
           <Image 
@@ -34,17 +34,17 @@ const Card: React.FC<CardProps> = ({ icon, title, description, isWhiteIcon = fal
             alt={title}
             width={26}
             height={26}
-            className={`${isHovered ? 'invert' : 'brightness-0'} transition-all duration-300`}
+            className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 ${isHovered ? 'invert' : 'brightness-0'} transition-all duration-300`}
           />
         )}
       </div>
-      <div className="self-stretch flex flex-col justify-start items-start gap-1.5">
-        <div className={`self-stretch justify-start text-2xl font-extrabold font-['Nunito_Sans'] ${
+      <div className="self-stretch flex flex-col justify-start items-start gap-1 sm:gap-1.5">
+        <div className={`self-stretch justify-start text-lg sm:text-xl md:text-2xl font-extrabold font-['Nunito_Sans'] ${
           isHovered ? 'text-white' : 'text-zinc-800'
         }`}>
           {title}
         </div>
-        <div className={`self-stretch justify-start text-base font-normal font-['Roboto'] leading-relaxed ${
+        <div className={`self-stretch justify-start text-sm sm:text-base font-normal font-['Roboto'] leading-relaxed ${
           isHovered ? 'text-white' : 'text-black'
         }`}>
           {description}
@@ -80,31 +80,21 @@ const DealBreakers: React.FC = () => {
   ];
 
   return (
-    <section className="pt-20 pr-[120px] pl-[120px] pb-20 bg-white">
-      <div className="w-[1200px] mx-auto">
-        <div className="text-center mb-4">
-          <p className="text-sm font-medium text-[#FF5F45] uppercase tracking-wider mb-2">WHY US</p>
+    <section className="section-container bg-white py-10 sm:py-12 md:py-16 lg:py-20">
+      <div className="section-content">
+        <div className="text-center mb-2 sm:mb-3 md:mb-4">
+          <p className="text-xs sm:text-sm font-medium text-[#FF5F45] uppercase tracking-wider">WHY US</p>
         </div>
         
-        <h2 
-          className="text-dark-gray font-bold font-heading"
-          style={{
-            fontSize: "clamp(37px, 3.5vw, 43px)",
-            lineHeight: "1.4em",
-            textAlign: "center",
-            width: "100%",
-            margin: "0 0 24px 0",
-            mixBlendMode: "normal"
-          }}
-        >
+        <h2 className="text-dark-gray font-bold font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[43px] leading-tight text-center mb-3 sm:mb-4 md:mb-6">
           Eliminate deal breakers & win the client
         </h2>
         
-        <p className="text-center mx-auto mb-16 max-w-[618px] text-base font-normal font-['Roboto'] leading-relaxed">
+        <p className="text-center mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-[618px] text-sm sm:text-base font-normal font-['Roboto'] leading-relaxed px-4">
           Are deals falling through due to homeowners not receiving enough value or buyers underestimating renovation costs
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[60px] gap-x-[30px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 sm:gap-y-8 md:gap-y-10 lg:gap-y-[60px] gap-x-4 sm:gap-x-6 md:gap-x-[30px]">
           {cards.map((card, index) => (
             <Card
               key={index}

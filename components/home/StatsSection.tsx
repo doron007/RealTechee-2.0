@@ -7,8 +7,8 @@ interface StatsSectionProps {
 
 export default function StatsSection(props: StatsSectionProps) {
   return (
-    <section id="stats" className="bg-gray-50 py-16 px-6 md:px-12 text-center">
-      <div className="max-w-7xl mx-auto">
+    <section id="stats" className="section-container bg-gray-50 py-16">
+      <div className="section-content text-center">
         <h2 className="text-3xl font-bold text-gray-900">Our Impact</h2>
         <p className="text-lg text-gray-700 mt-2">Helping real estate professionals maximize their client's sale value.</p>
 

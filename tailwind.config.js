@@ -9,9 +9,9 @@ module.exports = {
       'sm': '640px',
       'md': '768px',
       'lg': '1024px',
-      'xl': '1200px',  // Changed from 1280px to 1200px
-      '2xl': '1400px', // Added 1400px breakpoint
-      '3xl': '1536px',
+      'xl': '1280px',
+      'xxl': '1400px', // New breakpoint between xl and 2xl
+      '2xl': '1536px',
     },
     extend: {
       colors: {
@@ -67,19 +67,30 @@ module.exports = {
         playfair: ["Playfair Display", "serif"]
       },
       fontSize: {
-        // Font scale from Figma specs
-        'xs': '13pt', // P3
-        'sm': '0.875rem',
-        'base': '16pt', // P2 / H6
-        'lg': '1.125rem',
-        'xl': '20pt', // P1 / H5
-        '2xl': '25pt', // H4
-        '3xl': '31pt', // H3
-        '4xl': '39pt', // H2
-        '5xl': '48pt', // H1
-        '6xl': '3.75rem',
-        '7xl': '4.5rem',
-        '2xs': '0.625rem',
+        // Responsive font sizing system
+        'xs': ['13pt', { lineHeight: '1.4' }], // P3
+        'sm': ['0.875rem', { lineHeight: '1.4' }],
+        'base': ['16pt', { lineHeight: '1.5' }], // P2 / H6
+        'lg': ['1.125rem', { lineHeight: '1.5' }],
+        'xl': ['20pt', { lineHeight: '1.4' }], // P1 / H5
+        '2xl': ['25pt', { lineHeight: '1.3' }], // H4
+        '3xl': ['31pt', { lineHeight: '1.2' }], // H3
+        '4xl': ['39pt', { lineHeight: '1.2' }], // H2
+        '5xl': ['48pt', { lineHeight: '1.1' }], // H1
+        '6xl': ['3.75rem', { lineHeight: '1.1' }],
+        '7xl': ['4.5rem', { lineHeight: '1.1' }],
+        '2xs': ['0.625rem', { lineHeight: '1.4' }],
+        
+        // Responsive sizes that will scale down on smaller screens
+        'responsive-xs': ['13pt', { lineHeight: '1.4' }],
+        'responsive-sm': ['14pt', { lineHeight: '1.4' }],
+        'responsive-base': ['16pt', { lineHeight: '1.5' }],
+        'responsive-lg': ['18pt', { lineHeight: '1.5' }],
+        'responsive-xl': ['20pt', { lineHeight: '1.4' }],
+        'responsive-2xl': ['25pt', { lineHeight: '1.3' }],
+        'responsive-3xl': ['31pt', { lineHeight: '1.2' }],
+        'responsive-4xl': ['39pt', { lineHeight: '1.2' }],
+        'responsive-5xl': ['48pt', { lineHeight: '1.1' }],
       },
       lineHeight: {
         'tight': '1.2', // 120%
@@ -121,5 +132,17 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.text-responsive': {
+          'font-size': 'clamp(16px, 2vw, 20px)',
+        },
+        '.text-responsive-heading': {
+          'font-size': 'clamp(24px, 4vw, 48px)',
+        },
+      }
+      addUtilities(newUtilities)
+    },
+  ],
 }

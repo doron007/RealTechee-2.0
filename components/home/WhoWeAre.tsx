@@ -50,8 +50,8 @@ export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
   ];
 
   return (
-    <section className={`py-[80px] px-4 sm:px-6 lg:px-[120px] bg-white ${className}`}>
-      <div className="max-w-7xl mx-auto">
+    <section className={`section-container bg-white py-[80px] ${className}`}>
+      <div className="section-content">
         <div className="flex flex-col items-center mb-16">
           <h2 className="uppercase text-[#E9664A] font-bold text-[14px] tracking-[0.18em] leading-[1.4] mb-4">Who We Serve</h2>
           <h3 className="font-['Nunito_Sans'] font-extrabold text-[39px] leading-[1.2] text-center text-[#2A2B2E]">Partner for Growth & Results</h3>

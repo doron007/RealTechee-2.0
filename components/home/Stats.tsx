@@ -12,66 +12,43 @@ export default function Stats(props: StatsProps) {
       value: 985,
       label: "Successful Projects",
       suffix: "",
-      delay: 0
+      delay: 0,
+      showPlus: true
     },
     {
-      value: 2462,
+      value: 368, // Updated according to Figma design
       label: "Happy Clients",
       suffix: "",
-      delay: 200
+      delay: 200,
+      showPlus: true
     },
     {
       value: 15,
       label: "Years of Experience",
       suffix: "Y",
-      delay: 400
+      delay: 400,
+      showPlus: true
     }
   ];
 
   return (
-    <section 
-      className="bg-black text-white w-full" 
-      style={{ 
-        height: "200px",
-        maxHeight: "200px",
-        display: "grid",
-        alignSelf: "stretch",
-        justifySelf: "stretch",
-        gridArea: "3/1/4/2",
-        position: "relative"
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full w-full">
-        <div className="h-full w-full grid grid-cols-3 items-center">
-          {/* Left stat */}
-          <div className="flex justify-start">
-            <StatItem
-              value={statsData[0].value}
-              label={statsData[0].label}
-              suffix={statsData[0].suffix}
-              delay={statsData[0].delay}
-            />
-          </div>
-          
-          {/* Middle stat */}
-          <div className="flex justify-center">
-            <StatItem
-              value={statsData[1].value}
-              label={statsData[1].label}
-              suffix={statsData[1].suffix}
-              delay={statsData[1].delay}
-            />
-          </div>
-          
-          {/* Right stat */}
-          <div className="flex justify-end">
-            <StatItem
-              value={statsData[2].value}
-              label={statsData[2].label}
-              suffix={statsData[2].suffix}
-              delay={statsData[2].delay}
-            />
-          </div>
+    <section className="section-container bg-black text-white py-8 sm:py-10 md:py-12 lg:py-[50px]">
+      <div className="section-content">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-[30px]">
+          {statsData.map((stat, index) => (
+            <div key={index} className={`flex justify-center ${
+              // Center the middle item on small screens when in 2-column layout
+              index === 1 && statsData.length === 3 ? 'sm:col-span-2 md:col-span-1' : ''
+            }`}>
+              <StatItem
+                value={stat.value}
+                label={stat.label}
+                suffix={stat.suffix}
+                delay={stat.delay}
+                showPlus={stat.showPlus}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

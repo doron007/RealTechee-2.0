@@ -1,5 +1,6 @@
-import { useVideoPlayer } from '../../utils/componentUtils';
-import { BodyText } from '../Typography';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { VideoPlayButton, VideoBackButton } from '../common/ui';
 
 // Define TestimonialsProps interface directly in the file
 interface TestimonialsProps {
@@ -7,80 +8,145 @@ interface TestimonialsProps {
 }
 
 export default function Testimonials(props: TestimonialsProps) {
-  const {
-    isPlaying,
-    isVideoLoaded,
-    videoRef,
-    handlePlayVideo,
-    handleVideoEnded,
-    handleVideoLoaded
-  } = useVideoPlayer();
+  // Direct video ref and state management instead of using hook
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  
+  // Direct video control functions
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(error => {
+          console.error("Video play failed:", error);
+        });
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+  };
+  
+  // Reset video function
+  const handleResetVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setIsPlaying(false);
+  };
+
+  // Animation on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+    const section = document.querySelector('.testimonials-section');
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => {
+      if (section) {
+        observer.unobserve(section);
+      }
+    };
+  }, []);
+
+  // Add event listener for video ending
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.addEventListener('ended', handleVideoEnded);
+      return () => {
+        videoElement.removeEventListener('ended', handleVideoEnded);
+      };
+    }
+  }, []);
 
   return (
-    <section className="py-[88px] bg-[#FCF9F8]">
-      <div className="max-w-[1440px] mx-auto px-[120px]">
-        <div className="flex flex-col md:flex-row gap-[64px] items-center">
-          {/* Video Testimonial - Using auto height to display naturally */}
-          <div className="relative w-full md:w-[628px] overflow-hidden shadow-lg flex-shrink-0">
-            {/* Video Thumbnail with Play Button Overlay */}
-            <div className="relative w-full">
-              {/* Static Image - No rounded corners as per Figma and using natural height */}
-              <div className={`transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100 z-10'}`}>
-                <img
-                  src="/videos/realtechee_testimonial_image.png"
-                  alt="Testimonial video thumbnail"
-                  className="w-full h-auto"
-                  style={{ display: 'block' }}
-                />
-              </div>
-              
-              {/* Play Button */}
-              {!isPlaying && (
+    <section className="testimonials-section section-container bg-[#FCF9F8] py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+      <div className="section-content">
+        {/* Section Title */}
+        <div className="mb-8 sm:mb-10 md:mb-12 text-center">
+          <h2 className="text-dark-gray font-bold font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+            Testimonials
+          </h2>
+        </div>
+        
+        <div className={`flex flex-col lg:flex-row gap-8 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16 items-center ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        } transition-all duration-1000`}>
+          {/* Video Container - Revised implementation */}
+          <div className="relative w-full lg:w-1/2 max-w-[650px]">
+            <div className="rounded-lg overflow-hidden shadow-md">
+              {/* Use a more reliable aspect-ratio approach */}
+              <div className="relative" style={{ paddingBottom: '56.25%' /* 16:9 aspect ratio */ }}>
+                {/* Static Image Overlay */}
                 <div 
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 z-20 cursor-pointer"
+                  className={`absolute inset-0 ${isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-opacity duration-300 z-10`}
                 >
-                  <button
-                    onClick={handlePlayVideo}
-                    className="group"
-                    aria-label="Play testimonial video"
-                  >
-                    <div className="w-[76px] h-[76px] flex items-center justify-center rounded-full bg-transparent border-4 border-white group-hover:scale-110 group-hover:bg-white group-hover:bg-opacity-20 transition-all duration-300">
-                      <img 
-                        src="/assets/icons/play.svg" 
-                        alt="Play" 
-                        width="32" 
-                        height="32"
-                      />
-                    </div>
-                  </button>
+                  <Image
+                    src="/videos/realtechee_testimonial_image.png"
+                    alt="Client testimonial"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
+                  <VideoPlayButton onClick={handlePlayVideo} />
                 </div>
-              )}
-              
-              {/* Video Element - No rounded corners as per Figma */}
-              <div className={`absolute inset-0 transition-opacity duration-300 ${isPlaying ? 'opacity-100 z-30' : 'opacity-0'}`}>
-                <video
-                  ref={videoRef}
-                  className="w-full h-auto"
-                  poster="/videos/realtechee_testimonial_image.png"
-                  controls={isPlaying}
-                  onEnded={handleVideoEnded}
-                  onLoadedData={handleVideoLoaded}
-                  controlsList="nodownload"
-                  playsInline
-                  preload="auto"
-                >
-                  <source src="/videos/realtechee_testimonial.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                
+                {/* Video Element with Back button */}
+                <div className={`absolute inset-0 ${isPlaying ? 'opacity-100 z-30' : 'opacity-0 z-0'} transition-opacity duration-300`}>
+                  <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    poster="/videos/realtechee_testimonial_image.png"
+                    controls={isPlaying}
+                    onEnded={handleVideoEnded}
+                    playsInline
+                  >
+                    <source src="/videos/realtechee_testimonial.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  <VideoBackButton onClick={handleResetVideo} />
+                </div>
               </div>
             </div>
           </div>
           
-          {/* Testimonial Text - Using exact text from Figma design */}
-          <div className="w-full md:w-[628px] flex items-center justify-center">
-            <p className="text-[20px] leading-[1.6em] text-[#2A2B2E] font-body text-center">
-              We helped 368 clients to improve their living space and increase value to their properties. Here is how we help our clients.
-            </p>
+          {/* Testimonial Content */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className={`transition-all delay-300 duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
+              {/* Quote Icon - Using inline SVG instead of external image */}
+              <div className="flex justify-center lg:justify-start mb-4 sm:mb-6 text-[#FF5F45]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="currentColor" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 opacity-70">
+                  <path d="M14,24l-6.5,12H16l6.5-12V12H14V24zM30,12v12l-6.5,12H32l6.5-12V12H30z" />
+                </svg>
+              </div>
+              
+              {/* Quote Text */}
+              <div className="font-body text-dark-gray text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-xl">
+                <p className="mb-8">
+                  We helped hundreds of clients to improve their living space and increase value to their properties. Here is how we help our clients.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

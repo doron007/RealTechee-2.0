@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 export default function Milestones(props: any) {
   return (
-    <section id="milestones" className="bg-white py-16 px-6 md:px-12 text-center">
-      <div className="max-w-7xl mx-auto">
+    <section id="milestones" className="section-container bg-white py-16">
+      <div className="section-content text-center">
         <h2 className="text-3xl font-bold text-gray-900">Project Milestones</h2>
         <p className="text-lg text-gray-700 mt-2">
           Track the key phases of your project, from start to completion.
