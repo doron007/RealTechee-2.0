@@ -133,13 +133,6 @@ export default function Testimonials(props: TestimonialsProps) {
             <div className={`transition-all delay-300 duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
-              {/* Quote Icon - Using inline SVG instead of external image */}
-              <div className="flex justify-center lg:justify-start mb-4 sm:mb-6 text-[#FF5F45]">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="currentColor" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 opacity-70">
-                  <path d="M14,24l-6.5,12H16l6.5-12V12H14V24zM30,12v12l-6.5,12H32l6.5-12V12H30z" />
-                </svg>
-              </div>
-              
               {/* Quote Text */}
               <div className="font-body text-dark-gray text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-xl">
                 <p className="mb-8">
