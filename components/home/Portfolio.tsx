@@ -91,7 +91,7 @@ export default function Portfolio() {
     }
   };
   
-  const handleSliderMoveTouch = (touch: Touch) => {
+  const handleSliderMoveTouch = (touch: React.Touch) => {
     if (sliderContainerRef.current) {
       const containerRect = sliderContainerRef.current.getBoundingClientRect();
       const newPosition = ((touch.clientX - containerRect.left) / containerRect.width) * 100;
