@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci --cache .npm --prefer-offline
+    build:
+      commands:
+        - echo "NEXT_PUBLIC_APP_VERSION=$(node -p "require('./package.json').version")" >> .env.local
+        - echo "NEXT_PUBLIC_COMMIT_SHA=$(git rev-parse HEAD)" >> .env.local
+        - echo "NEXT_PUBLIC_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> .env.local
+        - mkdir -p public/meta
+        - echo "{\"version\":\"$(node -p "require('./package.json').version")\",\"buildTime\":\"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\"gitCommit\":\"$(git rev-parse HEAD)\"}" > ./public/meta/build-info.json
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
+      - .npm/**/*

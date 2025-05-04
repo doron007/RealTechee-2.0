@@ -8,7 +8,11 @@
         "start": "next start",
         "lint": "next lint",
         "type-check": "tsc --noEmit",
-        "convert-to-ts": "node scripts/convertToTypeScript.js"
+        "convert-to-ts": "node scripts/convertToTypeScript.js",
+        "version:patch": "npm version patch",
+        "version:minor": "npm version minor",
+        "version:major": "npm version major",
+        "deploy:prod": "git push origin prod"
     },
     "dependencies": {
         "next": "^15.2.1",

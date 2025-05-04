@@ -9,6 +9,8 @@ interface FooterProps {
 
 export default function Footer(props: FooterProps) {
   const currentYear = new Date().getFullYear();
+  // Get version from environment variable or package.json
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0';
   
   return (
     <footer className="section-container bg-white py-8 sm:py-10 md:py-12 border-t border-gray-200">
@@ -126,9 +128,14 @@ export default function Footer(props: FooterProps) {
         
         {/* Copyright and Social Media */}
         <div className="mt-8 sm:mt-10 md:mt-12 pt-4 sm:pt-6 md:pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-0">
-            &copy; {currentYear} RealTechee. All rights reserved.
-          </p>
+          <div>
+            <p className="text-xs sm:text-sm text-gray-600 mb-1">
+              &copy; {currentYear} RealTechee. All rights reserved.
+            </p>
+            <p className="text-xs text-gray-400">
+              Version {version}
+            </p>
+          </div>
           
           {/* Social Media Icons */}
           <div className="flex space-x-4">
