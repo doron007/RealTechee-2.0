@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 // Define ButtonProps interface directly in the file
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'text';
+  variant?: 'primary' | 'secondary' | 'outline' | 'text' | 'noborder';
   href?: string;
   text?: string;
   showArrow?: boolean;
@@ -46,7 +46,7 @@ const ArrowIcon = () => (
  * Button component following the brand guidelines from Figma design
  * 
  * @param {Object} props - Component props
- * @param {string} props.variant - Button variant: 'primary', 'secondary', 'outline', or 'text'
+ * @param {string} props.variant - Button variant: 'primary', 'secondary', 'outline', 'text', or 'noborder'
  * @param {string} props.href - URL for the button to link to
  * @param {string} props.text - Button text content
  * @param {boolean} props.showArrow - Whether to show the arrow icon
@@ -66,19 +66,22 @@ const Button = ({
   children,
   ...props
 }: ButtonProps) => {
+  
   // Define button styles based on variant (following brand guidelines from Figma)
   const getButtonClass = () => {
     switch (variant) {
       case 'primary':
-        return 'btn-primary';
+        return 'bg-black text-white hover:bg-[#4E4E52] active:bg-[#4E4E52]';
       case 'secondary':
-        return 'btn-secondary';
+        return 'bg-white text-[#2A2B2E] border border-[#2A2B2E] hover:bg-gray-50 active:bg-black active:text-white';
       case 'outline':
-        return 'bg-transparent border border-dark-gray text-dark-gray px-6 py-4 rounded hover:bg-gray-100 transition-all';
+        return 'bg-transparent border border-dark-gray text-dark-gray hover:bg-gray-100 transition-all';
       case 'text':
-        return 'bg-transparent text-dark-gray px-6 py-2 hover:bg-gray-50 transition-all';
+        return 'bg-transparent text-dark-gray hover:bg-gray-50 transition-all';
+      case 'noborder':
+        return 'bg-transparent text-black hover:underline transition-all';
       default:
-        return 'btn-primary';
+        return 'bg-black text-white hover:bg-[#4E4E52] active:bg-[#4E4E52]';
     }
   };
 
@@ -86,16 +89,18 @@ const Button = ({
   const getTextClass = () => {
     switch (variant) {
       case 'primary':
-        return 'btn-primary-text';
       case 'secondary':
-        return 'btn-secondary-text';
+      case 'noborder':
+        return 'font-heading text-base font-extrabold leading-tight';
       case 'outline':
       case 'text':
         return 'font-heading text-base font-extrabold leading-tight text-dark-gray';
       default:
-        return 'btn-primary-text';
+        return 'font-heading text-base font-extrabold leading-tight';
     }
   };
+
+  const baseClasses = 'inline-flex items-center justify-center gap-4 px-6 py-4 rounded transition-colors';
 
   // Button content
   const buttonContent = (
@@ -113,7 +118,7 @@ const Button = ({
   if (disabled) {
     return (
       <button
-        className={`inline-flex items-center justify-center gap-4 opacity-60 cursor-not-allowed ${getButtonClass()} ${className}`}
+        className={`${baseClasses} opacity-60 cursor-not-allowed ${getButtonClass()} ${className}`}
         disabled
         {...props}
       >
@@ -126,7 +131,7 @@ const Button = ({
   if (onClick) {
     return (
       <button
-        className={`inline-flex items-center justify-center gap-4 ${getButtonClass()} ${className}`}
+        className={`${baseClasses} ${getButtonClass()} ${className}`}
         onClick={onClick}
         {...props}
       >
@@ -139,7 +144,7 @@ const Button = ({
   return (
     <Link
       href={href || '#'}
-      className={`inline-flex items-center justify-center gap-4 ${getButtonClass()} ${className}`}
+      className={`${baseClasses} ${getButtonClass()} ${className}`}
       {...props}
     >
       {buttonContent}

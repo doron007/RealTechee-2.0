@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { SectionTitle } from '../';
 
 interface PartnersProps {
   className?: string;
@@ -28,9 +29,9 @@ export default function Partners({ className }: PartnersProps) {
     <section className={`section-container bg-white py-10 sm:py-14 md:py-16 lg:py-[88px] ${className || ''}`}>
       <div className="section-content">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-[56px]">
-          <h2 className="text-xl sm:text-2xl md:text-[28px] lg:text-[31px] font-bold text-[#2A2B2E] font-nunito leading-tight">
+          <SectionTitle>
             Collaborating with Industry Leaders
-          </h2>
+          </SectionTitle>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-0">

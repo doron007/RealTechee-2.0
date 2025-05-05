@@ -18,7 +18,8 @@
         "next": "^15.2.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-intersection-observer": "^9.16.0"
+        "react-intersection-observer": "^9.16.0",
+        "tailwind-merge": "^3.2.0"
     },
     "devDependencies": {
         "@types/node": "22.15.2",

@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { VideoPlayButton, VideoBackButton } from '../common/ui';
+import { SectionLabel, SectionTitle, BodyContent } from '..';
 
 interface AboutSectionProps {
   className?: string;
@@ -36,6 +37,12 @@ export default function AboutSection({ className = '' }: AboutSectionProps) {
   return (
     <section className={`section-container bg-[#FCF9F8] py-[88px] ${className}`}>
       <div className="section-content">
+        {/* Section Title and Label */}
+        <div className="text-center mb-12">
+          <SectionLabel className="text-primary">About Us</SectionLabel>
+          <SectionTitle className="mt-2">Our Mission</SectionTitle>
+        </div>
+
         {/* Using grid to ensure equal heights with 2 columns on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Video/Image Container - Using aspect ratio to match Figma design */}
@@ -67,9 +74,9 @@ export default function AboutSection({ className = '' }: AboutSectionProps) {
           
           {/* Description Text - Maintaining vertical alignment */}
           <div className="w-full flex items-center">
-            <p className="text-[20px] text-[#2A2B2E] font-normal font-['Roboto'] leading-[1.6em] text-center md:text-left">
+            <BodyContent className="text-[#2A2B2E] leading-[1.6em] text-center md:text-left">
               RealTechee was founded with a vision: to provide turn-key tools and technology to various industries, including automated programs, virtual walk-throughs, CRM, and UI. Our goal is to enhance user experience and execution for professionals and their clients, driving improved performance, conversion rates, and value.
-            </p>
+            </BodyContent>
           </div>
         </div>
       </div>

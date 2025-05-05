@@ -17,7 +17,9 @@ import {
   CardSubtitle,
   CardText
 } from '../components/Typography';
-import Button from '../components/common/buttons/Buttons';
+import Button from '../components/common/buttons/Button';
+import { ButtonShowcase, CardShowcase, GetAnEstimateShowcase } from '../components/style-guide';
+import ResponsiveTypographyShowcase from '../components/style-guide/ResponsiveTypographyShowcase';
 
 export default function StyleGuidePage() {
   return (
@@ -29,9 +31,16 @@ export default function StyleGuidePage() {
       
       <Header />
       
-      <main className="flex-grow">
+      {/* Added pt-24 sm:pt-28 md:pt-32 lg:pt-36 for proper spacing below the fixed header */}
+      <main className="flex-grow pt-24 sm:pt-28 md:pt-32 lg:pt-36">
         <div className="container mx-auto px-4 py-16">
           <Heading1 className="mb-12 text-center">RealTechee 2.0 Style Guide</Heading1>
+          
+          {/* Responsive Typography Section */}
+          <section className="mb-16">
+            <Heading2 className="mb-6 pb-2 border-b">Responsive Typography System</Heading2>
+            <ResponsiveTypographyShowcase />
+          </section>
           
           {/* Typography Section */}
           <section className="mb-16">
@@ -98,41 +107,59 @@ export default function StyleGuidePage() {
           {/* Buttons Section */}
           <section className="mb-16">
             <Heading2 className="mb-6 pb-2 border-b">Buttons</Heading2>
+            <p className="mb-6">
+              The RealTechee button system follows the design guidelines with consistent styling across various states and variants.
+            </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 border rounded">
-                <p className="mb-2 font-bold">Primary Button</p>
-                <div className="flex flex-col gap-4">
-                  <Button variant="primary" text="Learn More" />
-                  <Button variant="primary" text="Learn More" showArrow={true} />
-                  <Button variant="primary" text="Learn More" disabled={true} />
+            {/* New Button Showcase Component */}
+            <ButtonShowcase />
+            
+            {/* Get an Estimate Button Showcase */}
+            <div className="mt-12 pt-12 border-t">
+              <GetAnEstimateShowcase />
+            </div>
+            
+            <div className="mt-10">
+              <Heading3 className="mb-4">Usage Examples</Heading3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 border rounded">
+                  <p className="mb-2 font-bold">Primary Usage</p>
+                  <div className="mt-4">
+                    <Button variant="primary">Get an Estimate</Button>
+                    <p className="text-sm mt-3 text-gray-500">
+                      Primary buttons are used for main CTAs such as "Get an Estimate" or "Contact Us"
+                    </p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-6 border rounded">
-                <p className="mb-2 font-bold">Secondary Button</p>
-                <div className="flex flex-col gap-4">
-                  <Button variant="secondary" text="Get in Touch" />
-                  <Button variant="secondary" text="Get in Touch" showArrow={true} />
-                  <Button variant="secondary" text="Get in Touch" disabled={true} />
+                
+                <div className="p-6 border rounded">
+                  <p className="mb-2 font-bold">Secondary Usage</p>
+                  <div className="mt-4">
+                    <Button variant="secondary">Learn More</Button>
+                    <p className="text-sm mt-3 text-gray-500">
+                      Secondary buttons are used for supporting actions like "Learn More" or "View Details"
+                    </p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-6 border rounded">
-                <p className="mb-2 font-bold">Outline Button</p>
-                <div className="flex flex-col gap-4">
-                  <Button variant="outline" text="Read More" />
-                  <Button variant="outline" text="Read More" showArrow={true} />
-                  <Button variant="outline" text="Read More" disabled={true} />
+                
+                <div className="p-6 border rounded">
+                  <p className="mb-2 font-bold">Tertiary Usage</p>
+                  <div className="mt-4">
+                    <Button variant="tertiary">View All</Button>
+                    <p className="text-sm mt-3 text-gray-500">
+                      Tertiary buttons are used for less prominent actions like "View All" or in-line links
+                    </p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-6 border rounded">
-                <p className="mb-2 font-bold">Text Button</p>
-                <div className="flex flex-col gap-4">
-                  <Button variant="text" text="View Details" />
-                  <Button variant="text" text="View Details" showArrow={true} />
-                  <Button variant="text" text="View Details" disabled={true} />
+                
+                <div className="p-6 border rounded">
+                  <p className="mb-2 font-bold">With Icon</p>
+                  <div className="mt-4">
+                    <Button variant="primary" withIcon iconPosition="right">Start Now</Button>
+                    <p className="text-sm mt-3 text-gray-500">
+                      Buttons with icons add visual emphasis to important actions
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -220,6 +247,9 @@ export default function StyleGuidePage() {
                 </div>
               </div>
             </div>
+
+            {/* New Card Showcase Component */}
+            <CardShowcase />
           </section>
         </div>
       </main>

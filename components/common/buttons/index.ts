@@ -1,10 +1,14 @@
 // Button components barrel file
-import Button from './Buttons';
+import Button from './Button';
+import Buttons from './Buttons';
 import StyleGuideButton from './StyleGuideButton';
+import EstimateButton from './EstimateButton';
 
 export {
   Button,
-  StyleGuideButton
+  Buttons,
+  StyleGuideButton,
+  EstimateButton
 };
 
 // Default export for simpler imports

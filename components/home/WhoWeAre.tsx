@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { SectionLabel, SectionTitle, Subtitle, BodyContent } from '../';
 
 interface ServiceItemProps {
   icon: string;
@@ -19,8 +20,8 @@ const ServiceItem: React.FC<ServiceItemProps> = ({ icon, title, description }) =
         />
       </div>
       <div className="flex flex-col gap-6">
-        <h3 className="font-['Nunito_Sans'] font-extrabold text-[25px] leading-[1.36] text-[#2A2B2E]">{title}</h3>
-        <p className="font-['Archivo'] font-normal text-[17px] leading-[1.53] text-black">{description}</p>
+        <Subtitle className="text-[#2A2B2E]">{title}</Subtitle>
+        <BodyContent className="text-black">{description}</BodyContent>
       </div>
     </div>
   );
@@ -33,12 +34,12 @@ interface WhoWeAreProps {
 export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
   const services = [
     {
-      icon: '/assets/icons/brokerage-icon.svg',
+      icon: '/assets/icons/ic-sign.svg',
       title: 'Real Estate Brokerages',
       description: 'Get the tools and support needed to optimize operations, enhance client experiences, and increase profitability. From streamlined project management to real-time communication, we empower your team to excel in the competitive real estate market & ensure client satisfaction.'
     },
     {
-      icon: '/assets/icons/agent-icon.svg',
+      icon: '/assets/icons/ic-key.svg',
       title: 'Real Estate Agents',
       description: 'Receive cutting-edge resources to showcase properties, deliver exceptional customer service, and confidently close deals. Access real-time project updates, collaborate seamlessly with clients, and unlock the potential to sell properties faster and at higher prices.'
     },
@@ -53,8 +54,8 @@ export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
     <section className={`section-container bg-white py-[80px] ${className}`}>
       <div className="section-content">
         <div className="flex flex-col items-center mb-16">
-          <h2 className="uppercase text-[#E9664A] font-bold text-[14px] tracking-[0.18em] leading-[1.4] mb-4">Who We Serve</h2>
-          <h3 className="font-['Nunito_Sans'] font-extrabold text-[39px] leading-[1.2] text-center text-[#2A2B2E]">Partner for Growth & Results</h3>
+          <SectionLabel className="mb-4">Who We Serve</SectionLabel>
+          <SectionTitle className="text-center text-[#2A2B2E]">Partner for Growth & Results</SectionTitle>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px]">

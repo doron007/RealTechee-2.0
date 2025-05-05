@@ -57,6 +57,10 @@ export const CardText: React.FC<TypographyProps> = ({ children, className = '' }
   <p className={`card-text ${className}`}>{children}</p>
 );
 
+export const CardContent: React.FC<TypographyProps> = ({ children, className = '' }) => (
+  <p className={`card-text ${className}`}>{children}</p>
+);
+
 export default function Typography(): ReactElement {
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">

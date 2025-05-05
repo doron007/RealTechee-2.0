@@ -2,47 +2,15 @@ import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { 
   SectionLabel,
-  Heading2,
-  CardTitle,
-  CardText
-} from '../Typography';
-import Button from '../common/buttons/Buttons';
+  SectionTitle,
+  ButtonText,
+  Subtitle,
+  BodyContent,
+  SubContent
+} from '../'; 
+import { Card } from '../common/ui';
+import Button from '../common/buttons/Button';
 import type { FeaturesProps } from '../../types/components/home';
-
-// Feature card component interface
-interface FeatureCardProps {
-  title: string;
-  description: string;
-  isActive?: boolean;
-  delay?: number;
-  isVisible?: boolean;
-}
-
-// Feature card component
-const FeatureCard = ({ title, description, isActive = false, delay = 0, isVisible = false }: FeatureCardProps) => {
-  return (
-    <div 
-      data-status={isActive ? "active" : "normal"} 
-      className={`w-full p-4 sm:p-5 md:p-6 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-stone-200 
-      flex justify-start items-start gap-2 transition-all duration-700 ease-out ${delay ? `delay-${delay}` : ''} 
-      ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-    >
-      <div className="min-w-[20px] min-h-[20px] w-[20px] h-[20px] sm:min-w-[24px] sm:min-h-[24px] sm:w-[24px] sm:h-[24px] mr-2 flex-shrink-0 text-accent">
-        <Image
-          src="/assets/icons/vuesax-bold-tick-circle.svg"
-          alt="Feature icon"
-          width={24}
-          height={24}
-          className="w-full h-full"
-        />
-      </div>
-      <div className="inline-flex flex-col justify-start items-start gap-2">
-        <CardTitle className="text-base sm:text-lg md:text-xl">{title}</CardTitle>
-        <CardText className="text-sm sm:text-base">{description}</CardText>
-      </div>
-    </div>
-  );
-};
 
 // Milestone item component
 const MilestoneItem = ({ isCompleted = false }: { isCompleted?: boolean }) => {
@@ -126,44 +94,55 @@ export default function Features(props: FeaturesProps) {
           <SectionLabel className={`mb-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             FEATURES
           </SectionLabel>
-          <Heading2 className={`mb-6 sm:mb-8 md:mb-[32px] text-2xl sm:text-3xl md:text-4xl transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <SectionTitle className={`mb-6 sm:mb-8 md:mb-[32px] transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Powerful Features to Win More Deals
-          </Heading2>
+          </SectionTitle>
         
           {/* Main content flex container - improved responsive layout */}
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-6 xl:gap-8">
             {/* Left column - feature cards */}
             <div className="flex flex-col justify-start items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 w-full lg:w-[45%] xl:w-[541px]">
-              {/* Feature cards with staggered animations */}
-              <FeatureCard
-                title="Project Overview at a Glance"
-                description="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
-                isVisible={isVisible}
-                delay={200}
-              />
+              {/* Feature cards with staggered animations using standardized Card component */}
+              <div className={`transition-all duration-700 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <Card 
+                  variant="feature"
+                  icon="/assets/icons/vuesax-bold-tick-circle.svg"
+                  title="Project Overview at a Glance"
+                  content="Effortlessly keep track of all your client projects, both completed and ongoing. Get a comprehensive overview of the projects' statuses, ensuring you stay organized and informed throughout the entire project lifecycle."
+                  iconPosition="left"
+                />
+              </div>
               
-              <FeatureCard
-                title="Detailed Project Scope"
-                description="Define clear project parameters with comprehensive scope documents that outline all aspects of the renovation. Prevent scope creep and maintain transparency with clients by having detailed documentation readily available."
-                isVisible={isVisible}
-                delay={300}
-              />
+              <div className={`transition-all duration-700 ease-out delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <Card 
+                  variant="feature"
+                  icon="/assets/icons/vuesax-bold-tick-circle.svg"
+                  title="Detailed Project Scope"
+                  content="Define clear project parameters with comprehensive scope documents that outline all aspects of the renovation. Prevent scope creep and maintain transparency with clients by having detailed documentation readily available."
+                  iconPosition="left"
+                />
+              </div>
               
-              <FeatureCard
-                title="Real-Time Project Updates with Photo Interaction"
-                description="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects."
-                isVisible={isVisible}
-                delay={400}
-              />
+              <div className={`transition-all duration-700 ease-out delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <Card
+                  variant="feature"
+                  icon="/assets/icons/vuesax-bold-tick-circle.svg"
+                  title="Real-Time Project Updates with Photo Interaction"
+                  content="Your clients stay connected and engaged with their projects through real-time updates accompanied by photos. Comment on updates, ask questions, and receive prompt responses from the experts working on your projects."
+                  iconPosition="left"
+                />
+              </div>
               
               {/* Learn More button - Updated to use standardized Button component */}
               <div className={`mt-4 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <Button
                   variant="primary"
                   href="/features"
-                  text="Explore All Features"
-                  showArrow={true}
-                />
+                  withIcon={true}
+                  iconPosition="right"
+                >
+                  <ButtonText>Explore All Features</ButtonText>
+                </Button>
               </div>
             </div>
             
@@ -186,7 +165,7 @@ export default function Features(props: FeaturesProps) {
               </div>
               
               {/* Image thumbnails - responsive grid, hidden on xs, visible on sm and up */}
-              <div className="hidden sm:flex w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-10 sm:h-12 md:h-16 absolute left-0 sm:left-0 sm:bottom-[30%] md:bottom-[25%] lg:bottom-[20%] gap-1 md:gap-[3px]">
+              <div className="hidden sm:flex w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-10 sm:h-12 md:h-16 absolute left-0 sm:left-0 sm:bottom-[28%] md:bottom-[22%] lg:bottom-[5%] gap-1 md:gap-[3px]">
                 {thumbnailImages.map((src, index) => (
                   <div key={index} className="w-1/4 h-full overflow-hidden rounded-md">
                     <Image 
@@ -201,17 +180,13 @@ export default function Features(props: FeaturesProps) {
               </div>
               
               {/* Milestones widget - hidden on xs, visible on sm and up, better positioning */}
-              <div className="hidden sm:flex w-[200px] md:w-[220px] lg:w-[280px] px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6 md:pb-8 absolute right-0 sm:right-0 sm:bottom-[40%] md:bottom-[35%] lg:bottom-[30%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
-                <div className="justify-start text-zinc-800 text-base sm:text-lg md:text-xl font-bold font-['Roboto'] leading-loose">Project Milestones</div>
+              <div className="hidden sm:flex w-[200px] md:w-[220px] lg:w-[280px] px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6 md:pb-8 absolute right-0 sm:right-0 sm:bottom-[0%] md:bottom-[0%] lg:bottom-[0%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
+                <BodyContent as="div" className="justify-start text-zinc-800 font-bold leading-loose">Project Milestones</BodyContent>
                 <div className="self-stretch w-full flex flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
                   <MilestoneItem isCompleted={true} />
                   <MilestoneItem isCompleted={true} />
                   <MilestoneItem />
                   <MilestoneItem />
-                </div>
-                {/* Added status label */}
-                <div className="mt-1 sm:mt-2 py-1 px-2 sm:px-3 bg-green-100 rounded-full text-xs text-green-700 font-medium">
-                  50% Complete
                 </div>
               </div>
               
@@ -227,7 +202,6 @@ export default function Features(props: FeaturesProps) {
                       className="w-full h-full"
                     />
                   </div>
-                  <span className="text-xs font-medium">2/4 Milestones Complete</span>
                 </div>
               </div>
             </div>

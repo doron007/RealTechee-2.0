@@ -65,7 +65,7 @@ export const DropdownLink = (props: DropdownLinkProps) => {
     Link,
     { 
       href, 
-      className: "block px-4 py-2 text-base font-heading font-normal text-dark-gray hover:bg-off-white transition-colors",
+      className: "block px-4 py-2 text-sm font-heading font-normal text-dark-gray hover:bg-off-white transition-colors",
       onClick 
     },
     text

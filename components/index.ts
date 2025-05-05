@@ -17,8 +17,19 @@ export {
   BodyTextSecondary,
   CardTitle,
   CardSubtitle,
-  CardText
+  CardText,
+  CardContent
 } from './Typography';
+
+// Export Responsive Typography components
+export {
+  PageHeader,
+  SectionTitle,
+  Subtitle,
+  BodyContent,
+  SubContent,
+  ButtonText
+} from './ResponsiveTypography';
 
 // Export sections by page
 export * from './home';

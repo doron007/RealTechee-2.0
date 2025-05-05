@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { 
-  Heading1, 
+  PageHeader,
+  SectionTitle,
   SubtitlePill, 
-  BodyTextSecondary 
-} from '../Typography';
-import Button from '../common/buttons/Buttons';
+  BodyContent,
+  ButtonText 
+} from '../';
+import Button from '../common/buttons/Button';
 import Image from 'next/image';
 
 // Define HeroProps interface directly in the file
@@ -59,36 +61,35 @@ export default function Hero(props: HeroProps) {
                   </SubtitlePill>
                 </div>
                 
-                {/* Hero Title - with enhanced responsive typography */}
-                <h1 className={`font-heading font-extrabold text-text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl 2xl:text-7xl leading-tight md:leading-tight tracking-tight transition-all delay-200 duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                  <span className="inline md:hidden">Close More Deals Faster</span>
-                  <span className="hidden md:inline">Close More Deals Faster by Maximizing</span>
-                  <br className="hidden sm:block" />
-                  <span className="hidden md:inline">Your Client's Sale Value & Minimizing Buying Cost</span>
-                  <span className="inline md:hidden">Maximize Client Value</span>
-                </h1>
+                {/* Hero Title - using standardized PageHeader component */}
+                <div className={`transition-all delay-200 duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                  <SectionTitle>Close More Deals Faster by Maximizing Your Client's Sale Value & Minimizing Buying Cost</SectionTitle>
+                </div>
               </div>
               
-              {/* Hero Details - with enhanced responsive sizing and animation */}
-              <div className={`text-text-secondary font-body font-normal text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl transition-all delay-300 duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                Supercharge your agents' success with a proven real estate home preparation platform. Attract the right customers, dominate the market, and achieve outstanding results effortlessly.
+              {/* Hero Details - using standardized BodyContent component */}
+              <div className={`transition-all delay-300 duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} max-w-2xl`}>
+                <BodyContent>
+                  Supercharge your agents' success with a proven real estate home preparation platform. Attract the right customers, dominate the market, and achieve outstanding results effortlessly.
+                </BodyContent>
               </div>
               
-              {/* Hero Buttons - with animation */}
+              {/* Hero Buttons - updated to use standardized Button component */}
               <div className={`flex flex-wrap gap-3 sm:gap-4 pt-3 sm:pt-4 md:pt-6 transition-all delay-400 duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <Button
                   variant="primary"
                   href="/learn-more"
-                  text="Learn More"
-                  showArrow={true}
-                  className="text-base sm:text-lg md:px-6 md:py-3 lg:px-8 lg:py-4"
-                />
+                  withIcon={true}
+                  iconPosition="right"
+                >
+                  <ButtonText>Learn More</ButtonText>
+                </Button>
                 <Button
                   variant="secondary"
                   href="/get-in-touch"
-                  text="Get in touch"
-                  className="text-base sm:text-lg md:px-6 md:py-3 lg:px-8 lg:py-4"
-                />
+                >
+                  <ButtonText>Get in touch</ButtonText>
+                </Button>
               </div>
             </div>
           </div>

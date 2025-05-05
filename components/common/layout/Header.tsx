@@ -7,6 +7,8 @@ import {
   productCategories,
   contactOptions
 } from '../../../utils/componentUtils';
+import Button from '../buttons/Button';
+import EstimateButton from '../buttons/EstimateButton';
 
 // Define HeaderProps interface directly in the file
 interface HeaderProps {
@@ -84,7 +86,7 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
         scrolled ? 'bg-white shadow-md py-2 sm:py-3' : 'bg-white py-3 sm:py-4 md:py-5 lg:py-6'
       }`}
     >
-      <div className="w-full max-w-[1536px] mx-auto flex items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-[120px]">
+      <div className="w-full max-w-[1536px] mx-auto flex items-center px-3 sm:px-4 md:px-6 lg:px-8 xl:px-14 2xl:px-16">
         {/* Logo */}
         <div className={`flex-shrink-0 h-[32px] sm:h-[35px] md:h-[40px] lg:h-[45px] flex items-center transition-all duration-300 ${scrolled ? 'transform scale-95' : ''}`}>
           <Link href="/" className="flex items-center h-full">
@@ -101,8 +103,8 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
           </Link>
         </div>
         
-        {/* Menu bar - desktop */}
-        <div className="hidden lg:flex items-center ml-3 xl:ml-6 2xl:ml-8 gap-2 xl:gap-4 2xl:gap-[38px]">
+        {/* Menu bar - desktop - now only showing at xl and above breakpoints */}
+        <div className="hidden xl:flex items-center ml-6 xl:ml-12 2xl:ml-14 gap-2 xl:gap-6 2xl:gap-8">
           {/* Products Dropdown */}
           <div 
             className="relative group"
@@ -110,13 +112,13 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
             onMouseLeave={() => setProductsDropdownOpen(false)}
           >
             <button 
-              className="text-dark-gray text-responsive-sm lg:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap gap-1 py-2 px-1 hover:text-accent transition-colors"
+              className="text-dark-gray text-responsive-sm xl:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap gap-1 py-2 px-1 hover:text-accent transition-colors"
               onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
               aria-expanded={productsDropdownOpen}
             >
               Products
               <Image 
-                src="/assets/icons/chevron-down.svg" 
+                src="/assets/icons/ic-arrow-down.svg" 
                 alt="Dropdown" 
                 width={16} 
                 height={16} 
@@ -146,14 +148,14 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
 
           {/* Projects */}
           <div className="relative group">
-            <Link href="/projects" className="text-dark-gray text-responsive-sm lg:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap py-2 px-1 hover:text-accent transition-colors">
+            <Link href="/projects" className="text-dark-gray text-responsive-sm xl:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap py-2 px-1 hover:text-accent transition-colors">
               Projects
             </Link>
           </div>
 
           {/* About */}
           <div className="relative group">
-            <Link href="/about" className="text-dark-gray text-responsive-sm lg:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap py-2 px-1 hover:text-accent transition-colors">
+            <Link href="/about" className="text-dark-gray text-responsive-sm xl:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed whitespace-nowrap py-2 px-1 hover:text-accent transition-colors">
               About
             </Link>
           </div>
@@ -165,13 +167,13 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
             onMouseLeave={() => setContactDropdownOpen(false)}
           >
             <button 
-              className="text-dark-gray text-responsive-sm lg:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap gap-1 py-2 px-1 hover:text-accent transition-colors"
+              className="text-dark-gray text-responsive-sm xl:text-responsive-base 2xl:text-base font-body font-normal leading-relaxed flex items-center whitespace-nowrap gap-1 py-2 px-1 hover:text-accent transition-colors"
               onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
               aria-expanded={contactDropdownOpen}
             >
               Contact
               <Image 
-                src="/assets/icons/chevron-down.svg" 
+                src="/assets/icons/ic-arrow-down.svg" 
                 alt="Dropdown" 
                 width={16} 
                 height={16} 
@@ -200,8 +202,8 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
           </div>
         </div>
         
-        {/* Action Buttons Container */}
-        <div className="hidden lg:flex items-center gap-1.5 xl:gap-2">
+        {/* Action Buttons Container - Only showing at xl and above */}
+        <div className="hidden xl:flex items-center gap-4 xl:gap-6 ml-auto">
           {/* Login/Profile Button */}
           {userLoggedIn ? (
             <div 
@@ -210,19 +212,16 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
               onMouseLeave={() => setProfileDropdownOpen(false)}
             >
               <button
-                className="flex items-center gap-2 py-2 lg:py-2.5 xl:py-3 px-3 lg:px-4 text-dark-gray hover:text-accent text-responsive-sm lg:text-responsive-base font-heading font-extrabold leading-tight whitespace-nowrap transition-colors"
+                className="flex items-center gap-2 py-2 xl:py-2.5 2xl:py-3 px-3 xl:px-4 text-dark-gray hover:text-accent text-responsive-sm xl:text-responsive-base font-heading font-medium leading-tight whitespace-nowrap transition-colors"
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 aria-expanded={profileDropdownOpen}
               >
-                <div className="w-8 h-8 rounded-full bg-[#F0E4DF] flex items-center justify-center">
-                  <span className="text-dark-gray font-bold text-sm">JD</span>
-                </div>
-                <span>My Account</span>
+                <span>Doron Hetz</span>
                 <Image 
-                  src="/assets/icons/chevron-down.svg" 
+                  src="/assets/icons/ic-arrow-down.svg" 
                   alt="Dropdown" 
-                  width={14} 
-                  height={14} 
+                  width={16} 
+                  height={16} 
                   className={`transform transition-transform duration-300 ${profileDropdownOpen ? 'rotate-180' : ''}`} 
                 />
               </button>
@@ -259,32 +258,25 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
               </div>
             </div>
           ) : (
-            <Link 
-              href="/login" 
-              className="py-2 lg:py-2.5 xl:py-3 2xl:py-4 px-3 lg:px-4 xl:px-5 2xl:px-6 text-dark-gray hover:text-accent text-responsive-sm lg:text-responsive-base 2xl:text-base font-heading font-extrabold leading-tight flex items-center justify-center whitespace-nowrap transition-colors"
-            >
-              Login
-            </Link>
+            <Button
+              variant="tertiary"
+              href="/login"
+              text="Login"
+              underline={true}
+              onClick={() => setIsOpen(false)}
+            />
           )}
           
           {/* Get an Estimate Button */}
-          <Link 
-            href="/get-estimate" 
-            className="py-2 lg:py-2.5 xl:py-3 2xl:py-4 px-3 lg:px-4 xl:px-5 2xl:px-6 rounded-[4px] bg-black hover:bg-zinc-800 text-white flex items-center justify-center whitespace-nowrap gap-1.5 lg:gap-2 xl:gap-3 2xl:gap-4 transition-colors"
-          >
-            <Image 
-              src="/assets/icons/arrow-right.svg" 
-              alt="Arrow Right" 
-              width={16}
-              height={16}
-              className="invert w-[14px] h-[14px] lg:w-[16px] lg:h-[16px] xl:w-[18px] xl:h-[18px]" 
-            />
-            <span className="text-white text-responsive-sm lg:text-responsive-base 2xl:text-base font-heading font-extrabold leading-tight">Get an Estimate</span>
-          </Link>
+          <EstimateButton
+            priority="primary"
+            href="/contact"
+            onClick={() => setIsOpen(false)}
+          />
         </div>
         
-        {/* Mobile Menu Button - Enhanced for better accessibility and touch target */}
-        <div className="lg:hidden">
+        {/* Mobile Menu Button - Now showing on lg and below */}
+        <div className="xl:hidden ml-auto">
           <button
             type="button"
             className="inline-flex items-center justify-center p-2.5 rounded-md text-medium-gray hover:text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent transition-all"
@@ -294,7 +286,7 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
           >
             <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
             {isOpen ? (
-              <Image src="/assets/icons/close.svg" alt="Close Menu" width={24} height={24} />
+              <Image src="/assets/icons/ic-cancel.svg" alt="Close Menu" width={24} height={24} />
             ) : (
               <Image src="/assets/icons/menu.svg" alt="Open Menu" width={24} height={24} />
             )}
@@ -302,173 +294,194 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
         </div>
       </div>
       
-      {/* Mobile Menu - Improved with better transitions and styling from Figma */}
+      {/* Mobile Menu - Updated according to Figma design */}
       <div 
-        className={`lg:hidden bg-white fixed inset-0 z-40 transition-all duration-300 ease-in-out transform ${
-          isOpen ? 'translate-y-0 opacity-100' : 'translate-y-[-5%] opacity-0 pointer-events-none'
+        className={`xl:hidden bg-white fixed right-0 z-40 transition-all duration-300 ease-in-out transform shadow-lg ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ 
-          top: scrolled ? '52px' : '59px', 
-          height: scrolled ? 'calc(100vh - 52px)' : 'calc(100vh - 59px)'
+          top: scrolled ? '65px' : '75px', // Increased values to ensure menu appears below the header
+          height: scrolled ? 'calc(100vh - 65px)' : 'calc(100vh - 75px)',
+          width: '280px', // Width based on the longest menu item
+          maxWidth: '90vw'
         }}
         aria-hidden={!isOpen}
       >
         <div className="h-full flex flex-col overflow-y-auto">
-          {/* User info section - shown only when logged in */}
-          {userLoggedIn && (
-            <div className="px-4 sm:px-6 py-4 border-b border-[#F6F6F6] bg-[#FAFAFA]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#F0E4DF] rounded-full flex items-center justify-center">
-                  <span className="text-dark-gray font-bold">JD</span>
+          {/* Top Action Buttons Container */}
+          <div className="p-4 space-y-3 border-b border-[#F6F6F6]">
+            {/* Login/Profile Button */}
+            {userLoggedIn ? (
+              <div className="flex items-center gap-3 px-3 py-2 rounded bg-[#FAFAFA]">
+                <div className="w-9 h-9 rounded-full bg-[#F0E4DF] flex items-center justify-center flex-shrink-0">
+                  <span className="text-dark-gray font-bold text-sm">DH</span>
                 </div>
-                <div className="flex-1">
-                  <div className="text-dark-gray font-bold">John Doe</div>
-                  <div className="text-medium-gray text-sm">john.doe@example.com</div>
-                </div>
-                <Link 
-                  href="/profile"
-                  className="text-accent text-sm font-medium hover:underline"
-                  onClick={() => setIsOpen(false)}
-                >
-                  View Profile
-                </Link>
-              </div>
-            </div>
-          )}
-          
-          {/* Navigation Menu - Styled according to Figma mobile design */}
-          <div className="px-4 py-2 flex-1">
-            {/* Products Section */}
-            <div className="py-1.5">
-              <button
-                className="flex justify-between w-full px-3 py-3 text-base font-body font-medium text-dark-gray active:bg-gray-50 rounded"
-                onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
-                aria-expanded={productsDropdownOpen}
-              >
-                <span>Products</span>
-                <Image 
-                  src="/assets/icons/chevron-down.svg" 
-                  alt="Dropdown" 
-                  width={20} 
-                  height={20} 
-                  className={`transform transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180' : ''}`} 
-                />
-              </button>
-              
-              {/* Products Menu Items with height transition */}
-              <div 
-                className="overflow-hidden transition-all duration-300 ease-in-out"
-                style={{ 
-                  maxHeight: productsDropdownOpen ? `${productCategories.length * 44}px` : '0',
-                  opacity: productsDropdownOpen ? 1 : 0
-                }}
-              >
-                <div className="pl-4 space-y-1 mt-1 mb-2">
-                  {productCategories.map((category, index) => (
-                    <MobileDropdownLink 
-                      key={index}
-                      href={category.href} 
-                      text={category.text}
-                      onClick={() => setIsOpen(false)}
-                    />
-                  ))}
+                <div className="min-w-0 flex-1">
+                  <div className="text-dark-gray font-medium text-sm truncate">Doron Hetz</div>
+                  <div className="text-medium-gray text-xs">user@example.com</div>
                 </div>
               </div>
-              <div className="h-px bg-[#F6F6F6] my-1"></div>
-            </div>
-            
-            <div className="py-1.5">
-              <Link 
-                href="/projects" 
-                className="block px-3 py-3 text-base font-body font-medium text-dark-gray active:bg-gray-50 rounded"
+            ) : (
+              <Button
+                variant="primary"
+                href="/login"
+                text="Login"
+                fullWidth={true}
                 onClick={() => setIsOpen(false)}
-              >
-                Projects
-              </Link>
-              <div className="h-px bg-[#F6F6F6] my-1"></div>
-            </div>
-            
-            <div className="py-1.5">
-              <Link 
-                href="/about" 
-                className="block px-3 py-3 text-base font-body font-medium text-dark-gray active:bg-gray-50 rounded"
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </Link>
-              <div className="h-px bg-[#F6F6F6] my-1"></div>
-            </div>
-            
-            {/* Contact Section */}
-            <div className="py-1.5">
-              <button
-                className="flex justify-between w-full px-3 py-3 text-base font-body font-medium text-dark-gray active:bg-gray-50 rounded"
-                onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
-                aria-expanded={contactDropdownOpen}
-              >
-                <span>Contact</span>
-                <Image 
-                  src="/assets/icons/chevron-down.svg" 
-                  alt="Dropdown" 
-                  width={20} 
-                  height={20} 
-                  className={`transform transition-transform duration-200 ${contactDropdownOpen ? 'rotate-180' : ''}`} 
-                />
-              </button>
-              
-              {/* Contact Menu Items with height transition */}
-              <div 
-                className="overflow-hidden transition-all duration-300 ease-in-out"
-                style={{ 
-                  maxHeight: contactDropdownOpen ? `${contactOptions.length * 44}px` : '0',
-                  opacity: contactDropdownOpen ? 1 : 0
-                }}
-              >
-                <div className="pl-4 space-y-1 mt-1 mb-2">
-                  {contactOptions.map((option, index) => (
-                    <MobileDropdownLink 
-                      key={index}
-                      href={option.href} 
-                      text={option.text}
-                      onClick={() => setIsOpen(false)}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="h-px bg-[#F6F6F6] my-1"></div>
-            </div>
-            
-            {/* Login - Only shown when not logged in */}
-            {!userLoggedIn && (
-              <div className="py-1.5">
-                <Link 
-                  href="/login" 
-                  className="block px-3 py-3 text-base font-body font-medium text-dark-gray active:bg-gray-50 rounded"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Login
-                </Link>
-                <div className="h-px bg-[#F6F6F6] my-1"></div>
-              </div>
+                textSize="responsive-sm"
+              />
             )}
             
-            {/* Account Options - Only visible when logged in */}
+            {/* Get an Estimate Button */}
+            <EstimateButton
+              priority="primary"
+              href="/contact"
+              fullWidth={true}
+              onClick={() => setIsOpen(false)}
+              size="sm"
+            />
+          </div>
+          
+          {/* Navigation Menu */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <nav className="space-y-3">
+              {/* Products Section */}
+              <div>
+                <button
+                  className="flex justify-between w-full px-3 py-2.5 text-base font-medium text-dark-gray hover:bg-gray-50 rounded"
+                  onClick={() => setProductsDropdownOpen(!productsDropdownOpen)}
+                  aria-expanded={productsDropdownOpen}
+                >
+                  <span>Products</span>
+                  <Image 
+                    src="/assets/icons/ic-arrow-down.svg" 
+                    alt="Dropdown" 
+                    width={16} 
+                    height={16} 
+                    className={`transform transition-transform duration-200 ${productsDropdownOpen ? 'rotate-180' : ''}`} 
+                  />
+                </button>
+                
+                {/* Products Menu Items with height transition */}
+                <div 
+                  className="overflow-hidden transition-all duration-200 ease-in-out pb-0"
+                  style={{ 
+                    maxHeight: productsDropdownOpen ? `${(productCategories.length * 36) + 16}px` : '0',
+                    opacity: productsDropdownOpen ? 1 : 0,
+                    marginBottom: productsDropdownOpen ? '0.75rem' : '0'
+                  }}
+                >
+                  <div className="pl-4 space-y-1 mt-1">
+                    {productCategories.map((category, index) => (
+                      <Link 
+                        key={index}
+                        href={category.href}
+                        className="block px-3 py-2 text-sm font-normal text-dark-gray hover:bg-gray-50 rounded"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {category.text}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Projects Link */}
+              <div>
+                <Link 
+                  href="/projects" 
+                  className="block px-3 py-2.5 text-base font-medium text-dark-gray hover:bg-gray-50 rounded"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Projects
+                </Link>
+              </div>
+              
+              {/* About Link */}
+              <div>
+                <Link 
+                  href="/about" 
+                  className="block px-3 py-2.5 text-base font-medium text-dark-gray hover:bg-gray-50 rounded"
+                  onClick={() => setIsOpen(false)}
+                >
+                  About
+                </Link>
+              </div>
+              
+              {/* Contact Section */}
+              <div>
+                <button
+                  className="flex justify-between w-full px-3 py-2.5 text-base font-medium text-dark-gray hover:bg-gray-50 rounded"
+                  onClick={() => setContactDropdownOpen(!contactDropdownOpen)}
+                  aria-expanded={contactDropdownOpen}
+                >
+                  <span>Contact</span>
+                  <Image 
+                    src="/assets/icons/ic-arrow-down.svg" 
+                    alt="Dropdown" 
+                    width={16} 
+                    height={16} 
+                    className={`transform transition-transform duration-200 ${contactDropdownOpen ? 'rotate-180' : ''}`} 
+                  />
+                </button>
+                
+                {/* Contact Menu Items with height transition */}
+                <div 
+                  className="overflow-hidden transition-all duration-200 ease-in-out pb-0"
+                  style={{ 
+                    maxHeight: contactDropdownOpen ? `${(contactOptions.length * 36) + 24}px` : '0',
+                    opacity: contactDropdownOpen ? 1 : 0,
+                    marginBottom: contactDropdownOpen ? '0.75rem' : '0'
+                  }}
+                >
+                  <div className="pl-4 space-y-1 mt-1">
+                    {contactOptions.map((option, index) => (
+                      <Link 
+                        key={index}
+                        href={option.href}
+                        className="block px-3 py-2 text-sm font-normal text-dark-gray hover:bg-gray-50 rounded"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {option.text}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </nav>
+            
+            {/* User Account Options - Only when logged in */}
             {userLoggedIn && (
-              <div className="mt-4 mb-2">
-                <div className="px-3 py-2 text-xs font-medium text-medium-gray">
-                  ACCOUNT
+              <div className="mt-6 pt-6 border-t border-[#F6F6F6]">
+                <div className="px-3 pb-2 text-xs font-medium uppercase text-medium-gray">
+                  Account
                 </div>
                 <div className="space-y-1">
                   <Link 
+                    href="/profile" 
+                    className="flex items-center px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Image 
+                      src="/assets/icons/user.svg" 
+                      alt="" 
+                      width={18} 
+                      height={18} 
+                      className="mr-3" 
+                    />
+                    My Profile
+                  </Link>
+                  
+                  <Link 
                     href="/projects" 
-                    className="flex items-center px-3 py-2.5 text-base text-dark-gray active:bg-gray-50 rounded"
+                    className="flex items-center px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
                     onClick={() => setIsOpen(false)}
                   >
                     <Image 
                       src="/assets/icons/folder.svg" 
                       alt="" 
-                      width={20} 
-                      height={20} 
+                      width={18} 
+                      height={18} 
                       className="mr-3" 
                     />
                     My Projects
@@ -476,14 +489,14 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                   
                   <Link 
                     href="/settings" 
-                    className="flex items-center px-3 py-2.5 text-base text-dark-gray active:bg-gray-50 rounded"
+                    className="flex items-center px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
                     onClick={() => setIsOpen(false)}
                   >
                     <Image 
                       src="/assets/icons/settings.svg" 
                       alt="" 
-                      width={20} 
-                      height={20} 
+                      width={18} 
+                      height={18} 
                       className="mr-3" 
                     />
                     Account Settings
@@ -491,14 +504,14 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                   
                   <Link 
                     href="/logout" 
-                    className="flex items-center px-3 py-2.5 text-base text-dark-gray active:bg-gray-50 rounded"
+                    className="flex items-center px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
                     onClick={() => setIsOpen(false)}
                   >
                     <Image 
                       src="/assets/icons/log-out.svg" 
                       alt="" 
-                      width={20} 
-                      height={20} 
+                      width={18} 
+                      height={18} 
                       className="mr-3" 
                     />
                     Sign Out
@@ -506,24 +519,6 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                 </div>
               </div>
             )}
-          </div>
-          
-          {/* Bottom CTA Section */}
-          <div className="px-4 pt-3 pb-6 border-t border-[#F6F6F6] bg-[#FCFCFC] mt-auto">
-            <Link 
-              href="/get-estimate" 
-              className="flex items-center justify-center w-full px-6 py-3.5 bg-black hover:bg-zinc-800 text-white rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <Image 
-                src="/assets/icons/arrow-right.svg" 
-                alt="Arrow Right" 
-                width={16} 
-                height={16} 
-                className="mr-2 invert" 
-              />
-              <span className="text-white text-base font-heading font-extrabold">Get an Estimate</span>
-            </Link>
           </div>
         </div>
       </div>

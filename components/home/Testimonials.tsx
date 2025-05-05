@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { VideoPlayButton, VideoBackButton } from '../common/ui';
+import { SectionTitle, BodyContent } from '../';
 
 // Define TestimonialsProps interface directly in the file
 interface TestimonialsProps {
@@ -80,9 +81,9 @@ export default function Testimonials(props: TestimonialsProps) {
       <div className="section-content">
         {/* Section Title */}
         <div className="mb-8 sm:mb-10 md:mb-12 text-center">
-          <h2 className="text-dark-gray font-bold font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
+          <SectionTitle>
             Testimonials
-          </h2>
+          </SectionTitle>
         </div>
         
         <div className={`flex flex-col lg:flex-row gap-8 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16 items-center ${
@@ -134,10 +135,10 @@ export default function Testimonials(props: TestimonialsProps) {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}>
               {/* Quote Text */}
-              <div className="font-body text-dark-gray text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed max-w-xl">
-                <p className="mb-8">
+              <div className="text-dark-gray max-w-xl">
+                <BodyContent className="mb-8">
                   We helped hundreds of clients to improve their living space and increase value to their properties. Here is how we help our clients.
-                </p>
+                </BodyContent>
               </div>
             </div>
           </div>
