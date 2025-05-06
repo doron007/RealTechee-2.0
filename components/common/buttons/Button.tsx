@@ -150,60 +150,83 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(({
   // State is either forced (for style guide) or determined by the disabled prop
   const state: ButtonState = forceState || (disabled ? 'disabled' : 'normal');
   
-  // Generate variant and state specific classes based on Figma design
-  const getVariantClasses = () => {
+  // Get all state variants classes to build hover and active selectors
+  const getVariantStateClasses = () => {
     if (mode === 'dark') {
       switch (variant) {
         case 'primary':
           return {
             normal: 'bg-white text-[#2A2B2E]',
-            hover: 'bg-[#D2D2D4] text-[#2A2B2E]',
-            pressed: 'bg-[#6E6E73] text-white',
-            disabled: 'bg-[#3D3D3F] text-[#8B8B8F] pointer-events-none'
-          }[state];
+            hover: 'hover:bg-[#D2D2D4] hover:text-[#2A2B2E]',
+            pressed: 'active:bg-[#6E6E73] active:text-white',
+            disabled: 'disabled:bg-[#3D3D3F] disabled:text-[#8B8B8F] disabled:pointer-events-none'
+          };
         case 'secondary':
           return {
             normal: 'bg-transparent text-white border border-white',
-            hover: 'bg-white/10 text-white border border-white',
-            pressed: 'bg-white/20 text-white border border-white',
-            disabled: 'bg-transparent text-[#8B8B8F] border border-[#8B8B8F] pointer-events-none'
-          }[state];
+            hover: 'hover:bg-white/10 hover:text-white hover:border hover:border-white',
+            pressed: 'active:bg-white/20 active:text-white active:border active:border-white',
+            disabled: 'disabled:bg-transparent disabled:text-[#8B8B8F] disabled:border disabled:border-[#8B8B8F] disabled:pointer-events-none'
+          };
         case 'tertiary':
           return {
             normal: 'bg-transparent text-white',
-            hover: 'bg-transparent text-[#D2D2D4]',
-            pressed: 'bg-transparent text-[#6E6E73]',
-            disabled: 'bg-transparent text-[#8B8B8F] pointer-events-none'
-          }[state];
+            hover: 'hover:bg-transparent hover:text-[#D2D2D4]',
+            pressed: 'active:bg-transparent active:text-[#6E6E73]',
+            disabled: 'disabled:bg-transparent disabled:text-[#8B8B8F] disabled:pointer-events-none'
+          };
         default:
-          return '';
+          return {
+            normal: '',
+            hover: '',
+            pressed: '',
+            disabled: ''
+          };
       }
     } else { // Light mode
       switch (variant) {
         case 'primary':
           return {
             normal: 'bg-[#2A2B2E] text-white',
-            hover: 'bg-black text-white',
-            pressed: 'bg-[#4E4E52] text-white',
-            disabled: 'bg-[#BCBCBF] text-white pointer-events-none'
-          }[state];
+            hover: 'hover:bg-black hover:text-white',
+            pressed: 'active:bg-[#4E4E52] active:text-white',
+            disabled: 'disabled:bg-[#BCBCBF] disabled:text-white disabled:pointer-events-none'
+          };
         case 'secondary':
           return {
             normal: 'bg-white text-[#2A2B2E] border border-[#2A2B2E]',
-            hover: 'bg-[#BCBCBF] text-[#2A2B2E] border border-[#2A2B2E]',
-            pressed: 'bg-[#2A2B2E] text-white border border-[#2A2B2E]',
-            disabled: 'bg-white text-[#BCBCBF] border border-[#BCBCBF] pointer-events-none'
-          }[state];
+            hover: 'hover:bg-[#BCBCBF] hover:text-[#2A2B2E] hover:border hover:border-[#2A2B2E]',
+            pressed: 'active:bg-[#2A2B2E] active:text-white active:border active:border-[#2A2B2E]',
+            disabled: 'disabled:bg-white disabled:text-[#BCBCBF] disabled:border disabled:border-[#BCBCBF] disabled:pointer-events-none'
+          };
         case 'tertiary':
           return {
             normal: 'bg-transparent text-[#2A2B2E] px-0',
-            hover: 'bg-transparent text-black px-0',
-            pressed: 'bg-transparent text-[#4E4E52] px-0',
-            disabled: 'bg-transparent text-[#BCBCBF] pointer-events-none px-0'
-          }[state];
+            hover: 'hover:bg-transparent hover:text-black hover:px-0',
+            pressed: 'active:bg-transparent active:text-[#4E4E52] active:px-0',
+            disabled: 'disabled:bg-transparent disabled:text-[#BCBCBF] disabled:pointer-events-none disabled:px-0'
+          };
         default:
-          return '';
+          return {
+            normal: '',
+            hover: '',
+            pressed: '',
+            disabled: ''
+          };
       }
+    }
+  };
+
+  // Generate variant and state specific classes based on Figma design
+  const getVariantClasses = () => {
+    const stateClasses = getVariantStateClasses();
+    
+    if (forceState) {
+      // If a specific state is forced, only return that state's classes
+      return stateClasses[forceState as keyof typeof stateClasses];
+    } else {
+      // Otherwise, combine normal state with interactive states
+      return `${stateClasses.normal} ${stateClasses.hover} ${stateClasses.pressed} ${stateClasses.disabled}`;
     }
   };
   

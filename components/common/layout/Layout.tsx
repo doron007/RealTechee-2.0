@@ -83,7 +83,8 @@ export default function Layout({ children, title, description }: LayoutProps) {
 
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow">{children}</main>
+        {/* Add pt-[70px] sm:pt-[80px] md:pt-[85px] lg:pt-[90px] to account for the fixed header height */}
+        <main className="flex-grow pt-[70px] sm:pt-[80px] md:pt-[85px] lg:pt-[90px]">{children}</main>
         <Footer />
       </div>
       

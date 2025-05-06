@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer';
 
 /**
  * Hook to animate counting from one number to another when element comes into view
+ * Animation will restart each time the element enters the viewport
  * @returns The current count and ref to attach to your element
  */
 export const useCounter = (
@@ -13,12 +14,16 @@ export const useCounter = (
 ): [number, (node?: Element | null) => void] => {
   const [count, setCount] = useState<number>(start);
   const [ref, inView] = useInView({
-    triggerOnce: true,
+    triggerOnce: false, // Changed to false so it triggers every time element enters viewport
     threshold: 0.1,
   });
 
   useEffect(() => {
-    if (!inView) return;
+    // Reset count when element goes out of view
+    if (!inView) {
+      setCount(start);
+      return;
+    }
 
     let startTime: number;
     let animationFrame: number;

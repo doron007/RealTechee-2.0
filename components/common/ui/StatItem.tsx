@@ -1,4 +1,6 @@
 import { useCounter } from '../../../utils/animationUtils';
+import { SectionTitle, BodyContent } from '../../ResponsiveTypography';
+import { twMerge } from 'tailwind-merge';
 
 // Define StatItemProps interface directly in the file
 interface StatItemProps {
@@ -28,17 +30,32 @@ export default function StatItem({
   duration = 2000,
   showPlus = true 
 }: StatItemProps) {
+  // The counter will now reset and animate each time the component enters the viewport
   const [count, counterRef] = useCounter(value, duration, 0, delay);
 
   return (
     <div ref={counterRef} className="text-center">
       <div className="flex justify-center items-start mb-1 sm:mb-1.5 md:mb-2">
-        <span className="font-heading font-extrabold text-3xl sm:text-4xl md:text-4xl lg:text-5xl text-white">{count}{suffix}</span>
-        {showPlus && <span className="text-[14px] sm:text-[16px] md:text-[18px] font-bold text-[#F8E9E6]">+</span>}
+        <SectionTitle 
+          as="span" 
+          className="text-white font-extrabold text-3xl sm:text-4xl md:text-4xl lg:text-5xl"
+        >
+          {count}{suffix}
+        </SectionTitle>
+        {showPlus && (
+          <span className="text-[14px] sm:text-[16px] md:text-[18px] font-bold text-[#F8E9E6] mt-1">+</span>
+        )}
       </div>
-      <p className="text-[#F8E9E6] font-body font-extrabold text-base sm:text-lg md:text-xl text-center leading-relaxed">
+      <BodyContent 
+        as="p" 
+        className={twMerge(
+          "text-[#F8E9E6]",
+          "font-extrabold", 
+          "text-center"
+        )}
+      >
         {label}
-      </p>
+      </BodyContent>
     </div>
   );
 }
