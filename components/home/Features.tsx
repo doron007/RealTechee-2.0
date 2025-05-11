@@ -91,10 +91,10 @@ export default function Features(props: FeaturesProps) {
     <section className="section-container bg-stone-50 py-10 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden">
       <div className="section-content">
         <div ref={featuresRef} className="w-full max-w-[1200px] mx-auto mb-6 sm:mb-8">
-          <SectionLabel className={`mb-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <SectionLabel className="text-[#FF5F45]">
             FEATURES
           </SectionLabel>
-          <SectionTitle className={`mb-6 sm:mb-8 md:mb-[32px] transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <SectionTitle>
             Powerful Features to Win More Deals
           </SectionTitle>
         
@@ -147,14 +147,14 @@ export default function Features(props: FeaturesProps) {
             </div>
             
             {/* Right side - images and milestone widget - Enhanced responsive behavior */}
-            <div className={`w-full lg:w-[50%] xl:w-[650px] h-[350px] xs:h-[380px] sm:h-[450px] md:h-[520px] lg:h-[600px] relative overflow-hidden mt-8 lg:mt-0 transition-all duration-1000 ${isRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <div className={`w-full lg:w-[50%] xl:w-[650px] h-[350px] xs:h-[380px] sm:h-[450px] md:h-[540px] lg:h-[700px] relative overflow-hidden mt-8 lg:mt-0 transition-all duration-1000 ${isRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
               {/* Circle decoration - hidden on xs, visible on sm and up */}
-              <div className="hidden sm:block w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 absolute right-0 sm:right-4 md:right-8 lg:right-16 bottom-4 sm:bottom-8 lg:bottom-20 rounded-full border border-accent border-dashed animate-pulse-slow opacity-60" />
+              <div className="hidden lg:block w-52 h-52 lg:w-96 lg:h-96 absolute right-0 lg:right-16 bottom-4 lg:bottom-20 rounded-full border border-accent border-dashed animate-pulse-slow opacity-60" />
               
               {/* Main image - better responsive positioning */}
-              <div className="relative sm:absolute w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-auto sm:h-56 md:h-64 lg:h-96 mx-auto sm:mx-0 sm:left-0 sm:top-[10%] md:top-[15%] lg:top-[20%] shadow-lg rounded-lg overflow-hidden">
+              <div className="relative lg:absolute w-full lg:w-[505px] h-auto lg:h-96 mx-auto lg:mx-0 lg:left-0 lg:top-[20%] shadow-lg rounded-lg overflow-hidden">
                 <Image 
-                  className="w-full h-auto rounded-md object-cover hover:scale-105 transition-transform duration-700" 
+                  className="w-full h-auto rounded-md object-cover" 
                   src={mainImageSrc}
                   alt="Project overview dashboard showing renovation progress" 
                   width={505}
@@ -165,11 +165,11 @@ export default function Features(props: FeaturesProps) {
               </div>
               
               {/* Image thumbnails - responsive grid, hidden on xs, visible on sm and up */}
-              <div className="hidden sm:flex w-full sm:w-[90%] md:w-[80%] lg:w-[505px] h-10 sm:h-12 md:h-16 absolute left-0 sm:left-0 sm:bottom-[28%] md:bottom-[22%] lg:bottom-[5%] gap-1 md:gap-[3px]">
+              <div className="hidden lg:flex w-full lg:w-[505px] h-10 lg:h-16 absolute left-0 lg:bottom-[16%] gap-1 lg:gap-[3px]">
                 {thumbnailImages.map((src, index) => (
                   <div key={index} className="w-1/4 h-full overflow-hidden rounded-md">
                     <Image 
-                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" 
+                      className="w-full h-full object-cover" 
                       src={src} 
                       alt={`Project thumbnail ${index + 1} showing renovation progress`} 
                       width={99} 
@@ -180,7 +180,9 @@ export default function Features(props: FeaturesProps) {
               </div>
               
               {/* Milestones widget - hidden on xs, visible on sm and up, better positioning */}
-              <div className="hidden sm:flex w-[200px] md:w-[220px] lg:w-[280px] px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6 md:pb-8 absolute right-0 sm:right-0 sm:bottom-[0%] md:bottom-[0%] lg:bottom-[0%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
+              <div className="hidden lg:flex w-[200px] lg:w-[280px] px-3 lg:px-6 pt-3 lg:pt-6 pb-4 lg:pb-8 absolute right-0 
+                sm:bottom-[0%] md:bottom-[0%] lg:bottom-[0%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] 
+                backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
                 <BodyContent as="div" className="justify-start text-zinc-800 font-bold leading-loose">Project Milestones</BodyContent>
                 <div className="self-stretch w-full flex flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
                   <MilestoneItem isCompleted={true} />

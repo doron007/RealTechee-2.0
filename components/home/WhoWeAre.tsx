@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { SectionLabel, SectionTitle, Subtitle, BodyContent } from '../';
+import { SectionLabel, SectionTitle, Subtitle, BodyContent, SubContent } from '../';
 
 interface ServiceItemProps {
   icon: string;
@@ -11,7 +11,7 @@ interface ServiceItemProps {
 const ServiceItem: React.FC<ServiceItemProps> = ({ icon, title, description }) => {
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="w-16 h-16 flex items-center justify-center">
+      <div className="w-16 h-16 flex ">
         <Image 
           src={icon} 
           alt={`${title} icon`} 
@@ -20,8 +20,8 @@ const ServiceItem: React.FC<ServiceItemProps> = ({ icon, title, description }) =
         />
       </div>
       <div className="flex flex-col gap-6">
-        <Subtitle className="text-[#2A2B2E]">{title}</Subtitle>
-        <BodyContent className="text-black">{description}</BodyContent>
+        <BodyContent className="text-[#FF5F45]">{title}</BodyContent>
+        <SubContent className="text-black">{description}</SubContent>
       </div>
     </div>
   );
@@ -53,10 +53,12 @@ export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
   return (
     <section className={`section-container bg-white py-[80px] ${className}`}>
       <div className="section-content">
-        <div className="flex flex-col items-center mb-16">
-          <SectionLabel className="mb-4">Who We Serve</SectionLabel>
-          <SectionTitle className="text-center text-[#2A2B2E]">Partner for Growth & Results</SectionTitle>
-        </div>
+        <SectionLabel className="text-[#FF5F45] text-center">
+          Who We Serve
+        </SectionLabel>
+        <SectionTitle className="text-center">
+          Partner for Growth & Results
+        </SectionTitle>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px]">
           {services.map((service, index) => (

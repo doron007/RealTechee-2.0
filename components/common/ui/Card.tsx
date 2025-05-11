@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import { CardTitle, CardSubtitle, CardContent } from '../../';
+import { CardTitle, CardSubtitle, CardContent, SubContent } from '../../';
 
 // Variants based on different cards in the site
 export type CardVariant = 'default' | 'feature' | 'dealBreaker' | 'step';
@@ -228,7 +228,7 @@ const Card: React.FC<CardProps> = ({
     if (!content) return null;
     
     return typeof content === 'string' ? (
-      <CardContent className={getDescriptionColorClass()}>{content}</CardContent>
+      <SubContent className={getDescriptionColorClass()}>{content}</SubContent>
     ) : (
       content
     );

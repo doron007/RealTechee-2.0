@@ -1,6 +1,7 @@
 import { useCounter } from '../../utils/animationUtils';
 import StatItem from '../common/ui/StatItem';
 import Section from '../common/layout/Section';
+import ContainerThreeColumns from '../common/layout/ContainerThreeColumns';
 
 // Define StatsProps interface directly in the file
 interface StatsProps {
@@ -29,28 +30,56 @@ export default function Stats(props: StatsProps) {
     }
   ];
 
+  // Create content for each column - simplified since horizontalAlign handles centering
+  const leftColumn = (
+    <StatItem
+      value={statsData[0].value}
+      label={statsData[0].label}
+      suffix={statsData[0].suffix}
+      showPlus={statsData[0].showPlus}
+    />
+  );
+
+  const middleColumn = (
+    <StatItem
+      value={statsData[1].value}
+      label={statsData[1].label}
+      suffix={statsData[1].suffix}
+      showPlus={statsData[1].showPlus}
+    />
+  );
+
+  const rightColumn = (
+    <StatItem
+      value={statsData[2].value}
+      label={statsData[2].label}
+      suffix={statsData[2].suffix}
+      showPlus={statsData[2].showPlus}
+    />
+  );
+
   return (
     <Section
-      className={`bg-black text-white ${props.className || ''}`}
+      background="black"
+      textColor="white"
+      className={props.className || ''}
+      constrained={false} // Set to false to make background extend full width
       animated
       staggerChildren
       staggerDelay={200}
-      constrained={false}
+      id="stats"
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-[30px]">
-        {statsData.map((stat, index) => (
-          <div key={index} className={`flex justify-center ${
-            // Center the middle item on small screens when in 2-column layout
-            index === 1 && statsData.length === 3 ? 'sm:col-span-2 md:col-span-1' : ''
-          }`}>
-            <StatItem
-              value={stat.value}
-              label={stat.label}
-              suffix={stat.suffix}
-              showPlus={stat.showPlus}
-            />
-          </div>
-        ))}
+      {/* Content container to maintain proper width for the content */}
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ContainerThreeColumns
+          leftContent={leftColumn}
+          middleContent={middleColumn}
+          rightContent={rightColumn}
+          gap="medium"
+          breakpoint="md"
+          verticalAlign="center"
+          horizontalAlign="center" // Using the new horizontalAlign prop
+        />
       </div>
     </Section>
   );

@@ -23,6 +23,7 @@ export default function Hero(props: HeroProps) {
       backgroundImage="/assets/images/hero-bg.png"
       mobileBackgroundImage="/assets/images/hero-bg-mobile.png"
       withOverlay
+      overlayOpacity={10} // Lower opacity for a lighter effect
       className={`${props.className || ''}`}
       constrained={false} // Set to false to match exact Header alignment
       marginTop={0}

@@ -1,5 +1,56 @@
 import React, { ReactNode, ReactElement } from 'react';
 
+// Adding margin/spacing options to typography components
+export type TypographySpacing = 'none' | 'small' | 'medium' | 'large';
+
+interface TextProps {
+  children: React.ReactNode;
+  className?: string;
+  spacing?: TypographySpacing;
+  as?: React.ElementType;
+  center?: boolean;
+}
+
+// Define spacing classes map to be used across typography components
+const spacingClasses = {
+  none: '',
+  small: 'mb-4',
+  medium: 'mb-6 sm:mb-8',
+  large: 'mb-8 sm:mb-10 md:mb-12',
+};
+
+export function SectionLabel({ children, className = '', spacing = 'small', as: Component = 'h3', center = false }: TextProps) {
+  return (
+    <Component className={`text-sm sm:text-base uppercase tracking-wider font-semibold ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
+      {children}
+    </Component>
+  );
+}
+
+export function SectionTitle({ children, className = '', spacing = 'medium', as: Component = 'h2', center = false }: TextProps) {
+  return (
+    <Component className={`text-3xl sm:text-4xl md:text-5xl font-bold text-primary font-heading leading-tight ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
+      {children}
+    </Component>
+  );
+}
+
+export function Subtitle({ children, className = '', spacing = 'small', as: Component = 'h3', center = false }: TextProps) {
+  return (
+    <Component className={`text-xl sm:text-2xl font-medium text-dark-gray font-heading ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
+      {children}
+    </Component>
+  );
+}
+
+export function BodyContent({ children, className = '', spacing = 'none', as: Component = 'p', center = false }: TextProps) {
+  return (
+    <Component className={`text-base sm:text-lg font-body leading-relaxed text-medium-gray ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
+      {children}
+    </Component>
+  );
+}
+
 interface TypographyProps {
   children: ReactNode;
   className?: string;
@@ -29,7 +80,7 @@ export const Heading6: React.FC<TypographyProps> = ({ children, className = '' }
   <h6 className={`heading-6 ${className}`}>{children}</h6>
 );
 
-export const SectionLabel: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const SectionLabelOld: React.FC<TypographyProps> = ({ children, className = '' }) => (
   <div className={`section-label ${className}`}>{children}</div>
 );
 

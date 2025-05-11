@@ -18,7 +18,7 @@ export default function VideoPlayButton({ onClick, className = '' }: VideoPlayBu
       aria-label="Play video"
       type="button"
     >
-      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-transparent rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-lg border border-black">
+      <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white bg-opacity-50 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-lg border border-black">
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 24 24" 

@@ -50,7 +50,7 @@ export default function StatItem({
         as="p" 
         className={twMerge(
           "text-[#F8E9E6]",
-          "font-extrabold", 
+          // "font-extrabold", 
           "text-center"
         )}
       >

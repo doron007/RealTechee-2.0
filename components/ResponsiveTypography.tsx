@@ -1,11 +1,25 @@
 import React, { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+// Define spacing type for consistent spacing options
+export type TypographySpacing = 'none' | 'small' | 'medium' | 'large';
+
+// Enhanced typography props with spacing and alignment options
 interface TypographyProps {
   children: ReactNode;
   className?: string;
   as?: React.ElementType;
+  spacing?: TypographySpacing;
+  center?: boolean;
 }
+
+// Spacing classes for consistent margins
+const spacingClasses = {
+  none: '',
+  small: 'mb-4',
+  medium: 'mb-6 sm:mb-8',
+  large: 'mb-8 sm:mb-10 md:mb-12'
+};
 
 /**
  * Page Header - Responsive typography following the system
@@ -19,13 +33,17 @@ interface TypographyProps {
 export const PageHeader: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'h1' 
+  as = 'h1',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-heading font-extrabold',
     'text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl xxl:text-5xl 2xl:text-5xl',
     'leading-tight tracking-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -44,13 +62,17 @@ export const PageHeader: React.FC<TypographyProps> = ({
 export const SectionTitle: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'h2' 
+  as = 'h2',
+  spacing = 'medium',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-heading font-bold',
     'text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl xxl:text-4xl 2xl:text-4xl',
     'leading-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -69,13 +91,17 @@ export const SectionTitle: React.FC<TypographyProps> = ({
 export const Subtitle: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'h3' 
+  as = 'h3',
+  spacing = 'small',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-heading font-semibold',
     'text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-3xl xxl:text-3xl 2xl:text-3xl',
     'leading-snug',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -94,13 +120,17 @@ export const Subtitle: React.FC<TypographyProps> = ({
 export const BodyContent: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'p' 
+  as = 'p',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-body font-normal',
     'text-base sm:text-base md:text-lg lg:text-lg xl:text-xl xxl:text-xl 2xl:text-xl',
     'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -119,13 +149,17 @@ export const BodyContent: React.FC<TypographyProps> = ({
 export const SubContent: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'p' 
+  as = 'p',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-body font-normal',
     'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
     'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -144,13 +178,17 @@ export const SubContent: React.FC<TypographyProps> = ({
 export const ButtonText: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'span' 
+  as = 'span',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-inter font-medium',
     'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
     'leading-none',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -169,13 +207,17 @@ export const ButtonText: React.FC<TypographyProps> = ({
 export const CardTitle: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'h3' 
+  as = 'h3',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-heading font-bold',
     'text-base sm:text-base md:text-lg lg:text-xl xl:text-xl xxl:text-xl 2xl:text-xl',
     'leading-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -194,13 +236,17 @@ export const CardTitle: React.FC<TypographyProps> = ({
 export const CardSubtitle: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'div' 
+  as = 'div',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-heading font-medium',
     'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
     'leading-snug',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   
@@ -219,13 +265,17 @@ export const CardSubtitle: React.FC<TypographyProps> = ({
 export const CardContent: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as = 'p' 
+  as = 'p',
+  spacing = 'none',
+  center = false
 }) => {
   const Element = as;
   const classes = twMerge(
     'font-body font-normal',
     'text-sm sm:text-sm md:text-sm lg:text-base xl:text-base xxl:text-base 2xl:text-base',
     'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
     className
   );
   

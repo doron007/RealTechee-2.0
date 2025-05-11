@@ -30,23 +30,18 @@ const DealBreakers: React.FC = () => {
   return (
     <section className="section-container bg-white py-10 sm:py-12 md:py-16 lg:py-20">
       <div className="section-content">
-        <div className="text-center mb-2 sm:mb-3 md:mb-4">
-          <SectionLabel>WHY US</SectionLabel>
-        </div>
+        <SectionLabel className="text-[#FF5F45] text-center">
+          WHY US
+        </SectionLabel>
+        <SectionTitle className="text-center">
+          Eliminate deal breakers & win the client
+        </SectionTitle>
         
-        <div className="text-center mb-3 sm:mb-4 md:mb-6">
-          <SectionTitle>
-            Eliminate deal breakers & win the client
-          </SectionTitle>
-        </div>
+        <BodyContent  className="text-center mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-[618px] px-4">
+          Are deals falling through due to homeowners not receiving enough value or buyers underestimating renovation costs
+        </BodyContent>
         
-        <div className="text-center mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-[618px] px-4">
-          <BodyContent>
-            Are deals falling through due to homeowners not receiving enough value or buyers underestimating renovation costs
-          </BodyContent>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 sm:gap-y-8 md:gap-y-10 lg:gap-y-[60px] gap-x-4 sm:gap-x-6 md:gap-x-[30px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 :grid-cols-3 gap-2">
           {cards.map((card, index) => (
             <Card
               key={index}

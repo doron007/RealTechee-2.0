@@ -1,346 +1,182 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { twMerge } from 'tailwind-merge';
+import React from 'react';
+import { ExtendedSectionProps } from '../../../types/components/common/layout';
 
-// Define types for responsive padding
-type ResponsivePadding = {
-  default: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-  '2xl'?: number;
-};
+export type SectionBackground = 'primary' | 'secondary' | 'white' | 'light' | 'black' | 'none';
+export type SectionSpacing = 'small' | 'medium' | 'large' | 'none';
 
+// Original section props - keeping for backward compatibility
 export interface SectionProps {
-  /**
-   * ID for the section, useful for navigation
-   */
-  id?: string;
-
-  /**
-   * Custom CSS classes to apply to the section container
-   */
+  children: React.ReactNode;
   className?: string;
-
-  /**
-   * Top margin in pixels (default: 0px)
-   */
-  marginTop?: number;
-
-  /**
-   * Bottom margin in pixels (default: 0px)
-   */
-  marginBottom?: number;
-
-  /**
-   * Top padding in pixels (default: 50px)
-   * Can be a single number for consistent padding or an object for responsive padding
-   * Example: { default: 50, md: 80, '2xl': 100 }
-   */
-  paddingTop?: number | ResponsivePadding;
-
-  /**
-   * Bottom padding in pixels (default: 50px)
-   * Can be a single number for consistent padding or an object for responsive padding
-   * Example: { default: 50, md: 80, '2xl': 100 }
-   */
-  paddingBottom?: number | ResponsivePadding;
-
-  /**
-   * Optional background image URL
-   */
-  backgroundImage?: string;
-
-  /**
-   * Optional mobile-specific background image URL
-   */
-  mobileBackgroundImage?: string;
-
-  /**
-   * Whether to add a gradient overlay to the background
-   */
-  withOverlay?: boolean;
-
-  /**
-   * Custom CSS classes for the overlay
-   */
-  overlayClassName?: string;
-
-  /**
-   * Whether to enable entrance animations for children
-   */
+  background?: SectionBackground;
+  spacing?: SectionSpacing;
+  id?: string;
   animated?: boolean;
-
-  /**
-   * Delay before starting the animation in milliseconds
-   */
-  animationDelay?: number;
-
-  /**
-   * Whether to stagger child animations (applies class to direct children)
-   */
   staggerChildren?: boolean;
-
-  /**
-   * Delay between each child animation in milliseconds
-   */
   staggerDelay?: number;
-
-  /**
-   * Whether the content should have a max width
-   */
-  constrained?: boolean;
-
-  /**
-   * CSS classes to apply to the constrained content container
-   */
-  contentClassName?: string;
-
-  /**
-   * Whether to add decorative elements (blobs/circles) in the background
-   */
+  textColor?: 'white' | 'black' | 'default';
+  // Adding extended props
   withDecorativeElements?: boolean;
-
-  /**
-   * The children to render inside the section
-   */
-  children: ReactNode;
+  backgroundImage?: string;
+  mobileBackgroundImage?: string;
+  withOverlay?: boolean;
+  constrained?: boolean;
+  marginTop?: number | string;
+  marginBottom?: number | string;
+  paddingTop?: number | string | Record<string, number>;
+  paddingBottom?: number | string | Record<string, number>;
+  overlayOpacity?: number; // New prop for overlay opacity
 }
 
-/**
- * A standardized, reusable section component that handles common layout patterns
- * including background images, animations, and responsive padding.
- * Width constraints match the Header component for consistency.
- */
-const Section: React.FC<SectionProps> = ({
+export default function Section({ 
+  children, 
+  className = '', 
+  background = 'white',
+  spacing = 'medium',
   id,
-  className = '',
-  marginTop = 0,
-  marginBottom = 0,
-  paddingTop = 50,
-  paddingBottom = 50,
+  animated = false,
+  staggerChildren = false,
+  staggerDelay = 100,
+  textColor = 'default',
+  // Extended props with defaults
+  withDecorativeElements = false,
   backgroundImage,
   mobileBackgroundImage,
   withOverlay = false,
-  overlayClassName = '',
-  animated = false,
-  animationDelay = 300,
-  staggerChildren = false,
-  staggerDelay = 100,
   constrained = true,
-  contentClassName = '',
-  withDecorativeElements = false,
-  children
-}) => {
-  const [isVisible, setIsVisible] = useState<boolean>(!animated);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Generate a stable section ID for CSS targeting
-  const [sectionId] = useState(() => id || `section-${Math.random().toString(36).substring(2, 11)}`);
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    if (animated) {
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, animationDelay);
-
-      return () => clearTimeout(timer);
-    }
-  }, [animated, animationDelay]);
-
-  // Apply responsive padding using useEffect to ensure it's applied on the client side
-  useEffect(() => {
-    // Skip if not mounted yet
-    if (!isMounted || !sectionRef.current) return;
-
-    // Handle responsive padding
-    if (typeof paddingTop === 'object' || typeof paddingBottom === 'object') {
-      // Apply base padding
-      if (typeof paddingTop === 'object') {
-        sectionRef.current.style.paddingTop = `${paddingTop.default}px`;
-      }
-      if (typeof paddingBottom === 'object') {
-        sectionRef.current.style.paddingBottom = `${paddingBottom.default}px`;
-      }
-
-      // Create and apply media query stylesheet
-      const styleId = `responsive-padding-${sectionId}`;
-      let styleEl = document.getElementById(styleId) as HTMLStyleElement;
-
-      // Create style element if it doesn't exist
-      if (!styleEl) {
-        styleEl = document.createElement('style');
-        styleEl.id = styleId;
-        document.head.appendChild(styleEl);
-      }
-
-      // Generate CSS for media queries
-      let css = '';
-
-      // Generate top padding media queries
-      if (typeof paddingTop === 'object') {
-        if (paddingTop.md) {
-          css += `@media (min-width: 768px) { #${sectionId} { padding-top: ${paddingTop.md}px !important; } }\n`;
-        }
-        if (paddingTop.lg) {
-          css += `@media (min-width: 1024px) { #${sectionId} { padding-top: ${paddingTop.lg}px !important; } }\n`;
-        }
-        if (paddingTop.xl) {
-          css += `@media (min-width: 1280px) { #${sectionId} { padding-top: ${paddingTop.xl}px !important; } }\n`;
-        }
-        if (paddingTop['2xl']) {
-          css += `@media (min-width: 1536px) { #${sectionId} { padding-top: ${paddingTop['2xl']}px !important; } }\n`;
-        }
-      }
-
-      // Generate bottom padding media queries
-      if (typeof paddingBottom === 'object') {
-        if (paddingBottom.md) {
-          css += `@media (min-width: 768px) { #${sectionId} { padding-bottom: ${paddingBottom.md}px !important; } }\n`;
-        }
-        if (paddingBottom.lg) {
-          css += `@media (min-width: 1024px) { #${sectionId} { padding-bottom: ${paddingBottom.lg}px !important; } }\n`;
-        }
-        if (paddingBottom.xl) {
-          css += `@media (min-width: 1280px) { #${sectionId} { padding-bottom: ${paddingBottom.xl}px !important; } }\n`;
-        }
-        if (paddingBottom['2xl']) {
-          css += `@media (min-width: 1536px) { #${sectionId} { padding-bottom: ${paddingBottom['2xl']}px !important; } }\n`;
-        }
-      }
-
-      // Apply CSS
-      styleEl.textContent = css;
-    }
-
-    // Clean up function
-    return () => {
-      const styleId = `responsive-padding-${sectionId}`;
-      const styleEl = document.getElementById(styleId);
-      if (styleEl) {
-        styleEl.parentNode?.removeChild(styleEl);
-      }
-    };
-  }, [isMounted, sectionId, paddingTop, paddingBottom]);
-
-  // Handle responsive background image if both options are provided
-  const bgImage = backgroundImage && mobileBackgroundImage && isMounted && window.innerWidth < 768
-    ? `url(${mobileBackgroundImage})`
-    : backgroundImage ? `url(${backgroundImage})` : undefined;
-
-  // Base section classes
-  const sectionClasses = twMerge(
-    "relative section-container",
-    backgroundImage ? 'overflow-hidden' : '',
-    className
-  );
-
-  // Content container classes - match the Header width constraints
-  const contentContainerClasses = twMerge(
-    "section-content relative z-10 w-full max-w-[1536px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-14 2xl:px-16",
-    contentClassName
-  );
-
-  // Create staggered animation with React.Children if needed
-  const renderContent = () => {
-    if (staggerChildren && React.Children.count(children) > 0) {
-      return React.Children.map(children, (child, index) => {
-        if (!React.isValidElement(child)) return child;
-
-        // Calculate stagger delay based on index
-        const delay = index * staggerDelay;
-
-        // Clone the element and add animation classes with proper type safety
-        return React.cloneElement(child, {
-          className: twMerge(
-            (child.props as { className?: string }).className || '',
-            `transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`
-          ),
-          style: {
-            ...((child.props as { style?: React.CSSProperties }).style || {}),
-            transitionDelay: `${delay}ms`,
-          }
-        } as React.HTMLAttributes<HTMLElement>);
-      });
-    } else if (animated) {
-      return (
-        <div className={`transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {children}
-        </div>
-      );
-    } else {
-      return children;
-    }
+  marginTop,
+  marginBottom,
+  paddingTop,
+  paddingBottom,
+  overlayOpacity = 40, // Default opacity of 40%
+}: SectionProps) {
+  // Map background types to actual colors
+  const backgroundClasses = {
+    primary: 'bg-primary',
+    secondary: 'bg-secondary',
+    white: 'bg-white',
+    light: 'bg-[#FCF9F8]',
+    black: 'bg-black',
+    none: ''
   };
 
-  // Calculate styles for the section
-  const sectionStyle: React.CSSProperties = {
-    marginTop: `${marginTop}px`,
-    marginBottom: `${marginBottom}px`
+  // Map text colors to CSS classes
+  const textClasses = {
+    white: 'text-white',
+    black: 'text-black',
+    default: ''
   };
 
-  // Only set initial padding values for non-responsive padding
-  if (typeof paddingTop === 'number') {
-    sectionStyle.paddingTop = `${paddingTop}px`;
-  } else if (typeof paddingTop === 'object' && !isMounted) {
-    // Set initial value for SSR only (will be overridden by useEffect)
-    sectionStyle.paddingTop = `${paddingTop.default}px`;
+  // Map spacing types to actual padding values
+  const spacingClasses = {
+    small: 'py-6 sm:py-8 md:py-10',
+    medium: 'py-10 sm:py-12 md:py-16 lg:py-20',
+    large: 'py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28',
+    none: ''
+  };
+
+  // Animation classes
+  const animationClasses = animated ? 'animate-in' : '';
+  const staggerClasses = staggerChildren ? 'stagger-children' : '';
+
+  // Generate inline styles for background images and custom margins/paddings
+  const sectionStyles: React.CSSProperties = {};
+  
+  // Add background image if provided
+  if (backgroundImage) {
+    sectionStyles.backgroundImage = `url(${backgroundImage})`;
+    sectionStyles.backgroundSize = 'cover';
+    sectionStyles.backgroundPosition = 'center';
+    // Set position relative for background image
+    sectionStyles.position = 'relative';
   }
 
-  if (typeof paddingBottom === 'number') {
-    sectionStyle.paddingBottom = `${paddingBottom}px`;
-  } else if (typeof paddingBottom === 'object' && !isMounted) {
-    // Set initial value for SSR only (will be overridden by useEffect)
-    sectionStyle.paddingBottom = `${paddingBottom.default}px`;
+  // Add custom margin and padding if provided as simple values
+  if (typeof marginTop === 'number' || typeof marginTop === 'string') {
+    sectionStyles.marginTop = marginTop;
   }
+  
+  if (typeof marginBottom === 'number' || typeof marginBottom === 'string') {
+    sectionStyles.marginBottom = marginBottom;
+  }
+  
+  // For simple padding values (not responsive objects)
+  if (typeof paddingTop === 'number' || typeof paddingTop === 'string') {
+    sectionStyles.paddingTop = paddingTop;
+  }
+  
+  if (typeof paddingBottom === 'number' || typeof paddingBottom === 'string') {
+    sectionStyles.paddingBottom = paddingBottom;
+  }
+
+  // Generate responsive padding classes if padding is provided as an object
+  let responsivePaddingTopClass = '';
+  let responsivePaddingBottomClass = '';
+  
+  if (paddingTop && typeof paddingTop === 'object') {
+    // This would be handled with utility classes or inline styles
+    // For now we'll just set the default value and handle responsive in CSS
+    if (paddingTop.default) {
+      sectionStyles.paddingTop = `${paddingTop.default}px`;
+    }
+  }
+  
+  if (paddingBottom && typeof paddingBottom === 'object') {
+    if (paddingBottom.default) {
+      sectionStyles.paddingBottom = `${paddingBottom.default}px`;
+    }
+  }
+
+  // Combine background and spacing with any custom classes
+  let combinedClassName = `section-container ${backgroundClasses[background]} ${textClasses[textColor]} ${animationClasses} ${staggerClasses}`;
+  
+  // Only add spacing classes if no custom padding is provided
+  if (!paddingTop && !paddingBottom) {
+    combinedClassName += ` ${spacingClasses[spacing]}`;
+  }
+  
+  // Position relative is necessary for absolute positioning of overlay and decorative elements
+  combinedClassName += ' relative';
+  
+  // Add constrained class for width only to the inner content div
+  let contentClassName = 'section-content relative z-10';
+  if (constrained) {
+    contentClassName += ' max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8';
+  }
+  
+  // Add responsive padding classes
+  combinedClassName += ` ${responsivePaddingTopClass} ${responsivePaddingBottomClass}`;
+  
+  // Add any custom classes
+  combinedClassName += ` ${className}`;
 
   return (
-    <section
-      id={sectionId}
-      ref={sectionRef}
-      className={sectionClasses}
-      data-animated={animated}
-      style={sectionStyle}
+    <section 
+      className={combinedClassName} 
+      id={id}
+      style={sectionStyles}
+      {...(staggerChildren && { 'data-stagger-delay': staggerDelay.toString() })}
     >
-      {/* Background with optional overlay */}
-      {backgroundImage && (
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: bgImage }}
-        >
-          {withOverlay && (
-            <div className={twMerge("absolute inset-0 bg-gradient-to-b from-transparent to-white/20", overlayClassName)}></div>
-          )}
+      {/* Add overlay if withOverlay is true - with customizable opacity */}
+      {withOverlay && 
+        <div 
+          className="absolute inset-0 bg-black z-0" 
+          style={{ opacity: overlayOpacity / 100 }}
+        ></div>
+      }
+      
+      {/* Decorative elements if specified */}
+      {withDecorativeElements && (
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+          {/* Add your decorative elements here */}
+          <div className="hidden md:block absolute top-10 left-10 w-20 h-20 rounded-full bg-primary-light opacity-30"></div>
+          <div className="hidden md:block absolute bottom-10 right-10 w-32 h-32 rounded-full bg-secondary-light opacity-20"></div>
         </div>
       )}
-
-      {/* Content container */}
-      <div className={contentContainerClasses}>
-        {/* Optional inner constrained container */}
-        {constrained ? (
-          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto">
-            {renderContent()}
-          </div>
-        ) : (
-          renderContent()
-        )}
-
-        {/* Decorative elements - visible on larger screens */}
-        {withDecorativeElements && (
-          <>
-            <div className="hidden md:block absolute bottom-0 right-0 -mb-16 -mr-16 opacity-20 z-0">
-              <div className="w-64 h-64 rounded-full bg-accent/30 blur-3xl"></div>
-            </div>
-            <div className="hidden md:block absolute top-24 left-8 -mt-8 -ml-8 opacity-20 z-0">
-              <div className="w-48 h-48 rounded-full bg-primary/30 blur-3xl"></div>
-            </div>
-          </>
-        )}
+      
+      <div className={contentClassName}>
+        {children}
       </div>
     </section>
   );
-};
-
-export default Section;
+}
