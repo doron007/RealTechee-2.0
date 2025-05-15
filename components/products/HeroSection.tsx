@@ -81,10 +81,12 @@ export default function HeroSection({
             backgroundImage={backgroundImage}
             background="none"
             spacing="none"
-            paddingTop="63px"
-            paddingBottom="63px"
             constrained={false}
-        >
+            marginTop={50}
+            marginBottom={50}
+            paddingTop={{ default: 50, md: 80, '2xl': 100 }}
+            paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
+              >
             <div className="flex flex-col sm:items-center text-left sm:text-center">
                 {content.titles.map((titleLine, index) => (
                     <SectionTitle 
@@ -96,7 +98,13 @@ export default function HeroSection({
                     </SectionTitle>
                 ))}
                 {content.subContents.map((subContent, index) => (
-                    <SubContent key={index}>{subContent}</SubContent>
+                    <SubContent 
+                        key={index} 
+                        spacing={index < content.subContents.length - 1 ? 'none' : 'small'} 
+                        className={index > 0 ? "mt-1" : ""}
+                    >
+                        {subContent}
+                    </SubContent>
                 ))}
             </div>
         </Section>
