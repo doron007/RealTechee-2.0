@@ -40,7 +40,7 @@ export const PageHeader: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-heading font-extrabold',
-    'text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl xxl:text-5xl 2xl:text-5xl',
+    'text-3xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-4xl xxl:text-5xl 2xl:text-5xl',
     'leading-tight tracking-tight',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -69,7 +69,7 @@ export const SectionTitle: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-heading font-bold',
-    'text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl xxl:text-4xl 2xl:text-4xl',
+    'text-2xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-3xl xxl:text-4xl 2xl:text-4xl',
     'leading-tight',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -98,7 +98,7 @@ export const Subtitle: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-heading font-semibold',
-    'text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-3xl xxl:text-3xl 2xl:text-3xl',
+    'text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-2xl xxl:text-3xl 2xl:text-3xl',
     'leading-snug',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -127,7 +127,7 @@ export const BodyContent: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-body font-normal',
-    'text-base sm:text-base md:text-lg lg:text-lg xl:text-xl xxl:text-xl 2xl:text-xl',
+    'text-base sm:text-base md:text-base lg:text-lg xl:text-lg xxl:text-xl 2xl:text-xl',
     'leading-relaxed',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -140,9 +140,9 @@ export const BodyContent: React.FC<TypographyProps> = ({
 /**
  * Sub Content - Responsive typography following the system
  * sm: text-sm (14px)
- * md: text-base (16px)
+ * md: text-sm (14px) - changed from text-base to maintain 14px at md breakpoint
  * lg: text-base (16px)
- * xl: text-lg (18px)
+ * xl: text-base (16px) - changed from text-lg to maintain 16px at xl breakpoint
  * xxl: text-lg (18px)
  * 2xl: text-lg (18px) - capped at 18px
  */
@@ -156,7 +156,7 @@ export const SubContent: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-body font-normal',
-    'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
+    'text-sm sm:text-sm md:text-sm lg:text-base xl:text-base xxl:text-lg 2xl:text-lg',
     'leading-relaxed',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -185,7 +185,7 @@ export const ButtonText: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-inter font-medium',
-    'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
+    'text-sm sm:text-sm md:text-sm lg:text-base xl:text-base xxl:text-lg 2xl:text-lg',
     'leading-none',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -214,7 +214,7 @@ export const CardTitle: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-heading font-bold',
-    'text-base sm:text-base md:text-lg lg:text-xl xl:text-xl xxl:text-xl 2xl:text-xl',
+    'text-base sm:text-base md:text-base lg:text-lg xl:text-lg xxl:text-xl 2xl:text-xl',
     'leading-tight',
     spacingClasses[spacing],
     center ? 'text-center' : '',
@@ -243,7 +243,7 @@ export const CardSubtitle: React.FC<TypographyProps> = ({
   const Element = as;
   const classes = twMerge(
     'font-heading font-medium',
-    'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
+    'text-sm sm:text-sm md:text-sm lg:text-base xl:text-base xxl:text-lg 2xl:text-lg',
     'leading-snug',
     spacingClasses[spacing],
     center ? 'text-center' : '',

@@ -55,7 +55,7 @@ export default function Footer(props: FooterProps) {
             <div>
               <SubContent as="h3" className="text-gray-900 font-bold mb-3">Quick Links</SubContent>
               <div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/"
@@ -64,7 +64,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/projects"
@@ -73,7 +73,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/about"
@@ -82,7 +82,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/privacy-policy"
@@ -98,25 +98,25 @@ export default function Footer(props: FooterProps) {
             <div>
               <SubContent as="h3" className="text-gray-900 font-bold mb-3">Products</SubContent>
               <div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/products/for-sellers"
+                    href="/products/sellers"
                     text="For Sellers"
                     size="sm"
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/products/for-buyers"
+                    href="/products/buyers"
                     text="For Buyers"
                     size="sm"
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/products/kitchen-and-bath"
@@ -125,7 +125,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/products/commercial"
@@ -134,7 +134,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/products/architects-and-designers"
@@ -150,7 +150,7 @@ export default function Footer(props: FooterProps) {
             <div>
               <SubContent as="h3" className="text-gray-900 font-bold mb-3">Contact</SubContent>
               <div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/general-inquiry"
@@ -159,7 +159,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/get-estimate"
@@ -168,7 +168,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/get-qualified"
@@ -177,7 +177,7 @@ export default function Footer(props: FooterProps) {
                     textSize="sm"
                   />
                 </div>
-                <div className="mb-2">
+                <div className="mb-1">
                   <Button
                     variant="tertiary"
                     href="/become-affiliate"
@@ -230,7 +230,7 @@ export default function Footer(props: FooterProps) {
               <div>
                 <SubContent as="h3" className="text-gray-900 font-bold mb-4">Quick Links</SubContent>
                 <div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/"
@@ -239,7 +239,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/projects"
@@ -248,7 +248,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/about"
@@ -257,7 +257,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/privacy-policy"
@@ -273,25 +273,25 @@ export default function Footer(props: FooterProps) {
               <div>
                 <SubContent as="h3" className="text-gray-900 font-bold mb-4">Products</SubContent>
                 <div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/products/for-sellers"
+                      href="/products/sellers"
                       text="For Sellers"
                       size="sm"
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/products/for-buyers"
+                      href="/products/buyers"
                       text="For Buyers"
                       size="sm"
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/products/kitchen-and-bath"
@@ -300,7 +300,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/products/commercial"
@@ -309,7 +309,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/products/architects-and-designers"
@@ -325,7 +325,7 @@ export default function Footer(props: FooterProps) {
               <div>
                 <SubContent as="h3" className="text-gray-900 font-bold mb-4">Contact</SubContent>
                 <div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/general-inquiry"
@@ -334,7 +334,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/get-estimate"
@@ -343,7 +343,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/get-qualified"
@@ -352,7 +352,7 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-0.5">
                     <Button
                       variant="tertiary"
                       href="/become-affiliate"

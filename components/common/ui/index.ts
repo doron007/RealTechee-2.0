@@ -6,6 +6,11 @@ import VideoPlayButton from './VideoPlayButton';
 import VideoBackButton from './VideoBackButton';
 import VideoPlayer from './VideoPlayer';
 import SliderNavBar from './SliderNavBar';
+import FeatureCard from './FeatureCard';
+import TestimonialCard from './TestimonialCard';
+import TestimonialCarousel from './TestimonialCarousel';
+import FinancingCard from './FinancingCard';
+import BenefitBlock from './BenefitBlock';
 
 export {
   Card,
@@ -14,5 +19,10 @@ export {
   VideoPlayButton,
   VideoBackButton,
   VideoPlayer,
-  SliderNavBar
+  SliderNavBar,
+  FeatureCard,
+  TestimonialCard,
+  TestimonialCarousel,
+  FinancingCard,
+  BenefitBlock
 };

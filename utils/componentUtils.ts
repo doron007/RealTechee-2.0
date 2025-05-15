@@ -184,8 +184,8 @@ interface ProductCategory {
  * Common product categories data for reuse
  */
 export const productCategories: ProductCategory[] = [
-  { href: "/products/for-sellers", text: "For Sellers" },
-  { href: "/products/for-buyers", text: "For Buyers" },
+  { href: "/products/sellers", text: "For Sellers" },
+  { href: "/products/buyers", text: "For Buyers" },
   { href: "/products/kitchen-and-bath", text: "Kitchen & Bath Showroom" },
   { href: "/products/commercial", text: "Commercial Program" },
   { href: "/products/architects-and-designers", text: "Architects & Designers" }
