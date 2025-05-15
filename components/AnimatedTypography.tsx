@@ -9,11 +9,9 @@ import {
   ButtonText,
   CardTitle,
   CardSubtitle,
-  CardContent
-} from './ResponsiveTypography';
-
-// Import SectionLabel from Typography since it's not in ResponsiveTypography
-import { SectionLabel } from './Typography';
+  CardContent,
+  SectionLabel
+} from './Typography';
 
 // Create animated versions of our typography components
 export const AnimatedPageHeader = withAnimation(PageHeader);

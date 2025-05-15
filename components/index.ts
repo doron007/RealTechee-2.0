@@ -3,7 +3,7 @@
  * This file re-exports all components for easier imports
  */
 
-// Export Typography components
+// Export all Typography components from consolidated file
 export {
   Heading1,
   Heading2,
@@ -18,18 +18,14 @@ export {
   CardTitle,
   CardSubtitle,
   CardText,
-  CardContent
-} from './Typography';
-
-// Export Responsive Typography components
-export {
+  CardContent,
   PageHeader,
   SectionTitle,
   Subtitle,
   BodyContent,
   SubContent,
   ButtonText
-} from './ResponsiveTypography';
+} from './Typography';
 
 // Export Animated Typography components
 export {
@@ -37,7 +33,12 @@ export {
   AnimatedSectionTitle,
   AnimatedSubtitle,
   AnimatedBodyContent,
-  AnimatedSubContent
+  AnimatedSubContent,
+  AnimatedPageHeader,
+  AnimatedButtonText,
+  AnimatedCardTitle,
+  AnimatedCardSubtitle,
+  AnimatedCardContent
 } from './AnimatedTypography';
 
 // Export sections by page

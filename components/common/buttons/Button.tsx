@@ -2,7 +2,7 @@ import React, { ReactNode, MouseEvent, forwardRef } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
-import { ButtonText } from '../../ResponsiveTypography';
+import { ButtonText } from '../../Typography';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'sm' | 'md' | 'lg';

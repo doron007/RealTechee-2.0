@@ -6,7 +6,7 @@ import {
   BodyContent, 
   SubContent,
   ButtonText
-} from '../ResponsiveTypography';
+} from '../Typography';
 import Button from '../common/buttons/Button';
 
 const ResponsiveTypographyShowcase: React.FC = () => {

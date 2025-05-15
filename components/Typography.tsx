@@ -1,17 +1,25 @@
 import React, { ReactNode, ReactElement } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-// Adding margin/spacing options to typography components
+/**
+ * @fileoverview Consolidated Typography Components
+ * 
+ * This file contains all the typography components for RealTechee.
+ * Consistent type scale and responsive text sizes for all text elements.
+ */
+
+// Types and interfaces for typography components
 export type TypographySpacing = 'none' | 'small' | 'medium' | 'large';
 
-interface TextProps {
-  children: React.ReactNode;
+interface TypographyProps {
+  children: ReactNode;
   className?: string;
   spacing?: TypographySpacing;
   as?: React.ElementType;
   center?: boolean;
 }
 
-// Define spacing classes map to be used across typography components
+// Spacing classes for consistent margins across all typography components
 const spacingClasses = {
   none: '',
   small: 'mb-4',
@@ -19,283 +27,574 @@ const spacingClasses = {
   large: 'mb-8 sm:mb-10 md:mb-12',
 };
 
-export function SectionLabel({ children, className = '', spacing = 'small', as: Component = 'h3', center = false }: TextProps) {
-  return (
-    <Component className={`text-sm sm:text-base uppercase tracking-wider font-semibold ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
-      {children}
-    </Component>
+/**
+ * PAGE AND SECTION HEADERS
+ * Primary typography elements for page structure
+ */
+
+/**
+ * Page Header - Main page heading
+ * Size scale:
+ * sm: text-2xl (25px)
+ * md: text-3xl (31px) 
+ * lg: text-3xl (31px)
+ * xl: text-4xl (36px)
+ * xxl: text-5xl (48px)
+ * 2xl: text-5xl (48px) - capped at 48px
+ */
+export const PageHeader: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'h1',
+  spacing = 'large',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-heading font-semibold',
+    'text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl xxl:text-5xl 2xl:text-5xl',
+    'leading-tight tracking-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
   );
-}
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export function SectionTitle({ children, className = '', spacing = 'medium', as: Component = 'h2', center = false }: TextProps) {
-  return (
-    <Component className={`text-3xl sm:text-4xl md:text-5xl font-bold text-primary font-heading leading-tight ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
-      {children}
-    </Component>
+/**
+ * Section Title - Main title for page sections
+ * Size scale:
+ * sm: text-xl (20px)
+ * md: text-2xl (25px)
+ * lg: text-2xl (25px)
+ * xl: text-2xl (25px)
+ * xxl: text-3xl (31px)
+ * 2xl: text-3xl (31px)
+ */
+export const SectionTitle: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'h2',
+  spacing = 'medium',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-heading font-bold',
+    'text-xl sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl xxl:text-3xl 2xl:text-3xl',
+    'leading-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
   );
-}
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export function Subtitle({ children, className = '', spacing = 'small', as: Component = 'h3', center = false }: TextProps) {
-  return (
-    <Component className={`text-xl sm:text-2xl font-medium text-dark-gray font-heading ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
-      {children}
-    </Component>
+/**
+ * Subtitle - Secondary title for sections
+ * Size scale:
+ * sm: text-lg (18px)
+ * md: text-xl (20px)
+ * lg: text-xl (20px)
+ * xl: text-xl (20px)
+ * xxl: text-2xl (25px)
+ * 2xl: text-2xl (25px)
+ */
+export const Subtitle: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'h3',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-heading font-semibold',
+    'text-lg sm:text-lg md:text-xl lg:text-xl xl:text-xl xxl:text-2xl 2xl:text-2xl',
+    'leading-snug',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
   );
-}
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export function BodyContent({ children, className = '', spacing = 'none', as: Component = 'p', center = false }: TextProps) {
-  return (
-    <Component className={`text-base sm:text-lg font-body leading-relaxed text-medium-gray ${spacingClasses[spacing]} ${center ? 'text-center' : ''} ${className}`}>
-      {children}
-    </Component>
+/**
+ * Section Label - Used for labels and category headings
+ * Size scale: text-xs sm:text-sm
+ */
+export const SectionLabel: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'h4',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'text-xs sm:text-sm uppercase tracking-wider font-semibold',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
   );
-}
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-interface TypographyProps {
-  children: ReactNode;
-  className?: string;
-}
+/**
+ * BODY TEXT COMPONENTS
+ * For general content and paragraphs
+ */
 
-export const Heading1: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h1 className={`heading-1 ${className}`}>{children}</h1>
-);
+/**
+ * Body Content - Main body text
+ * Size scale:
+ * sm: text-sm (14px)
+ * md: text-base (16px)
+ * lg: text-base (16px)
+ * xl: text-lg (18px)
+ * xxl: text-lg (18px)
+ * 2xl: text-lg (18px)
+ */
+export const BodyContent: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'p',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-body font-normal',
+    'text-sm sm:text-sm md:text-base lg:text-base xl:text-lg xxl:text-lg 2xl:text-lg',
+    'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const Heading2: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h2 className={`heading-2 ${className}`}>{children}</h2>
-);
+/**
+ * Sub Content - Smaller body text for secondary content
+ * Size scale:
+ * sm: text-xs (12px)
+ * md: text-xs (12px)
+ * lg: text-sm (14px)
+ * xl: text-sm (14px)
+ * xxl: text-base (16px)
+ * 2xl: text-base (16px)
+ */
+export const SubContent: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'p',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-body font-normal',
+    'text-xs sm:text-xs md:text-xs lg:text-sm xl:text-sm xxl:text-base 2xl:text-base',
+    'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const Heading3: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h3 className={`heading-3 ${className}`}>{children}</h3>
-);
+/**
+ * Button Text - Typography for buttons
+ * Size scale:
+ * sm: text-xs (12px)
+ * md: text-sm (14px)
+ * lg: text-sm (14px)
+ * xl: text-base (16px)
+ * xxl: text-base (16px)
+ * 2xl: text-base (16px)
+ */
+export const ButtonText: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'span',
+  spacing = 'none',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-inter font-medium',
+    'text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base xxl:text-base 2xl:text-base',
+    'leading-none',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const Heading4: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h4 className={`heading-4 ${className}`}>{children}</h4>
-);
+/**
+ * CARD TYPOGRAPHY
+ * For card components and content blocks
+ */
 
-export const Heading5: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h5 className={`heading-5 ${className}`}>{children}</h5>
-);
+/**
+ * CardTitle - For card headers
+ * Size scale:
+ * sm: text-sm (14px)
+ * md: text-base (16px)
+ * lg: text-lg (18px)
+ * xl: text-lg (18px)
+ * xxl: text-lg (18px)
+ * 2xl: text-lg (18px)
+ */
+export const CardTitle: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'h3',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-heading font-bold',
+    'text-sm sm:text-sm md:text-base lg:text-lg xl:text-lg xxl:text-lg 2xl:text-lg',
+    'leading-tight',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const Heading6: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h6 className={`heading-6 ${className}`}>{children}</h6>
-);
+/**
+ * CardSubtitle - For card subheaders
+ * Size scale:
+ * sm: text-xs (12px)
+ * md: text-sm (14px)
+ * lg: text-sm (14px)
+ * xl: text-base (16px)
+ * xxl: text-base (16px)
+ * 2xl: text-base (16px)
+ */
+export const CardSubtitle: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'div',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-heading font-medium',
+    'text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base xxl:text-base 2xl:text-base',
+    'leading-snug',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const SectionLabelOld: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <div className={`section-label ${className}`}>{children}</div>
-);
+/**
+ * CardContent - For card body content
+ * Size scale:
+ * sm: text-xs (12px)
+ * md: text-xs (12px)
+ * lg: text-sm (14px)
+ * xl: text-sm (14px)
+ * xxl: text-sm (14px)
+ * 2xl: text-sm (14px)
+ */
+export const CardContent: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '', 
+  as = 'p',
+  spacing = 'small',
+  center = false
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-body font-normal',
+    'text-xs sm:text-xs md:text-xs lg:text-sm xl:text-sm xxl:text-sm 2xl:text-sm',
+    'leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  
+  return <Element className={classes}>{children}</Element>;
+};
 
-export const SubtitlePill: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <div className={`subtitle-pill ${className}`}>{children}</div>
-);
+/**
+ * LEGACY/TRADITIONAL HEADING ELEMENTS
+ * Classic h1-h6 elements with consistent spacing and sizing
+ * Updated according to Figma design: https://www.figma.com/design/TXcYWiSywAE8GRGoY3FPot
+ */
 
-export const BodyText: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <p className={`body-text ${className}`}>{children}</p>
-);
+export const Heading1: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'large',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-2xl sm:text-3xl md:text-4xl lg:text-[48px]', // explicitly set to 48px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h1 className={classes}>{children}</h1>;
+};
 
-export const BodyTextSecondary: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <p className={`body-text-secondary ${className}`}>{children}</p>
-);
+export const Heading2: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'medium',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-xl sm:text-2xl md:text-3xl lg:text-[39px]', // explicitly set to 39px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h2 className={classes}>{children}</h2>;
+};
 
-export const CardTitle: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h3 className={`card-title ${className}`}>{children}</h3>
-);
+export const Heading3: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-lg sm:text-xl md:text-2xl lg:text-[31px]', // explicitly set to 31px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h3 className={classes}>{children}</h3>;
+};
 
-export const CardSubtitle: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <h4 className={`card-subtitle ${className}`}>{children}</h4>
-);
+export const Heading4: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-base sm:text-lg md:text-xl lg:text-[25px]', // explicitly set to 25px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h4 className={classes}>{children}</h4>;
+};
 
-export const CardText: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <p className={`card-text ${className}`}>{children}</p>
-);
+export const Heading5: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-sm sm:text-base md:text-lg lg:text-[20px]', // explicitly set to 20px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h5 className={classes}>{children}</h5>;
+};
 
-export const CardContent: React.FC<TypographyProps> = ({ children, className = '' }) => (
-  <p className={`card-text ${className}`}>{children}</p>
-);
+export const Heading6: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false
+}) => {
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-xs sm:text-sm md:text-base lg:text-[16px]', // explicitly set to 16px
+    'leading-[120%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <h6 className={classes}>{children}</h6>;
+};
 
+/**
+ * TRADITIONAL BODY TEXT ELEMENTS
+ * Classic body text elements with consistent spacing and sizing
+ * Updated according to Figma design: https://www.figma.com/design/TXcYWiSywAE8GRGoY3FPot
+ */
+
+export const Body1: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false,
+  as = 'p'
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-base sm:text-lg md:text-xl lg:text-[20px]', // explicitly set to 20px
+    'leading-[150%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <Element className={classes}>{children}</Element>;
+};
+
+export const Body2: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false,
+  as = 'p'
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-sm sm:text-base md:text-lg lg:text-[16px]', // explicitly set to 16px
+    'leading-[150%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <Element className={classes}>{children}</Element>;
+};
+
+export const Body3: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false,
+  as = 'p'
+}) => {
+  const Element = as;
+  const classes = twMerge(
+    'font-nunito font-normal',
+    'text-xs sm:text-sm md:text-base lg:text-[14px]', // explicitly set to 14px
+    'leading-[150%] tracking-[0%]',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <Element className={classes}>{children}</Element>;
+};
+
+/**
+ * ADDITIONAL SPECIALIZED TEXT COMPONENTS
+ * For specific use cases and variations
+ */
+
+// Legacy component, kept for backward compatibility
+export const SectionLabelOld: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false 
+}) => {
+  const classes = twMerge(
+    'text-xs sm:text-sm uppercase tracking-wider font-semibold',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <div className={classes}>{children}</div>;
+};
+
+export const SubtitlePill: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false 
+}) => {
+  const classes = twMerge(
+    'text-xs sm:text-sm uppercase tracking-wider font-medium',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <div className={classes}>{children}</div>;
+};
+
+export const BodyText: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false 
+}) => {
+  const classes = twMerge(
+    'text-sm sm:text-base leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <p className={classes}>{children}</p>;
+};
+
+export const BodyTextSecondary: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false 
+}) => {
+  const classes = twMerge(
+    'text-xs sm:text-sm leading-relaxed text-medium-gray',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <p className={classes}>{children}</p>;
+};
+
+export const CardText: React.FC<TypographyProps> = ({ 
+  children, 
+  className = '',
+  spacing = 'small',
+  center = false 
+}) => {
+  const classes = twMerge(
+    'text-xs sm:text-sm leading-relaxed',
+    spacingClasses[spacing],
+    center ? 'text-center' : '',
+    className
+  );
+  return <p className={classes}>{children}</p>;
+};
+
+// Export a default reference to TypographyGuide component
 export default function Typography(): ReactElement {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl">
-      <Heading1 className="mb-10 font-heading">RealTechee Typography Guide</Heading1>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Headings</Heading2>
-        <div className="space-y-6">
-          <div className="py-3">
-            <Heading1>H1 Heading</Heading1>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: 57.60px | Size: text-5xl</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <Heading2>H2 Heading</Heading2>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: leading-10 | Size: text-4xl</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <Heading3>H3 Heading</Heading3>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: leading-9 | Size: text-3xl</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <Heading4>H4 Heading</Heading4>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: 120px | Size: text-2xl</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <Heading5>H5 Heading</Heading5>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: normal | Size: text-xl</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <Heading6>H6 Heading</Heading6>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Line Height: tight | Size: text-base</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Paragraphs</Heading2>
-        <div className="space-y-6">
-          <div className="py-3">
-            <BodyText className="paragraph-1">P1 - This is a paragraph text in text-xl size.</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Roboto | Weight: Normal | Size: text-xl | Line Height: loose</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="paragraph-2">P2 - This is a paragraph text in text-base size.</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Roboto | Weight: Normal | Size: text-base | Line Height: relaxed</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="paragraph-3">P3 - This is a paragraph text in text-xs size.</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Roboto | Weight: Normal | Size: text-xs | Line Height: tight</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Brand Typography</Heading2>
-        <div className="space-y-6">
-          <div className="py-3">
-            <BodyText className="brand-title">Brand Title</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Inter | Weight: Bold | Size: 39pt</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="brand-subtitle">Brand Subtitle for secondary information</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Inter | Weight: Regular | Size: 18pt | Color: Neutral 400</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="brand-identity">Brand Identity Text in Playfair Display</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Playfair Display | Weight: Regular | Size: 14pt | Color: Neutral 400</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Content & UI Typography</Heading2>
-        <div className="space-y-6">
-          <div className="py-3">
-            <Heading3 className="content-title">Content Title</Heading3>
-            <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: SemiBold | Size: 48pt</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="content-body">Content body text used for descriptive paragraphs on landing pages and important sections.</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Roboto | Weight: Regular | Size: 20pt | Line Height: 1.6</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="btn-text">Button Text</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Inter | Weight: Medium | Size: 16pt</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <BodyText className="menu-text">Menu Navigation Text</BodyText>
-            <BodyTextSecondary className="mt-1">Font: Inter | Weight: Medium | Size: 14pt</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Buttons</Heading2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="py-3">
-            <button className="btn btn-primary">Primary Button</button>
-            <BodyTextSecondary className="mt-3">Primary Button: Black background with white text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-secondary">Secondary Button</button>
-            <BodyTextSecondary className="mt-3">Secondary Button: Dark gray background with white text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-outline">Outline Button</button>
-            <BodyTextSecondary className="mt-3">Outline Button: Transparent with black border and text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-accent-1">Accent 1 Button</button>
-            <BodyTextSecondary className="mt-3">Accent 1 Button: Red (#D11919) with white text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-accent-2">Accent 2 Button</button>
-            <BodyTextSecondary className="mt-3">Accent 2 Button: Coral/Orange (#E9664A) with white text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-accent-3">Accent 3 Button</button>
-            <BodyTextSecondary className="mt-3">Accent 3 Button: Yellow (#FFB900) with black text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-accent-4">Accent 4 Button</button>
-            <BodyTextSecondary className="mt-3">Accent 4 Button: Teal (#3BE8B0) with black text</BodyTextSecondary>
-          </div>
-          <div className="py-3">
-            <button className="btn btn-accent-5">Accent 5 Button</button>
-            <BodyTextSecondary className="mt-3">Accent 5 Button: Blue (#17619C) with white text</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
-      
-      <section className="mb-12">
-        <Heading2 className="mb-6 pb-2 border-b border-very-light-gray">Color Palette</Heading2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-md bg-black text-white">
-            <BodyText className="font-bold">Black</BodyText>
-            <BodyTextSecondary>#151515</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-dark-gray text-white">
-            <BodyText className="font-bold">Dark Gray</BodyText>
-            <BodyTextSecondary>#2A2B2E</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-medium-gray text-white">
-            <BodyText className="font-bold">Medium Gray</BodyText>
-            <BodyTextSecondary>#6E6E73</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-light-gray text-black">
-            <BodyText className="font-bold">Light Gray</BodyText>
-            <BodyTextSecondary>#919191</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-very-light-gray text-black">
-            <BodyText className="font-bold">Very Light Gray</BodyText>
-            <BodyTextSecondary>#E4E4E4</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-off-white text-black">
-            <BodyText className="font-bold">Off White</BodyText>
-            <BodyTextSecondary>#F9F4F3</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-white text-black border border-very-light-gray">
-            <BodyText className="font-bold">White</BodyText>
-            <BodyTextSecondary>#FFFFFF</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-accent-1 text-white">
-            <BodyText className="font-bold">Accent 1</BodyText>
-            <BodyTextSecondary>#D11919</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-accent-2 text-white">
-            <BodyText className="font-bold">Accent 2</BodyText>
-            <BodyTextSecondary>#E9664A</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-accent-3 text-black">
-            <BodyText className="font-bold">Accent 3</BodyText>
-            <BodyTextSecondary>#FFB900</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-accent-4 text-black">
-            <BodyText className="font-bold">Accent 4</BodyText>
-            <BodyTextSecondary>#3BE8B0</BodyTextSecondary>
-          </div>
-          <div className="p-4 rounded-md bg-accent-5 text-white">
-            <BodyText className="font-bold">Accent 5</BodyText>
-            <BodyTextSecondary>#17619C</BodyTextSecondary>
-          </div>
-        </div>
-      </section>
+    <div className="p-4">
+      <Heading2>Typography Components</Heading2>
+      <p className="mt-4">
+        View the full Typography Guide in the Style Guide section.
+        Import typography components from this file for use in your components.
+      </p>
     </div>
   );
 }

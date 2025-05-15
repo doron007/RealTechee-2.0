@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { SubContent, BodyContent } from '../../../components/ResponsiveTypography';
+import { SubContent, BodyContent } from '../../Typography';
 import Button from '../buttons/Button';
 
 // Define FooterProps interface directly in the file

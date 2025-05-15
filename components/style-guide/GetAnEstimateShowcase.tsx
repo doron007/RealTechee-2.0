@@ -1,6 +1,6 @@
 import React from 'react';
 import EstimateButton from '../common/buttons/EstimateButton';
-import { ButtonText } from '../ResponsiveTypography';
+import { ButtonText } from '../Typography';
 import { EstimateMode, EstimatePriority, EstimateStatus } from '../common/buttons/EstimateButton';
 
 const priorityOptions: EstimatePriority[] = ['primary', 'secondary', 'tertiary'];

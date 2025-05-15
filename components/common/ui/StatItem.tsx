@@ -1,5 +1,5 @@
 import { useCounter } from '../../../utils/animationUtils';
-import { SectionTitle, BodyContent } from '../../ResponsiveTypography';
+import { SectionTitle, BodyContent } from '../../Typography';
 import { twMerge } from 'tailwind-merge';
 
 // Define StatItemProps interface directly in the file

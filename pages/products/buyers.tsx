@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { HeroSection } from '../../components/products';
+import { HeroSection, FeaturesSection } from '../../components/products';
+import { ProductType } from '../../components/products/HeroSection';
 
 const Buyers: NextPage = () => {
   return (
@@ -13,7 +14,8 @@ const Buyers: NextPage = () => {
       </Head>
       
       <main className="flex-grow">
-        <HeroSection isBuyer={true} />
+        <HeroSection productType={ProductType.BUYER} />
+        <FeaturesSection productType={ProductType.BUYER} className="mt-12" />
       </main>
     </div>
   );

@@ -62,31 +62,16 @@ interface HeroSectionProps {
     title?: string[];
     description?: string;
     className?: string;
-    productType?: ProductType;
-    // Legacy props for backward compatibility
-    isBuyer?: boolean;
-    isSeller?: boolean;
-    isKitchenBath?: boolean; 
+    productType: ProductType;
 }
 
 export default function HeroSection({
     className = '',
     title,
     productType,
-    isBuyer = false,
-    isSeller = false,
-    isKitchenBath = false,
 }: HeroSectionProps) {
-    // Determine product type from legacy props if productType is not provided
-    let effectiveProductType = productType;
-    if (!effectiveProductType) {
-        if (isBuyer) effectiveProductType = ProductType.BUYER;
-        else if (isKitchenBath) effectiveProductType = ProductType.KITCHEN_BATH;
-        else effectiveProductType = ProductType.SELLER; // Default to seller
-    }
-
     // Get content for the current product type
-    const content = PRODUCT_CONTENT[effectiveProductType];
+    const content = PRODUCT_CONTENT[productType];
     const backgroundImage = content.backgroundImage;
     
     return (
