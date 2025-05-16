@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { HeroSection, FeaturesSection } from '../../components/products';
+import { HeroSection, FeaturesSection, BenefitsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
 
 const ArchitectsAndDesigners: NextPage = () => {
@@ -15,7 +15,8 @@ const ArchitectsAndDesigners: NextPage = () => {
       
       <main className="flex-grow">
         <HeroSection productType={ProductType.ARCHITECT_DESIGNER} />
-        <FeaturesSection productType={ProductType.ARCHITECT_DESIGNER} className="mt-12" />
+        <FeaturesSection productType={ProductType.ARCHITECT_DESIGNER} />
+        <BenefitsSection productType={ProductType.ARCHITECT_DESIGNER} />
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExtendedSectionProps } from '../../../types/components/common/layout';
 
-export type SectionBackground = 'primary' | 'secondary' | 'white' | 'light' | 'black' | 'none';
+export type SectionBackground = 'primary' | 'secondary' | 'white' | 'light' | 'black' | 'gray' | 'none';
 export type SectionSpacing = 'small' | 'medium' | 'large' | 'none';
 
 // Original section props - keeping for backward compatibility
@@ -57,6 +57,7 @@ export default function Section({
     white: 'bg-white',
     light: 'bg-[#FCF9F8]',
     black: 'bg-black',
+    gray: 'bg-[#353535]',
     none: ''
   };
 
