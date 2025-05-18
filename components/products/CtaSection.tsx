@@ -9,8 +9,8 @@ import { CtaSection as CommonCtaSection } from '../common/sections';
 export default function CtaSection() {
   return (
     <CommonCtaSection 
-      title="Ready to win more big deals faster?"
-      subtitle="Get a Renovation Estimate Today"
+      title="Get Started"
+      subtitle="You'll receive a free estimate within 48 hours."
       buttonText="Get an Estimate"
       buttonLink="/get-estimate"
     />

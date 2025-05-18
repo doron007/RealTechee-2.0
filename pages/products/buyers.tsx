@@ -2,6 +2,7 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
+import { CtaSection } from '../../components/common/sections';
 
 const Buyers: NextPage = () => {
   return (
@@ -18,6 +19,12 @@ const Buyers: NextPage = () => {
         <FeaturesSection productType={ProductType.BUYER} />
         <BenefitsSection productType={ProductType.BUYER} />
         <TestimonialsSection productType={ProductType.BUYER} />
+        <CtaSection 
+          title="Get Started"
+          subtitle="You'll receive a free estimate within 48 hours."
+          buttonText="Get an Estimate"
+          buttonLink="/get-estimate"
+        />
       </main>
     </div>
   );

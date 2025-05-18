@@ -8,7 +8,6 @@ import VideoPlayer from './VideoPlayer';
 import SliderNavBar from './SliderNavBar';
 import FeatureCard from './FeatureCard';
 import TestimonialCard from './TestimonialCard';
-import FinancingCard from './FinancingCard';
 import BenefitBlock from './BenefitBlock';
 import SliderNavigation from './SliderNavigation';
 
@@ -22,7 +21,6 @@ export {
   SliderNavBar,
   FeatureCard,
   TestimonialCard,
-  FinancingCard,
   BenefitBlock,
   SliderNavigation
 };

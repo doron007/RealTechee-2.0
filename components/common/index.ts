@@ -3,11 +3,14 @@
  * This file re-exports all common components for easier imports
  */
 
-// Re-export button components
+// Export button components
 export * from './buttons';
 
-// Re-export layout components
+// Export layout components
 export * from './layout';
 
-// Re-export UI components
+// Export UI components
 export * from './ui';
+
+// Export sections components
+export * from './sections';

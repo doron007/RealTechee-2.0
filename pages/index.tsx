@@ -7,8 +7,7 @@ import {
   Partners, 
   Stats, 
   Portfolio, 
-  Testimonials, 
-  CtaSection,
+  Testimonials,
   AboutSection,
   DealBreakers,
   ClientSection,
@@ -19,6 +18,8 @@ import {
 // import ClientSection from '../components/ClientSection';
 import Footer from '../components/common/layout/Footer';
 import type { NextPage } from 'next';
+// Import the CtaSection directly from common/sections
+import { CtaSection } from '../components/common/sections';
 
 const Home: NextPage = () => {
   return (
@@ -42,7 +43,12 @@ const Home: NextPage = () => {
         <HowItWorks />
         <Partners />
         <WhoWeAre />
-        <CtaSection />
+        <CtaSection 
+          title="Ready to win more big deals faster?"
+          subtitle="Get a Renovation Estimate Today"
+          buttonText="Get an Estimate"
+          buttonLink="/get-estimate"
+        />
       </main>
     </div>
   );

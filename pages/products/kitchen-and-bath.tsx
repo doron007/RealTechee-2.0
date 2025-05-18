@@ -2,6 +2,7 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
+import { CtaSection } from '../../components/common/sections';
 
 const KitchenAndBath: NextPage = () => {
   return (
@@ -12,12 +13,18 @@ const KitchenAndBath: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      
+
       <main className="flex-grow">
         <HeroSection productType={ProductType.KITCHEN_BATH} />
         <FeaturesSection productType={ProductType.KITCHEN_BATH} />
         <BenefitsSection productType={ProductType.KITCHEN_BATH} />
         <TestimonialsSection productType={ProductType.KITCHEN_BATH} />
+        <CtaSection
+          title="Get Started"
+          subtitle="Initiate Business Growth Today"
+          buttonText="Get Qualified"
+          buttonLink="/get-qualified"
+        />
       </main>
     </div>
   );

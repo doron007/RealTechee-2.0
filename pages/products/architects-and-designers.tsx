@@ -2,6 +2,7 @@ import Head from 'next/head';
 import type { NextPage } from 'next';
 import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
+import { CtaSection } from '../../components/common/sections';
 
 const ArchitectsAndDesigners: NextPage = () => {
   return (
@@ -12,12 +13,18 @@ const ArchitectsAndDesigners: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      
+
       <main className="flex-grow">
         <HeroSection productType={ProductType.ARCHITECT_DESIGNER} />
         <FeaturesSection productType={ProductType.ARCHITECT_DESIGNER} />
         <BenefitsSection productType={ProductType.ARCHITECT_DESIGNER} />
         <TestimonialsSection productType={ProductType.ARCHITECT_DESIGNER} />
+        <CtaSection
+          title="Get Started"
+          subtitle="Grow Your Business Today."
+          buttonText="Get Qualified"
+          buttonLink="/get-qualified"
+        />
       </main>
     </div>
   );
