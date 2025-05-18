@@ -4,30 +4,90 @@ import { ExtendedSectionProps } from '../../../types/components/common/layout';
 export type SectionBackground = 'primary' | 'secondary' | 'white' | 'light' | 'black' | 'gray' | 'none';
 export type SectionSpacing = 'small' | 'medium' | 'large' | 'none';
 
-// Original section props - keeping for backward compatibility
+/**
+ * Props interface for the Section component
+ */
 export interface SectionProps {
+  /** Content to render within the section */
   children: React.ReactNode;
+  
+  /** Additional CSS classes to apply to the section */
   className?: string;
+  
+  /** Background color/theme for the section */
   background?: SectionBackground;
+  
+  /** Vertical spacing (padding) size */
   spacing?: SectionSpacing;
+  
+  /** HTML ID attribute for the section */
   id?: string;
+  
+  /** Whether to animate the section on scroll */
   animated?: boolean;
+  
+  /** Whether to stagger the animation of child elements */
   staggerChildren?: boolean;
+  
+  /** Delay between each child element animation in milliseconds */
   staggerDelay?: number;
+  
+  /** Text color for the section content */
   textColor?: 'white' | 'black' | 'default';
-  // Adding extended props
+  
+  /** Whether to display decorative elements in the background */
   withDecorativeElements?: boolean;
+  
+  /** URL for the background image */
   backgroundImage?: string;
+  
+  /** URL for the background image on mobile devices */
   mobileBackgroundImage?: string;
+  
+  /** 
+   * Whether to add a semi-transparent overlay over the section
+   * Useful for improving text readability over background images
+   */
   withOverlay?: boolean;
+  
+  /** Whether the section content should be constrained to a maximum width */
   constrained?: boolean;
+  
+  /** Custom margin-top value */
   marginTop?: number | string;
+  
+  /** Custom margin-bottom value */
   marginBottom?: number | string;
+  
+  /** 
+   * Custom padding-top value
+   * Can be a simple value or an object with responsive breakpoints
+   */
   paddingTop?: number | string | Record<string, number>;
+  
+  /** 
+   * Custom padding-bottom value
+   * Can be a simple value or an object with responsive breakpoints
+   */
   paddingBottom?: number | string | Record<string, number>;
-  overlayOpacity?: number; // New prop for overlay opacity
+  
+  /**
+   * Opacity percentage for the overlay (0-100)
+   * Only applies when withOverlay is true
+   */
+  overlayOpacity?: number;
 }
 
+/**
+ * Section component - A versatile container for page sections with various styling options
+ * 
+ * Features:
+ * - Background colors and images
+ * - Customizable spacing and constraints
+ * - Animation capabilities
+ * - Optional overlay for improved text readability over images
+ * - Responsive padding options
+ */
 export default function Section({ 
   children, 
   className = '', 

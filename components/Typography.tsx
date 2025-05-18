@@ -19,6 +19,11 @@ interface TypographyProps {
   center?: boolean;
 }
 
+// Extended interface for SubtitlePill to include uppercase option
+interface SubtitlePillProps extends TypographyProps {
+  uppercase?: boolean;
+}
+
 // Spacing classes for consistent margins across all typography components
 const spacingClasses = {
   none: '',
@@ -526,19 +531,28 @@ export const SectionLabelOld: React.FC<TypographyProps> = ({
   return <div className={classes}>{children}</div>;
 };
 
-export const SubtitlePill: React.FC<TypographyProps> = ({ 
+/**
+ * SubtitlePill - For pill-shaped labels
+ * @param uppercase - Whether to transform text to uppercase (default: true for backward compatibility)
+ */
+export const SubtitlePill: React.FC<SubtitlePillProps> = ({ 
   children, 
   className = '',
-  spacing = 'small',
-  center = false 
+  spacing = 'none',
+  center = false,
+  uppercase = true,
+  as = 'span'
 }) => {
+  const Element = as;
   const classes = twMerge(
-    'text-xs sm:text-sm uppercase tracking-wider font-medium',
+    'font-body font-medium py-1 px-3 rounded-full inline-block',
+    'text-xs sm:text-xs',
+    uppercase ? 'uppercase tracking-wider' : '',
     spacingClasses[spacing],
     center ? 'text-center' : '',
     className
   );
-  return <div className={classes}>{children}</div>;
+  return <Element className={classes}>{children}</Element>;
 };
 
 export const BodyText: React.FC<TypographyProps> = ({ 

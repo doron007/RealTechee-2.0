@@ -55,23 +55,23 @@ const BENEFITS_CONTENT = {
     ]
   },
   [ProductType.BUYER]: {
-    sectionLabel: "WHY PARTNER WITH US",
-    title: "The RealTechee Advantage",
+    sectionLabel: "REVOLUTIONIZING BUYING FOR CLIENTS & AGENTS",
+    title: "Enhance Client Value, Attract More Business",
     benefits: [
       {
         icon: "/assets/icons/prd-buyers-benefit-top.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Expand Property Options",
+            content: "Qualify your clients for more properties that align with their budget by leveraging cost-effective home improvements."
           },
           {
-            title: "",
-            content: ""
+            title: "48-Hour Estimates",
+            content: "Provide swift quotes to your buyers within 48 hours, kickstarting home improvement projects promptly and impressing your clients."
           },
           {
-            title: "",
-            content: ""
+            title: "Revenue Share",
+            content: "Boost your income effortlessly as Realtechee rewards your partnership with a generous RevShare on every signed contract."
           }
         ]
       },
@@ -79,39 +79,39 @@ const BENEFITS_CONTENT = {
         icon: "/assets/icons/prd-buyers-benefit-bottom.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Project Transparency",
+            content: "You and your client can monitor daily progress, view before and after photos, track project stages, review scope of work, and payment terms online, anytime."
           },
           {
-            title: "",
-            content: ""
+            title: "Increased Lead Conversion",
+            content: "Deliver added value to homeowners, boosting your or your teams lead conversion rates in the real estate purchasing market."
           },
           {
-            title: "",
-            content: ""
+            title: "Streamline Property Purchase",
+            content: "Accelerate your property buying process, efficiently remodel within your budget, and stay on track with your project timeline."
           }
         ]
       }
     ]
   },
   [ProductType.KITCHEN_BATH]: {
-    sectionLabel: "THE REALTECHEE DIFFERENCE",
-    title: "Partner Benefits",
+    sectionLabel: "FEATURES",
+    title: "Offer More Value to Your Customers and Grow Your Business - Attract More Customers",
     benefits: [
       {
         icon: "/assets/icons/prd-kb-benefit-top.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Online Presence Boost",
+            content: "Elevate your digital presence and promote your brand across extensive marketing channels."
           },
           {
-            title: "",
-            content: ""
+            title: "Lead Generation",
+            content: "Identify and generate more leads, boosted by RealTechee's marketing channels and dashboard tools to attract more clients."
           },
           {
-            title: "",
-            content: ""
+            title: "Online Platform",
+            content: "Seamlessly work with contractors and homeowners using our user-friendly dashboard and project management tools."
           }
         ]
       },
@@ -119,39 +119,39 @@ const BENEFITS_CONTENT = {
         icon: "/assets/icons/prd-kb-benefit-bottom.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Exclusive Program Access",
+            content: "Elevate your competitive edge by offering clients exclusive access to RealTechee's remodeling concierge program."
           },
           {
-            title: "",
-            content: ""
+            title: "Revenue Share",
+            content: "Increase your profitability potential thanks to non-product income streams generated via RealTechee's innovative platform."
           },
           {
-            title: "",
-            content: ""
+            title: "Flexible Financing Options",
+            content: "Access tailored financing solutions to accommodate your project needs, ensuring financial flexibility for you and your clients."
           }
         ]
       }
     ]
   },
   [ProductType.COMMERCIAL]: {
-    sectionLabel: "BENEFITS",
-    title: "Why Choose Our Commercial Program",
+    sectionLabel: "FEATURES",
+    title: "Accessible Solutions to Maximize Returns in Commercial Real Estate",
     benefits: [
       {
         icon: "/assets/icons/prd-com-benefit-top.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Versatile Commercial Solutions",
+            content: "Access a wide range of tailored services for commercial real estate, covering tenant improvements, renovations, new construction, and property development, all through a unified platform."
           },
           {
-            title: "",
-            content: ""
+            title: "Immersive Virtual Walkthroughs",
+            content: "Experience detailed virtual walkthroughs that allow stakeholders to understand project progress and design in-depth, ensuring alignment at every stage of your project."
           },
           {
-            title: "",
-            content: ""
+            title: "Project Timeline Management",
+            content: "Efficiently manage project timelines and milestones to ensure on-time project delivery and client satisfaction."
           }
         ]
       },
@@ -159,39 +159,39 @@ const BENEFITS_CONTENT = {
         icon: "/assets/icons/prd-com-benefit-bottom.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Revenue Sharing Opportunity",
+            content: "Boost profitability with a revenue share on all customer referrals."
           },
           {
-            title: "",
-            content: ""
+            title: "Collaboration Tools",
+            content: "Leverage user-friendly communication tools for seamless collaboration among contractors, developers, and property owners, streamlining project coordination."
           },
           {
-            title: "",
-            content: ""
+            title: "Flexible Financing Solutions",
+            content: "Enjoy access to flexible financing options specifically structured to meet the unique needs of commercial projects. In addition to Zero out of pocket programs for commercial real estate transactions - paid at close of escrow."
           }
         ]
       }
     ]
   },
   [ProductType.ARCHITECT_DESIGNER]: {
-    sectionLabel: "PARTNERING BENEFITS",
-    title: "Grow Your Practice With Us",
+    sectionLabel: "FEATURES",
+    title: "Your Partner in Simplifying the Design-Build Journey",
     benefits: [
       {
         icon: "/assets/icons/prd-ad-benefit-top.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Digital Collaboration Platform",
+            content: "Work cohesively with clients, contractors, and project managers on our digital platform."
           },
           {
-            title: "",
-            content: ""
+            title: "Personalized Project Dashboard",
+            content: "Effectively manage and monitor your projects using a personalized dashboard, offering real-time insights to your clients."
           },
           {
-            title: "",
-            content: ""
+            title: "Immersive Virtual Walk-Throughs",
+            content: "Watch your designs come to life through live virtual walk-throughs during renovations, ensuring a smooth transition from concept to reality."
           }
         ]
       },
@@ -199,16 +199,16 @@ const BENEFITS_CONTENT = {
         icon: "/assets/icons/prd-ad-benefit-bottom.svg",
         items: [
           {
-            title: "",
-            content: ""
+            title: "Marketing Channel Access",
+            content: "Collaborate with RealTechee to extend your brand's reach through our diverse marketing channels, attracting a broader range of design clients."
           },
           {
-            title: "",
-            content: ""
+            title: "Flexible Financing Solutions",
+            content: "Realtechee provides you with the ability to secure tailored financing options for their clients, ensuring that projects align with budget constraints and financial goals."
           },
           {
-            title: "",
-            content: ""
+            title: "New Revenue Vertical",
+            content: "Elevate your financial standing with Realtechee's unique revenue-sharing program, generating additional non-product income streams."
           }
         ]
       }
@@ -246,10 +246,10 @@ export default function BenefitsSection({
       id="benefits"
       background="gray"
       className={`${className}`}
-      marginTop={50}
-      marginBottom={50}
+      marginTop={0}
+      marginBottom={0}
       paddingTop={{ default: 24, md: 80, '2xl': 100 }}
-      paddingBottom={{ default: 24, md: 80, '2xl': 100 }}
+      paddingBottom={{ default: 74, md: 130, '2xl': 150 }}
     >
       {/* Header section */}
       <div className="text-center m-24 animate-on-scroll">

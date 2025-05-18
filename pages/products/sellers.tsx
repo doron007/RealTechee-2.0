@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { HeroSection, FeaturesSection, BenefitsSection } from '../../components/products';
+import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
 
 const Sellers: NextPage = () => {
@@ -17,6 +17,7 @@ const Sellers: NextPage = () => {
         <HeroSection productType={ProductType.SELLER} />
         <FeaturesSection productType={ProductType.SELLER} />
         <BenefitsSection productType={ProductType.SELLER} />
+        <TestimonialsSection productType={ProductType.SELLER}/>
       </main>
     </div>
   );

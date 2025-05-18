@@ -8,9 +8,9 @@ import VideoPlayer from './VideoPlayer';
 import SliderNavBar from './SliderNavBar';
 import FeatureCard from './FeatureCard';
 import TestimonialCard from './TestimonialCard';
-import TestimonialCarousel from './TestimonialCarousel';
 import FinancingCard from './FinancingCard';
 import BenefitBlock from './BenefitBlock';
+import SliderNavigation from './SliderNavigation';
 
 export {
   Card,
@@ -22,7 +22,7 @@ export {
   SliderNavBar,
   FeatureCard,
   TestimonialCard,
-  TestimonialCarousel,
   FinancingCard,
-  BenefitBlock
+  BenefitBlock,
+  SliderNavigation
 };
