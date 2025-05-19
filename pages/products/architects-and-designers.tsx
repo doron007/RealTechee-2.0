@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
+import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection, FinancingSolutionsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
 import { CtaSection } from '../../components/common/sections';
 
@@ -19,6 +19,7 @@ const ArchitectsAndDesigners: NextPage = () => {
         <FeaturesSection productType={ProductType.ARCHITECT_DESIGNER} />
         <BenefitsSection productType={ProductType.ARCHITECT_DESIGNER} />
         <TestimonialsSection productType={ProductType.ARCHITECT_DESIGNER} />
+        <FinancingSolutionsSection productType={ProductType.ARCHITECT_DESIGNER} />
         <CtaSection
           title="Get Started"
           subtitle="Grow Your Business Today."

@@ -41,8 +41,16 @@ export {
   AnimatedCardContent
 } from './AnimatedTypography';
 
+// Export specific UI components directly
+import { SliderNavBar } from './common/ui';
+export { SliderNavBar };
+
 // Export sections by page
 export * from './home';
 export * from './contact';
-export * from './common';
+
+// Explicitly re-export from common to avoid conflicts
+import * as CommonComponents from './common';
+export { CommonComponents };
+
 export * from './style-guide';

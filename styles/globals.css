@@ -6,7 +6,7 @@
 /* Nunito Sans */
 @font-face {
   font-family: 'Nunito Sans';
-  src: url('/assets/fonts/NunitoSans/NunitoSans_10pt-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/NunitoSans_10pt-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -14,7 +14,7 @@
 
 @font-face {
   font-family: 'Nunito Sans';
-  src: url('/assets/fonts/NunitoSans/NunitoSans_10pt-Medium.ttf') format('truetype');
+  src: url('/assets/fonts/NunitoSans_10pt-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -22,7 +22,7 @@
 
 @font-face {
   font-family: 'Nunito Sans';
-  src: url('/assets/fonts/NunitoSans/NunitoSans_10pt-SemiBold.ttf') format('truetype');
+  src: url('/assets/fonts/NunitoSans_10pt-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -30,7 +30,7 @@
 
 @font-face {
   font-family: 'Nunito Sans';
-  src: url('/assets/fonts/NunitoSans/NunitoSans_10pt-Bold.ttf') format('truetype');
+  src: url('/assets/fonts/NunitoSans_10pt-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -38,7 +38,7 @@
 
 @font-face {
   font-family: 'Nunito Sans';
-  src: url('/assets/fonts/NunitoSans/NunitoSans_10pt-ExtraBold.ttf') format('truetype');
+  src: url('/assets/fonts/NunitoSans_10pt-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -47,7 +47,7 @@
 /* Roboto */
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/Roboto-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -55,7 +55,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+  src: url('/assets/fonts/Roboto-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -63,7 +63,7 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url('/assets/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+  src: url('/assets/fonts/Roboto-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,8 @@
 /* Inter */
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/Inter/Inter-Regular.woff2') format('woff2');
+  /* Fallback to Google Fonts since Inter fonts might be missing locally */
+  src: local('Inter'), url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -80,7 +81,8 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/Inter/Inter-Medium.woff2') format('woff2');
+  /* Fallback to Google Fonts since Inter fonts might be missing locally */
+  src: local('Inter'), url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -88,7 +90,8 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/Inter/Inter-SemiBold.woff2') format('woff2');
+  /* Fallback to Google Fonts since Inter fonts might be missing locally */
+  src: local('Inter'), url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -96,7 +99,8 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('/assets/fonts/Inter/Inter-Bold.woff2') format('woff2');
+  /* Fallback to Google Fonts since Inter fonts might be missing locally */
+  src: local('Inter'), url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -105,7 +109,8 @@
 /* Playfair Display */
 @font-face {
   font-family: 'Playfair Display';
-  src: url('/assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.woff2') format('woff2');
+  /* Use Google Fonts for Playfair Display since local files are missing */
+  src: local('Playfair Display'), url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&display=swap');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -113,7 +118,8 @@
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('/assets/fonts/PlayfairDisplay/PlayfairDisplay-Medium.woff2') format('woff2');
+  /* Use Google Fonts for Playfair Display since local files are missing */
+  src: local('Playfair Display'), url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -121,7 +127,8 @@
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('/assets/fonts/PlayfairDisplay/PlayfairDisplay-SemiBold.woff2') format('woff2');
+  /* Use Google Fonts for Playfair Display since local files are missing */
+  src: local('Playfair Display'), url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -129,7 +136,8 @@
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('/assets/fonts/PlayfairDisplay/PlayfairDisplay-Bold.woff2') format('woff2');
+  /* Use Google Fonts for Playfair Display since local files are missing */
+  src: local('Playfair Display'), url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
   font-weight: 700;
   font-style: normal;
   font-display: swap;

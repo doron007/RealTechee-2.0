@@ -10,6 +10,9 @@ import FeatureCard from './FeatureCard';
 import TestimonialCard from './TestimonialCard';
 import BenefitBlock from './BenefitBlock';
 import SliderNavigation from './SliderNavigation';
+import { TagLabel } from './TagLabel';
+import { BenefitCard } from './BenefitCard';
+import { OptionCard } from './OptionCard';
 
 export {
   Card,
@@ -22,5 +25,8 @@ export {
   FeatureCard,
   TestimonialCard,
   BenefitBlock,
-  SliderNavigation
+  SliderNavigation,
+  TagLabel,
+  BenefitCard,
+  OptionCard
 };

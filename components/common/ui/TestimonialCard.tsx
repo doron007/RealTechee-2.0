@@ -62,7 +62,8 @@ export default function TestimonialCard({
               {pills.map((pill, pillIndex) => (
                 <SubtitlePill 
                   key={pillIndex}
-                  className={`bg-[${pillBackgroundColor}] text-[${pillTextColor}]`}
+                  backgroundColor={pillBackgroundColor}
+                  textColor={pillTextColor}
                   uppercase={false}
                 >
                   {pill}

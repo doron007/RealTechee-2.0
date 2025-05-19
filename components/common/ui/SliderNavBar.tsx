@@ -1,134 +1,76 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-export interface SliderNavBarProps {
-  /**
-   * Current index in the slider (0-based)
-   */
+interface SliderNavBarProps {
   currentIndex: number;
-  
-  /**
-   * Total number of items in the slider
-   */
   totalItems: number;
-  
-  /**
-   * Handler for previous button click
-   */
   onPrevious: () => void;
-  
-  /**
-   * Handler for next button click
-   */
   onNext: () => void;
-  
-  /**
-   * Optional content to display on the left side of the navigation bar
-   */
-  leftContent?: ReactNode;
-  
-  /**
-   * Primary color for active elements (e.g., next button background)
-   * @default "#27272A" (zinc-800)
-   */
   primaryColor?: string;
-  
-  /**
-   * Text color for items on primary background
-   * @default "#FFFFFF" (white)
-   */
   primaryTextColor?: string;
-  
-  /**
-   * Secondary color for inactive elements
-   * @default "#FFFFFF" (white)
-   */
   secondaryColor?: string;
-  
-  /**
-   * Text color for normal text elements
-   * @default "#27272A" (zinc-800)
-   */
   textColor?: string;
-  
-  /**
-   * Border color for elements with borders
-   * @default "#27272A" (zinc-800)
-   */
   borderColor?: string;
-  
-  /**
-   * CSS class name for additional styling
-   */
-  className?: string;
+  leftContent?: React.ReactNode;
 }
 
-/**
- * SliderNavBar component for navigating through slide content
- * Provides previous/next buttons and current position indicator
- */
 const SliderNavBar: React.FC<SliderNavBarProps> = ({
   currentIndex,
   totalItems,
   onPrevious,
   onNext,
-  leftContent,
-  primaryColor = "#27272A", // zinc-800
-  primaryTextColor = "#FFFFFF", // white
-  secondaryColor = "#FFFFFF", // white
-  textColor = "#27272A", // zinc-800
-  borderColor = "#27272A", // zinc-800
-  className = ""
+  primaryColor = '#27272A',
+  primaryTextColor = '#FFFFFF',
+  secondaryColor = '#FFFFFF',
+  textColor = '#27272A',
+  borderColor = '#27272A',
+  leftContent
 }) => {
   return (
-    <div className={`self-stretch flex flex-col sm:flex-row justify-between items-center w-full mt-6 sm:mt-8 md:mt-10 lg:mt-12 gap-5 sm:gap-4 ${className}`}>
-      {/* Left content area (if provided) */}
-      {leftContent && (
-        <>
-          <div className="py-2 sm:py-3 bg-white flex flex-col justify-start items-center sm:items-start gap-1 w-full sm:w-auto">
-            {leftContent}
-          </div>
-          
-          {/* Divider line - hidden on mobile */}
-          <div className="hidden sm:block w-0 sm:w-[15%] md:w-[25%] lg:w-[35%] h-0 outline outline-1 outline-offset-[-0.50px]" style={{ outlineColor: borderColor }} />
-        </>
-      )}
+    <div className="w-full flex flex-col sm:flex-row justify-between items-center border-t border-b py-4 px-4 sm:px-6 border-zinc-200">
+      {/* Left content - Can be customized */}
+      <div className="w-full sm:w-auto mb-4 sm:mb-0">
+        {leftContent}
+      </div>
       
       {/* Navigation controls */}
-      <div className="flex justify-center items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-        {/* Previous button */}
-        <div 
-          onClick={onPrevious}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 relative rounded-full outline outline-1 outline-offset-[-1px] overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
-          style={{ 
-            backgroundColor: secondaryColor, 
-            outlineColor: borderColor
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
-            <path d="M15 19L8 12L15 5" stroke={textColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      <div className="flex items-center space-x-4">
+        {/* Current slide indicator */}
+        <div className="text-zinc-800 text-base font-normal">
+          <span className="font-bold">{currentIndex + 1}</span>
+          <span className="mx-1">/</span>
+          <span>{totalItems}</span>
         </div>
         
-        {/* Counter */}
-        <div 
-          className="text-center text-xs sm:text-sm md:text-base font-normal font-['Nunito_Sans'] leading-tight"
-          style={{ color: textColor }}
-        >
-          {currentIndex + 1} / {totalItems}
-        </div>
-        
-        {/* Next button */}
-        <div 
-          onClick={onNext}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 relative rounded-full outline outline-1 outline-offset-[-1px] overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
-          style={{ 
-            backgroundColor: primaryColor, 
-            outlineColor: borderColor
-          }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
-            <path d="M9 5L16 12L9 19" stroke={primaryTextColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+        {/* Navigation buttons */}
+        <div className="flex space-x-2">
+          <button 
+            onClick={onPrevious}
+            className="flex items-center justify-center h-10 w-10 rounded-sm border"
+            style={{ 
+              backgroundColor: secondaryColor, 
+              color: textColor, 
+              borderColor: borderColor
+            }}
+            aria-label="Previous item"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={onNext}
+            className="flex items-center justify-center h-10 w-10 rounded-sm"
+            style={{ 
+              backgroundColor: primaryColor, 
+              color: primaryTextColor
+            }}
+            aria-label="Next item"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

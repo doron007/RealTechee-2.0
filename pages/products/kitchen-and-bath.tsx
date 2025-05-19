@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
-import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection } from '../../components/products';
+import { HeroSection, FeaturesSection, BenefitsSection, TestimonialsSection, FinancingSolutionsSection } from '../../components/products';
 import { ProductType } from '../../components/products/HeroSection';
 import { CtaSection } from '../../components/common/sections';
 
@@ -19,6 +19,7 @@ const KitchenAndBath: NextPage = () => {
         <FeaturesSection productType={ProductType.KITCHEN_BATH} />
         <BenefitsSection productType={ProductType.KITCHEN_BATH} />
         <TestimonialsSection productType={ProductType.KITCHEN_BATH} />
+        <FinancingSolutionsSection productType={ProductType.KITCHEN_BATH} />
         <CtaSection
           title="Get Started"
           subtitle="Initiate Business Growth Today"

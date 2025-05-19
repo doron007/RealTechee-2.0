@@ -197,15 +197,15 @@ export default function TestimonialsSection({
   const content = TESTIMONIALS_CONTENT[productType];
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = Math.ceil(content.testimonials.length / 3);
-  
+
   // Get current testimonials to display (3 per page)
   const currentTestimonials = content.testimonials.slice(currentPage * 3, (currentPage + 1) * 3);
-  
+
   // Navigation handlers
   const handlePrev = () => {
     setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
   };
-  
+
   const handleNext = () => {
     setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
   };
@@ -213,17 +213,17 @@ export default function TestimonialsSection({
   return (
     <Section
       background="none"
+      backgroundColor={content.background_color}
       spacing="medium"
-      id="testimonials"
-      className={`${className} bg-[${content.background_color}]`}
+      className={className}
       marginTop={0}
       marginBottom={0}
       paddingTop={{ default: 74, md: 130, '2xl': 150 }}
       paddingBottom={{ default: 74, md: 130, '2xl': 150 }}
     >
       <div className="text-center mb-8 md:mb-12 animate-on-scroll">
-        <SubContent className={`text-[${content.text_color}] mb-2`}>TESTIMONIALS</SubContent>
-        <Subtitle className="mb-4 md:mb-6">{content.title}</Subtitle>
+        <SubContent textColor={content.text_color} className="mb-2">TESTIMONIALS</SubContent>
+        <Subtitle className="mb-4 md:mb-6">{content.title || title}</Subtitle>
       </div>
 
       {/* Testimonials 3-column grid */}
@@ -244,7 +244,7 @@ export default function TestimonialsSection({
 
       {/* Navigation controls */}
       {totalPages > 1 && (
-        <SliderNavigation 
+        <SliderNavigation
           currentPage={currentPage}
           totalPages={totalPages}
           onPrevious={handlePrev}

@@ -16,6 +16,7 @@ export interface SectionProps {
   
   /** Background color/theme for the section */
   background?: SectionBackground;
+  backgroundColor?: string;
   
   /** Vertical spacing (padding) size */
   spacing?: SectionSpacing;
@@ -101,6 +102,7 @@ export default function Section({
   // Extended props with defaults
   withDecorativeElements = false,
   backgroundImage,
+  backgroundColor,
   mobileBackgroundImage,
   withOverlay = false,
   constrained = true,
@@ -150,6 +152,11 @@ export default function Section({
     sectionStyles.backgroundPosition = 'center';
     // Set position relative for background image
     sectionStyles.position = 'relative';
+  }
+
+  // Add  background color if provided
+  if(backgroundColor) {
+    sectionStyles.backgroundColor = backgroundColor;
   }
 
   // Add custom margin and padding if provided as simple values

@@ -17,11 +17,13 @@ interface TypographyProps {
   spacing?: TypographySpacing;
   as?: React.ElementType;
   center?: boolean;
+  textColor?: string; // Add textColor prop to base TypographyProps
 }
 
 // Extended interface for SubtitlePill to include uppercase option
 interface SubtitlePillProps extends TypographyProps {
   uppercase?: boolean;
+  backgroundColor?: string;
 }
 
 // Spacing classes for consistent margins across all typography components
@@ -199,7 +201,8 @@ export const SubContent: React.FC<TypographyProps> = ({
   className = '', 
   as = 'p',
   spacing = 'small',
-  center = false
+  center = false,
+  textColor
 }) => {
   const Element = as;
   const classes = twMerge(
@@ -211,7 +214,9 @@ export const SubContent: React.FC<TypographyProps> = ({
     className
   );
   
-  return <Element className={classes}>{children}</Element>;
+  const style = textColor ? { color: textColor } : undefined;
+  
+  return <Element className={classes} style={style}>{children}</Element>;
 };
 
 /**
@@ -534,6 +539,8 @@ export const SectionLabelOld: React.FC<TypographyProps> = ({
 /**
  * SubtitlePill - For pill-shaped labels
  * @param uppercase - Whether to transform text to uppercase (default: true for backward compatibility)
+ * @param backgroundColor - Custom background color (hex, rgb, or named color)
+ * @param textColor - Custom text color (hex, rgb, or named color)
  */
 export const SubtitlePill: React.FC<SubtitlePillProps> = ({ 
   children, 
@@ -541,6 +548,8 @@ export const SubtitlePill: React.FC<SubtitlePillProps> = ({
   spacing = 'none',
   center = false,
   uppercase = true,
+  backgroundColor,
+  textColor,
   as = 'span'
 }) => {
   const Element = as;
@@ -552,7 +561,14 @@ export const SubtitlePill: React.FC<SubtitlePillProps> = ({
     center ? 'text-center' : '',
     className
   );
-  return <Element className={classes}>{children}</Element>;
+  
+  // Simple style object with direct property assignment
+  const style = {
+    backgroundColor: backgroundColor || '',
+    color: textColor || ''
+  };
+  
+  return <Element className={classes} style={style}>{children}</Element>;
 };
 
 export const BodyText: React.FC<TypographyProps> = ({ 
