@@ -8,19 +8,19 @@ interface PartnersProps {
 export default function Partners({ className }: PartnersProps) {
   const partners = [
     {
-      name: "Partner 1",
+      name: "Sync",
       logo: "/assets/images/pages_home_partners_partner-logo-1.png",
     },
     {
-      name: "Partner 2",
+      name: "Equity Union",
       logo: "/assets/images/pages_home_partners_partner-logo-2.png",
     },
     {
-      name: "Partner 3",
+      name: "ASID",
       logo: "/assets/images/pages_home_partners_partner-logo-3.png",
     },
     {
-      name: "Partner 4",
+      name: "NKBA",
       logo: "/assets/images/pages_home_partners_partner-logo-4.png",
     }
   ];

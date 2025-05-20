@@ -46,6 +46,12 @@ export interface SectionProps {
   mobileBackgroundImage?: string;
   
   /** 
+   * Whether the background image should be aligned to the top
+   * When true, image fits width and any cropping happens from the bottom
+   */
+  backgroundTopAligned?: boolean;
+  
+  /** 
    * Whether to add a semi-transparent overlay over the section
    * Useful for improving text readability over background images
    */
@@ -104,6 +110,7 @@ export default function Section({
   backgroundImage,
   backgroundColor,
   mobileBackgroundImage,
+  backgroundTopAligned = true,
   withOverlay = false,
   constrained = true,
   marginTop,
@@ -149,7 +156,11 @@ export default function Section({
   if (backgroundImage) {
     sectionStyles.backgroundImage = `url(${backgroundImage})`;
     sectionStyles.backgroundSize = 'cover';
-    sectionStyles.backgroundPosition = 'center';
+    
+    // Apply backgroundTopAligned setting - if true, align to top and width 100%, crop from bottom if needed
+    sectionStyles.backgroundPosition = backgroundTopAligned ? 'top center' : 'center';
+    sectionStyles.width = '100%';
+    
     // Set position relative for background image
     sectionStyles.position = 'relative';
   }
