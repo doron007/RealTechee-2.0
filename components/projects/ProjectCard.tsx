@@ -29,6 +29,13 @@ export default function ProjectCard({
   className = '',
   onClick
 }: ProjectCardProps) {
+  // Helper function to format currency values without decimals
+  const formatCurrency = (value: string | undefined) => {
+    if (!value) return '0';
+    // Convert to number, round to remove decimals, then format with commas
+    return Math.round(parseFloat(value)).toLocaleString('en-US');
+  };
+
   // Get project properties safely
   const { 
     id, 
@@ -38,9 +45,9 @@ export default function ProjectCard({
   } = project;
   
   // Access fields with special characters or spaces using bracket notation
-  const AddedValue = project['Added value'];
-  const BoostPrice = project["Booster Estimated Cost"] || project['Boost Price'];
-  const SalePrice = project["Sale Price"];
+  const AddedValue = formatCurrency(project['Added value']);
+  const BoostPrice = formatCurrency(project["Booster Estimated Cost"] || project['Boost Price']);
+  const SalePrice = formatCurrency(project["Sale Price"]);
   const Bedrooms = project.Bedrooms || '0';
   const Bathrooms = project.Bathrooms || '0';
   const Floors = project.Floors || '0';
@@ -113,7 +120,7 @@ export default function ProjectCard({
     >
       <div className="flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
         {/* 1. Project Image */}
-        <div className="w-full h-[194px] relative overflow-hidden">
+        <div className="w-full relative overflow-hidden pb-[140%]">
           <Image
             src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
             alt={title || 'Project Image'}
@@ -135,20 +142,20 @@ export default function ProjectCard({
           )}
 
           {/* 3. Value Added Section */}
-          {(AddedValue || BoostPrice || SalePrice) && (
+          {(project['Added value'] || project["Booster Estimated Cost"] || project['Boost Price'] || project["Sale Price"]) && (
             <div className="flex flex-col mb-3">
               {/* Show different label based on whether there's Added Value */}
               <CardContent spacing="none" className="text-gray-500 mb-1">
-                {AddedValue && parseFloat(AddedValue) > 0 ? 'Value Added' : 'Boost Cost'}
+                {project['Added value'] && parseFloat(project['Added value']) > 0 ? 'Value Added' : 'Boost Cost'}
               </CardContent>
               
               {/* Main Price Value - Show Added Value or Boost Price */}
               <SectionTitle spacing="none" className="mb-1">
-                ${AddedValue && parseFloat(AddedValue) > 0 ? AddedValue : BoostPrice || '0'}
+                ${AddedValue && parseFloat(project['Added value'] || '0') > 0 ? AddedValue : BoostPrice}
               </SectionTitle>
               
               {/* Price Comparison Section - Only show when there's Added Value */}
-              {AddedValue && parseFloat(AddedValue) > 0 && (
+              {project['Added value'] && parseFloat(project['Added value']) > 0 && (
                 <div className="flex items-center gap-3 mb-2">
                   {BoostPrice && (
                     <Subtitle spacing="none" className="text-gray-500">${BoostPrice}</Subtitle>
