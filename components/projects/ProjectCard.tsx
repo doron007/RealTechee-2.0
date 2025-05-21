@@ -137,30 +137,35 @@ export default function ProjectCard({
           {/* 3. Value Added Section */}
           {(AddedValue || BoostPrice || SalePrice) && (
             <div className="flex flex-col mb-3">
-              <CardContent spacing="none" className="uppercase text-gray-500 mb-1">VALUE ADDED</CardContent>
+              {/* Show different label based on whether there's Added Value */}
+              <CardContent spacing="none" className="text-gray-500 mb-1">
+                {AddedValue && parseFloat(AddedValue) > 0 ? 'Value Added' : 'Boost Cost'}
+              </CardContent>
               
-              {/* Main Price Value - Added Value */}
-              {AddedValue && (
-                <SectionTitle spacing="none" className="mb-1">${AddedValue}</SectionTitle>
+              {/* Main Price Value - Show Added Value or Boost Price */}
+              <SectionTitle spacing="none" className="mb-1">
+                ${AddedValue && parseFloat(AddedValue) > 0 ? AddedValue : BoostPrice || '0'}
+              </SectionTitle>
+              
+              {/* Price Comparison Section - Only show when there's Added Value */}
+              {AddedValue && parseFloat(AddedValue) > 0 && (
+                <div className="flex items-center gap-3 mb-2">
+                  {BoostPrice && (
+                    <Subtitle spacing="none" className="text-gray-500">${BoostPrice}</Subtitle>
+                  )}
+                  {(BoostPrice && SalePrice) && (
+                    <Image 
+                      src="/assets/icons/arrow-right.svg" 
+                      alt="arrow" 
+                      width={16} 
+                      height={16} 
+                    />
+                  )}
+                  {SalePrice && (
+                    <Subtitle spacing="none" className="text-gray-500">${SalePrice}</Subtitle>
+                  )}
+                </div>
               )}
-              
-              {/* Price Comparison Section */}
-              <div className="flex items-center gap-3 mb-2">
-                {BoostPrice && (
-                  <Subtitle spacing="none" className="line-through text-gray-500">${BoostPrice}</Subtitle>
-                )}
-                {(BoostPrice && SalePrice) && (
-                  <Image 
-                    src="/assets/icons/arrow-right.svg" 
-                    alt="arrow" 
-                    width={16} 
-                    height={16} 
-                  />
-                )}
-                {SalePrice && (
-                  <Subtitle spacing="none">${SalePrice}</Subtitle>
-                )}
-              </div>
             </div>
           )}
 
