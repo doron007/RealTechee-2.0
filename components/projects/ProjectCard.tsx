@@ -119,18 +119,20 @@ export default function ProjectCard({
       onClick={handleCardClick}
     >
       <div className="flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
-        {/* 1. Project Image */}
-        <div className="w-full relative overflow-hidden pb-[75%]">
-          <Image
-            src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
-            alt={title || 'Project Image'}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            style={{ 
-              objectFit: 'cover',
-              objectPosition: 'center', 
-            }}
-          />
+        {/* 1. Project Image Container */}
+        <div className="pt-6 px-6">
+          <div className="w-full relative overflow-hidden pb-[71%] rounded-lg">
+            <Image
+              src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
+              alt={title || 'Project Image'}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ 
+                objectFit: 'cover',
+                objectPosition: 'center', 
+              }}
+            />
+          </div>
         </div>
         
         <div className="p-6 flex-1 flex flex-col">
@@ -187,22 +189,22 @@ export default function ProjectCard({
             <ProjectStat 
               icon="/assets/icons/ic-bedroom.svg"
               value={Bedrooms}
-              label="Bedrooms"
+              label="bdrms"
             />
             <ProjectStat 
               icon="/assets/icons/ic-staircase.svg"
               value={Floors}
-              label="Stories"
+              label="stories"
             />
             <ProjectStat 
               icon="/assets/icons/ic-bath.svg"
               value={Bathrooms}
-              label="Baths"
+              label="baths"
             />
             <ProjectStat 
               icon="/assets/icons/ic-size-sqft.svg"
               value={squareFeet}
-              label="Square Feet"
+              label="sqft"
             />
           </div>
 
@@ -213,8 +215,8 @@ export default function ProjectCard({
               size="sm"
               text="View more"
               className="px-5 py-3"
-              hasIcon={true}
-              iconPosition="right"
+              showArrow={true}
+              iconPosition="left"
               onClick={handleCardClick}
             />
           </div>
