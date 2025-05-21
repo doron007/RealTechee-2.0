@@ -31,6 +31,9 @@ export interface Project {
   "Original Value"?: string;
   "Listing Price"?: string;
   "Sale Price"?: string;
+  "Added value"?: string;
+  "Boost Price"?: string;
+  "Booster Estimated Cost"?: string;
   Budget?: string;
   "Created Date"?: string;
   "Updated Date"?: string;

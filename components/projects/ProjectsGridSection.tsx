@@ -113,7 +113,7 @@ export default function ProjectsGridSection({
     <Section
       id="projects-grid"
       className={`${className}`}
-      background="secondary"
+      backgroundColor="#F6F6F6"
       spacing="large"
     >
       {error && (
@@ -141,7 +141,7 @@ export default function ProjectsGridSection({
 
       {/* Projects Grid */}
       {!loading && projects.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {currentProjects.map((project) => (
             <ProjectCard
               key={project.id}

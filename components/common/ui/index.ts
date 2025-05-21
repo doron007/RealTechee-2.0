@@ -13,6 +13,7 @@ import SliderNavigation from './SliderNavigation';
 import { TagLabel } from './TagLabel';
 import { BenefitCard } from './BenefitCard';
 import { OptionCard } from './OptionCard';
+import StatusPill from './StatusPill';
 
 export {
   Card,
@@ -28,5 +29,6 @@ export {
   SliderNavigation,
   TagLabel,
   BenefitCard,
-  OptionCard
+  OptionCard,
+  StatusPill
 };

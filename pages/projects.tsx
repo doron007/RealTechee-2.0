@@ -1,7 +1,10 @@
 import React from 'react';
-import { HeroSection, ProjectsGridSection } from '../components/projects';
 import Head from 'next/head';
 import type { NextPage } from 'next';
+import { 
+  HeroSection, 
+  ProjectsGridSection 
+} from '../components/projects';
 
 const ProjectsPage: NextPage = () => {
   return (
