@@ -120,7 +120,7 @@ export default function ProjectCard({
     >
       <div className="flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
         {/* 1. Project Image */}
-        <div className="w-full relative overflow-hidden pb-[140%]">
+        <div className="w-full relative overflow-hidden pb-[75%]">
           <Image
             src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
             alt={title || 'Project Image'}
