@@ -1,0 +1,290 @@
+﻿"ID","Created Date","Updated Date","Owner","key","To","CC","BCC","Subject","Body","Body As Simple Text"
+"08b1db39-dc49-47f6-8aff-e8088eff0062",2022-03-17T05:43:48Z,2025-04-28T17:17:32Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","contact_us","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Contact Us] Someone contacted us","<p>Someone is trying to contact us with the details below:<br/></p>
+<br/>
+<p>
+First: {{first}}<br/>
+Last: {{last}}<br/>
+Email: {{email}}<br/>
+Phone: {{phone}}<br/>
+Address: {{address}}<br/>
+Product: {{product}}<br/>
+</p>
+<br/>
+<p>
+Subject: {{subject}}<br/>
+</p>
+<p>
+{{message}}
+</p>
+<p>
+Joey - please follow up with the requester or forward the request with instructions.<br/>
+<br/>
+Regards and thank you.<br/>
+<br/>
+The RealTechee team.
+</p>
+",
+"21e51aad-e581-4040-ab01-1589953e92cd",2022-12-13T05:14:31Z,2025-04-28T17:17:03Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteSigned",,"doron@realtechee.com;demo@realtechee.com",,"[RealTechee][Quote] Quote signed ! - {{address}}","<p>Hi {{fullName}},</p>
+<p>
+       Thank you for signing the quote for {{address}}.<br/>
+       For your records, a link to the signed quote <a href=""{{link}}"">(click here)</a>.<br/>
+       <br/>
+       Next, RealTechee accounting will start with the underwriting process, and will contact you shortly.<br/>
+       <br/>
+       Should you have any question please let us know.<br/>
+       <br/>
+       Looking forward to make your dreams come true.<br/>
+       <br/>
+       The RealTechee Team.<br/>
+</p>
+<br/>",
+"2ec1fa0b-99d3-443b-8fe9-099a09542828",2022-12-26T01:20:36Z,2023-09-06T01:17:42Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","assignedToEmail",,,,"[RealTechee] You have new assignment !!!","<p>Hi {{fullName}},</p>
+<p>
+       You have new assignment !<br/>
+       {{description}}<br/>
+       <a href=""{{link}}"">(Click here for more details)</a><br/>
+       <br/>
+       Working on your assignments diligently will improve customer experience.<br/>
+       <br/>
+       Thank you, the RealTechee Team.<br/>
+</p>
+<br/>",
+"5eaeabbc-81b9-4a03-959a-07a50594cb83",2024-01-09T19:35:01Z,2024-01-10T18:59:46Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","AEKpiNotice","doron@realtechee.com",,,"Performance Evaluation Email","<p>Subject: Performance Evaluation Email</p>
+<p>{{accountExecutive}},</p>
+<p>(Gaby included for visibility).</p>
+<p>This Friday (<strong>{{paymentDate}}</strong>), you will receive payment for last two weeks.<br/>Your fees are based on your achievements (KPI) of the two weeks ending on <strong>{{evaluationPeriodEnd}}</strong> and are as follows:</p>
+<ul>
+    <li>Next payment date: <strong>{{paymentDate}}</strong></li>
+    <li>KPI evaluation period: <strong>{{evaluationPeriodStart}} - {{evaluationPeriodEnd}}</strong></li>
+    <li>Sellers Service Requests Count: <strong>{{sellersRequestCount}}</strong>
+        <ul>{{sellersRequestAddresses}}</ul>
+    </li>
+    <li>Buyers Service Requests Count: <strong>{{buyersRequestCount}}</strong>
+        <ul>{{buyersRequestAddresses}}</ul>
+    </li>
+    <li>Contracts Signed: <strong>{{contractsSignedCount}}</strong>
+        <ul>{{contractsSignedAddresses}}</ul>
+    </li>
+</ul>
+<p>Based on this performance data, you have <strong>{{metNotMet}}</strong> the KPI criteria. As a result, your payment for this period is <strong>{{compensation}}</strong>.</p>
+<p>Please review this information for accuracy. If corrections are needed, please reply with your supporting data at the earliest. Otherwise Gaby will issue an eCheck for the specified amount by <strong>{{paymentDate}}</strong>.</p>
+<p>Your ongoing efforts and achievements are greatly appreciated. Should you have any questions or need further clarification, please do not hesitate to reach out.</p>
+<p>Best regards,</p>",
+"63495192-aaa9-4960-af41-f5615f3e1bf1",2023-02-11T23:12:08Z,2025-04-28T17:16:30Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteReminder","doron@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTechee][Quote] Quote reminder ! - {{address}}","<p>Hi {{fullName}}</p>
+<p>This is a reminder of a quote pending review and signature.</br>
+Address: {{address}}</br>
+</br>
+The quote total is {{totalPrice}} as of {{createdDate}}, and is subjected to RealTechee internal underwriting.</br>
+For quote details click the following link: <a href=""{{quoteUrl}}"">quote</a>.</br>
+</br>
+Click the following link to see quote details and approval: <a href=""{{url}}"">eSignature</a>.</br>
+</br>
+This quote is valid for the next 30 days, after which values may be subjected to change.</br>
+</br>
+If you have any questions or concerns regarding this quote, please don’t hesitate to get in touch with us at office@realtechee.com.</br>
+</br>
+Sincerely,</br>
+The RealTechee team.
+</p>",
+"6948ed19-8d56-4295-b0c2-849b9513ab36",2023-02-12T01:05:43Z,2024-02-04T22:36:05Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","assignedToEmailReminder",,,,"[RealTechee] Reminder of assignment !!!","<p>Hi {{fullName}},</p>
+<p>
+       This is a reminder of your assignment !<br/>
+       {{description}}<br/>
+       <a href=""""{{link}}"""">(Click here for more details)</a><br/>
+       <br/>
+       Working on your assignments diligently will improve customer experience.<br/>
+       <br/>
+       Thank you, the RealTechee Team.<br/>
+</p>
+<br/>",
+"6eabee33-057b-4b8c-95cc-71e0b747c119",2022-04-10T19:30:06Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","ECR","doron@realtechee.com",,,"[RealTecheeX][ECR] New ECR submitted","{{item}}",true
+"75926729-69fd-4a8b-9346-c4023d9c98dc",2022-04-10T19:30:46Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","BET","doron@realtechee.com",,,"[RealTecheeX][BET] New BET submitted","{{item}}",true
+"76ab1d36-7155-4cd1-ba6c-b7b9f7b570cf",2022-04-10T19:29:36Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","PVA","doron@realtechee.com",,,"[RealTecheeX][PVA] New PVA submitted","{{item}}",true
+"8dc008cc-f475-4577-9094-addfb65420d4",2022-07-20T20:04:44Z,2025-04-28T17:17:08Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","newMember",,"doron@realtechee.com;demo@realtechee.com",,"[RealTecheeX][New Member] You've got a new site member!","<p>Yay! We have new subscribed member:</p>
+<p>
+   First: {{first}}<br/>
+   Last: {{last}}<br/>
+   Email: {{email}}<br/>
+   Phone: {{phone}}<br/>
+   Member is: {{group}}<br/>
+   Brokerage: {{brokerage}}<br/>
+   Agent ID: {{agentID}}
+</p>
+<br/>",
+"a632b344-1c36-4a19-8239-ac292e73b41d",2023-08-26T22:57:06Z,2025-04-28T17:16:06Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteContractSent","doron@realtechee.com;accounting@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Contract sent ! - {{address}}","<p>Hi,</p>
+<p>
+       Contract sent for following address!<br/>
+               &nbsp;&nbsp;&nbsp;{{address}}<br/>
+       <br/>
+       Total Price: {{totalPrice}}<br/>
+       Total Cost: {{totalCost}}<br/>
+       <br/>
+       <a href=""{{link}}"">(click here to open quote)</a>.<br/>
+       <br/>
+       Waiting for signatures in the following order:<br/>
+            &nbsp;&nbsp;&nbsp;1. homeowner(s) signature<br/>
+            &nbsp;&nbsp;&nbsp;2. GC singature<br/>
+            &nbsp;&nbsp;&nbsp;3. Realtechee final signature to execute contract<br/>
+        <br/>       
+       Once all signed, a copy of the signed contract will be emailed to all.<br/>
+       <br/>
+       The RealTechee Team.<br/>
+</p>",
+"b146ab6f-d30e-4bc7-94b5-bc794b531e15",2023-01-30T05:28:06Z,2025-04-28T17:16:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteOpened","doron@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Quote opened ! - {{address}}","<p>Hi,</p>
+<p>
+       Following quote for {{address}} has been opened by {{loginEmail}}: <a href=""{{link}}"">(click here)</a>.<br/>
+       <br/>
+       Waiting for signature...<br/>
+       <br/>
+       The RealTechee Team.<br/>
+</p>
+<br/>",
+"b393303c-5b82-49e9-83a9-7703983c67d2",2023-02-11T23:02:21Z,2025-04-28T17:16:33Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteSend","doron@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTechee][Quote] New Quote !","<p>Hi {{fullName}},</p>
+
+<p>Thank you for asking us to quote on your project at: {{address}}.</p>
+
+<p>The quote total is {{totalPrice}} as of {{createdDate}}, and is subject to RealTechee's internal underwriting.</p>
+
+<p>Click the following link to see quote details and eSignature: <a href=""{{esing_url}}"">quote details</a>.</p>
+
+<p>By signing, you agree to the scope of work and pricing. Once approved, we will generate and send the contract via DocuSign.</p>
+
+<p>This quote is valid for the next 30 days, after which values may be subject to change.</p>
+
+<p>If you have any questions or concerns regarding this quote, please don’t hesitate to get in touch with us at <a href=""mailto:office@realtechee.com"">office@realtechee.com</a>.</p>
+
+<p>Sincerely,</p>
+<p>The RealTechee Team</p>",
+"c4ebff8c-46c2-44dd-9d74-b5fda47475ec",2022-04-10T19:40:36Z,2024-02-04T22:35:08Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","PropertyInformation","doron@realtechee.com",,,"[RealTecheeX][PropertyInformation] New Property Information submitted","{{item}}",true
+"d8e1f475-a9be-4877-9405-0195e4f69260",2023-03-05T17:43:35Z,2025-04-28T17:16:22Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteUnderwriting","doron@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Required information for underwriting - {{address}}","<p>Hi {{names}},</p>
+<p>In order to complete the internal underwriting and approval process for {{address}}, please provide the following information:</br>
+</br>
+<ul>
+      <li>Selling Price</li>
+      <li>Loan Balance</li>
+      <li>Credit Report (if available) / credit score</li>
+      <li>Legal ownership of property (title)</li>
+</ul>
+</p>
+<p>Thank you,</p>
+</br>
+<p>The Realtechee Team.</p>",
+"daab207f-9e88-476d-9af5-6b88de1e399d",2022-04-10T19:44:12Z,2025-04-28T17:17:28Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","Affiliate","accounting@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTecheeX][Affiliate] New Affiliate qualification form submitted","<p>New affiliate qualification application:</p>
+<p>
+		{{name}}<br/>
+		Company: {{company}}<br/>
+		Service Type: {{serviceType}}<br/>
+		email: {{email}}<br/>
+		phone: {{phone}}<br/>
+		Address: {{address}}<br/>
+</p>",false
+"ee54660a-8a38-4fe0-97bf-bb457aebca04",2022-03-17T03:17:15Z,2025-04-28T17:17:39Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","getAnEstimate","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Estimate] New request for estimate - {{address}}","<p>New request for estimate from:</p>
+    <p>
+       Address: {{address}}<br/>
+       <br/>
+       Agent: {{agentName}}<br/>
+       Agent Phone: {{agentPhone}}<br/>
+       Agent Email: {{agentEmail}}<br/>
+       <br/>
+       Owner: {{first}} {{last}}<br/>
+       Owner Phone: {{phone}}<br/>
+       OwnerEmail: {{email}}<br/>
+       <br/>
+       Relation: {{relation}}<br/>
+       Lead Source: {{lead}}<br/>
+       Need Finance: {{finance}}<br/>
+       Preferred Realtech Digital: {{digital}}<br/>
+       Requested date: {{requestedDate}}<br/>
+       Requested time: {{requestedTime}}<br/>
+       <br/>
+       Message: {{note}}
+       <br/>
+       <br/>
+       <strong><a href=""https://www.realtechee.com/request-a?id={{url}}"">Link to request</a></strong>
+       <br/>
+       <br/>
+</p>
+<br/>",
+"ef57bc32-a7bb-418d-a3d9-ea013fd9a86d",2022-04-10T20:12:10Z,2025-04-28T17:17:20Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","comment","accounting@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTecheeX][Comment] New comment","<p>Posted by: <b>{{postedBy}}</b></p>
+<p><b>{{title}}</b></p>
+<p>{{comment}}</p>
+<br/>
+<br/>
+<p>{{attachmentsMsg}}</p>
+<br/>
+<p><a href=""{{url}}"">Click here to go to the project portal.</a></p>",
+"f46ea90e-6799-4c33-858f-b5feeeb31741",2022-05-05T05:08:23Z,2025-04-28T17:17:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","bookingRequest","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Booking] New booking request","<p>New booking request to Get Qualified from:</p>
+<p>
+   Full Name: {{name}}<br/>
+   Email: {{email}}<br/>
+   Phone: {{phone}}<br/>
+   Brokerage: {{brokerage}}<br/>
+   Preferred Location: {{location}}<br/>
+   Requested Date/Time: {{datetime}}<br/>
+   <br/>
+   Please review and approve / dismiss on <a href=""https://www.realtechee.com/bookings"">Booking Admin</a>.
+</p>
+<br/>",
+"fca51c58-0184-4f31-8c91-be7b2e5706bf",2023-05-07T22:51:07Z,2025-04-28T17:16:14Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteAccounting","accounting@realtechee.com","doron@realtechee.com;demo@realtechee.com",,"[RealTechee][Quote] Please add Accounting information for new signed contract - {{address}}","<p>Hi Gaby,</p>
+<p>Please process new signed project, address: {{address}}.<br/>
+Let Meir know if you have any questions.</p>
+</br>
+<p>{{documentPublicLinksAsHtml}}</p>
+</br>
+<p>Thank you,</p>
+</br>
+<p>The RealTechee team</p>",
+"fd9ca1ec-7464-472e-b04f-5d3abe2083f5",2024-01-21T19:47:21Z,2025-04-28T17:15:45Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","getEstimateRequestAcknowledgment",,"doron@realtechee.com;demo@realtechee.com",,"Estimate Request Acknowledgment - {{address}}","<style>
+    .email-container {
+        font-family: Arial, sans-serif;
+        color: #333333;
+        line-height: 1.6;
+    }
+    .email-content {
+        margin: 0 auto;
+        width: 80%;
+    }
+</style>
+<div class=""email-container"">
+    <div class=""email-content"">
+        <p>Hello {{agentName}},</p>
+        <p>Thank you for reaching out to us and asking us to bid on your project at {{address}}. We are excited about the possibility of working with you.</p>
+        <p>An account executive will reach out shortly to schedule a walkthrough, either on-site or virtual, at your convenience.</p>
+        <p>To make our call more effective and help us better prepare, we kindly request your assistance in answering the following questions:</p>
+        <ul>
+            <li>What is the “as is” price comps show the property could list at?</li>
+            <li>What is the “after repair/staged” price comps show the property could list at?</li>
+            <li>What is the target price the homeowner wants to list at?</li>
+            <li>What is the target price the homeowner wants to pay for repair/staging?</li>
+            <li>How much is owed on the property?</li>
+            <li>What is the owners credit score? (We don’t pull this, we need in writing)</li>
+            <li>When does the homeowner want to sell the property?</li>
+            <li>Please provide us with a clean title.</li>
+        </ul>
+        <p>Additionally, please use <a href=""{{projectFolder}}"">this link</a> to access a private folder where you can upload any pictures, videos, or documents that can assist us in scoping the project. You can upload media using mobile devices or a desktop computer.</p>
+    </div>
+    <div class=""email-content"">
+        <p><strong>Summary of the request:</strong>
+        <ul>
+            <li>Address: {{address}}</li>
+            <li>Agent: {{agentName}}</li>
+            <li>Agent Phone: {{agentPhone}}</li>
+            <li>Agent Email: {{agentEmail}}</li>
+            <li>Owner: {{first}} {{last}}</li>
+            <li>Owner Phone: {{phone}}</li>
+            <li>OwnerEmail: {{email}}</li>
+            <li>Relation: {{relation}}</li>
+            <li>Brokerage: {{lead}}</li>
+            <li>Need Finance: {{finance}}</li>
+            <li>Preferred Realtech Digital: {{digital}}</li>
+            <li>Notes: {{note}}</li>
+        </ul>
+    </div>
+    <div class=""email-content"">
+        <p>If you have any questions or concerns regarding this quote, please don’t hesitate to get in touch with us at <a href=""mailto:office@realtechee.com"">office@realtechee.com</a>.</p>
+        <p>Sincerely,<br>
+        The RealTechee Team</p>
+        <img src=""https://static.wixstatic.com/media/29cccd_87524c06cec64892a32f1dbb3aaef05e~mv2.png"" alt=""RealTechee Logo"" style=""width: 200px;"">
+        <p>&copy; 2024 RealTechee. All rights reserved.</p>
+    </div>
+</div>",
