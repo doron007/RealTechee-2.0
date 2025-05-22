@@ -5,6 +5,7 @@ import ButtonShowcase from './ButtonShowcase';
 import CardShowcase from './CardShowcase';
 import GetAnEstimateShowcase from './GetAnEstimateShowcase';
 import ResponsiveTypographyShowcase from './ResponsiveTypographyShowcase';
+import StatusPillShowcase from './StatusPillShowcase';
 import Typography from './Typography';
 
 export {
@@ -14,6 +15,7 @@ export {
   CardShowcase,
   GetAnEstimateShowcase,
   ResponsiveTypographyShowcase,
+  StatusPillShowcase,
   Typography
 };
 

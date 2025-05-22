@@ -23,14 +23,14 @@ const PRODUCT_CONTENT = {
             'Selling Properties Has Never Been This Easy',
             '​Enhance home renovation opportunities and experience - sell faster and for a higher price'
         ],
-        backgroundImage: '/assets/images/seller-hero-bg.png'
+        backgroundImage: '/assets/images/hero-bg.png'
     },
     [ProductType.BUYER]: {
         titles: ['The Next Generation of Real', 'Estate Buyer Services'],
         subContents: [
             'Enhance home renovation opportunities and experience for clients'
         ],
-        backgroundImage: '/assets/images/seller-hero-bg.png' // Change this when you have a buyer background
+        backgroundImage: '/assets/images/hero-bg.png' // Change this when you have a buyer background
     },
     [ProductType.KITCHEN_BATH]: {
         titles: ['Kitchen and Bath Showroom', 'Program'],
@@ -38,7 +38,7 @@ const PRODUCT_CONTENT = {
             'Offer premium remodeling services while partnering with a top technology-based',
             'provider, ensuring exceptional execution and increasing showroom profits.'
         ],
-        backgroundImage: '/assets/images/seller-hero-bg.png' // Change this when you have a kitchen/bath background
+        backgroundImage: '/assets/images/hero-bg.png' // Change this when you have a kitchen/bath background
     },
     [ProductType.COMMERCIAL]: {
         titles: ['Commercial Real Estate', 'Program'],
@@ -46,7 +46,7 @@ const PRODUCT_CONTENT = {
             'Support Commercial Real Estate Owners and Tenants',
             'Enhance renovation services and support for a better ROI'
         ],
-        backgroundImage: '/assets/images/seller-hero-bg.png' // Change this when you have a commercial background
+        backgroundImage: '/assets/images/hero-bg.png' // Change this when you have a commercial background
     },
     [ProductType.ARCHITECT_DESIGNER]: {
         titles: ['Architect & Designer', 'Program'],
@@ -54,7 +54,7 @@ const PRODUCT_CONTENT = {
             'Focus on creating exceptional designs and provide a seamless experience for your',
             'clients- from design to build.'
         ],
-        backgroundImage: '/assets/images/seller-hero-bg.png' // Change this when you have an architect/designer background
+        backgroundImage: '/assets/images/hero-bg.png' // Change this when you have an architect/designer background
     }
 };
 

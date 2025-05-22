@@ -28,7 +28,7 @@ import {
   ButtonText
 } from '../components/Typography';
 import Button from '../components/common/buttons/Button';
-import { ButtonShowcase, CardShowcase, GetAnEstimateShowcase } from '../components/style-guide';
+import { ButtonShowcase, CardShowcase, GetAnEstimateShowcase, StatusPillShowcase } from '../components/style-guide';
 import ResponsiveTypographyShowcase from '../components/style-guide/ResponsiveTypographyShowcase';
 
 export default function StyleGuidePage() {
@@ -66,12 +66,16 @@ export default function StyleGuidePage() {
                 <SectionLabel>04</SectionLabel>
                 <BodyText className="font-medium">Colors</BodyText>
               </a>
-              <a href="#cards" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
+              <a href="#status-pills" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
                 <SectionLabel>05</SectionLabel>
+                <BodyText className="font-medium">Status Pills</BodyText>
+              </a>
+              <a href="#cards" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
+                <SectionLabel>06</SectionLabel>
                 <BodyText className="font-medium">Cards</BodyText>
               </a>
               <a href="#component-library" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>06</SectionLabel>
+                <SectionLabel>07</SectionLabel>
                 <BodyText className="font-medium">Component Library</BodyText>
               </a>
             </div>
@@ -464,9 +468,21 @@ export default function StyleGuidePage() {
             </div>
           </section>
           
+          {/* Status Pills Section */}
+          <section id="status-pills" className="mb-20 scroll-mt-40">
+            <SectionTitle className="mb-6 pb-2 border-b">05. Status Pills</SectionTitle>
+            <BodyContent className="mb-6">
+              Status pills provide visual indication of the current state of an entity (Project, Request, or Quote).
+              The consistent color system helps users quickly identify status across the platform.
+            </BodyContent>
+            
+            {/* Status Pill Showcase Component */}
+            <StatusPillShowcase />
+          </section>
+          
           {/* Cards Section */}
           <section id="cards" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">05. Card Examples</SectionTitle>
+            <SectionTitle className="mb-6 pb-2 border-b">06. Card Examples</SectionTitle>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <div className="card card-hover">
@@ -502,7 +518,7 @@ export default function StyleGuidePage() {
           
           {/* Component Library Section */}
           <section id="component-library" className="scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">06. Component Library</SectionTitle>
+            <SectionTitle className="mb-6 pb-2 border-b">07. Component Library</SectionTitle>
             <BodyContent className="mb-6">
               The RealTechee component library provides standardized UI elements that maintain 
               consistent design patterns across the site. The major components are documented below.

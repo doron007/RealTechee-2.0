@@ -22,7 +22,7 @@ export default function ProjectsGridSection({
   projectsPerPage = 6,
   filter
 }: ProjectsGridSectionProps) {
-  console.log('ProjectsGridSection component rendered');
+  // console.log('ProjectsGridSection component rendered');
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -30,21 +30,21 @@ export default function ProjectsGridSection({
 
   // Fetch projects from API
   useEffect(() => {
-    console.log('ProjectsGridSection useEffect triggered', { filter });
+    // console.log('ProjectsGridSection useEffect triggered', { filter });
 
     async function fetchProjects() {
       try {
-        console.log('fetchProjects function called');
+        // console.log('fetchProjects function called');
         setLoading(true);
         const fetchedProjects = await getProjects(filter);
-        console.log('API response:', fetchedProjects);
+        // console.log('API response:', fetchedProjects);
 
         // If API returns projects, use them
         if (fetchedProjects && fetchedProjects.length > 0) {
           setProjects(fetchedProjects);
           setError('');
         } else {
-          console.log('No projects returned from API');
+          // console.log('No projects returned from API');
           setProjects([]);
           setError('No projects found matching your criteria.');
         }
@@ -114,7 +114,12 @@ export default function ProjectsGridSection({
       id="projects-grid"
       className={`${className}`}
       backgroundColor="#F6F6F6"
-      spacing="large"
+      spacing="none"
+      constrained={false}
+      marginTop={0}
+      marginBottom={0}
+      paddingTop={{ default: 50, md: 80, '2xl': 100 }}
+      paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
     >
       {error && (
         <div className="w-full text-center mb-10">

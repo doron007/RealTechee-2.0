@@ -53,12 +53,12 @@ export default function ProjectCard({
   const Floors = project.Floors || '0';
   const squareFeet = project["Size Sqft."] || '0';
   
-  // Debug logging
-  console.log('Project Card Data:', { 
-    id, title, imageUrl, Status, 
-    AddedValue, BoostPrice, SalePrice,
-    Bedrooms, Bathrooms, Floors, squareFeet
-  });
+  // // Debug logging
+  // console.log('Project Card Data:', { 
+  //   id, title, imageUrl, Status, 
+  //   AddedValue, BoostPrice, SalePrice,
+  //   Bedrooms, Bathrooms, Floors, squareFeet
+  // });
 
   // Helper to extract address parts for two-line display
   const formatAddress = (fullAddress: string | undefined) => {
@@ -121,7 +121,7 @@ export default function ProjectCard({
       <div className="flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
         {/* 1. Project Image Container */}
         <div className="pt-6 px-6">
-          <div className="w-full relative overflow-hidden pb-[71%] rounded-lg">
+          <div className="w-full relative overflow-hidden pb-[62%] rounded-lg">
             <Image
               src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
               alt={title || 'Project Image'}
@@ -180,12 +180,12 @@ export default function ProjectCard({
 
           {/* 4. Title with Address */}
           <div className="mb-3">
-            <CardTitle className="text-[#2A2B2E] font-bold mb-1">{address.line1}</CardTitle>
+            <CardTitle className="text-[#2A2B2E] font-bold mb-0">{address.line1}</CardTitle>
             {address.line2 && <SubContent className="text-gray-500 tracking-wider">{address.line2}</SubContent>}
           </div>
 
           {/* 5. Project Stats Grid */}
-          <div className="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-4">
             <ProjectStat 
               icon="/assets/icons/ic-bedroom.svg"
               value={Bedrooms}
@@ -202,7 +202,7 @@ export default function ProjectCard({
               label="baths"
             />
             <ProjectStat 
-              icon="/assets/icons/ic-size-sqft.svg"
+              icon="/assets/icons/ic-dimension.svg"
               value={squareFeet}
               label="sqft"
             />

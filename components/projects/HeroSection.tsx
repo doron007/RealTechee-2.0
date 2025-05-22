@@ -30,15 +30,13 @@ export default function HeroSection({
   return (
     <Section
       id="projects-hero"
-      className={`flex flex-col justify-center items-center overflow-hidden sm:min-h-[275px] ${className}`}
+      className={`flex flex-col justify-center items-center overflow-hidden sm:min-h-[200px] ${className}`}
       backgroundImage={backgroundImage}
       background="none"
       spacing="none"
       constrained={false}
       marginTop={0}
       marginBottom={0}
-      paddingTop={{ default: 50, md: 80, '2xl': 100 }}
-      paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
     >
       <div className="w-full sm:w-3/5 mx-auto flex flex-col items-start sm:items-center text-left sm:text-center">
         <SectionTitle>
