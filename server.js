@@ -1,8 +1,6 @@
 const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
-const fs = require('fs')
-const path = require('path')
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
@@ -17,48 +15,16 @@ app.prepare().then(() => {
     try {
       const parsedUrl = parse(req.url, true)
       
-      // Special handling for webpack hot update files and webpack-hmr
-      if (req.url.includes('.hot-update.json') || 
-          req.url.includes('.hot-update.js') || 
-          req.url.includes('webpack-hmr')) {
-        
-        // Set headers to prevent caching
+      // Set CORS headers to allow all origins
+      res.setHeader('Access-Control-Allow-Origin', '*')
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+      
+      // For HMR-related requests, ensure proper headers but let Next.js handle them
+      if (req.url.includes('.hot-update.') || req.url.includes('webpack-hmr')) {
         res.setHeader('Cache-Control', 'no-store, must-revalidate')
         res.setHeader('Pragma', 'no-cache')
         res.setHeader('Expires', '0')
-        
-        // For webpack-hmr endpoint specifically
-        if (req.url.includes('webpack-hmr')) {
-          res.setHeader('Content-Type', 'text/event-stream')
-          res.setHeader('Connection', 'keep-alive')
-          res.write('\n')
-          
-          // Keep the connection alive
-          const interval = setInterval(() => {
-            res.write('data: {}\n\n')
-          }, 15000)
-          
-          // Clean up on close
-          req.on('close', () => {
-            clearInterval(interval)
-          })
-          
-          return
-        }
-        
-        // For hot-update.json files, try to locate them in .next directory
-        if (req.url.includes('.hot-update.json')) {
-          const fileName = path.basename(req.url)
-          const filePath = path.join(process.cwd(), '.next', 'static', 'webpack', fileName)
-          
-          // If file exists, serve it
-          if (fs.existsSync(filePath)) {
-            const content = fs.readFileSync(filePath, 'utf8')
-            res.setHeader('Content-Type', 'application/json')
-            res.end(content)
-            return
-          }
-        }
       }
       
       // Let Next.js handle all other requests
@@ -71,6 +37,6 @@ app.prepare().then(() => {
   }).listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://${hostname}:${port}`)
-    console.log('> HMR enhancement enabled')
+    console.log('> Client-side navigation enabled')
   })
 })

@@ -5,7 +5,8 @@
       "name": "Next.js: debug server-side",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run dev"
+      "command": "npm run dev:debug",
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "name": "Next.js: debug client-side",
@@ -18,12 +19,20 @@
       "name": "Next.js: debug full stack",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run dev",
+      "command": "npm run dev:debug",
+      "skipFiles": ["<node_internals>/**"],
       "serverReadyAction": {
-        "pattern": "started server on .+, url: (https?://.+)",
+        "pattern": "- Local:.+(https?://.+)|ready - started server on .+, url: (https?://.+)",
         "uriFormat": "%s",
         "action": "debugWithChrome"
       }
+    },
+    {
+      "name": "Next.js: debug custom server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

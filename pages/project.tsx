@@ -17,6 +17,10 @@ const ProjectDetails: NextPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Skip effect if router is not ready yet
+    if (!router.isReady) return;
+    
+    // Define async function
     async function loadProject() {
       setLoading(true);
       setError(null);
@@ -63,7 +67,16 @@ const ProjectDetails: NextPage = () => {
     }
 
     if (router.isReady) {
-      loadProject();
+      // Use a timeout to avoid immediate loading which can interfere with debugging
+      const loadTimeout = setTimeout(() => {
+        loadProject();
+      }, 100);
+      
+      // Clean up function
+      return () => {
+        clearTimeout(loadTimeout);
+        // Any other cleanup needed
+      };
     }
   }, [projectId, router.isReady]);
 
