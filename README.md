@@ -8,13 +8,15 @@ This is a Next.js-based website for RealTechee, a company that helps property ow
 - Modern UI with brand-consistent styling
 - Interactive components
 - Contact form for customer inquiries
+- Server-side image processing for Wix media URLs
 
 ## Technologies Used
 
 - Next.js
 - React
 - CSS
-- JavaScript
+- TypeScript
+- Server-side API routes for media processing
 
 ## Getting Started
 
@@ -32,6 +34,19 @@ This is a Next.js-based website for RealTechee, a company that helps property ow
 ## Project Structure
 
 - `/components` - React components
-- `/pages` - Next.js pages
+- `/pages` - Next.js pages and API routes
 - `/public` - Static assets
 - `/styles` - CSS files
+- `/utils` - Utility functions including server-side media processing
+
+## Media URL Handling
+
+This project includes a robust solution for handling Wix media URLs in both client and server environments. For details, see [SERVER_MEDIA_MIGRATION.md](./SERVER_MEDIA_MIGRATION.md).
+
+### Key Features
+
+- Server-side conversion of complex Wix media URLs
+- API endpoints for media URL processing
+- Client utilities for simplified media handling
+- Caching to improve performance
+- Comprehensive error handling

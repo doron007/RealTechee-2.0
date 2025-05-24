@@ -14,6 +14,7 @@ import { TagLabel } from './TagLabel';
 import { BenefitCard } from './BenefitCard';
 import { OptionCard } from './OptionCard';
 import StatusPill from './StatusPill';
+import CollapsibleSection from './CollapsibleSection';
 
 export {
   Card,
@@ -30,5 +31,6 @@ export {
   TagLabel,
   BenefitCard,
   OptionCard,
-  StatusPill
+  StatusPill,
+  CollapsibleSection
 };

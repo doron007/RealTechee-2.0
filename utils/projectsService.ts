@@ -8,6 +8,7 @@ import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import { Project, ProjectFilter } from '../types/projects';
 import { readCsvFile, writeCsvFile } from './csvUtils';
+import { processImageUrl, processImageGallery } from './serverWixMediaUtils';
 
 // Define the path to the projects CSV file
 const PROJECTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'Projects.csv');
@@ -58,20 +59,39 @@ const DEFAULT_PROJECTS: Project[] = [
 /**
  * Maps a raw CSV project to the format expected by the UI
  */
-function mapProjectForUI(project: Project): Project {
+async function mapProjectForUI(project: Project): Promise<Project> {
   // Extract location from title if possible (format is often "Address, City, State")
   const titleParts = project.Title?.split(',') || [];
   const locationPart = titleParts.length > 1 ? 
     titleParts.slice(1).join(',').trim() : 
     "";
 
+  // Process image URL on the server side
+  const processedImageUrl = await processImageUrl(project.Image);
+  
+  // Process Gallery if available
+  let processedGallery = project.Gallery;
+  if (project.Gallery && typeof project.Gallery === 'string') {
+    try {
+      // Process the Gallery field to convert any Wix URLs
+      const galleryImages = await processImageGallery(project.Gallery);
+      if (Array.isArray(galleryImages) && galleryImages.length > 0) {
+        // Store processed URLs back in the Gallery field
+        processedGallery = JSON.stringify(galleryImages);
+      }
+    } catch (error) {
+      console.error('Error processing gallery in mapProjectForUI:', error);
+    }
+  }
+  
   // For any project coming from the CSV, ensure it has the UI-compatible fields
   return {
     ...project,
     id: project.ID || project.projectID || uuidv4(),
     title: project.Title || "",
     description: project.Description || "",
-    imageUrl: project.Image || "/assets/images/hero-bg.png",
+    imageUrl: processedImageUrl || "/assets/images/hero-bg.png",
+    Gallery: processedGallery, // Use processed Gallery
     category: project["Property Type"] || "",
     location: locationPart,
     completionDate: project["Created Date"] || "",
@@ -111,13 +131,13 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
     const rawProjects = readCsvFile<Project>(PROJECTS_CSV_PATH);
     
     // Map the raw CSV projects to the UI-friendly format
-    const projects = rawProjects.map(mapProjectForUI);
+    const mappedProjects = await Promise.all(rawProjects.map(mapProjectForUI));
     
     if (!filter) {
-      return projects;
+      return mappedProjects;
     }
     
-    return projects.filter(project => {
+    return mappedProjects.filter(project => {
       // Apply category filter if provided
       if (filter.category && project.category !== filter.category) {
         return false;
@@ -162,7 +182,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
     initializeProjectsFile();
     const rawProjects = readCsvFile<Project>(PROJECTS_CSV_PATH);
     const project = rawProjects.find(p => p.ID === id || p.id === id || p.projectID === id);
-    return project ? mapProjectForUI(project) : null;
+    return project ? await mapProjectForUI(project) : null;
   } catch (error) {
     console.error(`Error fetching project with id ${id}:`, error);
     return null;

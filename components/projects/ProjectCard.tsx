@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../common/ui';
 import Image from 'next/image';
 import { Project } from '../../types/projects';
-import { convertWixMediaUrl } from '../../utils/wixMediaUtils';
+import { safeImageUrl } from '../../utils/clientWixMediaUtils';
 import StatusPill from '../common/ui/StatusPill';
 import { 
   CardTitle, 
@@ -14,6 +14,16 @@ import {
   ButtonText 
 } from '../Typography';
 import Button from '../common/buttons/Button';
+import { formatCurrency } from '../../utils/formatUtils';
+
+// Define reliable fallback images that exist in the project
+const FALLBACK_IMAGES = [
+  '/assets/images/hero-bg.png',
+  '/assets/images/properties/property-1.jpg',
+  '/assets/images/properties/property-2.jpg'
+];
+
+// Removed inline definition of formatCurrency
 
 interface ProjectCardProps {
   project: Project;
@@ -29,21 +39,40 @@ export default function ProjectCard({
   className = '',
   onClick
 }: ProjectCardProps) {
-  // Helper function to format currency values without decimals
-  const formatCurrency = (value: string | undefined) => {
-    if (!value) return '0';
-    // Convert to number, round to remove decimals, then format with commas
-    return Math.round(parseFloat(value)).toLocaleString('en-US');
-  };
+  // State to store the resolved image URL
+  const [resolvedImageUrl, setResolvedImageUrl] = useState<string>(FALLBACK_IMAGES[0]);
+  // State to track if we've already fallen back to the placeholder
+  const [usedFallback, setUsedFallback] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    const resolveImageUrl = async () => {
+      if (project.imageUrl) {
+        try {
+          const url = await safeImageUrl(project.imageUrl);
+          if (isMounted) {
+            setResolvedImageUrl(url);
+            setUsedFallback(false); // Reset fallback status when we successfully load a new URL
+          }
+        } catch (error) {
+          console.error('Failed to resolve image URL:', error);
+        }
+      }
+    };
+    resolveImageUrl();
+    return () => {
+      isMounted = false;
+    };
+  }, [project.imageUrl]);
 
   // Get project properties safely
   const { 
-    id, 
-    title, 
-    imageUrl, 
-    Status 
+    id,
+    title,
+    imageUrl,
+    Status: status
   } = project;
-  
+
   // Access fields with special characters or spaces using bracket notation
   const AddedValue = formatCurrency(project['Added value']);
   const BoostPrice = formatCurrency(project["Booster Estimated Cost"] || project['Boost Price']);
@@ -52,7 +81,8 @@ export default function ProjectCard({
   const Bathrooms = project.Bathrooms || '0';
   const Floors = project.Floors || '0';
   const squareFeet = project["Size Sqft."] || '0';
-  
+
+  //
   // // Debug logging
   // console.log('Project Card Data:', { 
   //   id, title, imageUrl, Status, 
@@ -123,13 +153,28 @@ export default function ProjectCard({
         <div className="pt-6 px-6">
           <div className="w-full relative overflow-hidden pb-[62%] rounded-lg">
             <Image
-              src={imageUrl ? convertWixMediaUrl(imageUrl) : '/assets/images/hero-bg.png'}
-              alt={title || 'Project Image'}
+              src={resolvedImageUrl}
+              alt={project.title || 'Project Image'}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{ 
                 objectFit: 'cover',
                 objectPosition: 'center', 
+              }}
+              onError={(e) => {
+                // Only try to use the placeholder if we haven't already done so
+                if (!usedFallback) {
+                  console.warn('Image failed to load, using fallback.');
+                  setUsedFallback(true);
+                  // Rotate through fallback images to distribute load
+                  const fallbackIndex = Math.floor(Math.random() * FALLBACK_IMAGES.length);
+                  setResolvedImageUrl(FALLBACK_IMAGES[fallbackIndex]);
+                } else {
+                  // If we're already using the fallback, just log the error
+                  console.error('Fallback image also failed to load.');
+                  // Prevent further attempts by stopping propagation
+                  e.stopPropagation();
+                }
               }}
             />
           </div>
@@ -137,9 +182,9 @@ export default function ProjectCard({
         
         <div className="p-6 flex-1 flex flex-col">
           {/* 2. Status Pill */}
-          {Status && (
+          {status && (
             <div className="mb-2">
-              <StatusPill status={Status} />
+              <StatusPill status={status} />
             </div>
           )}
 
