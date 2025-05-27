@@ -1,0 +1,76 @@
+/* Custom styles for react-image-gallery */
+
+/* Overall gallery container */
+.image-gallery {
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Main slide container */
+.image-gallery-slide {
+  background-color: #000;
+}
+
+/* Fixed height main content area */
+.image-gallery-content {
+  height: auto;
+}
+
+/* Main image */
+.image-gallery-image {
+  aspect-ratio: 16/9;
+  height: auto;
+}
+
+/* Fallback for browsers that don't support aspect-ratio */
+@supports not (aspect-ratio: 16/9) {
+  .image-gallery-image {
+    height: 0;
+    padding-bottom: 56.25%; /* (9/16 * 100) */
+    position: relative;
+  }
+  .image-gallery-image img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+
+/* Thumbnail dimensions and styling */
+.image-gallery-thumbnails-container {
+  padding: 10px 0;
+  /* background: #000; */
+}
+
+.image-gallery-thumbnail {
+  width: 80px !important;  /* Override any inline styles */
+  height: 80px !important;
+  margin: 0 5px;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.image-gallery-thumbnail:hover {
+  border-color: #e5e5e5;  /* Light gray border on hover */
+}
+
+.image-gallery-thumbnail.active {
+  border-color: #3B82F6;  /* Blue border for active thumbnail */
+}
+
+.image-gallery-thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.image-gallery-left-nav:hover,
+.image-gallery-right-nav:hover {
+  color: #111827; 
+}

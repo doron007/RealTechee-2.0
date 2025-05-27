@@ -9,7 +9,6 @@ import { GalleryImage } from '../components/projects/ProjectImageGallery';
 
 // Import components
 import Button from '../components/common/buttons/Button';
-import Layout from '../components/common/layout/Layout';
 import { 
   ProjectImageGallery, 
   PropertyDetailsCard, 
@@ -17,6 +16,7 @@ import {
   AgentInfoCard 
 } from '../components/projects';
 import { CollapsibleSection } from '../components/common/ui';
+import { ImageGallery } from 'components/common/ui';
 
 // Typography components
 import { PageHeader, SectionTitle, BodyContent } from '../components/Typography';
@@ -37,7 +37,7 @@ const ProjectDetails: NextPage = () => {
     return urls.map((url, index) => ({
       url,
       alt: `Project image ${index + 1}`,
-      description: `Project image ${index + 1}`
+      description: `` //`Project image ${index + 1}`
     }));
   };
 
@@ -164,15 +164,6 @@ const ProjectDetails: NextPage = () => {
       </Head>
       
       <main className="flex-grow">
-        {/* Hero Section */}
-        {/* {!loading && !error && project && (
-          <div className="bg-gray-50 py-8 border-b border-gray-200">
-            <div className="container mx-auto px-4">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{project.title}</h1>
-            </div>
-          </div>
-        )} */}
-        
         {/* Loading State */}
         {loading && (
           <div className="container mx-auto px-4 py-16 flex justify-center">
@@ -200,7 +191,8 @@ const ProjectDetails: NextPage = () => {
               {/* Left Column (60%) */}
               <div className="lg:col-span-3">
                 {/* Image Slideshow */}
-                <ProjectImageGallery images={galleryImages} />
+                {/* <ProjectImageGallery images={galleryImages} /> */}
+                <ImageGallery images={galleryImages} />
                 
                 {/* Project Description */}
                 <div className="mb-8">

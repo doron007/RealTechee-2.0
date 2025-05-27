@@ -1,5 +1,7 @@
 import Layout from '../components/common/layout/Layout';
 import '../styles/globals.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import '../styles/image-gallery-custom.css';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
 import type { ReactElement } from 'react';

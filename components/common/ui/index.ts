@@ -15,6 +15,7 @@ import { BenefitCard } from './BenefitCard';
 import { OptionCard } from './OptionCard';
 import StatusPill from './StatusPill';
 import CollapsibleSection from './CollapsibleSection';
+import { ImageGallery } from './ImageGallery';
 
 export {
   Card,
@@ -32,5 +33,6 @@ export {
   BenefitCard,
   OptionCard,
   StatusPill,
-  CollapsibleSection
+  CollapsibleSection,
+  ImageGallery,
 };

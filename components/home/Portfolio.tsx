@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { SectionLabel, SectionTitle, BodyContent, SubContent, SliderNavBar } from '../';
+import Button from '../common/buttons/Button';
 
 export default function Portfolio() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -123,6 +125,26 @@ export default function Portfolio() {
               </>
             }
           />
+          
+          {/* Gallery Demo Options */}
+          <div className="w-full mt-10 flex flex-col sm:flex-row justify-center items-center gap-6">
+            <Link href="/projects">
+              <Button 
+                variant="primary"
+                size="lg"
+              >
+                View Projects (Original Gallery)
+              </Button>
+            </Link>
+            <Link href="/projects2">
+              <Button 
+                variant="secondary"
+                size="lg"
+              >
+                View Projects (React Image Gallery)
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
