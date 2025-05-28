@@ -6,6 +6,7 @@ import { getProjectById } from '../utils/projectsApi';
 import { Project } from '../types/projects';
 import { getProjectGalleryImages } from '../utils/galleryUtils';
 import { GalleryImage } from '../components/projects/ProjectImageGallery';
+import { generatePropertyDescription } from '../utils/descriptionUtils';
 
 // Import components
 import Button from '../components/common/buttons/Button';
@@ -19,7 +20,7 @@ import { CollapsibleSection } from '../components/common/ui';
 import { ImageGallery } from 'components/common/ui';
 
 // Typography components
-import { PageHeader, SectionTitle, BodyContent } from '../components/Typography';
+import { PageHeader, SectionTitle, BodyContent, CardTitle } from '../components/Typography';
 
 const ProjectDetails: NextPage = () => {
   const router = useRouter();
@@ -191,15 +192,12 @@ const ProjectDetails: NextPage = () => {
               {/* Left Column (60%) */}
               <div className="lg:col-span-3">
                 {/* Image Slideshow */}
-                {/* <ProjectImageGallery images={galleryImages} /> */}
                 <ImageGallery images={galleryImages} />
                 
                 {/* Project Description */}
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold mb-4">Project Description</h2>
-                  <div className="prose max-w-none">
-                    <p>{project.description || 'No description available for this project.'}</p>
-                  </div>
+                  <CardTitle className="text-2xl font-bold mb-4">Project Description</CardTitle>
+                  <BodyContent>{project.description || generatePropertyDescription(project)}</BodyContent>
                 </div>
                 
                 {/* Milestones (Collapsible) */}

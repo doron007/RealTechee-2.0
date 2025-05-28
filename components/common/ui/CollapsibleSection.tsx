@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SectionTitle } from '../../Typography';
+import Image from 'next/image';
+import { SectionTitle, CardTitle } from '../../Typography';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -20,8 +21,15 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <span>{isExpanded ? '▲' : '▼'}</span>
+        <CardTitle className="text-xl font-semibold">{title}</CardTitle>
+        <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
+          <Image 
+            src="/assets/icons/ic-arrow-down.svg"
+            alt={isExpanded ? "Collapse" : "Expand"}
+            width={20}
+            height={20}
+          />
+        </div>
       </button>
       {isExpanded && (
         <div className="p-4">

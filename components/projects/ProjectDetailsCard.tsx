@@ -1,32 +1,53 @@
 import React from 'react';
 import { Project } from '../../types/projects';
+import Card from '../common/ui/Card';
+import { BodyContent, CardTitle } from '../Typography';
+import { formatCurrency } from '../../utils/formatUtils';
+import StatusPill from '../common/ui/StatusPill';
 
 interface ProjectDetailsCardProps {
   project: Project;
 }
 
 const ProjectDetailsCard: React.FC<ProjectDetailsCardProps> = ({ project }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-xl font-bold mb-4 border-b pb-2">Project Details</h2>
-      <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
-        <dt className="text-gray-600">Status:</dt>
-        <dd>
-          <span className="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
-            {project.Status || 'In Progress'}
-          </span>
-        </dd>
-        
-        <dt className="text-gray-600">Original Price:</dt>
-        <dd className="font-medium">${project["Original Value"] || '850,000'}</dd>
-        
-        <dt className="text-gray-600">Boost Price:</dt>
-        <dd className="font-medium">${project["Boost Price"] || '150,000'}</dd>
-        
-        <dt className="text-gray-600">Value Added:</dt>
-        <dd className="font-medium text-green-600">${project["Added value"] || '300,000'}</dd>
-      </dl>
+  const content = (
+    <div className="p-4 flex flex-col gap-2">
+      <div className="flex h-8">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Status:</BodyContent>
+          <StatusPill status={project.Status || 'New'} />
+        </div>
+      </div>
+      
+      <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Original Price:</BodyContent>
+          <BodyContent className="leading-none my-auto">${formatCurrency(project["Original Value"]) || '850,000'}</BodyContent>
+        </div>
+      </div>
+
+      <div className="flex h-8">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Boost Price:</BodyContent>
+          <BodyContent className="leading-none my-auto">${formatCurrency(project["Boost Price"]) || '150,000'}</BodyContent>
+        </div>
+      </div>
+      
+      <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto font-bold">Value Added:</BodyContent>
+          <BodyContent className="leading-none my-auto text-gray-600 font-bold">${formatCurrency(project["Added value"]) || '300,000'}</BodyContent>
+        </div>
+      </div>
     </div>
+  );
+
+  return (
+    <Card 
+      title={<CardTitle className="mb-0">Project Details</CardTitle>}
+      content={content}
+      className="-my-5 sm:-my-6 md:-my-7"
+    />
   );
 };
 

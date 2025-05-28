@@ -1,34 +1,56 @@
 import React from 'react';
 import { Project } from '../../types/projects';
-import Button from '../common/buttons/Button';
+import Card from '../common/ui/Card';
+import { Button } from '../common/buttons';
+import { BodyContent, CardTitle } from '../Typography';
+import Image from 'next/image';
+import { formatPhoneNumber } from '../../utils/formatUtils';
 
 interface AgentInfoCardProps {
   project: Project;
 }
 
 const AgentInfoCard: React.FC<AgentInfoCardProps> = ({ project }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-bold mb-4 border-b pb-2">Agent Information</h2>
-      <div className="flex items-center mb-4">
-        <div className="w-16 h-16 rounded-full bg-gray-300 mr-4"></div>
+  const content = (
+    <div className="p-4 flex flex-col gap-2">
+      <div className="flex items-center mb-3">
+        <div className="w-16 h-16 rounded-full bg-gray-300 mr-4 flex-shrink-0"></div>
         <div>
-          <h3 className="font-semibold text-lg">{project["Agent Name"] || 'John Smith'}</h3>
-          <p className="text-gray-600 text-sm">Real Estate Specialist</p>
+          <BodyContent className="font-semibold leading-none mb-1">{project["Agent Name"] || 'John Smith'}</BodyContent>
+          {/* <BodyContent className="text-gray-600 text-sm leading-none">Real Estate Specialist</BodyContent> */}
         </div>
       </div>
-      <dl className="grid grid-cols-1 gap-y-2">
-        <dt className="text-gray-600">Phone:</dt>
-        <dd className="font-medium">{project["Agent Phone"] || '(123) 456-7890'}</dd>
-        
-        <dt className="text-gray-600">Email:</dt>
-        <dd className="font-medium">{project["Agent Email"] || 'agent@realtechee.com'}</dd>
-      </dl>
+
+      <div className="flex h-8">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Phone:</BodyContent>
+          <BodyContent className="leading-none my-auto">{formatPhoneNumber(project["Agent Phone"]) || '(123) 456-7890'}</BodyContent>
+        </div>
+      </div>
       
-      <Button variant="primary" className="w-full mt-4">
-        Contact Agent
-      </Button>
+      <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Email:</BodyContent>
+          <BodyContent className="leading-none my-auto">{project["Agent Email"] || 'agent@realtechee.com'}</BodyContent>
+        </div>
+      </div>
+
+      <div className="mt-2">
+        <Button 
+          variant="primary" 
+          text="Contact Agent"
+          className="w-full"
+        />
+      </div>
     </div>
+  );
+
+  return (
+    <Card 
+      title={<CardTitle className="mb-0">Agent Information</CardTitle>}
+      content={content}
+      className="-my-5 sm:-my-6 md:-my-7"
+    />
   );
 };
 

@@ -1,58 +1,98 @@
 import React from 'react';
 import { Project } from '../../types/projects';
 import Card from '../common/ui/Card';
+import { Button } from '../common/buttons';
+import { PageHeader, SectionLabel, BodyContent, ButtonText, CardContent, CardTitle } from '../Typography';
+import Image from 'next/image';
 
 interface PropertyDetailsCardProps {
   project: Project;
 }
 
+// Reuse the ProjectStat component from ProjectCard
+const ProjectStat = ({ icon, value, label }: { icon: string, value: string, label: string }) => (
+  <div className="flex items-center gap-2">
+    <div className="w-5 h-5 flex-shrink-0">
+      <Image 
+        src={icon}
+        alt={label} 
+        width={20} 
+        height={20}
+        onError={(e) => {
+          console.error(`Failed to load icon: ${icon}`);
+          e.currentTarget.style.display = 'none';
+        }}
+      />
+    </div>
+    <CardContent spacing="none" className="font-medium text-[#2A2B2E] leading-none">{value}</CardContent>
+    <CardContent spacing="none" className="text-gray-500 text-xs leading-none ml-1">{label}</CardContent>
+  </div>
+);
+
 const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-xl font-bold mb-4 border-b pb-2">Property Details</h2>
-      <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
-        <dt className="text-gray-600">Address:</dt>
-        <dd className="font-medium">{project.location || '123 Main St'}</dd>
-        
-        <dt className="text-gray-600">Property Type:</dt>
-        <dd className="font-medium">{project["Property Type"] || 'Single Family'}</dd>
-        
-        <dt className="text-gray-600">Year Built:</dt>
-        <dd className="font-medium">{project["Year Built"] || '2020'}</dd>
-        
-        <dt className="text-gray-600">Bedrooms:</dt>
-        <dd className="font-medium">{project.Bedrooms || '4'}</dd>
-        
-        <dt className="text-gray-600">Bathrooms:</dt>
-        <dd className="font-medium">{project.Bathrooms || '3'}</dd>
-        
-        <dt className="text-gray-600">Stories:</dt>
-        <dd className="font-medium">{project.Floors || '2'}</dd>
-        
-        <dt className="text-gray-600">Square Feet:</dt>
-        <dd className="font-medium">{project["Size Sqft."] || '2,500'}</dd>
-      </dl>
+  const { Bedrooms, Bathrooms, Floors } = project;
+  const squareFeet = project["Size Sqft."] || '0';
+
+  const content = (
+    <div className="p-4 flex flex-col gap-2">
+      <div className="flex h-8">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Property Type:</BodyContent>
+          <BodyContent className="leading-none my-auto">{project["Property Type"] || 'Single Family'}</BodyContent>
+        </div>
+      </div>
       
-      {/* External Links */}
-      <div className="mt-6 grid grid-cols-2 gap-4">
-        <a 
-          href={project["Zillow Link"] || "#"} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors text-sm"
-        >
-          View on Zillow
-        </a>
-        <a 
-          href={project["Redfin Link"] || "#"} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center justify-center bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors text-sm"
-        >
-          View on Redfin
-        </a>
+      <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
+        <div className="flex items-center w-full">
+          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Year Built:</BodyContent>
+          <BodyContent className="leading-none my-auto">{project["Year Built"] || '1971'}</BodyContent>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 py-3">
+        <ProjectStat 
+          icon="/assets/icons/ic-bedroom.svg"
+          value={Bedrooms || '4'}
+          label="bdrms"
+        />
+        <ProjectStat 
+          icon="/assets/icons/ic-staircase.svg"
+          value={Floors || '2'}
+          label="stories"
+        />
+        <ProjectStat 
+          icon="/assets/icons/ic-bath.svg"
+          value={Bathrooms || '4'}
+          label="baths"
+        />
+        <ProjectStat 
+          icon="/assets/icons/ic-dimension.svg"
+          value={squareFeet || '2427'}
+          label="sqft"
+        />
+      </div>
+      
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-1">
+        <Button 
+          variant="secondary"
+          href={project["Zillow Link"] || "#"}
+          text="View on Zillow"
+        />
+        <Button
+          variant="secondary"
+          href={project["Redfin Link"] || "#"}
+          text="View on Redfin"
+        />
       </div>
     </div>
+  );
+
+  return (
+    <Card 
+      title={<CardTitle className="mb-0">Property Details</CardTitle>}
+      content={content}
+      className="-my-5 sm:-my-6 md:-my-7"
+    />
   );
 };
 
