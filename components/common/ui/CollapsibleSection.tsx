@@ -16,12 +16,12 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(initialExpanded);
 
   return (
-    <div className="mb-8 border rounded-lg overflow-hidden">
+    <div className="mb-4 overflow-hidden">
       <button 
-        className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        className="w-full flex justify-between items-center py-2 hover:bg-gray-100 transition-colors text-left"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <CardTitle className="text-xl font-semibold">{title}</CardTitle>
+        <SectionTitle className="!mb-0 text-xl font-bold">{title}</SectionTitle>
         <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
           <Image 
             src="/assets/icons/ic-arrow-down.svg"
@@ -32,7 +32,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         </div>
       </button>
       {isExpanded && (
-        <div className="p-4">
+        <div className="py-2 pl-4">
           {children}
         </div>
       )}

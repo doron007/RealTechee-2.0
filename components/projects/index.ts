@@ -9,3 +9,6 @@ export { default as ProjectImageGallery } from './ProjectImageGallery';
 export { default as PropertyDetailsCard } from './PropertyDetailsCard';
 export { default as ProjectDetailsCard } from './ProjectDetailsCard';
 export { default as AgentInfoCard } from './AgentInfoCard';
+export { default as MilestonesList, type Milestone } from './MilestonesList';
+export { default as PaymentList, type Payment } from './PaymentList';
+export { default as ProjectDescriptionSection } from './ProjectDescriptionSection';

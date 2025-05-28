@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
 import { getProjectById } from '../utils/projectsApi';
@@ -10,11 +11,16 @@ import { generatePropertyDescription } from '../utils/descriptionUtils';
 
 // Import components
 import Button from '../components/common/buttons/Button';
-import { 
-  ProjectImageGallery, 
-  PropertyDetailsCard, 
-  ProjectDetailsCard, 
-  AgentInfoCard 
+import {
+  ProjectImageGallery,
+  PropertyDetailsCard,
+  ProjectDetailsCard,
+  AgentInfoCard,
+  MilestonesList,
+  PaymentList,
+  ProjectDescriptionSection,
+  type Milestone,
+  type Payment
 } from '../components/projects';
 import { CollapsibleSection } from '../components/common/ui';
 import { ImageGallery } from 'components/common/ui';
@@ -27,12 +33,12 @@ const ProjectDetails: NextPage = () => {
   // Extract projectId and ensure it's a string
   const projectIdParam = router.query.projectId;
   const projectId = Array.isArray(projectIdParam) ? projectIdParam[0] : projectIdParam;
-  
+
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
-  
+
   // Helper function to convert string URLs to GalleryImage objects
   const convertToGalleryImages = (urls: string[]): GalleryImage[] => {
     return urls.map((url, index) => ({
@@ -43,11 +49,11 @@ const ProjectDetails: NextPage = () => {
   };
 
   useEffect(() => {
-    // Skip effect if router is not ready yet or no projectId
+    // Skip effect if router is not ready
     if (!router.isReady || !projectId) {
       return;
     }
-    
+
     async function loadProject() {
       setLoading(true);
       setError(null);
@@ -77,7 +83,7 @@ const ProjectDetails: NextPage = () => {
         if (projectId && typeof projectId === 'string') {
           try {
             const fetchedProject = await getProjectById(projectId);
-            
+
             if (fetchedProject) {
               setProject(fetchedProject);
               try {
@@ -128,42 +134,80 @@ const ProjectDetails: NextPage = () => {
         setLoading(false);
       }
     }, 100);
-    
+
     // Clean up function
     return () => {
       clearTimeout(loadTimeout);
     };
   }, [projectId, router.isReady]);
 
-  // Milestone and payment schedule data
-  const milestones = [
-    { name: 'Design Phase', status: 'Completed', statusClass: 'text-green-600' },
-    { name: 'Foundation Work', status: 'Completed', statusClass: 'text-green-600' },
-    { name: 'Framing', status: 'In Progress', statusClass: 'text-blue-600' },
-    { name: 'Electrical & Plumbing', status: 'Pending', statusClass: 'text-gray-400' },
-    { name: 'Finishing', status: 'Pending', statusClass: 'text-gray-400' }
+  // Define milestones array with proper typing
+  const milestones: Milestone[] = [
+    {
+      name: 'New Roof on House and Garage',
+      description: 'Demo and haul away existing old roof. Supply and install new 30 years cool roof shingles roof (color to be selected by customer).\n\nNOTE:\n1. Includes up to 100sq ft of plywood replacement\n2. Solar panels to be removed and reinstall by 3rd party (Realtechee will not be responsible panels)',
+      isCompleted: true,
+      order: 1
+    },
+    {
+      name: 'Repair ceiling in laundry room and crack on living room ceiling',
+      description: 'Strip ceiling drywall\nMud the surface\nSkim coat the ceiling\nPaint entire living room',
+      isCompleted: false,
+      order: 2
+    }
   ];
 
-  const paymentSchedule = [
-    { name: 'Initial Deposit (25%)', status: 'Paid', statusClass: 'text-green-600' },
-    { name: 'Foundation Complete (15%)', status: 'Paid', statusClass: 'text-green-600' },
-    { name: 'Framing Complete (20%)', status: 'Due June 15, 2025', statusClass: 'text-blue-600' },
-    { name: 'Utilities Installed (15%)', status: 'TBD', statusClass: 'text-gray-400' },
-    { name: 'Final Payment (25%)', status: 'TBD', statusClass: 'text-gray-400' }
+  // Payment schedule with proper typing
+  const payments: Payment[] = [
+    {
+      name: 'Initial Deposit (25%)',
+      description: '',
+      isPaid: true,
+      price: 1000,
+      order: 1
+    },
+    {
+      name: 'Foundation Complete (15%)',
+      description: '',
+      isPaid: true,
+      price: 1000,
+      order: 2
+    },
+    {
+      name: 'Framing Complete (20%)',
+      description: '',
+      isPaid: true,
+      price: 1000,
+      order: 3
+    },
+    {
+      name: 'Utilities Installed (15%)',
+      description: '',
+      isPaid: false,
+      price: 1000,
+      order: 4
+    },
+    {
+      name: 'Final Payment (25%)',
+      description: '',
+      isPaid: false,
+      price: 1000,
+      order: 5
+    }
   ];
 
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
         <title>{project ? `${project.title} | RealTechee` : 'Project Details | RealTechee'}</title>
-        <meta 
-          name="description" 
+        <meta
+          name="description"
           content={project ? `View details for ${project.title}` : 'Project details page for RealTechee projects'}
         />
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      
+
       <main className="flex-grow">
         {/* Loading State */}
         {loading && (
@@ -176,7 +220,7 @@ const ProjectDetails: NextPage = () => {
         {!loading && error && (
           <div className="container mx-auto px-4 py-16 flex flex-col items-center">
             <div className="text-amber-600 text-lg mb-6">{error}</div>
-            <Button 
+            <Button
               variant="primary"
               onClick={() => router.push('/projects')}
             >
@@ -193,53 +237,36 @@ const ProjectDetails: NextPage = () => {
               <div className="lg:col-span-3">
                 {/* Image Slideshow */}
                 <ImageGallery images={galleryImages} />
-                
+
                 {/* Project Description */}
-                <div className="mb-8">
-                  <CardTitle className="text-2xl font-bold mb-4">Project Description</CardTitle>
+                <ProjectDescriptionSection description={project.description || generatePropertyDescription(project)} />
+                {/* <div className="mb-8">
+                  <SectionTitle className="text-2xl font-bold mb-4">Project Description</SectionTitle>
                   <BodyContent>{project.description || generatePropertyDescription(project)}</BodyContent>
-                </div>
-                
-                {/* Milestones (Collapsible) */}
-                <CollapsibleSection title="Milestones" initialExpanded={true}>
-                  <ul className="space-y-2">
-                    {milestones.map((milestone, index) => (
-                      <li key={index} className="flex justify-between">
-                        <span>{milestone.name}</span>
-                        <span className={milestone.statusClass}>{milestone.status}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CollapsibleSection>
-                
-                {/* Payment Schedule (Collapsible) */}
-                <CollapsibleSection title="Payment Schedule" initialExpanded={true}>
-                  <ul className="space-y-2">
-                    {paymentSchedule.map((payment, index) => (
-                      <li key={index} className="flex justify-between">
-                        <span>{payment.name}</span>
-                        <span className={payment.statusClass}>{payment.status}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CollapsibleSection>
+                </div> */}
+
+                {/* Milestones List */}
+                <MilestonesList milestones={milestones} />
+
+                {/* Payment Schedule */}
+                <PaymentList payments={payments} />
               </div>
-              
+
               {/* Right Column (40%) */}
               <div className="lg:col-span-2">
                 {/* Property Details */}
                 <PropertyDetailsCard project={project} />
-                
+
                 {/* Project Details */}
                 <ProjectDetailsCard project={project} />
-                
+
                 {/* Agent Information */}
                 <AgentInfoCard project={project} />
               </div>
             </div>
-            
+
             <div className="mt-12 text-center">
-              <Button 
+              <Button
                 variant="secondary"
                 onClick={() => router.push('/projects')}
               >
