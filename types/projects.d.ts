@@ -3,12 +3,14 @@
  * Based on the CSV structure
  */
 
+import { ProjectStatus } from '../utils/projectsService';
+
 export interface Project {
   // CSV original fields
   ID?: string;
   projectID?: string;
   Title?: string;
-  Status?: string;
+  Status?: ProjectStatus;
   "Status Image"?: string;
   "Status Order"?: string;
   "Property Type"?: string;
@@ -57,4 +59,5 @@ export interface ProjectFilter {
   status?: string;
   featured?: boolean;
   search?: string;
+  includeArchived?: boolean;  // defaults to false
 }

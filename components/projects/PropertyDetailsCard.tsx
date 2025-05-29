@@ -13,10 +13,10 @@ interface PropertyDetailsCardProps {
 const ProjectStat = ({ icon, value, label }: { icon: string, value: string, label: string }) => (
   <div className="flex items-center gap-2">
     <div className="w-5 h-5 flex-shrink-0">
-      <Image 
+      <Image
         src={icon}
-        alt={label} 
-        width={20} 
+        alt={label}
+        width={20}
         height={20}
         onError={(e) => {
           console.error(`Failed to load icon: ${icon}`);
@@ -37,43 +37,63 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
     <div className="p-4 flex flex-col gap-2">
       <div className="flex h-8">
         <div className="flex items-center w-full">
+          <div className="flex items-center gap-2 pb-2">
+            <div className="w-5 h-5 flex-shrink-0">
+              <Image
+                src="/assets/icons/ic-location.svg"
+                alt="location"
+                width={20}
+                height={20}
+                onError={(e) => {
+                  console.error(`Failed to load icon: "/assets/icons/ic-location.svg"`);
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+            <BodyContent spacing="none" className="text-gray-600 leading-none">{project.Title || 'Address'}</BodyContent>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex h-8 pl-4">
+        <div className="flex items-center w-full">
           <BodyContent className="text-gray-600 w-32 leading-none my-auto">Property Type:</BodyContent>
           <BodyContent className="leading-none my-auto">{project["Property Type"] || 'Single Family'}</BodyContent>
         </div>
       </div>
-      
-      <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
+
+      <div className="flex h-8 pl-4 bg-[#F9F9F9]">
         <div className="flex items-center w-full">
           <BodyContent className="text-gray-600 w-32 leading-none my-auto">Year Built:</BodyContent>
           <BodyContent className="leading-none my-auto">{project["Year Built"] || '1971'}</BodyContent>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 py-3">
-        <ProjectStat 
+        <ProjectStat
           icon="/assets/icons/ic-bedroom.svg"
           value={Bedrooms || '4'}
           label="bdrms"
         />
-        <ProjectStat 
+        <ProjectStat
           icon="/assets/icons/ic-staircase.svg"
           value={Floors || '2'}
           label="stories"
         />
-        <ProjectStat 
+        <ProjectStat
           icon="/assets/icons/ic-bath.svg"
           value={Bathrooms || '4'}
           label="baths"
         />
-        <ProjectStat 
+        <ProjectStat
           icon="/assets/icons/ic-dimension.svg"
           value={squareFeet || '2427'}
           label="sqft"
         />
       </div>
-      
+
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-1">
-        <Button 
+        <Button
           variant="secondary"
           href={project["Zillow Link"] || "#"}
           text="View on Zillow"
@@ -88,7 +108,7 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
   );
 
   return (
-    <Card 
+    <Card
       title={<CardTitle className="mb-0">Property Details</CardTitle>}
       content={content}
       className="-my-5 sm:-my-6 md:-my-7"

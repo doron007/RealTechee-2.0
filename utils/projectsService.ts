@@ -10,6 +10,27 @@ import { Project, ProjectFilter } from '../types/projects';
 import { readCsvFile, writeCsvFile } from './csvUtils';
 import { processImageUrl, processImageGallery } from './serverWixMediaUtils';
 
+// Project status type
+export type ProjectStatus = 'New' | 'Boosting' | 'Buyer Servicing' | 'Pre-listing' | 'Listed' | 'In-escrow' | 'Sold' | 'Completed' | 'Archived';
+
+// Helper function to check if a string is a valid ProjectStatus
+function isProjectStatus(status: string): status is ProjectStatus {
+  return status in PROJECT_STATUS_ORDER;
+}
+
+// Define project status order
+const PROJECT_STATUS_ORDER: Record<ProjectStatus, number> = {
+  'New': 1,
+  'Boosting': 2,
+  'Buyer Servicing': 3,
+  'Pre-listing': 4,
+  'Listed': 5,
+  'In-escrow': 6,
+  'Sold': 7,
+  'Completed': 8,
+  'Archived': 9
+};
+
 // Define the path to the projects CSV file
 const PROJECTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'Projects.csv');
 
@@ -133,29 +154,36 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
     // Map the raw CSV projects to the UI-friendly format
     const mappedProjects = await Promise.all(rawProjects.map(mapProjectForUI));
     
-    if (!filter) {
-      return mappedProjects;
-    }
-    
-    return mappedProjects.filter(project => {
+    // Filter projects
+    const filteredProjects = mappedProjects.filter(project => {
+      // Filter out archived projects unless explicitly included
+      if (!filter?.includeArchived && project.Status === 'Archived') {
+        return false;
+      }
+
       // Apply category filter if provided
-      if (filter.category && project.category !== filter.category) {
+      if (filter?.category && project.category !== filter.category) {
         return false;
       }
       
       // Apply location filter if provided
-      if (filter.location && project.location && !project.location.includes(filter.location)) {
+      if (filter?.location && project.location && !project.location.includes(filter.location)) {
         return false;
       }
       
       // Apply featured filter if provided
-      if (filter.featured !== undefined && 
+      if (filter?.featured !== undefined && 
           project.featured?.toString() !== filter.featured.toString()) {
         return false;
       }
       
+      // Apply status filter if provided
+      if (filter?.status && project.Status !== filter.status) {
+        return false;
+      }
+      
       // Apply search filter if provided
-      if (filter.search) {
+      if (filter?.search) {
         const searchTerm = filter.search.toLowerCase();
         return (
           (project.title && project.title.toLowerCase().includes(searchTerm)) || 
@@ -166,6 +194,23 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
       }
       
       return true;
+    });
+    
+    // Sort projects by status order and then by updated date
+    return filteredProjects.sort((a, b) => {
+      // Get status order, defaulting to highest number if status not found
+      const aOrder = a.Status && isProjectStatus(a.Status) ? PROJECT_STATUS_ORDER[a.Status] : 999;
+      const bOrder = b.Status && isProjectStatus(b.Status) ? PROJECT_STATUS_ORDER[b.Status] : 999;
+      
+      // First sort by status order
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
+      }
+      
+      // Then sort by updated date in descending order
+      const aDate = new Date(a.updatedAt || a['Updated Date'] || 0);
+      const bDate = new Date(b.updatedAt || b['Updated Date'] || 0);
+      return bDate.getTime() - aDate.getTime();
     });
   } catch (error) {
     console.error('Error fetching projects:', error);

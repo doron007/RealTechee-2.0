@@ -208,10 +208,6 @@ const ProjectDetails: NextPage = () => {
 
                 {/* Project Description */}
                 <ProjectDescriptionSection description={project.description || generatePropertyDescription(project)} />
-                {/* <div className="mb-8">
-                  <SectionTitle className="text-2xl font-bold mb-4">Project Description</SectionTitle>
-                  <BodyContent>{project.description || generatePropertyDescription(project)}</BodyContent>
-                </div> */}
 
                 {/* Milestones List */}
                 <MilestonesList milestones={milestones} />
