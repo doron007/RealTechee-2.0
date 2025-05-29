@@ -4,10 +4,10 @@ import { CollapsibleSection } from '../common/ui';
 import { CardTitle, BodyContent } from '../Typography';
 
 export interface Milestone {
-  name: string;
-  description: string;
-  isCompleted: boolean;
-  order?: number; // Optional prop for ordering
+  Name: string;
+  Description: string;
+  'Is Complete': boolean;
+  Order?: number;
 }
 
 interface MilestonesListProps {
@@ -26,18 +26,18 @@ export default function MilestonesList({
   // Sort milestones: completed first, then by order (if exists), then preserve original order
   const sortedMilestones = [...milestones].sort((a, b) => {
     // First sort by completion status (completed items first)
-    if (a.isCompleted !== b.isCompleted) {
-      return a.isCompleted ? -1 : 1;
+    if (a['Is Complete'] !== b['Is Complete']) {
+      return a['Is Complete'] ? -1 : 1;
     }
     
     // Then sort by order if both have order defined
-    if (a.order !== undefined && b.order !== undefined) {
-      return a.order - b.order;
+    if (a.Order !== undefined && b.Order !== undefined) {
+      return a.Order - b.Order;
     }
     
     // If only one has order defined, put the one with order first
-    if (a.order !== undefined) return -1;
-    if (b.order !== undefined) return 1;
+    if (a.Order !== undefined) return -1;
+    if (b.Order !== undefined) return 1;
     
     // If neither has order, maintain original order
     return 0;
@@ -46,28 +46,31 @@ export default function MilestonesList({
   return (
     <div className={className}>
       <CollapsibleSection title={title} initialExpanded={initialExpanded}>
-        <div className="space-y-2">
+        <div className="space-y-1">
           {sortedMilestones.map((milestone, index) => (
             <div 
-              key={index} 
-              className={`flex gap-4 p-2 ${
-                milestone.isCompleted ? 'bg-gray-200' : 'bg-gray-50'
+              key={index}
+              className={`flex items-center gap-4 py-1.5 px-2 ${
+                milestone['Is Complete'] ? 'bg-gray-200' : 'bg-gray-50'
               }`}
             >
-              <div className="flex-shrink-0 mt-1">
+              <div className="flex-shrink-0">
                 <Image 
-                  src={milestone.isCompleted 
+                  src={milestone['Is Complete']
                     ? '/assets/icons/btn-checkbox-checked.svg'
                     : '/assets/icons/btn-checkbox-not-checked.svg'
                   }
-                  alt={milestone.isCompleted ? "Completed milestone" : "Pending milestone"}
+                  alt={milestone['Is Complete'] ? "Milestone completed" : "Milestone pending"}
                   width={20}
                   height={20}
                 />
               </div>
+              
               <div className="flex-1">
-                <CardTitle className="text-[#2A2B2E] mb-2">{milestone.name}</CardTitle>
-                <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{milestone.description}</BodyContent>
+                <BodyContent className="!mb-0 text-[#2A2B2E]">{milestone.Name}</BodyContent>
+                {milestone.Description && (
+                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{milestone.Description}</BodyContent>
+                )}
               </div>
             </div>
           ))}

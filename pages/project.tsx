@@ -3,8 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import { getProjectById } from '../utils/projectsApi';
+import { getProjectById, getProjectMilestones, getProjectPayments } from '../utils/projectsApi';
 import { Project } from '../types/projects';
+import { ProjectMilestone, ProjectPayment } from '../types/projectItems';
 import { getProjectGalleryImages } from '../utils/galleryUtils';
 import { GalleryImage } from '../components/projects/ProjectImageGallery';
 import { generatePropertyDescription } from '../utils/descriptionUtils';
@@ -30,7 +31,6 @@ import { PageHeader, SectionTitle, BodyContent, CardTitle } from '../components/
 
 const ProjectDetails: NextPage = () => {
   const router = useRouter();
-  // Extract projectId and ensure it's a string
   const projectIdParam = router.query.projectId;
   const projectId = Array.isArray(projectIdParam) ? projectIdParam[0] : projectIdParam;
 
@@ -38,6 +38,8 @@ const ProjectDetails: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [milestones, setMilestones] = useState<ProjectMilestone[]>([]);
+  const [payments, setPayments] = useState<ProjectPayment[]>([]);
 
   // Helper function to convert string URLs to GalleryImage objects
   const convertToGalleryImages = (urls: string[]): GalleryImage[] => {
@@ -69,6 +71,15 @@ const ProjectDetails: NextPage = () => {
                 setProject(parsedProject);
                 const resolvedImages = await getProjectGalleryImages(parsedProject);
                 setGalleryImages(convertToGalleryImages(resolvedImages));
+                
+                // Fetch milestones and payments
+                const [projectMilestones, projectPayments] = await Promise.all([
+                  getProjectMilestones(parsedProject.projectID || parsedProject.id),
+                  getProjectPayments(parsedProject.projectID || parsedProject.id)
+                ]);
+                
+                setMilestones(projectMilestones);
+                setPayments(projectPayments);
                 setLoading(false);
                 return;
               }
@@ -87,7 +98,14 @@ const ProjectDetails: NextPage = () => {
             if (fetchedProject) {
               setProject(fetchedProject);
               try {
-                const images = await getProjectGalleryImages(fetchedProject);
+                // Fetch all data in parallel
+                const [images, projectMilestones, projectPayments] = await Promise.all([
+                  getProjectGalleryImages(fetchedProject),
+                  getProjectMilestones(fetchedProject.projectID || fetchedProject.id),
+                  getProjectPayments(fetchedProject.projectID || fetchedProject.id)
+                ]);
+
+                // Handle images
                 if (!images || images.length === 0) {
                   console.warn('No gallery images found for project, using placeholder.');
                   setGalleryImages([{
@@ -98,8 +116,13 @@ const ProjectDetails: NextPage = () => {
                 } else {
                   setGalleryImages(convertToGalleryImages(images));
                 }
-              } catch (galleryError) {
-                console.error('Error loading gallery images:', galleryError);
+
+                // Set milestones and payments
+                setMilestones(projectMilestones);
+                setPayments(projectPayments);
+
+              } catch (error) {
+                console.error('Error loading project data:', error);
                 setGalleryImages([{
                   url: '/assets/images/hero-bg.png',
                   alt: 'Project placeholder image',
@@ -140,61 +163,6 @@ const ProjectDetails: NextPage = () => {
       clearTimeout(loadTimeout);
     };
   }, [projectId, router.isReady]);
-
-  // Define milestones array with proper typing
-  const milestones: Milestone[] = [
-    {
-      name: 'New Roof on House and Garage',
-      description: 'Demo and haul away existing old roof. Supply and install new 30 years cool roof shingles roof (color to be selected by customer).\n\nNOTE:\n1. Includes up to 100sq ft of plywood replacement\n2. Solar panels to be removed and reinstall by 3rd party (Realtechee will not be responsible panels)',
-      isCompleted: true,
-      order: 1
-    },
-    {
-      name: 'Repair ceiling in laundry room and crack on living room ceiling',
-      description: 'Strip ceiling drywall\nMud the surface\nSkim coat the ceiling\nPaint entire living room',
-      isCompleted: false,
-      order: 2
-    }
-  ];
-
-  // Payment schedule with proper typing
-  const payments: Payment[] = [
-    {
-      name: 'Initial Deposit (25%)',
-      description: '',
-      isPaid: true,
-      price: 1000,
-      order: 1
-    },
-    {
-      name: 'Foundation Complete (15%)',
-      description: '',
-      isPaid: true,
-      price: 1000,
-      order: 2
-    },
-    {
-      name: 'Framing Complete (20%)',
-      description: '',
-      isPaid: true,
-      price: 1000,
-      order: 3
-    },
-    {
-      name: 'Utilities Installed (15%)',
-      description: '',
-      isPaid: false,
-      price: 1000,
-      order: 4
-    },
-    {
-      name: 'Final Payment (25%)',
-      description: '',
-      isPaid: false,
-      price: 1000,
-      order: 5
-    }
-  ];
 
   return (
     <div className="flex flex-col min-h-screen">

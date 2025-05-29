@@ -3,6 +3,7 @@
  */
 
 import { Project, ProjectFilter } from '../types/projects';
+import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
 
 /**
  * Get all projects with optional filtering
@@ -174,6 +175,63 @@ export async function getProjectLocations(): Promise<string[]> {
     return data.locations;
   } catch (error) {
     console.error('Error fetching project locations:', error);
+    return [];
+  }
+}
+
+/**
+ * Get all milestones for a project
+ */
+export async function getProjectMilestones(projectId: string): Promise<ProjectMilestone[]> {
+  try {
+    const response = await fetch(`/api/projects/milestones?projectId=${projectId}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.milestones;
+  } catch (error) {
+    console.error('Error fetching project milestones:', error);
+    return [];
+  }
+}
+
+/**
+ * Get all payments for a project
+ */
+export async function getProjectPayments(projectId: string): Promise<ProjectPayment[]> {
+  try {
+    const response = await fetch(`/api/projects/payments?projectId=${projectId}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.payments;
+  } catch (error) {
+    console.error('Error fetching project payments:', error);
+    return [];
+  }
+}
+
+/**
+ * Get all comments for a project
+ */
+export async function getProjectComments(projectId: string): Promise<ProjectComment[]> {
+  try {
+    const response = await fetch(`/api/projects/comments?projectId=${projectId}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.comments;
+  } catch (error) {
+    console.error('Error fetching project comments:', error);
     return [];
   }
 }

@@ -5,11 +5,11 @@ import { CardTitle, BodyContent } from '../Typography';
 import { formatCurrency } from '../../utils/formatUtils';
 
 export interface Payment {
-  name: string;
-  description: string;
-  isPaid: boolean;
-  price: number;
-  order?: number;
+  PaymentName: string;
+  Description?: string;
+  Paid: boolean;
+  'Payment Amount': number;
+  Order?: number;
 }
 
 interface PaymentListProps {
@@ -28,18 +28,18 @@ export default function PaymentList({
   // Sort payments: paid first, then by order
   const sortedPayments = [...payments].sort((a, b) => {
     // First sort by payment status (paid items first)
-    if (a.isPaid !== b.isPaid) {
-      return a.isPaid ? -1 : 1;
+    if (a.Paid !== b.Paid) {
+      return a.Paid ? -1 : 1;
     }
     
     // Then sort by order if both have order defined
-    if (a.order !== undefined && b.order !== undefined) {
-      return a.order - b.order;
+    if (a.Order !== undefined && b.Order !== undefined) {
+      return a.Order - b.Order;
     }
     
     // If only one has order defined, put the one with order first
-    if (a.order !== undefined) return -1;
-    if (b.order !== undefined) return 1;
+    if (a.Order !== undefined) return -1;
+    if (b.Order !== undefined) return 1;
     
     // If neither has order, maintain original order
     return 0;
@@ -53,16 +53,16 @@ export default function PaymentList({
             <div 
               key={index} 
               className={`flex items-center gap-4 py-1.5 px-2 ${
-                payment.isPaid ? 'bg-gray-200' : 'bg-gray-50'
+                payment.Paid ? 'bg-gray-200' : 'bg-gray-50'
               }`}
             >
               <div className="flex-shrink-0">
                 <Image 
-                  src={payment.isPaid 
+                  src={payment.Paid 
                     ? '/assets/icons/btn-checkbox-checked.svg'
                     : '/assets/icons/btn-checkbox-not-checked.svg'
                   }
-                  alt={payment.isPaid ? "Payment Paid" : "Oustanding payment"}
+                  alt={payment.Paid ? "Payment Paid" : "Outstanding payment"}
                   width={20}
                   height={20}
                 />
@@ -71,13 +71,13 @@ export default function PaymentList({
               <div className="flex-1 flex items-center">
                 <div className="flex-1">
                   <div className="flex justify-between items-center gap-4">
-                    <BodyContent className="!mb-0 text-[#2A2B2E]">{payment.name}</BodyContent>
+                    <BodyContent className="!mb-0 text-[#2A2B2E]">{payment.PaymentName}</BodyContent>
                     <BodyContent className="!mb-0 text-right">
-                      ${formatCurrency(payment.price.toString())}
+                      ${formatCurrency(payment['Payment Amount'].toString())}
                     </BodyContent>
                   </div>
-                  {payment.description && (
-                    <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{payment.description}</BodyContent>
+                  {payment.Description && (
+                    <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{payment.Description}</BodyContent>
                   )}
                 </div>
               </div>
