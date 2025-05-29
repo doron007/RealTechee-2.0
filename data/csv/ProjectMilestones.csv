@@ -1,11 +1,88 @@
-﻿"ID","Created Date","Updated Date","Name","Description","Project ID","Order","Is Complete","Estimated Start","Estimated Finish","Is Category","Is Internal"
-"0629747d-63c5-4940-b49d-c71879065ade",2023-12-05T01:14:44Z,2024-03-25T15:37:18Z,"Remove mirrors in living room and master bedroom",,"69",7,true,,,false,false
-"0b8c39bf-861f-49f2-95fb-3a45263808f4",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Tub & Tile surround","Supply and install new plumbing fixtures (shower valve, shower head) -allowance $500.00
+﻿"ID","Created Date","Updated Date","Owner","Name","Description","Project ID","Order","Is Complete","Estimated Start","Estimated Finish","Is Category","Is Internal"
+"019b24a6-f7dd-72b4-092f-e8d46c694821",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Flooring","Demo existing carpet in living room, master bedroom, bathroom and hallway
+Supply and Install 1550 sq ft of LVT 
+Supply and install baseboards to be painted by others
+","91",5,false,,,false,false
+"033fec9c-6fa2-bd66-829f-b297dcf68111",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Interior paint ",,"56",18,true,,"2023-08-25T07:00:00.000Z",false,false
+"0534b6f3-e905-4f56-2e5b-dd03882a8408",2023-11-01T15:30:28Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Change order 2",,"62",8,true,,,false,false
+"0629747d-63c5-4940-b49d-c71879065ade",2023-12-05T01:14:44Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Remove mirrors in living room and master bedroom",,"69",7,true,,,false,false
+"0724512c-48d3-84b9-49cb-b58c761d45d8",2023-10-21T20:39:46Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","DO something for CO",,"9",1,false,,,false,false
+"075115e3-42ac-0dc9-a571-a67cecaee669",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Drywall Repairs",,"56",11,true,,2023-07-20T22:00:00Z,false,false
+"07899d81-da9f-2bdb-b368-81cfa47db2da",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Cabinets instaltion",,"17",9,true,,,false,false
+"08b927e9-94d5-9fd4-c6e2-9a2f4d59a985",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","kitchenette",,"63",1,true,,,false,false
+"08c3dab4-845d-0d88-a9a7-c8e2ef2715b0",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Recappable installation (6)",,"63",5,true,,,false,false
+"0b8c39bf-861f-49f2-95fb-3a45263808f4",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Tub & Tile surround","Supply and install new plumbing fixtures (shower valve, shower head) -allowance $500.00
 Supply and install new tile on shower walls (allowance $500.00)
 Apply grout
 Supply and install new frameless shower door
 Reglaze tub","69",2,true,,,false,false
-"359e11bb-cd20-451c-8af6-6f3cb56d6851",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Master bathroom ","Demo existing shower including plumbing fixtures, tile and shower door
+"0f605900-e50d-5f8b-2c2d-b1a902981fa1",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Water proof the bathroom walls in main house",,"17",4,true,,,false,false
+"111de4ba-eedb-dc32-b92a-2c01be78c3bf",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Wiring and installation of a newly located wall mounted light.","Wiring and installation of a newly located wall mounted light.
+Notes:
+* Fixture to be provided by customer","64",6,true,,,false,false
+"138cc46c-4951-545e-f65c-61aea6ae8a86",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Switch controls (2)","Installation of GFCI receptacle in an existing location.","64",14,true,,,false,false
+"13afc18d-6856-21d0-c121-a4a55b278829",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Flooring work",,"70",4,true,2023-11-09T08:00:00Z,2023-11-10T08:00:00Z,false,false
+"15488eff-012a-0499-3e33-0e0efa161325",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","20 New 20LED lights","Wiring and installation of a newly located 4"" LED recess light.
+Notes:
+* Includes standard, dimmable trim.
+* Other trims are available upon request for an additional cost.
+* Fire proofing of light is not included - client is responsible. If requested A
+Lighting Inc. will quote accordingly.
+* * LEDs are extremely energy efficient and consume up to 90% less power than
+incandescent bulbs. Since LEDs use only a fraction of the energy of an
+incandescent light bulb there is a dramatic decrease in power costs. Additionally,
+money and energy is saved in maintenance and replacement costs due to the long
+LED lifespan. We recommend our clients to research the many more benefits
+upgrading to LED can bring.","64",3,true,,,false,false
+"1692b765-40cb-e818-f22d-2e22c80abc5d",2023-12-19T22:57:04Z,2024-03-14T16:39:12Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","New Roof on House and Garage","Demo and haul away existing old roof 
+Supply and install new 30 years cool roof shingles roof (color to be selected by customer)
+
+NOTE:
+1.  Includes up to 100sq ft of plywood replacement
+2. Solar panels to be removed and reinstall by 3rd party (Realtechee will not be responsible for the removal and the reinstall of the panels)","72",1,false,,,false,false
+"184fa365-dffb-c572-9534-cc65c2b73bf1",2023-01-16T06:19:40Z,2023-05-09T05:23:16Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","CO 1-13-2023",,"2",6,true,,,false,false
+"19b52315-9a2c-fda2-23d0-e10283f53e60",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Tile installtion in main house bathrooms",,"17",5,true,,,false,false
+"1b5782d2-694d-07ea-eb60-b2750c4af786",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Install new stone on fire place and master vanity",,"56",16,true,,,false,false
+"1e595733-d7b1-6e25-ddf9-2c996114276a",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Wiring and installation of a newly located GFCI receptacle.","Wiring and installation of a newly located GFCI receptacle.","64",12,true,,,false,false
+"1f93bac8-0598-c6d0-8fd0-88dec4cd6b49",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Dedicated line 120 volt 20 AMP (6)",,"63",2,true,,,false,false
+"1fc80121-06cc-d01b-52f4-14b7be384815",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Kitchen","Demo existing countertop and backsplash
+Demo sink and faucet
+Demo all appliances
+Demo existing light fixtures
+Remove and haul away all debris
+Supply and Install 4 LED lights with on/off dimmer switch
+Supply and install new plywood on existing counter tops
+Install new trims around new double oven (as needed)
+Supply and install new quartz countertop with 6' backsplash (1 slab)
+Supply and Install new sink, faucet and garbage disposal ($500 allowance)
+
+NOTE: ALL OTHER APPLIANCES TO BE SUPPLIED BY OTHERS
+","91",4,false,,,false,false
+"22e2f78a-82ff-b5d5-87b8-53a4639f1c11",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Switch controls (x8)","Wiring and installation of a newly located switch control.
+Notes:
+* Includes installation of switch at finishing.
+* Does not include dimmer control switch.","64",9,true,,,false,false
+"2447bb47-c709-67ba-b59f-02cef6175b20",2023-10-07T02:58:01Z,2024-03-14T16:41:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Staging","Kitchen Décor as needed
+Dining Room Décor, artwork as needed
+Living Room Décor, artwork and plants as needed
+Family Room Décor, artwork and plants as needed
+Primary Bedroom Décor, artwork and plants as needed
+Primary Bathroom Décor, artwork, plants as needed
+Guest Bedroom Furniture, lighting, rugs, décor, artwork and plants as needed
+Guest Bathroom Décor, artwork as needed
+Outdoor Backyard Patio Furniture, decor, as needed
+Side Patio Furniture, decor, as needed
+
+","67",1,true,,,false,false
+"27fdad69-aa91-f6cd-1d97-939221b8352e",2023-08-02T04:22:18Z,2023-11-20T06:31:56Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Exterior Work","Repair bricks in front of the house
+Dry Rot wood repair on eaves in from of the house (next to the main entrance) Patio cover repair both framing and dry rot wood repair
+Dry Rot wood repair on three corner of the house second story eaves.
+This is a local repair, excluding painting the entire patio cover, eaves and fascia.","59",1,true,,,false,false
+"285248b8-89e2-1037-0707-ffce60708e0c",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Dedicated line for over",,"63",3,true,,,false,false
+"2c91986c-a6db-a450-faba-77565f4ca058",2023-10-29T20:17:59Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","test",,"9",8,false,,,false,false
+"32918b58-82ab-2929-03aa-a72b30c5335f",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Demolition",,"70",1,true,2023-11-01T07:00:00Z,2023-11-01T07:00:00Z,false,false
+"32bd7df9-8fda-6a85-84f0-a2bb27f70a0b",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Paint ",,"70",5,true,2023-11-13T08:00:00Z,2023-11-14T08:00:00Z,false,false
+"359e11bb-cd20-451c-8af6-6f3cb56d6851",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Master bathroom ","Demo existing shower including plumbing fixtures, tile and shower door
 Demo soffit above the shower
 Demo countertop including sink and lavatory faucet
 Demo existing heater
@@ -16,21 +93,80 @@ Supply and install 2 new under mount sinks
 Supply and install 2 new lavatory faucets (allowance $200.00 for both faucets)
 Supply and Install 3 LED lights above the vanity area
 Supply and install new fan/light/heater combo","69",1,true,,,false,false
-"3644e196-c85f-b4ae-bda2-1f3c3fdf3ffe",2023-11-14T21:05:16Z,2024-03-25T15:37:18Z,"Install 8 new water shut off valves ","Demo and removal of 8 water shutoff valves per HOA
+"3644e196-c85f-b4ae-bda2-1f3c3fdf3ffe",2023-11-14T21:05:16Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install 8 new water shut off valves ","Demo and removal of 8 water shutoff valves per HOA
 Supply and install 8 water shut valves per HOA
 ","69",9,true,,,false,false
-"38426736-677a-4165-8866-8218fedd5fdc",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Flooring","Demo existing carpet in living room, master bedroom, bathroom and hallway
+"38426736-677a-4165-8866-8218fedd5fdc",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Flooring","Demo existing carpet in living room, master bedroom, bathroom and hallway
 Supply and Install 1550 sq ft of LVT 
 Supply and install baseboards to be painted by others
 ","69",5,true,,,false,false
-"49eaf24a-4b2d-4103-08c1-cc5ff3cf167e",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"City Fees ","City Permit Required by HOA Fees ","69",10,true,,,false,false
-"57d4d5dd-be0b-5d3b-cd50-05f05b8b9c09",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"CO #2 - City of Los Angeles Department of Building and Safety - CORRECTION NOTICE","'- Receptacle Countertop Wall Spaces
+"388c1d6a-600e-b155-7263-f08d68e509c3",2023-01-16T06:19:40Z,2023-05-09T05:23:15Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Change orders",,"2",5,false,,,true,false
+"3d7141dc-2cbf-8da2-5668-8909cc1eed2c",2023-01-17T15:20:27Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install new roof in the main house and ADU",,"17",15,true,,,false,false
+"406d4772-91c4-1f5e-0572-08c94a5ad1d8",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install appliances",,"91",8,false,,,false,false
+"41bfe296-c47d-3f5b-4021-682440448ce1",2023-03-20T05:54:36Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Flooring","Supply and install new flooring
+Supply and install new baseboards","48",6,true,2023-03-28T07:00:00Z,2023-04-01T07:00:00Z,false,false
+"426cf91e-a9d5-fcde-ee2e-7b4ff7bae5ba",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Replace galvanized pipes","Demo existing galvanized plumbing 
+Remove and haul away all debris
+Install new piping under the house 
+Run new piping to bathroom area
+Run new piping to kitchen area
+","64",19,true,,,false,false
+"45779ec0-0bd1-9d34-841f-61ea580515b7",2023-09-18T03:38:03Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Change order 1",,"62",6,true,,,false,false
+"46adef5c-48c9-6747-2f26-372e2884c383",2023-08-29T21:53:45Z,2023-12-14T18:16:36Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Remove items into pods and Haul away ","Remove and haul away debris and furniture from inside the house as well as the backyard (including 2 shades)
+Remove and haul away all the items.
+***Items from brother in law room - not to be touched
+***Owner will move out before start of work
+","66",1,true,,,false,false
+"48890915-d01b-f588-b33a-8bd8c80311fb",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","GFCI installation (2)",,"63",6,true,,,false,false
+"49eaf24a-4b2d-4103-08c1-cc5ff3cf167e",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","City Fees ","City Permit Required by HOA Fees ","69",10,true,,,false,false
+"4abfd4ba-ae13-2b44-213f-bef1da91845d",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","LVT Floor instaltion","Demo red carpet in the bedroom
+Supply and install approx. 14 sq. ft of New Lvt floor
+Supply and install new baseboards","64",18,true,,,false,false
+"5042684e-5cb7-ef5f-40ba-0b8115e74cb5",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Electric plumbing and finishes instaltion",,"17",12,true,,,false,false
+"50cc1660-6cc4-6a9b-ea86-e2cbeff27a39",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Install new concrete in main entrance ",,"56",20,true,,2023-08-25T07:00:00Z,false,false
+"50cdf7fb-3a1f-50f2-1acb-ba4d81ce4ac5",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Apply hot mop & Water proof the bathroom in the ADU",,"17",14,true,,,false,false
+"51993595-08fa-56c0-99be-d6b895f87ea5",2023-06-27T20:47:36Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Demolition",,"56",1,true,,,false,false
+"535e2530-f5e5-a1d0-7586-93bd21ac39ef",2023-09-01T21:23:02Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Change Order 1",,"56",21,true,,,false,false
+"5421000f-1118-e2c0-20d8-498b6c704123",2023-03-22T04:58:06Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","KITCHEN REMODELING ","Demo existing electric cook top
+Supply and install new gas cooktop
+Reglaze counter top 
+install new kitchen faucet
+Paint kitchen cabinets (whisper white color)
+Demo existing light fixtures and wood framing
+Install new LED lights with new switch
+Refinish crown molding (to match new kitchen cabinets color)","9",2,true,,,false,false
+"5600a293-f8d5-e3fe-291e-dbe34dde4487",2023-03-22T04:58:06Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Guest bathroom","Demo existing soffit and light fixture
+Demo wood mirror
+Repair walls and ceiling and paint the bathroom
+Install new one large mirror
+Reglaze the sink
+Refinish cabinet (whisper white)","9",6,true,,,false,false
+"56f6a2aa-56d7-9131-337d-0a81ed6bc590",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Upgrading and suppling a dimmer control switch.","Upgrading and suppling a dimmer control switch.","64",10,true,,,false,false
+"572c9a67-7aef-2817-a089-6f7ce8c3308f",2023-08-20T21:33:13Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Paint preparation","Minor repairs of cracks (interior and exterior)","61",3,true,2023-08-16T07:00:00Z,2023-08-18T07:00:00Z,false,false
+"57d4d5dd-be0b-5d3b-cd50-05f05b8b9c09",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","CO #2 - City of Los Angeles Department of Building and Safety - CORRECTION NOTICE","'- Receptacle Countertop Wall Spaces
 - Dishwasher Receptacle in Space Adjacent
 - Maintain Fire Rating
 - Bathroom Receptacle Within 3-ft of Sink","69",12,true,,,false,false
-"5fd16dea-7b07-7bc9-1fe8-064a5b69de06",2024-03-14T16:47:47Z,2024-03-25T15:37:18Z,"New ventilation system per city request",,"69",14,true,,,false,false
-"65d073c2-f3d4-4d60-a78c-0fc45f086c10",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Install appliances",,"69",8,true,,,false,false
-"70b852be-58db-b309-2a80-351a4cf398b4",2024-03-14T16:47:47Z,2024-03-25T15:37:18Z,"Final inspection correction notice","Inspector asked for some upgrades in the electric in the unit before he can sign off.
+"58d0b6fd-d4b7-2fcc-aa3e-33c41c808c61",2023-10-16T01:10:19Z,2023-11-20T19:58:42Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Flooring Demolition and preparation ","Demo existing flooring in common area
+Demo carpet in the bedrooms
+Remove and haul away all debris
+Install new LVT/ Laminate floor (to be provided by owner)
+Install new baseboards (to be provide by customer) -paint excluded.
+","68",2,true,,,false,false
+"5da1c8c2-f337-7637-dc08-a178c5a20d52",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Rough plumbing",,"56",3,true,,2023-07-07T07:00:00Z,false,false
+"5df2bdf0-f9d7-8669-5013-2c22d60cf918",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Slab installation on shower walls and kitchen ",,"56",12,true,,,false,false
+"5fd16dea-7b07-7bc9-1fe8-064a5b69de06",2024-03-14T16:47:47Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","New ventilation system per city request",,"69",14,true,,,false,false
+"6104681f-8317-344d-9b20-57d5cbee9dde",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Wiring and installation of a newly located receptacle.","Wiring and installation of a newly located receptacle.","64",11,true,,,false,false
+"65be3d95-b1b4-62f0-de8b-df1c0ce41221",2023-08-20T21:33:13Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Paint (interior and exterior)",,"61",4,true,2023-08-21T07:00:00Z,2023-08-28T07:00:00Z,false,false
+"65d073c2-f3d4-4d60-a78c-0fc45f086c10",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install appliances",,"69",8,true,,,false,false
+"6659e441-3415-7c0f-51f2-3b94769b5c65",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Installation of a receptacle in an existing location.","Installation of a receptacle in an existing location.","64",15,true,,,false,false
+"6c4ae078-abac-36c9-6738-14cd3c3c49b3",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Counter top Installation",,"17",10,true,,,false,false
+"6d6b84ae-682e-a5ed-01c8-47464c6d5a96",2023-12-19T22:57:04Z,2024-03-14T16:39:12Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Repair ceiling in laundry room and crack on living room ceiling","Strip ceiling drywall
+Mud the surface
+Skim coat the ceiling
+Paint entire living room","72",2,false,,,false,false
+"6ef6092e-ff6d-cb7f-0cc3-91144126969b",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","interior paint",,"17",7,true,,,false,false
+"70b852be-58db-b309-2a80-351a4cf398b4",2024-03-14T16:47:47Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Final inspection correction notice","Inspector asked for some upgrades in the electric in the unit before he can sign off.
 
 1) Upgrade all electric outlets in the house and bring them up to new code
 
@@ -38,9 +174,134 @@ Supply and install baseboards to be painted by others
 
 Note: few areas will need to be opened in order wide for new switches and outlets.
 Paint work to be completed by others.","69",13,true,,,false,false
-"70cab224-8b9c-4f33-a2e8-299f30c27803",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Living room 6 LED inset lights","Supply and Install 6 LED lights with on/off dimmer switch","69",6,true,,,false,false
-"96eda671-a0b4-facf-1fc4-bee153e5de68",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"Permit fee deposit - paid by Bobbe on 11/22",,"69",11,true,,,false,false
-"bb4e0a6b-1204-47ca-9576-e2a0e0b137f7",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Guest Bathroom","Demo shower including plumbing fixtures, tile and shower door
+"70cab224-8b9c-4f33-a2e8-299f30c27803",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Living room 6 LED inset lights","Supply and Install 6 LED lights with on/off dimmer switch","69",6,true,,,false,false
+"7221dc1a-d935-21cc-5ac2-8e7abf2a7a2b",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Wiring and installation of a newly located exhaust fan with light","Wiring and installation of a newly located exhaust fan with light.
+Notes:
+* Quiet exhaust fan is standard and included in price, others are available by
+request for additional charge .
+* There will be additional charges for any extra duct work necessary to complete
+installation.","64",7,true,,,false,false
+"726cbb6e-4b85-0742-54eb-9d19d7bc7fbb",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Remove mirrors in living room and master bedroom",,"91",7,false,,,false,false
+"734cf265-9b0f-6678-bf45-74e4cdae787c",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Tub & Tile surround","Supply and install new plumbing fixtures (shower valve, shower head) -allowance $500.00
+Supply and install new tile on shower walls (allowance $500.00)
+Apply grout
+Supply and install new frameless shower door
+Reglaze tub","91",2,false,,,false,false
+"73a6d55c-dc4f-2d8c-3c01-4997616ee1e7",2023-01-17T15:19:19Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Apply Hot mop to shower pans in main house",,"17",3,true,,,false,false
+"745e8754-aed4-cc9a-1dcf-4acb0469b2ef",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Metal lath on shower walls",,"56",10,true,,2023-07-17T22:00:00Z,false,false
+"7531046b-5923-bfa9-e553-dabff3d37126",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"," New panel","Panel Service upgrade to a 200 amp panel, including the labeling of breakers and proper grounding.
+ATTENTION - THIS PRICE ONLY APPLIES TO SAME LOCATION
+APPROVAL.
+Notes:
+* For same locations installation only.","64",2,true,,,false,false
+"76d67538-bdce-5b45-fa65-5683389f2946",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","LVT Flooring installation",,"17",8,true,,,false,false
+"77269bec-af22-f198-63ec-1115f766ac3f",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","4 new LED trims","Installation of a 4"" LED recess light trim in an existing location.
+Notes:
+* Includes standard, dimmable trim.
+* Other trims are available upon request for an additional cost.
+* Fire proofing of light is not included - client is responsible. If requested A
+Lighting Inc. will quote accordingly.","64",4,true,,,false,false
+"78a218b1-f8fc-09f1-70b7-f582056dce82",2023-08-29T20:26:37Z,2023-08-29T21:18:38Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Remove items into pods and Haul away ","Remove and haul away debris and furniture from inside the house as well as the backyard (including 2 shades)
+Remove and haul away all the items.
+***Items from brother in law room - not to be touched
+***Owner will move out before start of work
+","65",1,false,,,false,false
+"7b03a864-a189-6f7e-7277-0a0c75e80105",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","LVT floor installation ",,"56",13,true,,2023-07-28T07:00:00Z,false,false
+"7b9052d7-bd3a-fcd3-9fe3-e72cb1f8ce01",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Complete tile installation in the bathroom ",,"62",4,true,2023-09-15T07:00:00Z,2023-09-22T07:00:00Z,false,false
+"8035b741-5529-cc18-0154-efd22df2cc0f",2023-03-20T05:54:36Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Electric",,"48",5,true,2023-03-27T07:00:00Z,2023-03-27T07:00:00Z,false,false
+"81d09d3f-6d6f-eda9-817c-59e64e0f5af6",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Loose wires (2)",,"63",8,true,,,false,false
+"8300c38b-f9be-b986-8fcf-fbf1599b2560",2023-08-20T21:33:13Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install new shower door",,"61",6,true,2023-08-31T07:00:00Z,2023-08-31T07:00:00Z,false,false
+"8447346d-3e34-fab6-37a6-517d663f8817",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Master bathroom ","Demo existing shower including plumbing fixtures, tile and shower door
+Demo soffit above the shower
+Demo countertop including sink and lavatory faucet
+Demo existing heater
+Remove and haul away all debris
+Repair ceiling drywall after removal of soffit
+Supply fabricate and install new quartz countertop with 4"" backsplash
+Supply and install 2 new under mount sinks
+Supply and install 2 new lavatory faucets (allowance $200.00 for both faucets)
+Supply and Install 3 LED lights above the vanity area
+Supply and install new fan/light/heater combo","91",1,false,,,false,false
+"84f84333-0bff-2e32-953a-9dab0afe5654",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Shower doors instaltion",,"17",11,true,,,false,false
+"84fbe6d9-6e53-0588-2236-ba28272ba4d0",2023-05-04T04:28:09Z,2023-05-09T05:23:16Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Bathroom plumbing ",,"2",1,true,2023-05-04T07:00:00Z,2023-05-04T07:00:00Z,false,false
+"8573ec7a-dad4-8baa-dd90-75aab67e6150",2023-03-19T22:53:06Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Popcorn removal",,"48",2,true,2023-03-20T07:00:00Z,2023-03-20T07:00:00Z,false,false
+"861dc06f-a872-cee4-c5c6-7636404420fa",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","RV Plug",,"63",9,true,,,false,false
+"86998a06-8231-2b05-d4af-fa916418e8ce",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Living room 6 LED inset lights","Supply and Install 6 LED lights with on/off dimmer switch","91",6,false,,,false,false
+"879da0ea-098d-be3e-de51-66ce72f3a704",2023-06-27T20:47:36Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Rough electric",,"56",4,true,,2023-07-07T07:00:00Z,false,false
+"88be1c9e-150f-0a35-6f53-b20462b5e40e",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Rewire","Wiring and installation of a newly located 4"" LED recess light.
+Notes:
+* Includes standard, dimmable trim.
+* Other trims are available upon request for an additional cost.
+* Fire proofing of light is not included - (if needed - we will quote separately ","64",1,true,,,false,false
+"8a0bd97b-f5d8-1c3b-dc36-3bad11d1437b",2023-08-29T20:26:37Z,2023-08-29T21:18:38Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Interior Paint","Prepare all walls and ceiling
+Prime and Paint all walls, ceiling, doors, trims and baseboards
+Paint kitchen cabinets","65",2,false,,,false,false
+"8a41686b-9d9e-2a82-a84a-c5042ac7db01",2023-10-24T01:05:36Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Additional work","Completion of items","61",7,true,,,false,false
+"8af0f09a-6ce1-daa6-d524-26f1031ca956",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Complete job ",,"62",7,true,2023-10-05T07:00:00Z,2023-09-05T07:00:00Z,false,false
+"8ba3b920-d633-7adc-ee86-d570f5163701",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Demolition, rough plumbing,rough electric",,"62",2,true,2023-08-30T07:00:00Z,2023-09-11T07:00:00Z,false,false
+"8d2a58f7-b12e-c7fd-5865-53a262b46c32",2023-11-15T04:24:15Z,2024-03-14T16:40:08Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Cleaning","Deep cleaning of for sale","71",1,true,,,false,false
+"8f8835be-05b3-ddeb-d9e0-aeeaf72427a9",2023-01-16T02:42:03Z,2023-05-09T05:23:16Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Demolition",,"2",3,true,2022-11-22T08:00:00Z,2022-11-29T08:00:00Z,false,false
+"90953643-aa26-e35b-fbf2-ff0f1ad5e6a3",2023-01-04T05:01:06Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","444","dddd","9",3,true,,,true,true
+"90d13e57-f4ee-542a-9277-6ee8736bef16",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Drywall instaltion in main house and ADU",,"17",6,true,,,false,false
+"918bf30f-55f2-c282-de6c-f72b300a3db2",2023-10-30T03:49:43Z,2023-10-30T03:53:43Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Guest Bathroom","Demo shower including plumbing fixtures, tile and shower door
+Demo countertop including sink and lavatory faucet
+Demo existing heater
+Remove and haul away all debris
+Apply hot mop to shower pan
+Supply and install new plumbing fixtures (shower valve, shower head -allowance $500.00)
+Supply and Install new tile on shower walls and shower pan ($3 per sq ft allowance)
+Supply and install new frameless shower door
+Supply fabricate and install new quartz countertop with 4"" backsplash
+Supply and install 1 new under mount sink
+Supply and install new lavatory faucet
+Supply and Install 3 LED light above the vanity area
+Supply and install new fan/light/heater combo","91",3,false,,,false,false
+"96eda671-a0b4-facf-1fc4-bee153e5de68",2023-12-06T20:24:49Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Permit fee deposit - paid by Bobbe on 11/22",,"69",11,true,,,false,false
+"994dface-68c1-b1a6-48bb-42cfec253133",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Framing",,"56",6,true,,2023-07-12T22:00:00Z,false,false
+"99543656-c372-2d32-b6e8-7a9b93f81e53",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Hot mop ",,"56",9,true,,2023-07-13T22:00:00Z,false,false
+"9bc6d84c-e18e-ab3d-5685-9061f9fac346",2023-08-29T21:53:45Z,2023-12-14T18:16:36Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Interior Paint","Prepare all walls and ceiling
+Prime and Paint all walls, ceiling, doors, trims and baseboards
+Paint kitchen cabinets","66",2,true,,,false,false
+"9f378437-7199-3f18-4f61-bd8ff27a2bcf",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install insulation in all walls and ceiling",,"17",1,true,,,false,false
+"a0c144c2-b4a0-e7b4-b9ad-622f981d929a",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","3 way switch","Wiring and installation of a newly located 3 way switch control.
+Notes:
+* 2 separate on/off switch control location for the same single light or group
+lighting","64",8,true,,,false,false
+"a2648660-0b60-1e12-a40c-4726ad29deb2",2023-01-17T15:20:27Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install new French Doors in the ADU",,"17",16,true,,,false,false
+"a7159d91-415a-bbe3-c498-1de1ae905f0f",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","10 ne dedicated lines","A new dedicated line run of a 120 volt 20 amp circuit from panel, as necessary or
+required by code.
+Notes:
+* (1) AC
+* (2) Bath
+* (7) Kitchen items - DEDICATED LINES FOR KITCHEN WILL BE LEFT
+INSIDE THE J-BOX IN CRAWL SPACE / ATTIC. PRICING DOES NOT
+INCLUDE OUTLETS / GFCI'S WIRING : KITCHEN ONLY.","64",13,true,,,false,false
+"a7f56fc8-9814-7392-8d28-611eda02be5b",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Installation of a switch control in an existing location","Installation of a switch control in an existing location.
+Notes:
+* Includes installation of switch at finishing.
+* Does not include dimmer control switch.","64",16,true,,,false,false
+"a881580d-e6d1-4399-4c39-0f5eb1955201",2023-01-16T04:48:56Z,2023-05-09T05:23:16Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","CO 11-22-2022",,"2",7,true,2022-11-27T08:00:00Z,,false,false
+"aa0dfdd0-dc69-ef7a-032c-f98d9ce9575f",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Complete drywall repair and floating of tub walls",,"62",3,true,2023-09-12T21:00:00Z,2023-10-17T21:00:00Z,false,false
+"ab7bd72e-82d4-4b8d-b22d-1001272779db",2023-03-22T04:58:06Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Appliances","Demo existing dish washer
+Remove and haul away
+Supply new dish washer (allowance $700.00)
+Install new dish washer
+
+Demo existing double oven
+Remove and haul away
+Supply and install new double oven (allowance $1800.00)
+Modify cabinet and add trim as need to accommodate new double oven","9",4,true,,,false,false
+"ac7725c8-a1b2-1af1-f684-56bf31d206a1",2023-10-16T01:10:19Z,2023-11-20T19:58:42Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Popcorn ceiling Removal","Scrape existing popcorn ceiling from 3 bedroom and common area.
+Remove and haul away all debris
+Repair cracks as needed
+Skim coat all the ceiling
+Sand down and prepare for paint","68",1,true,,,false,false
+"acffdd8e-993e-6956-a12c-78033a101f5c",2023-08-20T21:29:30Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Demo & Haul away","Including relocation of boxes from inside house into the garage","61",1,true,2023-08-14T07:00:00Z,2023-08-15T07:00:00Z,false,false
+"ae77c5ef-552b-066f-f36f-828d3aae52a4",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Stucco work",,"56",5,true,,2023-07-10T07:00:00Z,false,false
+"aed4766e-fe12-fff3-28dc-932c45c5b575",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Framing",,"70",2,true,2023-11-01T07:00:00Z,2023-11-02T07:00:00Z,false,false
+"b6519c60-a409-f429-3534-74bb7b807c52",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Tile installation in the ADU",,"17",13,true,,,false,false
+"b997bcba-67b6-d9e0-ca22-695b8c23b30c",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Insulation ",,"56",8,true,,2023-07-18T22:00:00Z,false,false
+"bb4e0a6b-1204-47ca-9576-e2a0e0b137f7",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Guest Bathroom","Demo shower including plumbing fixtures, tile and shower door
 Demo countertop including sink and lavatory faucet
 Demo existing heater
 Remove and haul away all debris
@@ -53,7 +314,44 @@ Supply and install 1 new under mount sink
 Supply and install new lavatory faucet
 Supply and Install 3 LED light above the vanity area
 Supply and install new fan/light/heater combo","69",3,true,,,false,false
-"ff9e58ff-48d2-4290-aea1-c76c80ab0e9e",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"Kitchen","Demo existing countertop and backsplash
+"bb583488-4c10-2762-f30e-0226b378c3a7",2023-08-20T21:33:13Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Refinish existing wood floor",,"61",5,true,2023-08-28T07:00:00Z,2023-08-31T07:00:00Z,false,false
+"bdd1b465-6964-5366-36c1-d0521c492b10",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Scrape the popcorn ceilingSkim coat the ceilingApply one coat f primerApply 2 coats of paint","Scrape the popcorn ceiling
+Skim coat the ceiling
+Apply one coat f primer
+Apply 2 coats of paint","64",17,true,,,false,false
+"c23d4f43-d520-b0d9-fccc-aa19d8c085d9",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Drywall Work ",,"70",3,true,2023-11-04T07:00:00Z,2023-11-08T08:00:00Z,false,false
+"c5e6bcd0-5e9a-3973-b432-f5f6bcf3dd21",2023-11-15T04:24:15Z,2024-03-14T16:40:08Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Repairs and declutter listed below","Includes replacement of plastic for light at kitchen ceiling
+Includes door on vanity rehung
+Includes removal of items left by tenant
+
+Does not include repairing or replacing anything other than listed above including: flooring, window coverings, appliances, walls, cabinet handles, towel racks, light switches, fans or any other items
+Does not include repairing scuffs or repainting
+Does not include staging","71",2,true,,,false,false
+"c6af9140-3aed-0951-0f2e-3b672c6453fc",2023-01-16T02:44:01Z,2023-05-09T05:23:16Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Drywall work",,"2",4,true,2023-01-09T08:00:00Z,,false,false
+"c7eda3de-5fd7-3182-0e6c-f8a8ad0120df",2023-01-16T02:40:08Z,2023-05-09T05:23:16Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Start of work",,"2",2,true,2022-11-22T08:00:00Z,,false,false
+"ceb7c741-c0e4-087b-edb9-43d2c0b9589c",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Complete fire place and living room tile",,"62",5,true,2023-09-18T07:00:00Z,2023-09-19T07:00:00Z,false,false
+"d41ba043-4fbf-8e8f-d155-8a6e5781624e",2023-10-21T20:47:07Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","DO something for CO",,"9",7,false,,,false,false
+"d794aace-770c-2a8c-4487-007605419ad0",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Exterior paint ",,"56",19,true,,2023-08-25T07:00:00Z,false,false
+"db3b06d9-e22e-57df-2c3e-7fe0a59975af",2023-03-19T22:53:06Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Install flashes ",,"48",4,true,2023-03-22T07:00:00Z,2023-03-22T07:00:00Z,false,false
+"dc553c56-b0cf-0a40-4983-769a344e1cba",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Install new interior doors and new casings",,"56",14,true,,,false,false
+"dd4242de-90fc-a321-1201-fc9a5e14af6f",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Switch control (1)",,"63",7,true,,,false,false
+"dea1f839-086b-cb8e-5ffa-f64a6fcf43b6",2023-03-22T05:10:07Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Touch ups",,"48",7,true,2023-04-03T07:00:00Z,2023-04-03T07:00:00Z,false,false
+"e21963a5-cdab-53d8-b210-d981328d5f65",2023-03-22T04:58:06Z,2023-10-29T20:20:23Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Powder room","Reglaze sink to white
+Install new light fixture","9",5,true,,,false,false
+"e4a91312-e0df-e79e-040c-af45fbccc5cb",2023-11-02T17:42:12Z,2023-11-20T20:04:04Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install closet doors",,"70",6,true,2023-11-15T08:00:00Z,2023-11-15T08:00:00Z,false,false
+"ec46edc2-e2e9-c21c-6cb4-86d8f6422aa7",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Windows installation ",,"56",2,true,,,false,false
+"ed649c83-27e5-9207-511d-418e13d044e6",2023-09-13T16:57:54Z,2023-11-23T04:13:48Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Start of work",,"62",1,true,,,false,false
+"ee0e2257-0b13-39c8-7622-bc902a3ce5b8",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Kitchen carpentry",,"56",7,true,,2023-07-14T07:00:00Z,false,false
+"f1cf61df-b5a0-bd60-12fe-8736df8ecad8",2023-03-19T22:53:06Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Painting",,"48",3,true,2023-03-20T07:00:00Z,2023-03-27T07:00:00Z,false,false
+"f26c5c40-8720-9af1-aba5-c199fc9c913a",2023-08-23T02:02:53Z,2023-11-20T06:24:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Dedicated line for AC",,"63",4,true,,,false,false
+"f37e7ccf-98f0-1384-ec2c-944641af5abd",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Install new front door ",,"56",17,true,,2023-08-22T07:00:00Z,false,false
+"f662c531-fc0c-a75c-4258-c0909d7ccd58",2023-06-27T20:47:37Z,2023-12-15T04:54:51Z,"50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82","Refinish kitchen cabinets and master bathroom vanity",,"56",15,true,,,false,false
+"f6dd8fbb-4843-03c8-f418-18e3b1a7c610",2023-03-20T05:54:36Z,2023-10-27T15:10:12Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Demolition",,"48",1,true,2023-03-20T07:00:00Z,2023-03-20T07:00:00Z,false,false
+"f9c13302-c381-d00e-0b5d-99a8f72b05b0",2023-08-29T06:19:07Z,2023-12-18T16:01:40Z,"34ac6ca6-b333-4ba9-a486-33c8fc41ce6f","Replace a fan on an existing ceiling fan box","Replace a fan on an existing ceiling fan box. (Supply and install)
+Notes:
+*Includes assembly of fan at finishing.","64",5,true,,,false,false
+"fce3d0f7-c78f-e260-a28a-4798f729e464",2023-01-17T15:19:20Z,2024-03-14T16:43:27Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Install new drywall on walls and ceiling",,"17",2,true,,,false,false
+"ff9e58ff-48d2-4290-aea1-c76c80ab0e9e",2023-12-05T01:15:29Z,2024-03-25T15:37:18Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Kitchen","Demo existing countertop and backsplash
 Demo sink and faucet
 Demo all appliances
 Demo existing light fixtures
@@ -66,3 +364,4 @@ Supply and Install new sink, faucet and garbage disposal ($500 allowance)
 
 NOTE: ALL OTHER APPLIANCES TO BE SUPPLIED BY OTHERS
 ","69",4,true,,,false,false
+"ffb5ca76-7787-3b32-7c5b-43bfd26afcf5",2023-08-20T21:29:30Z,2023-11-20T06:25:47Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","Trimming tress and clean out of yard",,"61",2,true,2023-08-16T07:00:00Z,2023-08-16T07:00:00Z,false,false
