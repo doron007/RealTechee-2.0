@@ -4,6 +4,7 @@ import { Modal, Box } from '@mui/material';
 import { CollapsibleSection } from '../common/ui';
 import { BodyContent } from '../Typography';
 import { formatDate } from '../../utils/formatUtils';
+import Button from '../common/buttons/Button';
 
 export interface Comment {
     ID: string;
@@ -36,6 +37,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
 }) => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [sortOrder, setSortOrder] = React.useState<'newest' | 'oldest'>('newest');
 
     const modalStyle = {
         position: 'absolute',
@@ -67,12 +69,16 @@ const CommentsList: React.FC<CommentsListProps> = ({
         return () => window.removeEventListener('keydown', handleEscape);
     }, []);
 
-    // Sort comments by creation date, newest first
-    const sortedComments = [...commentsData].sort((a, b) => {
-        const dateA = new Date(a['Created Date']);
-        const dateB = new Date(b['Created Date']);
-        return dateB.getTime() - dateA.getTime();
-    });
+    // Sort comments by creation date based on sort order
+    const sortedComments = React.useMemo(() => {
+        return [...commentsData].sort((a, b) => {
+            const dateA = new Date(a['Created Date']);
+            const dateB = new Date(b['Created Date']);
+            return sortOrder === 'newest' 
+                ? dateB.getTime() - dateA.getTime() 
+                : dateA.getTime() - dateB.getTime();
+        });
+    }, [commentsData, sortOrder]);
 
     const handleImageClick = (imageUrl: string) => {
         setIsLoading(true);
@@ -84,9 +90,29 @@ const CommentsList: React.FC<CommentsListProps> = ({
         setIsLoading(false);
     };
 
+    const handleSort = (order: 'newest' | 'oldest') => {
+        setSortOrder(order);
+    };
+
     return (
         <div className={className}>
             <CollapsibleSection title={title} initialExpanded={initialExpanded}>
+                <div className="flex justify-end gap-2 mb-4">
+                    <Button 
+                        variant={sortOrder === 'newest' ? 'secondary' : 'link'}
+                        onClick={() => handleSort('newest')}
+                        className="!py-1 !px-3 text-sm"
+                    >
+                        Newest
+                    </Button>
+                    <Button 
+                        variant={sortOrder === 'oldest' ? 'secondary' : 'link'}
+                        onClick={() => handleSort('oldest')}
+                        className="!py-1 !px-3 text-sm"
+                    >
+                        Oldest
+                    </Button>
+                </div>
                 <div className="space-y-6">
                     {sortedComments.map((comment) => (
                         <div
