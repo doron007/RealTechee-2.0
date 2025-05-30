@@ -10,6 +10,7 @@ export interface Payment {
   Paid: boolean;
   'Payment Amount': number;
   Order?: number;
+  isSummaryRow?: boolean;
 }
 
 interface PaymentListProps {
@@ -27,23 +28,27 @@ export default function PaymentList({
   className = "",
   onPaymentToggle
 }: PaymentListProps) {
-  // Sort payments: paid first, then by order
+  // Sort payments: summary rows at the end, others by paid status and order
   const sortedPayments = [...payments].sort((a, b) => {
-    // First sort by payment status (paid items first)
-    if (a.Paid !== b.Paid) {
-      return a.Paid ? -1 : 1;
+    // Summary rows always go at the end
+    if (a.isSummaryRow !== b.isSummaryRow) {
+      return a.isSummaryRow ? 1 : -1;
     }
 
-    // Then sort by order if both have order defined
-    if (a.Order !== undefined && b.Order !== undefined) {
-      return a.Order - b.Order;
+    // For non-summary rows, sort by paid status and order
+    if (!a.isSummaryRow && !b.isSummaryRow) {
+      if (a.Paid !== b.Paid) {
+        return a.Paid ? -1 : 1;
+      }
+
+      if (a.Order !== undefined && b.Order !== undefined) {
+        return a.Order - b.Order;
+      }
+
+      if (a.Order !== undefined) return -1;
+      if (b.Order !== undefined) return 1;
     }
 
-    // If only one has order defined, put the one with order first
-    if (a.Order !== undefined) return -1;
-    if (b.Order !== undefined) return 1;
-
-    // If neither has order, maintain original order
     return 0;
   });
 
@@ -54,24 +59,36 @@ export default function PaymentList({
           {sortedPayments.map((payment, index) => (
             <div
               key={index}
-              className={`flex items-start gap-4 py-1.5 px-2 ${payment.Paid ? 'bg-gray-200' : 'bg-gray-50'
+              className={`flex items-start gap-4 py-1.5 px-2 ${payment.isSummaryRow
+                  ? 'bg-gray-50'
+                  : payment.Paid
+                    ? 'bg-gray-200'
+                    : 'bg-gray-50'
                 }`}
             >
-              <Checkbox
-                checked={payment.Paid}
-                onChange={() => onPaymentToggle?.(payment)}
-                color="default"
-                className="!pt-1"
-              />
-              <div className="flex-1">
+              {!payment.isSummaryRow && (
+                <Checkbox
+                  checked={payment.Paid}
+                  onChange={() => onPaymentToggle?.(payment)}
+                  color="default"
+                  className="!pt-1"
+                />
+              )}
+              <div className={`flex-1 ${payment.isSummaryRow ? 'ml-8' : ''}`}>
                 <div className="flex justify-between items-center gap-4">
-                  <BodyContent className="!mb-0 text-[#2A2B2E]">{payment.PaymentName}</BodyContent>
-                  <BodyContent className="!mb-0 text-right">
-                    ${formatCurrency(payment['Payment Amount'].toString())}
+                  <BodyContent className={`!mb-0 ${payment.isSummaryRow ? 'font-bold' : ''}`}>
+                    {payment.PaymentName}
                   </BodyContent>
+                  {!payment.isSummaryRow && (
+                    <BodyContent className="!mb-0 text-right">
+                      ${formatCurrency(payment['Payment Amount'].toString())}
+                    </BodyContent>
+                  )}
                 </div>
-                {payment.Description && (
-                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{payment.Description}</BodyContent>
+                {payment.Description && !payment.isSummaryRow && (
+                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">
+                    {payment.Description}
+                  </BodyContent>
                 )}
               </div>
             </div>

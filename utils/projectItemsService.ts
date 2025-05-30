@@ -1,5 +1,5 @@
 import path from 'path';
-import { readCsvFile } from './csvUtils';
+import { readCsvWithFilter, CsvRow } from './csvParser';
 import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
 
 // Define paths to CSV files
@@ -7,63 +7,254 @@ const MILESTONES_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'ProjectMile
 const PAYMENTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'ProjectPaymentTerms.csv');
 const COMMENTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'ProjectComments.csv');
 
+interface ProjectService {
+  getProjectMilestones(projectID: string): Promise<ProjectMilestone[]>;
+  getProjectPayments(projectID: string): Promise<ProjectPayment[]>;
+  getProjectComments(projectID: string): Promise<ProjectComment[]>;
+}
+
 /**
- * Get all milestones for a project by projectID
+ * Parse date string to ISO format
  */
-export async function getProjectMilestones(projectID: string): Promise<ProjectMilestone[]> {
+function parseDate(dateStr: string | undefined): string | undefined {
+  if (!dateStr?.trim()) return undefined;
+  
   try {
-    const milestones = readCsvFile<ProjectMilestone>(MILESTONES_CSV_PATH);
-    return milestones.filter(milestone => milestone['Project ID'] === projectID)
-      .sort((a, b) => {
-        // Sort by order if available, otherwise by completion status
-        if (a.Order !== undefined && b.Order !== undefined) {
-          return a.Order - b.Order;
-        }
-        // Put completed items first
-        return a['Is Complete'] === b['Is Complete'] ? 0 : a['Is Complete'] ? -1 : 1;
-      });
+    // Try parsing as ISO date (e.g. "2023-10-16T01:10:19Z")
+    const date = new Date(dateStr);
+    if (!isNaN(date.getTime())) {
+      return date.toISOString();
+    }
+    
+    // Try MM/DD/YYYY format
+    const matches = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (matches) {
+      const [_, month, day, year] = matches;
+      const formatted = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T00:00:00Z`;
+      const parsed = new Date(formatted);
+      if (!isNaN(parsed.getTime())) {
+        return parsed.toISOString();
+      }
+    }
+    
+    console.warn(`Unable to parse date: ${dateStr}`);
+    return undefined;
   } catch (error) {
-    console.error(`Error fetching milestones for project ${projectID}:`, error);
-    return [];
+    console.warn(`Error parsing date ${dateStr}:`, error);
+    return undefined;
   }
 }
 
 /**
- * Get all payments for a project by projectID
+ * Convert a CSV row to a strongly typed milestone object
  */
-export async function getProjectPayments(projectID: string): Promise<ProjectPayment[]> {
+function convertToMilestone(row: CsvRow): ProjectMilestone | null {
   try {
-    const payments = readCsvFile<ProjectPayment>(PAYMENTS_CSV_PATH);
-    return payments.filter(payment => payment.projectID === projectID)
-      .sort((a, b) => {
-        // Sort by order if available, otherwise by payment status
-        if (a.Order !== undefined && b.Order !== undefined) {
-          return a.Order - b.Order;
-        }
-        // Put paid items first
-        return a.Paid === b.Paid ? 0 : a.Paid ? -1 : 1;
-      });
+    // Handle Order - clean and convert to number if present
+    let order: number | undefined;
+    if (row.Order) {
+      order = Number(row.Order);
+      if (isNaN(order)) order = undefined;
+    }
+
+    // Convert to milestone object with required type checking
+    const milestone: ProjectMilestone = {
+      ID: row.ID || '',
+      'Project ID': row['Project ID'] || '',
+      Name: row.Name || '',
+      Description: row.Description,
+      Order: order,
+      'Is Complete': row['Is Complete']?.toLowerCase() === 'true',
+      'Is Category': row['Is Category']?.toLowerCase() === 'true',
+      'Is Internal': row['Is Internal']?.toLowerCase() === 'true',
+      'Created Date': parseDate(row['Created Date']),
+      'Updated Date': parseDate(row['Updated Date']),
+      'Estimated Start': parseDate(row['Estimated Start']),
+      'Estimated Finish': parseDate(row['Estimated Finish']),
+      Owner: row.Owner
+    };
+
+    // Validate required fields
+    if (!milestone.ID || !milestone['Project ID'] || !milestone.Name) {
+      console.warn('Missing required milestone fields:', row);
+      return null;
+    }
+
+    return milestone;
   } catch (error) {
-    console.error(`Error fetching payments for project ${projectID}:`, error);
-    return [];
+    console.error('Error converting row to milestone:', error);
+    return null;
   }
 }
 
 /**
- * Get all comments for a project by projectID
+ * Convert a CSV row to a strongly typed payment object
  */
-export async function getProjectComments(projectID: string): Promise<ProjectComment[]> {
+function convertToPayment(row: CsvRow): ProjectPayment | null {
   try {
-    const comments = readCsvFile<ProjectComment>(COMMENTS_CSV_PATH);
-    return comments.filter(comment => comment['Project ID'] === projectID)
-      .sort((a, b) => {
-        // Sort by creation date if available, newest first
-        const dateA = a['Created Date'] ? new Date(a['Created Date']) : new Date(0);
-        const dateB = b['Created Date'] ? new Date(b['Created Date']) : new Date(0);
-        return dateB.getTime() - dateA.getTime();
-      });
+    // Handle Payment Amount - clean and convert to number
+    const amountStr = row['Payment Amount']?.toString().replace(/['"]/g, '').trim();
+    const amount = amountStr ? Number(amountStr) : 0;
+    if (isNaN(amount)) {
+      console.warn('Invalid payment amount:', row);
+      return null;
+    }
+
+    // Handle Order - clean and convert to number if present
+    let order: number | undefined;
+    if (row.Order) {
+      order = Number(row.Order);
+      if (isNaN(order)) order = undefined;
+    }
+
+    // Convert to payment object with required type checking
+    const payment: ProjectPayment = {
+      ID: row.ID || '',
+      projectID: row.projectID || '',
+      PaymentName: row.PaymentName || '',
+      'Payment Amount': amount,
+      Description: row.Description,
+      Order: order,
+      Paid: row.Paid?.toLowerCase() === 'true',
+      Type: row.Type,
+      paymentDue: parseDate(row.paymentDue),
+      'Parent Payment ID': row['Parent Payment ID'],
+      'Is Category': row['Is Category']?.toLowerCase() === 'true',
+      Internal: row.Internal?.toLowerCase() === 'true',
+      'Created Date': parseDate(row['Created Date']),
+      'Updated Date': parseDate(row['Updated Date']),
+      Owner: row.Owner
+    };
+
+    // Validate required fields
+    if (!payment.ID || !payment.projectID || !payment.PaymentName) {
+      console.warn('Missing required payment fields:', row);
+      return null;
+    }
+
+    return payment;
   } catch (error) {
-    console.error(`Error fetching comments for project ${projectID}:`, error);
+    console.error('Error converting row to payment:', error);
+    return null;
+  }
+}
+
+function createSummaryRow(id: string, projectId: string, name: string, amount: number): ProjectPayment {
+  return {
+    ID: id,
+    projectID: projectId,
+    PaymentName: name,
+    'Payment Amount': amount,
+    Paid: false,
+    isSummaryRow: true,
+    'Created Date': new Date().toISOString(),
+    'Updated Date': new Date().toISOString()
+  };
+}
+
+/**
+ * Project Items Service implementation
+ */
+class ProjectItemsService implements ProjectService {
+  async getProjectMilestones(projectID: string): Promise<ProjectMilestone[]> {
+    try {
+      if (!projectID?.trim()) {
+        console.error('getProjectMilestones: Invalid or empty projectID');
+        return [];
+      }
+
+      console.log(`[Milestone Service] Reading milestones for project ${projectID}`);
+      const startTime = Date.now();
+
+      // Read and filter CSV rows for this project only
+      const rows = await readCsvWithFilter(MILESTONES_CSV_PATH, 'Project ID', projectID);
+      
+      // Convert filtered rows to milestone objects
+      const milestones = rows
+        .map(convertToMilestone)
+        .filter((m): m is ProjectMilestone => m !== null)
+        .sort((a, b) => {
+          // Sort by Order if available
+          if (typeof a.Order === 'number' && typeof b.Order === 'number') {
+            return a.Order - b.Order;
+          }
+          // Fall back to creation date
+          const dateA = a['Created Date'] ? new Date(a['Created Date']) : new Date(0);
+          const dateB = b['Created Date'] ? new Date(b['Created Date']) : new Date(0);
+          return dateA.getTime() - dateB.getTime();
+        });
+
+      const duration = Date.now() - startTime;
+      console.log(`[Milestone Service] Found ${milestones.length} milestones in ${duration}ms`);
+      
+      return milestones;
+    } catch (error) {
+      console.error(`[Milestone Service] Error fetching milestones for project ${projectID}:`, error);
+      throw error;
+    }
+  }
+
+  async getProjectPayments(projectID: string): Promise<ProjectPayment[]> {
+    try {
+      if (!projectID?.trim()) {
+        console.error('getProjectPayments: Invalid or empty projectID');
+        return [];
+      }
+
+      console.log(`[Payment Service] Reading payments for project ${projectID}`);
+      const startTime = Date.now();
+
+      // Read and filter CSV rows for this project only
+      const rows = await readCsvWithFilter(PAYMENTS_CSV_PATH, 'projectID', projectID);
+      
+      // Convert filtered rows to payment objects
+      const payments = rows
+        .map(convertToPayment)
+        .filter((p): p is ProjectPayment => p !== null)
+        .sort((a, b) => {
+          // Sort by Order if available
+          if (typeof a.Order === 'number' && typeof b.Order === 'number') {
+            return a.Order - b.Order;
+          }
+          // Fall back to creation date
+          const dateA = a['Created Date'] ? new Date(a['Created Date']) : new Date(0);
+          const dateB = b['Created Date'] ? new Date(b['Created Date']) : new Date(0);
+          return dateA.getTime() - dateB.getTime();
+        });
+
+      // If we have payments, add summary rows
+      if (payments.length > 0) {
+        // Calculate totals
+        const totalPaid = payments
+          .filter(p => p.Paid)
+          .reduce((sum, p) => sum + p['Payment Amount'], 0);
+
+        const totalAmount = payments
+          .reduce((sum, p) => sum + p['Payment Amount'], 0);
+
+        // Add empty line, paid total, and balance rows
+        payments.push(
+          createSummaryRow(`${projectID}-empty`, projectID, '_'.repeat(50), 0),
+          createSummaryRow(`${projectID}-paid`, projectID, `Paid: $${totalPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, totalPaid),
+          createSummaryRow(`${projectID}-balance`, projectID, `Balance: $${(totalAmount - totalPaid).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, totalAmount - totalPaid)
+        );
+      }
+
+      const duration = Date.now() - startTime;
+      console.log(`[Payment Service] Found ${payments.length} payments in ${duration}ms`);
+      
+      return payments;
+    } catch (error) {
+      console.error(`[Payment Service] Error fetching payments for project ${projectID}:`, error);
+      throw error;
+    }
+  }
+
+  async getProjectComments(projectID: string): Promise<ProjectComment[]> {
+    // TODO: Implement comments service
     return [];
   }
 }
+
+// Export singleton instance
+export const projectItemsService = new ProjectItemsService();

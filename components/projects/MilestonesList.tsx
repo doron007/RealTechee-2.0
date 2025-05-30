@@ -4,10 +4,19 @@ import { CollapsibleSection } from '../common/ui';
 import { BodyContent } from '../Typography';
 
 export interface Milestone {
+  ID: string;
+  'Project ID': string;
   Name: string;
-  Description: string;
+  Description?: string;
   'Is Complete': boolean;
   Order?: number;
+  'Created Date'?: string;
+  'Updated Date'?: string;
+  Owner?: string;
+  'Is Category'?: boolean;
+  'Is Internal'?: boolean;
+  'Estimated Start'?: string;
+  'Estimated Finish'?: string;
 }
 
 interface MilestonesListProps {

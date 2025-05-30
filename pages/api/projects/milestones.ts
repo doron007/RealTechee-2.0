@@ -1,28 +1,58 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getProjectMilestones } from '../../../utils/projectItemsService';
+import { projectItemsService } from '../../../utils/projectItemsService';
 import { withCors } from '../../../utils/corsMiddleware';
+import { ProjectMilestone } from '../../../types/projectItems';
 
 export default withCors(async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
   const { projectId } = req.query;
 
-  // Validate projectId parameter
-  if (!projectId || typeof projectId !== 'string') {
+  // Basic validation
+  if (!projectId) {
     return res.status(400).json({ error: 'Project ID is required' });
   }
 
-  switch (method) {
-    case 'GET':
-      try {
-        const milestones = await getProjectMilestones(projectId);
-        return res.status(200).json({ milestones });
-      } catch (error) {
-        console.error('API error:', error);
-        return res.status(500).json({ error: 'Failed to fetch milestones' });
-      }
+  const projectIdString = Array.isArray(projectId) ? projectId[0] : projectId;
+  if (!projectIdString.trim()) {
+    return res.status(400).json({ error: 'Project ID cannot be empty' });
+  }
+
+  if (method !== 'GET') {
+    res.setHeader('Allow', ['GET']);
+    return res.status(405).json({ error: `Method ${method} Not Allowed` });
+  }
+
+  try {
+    const startTime = Date.now();
+    console.log(`[Milestones API] Starting request for ProjectID: ${projectIdString}`);
+
+    const milestones = await projectItemsService.getProjectMilestones(projectIdString);
+    const duration = Date.now() - startTime;
     
-    default:
-      res.setHeader('Allow', ['GET']);
-      return res.status(405).json({ error: `Method ${method} Not Allowed` });
+    if (!milestones.length) {
+      return res.status(404).json({
+        error: 'No milestones found',
+        projectId: projectIdString,
+        duration,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    return res.status(200).json({
+      milestones,
+      count: milestones.length,
+      projectId: projectIdString,
+      duration,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error(`[Milestones API] Error for ProjectID ${projectIdString}:`, error);
+    
+    return res.status(500).json({
+      error: 'Failed to fetch milestones',
+      message: error instanceof Error ? error.message : 'Unknown error',
+      projectId: projectIdString,
+      timestamp: new Date().toISOString()
+    });
   }
 });
