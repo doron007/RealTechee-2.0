@@ -1,6 +1,7 @@
 import path from 'path';
 import { readCsvWithFilter, CsvRow } from './csvParser';
 import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
+import { processImageGallery } from './serverWixMediaUtils';
 
 // Define paths to CSV files
 const MILESTONES_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'ProjectMilestones.csv');
@@ -153,6 +154,43 @@ function createSummaryRow(id: string, projectId: string, name: string, amount: n
 }
 
 /**
+ * Convert a CSV row to a strongly typed comment object
+ */
+function convertToComment(row: CsvRow): ProjectComment | null {
+  try {
+    // Required fields
+    const requiredFields = ['ID', 'Project ID', 'Posted By', 'Nickname', 'Comment'];
+    for (const field of requiredFields) {
+      if (!row[field]) {
+        console.warn(`[Comment Service] Missing required field ${field} in row:`, row);
+        return null;
+      }
+    }
+
+    // Create comment object
+    const comment: ProjectComment = {
+      ID: row.ID || '',
+      'Project ID': row['Project ID'] || '',
+      'Posted By': row['Posted By'] || '',
+      Nickname: row.Nickname || '',
+      Comment: row.Comment || '',
+      Files: row.Files || '', // Keep the raw value for now, will be processed later
+      'Is Private': row['Is Private']?.toLowerCase() === 'true',
+      'Posted By Profile Image': row['Posted By Profile Image'],
+      'Add To Gallery': row['Add To Gallery'],
+      'Created Date': parseDate(row['Created Date']) || new Date().toISOString(),
+      'Updated Date': parseDate(row['Updated Date']) || new Date().toISOString(),
+      Owner: row.Owner || ''
+    };
+
+    return comment;
+  } catch (error) {
+    console.error('[Comment Service] Error converting row to comment:', error, 'Row:', row);
+    return null;
+  }
+}
+
+/**
  * Project Items Service implementation
  */
 class ProjectItemsService implements ProjectService {
@@ -251,8 +289,90 @@ class ProjectItemsService implements ProjectService {
   }
 
   async getProjectComments(projectID: string): Promise<ProjectComment[]> {
-    // TODO: Implement comments service
-    return [];
+    try {
+      if (!projectID?.trim()) {
+        console.error('getProjectComments: Invalid or empty projectID');
+        return [];
+      }
+
+      console.log(`[Comment Service] Reading comments for project ${projectID}`);
+      const startTime = Date.now();
+
+      // Read and filter CSV rows for this project only
+      const rows = await readCsvWithFilter(COMMENTS_CSV_PATH, 'Project ID', projectID);
+      
+      // Convert filtered rows to comment objects
+      const comments = rows
+        .map(convertToComment)
+        .filter((c): c is ProjectComment => c !== null);
+
+      // Process images on the server side for all comments
+      const processedComments = await Promise.all(
+        comments.map(async (comment) => {
+          if (comment.Files && comment.Files !== '[]') {
+            try {
+              // Parse Files field as JSON if it's a JSON string
+              let filesArray: string[] = [];
+              if (typeof comment.Files === 'string') {
+                try {
+                  const parsedFiles = JSON.parse(comment.Files);
+                  
+                  // Handle both array of file objects and direct array of URLs
+                  if (Array.isArray(parsedFiles)) {
+                    filesArray = parsedFiles.map(file => {
+                      // If file is an object with src, extract the src
+                      if (file && typeof file === 'object' && 'src' in file) {
+                        return (file as { src: string }).src || '';
+                      }
+                      // If file is a string, use it directly
+                      return typeof file === 'string' ? file : '';
+                    });
+                  }
+                } catch (parseError) {
+                  console.warn(`[Comment Service] Error parsing Files JSON for comment ${comment.ID}:`, parseError);
+                  // If it's not valid JSON, treat it as a single URL unless it looks like malformed JSON
+                  filesArray = comment.Files.startsWith('[') ? [] : [comment.Files];
+                }
+              }
+
+              // Filter out empty strings and process URLs
+              const validUrls = filesArray.filter(url => url && url.length > 0);
+              const processedUrls = await processImageGallery(validUrls);
+
+              return {
+                ...comment,
+                images: processedUrls
+              };
+            } catch (error) {
+              console.error(`[Comment Service] Error processing images for comment ${comment.ID}:`, error);
+              return {
+                ...comment,
+                images: []
+              };
+            }
+          }
+          return {
+            ...comment,
+            images: []
+          };
+        })
+      );
+
+      // Sort by creation date, newest first
+      processedComments.sort((a, b) => {
+        const dateA = a['Created Date'] ? new Date(a['Created Date']) : new Date(0);
+        const dateB = b['Created Date'] ? new Date(b['Created Date']) : new Date(0);
+        return dateB.getTime() - dateA.getTime(); // Reverse chronological order
+      });
+
+      const duration = Date.now() - startTime;
+      console.log(`[Comment Service] Processed ${rows.length} rows into ${processedComments.length} valid comments in ${duration}ms`);
+      
+      return processedComments;
+    } catch (error) {
+      console.error(`[Comment Service] Error fetching comments for project ${projectID}:`, error);
+      throw error;
+    }
   }
 }
 
