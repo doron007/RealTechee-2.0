@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import { getProjectById, getProjectMilestones, getProjectPayments } from '../utils/projectsApi';
+import { getProjectById, getProjectMilestones, getProjectPayments, getProjectComments } from '../utils/projectsApi';
 import { Project } from '../types/projects';
-import { ProjectMilestone, ProjectPayment } from '../types/projectItems';
+import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
 import { getProjectGalleryImages } from '../utils/galleryUtils';
 import { GalleryImage } from '../components/projects/ProjectImageGallery';
 import { generatePropertyDescription } from '../utils/descriptionUtils';
@@ -19,9 +19,11 @@ import {
   AgentInfoCard,
   MilestonesList,
   PaymentList,
+  CommentsList,
   ProjectDescriptionSection,
   type Milestone,
-  type Payment
+  type Payment,
+  type Comment,
 } from '../components/projects';
 import { CollapsibleSection } from '../components/common/ui';
 import { ImageGallery } from 'components/common/ui';
@@ -40,6 +42,7 @@ const ProjectDetails: NextPage = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [milestones, setMilestones] = useState<ProjectMilestone[]>([]);
   const [payments, setPayments] = useState<ProjectPayment[]>([]);
+  const [comments, setComments] = useState<ProjectComment[]>([]);
 
   // Helper function to convert string URLs to GalleryImage objects
   const convertToGalleryImages = (urls: string[]): GalleryImage[] => {
@@ -73,13 +76,15 @@ const ProjectDetails: NextPage = () => {
                 setGalleryImages(convertToGalleryImages(resolvedImages));
                 
                 // Fetch milestones and payments
-                const [projectMilestones, projectPayments] = await Promise.all([
+                const [projectMilestones, projectPayments, projectComments] = await Promise.all([
                   getProjectMilestones(parsedProject.projectID || parsedProject.id),
-                  getProjectPayments(parsedProject.projectID || parsedProject.id)
+                  getProjectPayments(parsedProject.projectID || parsedProject.id),
+                  getProjectComments(parsedProject.projectID || parsedProject.id)
                 ]);
                 
                 setMilestones(projectMilestones);
                 setPayments(projectPayments);
+                setComments(projectComments);
                 setLoading(false);
                 return;
               }
@@ -99,11 +104,17 @@ const ProjectDetails: NextPage = () => {
               setProject(fetchedProject);
               try {
                 // Fetch all data in parallel
-                const [images, projectMilestones, projectPayments] = await Promise.all([
+                const projectIdForItems = fetchedProject.projectID || fetchedProject.id;
+                console.log('Fetching data for project:', projectIdForItems);
+                
+                const [images, projectMilestones, projectPayments, projectComments] = await Promise.all([
                   getProjectGalleryImages(fetchedProject),
-                  getProjectMilestones(fetchedProject.projectID || fetchedProject.id),
-                  getProjectPayments(fetchedProject.projectID || fetchedProject.id)
+                  getProjectMilestones(projectIdForItems),
+                  getProjectPayments(projectIdForItems),
+                  getProjectComments(projectIdForItems)
                 ]);
+
+                console.log('Fetched comments:', projectComments);
 
                 // Handle images
                 if (!images || images.length === 0) {
@@ -117,9 +128,12 @@ const ProjectDetails: NextPage = () => {
                   setGalleryImages(convertToGalleryImages(images));
                 }
 
-                // Set milestones and payments
+                // Set milestones, payments and comments
                 setMilestones(projectMilestones);
                 setPayments(projectPayments);
+                setComments(projectComments);
+                
+                console.log('Set comments:', projectComments);
 
               } catch (error) {
                 console.error('Error loading project data:', error);
@@ -214,6 +228,15 @@ const ProjectDetails: NextPage = () => {
 
                 {/* Payment Schedule */}
                 <PaymentList payments={payments} />
+
+                {/* Project Comments */}
+                {comments.length > 0 ? (
+                  <CommentsList commentsData={comments} />
+                ) : (
+                  <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+                    <BodyContent className="text-gray-500 text-center">No comments yet</BodyContent>
+                  </div>
+                )}
               </div>
 
               {/* Right Column (40%) */}

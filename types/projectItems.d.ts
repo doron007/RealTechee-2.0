@@ -49,6 +49,7 @@ export interface ProjectCommentData {
   'Created Date': string;
   'Updated Date': string;
   Owner: string;
+  images?: string[]; // Add processed image URLs field
 }
 
 @jsonObject
@@ -181,4 +182,7 @@ export class ProjectComment implements ProjectCommentData {
 
   @jsonMember
   Owner!: string;
+
+  @jsonMember
+  images?: string[]; // Add processed image URLs field
 }

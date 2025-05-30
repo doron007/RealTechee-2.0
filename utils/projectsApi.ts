@@ -222,16 +222,19 @@ export async function getProjectPayments(projectId: string): Promise<ProjectPaym
  */
 export async function getProjectComments(projectId: string): Promise<ProjectComment[]> {
   try {
+    console.log('[ProjectsAPI] Fetching comments for projectId:', projectId);
     const response = await fetch(`/api/projects/comments?projectId=${projectId}`);
     
     if (!response.ok) {
+      console.error(`[ProjectsAPI] API error: ${response.status}`);
       throw new Error(`API error: ${response.status}`);
     }
     
     const data = await response.json();
+    console.log('[ProjectsAPI] Received comments data:', data);
     return data.comments;
   } catch (error) {
-    console.error('Error fetching project comments:', error);
+    console.error('[ProjectsAPI] Error fetching project comments:', error);
     return [];
   }
 }

@@ -11,4 +11,5 @@ export { default as ProjectDetailsCard } from './ProjectDetailsCard';
 export { default as AgentInfoCard } from './AgentInfoCard';
 export { default as MilestonesList, type Milestone } from './MilestonesList';
 export { default as PaymentList, type Payment } from './PaymentList';
+export { default as CommentsList, type Comment } from './CommentsList';
 export { default as ProjectDescriptionSection } from './ProjectDescriptionSection';
