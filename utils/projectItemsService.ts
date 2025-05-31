@@ -1,5 +1,7 @@
 import path from 'path';
+import crypto from 'crypto';
 import { readCsvWithFilter, CsvRow } from './csvParser';
+import { appendToCSV } from './csvUtils';
 import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
 import { processImageGallery } from './serverWixMediaUtils';
 
@@ -14,6 +16,25 @@ interface ProjectService {
   getProjectComments(projectID: string): Promise<ProjectComment[]>;
 }
 
+// Required column order for ProjectComments.csv
+const COMMENT_COLUMNS = [
+  "Posted By",
+  "Nickname",
+  "Project ID", 
+  "Files",
+  "Comment",
+  "Is Private",
+  "Posted By Profile Image",
+  "Add To Gallery",
+  "ID",
+  "Created Date", 
+  "Updated Date",
+  "Owner"
+];
+
+// Required comment fields
+const REQUIRED_COMMENT_FIELDS = ['Project ID', 'Posted By', 'Nickname', 'Comment'];
+
 /**
  * Parse date string to ISO format
  */
@@ -24,7 +45,8 @@ function parseDate(dateStr: string | undefined): string | undefined {
     // Try parsing as ISO date (e.g. "2023-10-16T01:10:19Z")
     const date = new Date(dateStr);
     if (!isNaN(date.getTime())) {
-      return date.toISOString();
+      // Return in format YYYY-MM-DDTHH:mm:ssZ (without milliseconds)
+      return date.toISOString().replace(/\.\d{3}Z$/, 'Z');
     }
     
     // Try MM/DD/YYYY format
@@ -34,7 +56,8 @@ function parseDate(dateStr: string | undefined): string | undefined {
       const formatted = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T00:00:00Z`;
       const parsed = new Date(formatted);
       if (!isNaN(parsed.getTime())) {
-        return parsed.toISOString();
+        // Return in format YYYY-MM-DDTHH:mm:ssZ (without milliseconds)
+        return parsed.toISOString().replace(/\.\d{3}Z$/, 'Z');
       }
     }
     
@@ -167,17 +190,26 @@ function convertToComment(row: CsvRow): ProjectComment | null {
       }
     }
 
-    // Create comment object
+    // Create comment object with strict field mapping
     const comment: ProjectComment = {
-      ID: row.ID || '',
-      'Project ID': row['Project ID'] || '',
-      'Posted By': row['Posted By'] || '',
-      Nickname: row.Nickname || '',
-      Comment: row.Comment || '',
-      Files: row.Files || '', // Keep the raw value for now, will be processed later
-      'Is Private': row['Is Private']?.toLowerCase() === 'true',
-      'Posted By Profile Image': row['Posted By Profile Image'],
-      'Add To Gallery': row['Add To Gallery'],
+      ID: row.ID,
+      'Project ID': row['Project ID'],
+      'Posted By': row['Posted By'],
+      Nickname: row.Nickname,
+      Comment: row.Comment,
+      // Handle optional fields with proper defaults
+      'Is Private': typeof row['Is Private'] === 'string' ? row['Is Private'].toLowerCase() === 'true' : false,
+      // Files field needs special handling due to potential complex data
+      Files: (() => {
+        // If no Files field or empty array string, return empty string
+        if (!row.Files || row.Files === '[]') return '';
+        // Otherwise keep the raw value for later processing
+        return row.Files;
+      })(),
+      // Optional fields with undefined fallback
+      'Posted By Profile Image': row['Posted By Profile Image'] || undefined,
+      'Add To Gallery': row['Add To Gallery'] || undefined,
+      // Dates with validation
       'Created Date': parseDate(row['Created Date']) || new Date().toISOString(),
       'Updated Date': parseDate(row['Updated Date']) || new Date().toISOString(),
       Owner: row.Owner || ''
@@ -188,6 +220,45 @@ function convertToComment(row: CsvRow): ProjectComment | null {
     console.error('[Comment Service] Error converting row to comment:', error, 'Row:', row);
     return null;
   }
+}
+
+/**
+ * Sanitize HTML content by removing all tags and script content
+ */
+function sanitizeHTML(html: string): string {
+  // First remove script tags and their content
+  let sanitized = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  // Then remove all other HTML tags
+  sanitized = sanitized.replace(/<[^>]*>/g, '');
+  return sanitized;
+}
+
+/**
+ * Create a new comment object with required fields in the correct order
+ */
+function createOrderedComment(data: Partial<ProjectComment>): Record<string, any> {
+  // Generate required fields if not provided
+  const now = new Date().toISOString();
+  const comment: Record<string, any> = {
+    'Posted By': data['Posted By'] || '',
+    'Nickname': data.Nickname || '',
+    'Project ID': data['Project ID'] || '',
+    'Files': data.Files || '',  // Return empty string for Files
+    'Comment': data.Comment ? sanitizeHTML(data.Comment) : '',
+    'Is Private': data['Is Private'] ?? false,
+    'Posted By Profile Image': data['Posted By Profile Image'] || undefined,
+    'Add To Gallery': data['Add To Gallery'] || undefined,
+    'ID': data.ID || crypto.randomUUID(),
+    'Created Date': data['Created Date'] || now,
+    'Updated Date': data['Updated Date'] || now,
+    'Owner': data.Owner || undefined
+  };
+
+  // Ensure properties are in the correct order
+  return COMMENT_COLUMNS.reduce((ordered, key) => {
+    ordered[key] = comment[key];
+    return ordered;
+  }, {} as Record<string, any>);
 }
 
 /**
@@ -296,10 +367,13 @@ class ProjectItemsService implements ProjectService {
       }
 
       console.log(`[Comment Service] Reading comments for project ${projectID}`);
+      console.log(`[Comment Service] CSV file path: ${COMMENTS_CSV_PATH}`);
       const startTime = Date.now();
 
       // Read and filter CSV rows for this project only
+      console.log(`[Comment Service] Reading comments from ${COMMENTS_CSV_PATH}`);
       const rows = await readCsvWithFilter(COMMENTS_CSV_PATH, 'Project ID', projectID);
+      console.log(`[Comment Service] Found ${rows.length} rows for project ${projectID}`);
       
       // Convert filtered rows to comment objects
       const comments = rows
@@ -373,6 +447,35 @@ class ProjectItemsService implements ProjectService {
       console.error(`[Comment Service] Error fetching comments for project ${projectID}:`, error);
       throw error;
     }
+  }
+
+  /**
+   * Add a new comment to the project
+   */
+  async addComment(comment: Partial<ProjectComment>): Promise<ProjectComment | null> {
+    // Validate required fields
+    for (const field of REQUIRED_COMMENT_FIELDS) {
+      if (!comment[field as keyof ProjectComment]) {
+        throw new Error('Missing required fields');
+      }
+    }
+
+    const orderedComment = createOrderedComment(comment);
+
+    // Validate image URLs if present
+    if (comment.Files && typeof comment.Files === 'string') {
+      orderedComment.Files = comment.Files.split(',')
+        .map(url => url.trim())
+        .filter(url => url.match(/^https?:\/\/.+/))
+        .join(', ');
+    }
+
+    if (comment['Posted By Profile Image'] && !comment['Posted By Profile Image'].match(/^https?:\/\/.+/)) {
+      orderedComment['Posted By Profile Image'] = '';
+    }
+
+    const success = await appendToCSV(COMMENTS_CSV_PATH, orderedComment);
+    return success ? orderedComment as ProjectComment : null;
   }
 }
 

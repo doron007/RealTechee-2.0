@@ -230,13 +230,13 @@ const ProjectDetails: NextPage = () => {
                 <PaymentList payments={payments} />
 
                 {/* Project Comments */}
-                {comments.length > 0 ? (
-                  <CommentsList commentsData={comments} />
-                ) : (
-                  <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-                    <BodyContent className="text-gray-500 text-center">No comments yet</BodyContent>
-                  </div>
-                )}
+                <CommentsList 
+                  commentsData={comments} 
+                  projectId={project.projectID || project.id} 
+                  onCommentAdded={(newComment) => {
+                    setComments(prevComments => [...prevComments, newComment]);
+                  }} 
+                />
               </div>
 
               {/* Right Column (40%) */}

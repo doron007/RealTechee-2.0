@@ -24,6 +24,19 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com'
       }
     ]
+  },
+  webpack: (config, { dev, isServer }) => {
+    // Enable source maps in development
+    if (dev) {
+      config.devtool = 'source-map';
+    }
+    
+    // Ensure proper handling of source maps for server code
+    if (isServer) {
+      config.optimization.minimize = false;
+    }
+    
+    return config;
   }
 };
 

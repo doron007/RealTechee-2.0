@@ -7,6 +7,120 @@ import path from 'path';
 import { parse, stringify } from 'csv/sync';
 
 /**
+ * Append a comment to the ProjectComments.csv file with media information
+ * @param projectId - Project ID
+ * @param comment - Comment text
+ * @param email - User email
+ * @param name - User name
+ * @param media - Array of image/video media objects (optional)
+ * @param isPrivate - Whether the comment is private
+ * @param avatar - User avatar URL
+ * @returns boolean indicating success or failure
+ */
+export async function appendToCSV(filePath: string, data: Record<string, any>): Promise<boolean> {
+  // Explicit debugger statement at function entry
+  debugger;
+  
+  console.log('[CSV Debug] Starting appendToCSV with:', {
+    filePath,
+    dataKeys: Object.keys(data),
+  });
+
+  // Normalize inputs immediately for better debugging
+  const normalizedPath = filePath?.trim() || '';
+  const normalizedData = data || {};
+
+  try {
+    // Input validation with explicit debugging points
+    debugger;
+    if (!normalizedData || typeof normalizedData !== 'object') {
+      console.error('[CSV Debug] Invalid data object:', normalizedData);
+      throw new Error('Invalid data object provided');
+    }
+
+    if (!normalizedPath) {
+      console.error('[CSV Debug] Invalid file path:', normalizedPath);
+      throw new Error('Invalid file path provided');
+    }
+
+    // Directory handling
+    debugger;
+    const dirPath = path.dirname(normalizedPath);
+    console.log('[CSV Debug] Creating directory if needed:', dirPath);
+    
+    try {
+      await fs.promises.mkdir(dirPath, { recursive: true });
+    } catch (error) {
+      const dirError = error as Error;
+      console.error('[CSV Debug] Failed to create directory:', dirError);
+      throw new Error(`Failed to create directory: ${dirError.message}`);
+    }
+
+    // File existence check with explicit debug point
+    debugger;
+    let fileExists = false;
+    console.log('[CSV Debug] Checking if file exists:', normalizedPath);
+    
+    try {
+      await fs.promises.access(normalizedPath);
+      fileExists = true;
+      console.log('[CSV Debug] File exists');
+    } catch {
+      fileExists = false;
+      console.log('[CSV Debug] File does not exist, will create new file');
+    }
+
+    // Create new file with headers if needed
+    if (!fileExists) {
+      debugger;
+      console.log('[CSV Debug] Creating new file with headers');
+      const headers = Object.keys(normalizedData).join(',') + '\n';
+      try {
+        await fs.promises.writeFile(normalizedPath, headers, 'utf8');
+        console.log('[CSV Debug] Successfully created file with headers');
+      } catch (error) {
+        const writeError = error as Error;
+        console.error('[CSV Debug] Failed to write headers:', writeError);
+        throw new Error(`Failed to write headers: ${writeError.message}`);
+      }
+    }
+
+    // Prepare row data with explicit debug point
+    debugger;
+    console.log('[CSV Debug] Preparing row data');
+    const row = Object.values(normalizedData).map(value => {
+      if (value === null || value === undefined) return '';
+      if (typeof value === 'object') {
+        return `"${JSON.stringify(value).replace(/"/g, '""')}"`;
+      }
+      if (typeof value === 'string') {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    }).join(',') + '\n';
+
+    // Append the row with explicit debug point
+    debugger;
+    console.log('[CSV Debug] Appending row to file');
+    try {
+      await fs.promises.appendFile(normalizedPath, row, 'utf8');
+      console.log('[CSV Debug] Successfully appended row');
+      return true;
+    } catch (error) {
+      const appendError = error as Error;
+      console.error('[CSV Debug] Failed to append row:', appendError);
+      throw new Error(`Failed to append row: ${appendError.message}`);
+    }
+
+  } catch (error) {
+    debugger;
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[CSV Error] Failed to append to CSV:', errorMessage);
+    return false;
+  }
+}
+
+/**
  * Read a CSV file and parse it into an array of objects
  * @param filePath - Path to the CSV file
  * @returns Array of objects, where each object represents a row in the CSV
@@ -21,13 +135,28 @@ export function readCsvFile<T>(filePath: string): T[] {
       fileContent = fileContent.substring(1);
     }
     
-    // Parse the CSV content
+    // First parse headers to get expected columns
+    const rows = parse(fileContent, { trim: true });
+    if (!Array.isArray(rows) || rows.length === 0) {
+      console.warn(`Empty or invalid CSV file: ${filePath}`);
+      return [];
+    }
+
+    // Get headers from first row and create a set of valid columns
+    const headers = rows[0] as string[];
+    const validColumns = new Set(headers);
+
+    // Parse the CSV content with strict column handling
     const records = parse(fileContent, {
-      columns: true,
+      columns: (header: string[]) => {
+        // Only include columns that exist in the header
+        return header.filter((h: string) => validColumns.has(h));
+      },
       skip_empty_lines: true,
       trim: true,
-      bom: true, // Handle BOM automatically
+      bom: true
     });
+    
     return records as T[];
   } catch (error) {
     console.error(`Error reading CSV file ${filePath}:`, error);

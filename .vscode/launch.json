@@ -6,25 +6,52 @@
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run dev:debug",
-      "skipFiles": ["<node_internals>/**"]
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--inspect"
+      }
     },
     {
       "name": "Next.js: debug client-side",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*"
+      }
     },
     {
       "name": "Next.js: debug full stack",
       "type": "node-terminal",
       "request": "launch",
       "command": "npm run dev:debug",
-      "skipFiles": ["<node_internals>/**"],
       "serverReadyAction": {
-        "pattern": "- Local:.+(https?://.+)|ready - started server on .+, url: (https?://.+)",
+        "pattern": "started server on .+, url: (https?://.+)",
         "uriFormat": "%s",
         "action": "debugWithChrome"
+      },
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/.next/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--inspect"
+      },
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*"
       }
     },
     {
@@ -33,6 +60,12 @@
       "request": "launch",
       "program": "${workspaceFolder}/server.js",
       "skipFiles": ["<node_internals>/**"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": ["Next.js: debug server-side", "Next.js: debug client-side"]
     }
   ]
 }

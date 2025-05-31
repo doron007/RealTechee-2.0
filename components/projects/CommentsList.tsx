@@ -5,6 +5,7 @@ import { CollapsibleSection } from '../common/ui';
 import { BodyContent } from '../Typography';
 import { formatDate } from '../../utils/formatUtils';
 import Button from '../common/buttons/Button';
+import AddCommentDialog from './AddCommentDialog';
 
 export interface Comment {
     ID: string;
@@ -27,17 +28,22 @@ interface CommentsListProps {
     title?: string;
     initialExpanded?: boolean;
     className?: string;
+    projectId: string;
+    onCommentAdded?: (comment: Comment) => void;
 }
 
 const CommentsList: React.FC<CommentsListProps> = ({
     commentsData,
     title = "Comments",
     initialExpanded = true,
-    className = ""
+    className = "",
+    projectId,
+    onCommentAdded
 }) => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [sortOrder, setSortOrder] = React.useState<'newest' | 'oldest'>('newest');
+    const [isAddingComment, setIsAddingComment] = React.useState(false);
 
     const modalStyle = {
         position: 'absolute',
@@ -80,6 +86,30 @@ const CommentsList: React.FC<CommentsListProps> = ({
         });
     }, [commentsData, sortOrder]);
 
+    const handleAddComment = async (comment: string, files: File[]) => {
+        const formData = new FormData();
+        formData.append('projectId', projectId);
+        formData.append('comment', comment);
+        formData.append('nickname', 'User'); // You might want to make this dynamic
+        formData.append('userImageUrl', ''); // And this too
+        files.forEach(file => formData.append('images[]', file));
+
+        // Submit the comment
+        const response = await fetch('/api/projects/addComment', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add comment');
+        }
+
+        const data = await response.json();
+        if (onCommentAdded) {
+            onCommentAdded(data.comment);
+        }
+    };
+
     const handleImageClick = (imageUrl: string) => {
         setIsLoading(true);
         setSelectedImage(imageUrl);
@@ -97,24 +127,43 @@ const CommentsList: React.FC<CommentsListProps> = ({
     return (
         <div className={className}>
             <CollapsibleSection title={title} initialExpanded={initialExpanded}>
-                <div className="flex justify-end gap-2 mb-4">
-                    <Button 
-                        variant={sortOrder === 'newest' ? 'secondary' : 'link'}
-                        onClick={() => handleSort('newest')}
-                        className="!py-1 !px-3 text-sm"
+                <div className="flex justify-between items-center mb-4">
+                    {/* Sort buttons */}
+                    <div className="flex gap-2">
+                        <Button 
+                            variant={sortOrder === 'newest' ? 'secondary' : 'link'}
+                            onClick={() => handleSort('newest')}
+                            className="!py-1 !px-3 text-sm"
+                        >
+                            Newest
+                        </Button>
+                        <Button 
+                            variant={sortOrder === 'oldest' ? 'secondary' : 'link'}
+                            onClick={() => handleSort('oldest')}
+                            className="!py-1 !px-3 text-sm"
+                        >
+                            Oldest
+                        </Button>
+                    </div>
+
+                    {/* Add comment button */}
+                    <Button
+                        variant="primary"
+                        onClick={() => setIsAddingComment(true)}
+                        className="!py-1 !px-3 text-sm flex items-center gap-2"
                     >
-                        Newest
-                    </Button>
-                    <Button 
-                        variant={sortOrder === 'oldest' ? 'secondary' : 'link'}
-                        onClick={() => handleSort('oldest')}
-                        className="!py-1 !px-3 text-sm"
-                    >
-                        Oldest
+                        <span>Add Comment</span>
                     </Button>
                 </div>
+
+                {/* Comments list */}
                 <div className="space-y-6">
-                    {sortedComments.map((comment) => (
+                    {sortedComments.length === 0 ? (
+                        <div className="p-4 bg-gray-50 rounded-lg">
+                            <BodyContent className="text-gray-500 text-center">No comments yet</BodyContent>
+                        </div>
+                    ) : 
+                    sortedComments.map((comment) => (
                         <div
                             key={comment.ID}
                             className="bg-gray-50 p-4 rounded-lg"
@@ -154,12 +203,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
                                             role="button"
                                             tabIndex={0}
                                             aria-label={`View image ${index + 1}`}
+                                            style={{ aspectRatio: '1/1' }}
                                         >
                                             <Image
                                                 src={image}
                                                 alt={`Comment image ${index + 1}`}
                                                 fill
                                                 className="object-cover rounded-md"
+                                                sizes="80px"
                                             />
                                         </div>
                                     ))}
@@ -174,6 +225,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
                 </div>
             </CollapsibleSection>
 
+            {/* Image preview modal */}
             <Modal
                 open={!!selectedImage}
                 onClose={handleCloseModal}
@@ -181,7 +233,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
             >
                 <Box sx={modalStyle}>
                     {selectedImage && (
-                        <div className="relative flex items-center justify-center" style={{ maxWidth: '90vw', maxHeight: '90vh' }}>
+                        <div className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center">
                             <Image
                                 src={selectedImage}
                                 alt="Preview"
@@ -190,7 +242,6 @@ const CommentsList: React.FC<CommentsListProps> = ({
                                 className="w-auto h-auto max-w-full max-h-[90vh] object-contain"
                                 onLoad={() => setIsLoading(false)}
                                 onClick={(e) => e.stopPropagation()}
-                                priority
                             />
                             {isLoading && (
                                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -201,6 +252,13 @@ const CommentsList: React.FC<CommentsListProps> = ({
                     )}
                 </Box>
             </Modal>
+            
+            {/* Add comment dialog */}
+            <AddCommentDialog 
+                open={isAddingComment}
+                onClose={() => setIsAddingComment(false)}
+                onSubmit={handleAddComment}
+            />
         </div>
     );
 };

@@ -225,14 +225,16 @@ export async function getProjectComments(projectId: string): Promise<ProjectComm
     console.log('[ProjectsAPI] Fetching comments for projectId:', projectId);
     const response = await fetch(`/api/projects/comments?projectId=${projectId}`);
     
+    const data = await response.json();
+    
     if (!response.ok) {
-      console.error(`[ProjectsAPI] API error: ${response.status}`);
-      throw new Error(`API error: ${response.status}`);
+      console.error(`[ProjectsAPI] API error: ${response.status}`, data.error);
+      // Return empty array instead of throwing for 404 and 500 errors
+      return [];
     }
     
-    const data = await response.json();
     console.log('[ProjectsAPI] Received comments data:', data);
-    return data.comments;
+    return data.comments || [];
   } catch (error) {
     console.error('[ProjectsAPI] Error fetching project comments:', error);
     return [];
