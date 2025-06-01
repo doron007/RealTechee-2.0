@@ -14,16 +14,17 @@ Most tables include standard metadata columns:
 
 ### 1. Affiliates.csv
 - ID
-- Title
-- Company
+- Title ['Title' -> 'title']
+- Company ['Company' -> 'company']
 - Service Type ['Service Type' -> 'serviceType']
-- Name
-- Email
-- Phone
-- Full Address ['Full Address' -> 'fullAddress']
+- Contact ID ['Contact ID' -> 'contactId']  # Reference to Contacts table where isAffiliate=true
+- Name ['Name' -> 'name'] [Delete]
+- Email ['Email' -> 'email'] [Delete]
+- Phone ['Phone' -> 'phone'] [Delete]
+- Full Address ['Full Address' -> 'fullAddress'] [Delete]
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 - Worker's Compensation Ins. ['Worker's Compensation Ins.' -> 'workersCompensationInsurance']
 - License
 - Environmental Factor ['Environmental Factor' -> 'environmentalFactor']
@@ -38,19 +39,19 @@ Most tables include standard metadata columns:
 - Quality Assurance ['Quality Assurance' -> 'qualityAssurance']
 - Project Remnant List ['Project Remnant List' -> 'projectRemnantList']
 - Warranty Period ['Warranty Period' -> 'warrantyPeriod']
-- Accounting
+- Accounting ['Accounting' -> 'accounting']
 - Qualifier Name ['Qualifier Name' -> 'qualifierName']
-- Date
+- Date ['Date' -> 'date']
 - Qualfier Signature ['Qualfier Signature' -> 'qualifierSignature']
 - 92_SLA (All) [Delete]
 - 92_SLA (Company, Email) [Delete]
 - link-sla-2-name [Delete]
 
 ### 2. Auth.csv
-- Owner
-- Email
-- Hash
-- Token
+- Owner ['Owner' -> 'owner']
+- Email ['Email' -> 'email']
+- Hash ['Hash' -> 'hash']
+- Token ['Token' -> 'token']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
@@ -59,87 +60,90 @@ Most tables include standard metadata columns:
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Name
-- Email
-- Mobile
-- sendEmailNotifications
-- sendSmsNotifications
-- Active
-- order
+- Owner ['Owner' -> 'owner']
+- Contact ID ['Contact ID' -> 'contactId']  # Reference to Contacts table where isProjectManager=true
+- Name ['Name' -> 'name'] [Delete]
+- Email ['Email' -> 'email'] [Delete]
+- Mobile ['Mobile' -> 'mobile'] [Delete]
+- Send Email Notifications ['Send Email Notifications' -> 'sendEmailNotifications']
+- Send SMS Notifications ['Send SMS Notifications' -> 'sendSmsNotifications']
+- Active ['Active' -> 'active']
+- order ['Order' -> 'order']
 
 ### 4. BackOffice_BookingStatuses.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### 5. BackOffice_Brokerage.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
-- Live
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
+- Live ['Live' -> 'live']
 
 ### 6. BackOffice_Products.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### 7. BackOffice_ProjectStatuses.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### 8. ContactUs.csv
 - Submission Time ['Submission Time' -> 'submissionTime']
-- First Name ['First Name' -> 'firstName']
-- Last Name ['Last Name' -> 'lastName']
-- Email
-- Address
-- Subject
-- Message
-- Product
-- Phone
-- Email 2 ['Email 2' -> 'email2']
+- First Name ['First Name' -> 'firstName'] [Delete]
+- Last Name ['Last Name' -> 'lastName'] [Delete]
+- Email [Delete]
+- Address [Delete]
+- Subject ['Subject' -> 'subject']
+- Message ['Message' -> 'message']
+- Product ['Product' -> 'product']
+- Phone [Delete]
+- Email 2 ['Email 2' -> 'email2'] [Delete]
 - ID
-- Owner
+- Owner ['Owner' -> 'owner']
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
+- Contact ID ['Contact ID' -> 'contactId']  # Reference to Contacts table
 
 ### 9. ProjectComments.csv
-- Posted By ['Posted By' -> 'postedBy']
-- Nickname
+- Author ID ['Author ID' -> 'authorId']  # Reference to Contacts table
+- Posted By ['Posted By' -> 'postedBy'] [Delete]  # Using authorId instead
+- Nickname ['Nickname' -> 'nickname']
 - Project ID ['Project ID' -> 'projectId']
-- Files
-- Comment
+- Files ['Files' -> 'files']
+- Comment ['Comment' -> 'comment']
 - Is Private ['Is Private' -> 'isPrivate']
-- Posted By Profile Image ['Posted By Profile Image' -> 'postedByProfileImage']
+- Posted By Profile Image ['Posted By Profile Image' -> 'postedByProfileImage'] [Delete]  # Using authorId instead
 - Add To Gallery ['Add To Gallery' -> 'addToGallery']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 
 ### 10. ProjectMilestones.csv
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Name
-- Description
+- Owner ['Owner' -> 'owner']
+- Name ['Name' -> 'name']
+- Description ['Description' -> 'description']
 - Project ID ['Project ID' -> 'projectId']
-- Order
+- Order ['Order' -> 'order']
 - Is Complete ['Is Complete' -> 'isComplete']
 - Estimated Start ['Estimated Start' -> 'estimatedStart']
 - Estimated Finish ['Estimated Finish' -> 'estimatedFinish']
@@ -149,87 +153,92 @@ Most tables include standard metadata columns:
 ### 11. ProjectPaymentTerms.csv
 - ID
 - projectID
-- Type
+- Type ['Type' -> 'type']
 - PaymentName ['PaymentName' -> 'paymentName']
 - Payment Amount ['Payment Amount' -> 'paymentAmount']
 - paymentDue
-- Description
-- Order
-- Paid
+- Description ['Description' -> 'description']
+- Order ['Order' -> 'order']
+- Paid ['Paid' -> 'paid']
 - Parent Payment ID ['Parent Payment ID' -> 'parentPaymentId']
 - Is Category ['Is Category' -> 'isCategory']
-- Internal
+- Internal ['Internal' -> 'internal']
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 
 ### 12. QuoteItems.csv
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 - projectID
 - Item Name ['Item Name' -> 'itemName']
 - Item Completed ['Item Completed' -> 'itemCompleted']
 - Parent Stage ID ['Parent Stage ID' -> 'parentStageId']
-- Order
+- Order ['Order' -> 'order']
 - Is Category ['Is Category' -> 'isCategory']
-- Description
-- Qty
+- Description ['Description' -> 'description']
+- Qty ['Qty' -> 'quantity']
 - Unit Price ['Unit Price' -> 'unitPrice']
-- Total
-- Type
+- Total ['Total' -> 'total']
+- Type ['Type' -> 'type']
 - Recommend Item ['Recommend Item' -> 'recommendItem']
-- Image
-- Internal
+- Image ['Image' -> 'image']
+- Internal ['Internal' -> 'internal']
 - Margin Percent ['Margin Percent' -> 'marginPercent']
-- Cost
+- Cost ['Cost' -> 'cost']
 - price
 
 ### 13. Quotes.csv
 - ID
 - RequestID
 - Project ID ['Project ID' -> 'projectId']
-- Address
-- Status
+- propertyId ['Property ID' -> 'propertyId']  # Reference to Properties table
+- agentId ['Agent ID' -> 'agentId']  # Reference to Contacts table where isAgent=true
+- contactId ['Contact ID' -> 'contactId']  # Primary homeowner contact reference
+- contact2Id ['Contact ID 2' -> 'contact2Id']  # Second homeowner contact reference (optional)
+- contact3Id ['Contact ID 3' -> 'contact3Id']  # Third homeowner contact reference (optional)
+- Address ['Address' -> 'address'] [Delete]
+- Status ['Status' -> 'status']  
 - Status Image ['Status Image' -> 'statusImage']  
 - Status Order ['Status Order' -> 'statusOrder']
-- AssignedTo
+- AssignedTo ['AssignedTo' -> 'assignedTo']
 - Assigned Date ['Assigned Date' -> 'assignedDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- AgentName ['AgentName' -> 'agentName']
-- AgentPhone
-- AgentEmail
-- HomeownerName ['HomeownerName' -> 'homeownerName']
-- HomeownerPhone ['HomeownerPhone' -> 'homeownerPhone']
-- HomeownerEmail ['HomeownerEmail' -> 'homeownerEmail']
-- Homeowner Name 2 ['Homeowner Name 2' -> 'homeownerName2']
-- Homeowner Phone 2 ['Homeowner Phone 2' -> 'homeownerPhone2']
-- Homeowner Email 2 ['Homeowner Email 2' -> 'homeownerEmail2']
-- Homeowner Name 3 ['Homeowner Name 3' -> 'homeownerName3']
-- Homeowner Phone 3 ['Homeowner Phone 3' -> 'homeownerPhone3'] # Note: CSV has double space
-- Homeowner Email 3 ['Homeowner Email 3' -> 'homeownerEmail3']
+- AgentName ['AgentName' -> 'agentName'] [Delete]
+- AgentPhone ['AgentPhone' -> 'agentPhone'] [Delete]
+- AgentEmail ['AgentEmail' -> 'agentEmail'] [Delete]
+- HomeownerName ['HomeownerName' -> 'homeownerName'] [Delete]
+- HomeownerPhone ['HomeownerPhone' -> 'homeownerPhone'] [Delete]
+- HomeownerEmail ['HomeownerEmail' -> 'homeownerEmail'] [Delete]
+- Homeowner Name 2 ['Homeowner Name 2' -> 'homeownerName2'] [Delete]
+- Homeowner Phone 2 ['Homeowner Phone 2' -> 'homeownerPhone2'] [Delete]
+- Homeowner Email 2 ['Homeowner Email 2' -> 'homeownerEmail2'] [Delete]
+- Homeowner Name 3 ['Homeowner Name 3' -> 'homeownerName3'] [Delete]
+- Homeowner Phone 3 ['Homeowner Phone 3' -> 'homeownerPhone3'] [Delete]
+- Homeowner Email 3 ['Homeowner Email 3' -> 'homeownerEmail3'] [Delete]
 - Quote Number ['Quote Number' -> 'quoteNumber']
-- Title
-- Property Full Address ['Property Full Address' -> 'propertyFullAddress']
-- House Address ['House Address' -> 'houseAddress']
-- State # First occurrence
-- City # First occurrence
-- Zip # First occurrence
+- Title ['Title' -> 'title']  
+- Property Full Address ['Property Full Address' -> 'propertyFullAddress'] [Delete]
+- House Address ['House Address' -> 'houseAddress'] [Delete]
+- State [Delete]
+- City [Delete]
+- Zip [Delete]
 - Visitor ID ['Visitor ID' -> 'visitorId']
 - Pdf Generator URL ['Pdf Generator URL' -> 'pdfGeneratorUrl']
-- Document
-- Documents
-- Images
-- Budget
+- Document ['Document' -> 'document']  
+- Documents ['Documents' -> 'documents']  
+- Images ['Images' -> 'images']  
+- Budget ['Budget' -> 'budget']  
 - Total Cost ['Total Cost' -> 'totalCost']
 - Total Price ['Total Price' -> 'totalPrice']
-- Product
+- Product ['Product' -> pProduct']  
 - Operation Manager Approved ['Operation Manager Approved' -> 'operationManagerApproved']
 - Underwriting Approved ['Underwriting Approved' -> 'underwritingApproved']
-- Signed
+- Signed ['Signed' -> 'signed']  
 - signee1Name
-- Signature
+- Signature ['Signature' -> 'signature']  
 - Projected Listing Price ['Projected Listing Price' -> 'projectedListingPrice']
 - Loan Balance ['Loan Balance' -> 'loanBalance']
 - Credit Score ['Credit Score' -> 'creditScore']
@@ -253,146 +262,155 @@ Most tables include standard metadata columns:
 - Expired Date ['Expired Date' -> 'expiredDate']
 - Archived Date ['Archived Date' -> 'archivedDate']
 - Rejected Date ['Rejected Date' -> 'rejectedDate']
-- Brokerage
+- Brokerage ['Brokerage' -> 'brokerage']  
 - Office Notes ['Office Notes' -> 'officeNotes']
 - Reason For Archive ['Reason For Archive' -> 'reasonForArchive']
 - Estimated Weeks Duration ['Estimated Weeks Duration' -> 'estimatedWeeksDuration']
 - Account Executive ['Account Executive' -> 'accountExecutive']
-- Bedrooms
+- Bedrooms ['Bedrooms' -> 'bedrooms']  
 - Year Built ['Year Built' -> 'yearBuilt']
-- Floors
-- Bathrooms
+- Floors ['Floors' -> 'floors']  
+- Bathrooms ['Bathrooms' -> 'bathrooms']  
 - Size (sqft) ['Size (sqft)' -> 'sizeSqft']
 - Total Payments by Client ['Total Payments by Client' -> 'totalPaymentsByClient']
 - Total Payments to GC ['Total Payments to GC' -> 'totalPaymentsToGc']
 - Quote eSignature (ID) ['Quote eSignature (ID)' -> 'quoteESignatureId']
-- Owner
+- Owner ['Owner' -> 'owner'] 
 
 ### 14. Requests.csv
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
 - ID
-- Status
+- Status ['Status' -> 'status']
 - Status Image ['Status Image' -> 'statusImage']
 - Status Order ['Status Order' -> 'statusOrder']
+- Property ID ['Property ID' -> 'propertyId']  # Reference to Properties table
+- Agent ID ['Agent ID' -> 'agentId']  # Reference to Contacts table where isAgent=true
+- Contact ID ['Contact ID' -> 'contactId']  # Reference to Contacts table (homeowner)
+- Account Executive ID ['Account Executive ID' -> 'accountExecutiveId']  # Reference to Contacts table where isAccountExecutive=true
 - Account Executive ['Account Executive' -> 'accountExecutive']
-- Product
+- Product ['Product' -> 'product']
 - Assigned To ['Assigned To' -> 'assignedTo']
 - Assigned Date ['Assigned Date' -> 'assignedDate']
-- Agent Name ['Agent Name' -> 'agentName']
-- AgentPhone
-- Agent Email ['Agent Email' -> 'agentEmail']
-- Homeowner Full Name ['Homeowner Full Name' -> 'homeownerFullName']
-- Homeowner First Name ['Homeowner First Name' -> 'homeownerFirstName']
-- Homeowner Last Name ['Homeowner Last Name' -> 'homeownerLastName']
-- Homeowner Phone ['Homeowner Phone' -> 'homeownerPhone']
-- Homeowner Email ['Homeowner Email' -> 'homeownerEmail']
-- Property Address ['Property Address' -> 'propertyAddress']
-- Property Full Address ['Property Full Address' -> 'propertyFullAddress']
-- House Address ['House Address' -> 'houseAddress']
-- City
-- State
-- Zip
-- Message
+- Agent Name ['Agent Name' -> 'agentName'] [Delete]
+- AgentPhone ['AgentPhone' -> 'agentPhone'] [Delete]
+- Agent Email ['Agent Email' -> 'agentEmail'] [Delete]
+- Homeowner Full Name ['Homeowner Full Name' -> 'homeownerFullName'] [Delete]
+- Homeowner First Name ['Homeowner First Name' -> 'homeownerFirstName'] [Delete]
+- Homeowner Last Name ['Homeowner Last Name' -> 'homeownerLastName'] [Delete]
+- Homeowner Phone ['Homeowner Phone' -> 'homeownerPhone'] [Delete]
+- Homeowner Email ['Homeowner Email' -> 'homeownerEmail'] [Delete]
+- Property Address ['Property Address' -> 'propertyAddress'] [Delete]
+- Property Full Address ['Property Full Address' -> 'propertyFullAddress'] [Delete]
+- House Address ['House Address' -> 'houseAddress'] [Delete]
+- City ['City' -> 'city'] [Delete]  # Using propertyId instead [Delete]  # Using propertyId instead [Delete]
+- State ['State' -> 'state'] [Delete]
+- Zip ['Zip' -> 'zip'] [Delete]
+- Message ['Message' -> 'message']
 - Virtual Walkthrough ['Virtual Walkthrough' -> 'virtualWalkthrough']
-- Budget
+- Budget ['Budget' -> 'budget']
 - Listing City ['Listing City' -> 'listingCity']
 - Listing State ['Listing State' -> 'listingState']
 - Listing Zip Code ['Listing Zip Code' -> 'listingZipCode']
 - Relation to Property ['Relation to Property' -> 'relationToProperty']
+- Listing City [Delete]  # Using propertyId instead
+- Listing State [Delete]  # Using propertyId instead
+- Listing Zip Code [Delete]  # Using propertyId instead
 - Uploaded Media ['Uploaded Media' -> 'uploadedMedia']
-- Uploded Documents ['Uploded Documents' -> 'uploadedDocuments']  # Note: typo in original CSV
+- Uploaded Documents ['Uploaded Documents' -> 'uploadedDocuments']
 - Uploaded Videos ['Uploaded Videos' -> 'uploadedVideos']
 - RT Digital Selection ['RT Digital Selection' -> 'rtDigitalSelection']
 - Lead Source ['Lead Source' -> 'leadSource']
 - Need Finance ['Need Finance' -> 'needFinance']
-- leadFromSync
+- Lead From Sync ['Lead From Sync' -> 'leadFromSync']
 - Lead From Ventura Stone ['Lead From Ventura Stone' -> 'leadFromVenturaStone']
 - Office Notes ['Office Notes' -> 'officeNotes']
-- Archived
+- Archived ['Archived' -> 'archived']
 - Booking ID ['Booking ID' -> 'bookingId']
 - Requested Visit Date / Time ['Requested Visit Date / Time' -> 'requestedVisitDateTime']
-- Visitorid
+- VisitorId ['VisitorId' -> 'visitorId']
 - Visit Date ['Visit Date' -> 'visitDate']
 - Move To Quoting Date ['Move To Quoting Date' -> 'moveToQuotingDate']
 - Expired Date ['Expired Date' -> 'expiredDate']
 - Archived Date ['Archived Date' -> 'archivedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 
 ### BackOffice_Notifications.csv
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- key
-- To
-- CC
-- BCC
-- Subject
-- Body
+- Owner ['Owner' -> 'owner']
+- key ['Key' -> 'key']
+- To ['To' -> 'to']
+- CC ['CC' -> 'cc']
+- BCC ['BCC' -> 'bcc']
+- Subject ['Subject' -> 'subject']
+- Body ['Body' -> 'body']
 - Body As Simple Text ['Body As Simple Text' -> 'bodyAsSimpleText']
 
 ### BackOffice_QuoteStatuses.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### BackOffice_RequestStatuses.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### BackOffice_RoleTypes.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Order
+- Owner ['Owner' -> 'owner']
+- Order ['Order' -> 'order']
 
 ### eSignatureDocuments.csv
 - ID
-- Signed
+- Contact ID ['Contact ID' -> 'contactId']  # Reference to Contacts table
+- Signed ['Signed' -> 'signed']
 - Template ID ['Template ID' -> 'templateId']
 - Document Data ['Document Data' -> 'documentData']
 - PDF Generator URL ['PDF Generator URL' -> 'pdfGeneratorUrl']
-- Document
-- Signed By ['Signed By' -> 'signedBy']
-- Signature
-- Initials
-- Address
+- Document ['Document' -> 'document']
+- Signed By ['Signed By' -> 'signedBy'] [Delete]  # Using contactId instead
+- Signature ['Signature' -> 'signature']
+- Initials ['Initials' -> 'initials']
+- Address [Delete]  # Using contactId instead
 - Quote PDF url ['Quote PDF url' -> 'quotePdfUrl']
 - Signed Date ['Signed Date' -> 'signedDate']
 - Signed Document ['Signed Document' -> 'signedDocument']
 - Signed PDF Generator URL ['Signed PDF Generator URL' -> 'signedPdfGeneratorUrl']
 - Signed Quote PDF Public URL ['Signed Quote PDF Public URL' -> 'signedQuotePdfPublicUrl']
-- Homeowner Email ['Homeowner Email' -> 'homeownerEmail']
+- Homeowner Email ['Homeowner Email' -> 'homeownerEmail'] [Delete]  # Should use contactId instead
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
 - Owner
 
 ### Legal.csv
-- Title
+- Title ['Title' -> 'title']
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-- Content
+- Owner ['Owner' -> 'owner']
+- Content ['Content' -> 'content']
 - 12_Legal (Document ID) [Delete] # Legacy field
 - Document ID ['Document ID' -> 'documentId']
 
 ### MemberSignature.csv
-- Member Email ['Member Email' -> 'memberEmail']
-- Signature
-- Initials
-- IP
-- Full Name ['Full Name' -> 'fullName']
+- contactId ['Contact ID' -> 'contactId']  # Reference to Contacts table
+- Member Email ['Member Email' -> 'memberEmail'] [Delete]
+- Signature ['Signature' -> 'signature']
+- Initials ['Initials' -> 'initials']
+- IP ['IP' -> 'ip']
+- Full Name ['Full Name' -> 'fullName'] [Delete]
 - Initials Public URL ['Initials Public URL' -> 'initialsPublicUrl']
 - Initials Wix URL ['Initials Wix URL' -> 'initialsWixUrl']
 - Signature Public URL ['Signature Public URL' -> 'signaturePublicUrl']
@@ -400,72 +418,80 @@ Most tables include standard metadata columns:
 - ID
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
 
 ### PendingAppoitments.csv
 - ID
 - Assigned To ['Assigned To' -> 'assignedTo']
-- Status
+- Status ['Status' -> 'status']
 - Service Name ['Service Name' -> 'serviceName']
-- Name
-- Email
-- Phone
-- Agent Name ['Agent Name' -> 'agentName']
-- Agent Email ['Agent Email' -> 'agentEmail']
-- Agent Phone ['Agent Phone' -> 'agentPhone']
-- Request Address ['Request Address' -> 'requestAddress']
-- Brokerage
-- Visitorid
+- Name ['Name' -> 'name'] [Delete]
+- Email ['Email' -> 'email'] [Delete]
+- Phone ['Phone' -> 'phone'] [Delete]
+- Agent Name ['Agent Name' -> 'agentName'] [Delete]
+- Agent Email ['Agent Email' -> 'agentEmail'] [Delete]
+- Agent Phone ['Agent Phone' -> 'agentPhone'] [Delete]
+- Request Address ['Request Address' -> 'requestAddress'] [Delete]  # Using propertyId instead
+- Brokerage ['Brokerage' -> 'brokerage'] [Delete]
+- Visitorid ['VisitorId' -> 'visitorId']
 - Requested Slot ['Requested Slot' -> 'requestedSlot']
 - Preferred Location ['Preferred Location' -> 'preferredLocation']
 - Request ID ['Request ID' -> 'requestId']
 - Assigned Date ['Assigned Date' -> 'assignedDate']
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
+- Owner ['Owner' -> 'owner']
+- propertyId ['Property ID' -> 'propertyId']  # Reference to Properties table
+- agentId ['Agent ID' -> 'agentId']  # Reference to Contacts table where isAgent=true
+- contactId ['Contact ID' -> 'contactId']  # Reference to Contacts table
 
 ### ProjectPermissions.csv
 - Created Date ['Created Date' -> 'createdDate']
 - Updated Date ['Updated Date' -> 'updatedDate']
-- projectId
+- Project ID ['Project ID' -> 'projectId']
 - ID
-- Owner
-- NA
-- Permissions
+- Owner ['Owner' -> 'owner']
+- NA ['NA' -> 'na']
+- Permissions ['Permissions' -> 'permissions']
 
 ### Projects.csv
 - ID
-- projectID
-- Title
-- Status
+- Project ID ['Project ID' -> 'projectId']
+- Title ['Title' -> 'title']
+- Status ['Status' -> 'status']
 - Status Image ['Status Image' -> 'statusImage']
 - Status Order ['Status Order' -> 'statusOrder']
+- Property ID ['Property ID' -> 'propertyId']
+- Agent ID ['Agent ID' -> 'agentId']
+- Contact ID ['Contact ID' -> 'contactId']
+- Contact ID 2 ['Contact ID 2' -> 'contact2Id']
+- Contact ID 3 ['Contact ID 3' -> 'contact3Id']
 - Property Type ['Property Type' -> 'propertyType']
-- Description
-- Image
-- Gallery
-- Agent Name ['Agent Name' -> 'agentName']
-- Agent Email ['Agent Email' -> 'agentEmail']
-- Agent Phone ['Agent Phone' -> 'agentPhone']
-- Homeowner Full Name ['Homeowner Full Name' -> 'homeownerFullName']
-- Homeowner Email ['Homeowner Email' -> 'homeownerEmail']
-- Homeowner Phone ['Homeowner Phone' -> 'homeownerPhone']
-- Homeowner Full Name 2 ['Homeowner Full Name 2' -> 'homeownerFullName2']
-- Homeowner Email 2 ['Homeowner Email 2' -> 'homeownerEmail2']
-- Homeowner Phone 2 ['Homeowner Phone 2' -> 'homeownerPhone2']
-- Homeowner Full Name 3 ['Homeowner Full Name 3' -> 'homeownerFullName3']
-- Homeowner Email 3 ['Homeowner Email 3' -> 'homeownerEmail3']
-- Homeowner Phone 3 ['Homeowner Phone 3' -> 'homeownerPhone3']
-- Bedrooms
-- Bathrooms
-- Floors
-- Size Sqft. ['Size Sqft.' -> 'sizeSqft']
-- Year Built ['Year Built' -> 'yearBuilt']
-- Redfin Link ['Redfin Link' -> 'redfinLink']
-- Zillow Link ['Zillow Link' -> 'zillowLink']
-- Original Value ['Original Value' -> 'originalValue']
-- Listing Price ['Listing Price' -> 'listingPrice']
-- Sale Price ['Sale Price' -> 'salePrice']
+- Description ['Description' -> 'description']
+- Image ['Image' -> 'image']
+- Gallery ['Gallery' -> 'gallery']
+- Agent Name ['Agent Name' -> 'agentName'] [Delete]
+- Agent Email ['Agent Email' -> 'agentEmail'] [Delete]
+- Agent Phone ['Agent Phone' -> 'agentPhone'] [Delete]
+- Homeowner Full Name ['Homeowner Full Name' -> 'homeownerFullName'] [Delete]
+- Homeowner Email ['Homeowner Email' -> 'homeownerEmail'] [Delete]
+- Homeowner Phone ['Homeowner Phone' -> 'homeownerPhone'] [Delete]
+- Homeowner Full Name 2 ['Homeowner Full Name 2' -> 'homeownerFullName2'] [Delete]
+- Homeowner Email 2 ['Homeowner Email 2' -> 'homeownerEmail2'] [Delete]
+- Homeowner Phone 2 ['Homeowner Phone 2' -> 'homeownerPhone2'] [Delete]
+- Homeowner Full Name 3 ['Homeowner Full Name 3' -> 'homeownerFullName3'] [Delete]
+- Homeowner Email 3 ['Homeowner Email 3' -> 'homeownerEmail3'] [Delete]
+- Homeowner Phone 3 ['Homeowner Phone 3' -> 'homeownerPhone3'] [Delete]
+- Bedrooms ['Bedrooms' -> 'bedrooms'] [Delete]  # Using propertyId instead
+- Bathrooms ['Bathrooms' -> 'bathrooms'] [Delete]  # Using propertyId instead
+- Floors ['Floors' -> 'floors'] [Delete]  # Using propertyId instead
+- Size Sqft. ['Size Sqft.' -> 'sizeSqft'] [Delete]  # Using propertyId instead
+- Year Built ['Year Built' -> 'yearBuilt'] [Delete]  # Using propertyId instead
+- Redfin Link ['Redfin Link' -> 'redfinLink'] [Delete]  # Using propertyId instead
+- Zillow Link ['Zillow Link' -> 'zillowLink'] [Delete]  # Using propertyId instead
+- Original Value ['Original Value' -> 'originalValue'] [Delete]  # Using propertyId instead
+- Listing Price ['Listing Price' -> 'listingPrice'] [Delete]  # Using propertyId instead
+- Sale Price ['Sale Price' -> 'salePrice'] [Delete]  # Using propertyId instead
 - Boost Price ['Boost Price' -> 'boostPrice']
 - Booster Estimated Cost ['Booster Estimated Cost' -> 'boosterEstimatedCost']
 - Booster Actual Cost ['Booster Actual Cost' -> 'boosterActualCost']
@@ -481,7 +507,7 @@ Most tables include standard metadata columns:
 - Open Escrow Within (days) ['Open Escrow Within (days)' -> 'openEscrowWithinDays']
 - Carry Days ['Carry Days' -> 'carryDays']
 - Booster Actual Price ['Booster Actual Price' -> 'boosterActualPrice']
-- Budget
+- Budget ['Budget' -> 'budget']
 - Request Date ['Request Date' -> 'requestDate']
 - Visit / Review Date ['Visit / Review Date' -> 'visitReviewDate']
 - Created Date ['Created Date' -> 'createdDate']
@@ -500,8 +526,46 @@ Most tables include standard metadata columns:
 - Escrow Contact Info ['Escrow Contact Info' -> 'escrowContactInfo']
 - Exclude From Dashboard ['Exclude From Dashboard' -> 'excludeFromDashboard']
 - Invoice Number ['Invoice Number' -> 'invoiceNumber']
-- Brokerage
+- Brokerage ['Brokerage' -> 'brokerage']
 - Selected Products ['Selected Products' -> 'selectedProducts']
 - Signed Contracts ['Signed Contracts' -> 'signedContracts']
 - link-04-projects-title [Delete]
 - 04_Projects (Item) [Delete] # Note: appears twice in CSV
+
+## Proposed New Tables for Data Consolidation
+
+### Properties.csv
+- ID
+- propertyFullAddress
+- houseAddress
+- city
+- state
+- zip
+- propertyType
+- bedrooms
+- bathrooms
+- floors
+- sizeSqft
+- yearBuilt
+- redfinLink
+- zillowLink
+- listingCity
+- listingState
+- listingZipCode
+- originalValue
+- listingPrice
+- salePrice
+- Created Date ['Created Date' -> 'createdDate']
+- Updated Date ['Updated Date' -> 'updatedDate']
+- Owner
+
+### Contacts.csv
+- ID
+- firstName
+- lastName
+- fullName
+- email
+- phone
+- mobile
+- company
+- brokerage
