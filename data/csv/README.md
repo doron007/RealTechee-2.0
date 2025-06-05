@@ -2,14 +2,6 @@
 
 This document provides a comprehensive list of columns for each CSV file in the data structure.
 
-## Common Patterns
-
-Most tables include standard metadata columns:
-- ID
-- Created Date ['Created Date' -> 'createdDate']
-- Updated Date ['Updated Date' -> 'updatedDate']
-- Owner
-
 ## File Schemas
 
 ### 1. Affiliates.csv
@@ -531,6 +523,33 @@ Most tables include standard metadata columns:
 - Signed Contracts ['Signed Contracts' -> 'signedContracts']
 - link-04-projects-title [Delete]
 - 04_Projects (Item) [Delete] # Note: appears twice in CSV
+- link-projects-1-title-2 ['link-projects-1-title-2' -> 'linkProjects1Title2']
+- Estimate ['Estimate' -> 'estimate']
+- Price Quote Info ['Price Quote Info' -> 'priceQuoteInfo']
+- quote URL ['quote URL' -> 'quoteUrl']
+- Documents ['Documents' -> 'documents']
+- permissionPublic ['permissionPublic' -> 'permissionPublic']
+- permissionPrivateRoles ['permissionPrivateRoles' -> 'permissionPrivateRoles']
+- permissionPrivateUsers ['permissionPrivateUsers' -> 'permissionPrivateUsers']
+- projectManagerEmailList ['projectManagerEmailList' -> 'projectManagerEmailList']
+- projectManagerPhone ['projectManagerPhone' -> 'projectManagerPhone']
+- visitorId ['visitorId' -> 'visitorId']
+- quoteId ['quoteId' -> 'quoteId']
+- Request ID ['Request ID' -> 'requestId']
+- Assigned To ['Assigned To' -> 'assignedTo']
+- Assigned Date ['Assigned Date' -> 'assignedDate']
+- Office Notes ['Office Notes' -> 'officeNotes']
+- Quote Sent Date ['Quote Sent Date' -> 'quoteSentDate']
+- Quote Opened Date ['Quote Opened Date' -> 'quoteOpenedDate']
+- Quote Signed Date ['Quote Signed Date' -> 'quoteSignedDate']
+- Contracting Start Date ['Contracting Start Date' -> 'contractingStartDate']
+- Contract Sent Date ['Contract Sent Date' -> 'contractSentDate']
+- Archived Date ['Archived Date' -> 'archivedDate']
+- Estimated Weeks Duration ['Estimated Weeks Duration' -> 'estimatedWeeksDuration']
+- Account Executive ['Account Executive' -> 'accountExecutive']
+- Project Admin (ProjectID) ['Project Admin (ProjectID)' -> 'projectAdminProjectId']
+- Contract URL ['Contract URL' -> 'contractUrl']
+- Archived ['Archived' -> 'archived']
 
 ## Proposed New Tables for Data Consolidation
 
