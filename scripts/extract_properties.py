@@ -841,7 +841,7 @@ def normalize_str(s):
         return ''
     return re.sub(r'[^a-z0-9]', '', s.strip().lower())
 
-def findMatchingContact(email, fullName=None, firstName=None, lastName=None, phone=None, contacts_csv_path='data/csv/new/Contacts.csv'):
+def findMatchingContact(email, fullName=None, firstName=None, lastName=None, phone=None, contacts_csv_path='data/csv/final/Contacts.csv'):
     """
     Find the best matching contact in Contacts.csv based on provided fields.
     Returns the contact row (dict) or None if no good match.
@@ -900,26 +900,39 @@ def findMatchingContact(email, fullName=None, firstName=None, lastName=None, pho
         return best_row
     return None
 
-def matchContactsInCSV(csvFileName, field_mapping, contacts_csv_path='data/csv/new/Contacts.csv'):
+def findMatchingAddress(propertyFullAddress, houseAddress, properties_csv_path='data/csv/final/Properties.csv'):
     """
-    For each row in csvFileName, use field_mapping to extract the fields for findMatchingContact.
-    field_mapping: dict with keys 'fullName', 'firstName', 'lastName', 'email', 'phone' mapping to column names in the CSV.
-    Prints the matched fields and the returned contactId (or empty if no match).
+    Find the best matching address in Properties.csv based on propertyFullAddress (and optionally houseAddress).
+    Normalizes both sides by removing spaces and special characters, then matches on the first 10 characters of the full address (case-insensitive).
+    Returns the property row (dict) or None if no good match.
     """
-    with open(csvFileName, newline='', encoding='utf-8') as infile:
+    def norm_addr(addr):
+        if not addr:
+            return ''
+        # Remove spaces and special characters (',', '.', etc), lowercase
+        return re.sub(r'[^a-z0-9]', '', addr.strip().lower())
+
+    norm_full = norm_addr(propertyFullAddress)
+    norm_house = norm_addr(houseAddress) if houseAddress else None
+    if not norm_full:
+        return None
+    key = norm_full[:10]
+    best_row = None
+    with open(properties_csv_path, newline='', encoding='utf-8') as infile:
         reader = csv.DictReader(infile)
         for row in reader:
-            fullName = row.get(field_mapping.get('fullName', ''), '')
-            firstName = row.get(field_mapping.get('firstName', ''), '') if field_mapping.get('firstName') else None
-            lastName = row.get(field_mapping.get('lastName', ''), '') if field_mapping.get('lastName') else None
-            email = row.get(field_mapping.get('email', ''), '') if field_mapping.get('email') else None
-            phone = row.get(field_mapping.get('phone', ''), '') if field_mapping.get('phone') else None
-            match = findMatchingContact(email, fullName, firstName, lastName, phone, contacts_csv_path=contacts_csv_path)
-            contactId = match['ID'] if match else ''
-            print(f"Row: fullName='{fullName}', firstName='{firstName}', lastName='{lastName}', email='{email}', phone='{phone}' => contactId='{contactId}'")
+            row_full = norm_addr(row.get('propertyFullAddress', ''))
+            if row_full[:10] == key:
+                # Optionally, if houseAddress is provided, check it too for extra confidence
+                if norm_house:
+                    row_house = norm_addr(row.get('houseAddress', ''))
+                    if row_house and row_house == norm_house:
+                        return row
+                else:
+                    return row
+    return None
 
-
-def writeCSVWithContactId(csvFileName, field_mapping, contact_id_field, output_csv, contacts_csv_path='data/csv/new/Contacts.csv'):
+def writeCSVWithContactId(csvFileName, field_mapping, contact_id_field, output_csv, contacts_csv_path='data/csv/final/Contacts.csv'):
     """
     For each row in csvFileName, use field_mapping to extract the fields for findMatchingContact.
     Adds a new column (contact_id_field) at the end with the matched contactId (or blank if no match).
@@ -945,6 +958,25 @@ def writeCSVWithContactId(csvFileName, field_mapping, contact_id_field, output_c
         writer.writeheader()
         writer.writerows(rows)
     print(f"Wrote updated CSV with contact IDs to: {output_csv}")
+
+def writeCSVWithAddressId(csvFileName, field_mapping, address_id_field, output_csv, properties_csv_path='data/csv/final/Properties.csv'):
+    with open(csvFileName, newline='', encoding='utf-8') as infile:
+        reader = csv.DictReader(infile)
+        fieldnames = reader.fieldnames + [address_id_field]
+        rows = []
+        for row in reader:
+            propertyFullAddress = row.get(field_mapping.get('propertyFullAddress', ''), '')
+            houseAddress = row.get(field_mapping.get('houseAddress', ''), '') if field_mapping.get('houseAddress') else None
+            match = findMatchingAddress(propertyFullAddress, houseAddress, properties_csv_path=properties_csv_path)
+            addressId = match['ID'] if match else ''
+            row[address_id_field] = addressId
+            rows.append(row)
+    os.makedirs(os.path.dirname(output_csv), exist_ok=True)
+    with open(output_csv, 'w', newline='', encoding='utf-8') as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"Wrote updated CSV with address IDs to: {output_csv}")
 
 def main():
     # input_csv = 'data/csv/Projects.csv'
@@ -988,7 +1020,7 @@ def main():
     # updateCsvFieldNames('data/csv/ProjectPermissions.csv')
     # updateCsvFieldNames('data/csv/Projects.csv')
     
-    field_mapping = [
+    field_mapping_contactId = [
         # {
         #     'csvFileName': 'data/csv/new/Affiliates.csv',
         #     'outputCsv': 'data/csv/final/Affiliates.csv',
@@ -1084,17 +1116,82 @@ def main():
         #         'phone': 'homeownerPhone3',        # CSV column for email
         #     }
         # }
-    ]
-    # Use the new flexible field_mapping structure for batch processing
-    for mapping in field_mapping:
-        # input_csv = f"data/csv/new/{mapping['csvFileName']}"
-        # output_csv = f"data/csv/final/{mapping['csvFileName']}"
+    ]    
+    # Use the new flexible field_mapping_contactId structure for batch processing
+    for mapping in field_mapping_contactId:
         writeCSVWithContactId(
             mapping['csvFileName'],
             mapping['mapping'],
-            mapping['contactId'],
+            mapping['address_id_field'],
             mapping['outputCsv']
         )
+    
+    field_mapping_addressId = [
+        {
+            'csvFileName': 'data/csv/final/Affiliates.csv',
+            'outputCsv': 'data/csv/final/Affiliates.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'fullAddress',
+                # 'houseAddress': '',
+            }
+        },
+        {
+            'csvFileName': 'data/csv/final/ContactUs.csv',
+            'outputCsv': 'data/csv/final/ContactUs.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'address',
+                # 'houseAddress': '',
+            }
+        },
+        {
+            'csvFileName': 'data/csv/final/Quotes.csv',
+            'outputCsv': 'data/csv/final/Quotes.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'title',
+                'houseAddress': 'houseAddress',
+            }
+        },
+        {
+            'csvFileName': 'data/csv/final/Requests.csv',
+            'outputCsv': 'data/csv/final/Requests.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'propertyAddress',
+                'houseAddress': 'houseAddress',
+            }
+        },
+        {
+            'csvFileName': 'data/csv/final/eSignatureDocuments.csv',
+            'outputCsv': 'data/csv/final/eSignatureDocuments.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'address',
+                # 'houseAddress': '',
+            }
+        },
+        {
+            'csvFileName': 'data/csv/final/Projects.csv',
+            'outputCsv': 'data/csv/final/Projects.csv',
+            'address_id_field': 'addressId',
+            'mapping': {
+                'propertyFullAddress': 'title',
+                # 'houseAddress': '',
+            }
+        }     
+    ]
+        
+    # Use the new flexible field_mapping_addressId structure for batch processing
+    for mapping in field_mapping_addressId:
+        writeCSVWithAddressId(
+            mapping['csvFileName'],
+            mapping['mapping'],
+            mapping['address_id_field'],
+            mapping['outputCsv']
+        )
+
 
     None
 
