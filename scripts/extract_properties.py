@@ -1020,177 +1020,177 @@ def main():
     # updateCsvFieldNames('data/csv/ProjectPermissions.csv')
     # updateCsvFieldNames('data/csv/Projects.csv')
     
-    field_mapping_contactId = [
-        # {
-        #     'csvFileName': 'data/csv/new/Affiliates.csv',
-        #     'outputCsv': 'data/csv/final/Affiliates.csv',
-        #     'contactId': 'contactId',
-        #     'mapping': {
-        #         'fullName': 'name',      # CSV column for full name
-        #         'email': 'email',        # CSV column for email
-        #         'phone': 'phone',        # CSV column for phone (optional)
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/new/BackOffice_AssignTo.csv',
-        #     'outputCsv': 'data/csv/final/BackOffice_AssignTo.csv',
-        #     'contactId': 'contactId',
-        #     'mapping': {
-        #         'fullName': 'name',      # CSV column for full name
-        #         'email': 'email',        # CSV column for email
-        #         'phone': 'mobile',        # CSV column for phone (optional)
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/new/ContactUs.csv',
-        #     'outputCsv': 'data/csv/final/ContactUs.csv',
-        #     'contactId': 'contactId',
-        #     'mapping': {
-        #         'email': 'email',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/new/ProjectComments.csv',
-        #     'outputCsv': 'data/csv/final/ProjectComments.csv',
-        #     'contactId': 'postedByContactId',
-        #     'mapping': {
-        #         'email': 'postedBy',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/new/Requests.csv',
-        #     'outputCsv': 'data/csv/final/Requests.csv',
-        #     'contactId': 'agentContactId',
-        #     'mapping': {
-        #         'email': 'agentEmail',        # CSV column for email
-        #         'fullName': 'agentName',        # CSV column for email
-        #         'phone': 'agentPhone',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/final/Requests.csv',
-        #     'outputCsv': 'data/csv/final/Requests.csv',
-        #     'contactId': 'homeownerContactId',
-        #     'mapping': {
-        #         'email': 'homeownerEmail',        # CSV column for email
-        #         'fullName': 'homeownerFullName',        # CSV column for email
-        #         'phone': 'homeownerPhone',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/new/Projects.csv',
-        #     'outputCsv': 'data/csv/final/Projects.csv',
-        #     'contactId': 'agentContactId',
-        #     'mapping': {
-        #         'email': 'agentEmail',        # CSV column for email
-        #         'fullName': 'agentName',        # CSV column for email
-        #         'phone': 'agentPhone',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/final/Projects.csv',
-        #     'outputCsv': 'data/csv/final/Projects.csv',
-        #     'contactId': 'homeownerContactId',
-        #     'mapping': {
-        #         'email': 'homeownerEmail',        # CSV column for email
-        #         'fullName': 'homeownerFullName',        # CSV column for email
-        #         'phone': 'homeownerPhone',        # CSV column for email
-        #     }
-        # },        {
-        #     'csvFileName': 'data/csv/final/Projects.csv',
-        #     'outputCsv': 'data/csv/final/Projects.csv',
-        #     'contactId': 'homeowner2ContactId',
-        #     'mapping': {
-        #         'email': 'homeownerEmail2',        # CSV column for email
-        #         'fullName': 'homeownerName2',        # CSV column for email
-        #         'phone': 'homeownerPhone2',        # CSV column for email
-        #     }
-        # },
-        # {
-        #     'csvFileName': 'data/csv/final/Projects.csv',
-        #     'outputCsv': 'data/csv/final/Projects.csv',
-        #     'contactId': 'homeowner3ContactId',
-        #     'mapping': {
-        #         'email': 'homeownerEmail3',        # CSV column for email
-        #         'fullName': 'homeownerName3',        # CSV column for email
-        #         'phone': 'homeownerPhone3',        # CSV column for email
-        #     }
-        # }
-    ]    
-    # Use the new flexible field_mapping_contactId structure for batch processing
-    for mapping in field_mapping_contactId:
-        writeCSVWithContactId(
-            mapping['csvFileName'],
-            mapping['mapping'],
-            mapping['address_id_field'],
-            mapping['outputCsv']
-        )
+    # field_mapping_contactId = [
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/Affiliates.csv',
+    #     #     'outputCsv': 'data/csv/final/Affiliates.csv',
+    #     #     'contactId': 'contactId',
+    #     #     'mapping': {
+    #     #         'fullName': 'name',      # CSV column for full name
+    #     #         'email': 'email',        # CSV column for email
+    #     #         'phone': 'phone',        # CSV column for phone (optional)
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/BackOffice_AssignTo.csv',
+    #     #     'outputCsv': 'data/csv/final/BackOffice_AssignTo.csv',
+    #     #     'contactId': 'contactId',
+    #     #     'mapping': {
+    #     #         'fullName': 'name',      # CSV column for full name
+    #     #         'email': 'email',        # CSV column for email
+    #     #         'phone': 'mobile',        # CSV column for phone (optional)
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/ContactUs.csv',
+    #     #     'outputCsv': 'data/csv/final/ContactUs.csv',
+    #     #     'contactId': 'contactId',
+    #     #     'mapping': {
+    #     #         'email': 'email',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/ProjectComments.csv',
+    #     #     'outputCsv': 'data/csv/final/ProjectComments.csv',
+    #     #     'contactId': 'postedByContactId',
+    #     #     'mapping': {
+    #     #         'email': 'postedBy',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/Requests.csv',
+    #     #     'outputCsv': 'data/csv/final/Requests.csv',
+    #     #     'contactId': 'agentContactId',
+    #     #     'mapping': {
+    #     #         'email': 'agentEmail',        # CSV column for email
+    #     #         'fullName': 'agentName',        # CSV column for email
+    #     #         'phone': 'agentPhone',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Requests.csv',
+    #     #     'outputCsv': 'data/csv/final/Requests.csv',
+    #     #     'contactId': 'homeownerContactId',
+    #     #     'mapping': {
+    #     #         'email': 'homeownerEmail',        # CSV column for email
+    #     #         'fullName': 'homeownerFullName',        # CSV column for email
+    #     #         'phone': 'homeownerPhone',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/new/Projects.csv',
+    #     #     'outputCsv': 'data/csv/final/Projects.csv',
+    #     #     'contactId': 'agentContactId',
+    #     #     'mapping': {
+    #     #         'email': 'agentEmail',        # CSV column for email
+    #     #         'fullName': 'agentName',        # CSV column for email
+    #     #         'phone': 'agentPhone',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Projects.csv',
+    #     #     'outputCsv': 'data/csv/final/Projects.csv',
+    #     #     'contactId': 'homeownerContactId',
+    #     #     'mapping': {
+    #     #         'email': 'homeownerEmail',        # CSV column for email
+    #     #         'fullName': 'homeownerFullName',        # CSV column for email
+    #     #         'phone': 'homeownerPhone',        # CSV column for email
+    #     #     }
+    #     # },        {
+    #     #     'csvFileName': 'data/csv/final/Projects.csv',
+    #     #     'outputCsv': 'data/csv/final/Projects.csv',
+    #     #     'contactId': 'homeowner2ContactId',
+    #     #     'mapping': {
+    #     #         'email': 'homeownerEmail2',        # CSV column for email
+    #     #         'fullName': 'homeownerName2',        # CSV column for email
+    #     #         'phone': 'homeownerPhone2',        # CSV column for email
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Projects.csv',
+    #     #     'outputCsv': 'data/csv/final/Projects.csv',
+    #     #     'contactId': 'homeowner3ContactId',
+    #     #     'mapping': {
+    #     #         'email': 'homeownerEmail3',        # CSV column for email
+    #     #         'fullName': 'homeownerName3',        # CSV column for email
+    #     #         'phone': 'homeownerPhone3',        # CSV column for email
+    #     #     }
+    #     # }
+    # ]    
+    # # Use the new flexible field_mapping_contactId structure for batch processing
+    # for mapping in field_mapping_contactId:
+    #     writeCSVWithContactId(
+    #         mapping['csvFileName'],
+    #         mapping['mapping'],
+    #         mapping['address_id_field'],
+    #         mapping['outputCsv']
+    #     )
     
-    field_mapping_addressId = [
-        {
-            'csvFileName': 'data/csv/final/Affiliates.csv',
-            'outputCsv': 'data/csv/final/Affiliates.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'fullAddress',
-                # 'houseAddress': '',
-            }
-        },
-        {
-            'csvFileName': 'data/csv/final/ContactUs.csv',
-            'outputCsv': 'data/csv/final/ContactUs.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'address',
-                # 'houseAddress': '',
-            }
-        },
-        {
-            'csvFileName': 'data/csv/final/Quotes.csv',
-            'outputCsv': 'data/csv/final/Quotes.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'title',
-                'houseAddress': 'houseAddress',
-            }
-        },
-        {
-            'csvFileName': 'data/csv/final/Requests.csv',
-            'outputCsv': 'data/csv/final/Requests.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'propertyAddress',
-                'houseAddress': 'houseAddress',
-            }
-        },
-        {
-            'csvFileName': 'data/csv/final/eSignatureDocuments.csv',
-            'outputCsv': 'data/csv/final/eSignatureDocuments.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'address',
-                # 'houseAddress': '',
-            }
-        },
-        {
-            'csvFileName': 'data/csv/final/Projects.csv',
-            'outputCsv': 'data/csv/final/Projects.csv',
-            'address_id_field': 'addressId',
-            'mapping': {
-                'propertyFullAddress': 'title',
-                # 'houseAddress': '',
-            }
-        }     
-    ]
+    # field_mapping_addressId = [
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Affiliates.csv',
+    #     #     'outputCsv': 'data/csv/final/Affiliates.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'fullAddress',
+    #     #         # 'houseAddress': '',
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/ContactUs.csv',
+    #     #     'outputCsv': 'data/csv/final/ContactUs.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'address',
+    #     #         # 'houseAddress': '',
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Quotes.csv',
+    #     #     'outputCsv': 'data/csv/final/Quotes.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'title',
+    #     #         'houseAddress': 'houseAddress',
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Requests.csv',
+    #     #     'outputCsv': 'data/csv/final/Requests.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'propertyAddress',
+    #     #         'houseAddress': 'houseAddress',
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/eSignatureDocuments.csv',
+    #     #     'outputCsv': 'data/csv/final/eSignatureDocuments.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'address',
+    #     #         # 'houseAddress': '',
+    #     #     }
+    #     # },
+    #     # {
+    #     #     'csvFileName': 'data/csv/final/Projects.csv',
+    #     #     'outputCsv': 'data/csv/final/Projects.csv',
+    #     #     'address_id_field': 'addressId',
+    #     #     'mapping': {
+    #     #         'propertyFullAddress': 'title',
+    #     #         # 'houseAddress': '',
+    #     #     }
+    #     # }     
+    # ]
         
-    # Use the new flexible field_mapping_addressId structure for batch processing
-    for mapping in field_mapping_addressId:
-        writeCSVWithAddressId(
-            mapping['csvFileName'],
-            mapping['mapping'],
-            mapping['address_id_field'],
-            mapping['outputCsv']
-        )
+    # # Use the new flexible field_mapping_addressId structure for batch processing
+    # for mapping in field_mapping_addressId:
+    #     writeCSVWithAddressId(
+    #         mapping['csvFileName'],
+    #         mapping['mapping'],
+    #         mapping['address_id_field'],
+    #         mapping['outputCsv']
+    #     )
 
 
     None
