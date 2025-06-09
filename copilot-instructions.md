@@ -1,145 +1,109 @@
-# Component-Oriented Output (COO) Guidelines for GitHub Copilot
+# COO Rules: Component-Oriented Output & Code Only Once
 
-When providing code solutions in this project, please follow these principles:
+## Symbol Map
+`!`=not, `+`=ext/add, `@`=req, `*`=all, `->`=maps to, `w/`=with, `w/o`=without, `~`=about, `TS`=TypeScript, `int`=interface, `impl`=implementation, `comp`=component
 
-1. **Prefer extending component interfaces over creating wrapper components**
-   - Add properties directly to existing components rather than creating HOCs or wrapper elements
-   - Look for opportunities to extend component interfaces first
+## Purpose
+Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable library.
 
-2. **Minimize DOM nesting and avoid unnecessary wrapper elements**
-   - Avoid creating additional HTML elements simply for styling or layout purposes
-   - Use React.Fragment or component composition instead of wrapper divs
+## Core Reqs
+1. **COO**: Props-only styling + ! duplicate
+2. **Existing only** - ! new comps w/o approval  
+3. **TS strict** - Complete typing compliance
+4. **Props-only** - ! external CSS deps
+5. **Approval @** - * comp changes @ confirmation
 
-3. **Components should handle their styling internally**
-   - Follow strict Component-Oriented Output design principles
-   - Styling logic should be encapsulated within components
-   - Props should control styling behavior, not require client-side CSS
+## COO Rules
 
-4. **Extend component props before resorting to wrappers or className hacks**
-   - If a component needs new capabilities, extend its props interface
-   - Avoid inline styles directly in JSX when possible - add style props to the component
-   - Avoid className manipulation for styling that could be controlled by props
+**Props-Only Styling:**
+- Internal styling via props only, ! external CSS deps
+- Client focuses on behavior, ! appearance
 
-5. **Keep client code clean by implementing styling logic within components**
-   - Client code should focus on what a component does, not how it's styled
-   - Component APIs should be intuitive and not leak implementation details
-   - Use sensible defaults with override capabilities
+**! Duplicate:**
+- + existing comps, ! duplicate
+- One comp per unique functionality, reuse ints + patterns
 
-6. **Prefer direct solutions over complex workarounds**
-   - Look for the simplest and most direct solution first
-   - Avoid complex patterns when a simple property addition would suffice
+**Priorities:**
+1. + comp ints over wrapper comps
+2. Min DOM nesting - React.Fragment over divs  
+3. + style props vs className manipulation
+4. Direct solutions over complex workarounds
 
-## Existing Component Library
+## Existing Comp Library
 
-Use these existing components when possible instead of creating new ones:
+**Typography:** `PageHeader` `SectionTitle` `Subtitle` `SectionLabel` `BodyContent` `SubContent` `CardTitle` `CardSubtitle` `CardContent` `ButtonText`
 
-### Typography Components
+**UI:** `Card` (default|feature|dealBreaker|step) • `Button` (primary|secondary|tertiary) • `FeatureCard` • `BenefitCard` • `OptionCard` • `BenefitBlock` • `TestimonialCard` • `StatItem` • `SliderNavBar`
 
-| Component | Description |
-|-----------|-------------|
-| `PageHeader` | Main page heading with responsive sizing |
-| `SectionTitle` | Section headings with responsive sizing |
-| `Subtitle` | Secondary title for sections |
-| `SectionLabel` | Labels and category headings (uppercase) |
-| `BodyContent` | Main body text component |
-| `SubContent` | Smaller body text for secondary content |
-| `CardTitle` | Title text specifically for cards |
-| `CardSubtitle` | Subtitle text for cards |
-| `CardContent` | Body text for cards |
-| `ButtonText` | Text specifically for buttons |
+**Layout:** `Layout` `Section` `Header` `Footer` `ContentWrapper` `GridContainer` `ContainerTwoColumns` `ContainerThreeColumns`
 
-### UI Components
+**MUI:** See [docs](https://mui.com/components/)
+- **Input:** Autocomplete, Button, ButtonGroup, Checkbox, FAB, RadioGroup, Rating, Select, Slider, Switch, TextField, TransferList, ToggleButton
+- **Display:** Avatar, Badge, Chip, Divider, Icons, List, Table, Tooltip, Typography  
+- **Feedback:** Alert, Backdrop, Dialog, Progress, Skeleton, Snackbar
+- **Surface:** Accordion, AppBar, Card, Paper
+- **Navigation:** BottomNavigation, Breadcrumbs, Drawer, Link, Menu, Pagination, SpeedDial, Stepper, Tabs
+- **Layout:** Box, Container, Grid, Stack, ImageList
+- **Utility:** ClickAwayListener, CssBaseline, Modal, NoSsr, Popover, Popper, Portal, TextareaAutosize, Transitions, useMediaQuery
 
-| Component | Description |
-|-----------|-------------|
-| `Card` | Versatile card component with variants (default, feature, dealBreaker, step) |
-| `Button` | Button component with variants (primary, secondary, tertiary) |
-| `FeatureCard` | Specialized card for feature displays |
-| `BenefitCard` | Interactive card with hover effects for benefits |
-| `OptionCard` | Card with primary/secondary variants for options |
-| `BenefitBlock` | Component for displaying benefits with an image |
-| `TestimonialCard` | Card for displaying testimonials |
-| `StatItem` | Component for displaying statistics |
-| `SliderNavBar` | Navigation bar for sliders/carousels |
+**MUI-X:** DataGrid, TreeView, Charts, DatePicker, TimePicker, DateTimePicker, DateRangePicker, CalendarPicker *(Pro/Premium licenses @)*
 
-### Layout Components
+## Workflow
+1. Review existing comps before impl
+2. Doc @ exts, submit change proposal  
+3. Impl w/ backward compat
 
-| Component | Description |
-|-----------|-------------|
-| `Layout` | Main layout wrapper with header and footer |
-| `Section` | Standardized section container |
-| `Header` | Site navigation header |
-| `Footer` | Site footer with navigation |
-| `ContentWrapper` | Wrapper for content sections |
-| `GridContainer` | Grid layout container |
-| `ContainerTwoColumns` | Two-column layout container |
-| `ContainerThreeColumns` | Three-column layout container |
+## Technical Rules
+1. ! new comps w/o approval
+2. ! duplicate/overlapping ints
+3. Bias toward ! external styling deps unless simpler
+4. ! unnecessary DOM nesting/wrappers
+5. @ TS strict compliance
+6. Props = sole config method
+7. Prop config over class overrides
+8. Follow TS ints exactly
 
-## Figma Design Extraction Guidelines
+## Docs Reqs
+1. Doc * int exts w/ examples (style-guide.tsx)
+2. Include prop docs w/ types + defaults  
+3. Doc * approved deviations
 
-When converting Figma designs to code, follow this structured approach while adhering to the COO principles above and utilizing the existing component library.
+## Amplify Gen2 @
+- **Deploy:** `npx ampx sandbox` (! `ampx deploy`)
+- **! USE:** `ampx status` (doesn't exist)
+- **Envs:** dev (doron), staging only
+- **Status:** `npx ampx sandbox` + wait ~1min
 
-### Analysis Structure
+## Decision Rules
+**100% Confidence @ Before Action:**
+1. Issue identified + clear plan
+2. Aligns w/ COO + impact understood
 
-Create a detailed specification using this format before implementing:
+**Ask Confirmation If:**
+- Any doubt/arch changes/multiple solutions/critical functionality
 
-#### Component Name
-[Use the Figma node/layer/frame name]
+**Format:**
+```
+Issue: [problem] | Analysis: [findings] | Solution: [steps] | Impact: [risks] | Alternatives: [options] | Proceed?
+```
 
-#### Component Scope
-Identify if this is a small reusable component, a full section, or an entire page layout.
+## Figma Extraction
 
-#### Element Breakdown
-List children top-down, grouped by type. Map to existing components where possible:
+**Analysis Structure:**
+1. **Comp Name:** [Figma node] - scope (reusable|section|layout)
+2. **Elements:** List top-down, map -> existing comps
+3. **Layout:** Type, direction, alignment, responsive (sm|md|lg|xl)  
+4. **Typography:** Map -> existing typo comps, note overrides
+5. **Media:** Assets, sizes, interactions, a11y
 
-1. **[ContentType]**: "[Visible text]"  
-   - Map to: [Which existing component to use]  
-   - Role: [e.g., Primary CTA, Supporting Text, Decorative Icon]  
-   - Layer name: [Figma name]  
+**Impl Rules:**
+1. Map Figma -> existing comps first
+2. + comp props vs new comps
+3. Use typo comps vs raw HTML
+4. Leverage existing layout comps
+5. Flat hierarchies
 
-2. [Continue for all elements]
+**Goal:** Impl Figma w/ existing library, + vs duplicate.
 
-#### Layout & Structure
-- Layout type: [Flex/Grid/Absolute]
-- Direction & alignment
-- Responsive rules per breakpoint (sm, md, lg, xl)
-- Container padding & gaps
-- Map to existing layout components when possible
-
-#### Typography
-For each text type used:
-- Map to existing typography components
-- Note any style overrides needed
-- Always use project typography components over raw HTML elements
-
-#### Colors & Visuals
-- Use theme colors from the project
-- Backgrounds (solid, gradients, images, overlays)
-- Border: [radius, color, thickness]
-- Shadows, transparency
-- Note any new colors that need to be added to the theme
-
-#### Spacing
-- Document consistent spacing patterns
-- Use project spacing constants rather than arbitrary values
-- Maintain responsive spacing considerations
-
-#### Media
-- Image/Icon assets: [source or name], alt text
-- Sizes, alignment, visual behavior (contain/cover)
-- Document all required assets and their usage
-
-#### Interactions
-- Hover/click/tap states
-- Animations or transitions
-- Aria or accessibility notes
-
-### Implementation Guidelines
-
-1. **Component Mapping**: After analysis, map Figma elements to existing components first
-2. **Prop Extension**: Extend component props when needed rather than creating new components
-3. **Typography Consistency**: Always use typography components rather than raw text elements
-4. **Layout Reuse**: Leverage existing layout components before creating custom containers
-5. **Minimal Nesting**: Maintain flat component hierarchies when possible
-
-Remember: The goal is to implement Figma designs using our existing component library, extending as necessary, rather than creating duplicate components that serve the same purpose.
+## Confirmation @
+Respond "Understood" to confirm compliance.
