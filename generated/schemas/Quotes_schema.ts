@@ -1,0 +1,91 @@
+// Generated Amplify schema for Quotes
+// Source: Quotes.csv (228 records)
+
+import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+
+const quotesSchema = a.schema({
+  Quotes: a
+    .model({
+      ID: a.id().required(),
+      requestId: a.id(),
+      projectId: a.id(),
+      status: a.string(),
+      statusImage: a.string(),
+      statusOrder: a.float(),
+      assignedTo: a.string(),
+      assignedDate: a.datetime(),
+      updatedDate: a.datetime(),
+      quoteNumber: a.float(),
+      title: a.string(),
+      visitorId: a.id(),
+      pdfGeneratorUrl: a.url(),
+      document: a.string(),
+      documents: a.string(),
+      images: a.string(),
+      budget: a.float(),
+      totalCost: a.float(),
+      totalPrice: a.float(),
+      product: a.string(),
+      operationManagerApproved: a.boolean(),
+      underwritingApproved: a.boolean(),
+      signed: a.boolean(),
+      signee1Name: a.string(),
+      signature: a.string(),
+      projectedListingPrice: a.float(),
+      loanBalance: a.float(),
+      creditScore: a.float(),
+      eSignatureDocumentId: a.id(),
+      quotePdfUrl: a.url(),
+      viewedBy: a.string(),
+      associatedProject: a.string(),
+      changeOrder: a.string(),
+      requestDate: a.datetime(),
+      visitDate: a.datetime(),
+      createdDate: a.datetime(),
+      operationManagerApprovedDate: a.datetime(),
+      sentDate: a.datetime(),
+      openedDate: a.datetime(),
+      signedDate: a.datetime(),
+      underwritingApprovedDate: a.datetime(),
+      contractingStartDate: a.datetime(),
+      contractSentDate: a.datetime(),
+      contractSignedDate: a.datetime(),
+      convertedDate: a.datetime(),
+      expiredDate: a.datetime(),
+      archivedDate: a.datetime(),
+      rejectedDate: a.datetime(),
+      brokerage: a.string(),
+      officeNotes: a.string(),
+      reasonForArchive: a.string(),
+      estimatedWeeksDuration: a.string(),
+      accountExecutive: a.float(),
+      bedrooms: a.string(),
+      yearBuilt: a.string(),
+      floors: a.string(),
+      bathrooms: a.string(),
+      sizeSqft: a.string(),
+      totalPaymentsByClient: a.string(),
+      totalPaymentsToGc: a.string(),
+      quoteESignatureId: a.id(),
+      owner: a.string(),
+      ID: a.id().required(),
+      agentContactId: a.id(),
+      homeownerContactId: a.id(),
+      homeowner2ContactId: a.id(),
+      homeowner3ContactId: a.id(),
+      addressId: a.id(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+});
+
+export type QuotesSchema = ClientSchema<typeof quotesSchema>;
+
+export const quotesData = defineData({
+  schema: quotesSchema,
+  authorizationModes: {
+    defaultAuthorizationMode: 'apiKey',
+    apiKeyAuthorizationMode: {
+      expiresInDays: 30,
+    },
+  },
+});

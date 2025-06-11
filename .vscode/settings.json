@@ -1,0 +1,24 @@
+{
+  "debug.terminal.clearBeforeReusing": true,
+  "debug.console.closeOnEnd": false,
+  "debug.openDebug": "openOnDebugBreak",
+  "debug.showBreakpointsInOverviewRuler": true,
+  "debug.allowBreakpointsEverywhere": false,
+  "terminal.integrated.env.osx": {
+    "NODE_OPTIONS": "--max-old-space-size=4096"
+  },
+  "files.associations": {
+    "*.log": "log"
+  },
+  "search.exclude": {
+    "migration_env/**": true,
+    "**/.next/**": true,
+    "**/node_modules/**": true,
+    "**/.git/**": true
+  },
+  "python.defaultInterpreterPath": "./migration_env/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}

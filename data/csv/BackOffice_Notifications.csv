@@ -1,5 +1,5 @@
-﻿"ID","Created Date","Updated Date","Owner","key","To","CC","BCC","Subject","Body","Body As Simple Text"
-"08b1db39-dc49-47f6-8aff-e8088eff0062",2022-03-17T05:43:48Z,2025-04-28T17:17:32Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","contact_us","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Contact Us] Someone contacted us","<p>Someone is trying to contact us with the details below:<br/></p>
+ID,createdDate,updatedDate,owner,key,to,cc,bcc,subject,body,bodyAsSimpleText
+08b1db39-dc49-47f6-8aff-e8088eff0062,2022-03-17T05:43:48Z,2025-04-28T17:17:32Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,contact_us,doron@realtechee.com;demo@realtechee.com,,,[RealTecheeX][Contact Us] Someone contacted us,"<p>Someone is trying to contact us with the details below:<br/></p>
 <br/>
 <p>
 First: {{first}}<br/>
@@ -24,7 +24,7 @@ Regards and thank you.<br/>
 The RealTechee team.
 </p>
 ",
-"21e51aad-e581-4040-ab01-1589953e92cd",2022-12-13T05:14:31Z,2025-04-28T17:17:03Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteSigned",,"doron@realtechee.com;demo@realtechee.com",,"[RealTechee][Quote] Quote signed ! - {{address}}","<p>Hi {{fullName}},</p>
+21e51aad-e581-4040-ab01-1589953e92cd,2022-12-13T05:14:31Z,2025-04-28T17:17:03Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteSigned,,doron@realtechee.com;demo@realtechee.com,,[RealTechee][Quote] Quote signed ! - {{address}},"<p>Hi {{fullName}},</p>
 <p>
        Thank you for signing the quote for {{address}}.<br/>
        For your records, a link to the signed quote <a href=""{{link}}"">(click here)</a>.<br/>
@@ -38,7 +38,7 @@ The RealTechee team.
        The RealTechee Team.<br/>
 </p>
 <br/>",
-"2ec1fa0b-99d3-443b-8fe9-099a09542828",2022-12-26T01:20:36Z,2023-09-06T01:17:42Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","assignedToEmail",,,,"[RealTechee] You have new assignment !!!","<p>Hi {{fullName}},</p>
+2ec1fa0b-99d3-443b-8fe9-099a09542828,2022-12-26T01:20:36Z,2023-09-06T01:17:42Z,03839c70-7508-4e6d-b906-4df699fc5aa1,assignedToEmail,,,,[RealTechee] You have new assignment !!!,"<p>Hi {{fullName}},</p>
 <p>
        You have new assignment !<br/>
        {{description}}<br/>
@@ -49,7 +49,7 @@ The RealTechee team.
        Thank you, the RealTechee Team.<br/>
 </p>
 <br/>",
-"5eaeabbc-81b9-4a03-959a-07a50594cb83",2024-01-09T19:35:01Z,2024-01-10T18:59:46Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","AEKpiNotice","doron@realtechee.com",,,"Performance Evaluation Email","<p>Subject: Performance Evaluation Email</p>
+5eaeabbc-81b9-4a03-959a-07a50594cb83,2024-01-09T19:35:01Z,2024-01-10T18:59:46Z,03839c70-7508-4e6d-b906-4df699fc5aa1,AEKpiNotice,doron@realtechee.com,,,Performance Evaluation Email,"<p>Subject: Performance Evaluation Email</p>
 <p>{{accountExecutive}},</p>
 <p>(Gaby included for visibility).</p>
 <p>This Friday (<strong>{{paymentDate}}</strong>), you will receive payment for last two weeks.<br/>Your fees are based on your achievements (KPI) of the two weeks ending on <strong>{{evaluationPeriodEnd}}</strong> and are as follows:</p>
@@ -70,7 +70,7 @@ The RealTechee team.
 <p>Please review this information for accuracy. If corrections are needed, please reply with your supporting data at the earliest. Otherwise Gaby will issue an eCheck for the specified amount by <strong>{{paymentDate}}</strong>.</p>
 <p>Your ongoing efforts and achievements are greatly appreciated. Should you have any questions or need further clarification, please do not hesitate to reach out.</p>
 <p>Best regards,</p>",
-"63495192-aaa9-4960-af41-f5615f3e1bf1",2023-02-11T23:12:08Z,2025-04-28T17:16:30Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteReminder","doron@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTechee][Quote] Quote reminder ! - {{address}}","<p>Hi {{fullName}}</p>
+63495192-aaa9-4960-af41-f5615f3e1bf1,2023-02-11T23:12:08Z,2025-04-28T17:16:30Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteReminder,doron@realtechee.com;demo@realtechee.com,doron@realtechee.com,,[RealTechee][Quote] Quote reminder ! - {{address}},"<p>Hi {{fullName}}</p>
 <p>This is a reminder of a quote pending review and signature.</br>
 Address: {{address}}</br>
 </br>
@@ -86,7 +86,7 @@ If you have any questions or concerns regarding this quote, please don’t hesit
 Sincerely,</br>
 The RealTechee team.
 </p>",
-"6948ed19-8d56-4295-b0c2-849b9513ab36",2023-02-12T01:05:43Z,2024-02-04T22:36:05Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","assignedToEmailReminder",,,,"[RealTechee] Reminder of assignment !!!","<p>Hi {{fullName}},</p>
+6948ed19-8d56-4295-b0c2-849b9513ab36,2023-02-12T01:05:43Z,2024-02-04T22:36:05Z,03839c70-7508-4e6d-b906-4df699fc5aa1,assignedToEmailReminder,,,,[RealTechee] Reminder of assignment !!!,"<p>Hi {{fullName}},</p>
 <p>
        This is a reminder of your assignment !<br/>
        {{description}}<br/>
@@ -97,10 +97,10 @@ The RealTechee team.
        Thank you, the RealTechee Team.<br/>
 </p>
 <br/>",
-"6eabee33-057b-4b8c-95cc-71e0b747c119",2022-04-10T19:30:06Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","ECR","doron@realtechee.com",,,"[RealTecheeX][ECR] New ECR submitted","{{item}}",true
-"75926729-69fd-4a8b-9346-c4023d9c98dc",2022-04-10T19:30:46Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","BET","doron@realtechee.com",,,"[RealTecheeX][BET] New BET submitted","{{item}}",true
-"76ab1d36-7155-4cd1-ba6c-b7b9f7b570cf",2022-04-10T19:29:36Z,2023-12-21T00:49:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","PVA","doron@realtechee.com",,,"[RealTecheeX][PVA] New PVA submitted","{{item}}",true
-"8dc008cc-f475-4577-9094-addfb65420d4",2022-07-20T20:04:44Z,2025-04-28T17:17:08Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","newMember",,"doron@realtechee.com;demo@realtechee.com",,"[RealTecheeX][New Member] You've got a new site member!","<p>Yay! We have new subscribed member:</p>
+6eabee33-057b-4b8c-95cc-71e0b747c119,2022-04-10T19:30:06Z,2023-12-21T00:49:11Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,ECR,doron@realtechee.com,,,[RealTecheeX][ECR] New ECR submitted,{{item}},true
+75926729-69fd-4a8b-9346-c4023d9c98dc,2022-04-10T19:30:46Z,2023-12-21T00:49:11Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,BET,doron@realtechee.com,,,[RealTecheeX][BET] New BET submitted,{{item}},true
+76ab1d36-7155-4cd1-ba6c-b7b9f7b570cf,2022-04-10T19:29:36Z,2023-12-21T00:49:11Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,PVA,doron@realtechee.com,,,[RealTecheeX][PVA] New PVA submitted,{{item}},true
+8dc008cc-f475-4577-9094-addfb65420d4,2022-07-20T20:04:44Z,2025-04-28T17:17:08Z,03839c70-7508-4e6d-b906-4df699fc5aa1,newMember,,doron@realtechee.com;demo@realtechee.com,,[RealTecheeX][New Member] You've got a new site member!,"<p>Yay! We have new subscribed member:</p>
 <p>
    First: {{first}}<br/>
    Last: {{last}}<br/>
@@ -111,7 +111,7 @@ The RealTechee team.
    Agent ID: {{agentID}}
 </p>
 <br/>",
-"a632b344-1c36-4a19-8239-ac292e73b41d",2023-08-26T22:57:06Z,2025-04-28T17:16:06Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteContractSent","doron@realtechee.com;accounting@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Contract sent ! - {{address}}","<p>Hi,</p>
+a632b344-1c36-4a19-8239-ac292e73b41d,2023-08-26T22:57:06Z,2025-04-28T17:16:06Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteContractSent,doron@realtechee.com;accounting@realtechee.com;demo@realtechee.com,,,[RealTechee][Quote] Contract sent ! - {{address}},"<p>Hi,</p>
 <p>
        Contract sent for following address!<br/>
                &nbsp;&nbsp;&nbsp;{{address}}<br/>
@@ -130,7 +130,7 @@ The RealTechee team.
        <br/>
        The RealTechee Team.<br/>
 </p>",
-"b146ab6f-d30e-4bc7-94b5-bc794b531e15",2023-01-30T05:28:06Z,2025-04-28T17:16:59Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteOpened","doron@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Quote opened ! - {{address}}","<p>Hi,</p>
+b146ab6f-d30e-4bc7-94b5-bc794b531e15,2023-01-30T05:28:06Z,2025-04-28T17:16:59Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteOpened,doron@realtechee.com;demo@realtechee.com,,,[RealTechee][Quote] Quote opened ! - {{address}},"<p>Hi,</p>
 <p>
        Following quote for {{address}} has been opened by {{loginEmail}}: <a href=""{{link}}"">(click here)</a>.<br/>
        <br/>
@@ -139,7 +139,7 @@ The RealTechee team.
        The RealTechee Team.<br/>
 </p>
 <br/>",
-"b393303c-5b82-49e9-83a9-7703983c67d2",2023-02-11T23:02:21Z,2025-04-28T17:16:33Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteSend","doron@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTechee][Quote] New Quote !","<p>Hi {{fullName}},</p>
+b393303c-5b82-49e9-83a9-7703983c67d2,2023-02-11T23:02:21Z,2025-04-28T17:16:33Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteSend,doron@realtechee.com;demo@realtechee.com,doron@realtechee.com,,[RealTechee][Quote] New Quote !,"<p>Hi {{fullName}},</p>
 
 <p>Thank you for asking us to quote on your project at: {{address}}.</p>
 
@@ -155,8 +155,8 @@ The RealTechee team.
 
 <p>Sincerely,</p>
 <p>The RealTechee Team</p>",
-"c4ebff8c-46c2-44dd-9d74-b5fda47475ec",2022-04-10T19:40:36Z,2024-02-04T22:35:08Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","PropertyInformation","doron@realtechee.com",,,"[RealTecheeX][PropertyInformation] New Property Information submitted","{{item}}",true
-"d8e1f475-a9be-4877-9405-0195e4f69260",2023-03-05T17:43:35Z,2025-04-28T17:16:22Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteUnderwriting","doron@realtechee.com;demo@realtechee.com",,,"[RealTechee][Quote] Required information for underwriting - {{address}}","<p>Hi {{names}},</p>
+c4ebff8c-46c2-44dd-9d74-b5fda47475ec,2022-04-10T19:40:36Z,2024-02-04T22:35:08Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,PropertyInformation,doron@realtechee.com,,,[RealTecheeX][PropertyInformation] New Property Information submitted,{{item}},true
+d8e1f475-a9be-4877-9405-0195e4f69260,2023-03-05T17:43:35Z,2025-04-28T17:16:22Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteUnderwriting,doron@realtechee.com;demo@realtechee.com,,,[RealTechee][Quote] Required information for underwriting - {{address}},"<p>Hi {{names}},</p>
 <p>In order to complete the internal underwriting and approval process for {{address}}, please provide the following information:</br>
 </br>
 <ul>
@@ -169,7 +169,7 @@ The RealTechee team.
 <p>Thank you,</p>
 </br>
 <p>The Realtechee Team.</p>",
-"daab207f-9e88-476d-9af5-6b88de1e399d",2022-04-10T19:44:12Z,2025-04-28T17:17:28Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","Affiliate","accounting@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTecheeX][Affiliate] New Affiliate qualification form submitted","<p>New affiliate qualification application:</p>
+daab207f-9e88-476d-9af5-6b88de1e399d,2022-04-10T19:44:12Z,2025-04-28T17:17:28Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,Affiliate,accounting@realtechee.com;demo@realtechee.com,doron@realtechee.com,,[RealTecheeX][Affiliate] New Affiliate qualification form submitted,"<p>New affiliate qualification application:</p>
 <p>
 		{{name}}<br/>
 		Company: {{company}}<br/>
@@ -178,7 +178,7 @@ The RealTechee team.
 		phone: {{phone}}<br/>
 		Address: {{address}}<br/>
 </p>",false
-"ee54660a-8a38-4fe0-97bf-bb457aebca04",2022-03-17T03:17:15Z,2025-04-28T17:17:39Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","getAnEstimate","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Estimate] New request for estimate - {{address}}","<p>New request for estimate from:</p>
+ee54660a-8a38-4fe0-97bf-bb457aebca04,2022-03-17T03:17:15Z,2025-04-28T17:17:39Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,getAnEstimate,doron@realtechee.com;demo@realtechee.com,,,[RealTecheeX][Estimate] New request for estimate - {{address}},"<p>New request for estimate from:</p>
     <p>
        Address: {{address}}<br/>
        <br/>
@@ -205,7 +205,7 @@ The RealTechee team.
        <br/>
 </p>
 <br/>",
-"ef57bc32-a7bb-418d-a3d9-ea013fd9a86d",2022-04-10T20:12:10Z,2025-04-28T17:17:20Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","comment","accounting@realtechee.com;demo@realtechee.com","doron@realtechee.com",,"[RealTecheeX][Comment] New comment","<p>Posted by: <b>{{postedBy}}</b></p>
+ef57bc32-a7bb-418d-a3d9-ea013fd9a86d,2022-04-10T20:12:10Z,2025-04-28T17:17:20Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,comment,accounting@realtechee.com;demo@realtechee.com,doron@realtechee.com,,[RealTecheeX][Comment] New comment,"<p>Posted by: <b>{{postedBy}}</b></p>
 <p><b>{{title}}</b></p>
 <p>{{comment}}</p>
 <br/>
@@ -213,7 +213,7 @@ The RealTechee team.
 <p>{{attachmentsMsg}}</p>
 <br/>
 <p><a href=""{{url}}"">Click here to go to the project portal.</a></p>",
-"f46ea90e-6799-4c33-858f-b5feeeb31741",2022-05-05T05:08:23Z,2025-04-28T17:17:11Z,"29cccdd2-340f-41f4-a9e9-2db0c53b3114","bookingRequest","doron@realtechee.com;demo@realtechee.com",,,"[RealTecheeX][Booking] New booking request","<p>New booking request to Get Qualified from:</p>
+f46ea90e-6799-4c33-858f-b5feeeb31741,2022-05-05T05:08:23Z,2025-04-28T17:17:11Z,29cccdd2-340f-41f4-a9e9-2db0c53b3114,bookingRequest,doron@realtechee.com;demo@realtechee.com,,,[RealTecheeX][Booking] New booking request,"<p>New booking request to Get Qualified from:</p>
 <p>
    Full Name: {{name}}<br/>
    Email: {{email}}<br/>
@@ -225,7 +225,7 @@ The RealTechee team.
    Please review and approve / dismiss on <a href=""https://www.realtechee.com/bookings"">Booking Admin</a>.
 </p>
 <br/>",
-"fca51c58-0184-4f31-8c91-be7b2e5706bf",2023-05-07T22:51:07Z,2025-04-28T17:16:14Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","quoteAccounting","accounting@realtechee.com","doron@realtechee.com;demo@realtechee.com",,"[RealTechee][Quote] Please add Accounting information for new signed contract - {{address}}","<p>Hi Gaby,</p>
+fca51c58-0184-4f31-8c91-be7b2e5706bf,2023-05-07T22:51:07Z,2025-04-28T17:16:14Z,03839c70-7508-4e6d-b906-4df699fc5aa1,quoteAccounting,accounting@realtechee.com,doron@realtechee.com;demo@realtechee.com,,[RealTechee][Quote] Please add Accounting information for new signed contract - {{address}},"<p>Hi Gaby,</p>
 <p>Please process new signed project, address: {{address}}.<br/>
 Let Meir know if you have any questions.</p>
 </br>
@@ -234,7 +234,7 @@ Let Meir know if you have any questions.</p>
 <p>Thank you,</p>
 </br>
 <p>The RealTechee team</p>",
-"fd9ca1ec-7464-472e-b04f-5d3abe2083f5",2024-01-21T19:47:21Z,2025-04-28T17:15:45Z,"03839c70-7508-4e6d-b906-4df699fc5aa1","getEstimateRequestAcknowledgment",,"doron@realtechee.com;demo@realtechee.com",,"Estimate Request Acknowledgment - {{address}}","<style>
+fd9ca1ec-7464-472e-b04f-5d3abe2083f5,2024-01-21T19:47:21Z,2025-04-28T17:15:45Z,03839c70-7508-4e6d-b906-4df699fc5aa1,getEstimateRequestAcknowledgment,,doron@realtechee.com;demo@realtechee.com,,Estimate Request Acknowledgment - {{address}},"<style>
     .email-container {
         font-family: Arial, sans-serif;
         color: #333333;
