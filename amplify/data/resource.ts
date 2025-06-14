@@ -22,7 +22,7 @@ const Affiliates = a.model({
   signedNda: a.string(),
   safetyPlan: a.string(),
   waterSystem: a.string(),
-  numEmployees: a.float(),
+  numEmployees: a.integer(),
   generalGuidelines: a.string(),
   communication: a.string(),
   materialUtilization: a.string(),
@@ -61,7 +61,7 @@ const BackOfficeAssignTo = a.model({
   sendEmailNotifications: a.boolean(),
   sendSmsNotifications: a.boolean(),
   active: a.boolean(),
-  order: a.float(),
+  order: a.integer(),
   contactId: a.id(),
 }).authorization((allow) => allow.publicApiKey());
 
@@ -71,7 +71,7 @@ const BackOfficeBookingStatuses = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeBrokerage = a.model({
@@ -104,7 +104,7 @@ const BackOfficeProducts = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeProjectStatuses = a.model({
@@ -113,7 +113,7 @@ const BackOfficeProjectStatuses = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeQuoteStatuses = a.model({
@@ -122,7 +122,7 @@ const BackOfficeQuoteStatuses = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeRequestStatuses = a.model({
@@ -131,7 +131,7 @@ const BackOfficeRequestStatuses = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeRoleTypes = a.model({
@@ -140,7 +140,7 @@ const BackOfficeRoleTypes = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  order: a.float(),
+  order: a.integer(),
 }).authorization((allow) => allow.publicApiKey());
 
 const ContactUs = a.model({
@@ -169,6 +169,14 @@ const Contacts = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
+  
+  // Reverse relationships - see all projects for this contact
+  agentProjects: a.hasMany('Projects', 'agentContactId'),
+  homeownerProjects: a.hasMany('Projects', 'homeownerContactId'),
+  homeowner2Projects: a.hasMany('Projects', 'homeowner2ContactId'),
+  homeowner3Projects: a.hasMany('Projects', 'homeowner3ContactId'),
+  agentQuotes: a.hasMany('Quotes', 'agentContactId'),
+  homeownerQuotes: a.hasMany('Quotes', 'homeownerContactId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const Legal = a.model({
@@ -234,6 +242,9 @@ const ProjectComments = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
+  
+  // Relationships
+  project: a.belongsTo('Projects', 'projectId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const ProjectMilestones = a.model({
@@ -293,9 +304,9 @@ const Projects = a.model({
   gallery: a.string(),
   bedrooms: a.float(),
   bathrooms: a.float(),
-  floors: a.float(),
+  floors: a.integer(),
   sizeSqft: a.float(),
-  yearBuilt: a.float(),
+  yearBuilt: a.integer(),
   redfinLink: a.url(),
   zillowLink: a.url(),
   originalValue: a.float(),
@@ -373,6 +384,15 @@ const Projects = a.model({
   homeowner2ContactId: a.id(),
   homeowner3ContactId: a.id(),
   addressId: a.id(),
+  
+  // Relationships - This is the Gen2 superpower!
+  agent: a.belongsTo('Contacts', 'agentContactId'),
+  homeowner: a.belongsTo('Contacts', 'homeownerContactId'),
+  homeowner2: a.belongsTo('Contacts', 'homeowner2ContactId'),
+  homeowner3: a.belongsTo('Contacts', 'homeowner3ContactId'),
+  address: a.belongsTo('Properties', 'addressId'),
+  quotes: a.hasMany('Quotes', 'projectId'),
+  comments: a.hasMany('ProjectComments', 'projectId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const Properties = a.model({
@@ -381,18 +401,21 @@ const Properties = a.model({
   houseAddress: a.string(),
   city: a.string(),
   state: a.string(),
-  zip: a.float(),
+  zip: a.string(),
   propertyType: a.string(),
   bedrooms: a.float(),
   bathrooms: a.float(),
-  floors: a.float(),
+  floors: a.integer(),
   sizeSqft: a.float(),
-  yearBuilt: a.float(),
+  yearBuilt: a.integer(),
   redfinLink: a.url(),
   zillowLink: a.url(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
+  
+  // Reverse relationships - see all projects for this property
+  projects: a.hasMany('Projects', 'addressId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const QuoteItems = a.model({
@@ -404,7 +427,7 @@ const QuoteItems = a.model({
   itemName: a.string(),
   itemCompleted: a.boolean(),
   parentStageId: a.id(),
-  order: a.float(),
+  order: a.integer(),
   isCategory: a.boolean(),
   description: a.string(),
   quantity: a.float(),
@@ -429,7 +452,7 @@ const Quotes = a.model({
   assignedTo: a.string(),
   assignedDate: a.datetime(),
   updatedDate: a.datetime(),
-  quoteNumber: a.float(),
+  quoteNumber: a.integer(),
   title: a.string(),
   visitorId: a.id(),
   pdfGeneratorUrl: a.url(),
@@ -487,6 +510,11 @@ const Quotes = a.model({
   homeowner2ContactId: a.id(),
   homeowner3ContactId: a.id(),
   addressId: a.id(),
+  
+  // Relationships
+  project: a.belongsTo('Projects', 'projectId'),
+  agent: a.belongsTo('Contacts', 'agentContactId'),
+  homeowner: a.belongsTo('Contacts', 'homeownerContactId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const Requests = a.model({
