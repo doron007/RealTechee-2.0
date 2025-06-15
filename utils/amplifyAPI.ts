@@ -23,7 +23,7 @@ const createModelAPI = (modelName: string) => ({
 
   async list() {
     try {
-      const result = await (client.models as any)[modelName].list();
+      const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };
     } catch (error) {
       console.error(`Error listing ${modelName}:`, error);

@@ -6,6 +6,26 @@ import {
   affiliatesAPI,
   quotesAPI,
   requestsAPI,
+  authAPI,
+  backOfficeAssignToAPI,
+  backOfficeBookingStatusesAPI,
+  backOfficeBrokerageAPI,
+  backOfficeNotificationsAPI,
+  backOfficeProductsAPI,
+  backOfficeProjectStatusesAPI,
+  backOfficeQuoteStatusesAPI,
+  backOfficeRequestStatusesAPI,
+  backOfficeRoleTypesAPI,
+  contactUsAPI,
+  legalAPI,
+  memberSignatureAPI,
+  pendingAppoitmentsAPI,
+  projectCommentsAPI,
+  projectMilestonesAPI,
+  projectPaymentTermsAPI,
+  projectPermissionsAPI,
+  quoteItemsAPI,
+  eSignatureDocumentsAPI
 } from '../utils/amplifyAPI';
 
 export default function AmplifyTestClient() {
@@ -35,11 +55,31 @@ export default function AmplifyTestClient() {
   const getAllTableCounts = async (): Promise<Record<string, number | string>> => {
     const apis = [
       { name: 'Affiliates', api: affiliatesAPI },
-      { name: 'Properties', api: propertiesAPI },
+      { name: 'Auth', api: authAPI },
+      { name: 'BackOfficeAssignTo', api: backOfficeAssignToAPI },
+      { name: 'BackOfficeBookingStatuses', api: backOfficeBookingStatusesAPI },
+      { name: 'BackOfficeBrokerage', api: backOfficeBrokerageAPI },
+      { name: 'BackOfficeNotifications', api: backOfficeNotificationsAPI },
+      { name: 'BackOfficeProducts', api: backOfficeProductsAPI },
+      { name: 'BackOfficeProjectStatuses', api: backOfficeProjectStatusesAPI },
+      { name: 'BackOfficeQuoteStatuses', api: backOfficeQuoteStatusesAPI },
+      { name: 'BackOfficeRequestStatuses', api: backOfficeRequestStatusesAPI },
+      { name: 'BackOfficeRoleTypes', api: backOfficeRoleTypesAPI },
+      { name: 'ContactUs', api: contactUsAPI },
       { name: 'Contacts', api: contactsAPI },
+      { name: 'Legal', api: legalAPI },
+      { name: 'MemberSignature', api: memberSignatureAPI },
+      { name: 'PendingAppoitments', api: pendingAppoitmentsAPI },
+      { name: 'ProjectComments', api: projectCommentsAPI },
+      { name: 'ProjectMilestones', api: projectMilestonesAPI },
+      { name: 'ProjectPaymentTerms', api: projectPaymentTermsAPI },
+      { name: 'ProjectPermissions', api: projectPermissionsAPI },
       { name: 'Projects', api: projectsAPI },
+      { name: 'Properties', api: propertiesAPI },
+      { name: 'QuoteItems', api: quoteItemsAPI },
       { name: 'Quotes', api: quotesAPI },
-      { name: 'Requests', api: requestsAPI }
+      { name: 'Requests', api: requestsAPI },
+      { name: 'eSignatureDocuments', api: eSignatureDocumentsAPI }
     ];
 
     const counts: Record<string, number | string> = {};
@@ -56,9 +96,11 @@ export default function AmplifyTestClient() {
 
   const loadAllData = async () => {
     setLoading(true);
+    console.log('🔄 Starting data load...');
     
     try {
-      // Load main test data
+      // Load main test data using existing API structure
+      console.log('📡 Making API calls...');
       const [propertyResult, contactResult, affiliateResult, quoteResult, projectResult] = await Promise.all([
         propertiesAPI.list(),
         contactsAPI.list(), 
@@ -67,11 +109,39 @@ export default function AmplifyTestClient() {
         projectsAPI.list()
       ]);
       
-      if (propertyResult.success) setProperties(propertyResult.data || []);
-      if (contactResult.success) setContacts(contactResult.data || []);
-      if (affiliateResult.success) setAffiliates(affiliateResult.data || []);
-      if (quoteResult.success) setQuotes(quoteResult.data || []);
-      if (projectResult.success) setProjects(projectResult.data || []);
+      console.log('📊 API Results:', {
+        properties: { success: propertyResult.success, count: propertyResult.data?.length || 0, error: propertyResult.error, fullResult: propertyResult },
+        contacts: { success: contactResult.success, count: contactResult.data?.length || 0, error: contactResult.error, fullResult: contactResult },
+        affiliates: { success: affiliateResult.success, count: affiliateResult.data?.length || 0, error: affiliateResult.error, fullResult: affiliateResult },
+        quotes: { success: quoteResult.success, count: quoteResult.data?.length || 0, error: quoteResult.error, fullResult: quoteResult },
+        projects: { success: projectResult.success, count: projectResult.data?.length || 0, error: projectResult.error, fullResult: projectResult }
+      });
+
+      if (propertyResult.success) {
+        const filteredProperties = (propertyResult.data || []).filter((item: any) => item != null);
+        console.log('Properties loaded:', filteredProperties.length, 'items');
+        setProperties(filteredProperties);
+      }
+      if (contactResult.success) {
+        const filteredContacts = (contactResult.data || []).filter((item: any) => item != null);
+        console.log('Contacts loaded:', filteredContacts.length, 'items');
+        setContacts(filteredContacts);
+      }
+      if (affiliateResult.success) {
+        const filteredAffiliates = (affiliateResult.data || []).filter((item: any) => item != null);
+        console.log('Affiliates loaded:', filteredAffiliates.length, 'items');
+        setAffiliates(filteredAffiliates);
+      }
+      if (quoteResult.success) {
+        const filteredQuotes = (quoteResult.data || []).filter((item: any) => item != null);
+        console.log('Quotes loaded:', filteredQuotes.length, 'items');
+        setQuotes(filteredQuotes);
+      }
+      if (projectResult.success) {
+        const filteredProjects = (projectResult.data || []).filter((item: any) => item != null);
+        console.log('Projects loaded:', filteredProjects.length, 'items');
+        setProjects(filteredProjects);
+      }
 
       // Get counts for all tables
       const counts = await getAllTableCounts();
@@ -288,7 +358,27 @@ export default function AmplifyTestClient() {
 
       {/* Data Tab */}
       {activeTab === 'data' && (
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-6">
+          {/* Data Relationship Summary */}
+          <div className="bg-blue-50 p-4 rounded border">
+            <h3 className="font-semibold text-blue-800 mb-2">Data Relationships</h3>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium">Projects:</span> {projects.length} total
+                <br />
+                <span className="font-medium">Properties:</span> {properties.length} total
+              </div>
+              <div>
+                <span className="font-medium">Projects with addressId:</span> {projects.filter((p: any) => p?.addressId).length}
+                <br />
+                <span className="font-medium">Matched Relationships:</span> {
+                  projects.filter((p: any) => p?.addressId && properties.find((prop: any) => prop?.id === p.addressId)).length
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
           {/* Properties Section */}
           <div className="border border-gray-300 p-4 rounded">
             <h2 className="text-xl font-semibold mb-3">Properties ({properties.length})</h2>
@@ -296,11 +386,11 @@ export default function AmplifyTestClient() {
               <p className="text-gray-500">No properties yet. Create one to test!</p>
             ) : (
               <div className="space-y-2 max-h-60 overflow-y-auto">
-                {properties.slice(0, 5).map((property: any) => (
+                {properties.slice(0, 5).filter((property: any) => property && property.id).map((property: any) => (
                   <div key={property.id} className="bg-gray-50 p-3 rounded">
                     <div className="font-medium">{property.propertyFullAddress || 'No address'}</div>
                     <div className="text-sm text-gray-600">
-                      {property.city}, {property.state} {property.zip}
+                      {property.city || ''}, {property.state || ''} {property.zip || ''}
                     </div>
                     <div className="text-xs text-gray-400">ID: {property.id}</div>
                   </div>
@@ -319,12 +409,12 @@ export default function AmplifyTestClient() {
               <p className="text-gray-500">No contacts yet. Create one to test!</p>
             ) : (
               <div className="space-y-2 max-h-60 overflow-y-auto">
-                {contacts.slice(0, 5).map((contact: any) => (
+                {contacts.slice(0, 5).filter((contact: any) => contact && contact.id).map((contact: any) => (
                   <div key={contact.id} className="bg-gray-50 p-3 rounded">
-                    <div className="font-medium">{contact.fullName || contact.firstName + ' ' + contact.lastName || 'No name'}</div>
-                    <div className="text-sm text-gray-600">{contact.email}</div>
-                    <div className="text-sm text-gray-600">{contact.phone}</div>
-                    <div className="text-xs text-blue-600">{contact.company}</div>
+                    <div className="font-medium">{contact.fullName || (contact.firstName && contact.lastName ? contact.firstName + ' ' + contact.lastName : 'No name')}</div>
+                    <div className="text-sm text-gray-600">{contact.email || ''}</div>
+                    <div className="text-sm text-gray-600">{contact.phone || ''}</div>
+                    <div className="text-xs text-blue-600">{contact.company || ''}</div>
                     <div className="text-xs text-gray-400">ID: {contact.id}</div>
                   </div>
                 ))}
@@ -342,11 +432,11 @@ export default function AmplifyTestClient() {
               <p className="text-gray-500">No affiliates found</p>
             ) : (
               <div className="space-y-2 max-h-60 overflow-y-auto">
-                {affiliates.slice(0, 5).map((affiliate: any) => (
+                {affiliates.slice(0, 5).filter((affiliate: any) => affiliate && affiliate.id).map((affiliate: any) => (
                   <div key={affiliate.id} className="bg-gray-50 p-3 rounded">
                     <div className="font-medium">{affiliate.name || 'No name'}</div>
-                    <div className="text-sm text-gray-600">{affiliate.company}</div>
-                    <div className="text-sm text-gray-600">{affiliate.email}</div>
+                    <div className="text-sm text-gray-600">{affiliate.company || ''}</div>
+                    <div className="text-sm text-gray-600">{affiliate.email || ''}</div>
                     <div className="text-xs text-gray-400">ID: {affiliate.id}</div>
                   </div>
                 ))}
@@ -364,10 +454,10 @@ export default function AmplifyTestClient() {
               <p className="text-gray-500">No quotes found</p>
             ) : (
               <div className="space-y-2 max-h-60 overflow-y-auto">
-                {quotes.slice(0, 5).map((quote: any) => (
+                {quotes.slice(0, 5).filter((quote: any) => quote && quote.id).map((quote: any) => (
                   <div key={quote.id} className="bg-gray-50 p-3 rounded">
-                    <div className="font-medium">Quote #{quote.id?.slice(-6)}</div>
-                    <div className="text-sm text-gray-600">{quote.status}</div>
+                    <div className="font-medium">Quote #{quote.id?.slice(-6) || 'N/A'}</div>
+                    <div className="text-sm text-gray-600">{quote.status || 'No status'}</div>
                     <div className="text-xs text-gray-400">ID: {quote.id}</div>
                   </div>
                 ))}
@@ -377,6 +467,42 @@ export default function AmplifyTestClient() {
               </div>
             )}
           </div>
+
+          {/* Projects Section */}
+          <div className="border border-gray-300 p-4 rounded">
+            <h2 className="text-xl font-semibold mb-3">Projects ({projects.length})</h2>
+            {projects.length === 0 ? (
+              <p className="text-gray-500">No projects found</p>
+            ) : (
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {projects.slice(0, 5).filter((project: any) => project && project.id).map((project: any) => {
+                  // Find the associated property by addressId
+                  const associatedProperty = properties.find((prop: any) => prop && prop.id === project.addressId) as any;
+                  
+                  return (
+                    <div key={project.id} className="bg-gray-50 p-3 rounded">
+                      <div className="font-medium">Project #{project.id?.slice(-6) || 'N/A'}</div>
+                      <div className="text-sm text-gray-600">
+                        {associatedProperty ? 
+                          associatedProperty.propertyFullAddress : 
+                          `Address ID: ${project.addressId || 'N/A'}`
+                        }
+                      </div>
+                      <div className="text-sm text-blue-600">{project.status || 'No status'}</div>
+                      <div className="text-xs text-gray-400">Project ID: {project.id}</div>
+                      {project.addressId && (
+                        <div className="text-xs text-gray-400">Address ID: {project.addressId}</div>
+                      )}
+                    </div>
+                  );
+                })}
+                {projects.length > 5 && (
+                  <p className="text-sm text-gray-500">... and {projects.length - 5} more</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
         </div>
       )}
 

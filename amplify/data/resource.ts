@@ -5,7 +5,6 @@ import { defineData } from '@aws-amplify/backend';
 // Generated from CSV to DynamoDB migration
 
 const Affiliates = a.model({
-  ID: a.id().required(),
   title: a.string(),
   company: a.string(),
   serviceType: a.string(),
@@ -45,13 +44,11 @@ const Auth = a.model({
   email: a.email(),
   hash: a.boolean(),
   token: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeAssignTo = a.model({
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -67,7 +64,6 @@ const BackOfficeAssignTo = a.model({
 
 const BackOfficeBookingStatuses = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -76,7 +72,6 @@ const BackOfficeBookingStatuses = a.model({
 
 const BackOfficeBrokerage = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -85,7 +80,6 @@ const BackOfficeBrokerage = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const BackOfficeNotifications = a.model({
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -100,7 +94,6 @@ const BackOfficeNotifications = a.model({
 
 const BackOfficeProducts = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -109,7 +102,6 @@ const BackOfficeProducts = a.model({
 
 const BackOfficeProjectStatuses = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -118,7 +110,6 @@ const BackOfficeProjectStatuses = a.model({
 
 const BackOfficeQuoteStatuses = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -127,7 +118,6 @@ const BackOfficeQuoteStatuses = a.model({
 
 const BackOfficeRequestStatuses = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -136,7 +126,6 @@ const BackOfficeRequestStatuses = a.model({
 
 const BackOfficeRoleTypes = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -149,7 +138,6 @@ const ContactUs = a.model({
   subject: a.string(),
   message: a.string(),
   product: a.string(),
-  ID: a.id().required(),
   owner: a.string(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
@@ -157,7 +145,6 @@ const ContactUs = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const Contacts = a.model({
-  ID: a.id().required(),
   firstName: a.string(),
   lastName: a.string(),
   fullName: a.string(),
@@ -181,7 +168,6 @@ const Contacts = a.model({
 
 const Legal = a.model({
   title: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -200,14 +186,12 @@ const MemberSignature = a.model({
   initialsWixUrl: a.url(),
   signaturePublicUrl: a.url(),
   signatureWixUrl: a.url(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
 }).authorization((allow) => allow.publicApiKey());
 
 const PendingAppoitments = a.model({
-  ID: a.id().required(),
   assignedTo: a.string(),
   status: a.string(),
   serviceName: a.string(),
@@ -238,7 +222,6 @@ const ProjectComments = a.model({
   isPrivate: a.boolean(),
   postedByProfileImage: a.string(),
   addToGallery: a.string(),
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -248,7 +231,6 @@ const ProjectComments = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const ProjectMilestones = a.model({
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -264,7 +246,6 @@ const ProjectMilestones = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const ProjectPaymentTerms = a.model({
-  ID: a.id().required(),
   projectID: a.id(),
   type: a.string(),
   paymentName: a.string(),
@@ -285,14 +266,12 @@ const ProjectPermissions = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   projectId: a.id(),
-  ID: a.id().required(),
   owner: a.string(),
   na: a.string(),
   permissions: a.boolean(),
 }).authorization((allow) => allow.publicApiKey());
 
 const Projects = a.model({
-  ID: a.id().required(),
   projectID: a.id(),
   title: a.string(),
   status: a.string(),
@@ -396,7 +375,6 @@ const Projects = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const Properties = a.model({
-  ID: a.id().required(),
   propertyFullAddress: a.string(),
   houseAddress: a.string(),
   city: a.string(),
@@ -419,7 +397,6 @@ const Properties = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const QuoteItems = a.model({
-  ID: a.id().required(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
@@ -443,7 +420,6 @@ const QuoteItems = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const Quotes = a.model({
-  ID: a.id().required(),
   requestId: a.id(),
   projectId: a.id(),
   status: a.string(),
@@ -519,7 +495,6 @@ const Quotes = a.model({
 
 const Requests = a.model({
   createdDate: a.datetime(),
-  ID: a.id().required(),
   status: a.string(),
   statusImage: a.string(),
   statusOrder: a.float(),
@@ -557,7 +532,6 @@ const Requests = a.model({
 }).authorization((allow) => allow.publicApiKey());
 
 const eSignatureDocuments = a.model({
-  ID: a.id().required(),
   signed: a.boolean(),
   templateId: a.id(),
   documentData: a.string(),

@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+  
     {
       "name": "Debug Python",
       "type": "debugpy",
@@ -25,18 +26,17 @@
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {
         "webpack:///./*": "${workspaceFolder}/*"
-      }
+      },
+      "preLaunchTask": "npm: dev:debug",
+      "runtimeArgs": [
+        "--remote-debugging-port=9222"
+      ]
     },
     {
       "name": "Next.js: debug full stack",
-      "type": "node-terminal",
-      "request": "launch",
-      "command": "npm run debug:full-stack",
-      "serverReadyAction": {
-        "pattern": "Frontend \\(Next\\.js\\): (https?://[^\\s]+)",
-        "uriFormat": "%s",
-        "action": "debugWithChrome"
-      },
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
       "sourceMaps": true,
       "resolveSourceMapLocations": [
         "${workspaceFolder}/**",
@@ -50,6 +50,12 @@
       ],
       "sourceMapPathOverrides": {
         "webpack:///./*": "${workspaceFolder}/*"
+      },
+      "preLaunchTask": "npm: dev:debug",
+      "serverReadyAction": {
+        "pattern": "started server on .*, url: (https?://localhost:[0-9]+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
       }
     },
     {
@@ -69,7 +75,7 @@
       "name": "Debug Full Stack (Compound)",
       "configurations": [
         "Amplify Sandbox Only",
-        "Next.js: debug client-side"
+        "Next.js: debug full stack"
       ],
       "stopAll": true,
       "presentation": {
