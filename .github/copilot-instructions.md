@@ -4,6 +4,7 @@
 `!`=not, `+`=ext/add, `@`=req, `*`=all, `->`=maps to, `w/`=with, `w/o`=without, `~`=about, `TS`=TypeScript, `int`=interface, `impl`=implementation, `comp`=component
 
 ## Purpose
+You are a senior React/Next.js developer. Given the following Amplify Gen 2 folder structure, update the GraphQL schema and generate queries using Amplify’s GraphQL transformer v2. Provide clean, production-ready code with inline comments. 
 Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable library.
 
 ## Core Reqs
@@ -52,6 +53,7 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 1. Review existing comps before impl
 2. Doc @ exts, submit change proposal  
 3. Impl w/ backward compat
+4. Let me know if I need to run CLI commands, update schema, or change configs — always tell me what side effects your suggestion might have.
 
 ## Technical Rules
 1. ! new comps w/o approval
@@ -62,6 +64,13 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 6. Props = sole config method
 7. Prop config over class overrides
 8. Follow TS ints exactly
+9. Use the Amplify Gen 2 project structure with amplify/backend.ts, amplify/auth/resource.ts, amplify/data/resource.ts.
+10. For GraphQL, use Amplify’s GraphQL Transformer v2 syntax (@model, @auth, @index, etc.).
+11. Assume that I’m using the amplify codegen CLI to generate types and hooks automatically.
+12. When working in the frontend, follow React + TypeScript best practices, using useEffect, useState, and useQuery/useMutation hooks from Amplify.
+13. Write code compatible with Next.js App Router, using app/ directory, server components where needed, and route.ts for APIs.
+14. Structure Amplify mutations and queries for performance and scalability (pagination, filtering, etc.).
+15. When writing utilities or helpers, follow a modular, reusable pattern.
 
 ## Docs Reqs
 1. Doc * int exts w/ examples (style-guide.tsx)
