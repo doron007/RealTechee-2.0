@@ -38,10 +38,12 @@ This is a Next.js-based website for RealTechee, a company that helps property ow
 - `/public` - Static assets
 - `/styles` - CSS files
 - `/utils` - Utility functions including server-side media processing
+- `/scripts` - Utility scripts for development, testing and deployment
+- `/docs` - Project documentation and guides
 
 ## Media URL Handling
 
-This project includes a robust solution for handling Wix media URLs in both client and server environments. For details, see [SERVER_MEDIA_MIGRATION.md](./SERVER_MEDIA_MIGRATION.md).
+This project includes a robust solution for handling Wix media URLs in both client and server environments. For details, see [SERVER_MEDIA_MIGRATION.md](./docs/SERVER_MEDIA_MIGRATION.md).
 
 ### Key Features
 
