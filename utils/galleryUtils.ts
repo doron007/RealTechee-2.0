@@ -1,7 +1,11 @@
 
+import { createLogger } from './logger';
+
+const logger = createLogger('GalleryUtils');
+
 /**
  * Helper function to parse a JSON string or comma-separated list into an array of URLs
- * This function is Wix-agnostic and only deals with standard URLs
+ * Handles both simple URL arrays and complex gallery objects with src properties
  * 
  * @param galleryString - String that may contain JSON or comma-separated URLs
  * @param fallbackImage - Fallback image URL if parsing fails
@@ -27,11 +31,18 @@ export const parseGalleryString = (
       try {
         const parsed = JSON.parse(galleryString);
         if (Array.isArray(parsed)) {
-          // If it's an array, extract strings directly
-          urls = parsed.filter(item => typeof item === 'string');
+          // Handle array of gallery objects (like your migrated data)
+          urls = parsed.map(item => {
+            if (typeof item === 'string') {
+              return item; // Simple string URL
+            } else if (typeof item === 'object' && item.src) {
+              return item.src; // Extract src from gallery object
+            }
+            return null;
+          }).filter(url => url && typeof url === 'string');
         }
       } catch (e) {
-        console.warn('Failed to parse gallery JSON:', e);
+        logger.warn('Failed to parse gallery JSON', e);
       }
     }
     
@@ -51,7 +62,7 @@ export const parseGalleryString = (
     // Limit image count to prevent performance issues
     return validUrls.length > maxImages ? validUrls.slice(0, maxImages) : validUrls;
   } catch (error) {
-    console.error('Error parsing gallery string:', error);
+    logger.error('Error parsing gallery string', error);
     return fallbackImage ? [fallbackImage] : [];
   }
 };
@@ -79,12 +90,18 @@ export const getProjectGalleryImages = async (
   ];
 
   try {
-    // Try to use the Gallery field which should contain our image data
-    if (project.Gallery && typeof project.Gallery === 'string') {
-      // console.log('Extracting gallery images from project');
+    // Try to use the gallery field (check both lowercase and uppercase variations)
+    const galleryData = project.gallery || project.Gallery;
+    if (galleryData && typeof galleryData === 'string') {
+      logger.debug('Extracting gallery images from project', { 
+        galleryDataLength: galleryData.length 
+      });
       
-      // Parse the Gallery field content - should already be processed by the API
-      const galleryUrls = parseGalleryString(project.Gallery, null, maxImages);
+      // Parse the gallery field content - should already be processed by the API
+      const galleryUrls = parseGalleryString(galleryData, null, maxImages);
+      logger.info('Gallery URLs parsed successfully', { 
+        imageCount: galleryUrls.length 
+      });
       
       if (galleryUrls.length > 0) {
         return galleryUrls;
@@ -100,7 +117,7 @@ export const getProjectGalleryImages = async (
     // Last resort: use local fallback images
     return localFallbackImages;
   } catch (error) {
-    console.error('Error in getProjectGalleryImages:', error);
+    logger.error('Error in getProjectGalleryImages', error);
     // Return local fallback images if everything else fails
     return localFallbackImages;
   }

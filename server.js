@@ -1,6 +1,7 @@
 const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
+const { ServerLogger } = require('./utils/serverLogger')
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3000
 // Initialize Next.js app
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
+const logger = new ServerLogger('NextServer')
 
 app.prepare().then(() => {
   createServer(async (req, res) => {
@@ -30,13 +32,13 @@ app.prepare().then(() => {
       // Let Next.js handle all other requests
       await handle(req, res, parsedUrl)
     } catch (err) {
-      console.error('Error occurred handling request:', err)
+      logger.error('Error occurred handling request', err)
       res.statusCode = 500
       res.end('Internal Server Error')
     }
   }).listen(port, (err) => {
     if (err) throw err
-    console.log(`> Ready on http://${hostname}:${port}`)
-    console.log('> Client-side navigation enabled')
+    logger.info(`Server ready on http://${hostname}:${port}`)
+    logger.info('Client-side navigation enabled')
   })
 })

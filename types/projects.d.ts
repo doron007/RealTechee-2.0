@@ -1,56 +1,89 @@
 /**
  * Project data types
- * Based on the CSV structure
+ * Based on the Amplify Gen 2.0 schema after data migration
  */
 
 import { ProjectStatus } from '../utils/projectsService';
 
 export interface Project {
-  // CSV original fields
-  ID?: string;
-  projectID?: string;
-  Title?: string;
-  Status?: ProjectStatus;
-  "Status Image"?: string;
-  "Status Order"?: string;
-  "Property Type"?: string;
-  Description?: string;
-  Image?: string;
-  Gallery?: string;
-  "Agent Name"?: string;
-  "Agent Email"?: string;
-  "Agent Phone"?: string;
-  "Homeowner Full Name"?: string;
-  "Homeowner Email"?: string;
-  "Homeowner Phone"?: string;
-  Bedrooms?: string;
-  Bathrooms?: string;
-  Floors?: string;
-  "Size Sqft."?: string;
-  "Year Built"?: string;
-  "Redfin Link"?: string;
-  "Zillow Link"?: string;
-  "Original Value"?: string;
-  "Listing Price"?: string;
-  "Sale Price"?: string;
-  "Added value"?: string;
-  "Boost Price"?: string;
-  "Booster Estimated Cost"?: string;
-  Budget?: string;
-  "Created Date"?: string;
-  "Updated Date"?: string;
-  // UI fields (these are the ones used by components)
+  // Core Amplify fields
   id: string;
+  projectID: string;
   title: string;
-  description: string;
-  imageUrl: string;
-  category: string;
-  location: string;
-  completionDate: string;
-  budget: string;
-  featured: boolean;
-  createdAt: string;
-  updatedAt: string;
+  status: ProjectStatus;
+  statusImage?: string;
+  statusOrder?: number;
+  propertyType?: string;
+  description?: string;
+  image?: string;
+  gallery?: string;
+  
+  // Property details (all camelCase after migration)
+  bedrooms?: number;
+  bathrooms?: number;
+  floors?: number;
+  sizeSqft?: number;
+  yearBuilt?: number;
+  redfinLink?: string;
+  zillowLink?: string;
+  
+  // Financial data
+  originalValue?: number;
+  listingPrice?: number;
+  salePrice?: number;
+  addedValue?: number;
+  boostPrice?: number;
+  boosterEstimatedCost?: number;
+  budget?: string;
+  
+  // Contact relationships (using contact IDs)
+  agentContactId?: string;
+  homeownerContactId?: string;
+  homeowner2ContactId?: string;
+  homeowner3ContactId?: string;
+  
+  // Dates
+  createdDate?: string;
+  updatedDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  requestDate?: string;
+  visitReviewDate?: string;
+  proposalDate?: string;
+  contractDate?: string;
+  escrowDate?: string;
+  estimatedClosingDate?: string;
+  closingDate?: string;
+  
+  // Additional fields that may be populated via relationships
+  agent?: {
+    firstName?: string;
+    lastName?: string;
+    fullName?: string;
+    email?: string;
+    phone?: string;
+  };
+  homeowner?: {
+    firstName?: string;
+    lastName?: string;
+    fullName?: string;
+    email?: string;
+    phone?: string;
+  };
+  address?: {
+    propertyFullAddress?: string;
+    houseAddress?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+  };
+  
+  // Legacy UI compatibility fields
+  imageUrl?: string;
+  category?: string;
+  location?: string;
+  completionDate?: string;
+  featured?: boolean;
 }
 
 export interface ProjectFilter {

@@ -9,12 +9,12 @@ import { Project } from '../types/projects';
  */
 export function generatePropertyDescription(project: Project): string {
   // Gather all the available property details
-  const propertyType = project["Property Type"] || "property";
-  const bedrooms = project.Bedrooms || '0';
-  const bathrooms = project.Bathrooms || '0';
-  const squareFeet = project["Size Sqft."] || '0';
-  const yearBuilt = project["Year Built"] || '';
-  const floors = project.Floors || '1';
+  const propertyType = project.propertyType || "property";
+  const bedrooms = project.bedrooms?.toString() || '0';
+  const bathrooms = project.bathrooms?.toString() || '0';
+  const squareFeet = project.sizeSqft?.toString() || '0';
+  const yearBuilt = project.yearBuilt?.toString() || '';
+  const floors = project.floors?.toString() || '1';
 
   // Base description parts
   const parts: string[] = [];
@@ -50,16 +50,16 @@ export function generatePropertyDescription(project: Project): string {
   }
 
   // Add renovation status if available
-  if (project.Status) {
-    parts.push(`with ${project.Status.toLowerCase()} renovations`);
+  if (project.status) {
+    parts.push(`with ${project.status.toLowerCase()} renovations`);
   }
 
   // Handle project-specific details
-  if (project["Boost Price"] || project["Booster Estimated Cost"]) {
+  if (project.boostPrice || project.boosterEstimatedCost) {
     parts.push("scheduled for strategic improvements to maximize property value");
   }
 
-  if (project["Added value"] && parseFloat(project["Added value"]) > 0) {
+  if (project.addedValue && parseFloat(project.addedValue.toString()) > 0) {
     parts.push("with significant value-adding renovations");
   }
 

@@ -4,19 +4,19 @@ import { CollapsibleSection } from '../common/ui';
 import { BodyContent } from '../Typography';
 
 export interface Milestone {
-  ID: string;
-  'Project ID': string;
-  Name: string;
-  Description?: string;
-  'Is Complete': boolean;
-  Order?: number;
-  'Created Date'?: string;
-  'Updated Date'?: string;
-  Owner?: string;
-  'Is Category'?: boolean;
-  'Is Internal'?: boolean;
-  'Estimated Start'?: string;
-  'Estimated Finish'?: string;
+  id: string;
+  projectId: string;
+  name: string;
+  description?: string;
+  isComplete: boolean;
+  order?: number;
+  createdDate?: string;
+  updatedDate?: string;
+  owner?: string;
+  isCategory?: boolean;
+  isInternal?: boolean;
+  estimatedStart?: string;
+  estimatedFinish?: string;
 }
 
 interface MilestonesListProps {
@@ -37,18 +37,18 @@ export default function MilestonesList({
   // Sort milestones: completed first, then by order
   const sortedMilestones = [...milestones].sort((a, b) => {
     // First sort by completion status (completed items first)
-    if (a['Is Complete'] !== b['Is Complete']) {
-      return a['Is Complete'] ? -1 : 1;
+    if (a.isComplete !== b.isComplete) {
+      return a.isComplete ? -1 : 1;
     }
 
     // Then sort by order if both have order defined
-    if (a.Order !== undefined && b.Order !== undefined) {
-      return a.Order - b.Order;
+    if (a.order !== undefined && b.order !== undefined) {
+      return a.order - b.order;
     }
 
     // If only one has order defined, put the one with order first
-    if (a.Order !== undefined) return -1;
-    if (b.Order !== undefined) return 1;
+    if (a.order !== undefined) return -1;
+    if (b.order !== undefined) return 1;
 
     // If neither has order, maintain original order
     return 0;
@@ -61,19 +61,19 @@ export default function MilestonesList({
           {sortedMilestones.map((milestone, index) => (
             <div
               key={index}
-              className={`flex items-start gap-4 py-1.5 px-2 ${milestone['Is Complete'] ? 'bg-gray-200' : 'bg-gray-50'
+              className={`flex items-start gap-4 py-1.5 px-2 ${milestone.isComplete ? 'bg-gray-200' : 'bg-gray-50'
                 }`}
             >
               <Checkbox
-                checked={milestone['Is Complete']}
+                checked={milestone.isComplete}
                 onChange={() => onMilestoneToggle?.(milestone)}
                 color="default"
                 className="!pt-1"
               />
               <div className="flex-1">
-                <BodyContent className="!mb-0 text-[#2A2B2E]">{milestone.Name}</BodyContent>
-                {milestone.Description && (
-                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{milestone.Description}</BodyContent>
+                <BodyContent className="!mb-0 text-[#2A2B2E]">{milestone.name}</BodyContent>
+                {milestone.description && (
+                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{milestone.description}</BodyContent>
                 )}
               </div>
             </div>

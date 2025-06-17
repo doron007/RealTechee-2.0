@@ -8,19 +8,18 @@ import Button from '../common/buttons/Button';
 import AddCommentDialog from './AddCommentDialog';
 
 export interface Comment {
-    ID: string;
-    'Project ID': string;
-    'Posted By': string;
-    Nickname: string;
-    Comment: string;
-    Files?: string;
-    'Is Private': boolean;
-    'Posted By Profile Image'?: string;
-    'Add To Gallery'?: string;
-    'Created Date': string;
-    'Updated Date': string;
-    Owner: string;
-    images?: string[]; // Add processed image URLs field
+    id: string;
+    projectId: string;
+    postedByContactId: string;
+    nickname: string;
+    comment: string;
+    files?: string;
+    isPrivate: boolean;
+    postedByProfileImage?: string;
+    addToGallery?: string;
+    createdDate: string;
+    updatedDate: string;
+    owner: string;
 }
 
 interface CommentsListProps {
@@ -78,8 +77,8 @@ const CommentsList: React.FC<CommentsListProps> = ({
     // Sort comments by creation date based on sort order
     const sortedComments = React.useMemo(() => {
         return [...commentsData].sort((a, b) => {
-            const dateA = new Date(a['Created Date']);
-            const dateB = new Date(b['Created Date']);
+            const dateA = new Date(a.createdDate);
+            const dateB = new Date(b.createdDate);
             return sortOrder === 'newest' 
                 ? dateB.getTime() - dateA.getTime() 
                 : dateA.getTime() - dateB.getTime();
@@ -165,14 +164,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
                     ) : 
                     sortedComments.map((comment) => (
                         <div
-                            key={comment.ID}
+                            key={comment.id}
                             className="bg-gray-50 p-4 rounded-lg"
                         >
                             <div className="flex items-center gap-3 mb-2">
-                                {comment['Posted By Profile Image'] ? (
+                                {comment.postedByProfileImage ? (
                                     <Image
-                                        src={comment['Posted By Profile Image']}
-                                        alt={comment.Nickname}
+                                        src={comment.postedByProfileImage}
+                                        alt={comment.nickname}
                                         width={30}
                                         height={30}
                                         className="rounded-full"
@@ -180,45 +179,62 @@ const CommentsList: React.FC<CommentsListProps> = ({
                                 ) : (
                                     <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
                                         <span className="text-gray-600 text-sm">
-                                            {comment.Nickname.substring(0, 1).toUpperCase()}
+                                            {comment.nickname?.substring(0, 1).toUpperCase() || 'U'}
                                         </span>
                                     </div>
                                 )}
                                 <BodyContent className="font-medium !mb-0">
-                                    {comment.Nickname}
+                                    {comment.nickname}
                                 </BodyContent>
                             </div>
 
                             <BodyContent className="whitespace-pre-line mb-3">
-                                {comment.Comment}
+                                {comment.comment}
                             </BodyContent>
 
-                            {comment.images && comment.images.length > 0 && (
-                                <div className="mt-2 flex flex-wrap gap-2">
-                                    {comment.images.map((image, index) => (
+                            {comment.files && comment.files.length > 0 && (() => {
+                                // Handle different file formats - could be URLs or JSON
+                                let fileUrls: string[] = [];
+                                try {
+                                    // Try to parse as JSON first
+                                    const parsed = JSON.parse(comment.files);
+                                    if (Array.isArray(parsed)) {
+                                        fileUrls = parsed.filter(item => typeof item === 'string' && (item.startsWith('http') || item.startsWith('/')));
+                                    }
+                                } catch {
+                                    // If not JSON, treat as comma-separated URLs
+                                    fileUrls = comment.files.split(',')
+                                        .map(f => f.trim())
+                                        .filter(f => f && (f.startsWith('http') || f.startsWith('/')));
+                                }
+                                
+                                return fileUrls.length > 0 ? (
+                                    <div className="mt-2 flex flex-wrap gap-2">
+                                        {fileUrls.map((file, index) => (
                                         <div
                                             key={index}
                                             className="relative w-20 h-20 cursor-pointer hover:opacity-80 transition-opacity"
-                                            onClick={() => handleImageClick(image)}
+                                            onClick={() => handleImageClick(file)}
                                             role="button"
                                             tabIndex={0}
                                             aria-label={`View image ${index + 1}`}
                                             style={{ aspectRatio: '1/1' }}
                                         >
                                             <Image
-                                                src={image}
+                                                src={file}
                                                 alt={`Comment image ${index + 1}`}
                                                 fill
                                                 className="object-cover rounded-md"
                                                 sizes="80px"
                                             />
                                         </div>
-                                    ))}
-                                </div>
-                            )}
+                                        ))}
+                                    </div>
+                                ) : null;
+                            })()}
 
                             <BodyContent className="text-sm text-gray-500 !mb-0 mt-2">
-                                {formatDate(new Date(comment['Created Date']), { timeZone: 'America/Los_Angeles' })}
+                                {formatDate(new Date(comment.createdDate), { timeZone: 'America/Los_Angeles' })}
                             </BodyContent>
                         </div>
                     ))}

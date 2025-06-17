@@ -5,11 +5,11 @@ import { BodyContent } from '../Typography';
 import { formatCurrency } from '../../utils/formatUtils';
 
 export interface Payment {
-  PaymentName: string;
-  Description?: string;
-  Paid: boolean;
-  'Payment Amount': number;
-  Order?: number;
+  paymentName: string;
+  description?: string;
+  paid: boolean;
+  paymentAmount: number;
+  order?: number;
   isSummaryRow?: boolean;
 }
 
@@ -37,16 +37,16 @@ export default function PaymentList({
 
     // For non-summary rows, sort by paid status and order
     if (!a.isSummaryRow && !b.isSummaryRow) {
-      if (a.Paid !== b.Paid) {
-        return a.Paid ? -1 : 1;
+      if (a.paid !== b.paid) {
+        return a.paid ? -1 : 1;
       }
 
-      if (a.Order !== undefined && b.Order !== undefined) {
-        return a.Order - b.Order;
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
       }
 
-      if (a.Order !== undefined) return -1;
-      if (b.Order !== undefined) return 1;
+      if (a.order !== undefined) return -1;
+      if (b.order !== undefined) return 1;
     }
 
     return 0;
@@ -61,14 +61,14 @@ export default function PaymentList({
               key={index}
               className={`flex items-start gap-4 py-1.5 px-2 ${payment.isSummaryRow
                   ? 'bg-gray-50'
-                  : payment.Paid
+                  : payment.paid
                     ? 'bg-gray-200'
                     : 'bg-gray-50'
                 }`}
             >
               {!payment.isSummaryRow && (
                 <Checkbox
-                  checked={payment.Paid}
+                  checked={payment.paid}
                   onChange={() => onPaymentToggle?.(payment)}
                   color="default"
                   className="!pt-1"
@@ -77,17 +77,17 @@ export default function PaymentList({
               <div className={`flex-1 ${payment.isSummaryRow ? 'ml-8' : ''}`}>
                 <div className="flex justify-between items-center gap-4">
                   <BodyContent className={`!mb-0 ${payment.isSummaryRow ? 'font-bold' : ''}`}>
-                    {payment.PaymentName}
+                    {payment.paymentName}
                   </BodyContent>
                   {!payment.isSummaryRow && (
                     <BodyContent className="!mb-0 text-right">
-                      ${formatCurrency(payment['Payment Amount'].toString())}
+                      ${formatCurrency((payment.paymentAmount || 0).toString())}
                     </BodyContent>
                   )}
                 </div>
-                {payment.Description && !payment.isSummaryRow && (
+                {payment.description && !payment.isSummaryRow && (
                   <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">
-                    {payment.Description}
+                    {payment.description}
                   </BodyContent>
                 )}
               </div>

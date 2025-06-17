@@ -23,6 +23,8 @@ import json
 import time
 import sys
 import re
+import os
+import subprocess
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from decimal import Decimal
@@ -1489,6 +1491,330 @@ class AmplifyDataMigrator:
             self.logger.error(f"Sandbox to main sync failed: {str(e)}")
             raise
 
+    def create_amplify_backup(self, backup_name: str = None) -> str:
+        """Create a JSON backup of all Amplify sandbox tables."""
+        try:
+            if backup_name is None:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                backup_name = f"amplify_backup_{timestamp}"
+            
+            backup_dir = "backups"
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+            
+            backup_file = os.path.join(backup_dir, f"{backup_name}.json")
+            
+            self.logger.info("=" * 60)
+            self.logger.info(f"CREATING AMPLIFY BACKUP: {backup_name}")
+            self.logger.info("=" * 60)
+            
+            # Get all Amplify tables
+            response = self.client.list_tables()
+            all_tables = response['TableNames']
+            amplify_tables = [t for t in all_tables if t.endswith(self.amplify_suffix)]
+            
+            self.logger.info(f"Found {len(amplify_tables)} Amplify tables to backup")
+            
+            backup_data = {
+                'backup_metadata': {
+                    'created_at': datetime.now().isoformat(),
+                    'amplify_suffix': self.amplify_suffix,
+                    'total_tables': len(amplify_tables),
+                    'tables': amplify_tables
+                },
+                'table_data': {}
+            }
+            
+            total_records = 0
+            
+            for table_name in amplify_tables:
+                try:
+                    self.logger.info(f"Backing up table: {table_name}")
+                    table = self.dynamodb.Table(table_name)
+                    
+                    # Scan entire table
+                    response = table.scan()
+                    items = response.get('Items', [])
+                    
+                    # Handle pagination
+                    while 'LastEvaluatedKey' in response:
+                        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+                        items.extend(response.get('Items', []))
+                    
+                    # Convert Decimal objects to float for JSON serialization
+                    serializable_items = []
+                    for item in items:
+                        serializable_item = json.loads(json.dumps(item, default=str))
+                        serializable_items.append(serializable_item)
+                    
+                    backup_data['table_data'][table_name] = {
+                        'record_count': len(serializable_items),
+                        'items': serializable_items
+                    }
+                    
+                    total_records += len(serializable_items)
+                    self.logger.info(f"  Backed up {len(serializable_items)} records")
+                    
+                except Exception as e:
+                    self.logger.error(f"Error backing up table {table_name}: {str(e)}")
+                    backup_data['table_data'][table_name] = {
+                        'error': str(e),
+                        'record_count': 0,
+                        'items': []
+                    }
+            
+            # Save backup to file
+            with open(backup_file, 'w') as f:
+                json.dump(backup_data, f, indent=2)
+            
+            backup_size = os.path.getsize(backup_file) / (1024 * 1024)  # MB
+            
+            self.logger.info("\n" + "=" * 60)
+            self.logger.info("BACKUP COMPLETE")
+            self.logger.info("=" * 60)
+            self.logger.info(f"Backup file: {backup_file}")
+            self.logger.info(f"Total tables: {len(amplify_tables)}")
+            self.logger.info(f"Total records: {total_records}")
+            self.logger.info(f"File size: {backup_size:.2f} MB")
+            
+            return backup_file
+            
+        except Exception as e:
+            self.logger.error(f"Backup failed: {str(e)}")
+            raise
+
+    def list_available_backups(self) -> List[str]:
+        """List all available backup files."""
+        backup_dir = "backups"
+        if not os.path.exists(backup_dir):
+            return []
+        
+        backup_files = []
+        for filename in os.listdir(backup_dir):
+            if filename.startswith('amplify_backup_') and filename.endswith('.json'):
+                backup_path = os.path.join(backup_dir, filename)
+                backup_files.append({
+                    'filename': filename,
+                    'path': backup_path,
+                    'size_mb': os.path.getsize(backup_path) / (1024 * 1024),
+                    'created': datetime.fromtimestamp(os.path.getctime(backup_path))
+                })
+        
+        # Sort by creation time (newest first)
+        backup_files.sort(key=lambda x: x['created'], reverse=True)
+        return backup_files
+
+    def restore_from_backup(self, backup_file: str, dry_run: bool = True):
+        """Restore Amplify tables from a JSON backup."""
+        try:
+            if not os.path.exists(backup_file):
+                self.logger.error(f"Backup file not found: {backup_file}")
+                return
+            
+            self.logger.info("=" * 60)
+            self.logger.info(f"RESTORING FROM BACKUP {'(DRY RUN)' if dry_run else '(LIVE)'}")
+            self.logger.info("=" * 60)
+            self.logger.info(f"Backup file: {backup_file}")
+            
+            # Load backup data
+            with open(backup_file, 'r') as f:
+                backup_data = json.load(f)
+            
+            metadata = backup_data.get('backup_metadata', {})
+            table_data = backup_data.get('table_data', {})
+            
+            self.logger.info(f"Backup created: {metadata.get('created_at')}")
+            self.logger.info(f"Total tables in backup: {metadata.get('total_tables')}")
+            self.logger.info(f"Backup amplify suffix: {metadata.get('amplify_suffix')}")
+            
+            if not dry_run:
+                self.logger.warning("\n⚠️  LIVE RESTORE MODE - This will OVERWRITE existing data!")
+                self.logger.warning("Make sure you understand the impact before proceeding.")
+                
+                confirm = input("\nProceed with live restore? (yes/no): ")
+                if confirm.lower() != 'yes':
+                    self.logger.info("Restore cancelled by user")
+                    return
+            
+            # Get current Amplify tables
+            response = self.client.list_tables()
+            current_tables = response['TableNames']
+            current_amplify_tables = [t for t in current_tables if t.endswith(self.amplify_suffix)]
+            
+            total_restored_tables = 0
+            total_restored_records = 0
+            
+            for table_name, data in table_data.items():
+                try:
+                    if 'error' in data:
+                        self.logger.warning(f"Skipping table {table_name} (had backup error): {data['error']}")
+                        continue
+                    
+                    if table_name not in current_amplify_tables:
+                        self.logger.warning(f"Target table {table_name} doesn't exist in current environment")
+                        continue
+                    
+                    items = data.get('items', [])
+                    record_count = len(items)
+                    
+                    self.logger.info(f"\nRestoring table: {table_name}")
+                    self.logger.info(f"  Records to restore: {record_count}")
+                    
+                    if not dry_run and items:
+                        table = self.dynamodb.Table(table_name)
+                        
+                        # Optional: Clear existing data first
+                        clear_existing = input(f"Clear existing data in {table_name} first? (y/n): ").strip().lower()
+                        if clear_existing == 'y':
+                            self.logger.info(f"Clearing existing data in {table_name}...")
+                            existing_response = table.scan()
+                            existing_items = existing_response.get('Items', [])
+                            
+                            for existing_item in existing_items:
+                                table.delete_item(Key={'id': existing_item['id']})
+                            
+                            self.logger.info(f"Cleared {len(existing_items)} existing records")
+                        
+                        # Restore items in batches
+                        batch_size = 25
+                        restored_count = 0
+                        
+                        for i in range(0, len(items), batch_size):
+                            batch = items[i:i + batch_size]
+                            
+                            with table.batch_writer() as batch_writer:
+                                for item in batch:
+                                    try:
+                                        # Convert string numbers back to proper types where needed
+                                        cleaned_item = self.clean_restored_item(item)
+                                        batch_writer.put_item(Item=cleaned_item)
+                                        restored_count += 1
+                                    except Exception as e:
+                                        self.logger.error(f"Error restoring item {item.get('id')}: {str(e)}")
+                            
+                            self.logger.info(f"  Restored {min(i + batch_size, len(items))}/{len(items)} records")
+                        
+                        total_restored_records += restored_count
+                        self.logger.info(f"Successfully restored {restored_count}/{record_count} records")
+                    
+                    elif dry_run:
+                        self.logger.info(f"[DRY RUN] Would restore {record_count} records")
+                        total_restored_records += record_count
+                    
+                    total_restored_tables += 1
+                    
+                except Exception as e:
+                    self.logger.error(f"Error restoring table {table_name}: {str(e)}")
+            
+            # Summary
+            self.logger.info("\n" + "=" * 60)
+            self.logger.info("RESTORE SUMMARY")
+            self.logger.info("=" * 60)
+            self.logger.info(f"Tables restored: {total_restored_tables}")
+            self.logger.info(f"Records restored: {total_restored_records}")
+            
+            if not dry_run:
+                self.logger.info("\n✅ Restore complete! Your Amplify tables have been restored from backup.")
+            
+        except Exception as e:
+            self.logger.error(f"Restore failed: {str(e)}")
+            raise
+
+    def clean_restored_item(self, item: dict) -> dict:
+        """Clean up restored item data types for DynamoDB compatibility."""
+        cleaned_item = {}
+        
+        for key, value in item.items():
+            if isinstance(value, str):
+                # Try to convert string numbers back to Decimal for fields that should be numeric
+                if key in ['order', 'paymentAmount', 'sizeSqft', 'originalValue', 'listingPrice', 
+                          'salePrice', 'boostPrice', 'addedValue', 'accountExecutive']:
+                    try:
+                        if '.' in value:
+                            from decimal import Decimal
+                            cleaned_item[key] = Decimal(value)
+                        else:
+                            cleaned_item[key] = int(value) if value.isdigit() else value
+                    except (ValueError, TypeError):
+                        cleaned_item[key] = value
+                else:
+                    cleaned_item[key] = value
+            else:
+                cleaned_item[key] = value
+        
+        return cleaned_item
+
+    def fix_datetime_fields(self):
+        """Fix DateTime fields in all Amplify tables by calling the Node.js script."""
+        try:
+            self.logger.info("=" * 60)
+            self.logger.info("FIXING DATETIME FIELDS")
+            self.logger.info("=" * 60)
+            self.logger.info("This will convert all date fields to proper ISO 8601 format")
+            self.logger.info("and add missing createdAt/updatedAt fields for Amplify compatibility.")
+            
+            # Check if the datetime fix script exists
+            script_path = "scripts/fix_datetime_formats.mjs"
+            if not os.path.exists(script_path):
+                self.logger.error(f"DateTime fix script not found: {script_path}")
+                self.logger.error("Please ensure the script exists before running this option.")
+                return False
+            
+            self.logger.info(f"Running Node.js script: {script_path}")
+            self.logger.info("This may take a few minutes for large datasets...")
+            
+            # Run the Node.js script
+            try:
+                result = subprocess.run(
+                    ['node', script_path],
+                    capture_output=True,
+                    text=True,
+                    timeout=600  # 10 minute timeout
+                )
+                
+                if result.returncode == 0:
+                    # Success - show the output
+                    self.logger.info("✅ DateTime fix completed successfully!")
+                    self.logger.info("\nScript output:")
+                    for line in result.stdout.split('\n'):
+                        if line.strip():
+                            self.logger.info(f"   {line}")
+                    
+                    if result.stderr:
+                        self.logger.warning("Script warnings:")
+                        for line in result.stderr.split('\n'):
+                            if line.strip():
+                                self.logger.warning(f"   {line}")
+                    
+                    return True
+                else:
+                    # Error occurred
+                    self.logger.error(f"❌ DateTime fix failed with exit code: {result.returncode}")
+                    self.logger.error("Script stdout:")
+                    for line in result.stdout.split('\n'):
+                        if line.strip():
+                            self.logger.error(f"   {line}")
+                    self.logger.error("Script stderr:")
+                    for line in result.stderr.split('\n'):
+                        if line.strip():
+                            self.logger.error(f"   {line}")
+                    
+                    return False
+                    
+            except subprocess.TimeoutExpired:
+                self.logger.error("❌ DateTime fix script timed out after 10 minutes")
+                return False
+            except FileNotFoundError:
+                self.logger.error("❌ Node.js not found. Please ensure Node.js is installed and in PATH")
+                return False
+            except Exception as e:
+                self.logger.error(f"❌ Error running datetime fix script: {str(e)}")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"DateTime fix failed: {str(e)}")
+            return False
+
 def main():
     """Main function with interactive menu."""
     migrator = AmplifyDataMigrator()
@@ -1504,10 +1830,13 @@ def main():
         print("5. Convert Wix URLs in existing migrated data")
         print("6. Convert Wix documents to public URLs with filename")
         print("7. Sync data from sandbox to main/production tables")
-        print("8. Exit")
+        print("8. 🛡️  Create backup of Amplify tables")
+        print("9. 🔄 Restore from backup")
+        print("10. 📅 Fix DateTime fields (required after data restore)")
+        print("11. Exit")
         print("="*60)
         
-        choice = input("Select option (1-8): ").strip()
+        choice = input("Select option (1-11): ").strip()
         
         if choice == '1':
             print("\nAnalyzing table mappings...")
@@ -1580,6 +1909,69 @@ def main():
                 migrator.sync_sandbox_to_main(main_suffix, dry_run=False)
         
         elif choice == '8':
+            print("\n🛡️  Creating backup of Amplify tables...")
+            backup_name = input("Enter backup name (or press Enter for auto-generated): ").strip()
+            backup_name = backup_name if backup_name else None
+            
+            try:
+                backup_file = migrator.create_amplify_backup(backup_name)
+                print(f"\n✅ Backup created successfully: {backup_file}")
+                print("💡 Tip: Create backups before schema changes to avoid data loss!")
+            except Exception as e:
+                print(f"❌ Backup failed: {str(e)}")
+        
+        elif choice == '9':
+            print("\n🔄 Restoring from backup...")
+            
+            # List available backups
+            backups = migrator.list_available_backups()
+            if not backups:
+                print("No backup files found in ./backups/ directory")
+                continue
+            
+            print("\nAvailable backups:")
+            for i, backup in enumerate(backups, 1):
+                print(f"{i}. {backup['filename']}")
+                print(f"   Created: {backup['created'].strftime('%Y-%m-%d %H:%M:%S')}")
+                print(f"   Size: {backup['size_mb']:.2f} MB")
+            
+            try:
+                backup_choice = int(input(f"\nSelect backup to restore (1-{len(backups)}): ")) - 1
+                if 0 <= backup_choice < len(backups):
+                    selected_backup = backups[backup_choice]
+                    
+                    dry_run_choice = input("Run dry-run first? (y/n): ").strip().lower()
+                    
+                    if dry_run_choice == 'y':
+                        migrator.restore_from_backup(selected_backup['path'], dry_run=True)
+                    else:
+                        migrator.restore_from_backup(selected_backup['path'], dry_run=False)
+                else:
+                    print("Invalid backup selection")
+            except (ValueError, IndexError):
+                print("Invalid input. Please enter a number.")
+        
+        elif choice == '10':
+            print("\n📅 Fixing DateTime fields...")
+            print("This will convert all date fields to proper ISO 8601 format")
+            print("and add missing createdAt/updatedAt fields for Amplify compatibility.")
+            print("\n💡 This is typically needed after:")
+            print("   - Data restore from backup")
+            print("   - Initial migration from legacy tables")
+            print("   - Any time projects/data don't appear correctly")
+            
+            confirm = input("\nProceed with DateTime field fix? (y/n): ").strip().lower()
+            if confirm == 'y':
+                success = migrator.fix_datetime_fields()
+                if success:
+                    print("\n✅ DateTime fields fixed successfully!")
+                    print("💡 Your projects and data should now appear correctly.")
+                else:
+                    print("\n❌ DateTime fix failed. Check the logs above for details.")
+            else:
+                print("DateTime fix cancelled.")
+        
+        elif choice == '11':
             print("Exiting...")
             break
         

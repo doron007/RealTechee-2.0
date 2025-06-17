@@ -38,7 +38,9 @@ const PROJECTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'Projects.csv'
 const DEFAULT_PROJECTS: Project[] = [
   {
     id: 'project-001',
+    projectID: '001',
     title: 'Modern Kitchen Renovation',
+    status: 'Completed',
     description: 'A complete kitchen renovation with high-end appliances and custom cabinetry.',
     category: 'Kitchen',
     location: 'San Francisco CA',
@@ -51,7 +53,9 @@ const DEFAULT_PROJECTS: Project[] = [
   },
   {
     id: 'project-002',
+    projectID: '002',
     title: 'Master Bathroom Remodel',
+    status: 'Completed',
     description: 'Luxurious bathroom remodel with walk-in shower and heated floors.',
     category: 'Bathroom',
     location: 'Los Angeles CA',
@@ -64,7 +68,9 @@ const DEFAULT_PROJECTS: Project[] = [
   },
   {
     id: 'project-003',
+    projectID: '003',
     title: 'Open Concept Living Room',
+    status: 'Completed',
     description: 'Created an open concept living space by removing walls and updating finishes.',
     category: 'Living Room',
     location: 'Seattle WA',
@@ -82,20 +88,20 @@ const DEFAULT_PROJECTS: Project[] = [
  */
 async function mapProjectForUI(project: Project): Promise<Project> {
   // Extract location from title if possible (format is often "Address, City, State")
-  const titleParts = project.Title?.split(',') || [];
+  const titleParts = project.title?.split(',') || [];
   const locationPart = titleParts.length > 1 ? 
     titleParts.slice(1).join(',').trim() : 
     "";
 
   // Process image URL on the server side
-  const processedImageUrl = await processImageUrl(project.Image);
+  const processedImageUrl = await processImageUrl(project.imageUrl);
   
   // Process Gallery if available
-  let processedGallery = project.Gallery;
-  if (project.Gallery && typeof project.Gallery === 'string') {
+  let processedGallery = project.gallery;
+  if (project.gallery && typeof project.gallery === 'string') {
     try {
       // Process the Gallery field to convert any Wix URLs
-      const galleryImages = await processImageGallery(project.Gallery);
+      const galleryImages = await processImageGallery(project.gallery);
       if (Array.isArray(galleryImages) && galleryImages.length > 0) {
         // Store processed URLs back in the Gallery field
         processedGallery = JSON.stringify(galleryImages);
@@ -108,18 +114,18 @@ async function mapProjectForUI(project: Project): Promise<Project> {
   // For any project coming from the CSV, ensure it has the UI-compatible fields
   return {
     ...project,
-    id: project.ID || project.projectID || uuidv4(),
-    title: project.Title || "",
-    description: project.Description || "",
+    id: project.id || project.projectID || uuidv4(),
+    title: project.title || "",
+    description: project.description || "",
     imageUrl: processedImageUrl || "/assets/images/hero-bg.png",
-    Gallery: processedGallery, // Use processed Gallery
-    category: project["Property Type"] || "",
+    gallery: processedGallery, // Use processed Gallery
+    category: project.propertyType || "",
     location: locationPart,
-    completionDate: project["Created Date"] || "",
-    budget: project.Budget || "",
-    featured: project.Status === "Completed",
-    createdAt: project["Created Date"] || "",
-    updatedAt: project["Updated Date"] || ""
+    completionDate: project.createdDate || "",
+    budget: project.budget || "",
+    featured: project.status === "Completed",
+    createdAt: project.createdDate || "",
+    updatedAt: project.updatedDate || ""
   };
 }
 
@@ -157,7 +163,7 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
     // Filter projects
     const filteredProjects = mappedProjects.filter(project => {
       // Filter out archived projects unless explicitly included
-      if (!filter?.includeArchived && project.Status === 'Archived') {
+      if (!filter?.includeArchived && project.status === 'Archived') {
         return false;
       }
 
@@ -178,7 +184,7 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
       }
       
       // Apply status filter if provided
-      if (filter?.status && project.Status !== filter.status) {
+      if (filter?.status && project.status !== filter.status) {
         return false;
       }
       
@@ -199,8 +205,8 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
     // Sort projects by status order and then by updated date
     return filteredProjects.sort((a, b) => {
       // Get status order, defaulting to highest number if status not found
-      const aOrder = a.Status && isProjectStatus(a.Status) ? PROJECT_STATUS_ORDER[a.Status] : 999;
-      const bOrder = b.Status && isProjectStatus(b.Status) ? PROJECT_STATUS_ORDER[b.Status] : 999;
+      const aOrder = a.status && isProjectStatus(a.status) ? PROJECT_STATUS_ORDER[a.status] : 999;
+      const bOrder = b.status && isProjectStatus(b.status) ? PROJECT_STATUS_ORDER[b.status] : 999;
       
       // First sort by status order
       if (aOrder !== bOrder) {
@@ -208,8 +214,8 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
       }
       
       // Then sort by updated date in descending order
-      const aDate = new Date(a.updatedAt || a['Updated Date'] || 0);
-      const bDate = new Date(b.updatedAt || b['Updated Date'] || 0);
+      const aDate = new Date(a.updatedAt || a.updatedDate || 0);
+      const bDate = new Date(b.updatedAt || b.updatedDate || 0);
       return bDate.getTime() - aDate.getTime();
     });
   } catch (error) {
@@ -226,7 +232,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
     // Initialize if needed
     initializeProjectsFile();
     const rawProjects = readCsvFile<Project>(PROJECTS_CSV_PATH);
-    const project = rawProjects.find(p => p.ID === id || p.id === id || p.projectID === id);
+    const project = rawProjects.find(p => p.id === id || p.projectID === id);
     return project ? await mapProjectForUI(project) : null;
   } catch (error) {
     console.error(`Error fetching project with id ${id}:`, error);

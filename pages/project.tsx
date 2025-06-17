@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import { getProjectById, getProjectMilestones, getProjectPayments, getProjectComments } from '../utils/projectsApi';
-import { Project } from '../types/projects';
-import { ProjectMilestone, ProjectPayment, ProjectComment } from '../types/projectItems';
+import { useProjectData } from '../hooks';
+import { Comment } from '../components/projects/CommentsList';
 import { getProjectGalleryImages } from '../utils/galleryUtils';
 import { GalleryImage } from '../components/projects/ProjectImageGallery';
 import { generatePropertyDescription } from '../utils/descriptionUtils';
@@ -13,7 +11,6 @@ import { generatePropertyDescription } from '../utils/descriptionUtils';
 // Import components
 import Button from '../components/common/buttons/Button';
 import {
-  ProjectImageGallery,
   PropertyDetailsCard,
   ProjectDetailsCard,
   AgentInfoCard,
@@ -21,28 +18,55 @@ import {
   PaymentList,
   CommentsList,
   ProjectDescriptionSection,
-  type Milestone,
-  type Payment,
-  type Comment,
 } from '../components/projects';
-import { CollapsibleSection } from '../components/common/ui';
 import { ImageGallery } from 'components/common/ui';
-
-// Typography components
-import { PageHeader, SectionTitle, BodyContent, CardTitle } from '../components/Typography';
 
 const ProjectDetails: NextPage = () => {
   const router = useRouter();
   const projectIdParam = router.query.projectId;
   const projectId = Array.isArray(projectIdParam) ? projectIdParam[0] : projectIdParam;
 
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // Extract projectId from URL if router.query is not ready yet
+  const getProjectIdFromUrl = (): string | undefined => {
+    if (projectId) {
+      return projectId;
+    }
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlProjectId = urlParams.get('projectId');
+      return urlProjectId || undefined; // Convert null to undefined
+    }
+    return undefined;
+  };
+
+  const currentProjectId = getProjectIdFromUrl();
+
+  // Detect if this is a direct URL access or page refresh
+  // Only force refresh if there's no sessionStorage data for this project
+  const isDirectAccess = useMemo(() => {
+    if (typeof window === 'undefined') return true;
+    
+    try {
+      const storedProject = sessionStorage.getItem('currentProject');
+      if (storedProject) {
+        const parsedProject = JSON.parse(storedProject);
+        // If we have stored data for this project, don't force refresh
+        return parsedProject.id !== currentProjectId;
+      }
+      return true; // No stored data, force refresh
+    } catch (e) {
+      return true; // Error reading sessionStorage, force refresh
+    }
+  }, [currentProjectId]);
+
+  // Use the reusable project data hook
+  const { project, milestones, payments, comments, loading, error } = useProjectData({
+    projectId: currentProjectId,
+    loadFromSessionStorage: true,
+    forceRefresh: isDirectAccess // Force fresh data on direct access/refresh
+  });
+
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
-  const [milestones, setMilestones] = useState<ProjectMilestone[]>([]);
-  const [payments, setPayments] = useState<ProjectPayment[]>([]);
-  const [comments, setComments] = useState<ProjectComment[]>([]);
 
   // Helper function to convert string URLs to GalleryImage objects
   const convertToGalleryImages = (urls: string[]): GalleryImage[] => {
@@ -53,130 +77,47 @@ const ProjectDetails: NextPage = () => {
     }));
   };
 
+  // Load gallery images when project data is available
   useEffect(() => {
-    // Skip effect if router is not ready
-    if (!router.isReady || !projectId) {
-      return;
-    }
-
-    async function loadProject() {
-      setLoading(true);
-      setError(null);
+    async function loadGalleryImages() {
+      if (!project) {
+        return;
+      }
 
       try {
-        // Try to get project data from sessionStorage first
-        if (typeof window !== 'undefined') {
-          try {
-            const storedProject = sessionStorage.getItem('currentProject');
-            if (storedProject) {
-              const parsedProject = JSON.parse(storedProject) as Project;                // Verify it's the project we're looking for
-              if (parsedProject.id === projectId) {
-                setProject(parsedProject);
-                const resolvedImages = await getProjectGalleryImages(parsedProject);
-                setGalleryImages(convertToGalleryImages(resolvedImages));
-                
-                // Fetch milestones and payments
-                const [projectMilestones, projectPayments, projectComments] = await Promise.all([
-                  getProjectMilestones(parsedProject.projectID || parsedProject.id),
-                  getProjectPayments(parsedProject.projectID || parsedProject.id),
-                  getProjectComments(parsedProject.projectID || parsedProject.id)
-                ]);
-                
-                setMilestones(projectMilestones);
-                setPayments(projectPayments);
-                setComments(projectComments);
-                setLoading(false);
-                return;
-              }
-            }
-          } catch (e) {
-            console.error('Failed to retrieve project from sessionStorage:', e);
-            // Continue to API fetch if sessionStorage fails
-          }
-        }
-
-        // If we couldn't get from sessionStorage, fetch from API
-        if (projectId && typeof projectId === 'string') {
-          try {
-            const fetchedProject = await getProjectById(projectId);
-
-            if (fetchedProject) {
-              setProject(fetchedProject);
-              try {
-                // Fetch all data in parallel
-                const projectIdForItems = fetchedProject.projectID || fetchedProject.id;
-                console.log('Fetching data for project:', projectIdForItems);
-                
-                const [images, projectMilestones, projectPayments, projectComments] = await Promise.all([
-                  getProjectGalleryImages(fetchedProject),
-                  getProjectMilestones(projectIdForItems),
-                  getProjectPayments(projectIdForItems),
-                  getProjectComments(projectIdForItems)
-                ]);
-
-                console.log('Fetched comments:', projectComments);
-
-                // Handle images
-                if (!images || images.length === 0) {
-                  console.warn('No gallery images found for project, using placeholder.');
-                  setGalleryImages([{
-                    url: '/assets/images/hero-bg.png',
-                    alt: 'Project placeholder image',
-                    description: 'No images available'
-                  }]);
-                } else {
-                  setGalleryImages(convertToGalleryImages(images));
-                }
-
-                // Set milestones, payments and comments
-                setMilestones(projectMilestones);
-                setPayments(projectPayments);
-                setComments(projectComments);
-                
-                console.log('Set comments:', projectComments);
-
-              } catch (error) {
-                console.error('Error loading project data:', error);
-                setGalleryImages([{
-                  url: '/assets/images/hero-bg.png',
-                  alt: 'Project placeholder image',
-                  description: 'Error loading images'
-                }]);
-              }
-            } else {
-              setError('Project not found. It may have been removed or the ID is invalid.');
-            }
-          } catch (error) {
-            console.error('Error fetching project from API:', error);
-            setError('Failed to fetch project details. Please try again later.');
-          }
+        // With the latest data migration, URLs should already be public URLs
+        // getProjectGalleryImages handles both legacy Wix URLs (with fallback conversion) and public URLs
+        const resolvedImages = await getProjectGalleryImages(project);
+        
+        if (!resolvedImages || resolvedImages.length === 0) {
+          console.warn('No gallery images found for project, using placeholder.');
+          setGalleryImages([{
+            url: '/assets/images/hero-bg.png',
+            alt: 'Project placeholder image',
+            description: 'No images available'
+          }]);
         } else {
-          setError('No project selected. Please return to the projects page and select a project.');
+          setGalleryImages(convertToGalleryImages(resolvedImages));
         }
-      } catch (err) {
-        console.error('Error loading project details:', err);
-        setError('Failed to load project details. Please try again later.');
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error('Error loading gallery images:', error);
+        setGalleryImages([{
+          url: '/assets/images/hero-bg.png',
+          alt: 'Project placeholder image',
+          description: 'Error loading images'
+        }]);
       }
     }
 
-    // Use a timeout to avoid immediate loading which can interfere with debugging
-    const loadTimeout = setTimeout(() => {
-      try {
-        loadProject();
-      } catch (error) {
-        console.error('Uncaught error in loadProject:', error);
-        setError('An unexpected error occurred. Please try again later.');
-        setLoading(false);
-      }
-    }, 100);
+    loadGalleryImages();
+  }, [project]);
 
-    // Clean up function
-    return () => {
-      clearTimeout(loadTimeout);
-    };
-  }, [projectId, router.isReady]);
+  // Handler for adding new comments using Amplify API
+  const handleCommentAdded = async (newComment: Comment) => {
+    // The CommentsList component handles local state updates
+    // and the hook will refresh data on the next page load
+    console.log('New comment added:', newComment);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -233,9 +174,7 @@ const ProjectDetails: NextPage = () => {
                 <CommentsList 
                   commentsData={comments} 
                   projectId={project.projectID || project.id} 
-                  onCommentAdded={(newComment) => {
-                    setComments(prevComments => [...prevComments, newComment]);
-                  }} 
+                  onCommentAdded={handleCommentAdded} 
                 />
               </div>
 

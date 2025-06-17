@@ -30,8 +30,8 @@ const ProjectStat = ({ icon, value, label }: { icon: string, value: string, labe
 );
 
 const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) => {
-  const { Bedrooms, Bathrooms, Floors } = project;
-  const squareFeet = project["Size Sqft."] || '0';
+  const { bedrooms, bathrooms, floors } = project;
+  const squareFeet = project.sizeSqft || 0;
 
   const content = (
     <div className="p-4 flex flex-col gap-2">
@@ -50,7 +50,7 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
                 }}
               />
             </div>
-            <BodyContent spacing="none" className="text-gray-600 leading-none">{project.Title || 'Address'}</BodyContent>
+            <BodyContent spacing="none" className="text-gray-600 leading-none">{project.title || project.address?.propertyFullAddress || 'Address'}</BodyContent>
           </div>
         </div>
       </div>
@@ -58,36 +58,36 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
       <div className="flex h-8 pl-4">
         <div className="flex items-center w-full">
           <BodyContent className="text-gray-600 w-32 leading-none my-auto">Property Type:</BodyContent>
-          <BodyContent className="leading-none my-auto">{project["Property Type"] || 'Single Family'}</BodyContent>
+          <BodyContent className="leading-none my-auto">{project.propertyType || 'Single Family'}</BodyContent>
         </div>
       </div>
 
       <div className="flex h-8 pl-4 bg-[#F9F9F9]">
         <div className="flex items-center w-full">
           <BodyContent className="text-gray-600 w-32 leading-none my-auto">Year Built:</BodyContent>
-          <BodyContent className="leading-none my-auto">{project["Year Built"] || '1971'}</BodyContent>
+          <BodyContent className="leading-none my-auto">{project.yearBuilt || '1971'}</BodyContent>
         </div>
       </div>
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 py-3">
         <ProjectStat
           icon="/assets/icons/ic-bedroom.svg"
-          value={Bedrooms || '4'}
+          value={bedrooms?.toString() || '4'}
           label="bdrms"
         />
         <ProjectStat
           icon="/assets/icons/ic-staircase.svg"
-          value={Floors || '2'}
+          value={floors?.toString() || '2'}
           label="stories"
         />
         <ProjectStat
           icon="/assets/icons/ic-bath.svg"
-          value={Bathrooms || '4'}
+          value={bathrooms?.toString() || '4'}
           label="baths"
         />
         <ProjectStat
           icon="/assets/icons/ic-dimension.svg"
-          value={squareFeet || '2427'}
+          value={squareFeet?.toString() || '2427'}
           label="sqft"
         />
       </div>
@@ -95,12 +95,12 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-1">
         <Button
           variant="secondary"
-          href={project["Zillow Link"] || "#"}
+          href={project.zillowLink || "#"}
           text="View on Zillow"
         />
         <Button
           variant="secondary"
-          href={project["Redfin Link"] || "#"}
+          href={project.redfinLink || "#"}
           text="View on Redfin"
         />
       </div>

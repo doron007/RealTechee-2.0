@@ -243,6 +243,9 @@ const ProjectMilestones = a.model({
   estimatedFinish: a.datetime(),
   isCategory: a.boolean(),
   isInternal: a.boolean(),
+  
+  // Relationships
+  project: a.belongsTo('Projects', 'projectId'),
 }).authorization((allow) => allow.publicApiKey());
 
 const ProjectPaymentTerms = a.model({
@@ -253,13 +256,16 @@ const ProjectPaymentTerms = a.model({
   paymentDue: a.string(),
   description: a.string(),
   order: a.float(),
-  paid: a.id(),
+  paid: a.boolean(),
   parentPaymentId: a.id(),
   isCategory: a.boolean(),
   internal: a.boolean(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
+  
+  // Relationships
+  project: a.belongsTo('Projects', 'projectID'),
 }).authorization((allow) => allow.publicApiKey());
 
 const ProjectPermissions = a.model({
@@ -372,6 +378,8 @@ const Projects = a.model({
   address: a.belongsTo('Properties', 'addressId'),
   quotes: a.hasMany('Quotes', 'projectId'),
   comments: a.hasMany('ProjectComments', 'projectId'),
+  milestones: a.hasMany('ProjectMilestones', 'projectId'),
+  paymentTerms: a.hasMany('ProjectPaymentTerms', 'projectID'),
 }).authorization((allow) => allow.publicApiKey());
 
 const Properties = a.model({

@@ -70,17 +70,17 @@ export default function ProjectCard({
     id,
     title,
     imageUrl,
-    Status: status
+    status
   } = project;
 
-  // Access fields with special characters or spaces using bracket notation
-  const AddedValue = formatCurrency(project['Added value']);
-  const BoostPrice = formatCurrency(project["Booster Estimated Cost"] || project['Boost Price']);
-  const SalePrice = formatCurrency(project["Sale Price"]);
-  const Bedrooms = project.Bedrooms || '0';
-  const Bathrooms = project.Bathrooms || '0';
-  const Floors = project.Floors || '0';
-  const squareFeet = project["Size Sqft."] || '0';
+  // Access fields using camelCase field names
+  const AddedValue = formatCurrency(project.addedValue?.toString());
+  const BoostPrice = formatCurrency((project.boosterEstimatedCost || project.boostPrice)?.toString());
+  const SalePrice = formatCurrency(project.salePrice?.toString());
+  const Bedrooms = project.bedrooms?.toString() || '0';
+  const Bathrooms = project.bathrooms?.toString() || '0';
+  const Floors = project.floors?.toString() || '0';
+  const squareFeet = project.sizeSqft?.toString() || '0';
 
   //
   // // Debug logging
@@ -189,20 +189,20 @@ export default function ProjectCard({
           )}
 
           {/* 3. Value Added Section */}
-          {(project['Added value'] || project["Booster Estimated Cost"] || project['Boost Price'] || project["Sale Price"]) && (
+          {(project.addedValue || project.boosterEstimatedCost || project.boostPrice || project.salePrice) && (
             <div className="flex flex-col mb-3">
               {/* Show different label based on whether there's Added Value */}
               <CardContent spacing="none" className="text-gray-500 mb-1">
-                {project['Added value'] && parseFloat(project['Added value']) > 0 ? 'Value Added' : 'Boost Cost'}
+                {project.addedValue && parseFloat(project.addedValue.toString()) > 0 ? 'Value Added' : 'Boost Cost'}
               </CardContent>
               
               {/* Main Price Value - Show Added Value or Boost Price */}
               <SectionTitle spacing="none" className="mb-1">
-                ${AddedValue && parseFloat(project['Added value'] || '0') > 0 ? AddedValue : BoostPrice}
+                ${AddedValue && parseFloat(project.addedValue?.toString() || '0') > 0 ? AddedValue : BoostPrice}
               </SectionTitle>
               
               {/* Price Comparison Section - Only show when there's Added Value */}
-              {project['Added value'] && parseFloat(project['Added value']) > 0 && (
+              {project.addedValue && parseFloat(project.addedValue.toString()) > 0 && (
                 <div className="flex items-center gap-3 mb-2">
                   {BoostPrice && (
                     <Subtitle spacing="none" className="text-gray-500">${BoostPrice}</Subtitle>

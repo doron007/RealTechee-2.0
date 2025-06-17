@@ -54,7 +54,7 @@ export default function GraphQLDebugger() {
       
     } catch (error) {
       console.error('Properties query error:', error);
-      debug.queries.properties = { error: error.message };
+      debug.queries.properties = { error: error instanceof Error ? error.message : String(error) };
     }
 
     // Test Contacts query
@@ -76,7 +76,7 @@ export default function GraphQLDebugger() {
       
     } catch (error) {
       console.error('Contacts query error:', error);
-      debug.queries.contacts = { error: error.message };
+      debug.queries.contacts = { error: error instanceof Error ? error.message : String(error) };
     }
 
     // Test Projects query
@@ -98,7 +98,7 @@ export default function GraphQLDebugger() {
       
     } catch (error) {
       console.error('Projects query error:', error);
-      debug.queries.projects = { error: error.message };
+      debug.queries.projects = { error: error instanceof Error ? error.message : String(error) };
     }
 
     // Test a single item query to see if the issue is with list queries
@@ -122,7 +122,7 @@ export default function GraphQLDebugger() {
       }
     } catch (error) {
       console.error('Single item query error:', error);
-      debug.queries.singleProperty = { error: error.message };
+      debug.queries.singleProperty = { error: error instanceof Error ? error.message : String(error) };
     }
 
     console.log('\n📋 Debug Analysis Summary:', debug);

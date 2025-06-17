@@ -2,54 +2,112 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Section } from '../common/layout';
 import Button from '../common/buttons/Button';
-import { SectionTitle, SubContent } from '../Typography';
 import ProjectCard from './ProjectCard';
-import { getProjects } from '../../utils/projectsApi';
+import { optimizedProjectsAPI } from '../../utils/amplifyAPI';
 import { Project, ProjectFilter } from '../../types/projects';
+import { createLogger } from '../../utils/logger';
 
 // No need for fallback data - we'll use the CSV data from projectsService
 
 interface ProjectsGridSectionProps {
-  title?: string;
   className?: string;
   projectsPerPage?: number;
   filter?: ProjectFilter;
 }
 
+const logger = createLogger('ProjectsGridSection');
+
 export default function ProjectsGridSection({
-  title = 'Our Recent Projects',
   className = '',
   projectsPerPage = 6,
   filter
 }: ProjectsGridSectionProps) {
-  // console.log('ProjectsGridSection component rendered');
+  
   const [projects, setProjects] = useState<Project[]>([]);
+  const [enrichedProjects, setEnrichedProjects] = useState<Map<string, any>>(new Map());
   const [loading, setLoading] = useState(true);
+  const [backgroundLoading, setBackgroundLoading] = useState(false);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch projects from API
+  // Three-tier loading strategy for UPL optimization
   useEffect(() => {
-    // console.log('ProjectsGridSection useEffect triggered', { filter });
-
     async function fetchProjects() {
       try {
-        // console.log('fetchProjects function called');
         setLoading(true);
-        const fetchedProjects = await getProjects(filter);
-        // console.log('API response:', fetchedProjects);
+        setError('');
 
-        // If API returns projects, use them
-        if (fetchedProjects && fetchedProjects.length > 0) {
-          setProjects(fetchedProjects);
-          setError('');
+        // Tier 1: Load essential card data immediately
+        const amplifyFilter = {
+          category: filter?.category,
+          location: filter?.location,
+          status: filter?.status,
+          featured: filter?.featured,
+          search: filter?.search,
+          includeArchived: filter?.includeArchived
+        };
+
+        const result = await optimizedProjectsAPI.loadProjectCards(
+          amplifyFilter, 
+          1000 // Get all filtered projects for client-side pagination
+        );
+
+        if (result.success && result.data) {
+          // Convert Amplify data to Project format (mapping Amplify fields to CSV field names)
+          const mappedProjects = result.data.map((amplifyProject: any) => ({
+            // Map Amplify fields to Project interface
+            id: amplifyProject.id,
+            title: amplifyProject.title || '',
+            description: amplifyProject.description || '',
+            imageUrl: amplifyProject.image || '',
+            category: amplifyProject.status || '',
+            location: '', // Will be filled from address relationship
+            completionDate: amplifyProject.updatedDate || amplifyProject.createdDate || '',
+            budget: amplifyProject.budget || '',
+            featured: amplifyProject.status === 'Completed',
+            createdAt: amplifyProject.createdDate || '',
+            updatedAt: amplifyProject.updatedDate || '',
+            
+            // Map Amplify field names to CSV field names for ProjectCard compatibility
+            'Status': amplifyProject.status,
+            'Bedrooms': amplifyProject.bedrooms || 0,
+            'Bathrooms': amplifyProject.bathrooms || 0,
+            'Floors': amplifyProject.floors || 0,
+            'Size Sqft.': amplifyProject.sizeSqft || 0,
+            'Added value': amplifyProject.addedValue || 0,
+            'Booster Estimated Cost': amplifyProject.boosterEstimatedCost || 0,
+            'Boost Price': amplifyProject.boostPrice || 0,
+            'Sale Price': amplifyProject.salePrice || 0,
+            
+            // Keep original Amplify data
+            ...amplifyProject
+          }));
+
+          setProjects(mappedProjects);
+
+          // Tier 2: Load related data in background for first page only (optimization)
+          if (mappedProjects.length > 0) {
+            setBackgroundLoading(true);
+            // Only background load first page to optimize initial UPL
+            const firstPageProjects = mappedProjects.slice(0, projectsPerPage);
+            const projectIds = firstPageProjects.map((p: Project) => p.id);
+            
+            optimizedProjectsAPI.loadProjectsWithRelations(projectIds)
+              .then(enrichedData => {
+                setEnrichedProjects(enrichedData);
+                setBackgroundLoading(false);
+              })
+              .catch(err => {
+                logger.warn('Background loading failed', err);
+                setBackgroundLoading(false);
+              });
+          }
         } else {
-          // console.log('No projects returned from API');
           setProjects([]);
           setError('No projects found matching your criteria.');
         }
       } catch (err) {
-        console.error('Error fetching projects:', err);
+        logger.error('Error fetching projects', err);
         setProjects([]);
         setError('Failed to load projects. Please try again later.');
       } finally {
@@ -58,7 +116,7 @@ export default function ProjectsGridSection({
     }
 
     fetchProjects();
-  }, [filter]);
+  }, [filter, projectsPerPage]);
 
   // Calculate total number of pages
   const totalProjects = projects.length;
@@ -84,28 +142,76 @@ export default function ProjectsGridSection({
 
   const router = useRouter();
   
-  // Handle project card click
-  const handleProjectClick = (projectId: string) => {
-    // Find the project details from our loaded projects
-    const project = projects.find(p => p.id === projectId);
-    if (project) {
-      // Store project data in sessionStorage instead of passing via URL
-      // This is cleaner, more efficient, and avoids URL length limitations
-      try {
-        sessionStorage.setItem('currentProject', JSON.stringify(project));
-        // Just navigate with the ID
-        router.push({
-          pathname: '/project',
-          query: { projectId }
-        });
-      } catch (err) {
-        console.error('Failed to store project in sessionStorage:', err);
-        // Fallback to simple navigation if sessionStorage fails
-        router.push({
-          pathname: '/project',
-          query: { projectId }
-        });
+  // Handle project card click with optimized data loading
+  const handleProjectClick = async (projectId: string) => {
+    try {
+      logger.debug('Handling project click', { 
+        projectId,
+        enrichedProjectsAvailable: Array.from(enrichedProjects.keys())
+      });
+      
+      // Check if we have enriched data already loaded
+      let projectData = enrichedProjects.get(projectId);
+      logger.debug('Enriched data check', { hasEnrichedData: !!projectData });
+      
+      if (!projectData) {
+        logger.info('Loading project data from API', { projectId });
+        // Tier 3: Load full project data with all related information
+        const projectResult = await optimizedProjectsAPI.loadFullProject(projectId);
+        
+        if (projectResult.success && projectResult.data) {
+          // Use the numeric projectID for related data lookups
+          const numericProjectId = projectResult.data.projectID;
+          logger.debug('Using numeric projectID for related data', { numericProjectId });
+          
+          const [milestonesResult, paymentsResult, commentsResult] = await Promise.all([
+            optimizedProjectsAPI.getProjectMilestones(numericProjectId),
+            optimizedProjectsAPI.getProjectPaymentTerms(numericProjectId),
+            optimizedProjectsAPI.getProjectComments(numericProjectId)
+          ]);
+
+          logger.debug('API Results loaded', {
+            project: projectResult.success,
+            milestones: milestonesResult.success ? milestonesResult.data?.length : 'failed',
+            payments: paymentsResult.success ? paymentsResult.data?.length : 'failed',
+            comments: commentsResult.success ? commentsResult.data?.length : 'failed'
+          });
+
+          projectData = {
+            ...projectResult.data,
+            // Include all related data for instant loading on project page
+            milestones: milestonesResult.success ? milestonesResult.data : [],
+            payments: paymentsResult.success ? paymentsResult.data : [],
+            comments: commentsResult.success ? commentsResult.data : []
+          };
+          logger.debug('Complete project data prepared', {
+            id: projectData.id,
+            projectID: projectData.projectID,
+            hasMilestones: projectData.milestones?.length > 0,
+            hasPayments: projectData.payments?.length > 0,
+            hasComments: projectData.comments?.length > 0
+          });
+        }
       }
+
+      if (projectData) {
+        // Store complete project data with all related information in sessionStorage
+        logger.info('Storing complete project data in sessionStorage', { projectId });
+        sessionStorage.setItem('currentProject', JSON.stringify(projectData));
+      }
+
+      // Navigate to project page
+      router.push({
+        pathname: '/project',
+        query: { projectId }
+      });
+    } catch (err) {
+      logger.error('Failed to load project details', err);
+      // Fallback to simple navigation
+      router.push({
+        pathname: '/project',
+        query: { projectId }
+      });
     }
   };
 
@@ -131,6 +237,13 @@ export default function ProjectsGridSection({
       {loading && (
         <div className="w-full flex justify-center items-center py-16">
           <div className="animate-pulse text-gray-500">Loading projects...</div>
+        </div>
+      )}
+
+      {/* Background Loading Indicator */}
+      {backgroundLoading && !loading && (
+        <div className="w-full text-center mb-4">
+          <div className="text-blue-500 text-sm">Loading enhanced details...</div>
         </div>
       )}
 
