@@ -80,15 +80,15 @@ echo_step "New version: v$new_version"
 echo_step "Pushing changes and tags to main branch..."
 git push origin main --follow-tags
 
-# Switch to prod branch and merge from main
-echo_step "Switching to prod branch and merging changes from main..."
-git checkout prod
-git pull origin prod
+# Switch to prod-v2 branch and merge from main
+echo_step "Switching to prod-v2 branch and merging changes from main..."
+git checkout prod-v2
+git pull origin prod-v2
 git merge main
 
 # Push to production to trigger deployment
-echo_step "Pushing to prod branch to trigger deployment..."
-git push origin prod
+echo_step "Pushing to prod-v2 branch to trigger deployment..."
+git push origin prod-v2
 
 # Switch back to main branch
 echo_step "Switching back to main branch..."
@@ -96,3 +96,4 @@ git checkout main
 
 echo_step "Deployment initiated successfully! Version v$new_version is now being deployed."
 echo "You can check the deployment status in the AWS Amplify console."
+echo "App: RealTechee-Gen2 | Branch: prod-v2"
