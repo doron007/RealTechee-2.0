@@ -70,7 +70,7 @@ esac
 
 # Increment version and create git tag
 echo_step "Incrementing $version_type version..."
-npm version $version_type
+npm version $version_type -m "Release version %s"
 
 # Get the new version
 new_version=$(node -p "require('./package.json').version")
