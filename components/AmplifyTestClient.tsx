@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   propertiesAPI, 
   contactsAPI, 
@@ -40,61 +40,7 @@ export default function AmplifyTestClient() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Ensure component is mounted before doing anything
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Load data when component mounts
-  useEffect(() => {
-    if (mounted) {
-      loadAllData();
-    }
-  }, [mounted]);
-
-  const getAllTableCounts = async (): Promise<Record<string, number | string>> => {
-    const apis = [
-      { name: 'Affiliates', api: affiliatesAPI },
-      { name: 'Auth', api: authAPI },
-      { name: 'BackOfficeAssignTo', api: backOfficeAssignToAPI },
-      { name: 'BackOfficeBookingStatuses', api: backOfficeBookingStatusesAPI },
-      { name: 'BackOfficeBrokerage', api: backOfficeBrokerageAPI },
-      { name: 'BackOfficeNotifications', api: backOfficeNotificationsAPI },
-      { name: 'BackOfficeProducts', api: backOfficeProductsAPI },
-      { name: 'BackOfficeProjectStatuses', api: backOfficeProjectStatusesAPI },
-      { name: 'BackOfficeQuoteStatuses', api: backOfficeQuoteStatusesAPI },
-      { name: 'BackOfficeRequestStatuses', api: backOfficeRequestStatusesAPI },
-      { name: 'BackOfficeRoleTypes', api: backOfficeRoleTypesAPI },
-      { name: 'ContactUs', api: contactUsAPI },
-      { name: 'Contacts', api: contactsAPI },
-      { name: 'Legal', api: legalAPI },
-      { name: 'MemberSignature', api: memberSignatureAPI },
-      { name: 'PendingAppoitments', api: pendingAppoitmentsAPI },
-      { name: 'ProjectComments', api: projectCommentsAPI },
-      { name: 'ProjectMilestones', api: projectMilestonesAPI },
-      { name: 'ProjectPaymentTerms', api: projectPaymentTermsAPI },
-      { name: 'ProjectPermissions', api: projectPermissionsAPI },
-      { name: 'Projects', api: projectsAPI },
-      { name: 'Properties', api: propertiesAPI },
-      { name: 'QuoteItems', api: quoteItemsAPI },
-      { name: 'Quotes', api: quotesAPI },
-      { name: 'Requests', api: requestsAPI },
-      { name: 'eSignatureDocuments', api: eSignatureDocumentsAPI }
-    ];
-
-    const counts: Record<string, number | string> = {};
-    for (const { name, api } of apis) {
-      try {
-        const result = await api.list();
-        counts[name] = result.success ? (result.data?.length || 0) : 'Error';
-      } catch (error) {
-        counts[name] = 'Error';
-      }
-    }
-    return counts;
-  };
-
-  const loadAllData = async () => {
+  const loadAllData = useCallback(async () => {
     setLoading(true);
     console.log('🔄 Starting data load...');
     
@@ -153,6 +99,60 @@ export default function AmplifyTestClient() {
     }
     
     setLoading(false);
+  }, []);
+
+  // Ensure component is mounted before doing anything
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Load data when component mounts
+  useEffect(() => {
+    if (mounted) {
+      loadAllData();
+    }
+  }, [mounted, loadAllData]);
+
+  const getAllTableCounts = async (): Promise<Record<string, number | string>> => {
+    const apis = [
+      { name: 'Affiliates', api: affiliatesAPI },
+      { name: 'Auth', api: authAPI },
+      { name: 'BackOfficeAssignTo', api: backOfficeAssignToAPI },
+      { name: 'BackOfficeBookingStatuses', api: backOfficeBookingStatusesAPI },
+      { name: 'BackOfficeBrokerage', api: backOfficeBrokerageAPI },
+      { name: 'BackOfficeNotifications', api: backOfficeNotificationsAPI },
+      { name: 'BackOfficeProducts', api: backOfficeProductsAPI },
+      { name: 'BackOfficeProjectStatuses', api: backOfficeProjectStatusesAPI },
+      { name: 'BackOfficeQuoteStatuses', api: backOfficeQuoteStatusesAPI },
+      { name: 'BackOfficeRequestStatuses', api: backOfficeRequestStatusesAPI },
+      { name: 'BackOfficeRoleTypes', api: backOfficeRoleTypesAPI },
+      { name: 'ContactUs', api: contactUsAPI },
+      { name: 'Contacts', api: contactsAPI },
+      { name: 'Legal', api: legalAPI },
+      { name: 'MemberSignature', api: memberSignatureAPI },
+      { name: 'PendingAppoitments', api: pendingAppoitmentsAPI },
+      { name: 'ProjectComments', api: projectCommentsAPI },
+      { name: 'ProjectMilestones', api: projectMilestonesAPI },
+      { name: 'ProjectPaymentTerms', api: projectPaymentTermsAPI },
+      { name: 'ProjectPermissions', api: projectPermissionsAPI },
+      { name: 'Projects', api: projectsAPI },
+      { name: 'Properties', api: propertiesAPI },
+      { name: 'QuoteItems', api: quoteItemsAPI },
+      { name: 'Quotes', api: quotesAPI },
+      { name: 'Requests', api: requestsAPI },
+      { name: 'eSignatureDocuments', api: eSignatureDocumentsAPI }
+    ];
+
+    const counts: Record<string, number | string> = {};
+    for (const { name, api } of apis) {
+      try {
+        const result = await api.list();
+        counts[name] = result.success ? (result.data?.length || 0) : 'Error';
+      } catch (error) {
+        counts[name] = 'Error';
+      }
+    }
+    return counts;
   };
 
   const createTestProperty = async () => {

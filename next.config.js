@@ -25,19 +25,17 @@ const nextConfig = {
       }
     ]
   },
+  // Improve Fast Refresh and development experience
   webpack: (config, { dev, isServer }) => {
-    // Enable source maps in development
-    if (dev) {
-      config.devtool = 'source-map';
+    if (dev && !isServer) {
+      // Improve Fast Refresh behavior
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300,
+      };
     }
-    
-    // Ensure proper handling of source maps for server code
-    if (isServer) {
-      config.optimization.minimize = false;
-    }
-    
     return config;
-  }
+  },
 };
 
 module.exports = nextConfig;

@@ -562,11 +562,11 @@ export const SubtitlePill: React.FC<SubtitlePillProps> = ({
     className
   );
   
-  // Simple style object with direct property assignment
-  const style = {
-    backgroundColor: backgroundColor || '',
-    color: textColor || ''
-  };
+  // Only create style object if custom colors are provided to avoid hydration mismatch
+  const style = (backgroundColor || textColor) ? {
+    ...(backgroundColor && { backgroundColor }),
+    ...(textColor && { color: textColor })
+  } : undefined;
   
   return <Element className={classes} style={style}>{children}</Element>;
 };

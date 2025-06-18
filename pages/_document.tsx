@@ -13,20 +13,14 @@ class MyDocument extends Document {
           {/* Character set */}
           <meta charSet="utf-8" />
           
-          {/* Preconnect to external domains */}
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          {/* Favicons */}
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="apple-touch-icon" href="/assets/logos/favicon-192x192.png" />
+          <link rel="manifest" href="/site.webmanifest" />
           
-          {/* Font preloading and loading */}
-          <link
-            rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-            as="style"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          />
+          {/* Local fonts are used - no need for Google Fonts preconnect */}
           
           {/* Google Analytics, if needed */}
           {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogTitle, TextField, IconButton, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ImageIcon from '@mui/icons-material/Image';
+import Image from 'next/image';
 import Button from '../common/buttons/Button';
 
 interface AddCommentDialogProps {
@@ -91,10 +92,12 @@ export default function AddCommentDialog({ open, onClose, onSubmit }: AddComment
           <div className="grid grid-cols-3 gap-2 mb-4">
             {previews.map((preview, index) => (
               <div key={index} className="relative aspect-square">
-                <img 
+                <Image 
                   src={preview} 
                   alt={`Preview ${index + 1}`}
                   className="w-full h-full object-cover rounded"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <IconButton
                   size="small"

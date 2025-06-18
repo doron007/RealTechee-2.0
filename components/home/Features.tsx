@@ -76,13 +76,14 @@ export default function Features(props: FeaturesProps) {
       }
     );
 
-    if (featuresRef.current) {
-      observer.observe(featuresRef.current);
+    const currentRef = featuresRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (featuresRef.current) {
-        observer.unobserve(featuresRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
