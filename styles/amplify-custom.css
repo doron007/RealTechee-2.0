@@ -1,0 +1,182 @@
+/* Custom styling for Amplify UI components to match RealTechee design system */
+
+/* Override Amplify UI default styles */
+[data-amplify-authenticator] {
+  --amplify-colors-font-primary: #2A2B2E;
+  --amplify-colors-font-secondary: #6E6E73;
+  --amplify-colors-font-tertiary: #919191;
+  
+  --amplify-colors-brand-primary-10: #CE635E;
+  --amplify-colors-brand-primary-80: #CE635E;
+  --amplify-colors-brand-primary-90: #A54F4B;
+  --amplify-colors-brand-primary-100: #7C3B38;
+  
+  --amplify-colors-background-primary: #FFFFFF;
+  --amplify-colors-background-secondary: #F9F4F3;
+  
+  --amplify-colors-border-primary: #E4E4E4;
+  --amplify-colors-border-secondary: #D2CAC8;
+  
+  --amplify-radii-small: 8px;
+  --amplify-radii-medium: 12px;
+  --amplify-radii-large: 16px;
+  
+  --amplify-space-small: 0.75rem;
+  --amplify-space-medium: 1rem;
+  --amplify-space-large: 1.5rem;
+  
+  --amplify-fonts-default-variable: 'Roboto', sans-serif;
+  --amplify-line-heights-medium: 1.5;
+}
+
+/* Form field styling */
+[data-amplify-authenticator] .amplify-input {
+  border-radius: 8px;
+  border-color: #E4E4E4;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  padding: 12px 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+[data-amplify-authenticator] .amplify-input:focus {
+  border-color: #CE635E;
+  box-shadow: 0 0 0 3px rgba(206, 99, 94, 0.1);
+  outline: none;
+}
+
+/* Button styling */
+[data-amplify-authenticator] .amplify-button--primary {
+  background-color: #CE635E;
+  border-color: #CE635E;
+  border-radius: 8px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+[data-amplify-authenticator] .amplify-button--primary:hover {
+  background-color: #A54F4B;
+  border-color: #A54F4B;
+  transform: translateY(-1px);
+}
+
+[data-amplify-authenticator] .amplify-button--primary:active {
+  background-color: #7C3B38;
+  border-color: #7C3B38;
+  transform: translateY(0);
+}
+
+[data-amplify-authenticator] .amplify-button--link {
+  color: #E9664A;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+[data-amplify-authenticator] .amplify-button--link:hover {
+  color: #A54F4B;
+  text-decoration: underline;
+}
+
+/* Label styling */
+[data-amplify-authenticator] .amplify-label {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 500;
+  color: #2A2B2E;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Error message styling */
+[data-amplify-authenticator] [data-amplify-router-content] > div > div:first-child {
+  color: #D11919;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background-color: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 8px;
+}
+
+/* Tab styling for sign in/sign up */
+[data-amplify-authenticator] .amplify-tabs {
+  border-bottom: 2px solid #E4E4E4;
+  margin-bottom: 24px;
+}
+
+[data-amplify-authenticator] .amplify-tabs-item {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
+  color: #6E6E73;
+  padding: 12px 0;
+  margin-right: 32px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+[data-amplify-authenticator] .amplify-tabs-item[data-state="active"] {
+  color: #CE635E;
+  border-bottom-color: #CE635E;
+}
+
+[data-amplify-authenticator] .amplify-tabs-item:hover {
+  color: #2A2B2E;
+}
+
+/* Loading spinner */
+[data-amplify-authenticator] .amplify-loader {
+  border-color: #E4E4E4;
+  border-top-color: #CE635E;
+}
+
+/* Form container spacing */
+[data-amplify-authenticator] form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Ensure form fields are properly contained */
+[data-amplify-authenticator] .amplify-field {
+  width: 100%;
+  max-width: 100%;
+}
+
+[data-amplify-authenticator] .amplify-field-group {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Form field container */
+[data-amplify-authenticator] .amplify-field > div {
+  width: 100%;
+}
+
+/* Fieldset styling */
+[data-amplify-authenticator] .amplify-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Link styling within forms */
+[data-amplify-authenticator] a {
+  color: #E9664A;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+[data-amplify-authenticator] a:hover {
+  color: #A54F4B;
+  text-decoration: underline;
+}

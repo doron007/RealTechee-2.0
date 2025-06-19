@@ -37,7 +37,10 @@ const Affiliates = a.model({
   linkSla2Name: a.url(),
   contactId: a.id(),
   addressId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Auth = a.model({
   owner: a.string(),
@@ -46,7 +49,10 @@ const Auth = a.model({
   token: a.string(),
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeAssignTo = a.model({
   createdDate: a.datetime(),
@@ -60,7 +66,10 @@ const BackOfficeAssignTo = a.model({
   active: a.boolean(),
   order: a.integer(),
   contactId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeBookingStatuses = a.model({
   title: a.string(),
@@ -68,7 +77,10 @@ const BackOfficeBookingStatuses = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeBrokerage = a.model({
   title: a.string(),
@@ -77,7 +89,10 @@ const BackOfficeBrokerage = a.model({
   owner: a.string(),
   order: a.float(),
   live: a.boolean(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeNotifications = a.model({
   createdDate: a.datetime(),
@@ -90,7 +105,10 @@ const BackOfficeNotifications = a.model({
   subject: a.string(),
   body: a.string(),
   bodyAsSimpleText: a.string(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeProducts = a.model({
   title: a.string(),
@@ -98,7 +116,10 @@ const BackOfficeProducts = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeProjectStatuses = a.model({
   title: a.string(),
@@ -106,7 +127,10 @@ const BackOfficeProjectStatuses = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeQuoteStatuses = a.model({
   title: a.string(),
@@ -114,7 +138,10 @@ const BackOfficeQuoteStatuses = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeRequestStatuses = a.model({
   title: a.string(),
@@ -122,7 +149,10 @@ const BackOfficeRequestStatuses = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const BackOfficeRoleTypes = a.model({
   title: a.string(),
@@ -130,7 +160,10 @@ const BackOfficeRoleTypes = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const ContactUs = a.model({
   submissionTime: a.datetime(),
@@ -142,7 +175,10 @@ const ContactUs = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   addressId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Contacts = a.model({
   firstName: a.string(),
@@ -164,7 +200,10 @@ const Contacts = a.model({
   homeowner3Projects: a.hasMany('Projects', 'homeowner3ContactId'),
   agentQuotes: a.hasMany('Quotes', 'agentContactId'),
   homeownerQuotes: a.hasMany('Quotes', 'homeownerContactId'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Legal = a.model({
   title: a.string(),
@@ -174,7 +213,10 @@ const Legal = a.model({
   content: a.string(),
   legalDocumentId: a.id(),
   documentId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const MemberSignature = a.model({
   memberEmail: a.email(),
@@ -189,7 +231,10 @@ const MemberSignature = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const PendingAppoitments = a.model({
   assignedTo: a.string(),
@@ -211,7 +256,10 @@ const PendingAppoitments = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const ProjectComments = a.model({
   postedByContactId: a.id(),
@@ -228,7 +276,12 @@ const ProjectComments = a.model({
   
   // Relationships
   project: a.belongsTo('Projects', 'projectId'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.owner(),
+  allow.groups(['admin', 'agent'])
+]);
 
 const ProjectMilestones = a.model({
   createdDate: a.datetime(),
@@ -246,7 +299,10 @@ const ProjectMilestones = a.model({
   
   // Relationships
   project: a.belongsTo('Projects', 'projectId'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const ProjectPaymentTerms = a.model({
   projectID: a.id(),
@@ -266,7 +322,10 @@ const ProjectPaymentTerms = a.model({
   
   // Relationships
   project: a.belongsTo('Projects', 'projectID'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const ProjectPermissions = a.model({
   createdDate: a.datetime(),
@@ -275,7 +334,10 @@ const ProjectPermissions = a.model({
   owner: a.string(),
   na: a.string(),
   permissions: a.boolean(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Projects = a.model({
   projectID: a.id(),
@@ -380,7 +442,10 @@ const Projects = a.model({
   comments: a.hasMany('ProjectComments', 'projectId'),
   milestones: a.hasMany('ProjectMilestones', 'projectId'),
   paymentTerms: a.hasMany('ProjectPaymentTerms', 'projectID'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Properties = a.model({
   propertyFullAddress: a.string(),
@@ -402,7 +467,10 @@ const Properties = a.model({
   
   // Reverse relationships - see all projects for this property
   projects: a.hasMany('Projects', 'addressId'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const QuoteItems = a.model({
   createdDate: a.datetime(),
@@ -425,7 +493,10 @@ const QuoteItems = a.model({
   marginPercent: a.float(),
   cost: a.float(),
   price: a.float(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Quotes = a.model({
   requestId: a.id(),
@@ -499,7 +570,10 @@ const Quotes = a.model({
   project: a.belongsTo('Projects', 'projectId'),
   agent: a.belongsTo('Contacts', 'agentContactId'),
   homeowner: a.belongsTo('Contacts', 'homeownerContactId'),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const Requests = a.model({
   createdDate: a.datetime(),
@@ -537,7 +611,10 @@ const Requests = a.model({
   agentContactId: a.id(),
   homeownerContactId: a.id(),
   addressId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const eSignatureDocuments = a.model({
   signed: a.boolean(),
@@ -558,7 +635,10 @@ const eSignatureDocuments = a.model({
   updatedDate: a.datetime(),
   owner: a.string(),
   addressId: a.id(),
-}).authorization((allow) => allow.publicApiKey());
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
 
 const schema = a.schema({
   Affiliates,
@@ -593,7 +673,7 @@ const schema = a.schema({
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'apiKey',
+    defaultAuthorizationMode: 'userPool',
     apiKeyAuthorizationMode: {
       expiresInDays: 30
     }

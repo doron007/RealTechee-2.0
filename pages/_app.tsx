@@ -2,9 +2,14 @@ import Layout from '../components/common/layout/Layout';
 import '../styles/globals.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import '../styles/image-gallery-custom.css';
+import '../styles/amplify-custom.css';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
 import type { ReactElement } from 'react';
+import { Amplify } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import outputs from '../amplify_outputs.json';
 
 // Define types for pages with custom layouts
 type NextPageWithLayout = NextPage & {
@@ -15,6 +20,9 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
+// Configure Amplify
+Amplify.configure(outputs);
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Get layout from page or use default Layout
@@ -27,7 +35,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </Layout>
   );
 
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <Authenticator.Provider>
+      {getLayout(<Component {...pageProps} />)}
+    </Authenticator.Provider>
+  );
 }
 
 export default MyApp;

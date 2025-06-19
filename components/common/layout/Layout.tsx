@@ -2,6 +2,7 @@ import { useEffect, ReactNode } from 'react';
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,6 +11,11 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, title, description }: LayoutProps) {
+  // Get authentication state with route
+  const { user, signOut } = useAuthenticator((context) => [context.user, context.route]);
+
+  // Remove debug logs - authentication working
+
   // Handle scroll restoration and smooth scrolling to hash links
   useEffect(() => {
     const handleHashChange = () => {
@@ -75,7 +81,11 @@ export default function Layout({ children, title, description }: LayoutProps) {
       </Head>
 
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <Header 
+          userLoggedIn={!!user}
+          user={user}
+          onSignOut={signOut}
+        />
         {/* Add pt-[70px] sm:pt-[80px] md:pt-[85px] lg:pt-[90px] to account for the fixed header height */}
         <main className="flex-grow pt-[70px] sm:pt-[80px] md:pt-[85px] lg:pt-[90px]">{children}</main>
         <Footer />
