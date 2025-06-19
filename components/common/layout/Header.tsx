@@ -16,14 +16,47 @@ interface HeaderProps {
   transparent?: boolean;
   dark?: boolean;
   userLoggedIn?: boolean; // Added to handle logged-in state for mobile menu
+  user?: any; // Amplify user object
+  onSignOut?: () => void; // Sign out function
 }
 
-export default function Header({ userLoggedIn = false, ...props }: HeaderProps) {
+export default function Header({ userLoggedIn = false, user, onSignOut, ...props }: HeaderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState<boolean>(false);
   const [contactDropdownOpen, setContactDropdownOpen] = useState<boolean>(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState<boolean>(false);
+
+  // Helper functions to extract user data
+  const getUserDisplayName = () => {
+    if (!user) return 'User';
+    // Try to get name from user attributes
+    const email = user.signInDetails?.loginId || user.username || '';
+    const customContactId = user.attributes?.['custom:contactId'] || '';
+    
+    // For now, use email prefix as display name
+    // Later we could fetch from Contacts table using contactId
+    const emailPrefix = email.split('@')[0];
+    return emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+  };
+
+  const getUserEmail = () => {
+    if (!user) return 'user@example.com';
+    return user.signInDetails?.loginId || user.username || user.attributes?.email || 'user@example.com';
+  };
+
+  const getUserInitials = () => {
+    const displayName = getUserDisplayName();
+    return displayName.substring(0, 2).toUpperCase();
+  };
+
+  const handleSignOut = () => {
+    if (onSignOut) {
+      onSignOut();
+    }
+    setIsOpen(false);
+    setProfileDropdownOpen(false);
+  };
   const headerRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns when clicking outside
@@ -216,7 +249,7 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                 aria-expanded={profileDropdownOpen}
               >
-                <span>Doron Hetz</span>
+                <span>{getUserDisplayName()}</span>
                 <Image 
                   src="/assets/icons/ic-arrow-down.svg" 
                   alt="Dropdown" 
@@ -249,11 +282,12 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                     text="Account Settings"
                     onClick={() => setProfileDropdownOpen(false)}
                   />
-                  <DropdownLink 
-                    href="/logout" 
-                    text="Sign Out"
-                    onClick={() => setProfileDropdownOpen(false)}
-                  />
+                  <button
+                    className="w-full text-left px-4 py-2 text-responsive-sm xl:text-responsive-base text-dark-gray hover:bg-[#FAFAFA] font-medium transition-colors"
+                    onClick={handleSignOut}
+                  >
+                    Sign Out
+                  </button>
                 </div>
               </div>
             </div>
@@ -314,11 +348,11 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
             {userLoggedIn ? (
               <div className="flex items-center gap-3 px-3 py-2 rounded bg-[#FAFAFA]">
                 <div className="w-9 h-9 rounded-full bg-[#F0E4DF] flex items-center justify-center flex-shrink-0">
-                  <span className="text-dark-gray font-bold text-sm">DH</span>
+                  <span className="text-dark-gray font-bold text-sm">{getUserInitials()}</span>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-dark-gray font-medium text-sm truncate">Doron Hetz</div>
-                  <div className="text-medium-gray text-xs">user@example.com</div>
+                  <div className="text-dark-gray font-medium text-sm truncate">{getUserDisplayName()}</div>
+                  <div className="text-medium-gray text-xs">{getUserEmail()}</div>
                 </div>
               </div>
             ) : (
@@ -502,10 +536,9 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                     Account Settings
                   </Link>
                   
-                  <Link 
-                    href="/logout" 
-                    className="flex items-center px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
-                    onClick={() => setIsOpen(false)}
+                  <button
+                    className="flex items-center w-full px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"
+                    onClick={handleSignOut}
                   >
                     <Image 
                       src="/assets/icons/log-out.svg" 
@@ -515,7 +548,7 @@ export default function Header({ userLoggedIn = false, ...props }: HeaderProps) 
                       className="mr-3" 
                     />
                     Sign Out
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}

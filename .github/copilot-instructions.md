@@ -82,6 +82,7 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 - **! USE:** `ampx status` (doesn't exist)
 - **Envs:** dev (doron), staging only
 - **Status:** `npx ampx sandbox` + wait ~1min
+- **documentation:** [Amplify Gen2 Docs](https://docs.amplify.aws/react/)
 
 ## Decision Rules
 **100% Confidence @ Before Action:**

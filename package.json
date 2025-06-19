@@ -1,6 +1,6 @@
 {
   "name": "realtechee-clone",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,6 +22,7 @@
     "@aws-amplify/backend": "^1.16.1",
     "@aws-amplify/data-schema": "^1.21.0",
     "@aws-amplify/ui-react": "^6.11.2",
+    "@aws-sdk/client-cognito-identity-provider": "^3.830.0",
     "@aws-sdk/client-dynamodb": "^3.828.0",
     "@aws-sdk/util-dynamodb": "^3.828.0",
     "@emotion/react": "^11.14.0",
