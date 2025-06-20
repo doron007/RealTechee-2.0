@@ -7,8 +7,10 @@ import { createLogger } from './logger';
 // Configure Amplify with your sandbox outputs
 Amplify.configure(outputs);
 
-// Generate a typed client for your schema
-const client = generateClient<Schema>();
+// Generate a typed client for your schema with API key auth for anonymous access
+const client = generateClient<Schema>({
+  authMode: 'apiKey'
+});
 
 // Create module loggers
 const apiLogger = createLogger('AmplifyAPI');

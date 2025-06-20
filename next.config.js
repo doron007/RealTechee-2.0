@@ -22,6 +22,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'amplify-realtecheeclone-d-realtecheeuseruploadsbuc-p7hml7cayg9g.s3.us-west-1.amazonaws.com'
       }
     ]
   },

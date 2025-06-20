@@ -4,6 +4,7 @@
 export { useProjectData } from './useProjectData';
 export { useAmplifyData, usePaginatedAmplifyData } from './useAmplifyData';
 export { useListData } from './useListData';
+export { useCommentsData } from './useCommentsData';
 
 export type { 
   ProjectDataState, 

@@ -60,13 +60,22 @@ const ProjectDetails: NextPage = () => {
   }, [currentProjectId]);
 
   // Use the reusable project data hook
-  const { project, milestones, payments, comments, loading, error } = useProjectData({
+  const { project, milestones, payments, comments: initialComments, loading, error } = useProjectData({
     projectId: currentProjectId,
     loadFromSessionStorage: true,
     forceRefresh: isDirectAccess // Force fresh data on direct access/refresh
   });
 
+  // Local state for comments to handle real-time updates
+  const [comments, setComments] = useState<Comment[]>([]);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+  // Update local comments when initial comments are loaded
+  useEffect(() => {
+    if (initialComments.length > 0) {
+      setComments(initialComments);
+    }
+  }, [initialComments]);
 
   // Helper function to convert string URLs to GalleryImage objects
   const convertToGalleryImages = (urls: string[]): GalleryImage[] => {
@@ -114,8 +123,8 @@ const ProjectDetails: NextPage = () => {
 
   // Handler for adding new comments using Amplify API
   const handleCommentAdded = async (newComment: Comment) => {
-    // The CommentsList component handles local state updates
-    // and the hook will refresh data on the next page load
+    // Add the new comment to local state so it appears immediately
+    setComments(prevComments => [newComment, ...prevComments]);
     console.log('New comment added:', newComment);
   };
 
