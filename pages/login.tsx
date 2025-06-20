@@ -1,21 +1,63 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
+import { I18n } from 'aws-amplify/utils';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('LoginPage');
+
+// Configure I18n labels for form fields
+I18n.putVocabulariesForLanguage('en', {
+  'Given Name': 'First Name',
+  'Family Name': 'Last Name',
+});
 
 const LoginPage = () => {
   const router = useRouter();
   const { user } = useAuthenticator((context) => [context.user]);
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated - must be before early return
   useEffect(() => {
-    if (user) {
+    if (user && router.isReady) {
       const redirectTo = (router.query.redirect as string) || '/';
-      router.push(redirectTo);
+      const action = router.query.action as string;
+
+      if (action && redirectTo !== '/') {
+        // Add action parameter to redirect URL to trigger the desired action
+        const separator = redirectTo.includes('?') ? '&' : '?';
+        router.push(`${redirectTo}${separator}action=${encodeURIComponent(action)}`);
+      } else {
+        router.push(redirectTo);
+      }
     }
-  }, [user, router]);
+  }, [user, router.isReady, router.query, router]);
+
+  // Wait for router to be ready to ensure query params are available
+  if (!router.isReady) {
+    return null; // or a loading spinner
+  }
+
+  const { signup } = router.query;
+  const isSignUp = signup === 'true';
+
+  // Debug: log the values to verify they're correct
+  logger.debug('Router query parameters', router.query);
+  logger.debug('Signup parameter value', {
+    signup,
+    signupType: typeof signup,
+    signupString: String(signup),
+    signupBoolean: !!signup,
+    isSignUp
+  });
+  logger.debug('Authenticator configuration', {
+    initialState: isSignUp ? 'signUp' : 'signIn',
+    key: isSignUp ? 'signup' : 'signin',
+    hasSignupParam: !!signup,
+    signupTruthy: signup === 'true'
+  });
 
   return (
     <>
@@ -41,7 +83,7 @@ const LoginPage = () => {
               </div>
             </Link>
           </div>
-          
+
           <h2 className="mt-6 sm:mt-8 text-center text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-dark-gray">
             Welcome Back
           </h2>
@@ -58,9 +100,12 @@ const LoginPage = () => {
 
         <div className="mt-8 sm:mt-10 mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
           <div className="bg-white py-8 sm:py-10 px-4 sm:px-6 md:px-8 lg:px-10 shadow-card rounded-2xl border border-very-light-gray">
-            
+
             <Authenticator
+              key={isSignUp ? 'signup' : 'signin'} // Force remount when signup parameter changes
               socialProviders={[]}
+              initialState={isSignUp ? 'signUp' : 'signIn'}
+              signUpAttributes={['given_name', 'family_name']}
               components={{
                 Header() {
                   return null; // Hide default header since we have our own
@@ -88,39 +133,6 @@ const LoginPage = () => {
                       </div>
                     </div>
                   );
-                },
-              }}
-              formFields={{
-                signIn: {
-                  username: {
-                    placeholder: 'Enter your email address',
-                    label: 'Email Address',
-                    type: 'email',
-                  },
-                },
-                signUp: {
-                  username: {
-                    placeholder: 'Enter your email address',
-                    label: 'Email Address',
-                    type: 'email',
-                    order: 1,
-                  },
-                  email: {
-                    placeholder: 'Enter your email address',
-                    label: 'Email Address',
-                    type: 'email',
-                    order: 2,
-                  },
-                  password: {
-                    placeholder: 'Enter your password',
-                    label: 'Password',
-                    order: 3,
-                  },
-                  confirm_password: {
-                    placeholder: 'Confirm your password',
-                    label: 'Confirm Password',
-                    order: 4,
-                  },
                 },
               }}
             />

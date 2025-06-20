@@ -83,6 +83,29 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 - **Envs:** dev (doron), staging only
 - **Status:** `npx ampx sandbox` + wait ~1min
 - **documentation:** [Amplify Gen2 Docs](https://docs.amplify.aws/react/)
+- **database documentation:** [Amplify Gen2 Database Docs](https://docs.amplify.aws/react/build-a-backend/data/)
+- **storage documentation:** [Amplify Gen2 Storage Docs](https://docs.amplify.aws/react/build-a-backend/storage/set-up-storage/)
+- **auth documentation:** [Amplify Gen2 Auth Docs](https://docs.amplify.aws/react/build-a-backend/auth/)
+- **CLI:** `npx ampx` commands: 
+`ampx <command>
+Commands:
+  ampx generate             Generates post deployment artifacts
+  ampx sandbox              Starts sandbox, watch mode for Amplify backend deplo
+                            yments
+  ampx pipeline-deploy      Command to deploy backends in a custom CI/CD pipelin
+                            e. This command is not intended to be used locally.
+  ampx configure <command>  Configure AWS Amplify
+  ampx info                 Generates information for Amplify troubleshooting
+  ampx notices              Manage and interact with Amplify backend tooling not
+                            ices. View and acknowledge important notifications a
+                            bout your Amplify environment, including package com
+                            patibility issues, version updates, and potential is
+                            sues that may affect your development workflow.
+
+Options:
+      --debug    Print debug logs to the console      [boolean] [default: false]
+  -h, --help     Show help                                             [boolean]
+  -v, --version  Show version number                                   [boolean]`
 
 ## Decision Rules
 **100% Confidence @ Before Action:**

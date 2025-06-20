@@ -5272,5 +5272,37 @@
       "nonModels": {}
     }
   },
+  "storage": {
+    "aws_region": "us-west-1",
+    "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-p7hml7cayg9g",
+    "buckets": [
+      {
+        "name": "RealTecheeUserUploads",
+        "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-p7hml7cayg9g",
+        "aws_region": "us-west-1",
+        "paths": {
+          "public/*": {
+            "authenticated": [
+              "get",
+              "list",
+              "write"
+            ],
+            "guest": [
+              "get",
+              "list"
+            ]
+          },
+          "private/${cognito-identity.amazonaws.com:sub}/*": {
+            "entityidentity": [
+              "get",
+              "list",
+              "write",
+              "delete"
+            ]
+          }
+        }
+      }
+    ]
+  },
   "version": "1.4"
 }

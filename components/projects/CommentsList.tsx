@@ -1,11 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import { Modal, Box } from '@mui/material';
-import { CollapsibleSection } from '../common/ui';
+import { CollapsibleSection, AuthRequiredDialog } from '../common/ui';
 import { BodyContent } from '../Typography';
 import { formatDate } from '../../utils/formatUtils';
 import Button from '../common/buttons/Button';
 import AddCommentDialog from './AddCommentDialog';
+import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useCommentsData } from '../../hooks';
+import { useRouter } from 'next/router';
+import { createLogger } from '../../utils/logger';
 
 export interface Comment {
     id: string;
@@ -31,6 +35,8 @@ interface CommentsListProps {
     onCommentAdded?: (comment: Comment) => void;
 }
 
+const logger = createLogger('CommentsList');
+
 const CommentsList: React.FC<CommentsListProps> = ({
     commentsData,
     title = "Comments",
@@ -39,10 +45,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
     projectId,
     onCommentAdded
 }) => {
+    const { user, authStatus } = useAuthenticator((context) => [context.user, context.authStatus]);
+    const { addComment, loading: commentSubmitLoading } = useCommentsData();
+    const router = useRouter();
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
     const [isLoading, setIsLoading] = React.useState(false);
     const [sortOrder, setSortOrder] = React.useState<'newest' | 'oldest'>('newest');
     const [isAddingComment, setIsAddingComment] = React.useState(false);
+    const [isAuthRequiredOpen, setIsAuthRequiredOpen] = React.useState(false);
 
     const modalStyle = {
         position: 'absolute',
@@ -74,6 +84,24 @@ const CommentsList: React.FC<CommentsListProps> = ({
         return () => window.removeEventListener('keydown', handleEscape);
     }, []);
 
+    // Handle post-authentication actions
+    React.useEffect(() => {
+        const { action } = router.query;
+        
+        if (action === 'add comments' && authStatus === 'authenticated' && user) {
+            // User just authenticated and wanted to add a comment
+            setIsAddingComment(true);
+            
+            // Clean up the URL by removing the action parameter
+            const cleanQuery = { ...router.query };
+            delete cleanQuery.action;
+            router.replace({
+                pathname: router.pathname,
+                query: cleanQuery
+            }, undefined, { shallow: true });
+        }
+    }, [router.query.action, authStatus, user, router]);
+
     // Sort comments by creation date based on sort order
     const sortedComments = React.useMemo(() => {
         return [...commentsData].sort((a, b) => {
@@ -85,27 +113,64 @@ const CommentsList: React.FC<CommentsListProps> = ({
         });
     }, [commentsData, sortOrder]);
 
-    const handleAddComment = async (comment: string, files: File[]) => {
-        const formData = new FormData();
-        formData.append('projectId', projectId);
-        formData.append('comment', comment);
-        formData.append('nickname', 'User'); // You might want to make this dynamic
-        formData.append('userImageUrl', ''); // And this too
-        files.forEach(file => formData.append('images[]', file));
-
-        // Submit the comment
-        const response = await fetch('/api/projects/addComment', {
-            method: 'POST',
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to add comment');
-        }
-
-        const data = await response.json();
-        if (onCommentAdded) {
-            onCommentAdded(data.comment);
+    const handleAddComment = async (comment: string, files: File[], nickname: string, isPrivate = false) => {
+        try {
+            setIsLoading(true);
+            
+            // For authenticated users, try to get their contact ID using their email
+            let contactId = 'anonymous';
+            let profileImage = '';
+            let ownerValue = 'anonymous';
+            
+            if (user) {
+                const userEmail = user.signInDetails?.loginId || (user as any)?.attributes?.email;
+                ownerValue = user?.username || user?.userId || userEmail || 'anonymous';
+                
+                // Try to get existing contactId from user attributes first
+                const existingContactId = (user as any)?.attributes?.['custom:contactId'];
+                if (existingContactId) {
+                    contactId = existingContactId;
+                } else if (userEmail) {
+                    // If no contactId in user attributes, we'll need to create/find the contact
+                    // For now, use the email as contactId - this should be handled better in production
+                    contactId = userEmail;
+                }
+                
+                profileImage = (user as any)?.attributes?.['picture'] || '';
+            }
+            
+            // Use our hook to add the comment directly via GraphQL
+            // Support both authenticated and anonymous users
+            const commentData = {
+                projectId, // This should be the Projects.projectId field
+                comment,
+                nickname,
+                postedByContactId: contactId,
+                postedByProfileImage: profileImage,
+                isPrivate,
+                owner: ownerValue
+            };
+            
+            // Add comment and upload files
+            const newComment = await addComment(
+                commentData, 
+                files, 
+                (progress) => logger.debug('File upload progress', { progress: `${progress}%` })
+            );
+            
+            // Notify parent component of the new comment
+            if (onCommentAdded) {
+                onCommentAdded(newComment);
+            }
+            
+            // Wait a brief moment to ensure the comment is saved
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+        } catch (error) {
+            logger.error('Failed to add comment', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -148,7 +213,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
                     {/* Add comment button */}
                     <Button
                         variant="primary"
-                        onClick={() => setIsAddingComment(true)}
+                        onClick={() => {
+                            // Check auth status and show appropriate dialog
+                            if (authStatus === 'authenticated' && user) {
+                                setIsAddingComment(true);
+                            } else {
+                                setIsAuthRequiredOpen(true);
+                            }
+                        }}
                         className="!py-1 !px-3 text-sm flex items-center gap-2"
                     >
                         <span>Add Comment</span>
@@ -274,6 +346,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
                 open={isAddingComment}
                 onClose={() => setIsAddingComment(false)}
                 onSubmit={handleAddComment}
+                projectId={projectId}
+            />
+
+            {/* Auth required dialog */}
+            <AuthRequiredDialog
+                open={isAuthRequiredOpen}
+                onClose={() => setIsAuthRequiredOpen(false)}
+                action="add comments"
             />
         </div>
     );

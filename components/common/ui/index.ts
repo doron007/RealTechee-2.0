@@ -16,6 +16,7 @@ import { OptionCard } from './OptionCard';
 import StatusPill from './StatusPill';
 import CollapsibleSection from './CollapsibleSection';
 import { ImageGallery } from './ImageGallery';
+import AuthRequiredDialog from '../AuthRequiredDialog';
 
 export {
   Card,
@@ -35,4 +36,5 @@ export {
   StatusPill,
   CollapsibleSection,
   ImageGallery,
+  AuthRequiredDialog,
 };
