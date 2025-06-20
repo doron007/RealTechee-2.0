@@ -84,7 +84,20 @@ git push origin main --follow-tags
 echo_step "Switching to prod-v2 branch and merging changes from main..."
 git checkout prod-v2
 git pull origin prod-v2
-git merge main
+
+# Merge main into prod-v2, using main's version of amplify_outputs.json in case of conflict
+echo_step "Merging main branch (will use main's amplify_outputs.json if conflict)..."
+git merge main -X ours --no-edit || {
+  # If merge failed due to conflict, resolve amplify_outputs.json conflict automatically
+  if git status --porcelain | grep -q "amplify_outputs.json"; then
+    echo_step "Resolving amplify_outputs.json merge conflict with main's version..."
+    git checkout main -- amplify_outputs.json
+    git add amplify_outputs.json
+    git commit --no-edit -m "Resolve amplify_outputs.json conflict with main's version"
+  else
+    echo_error "Merge failed with conflicts other than amplify_outputs.json. Please resolve manually."
+  fi
+}
 
 # Push to production to trigger deployment
 echo_step "Pushing to prod-v2 branch to trigger deployment..."
