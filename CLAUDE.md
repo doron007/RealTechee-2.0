@@ -1,80 +1,76 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Symbol Map
+`!`=not, `+`=ext/add, `@`=req, `*`=all, `w/`=with, `TS`=TypeScript, `comp`=component
 
-## Development Commands
+## Commands
+**Dev:** `npm run dev|build|test|lint` • `npm run type-check` • `npx ampx sandbox`
 
-### Core Development
-- `npm run dev` - Start Next.js development server
-- `npm run build` - Build for production
-- `npm run test` - Run Jest test suite
-- `npm run test -- --watch` - Run tests in watch mode
-- `npx ampx sandbox` - Start Amplify development environment
+## Amplify Gen 2 (NOT Gen 1)
+**CRITICAL:** This project uses Amplify Gen 2. ! use deprecated Gen 1 patterns/commands.
 
-### Code Quality
-- `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript compiler check
+**Commands:** `npx ampx <command>`
+- `ampx sandbox` - Deploy/watch backend (primary dev command)
+- `ampx generate` - Generate post-deployment artifacts (types/hooks)
+- `ampx info` - Troubleshooting info
+- `ampx notices` - View notifications/compatibility issues
+- `ampx configure` - Configure AWS Amplify
+- `! ampx pipeline-deploy` - CI/CD only, ! use locally
 
-## Architecture Overview
+**Backend Access:** Use generated GraphQL hooks (useQuery, useMutation) from `npx ampx generate` - ! custom /api routes for backend operations
 
-### Tech Stack
-- **Frontend**: Next.js 15.2.1 with React 18.3.1 and TypeScript
-- **Backend**: AWS Amplify Gen 2 with GraphQL API
-- **Database**: DynamoDB with 26+ models including Projects, ProjectComments, Contacts
-- **Auth**: AWS Cognito with user groups (public, basic, member, agent, admin)
-- **Storage**: AWS S3 via Amplify Storage
-- **Styling**: Tailwind CSS + Material-UI with custom design system
+## COO: Component-Oriented Output
+
+### Rules
+1. Props-only styling + ! duplicate comps + ! new comps w/o approval
+2. TS strict compliance + ! external CSS deps
+3. Min DOM nesting (React.Fragment over divs) + direct solutions
+4. Props = sole config method + prop config over class overrides
+
+### Component Priority (for consistent look + single customization point)
+1. **Existing custom comps** (first choice - Typography/UI/Layout below)
+2. **MUI/MUI-X** (second choice - comprehensive component library)  
+3. **Native Next.js/React** (last resort only)
+
+### Available Components
+**Typography:** `PageHeader` `SectionTitle` `Subtitle` `SectionLabel` `BodyContent` `SubContent` `CardTitle` `CardSubtitle` `CardContent` `ButtonText`
+**UI:** `Card` `Button` `FeatureCard` `BenefitCard` `OptionCard` `BenefitBlock` `TestimonialCard` `StatItem` `SliderNavBar`
+**Layout:** `Layout` `Section` `Header` `Footer` `ContentWrapper` `GridContainer` `ContainerTwoColumns` `ContainerThreeColumns`
+**MUI:** All standard components available - Input, Display, Feedback, Surface, Navigation, Layout, Utility
+**MUI-X:** DataGrid, TreeView, Charts, DatePickers *(Pro/Premium licenses @)*
+
+## Architecture
+
+### Stack
+Next.js 15.2.1 + React 18.3.1 + TS + AWS Amplify Gen 2 + GraphQL + DynamoDB + S3 + Tailwind + MUI
 
 ### Key Directories
-- `amplify/` - Amplify Gen 2 configuration (backend.ts, data/resource.ts, auth/resource.ts)
-- `components/` - Feature-organized React components with barrel exports
-- `hooks/` - Custom React hooks (useCommentsData, useProjectData, etc.)
-- `pages/` - Next.js pages and API routes
-- `lib/` - Utility functions and configurations
-- `types/` - TypeScript type definitions
+`amplify/` (backend.ts, data/resource.ts, auth/resource.ts) • `components/` (feature-organized w/ barrel exports) • `hooks/` (custom) • `pages/` • `lib/` • `types/`
 
-### Data Architecture
-The GraphQL schema defines complex relationships between models:
-- Projects have many ProjectComments, Quotes, and Milestones
-- Users belong to hierarchical groups with role-based permissions
-- File attachments are managed through S3 storage integration
+### Data & Auth
+- GraphQL schema: 26+ models (Projects, ProjectComments, Contacts) w/ complex relationships
+- AWS Cognito: user groups (public, basic, member, agent, admin) w/ custom attributes (contactId, membershipTier)
+- Authorization: userPool, apiKey, owner-based access control
+- S3: project attachments + images w/ public/private access + preview + progress tracking
 
-### Component Patterns
-- **Component-Oriented Output (COO)** approach with props-only styling
-- TypeScript interfaces for all components with strict typing
-- Barrel exports via index.ts files for clean imports
-- Custom hooks for data management and state
+## Technical Rules
+1. ! new comps w/o approval + ! duplicate/overlapping ints
+2. Amplify Gen 2 structure + GraphQL Transformer v2 (@model, @auth, @index)
+3. Assume amplify codegen generates types + hooks automatically
+4. React + TS best practices + Next.js App Router (app/ directory, server components, route.ts)
+5. Structure mutations + queries for performance/scalability (pagination, filtering)
+6. TS strict mode + proper error handling + Tailwind consistency
 
-### Authentication Flow
-- AWS Cognito integration with custom user attributes (contactId, membershipTier)
-- User groups determine access levels and feature availability
-- Authorization modes: userPool, apiKey, owner-based access control
+## Decision Rules
+**Proceed if:** Issue identified + clear plan + aligns w/ COO + impact understood
+**Ask confirmation if:** Any doubt/arch changes/multiple solutions/critical functionality
+**Format:** `Issue: [x] | Analysis: [x] | Solution: [x] | Impact: [x] | Alternatives: [x] | Proceed?`
 
-### File Upload System
-- S3 integration for project attachments and images
-- Public/private access patterns based on user permissions
-- Image preview with modal display functionality
-- Progress tracking during uploads
+## Workflow
+1. Review existing comps before impl
+2. Doc @ exts, submit change proposal  
+3. Impl w/ backward compat
+4. Notify about CLI commands, schema updates, config changes + side effects
 
-## Development Notes
-
-### Amplify Commands
-- `npx ampx generate graphql-client-code` - Regenerate GraphQL types after schema changes
-- `npx ampx sandbox delete` - Clean up sandbox environment
-
-### Testing Patterns
-- Jest with React Testing Library for component testing
-- Custom render helpers for components requiring auth context
-- Mock Amplify hooks and GraphQL operations in tests
-
-### Code Conventions
-- Use TypeScript strict mode throughout
-- Follow established component organization patterns
-- Implement proper error handling for async operations
-- Maintain design system consistency using Tailwind utilities
-
-### Important Configuration Files
-- `amplify/backend.ts` - Main Amplify configuration
-- `amplify/data/resource.ts` - GraphQL schema with all models
-- `next.config.js` - Next.js config with image optimization for Wix media
-- `tailwind.config.js` - Custom design system configuration
+## Testing & Quality
+Jest + React Testing Library + custom render helpers + mock Amplify hooks/GraphQL operations

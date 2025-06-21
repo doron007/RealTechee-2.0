@@ -24,7 +24,7 @@ const Commercial: NextPage = () => {
           title="Get Started"
           subtitle="Close More Commercial Deals."
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

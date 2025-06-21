@@ -125,26 +125,6 @@ export default function Portfolio() {
               </>
             }
           />
-          
-          {/* Gallery Demo Options */}
-          <div className="w-full mt-10 flex flex-col sm:flex-row justify-center items-center gap-6">
-            <Link href="/projects">
-              <Button 
-                variant="primary"
-                size="lg"
-              >
-                View Projects (Original Gallery)
-              </Button>
-            </Link>
-            <Link href="/projects2">
-              <Button 
-                variant="secondary"
-                size="lg"
-              >
-                View Projects (React Image Gallery)
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     </section>

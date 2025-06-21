@@ -47,7 +47,7 @@ const Home: NextPage = () => {
           title="Ready to win more big deals faster?"
           subtitle="Get a Renovation Estimate Today"
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

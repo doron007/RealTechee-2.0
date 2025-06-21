@@ -49,7 +49,7 @@ const About: NextPage = () => {
           title="Ready to transform your real estate business?"
           subtitle="Join thousands of professionals who trust RealTechee"
           buttonText="Get Started Today"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

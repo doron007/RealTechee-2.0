@@ -24,7 +24,7 @@ const KitchenAndBath: NextPage = () => {
           title="Get Started"
           subtitle="Initiate Business Growth Today"
           buttonText="Get Qualified"
-          buttonLink="/get-qualified"
+          buttonLink="/contact/get-qualified"
         />
       </main>
     </div>

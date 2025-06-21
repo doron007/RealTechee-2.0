@@ -195,10 +195,10 @@ export const productCategories: ProductCategory[] = [
  * Common contact options data for reuse
  */
 export const contactOptions: ProductCategory[] = [
-  { href: "/contact", text: "Contact Us" },
-  { href: "/get-estimate", text: "Get Estimate" },
-  { href: "/get-qualified", text: "Get Qualified" },
-  { href: "/become-affiliate", text: "Become an Affiliate" }
+  { href: "/contact/contact-us", text: "Contact Us" },
+  { href: "/contact/get-estimate", text: "Get Estimate" },
+  { href: "/contact/get-qualified", text: "Get Qualified" },
+  { href: "/contact/affiliate", text: "Become an Affiliate" }
 ];
 
 interface VideoPlayerHook {

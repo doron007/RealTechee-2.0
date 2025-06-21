@@ -24,7 +24,7 @@ const Sellers: NextPage = () => {
           title="Get Started"
           subtitle="Receive a free estimate within 48 hours."
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

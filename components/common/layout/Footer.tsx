@@ -153,8 +153,8 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/general-inquiry"
-                    text="General Inquiry"
+                    href="/contact/contact-us"
+                    text="Contact Us"
                     size="sm"
                     textSize="sm"
                   />
@@ -162,7 +162,7 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/get-estimate"
+                    href="/contact/get-estimate"
                     text="Get Estimate"
                     size="sm"
                     textSize="sm"
@@ -171,7 +171,7 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/get-qualified"
+                    href="/contact/get-qualified"
                     text="Get Qualified"
                     size="sm"
                     textSize="sm"
@@ -180,7 +180,7 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/become-affiliate"
+                    href="/contact/affiliate"
                     text="Become an Affiliate"
                     size="sm"
                     textSize="sm"
@@ -328,8 +328,8 @@ export default function Footer(props: FooterProps) {
                   <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/general-inquiry"
-                      text="General Inquiry"
+                      href="/contact/contact-us"
+                      text="Contact Us"
                       size="sm"
                       textSize="sm"
                     />
@@ -337,7 +337,7 @@ export default function Footer(props: FooterProps) {
                   <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/get-estimate"
+                      href="/contact/get-estimate"
                       text="Get Estimate"
                       size="sm"
                       textSize="sm"
@@ -346,7 +346,7 @@ export default function Footer(props: FooterProps) {
                   <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/get-qualified"
+                      href="/contact/get-qualified"
                       text="Get Qualified"
                       size="sm"
                       textSize="sm"
@@ -355,7 +355,7 @@ export default function Footer(props: FooterProps) {
                   <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/become-affiliate"
+                      href="/contact/affiliate"
                       text="Become an Affiliate"
                       size="sm"
                       textSize="sm"

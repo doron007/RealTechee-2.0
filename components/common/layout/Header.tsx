@@ -304,7 +304,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
           {/* Get an Estimate Button */}
           <EstimateButton
             priority="primary"
-            href="/contact"
+            href="/contact/get-estimate"
             onClick={() => setIsOpen(false)}
           />
         </div>
@@ -369,7 +369,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
             {/* Get an Estimate Button */}
             <EstimateButton
               priority="primary"
-              href="/contact"
+              href="/contact/get-estimate"
               fullWidth={true}
               onClick={() => setIsOpen(false)}
               size="sm"

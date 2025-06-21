@@ -56,15 +56,16 @@ export default function Hero(props: HeroProps) {
         <div className="flex flex-wrap gap-3 sm:gap-4 pt-3 sm:pt-4 md:pt-6">
           <Button
             variant="primary"
-            href="/learn-more"
+            href="#testimonials"
             withIcon={true}
             iconPosition="left"
+            text="Learn More"
           >
-            <ButtonText>Learn More</ButtonText>
+            {/* <ButtonText>Learn More</ButtonText> */}
           </Button>
           <Button
             variant="tertiary"
-            href="/get-in-touch"
+            href="/contact/contact-us"
             text="Get in touch"
             underline={true}
           />

@@ -24,7 +24,7 @@ const ArchitectsAndDesigners: NextPage = () => {
           title="Get Started"
           subtitle="Grow Your Business Today."
           buttonText="Get Qualified"
-          buttonLink="/get-qualified"
+          buttonLink="/contact/get-qualified"
         />
       </main>
     </div>
