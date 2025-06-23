@@ -10,7 +10,7 @@ const Buyers: NextPage = () => {
       <Head>
         <title>RealTechee - Buyers</title>
         <meta name="description" content="Empower your buyer clients with our seamless renovation solutions, turning ordinary properties into their dream homes." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       

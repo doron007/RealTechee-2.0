@@ -591,7 +591,7 @@ const GetEstimate: NextPage = () => {
       <Head>
         <title>Get an Estimate - Contact Us</title>
         <meta name="description" content="Request a free estimate for your real estate project. Our experts will provide a detailed quote and consultation." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

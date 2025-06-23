@@ -1,5 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { SubContent } from '../Typography';
 
 interface AddressFieldsProps<T extends Record<string, any>> {
@@ -34,18 +35,22 @@ export function AddressFields<T extends Record<string, any>>({
           <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
             {addressLabel}
           </label>
-          <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+          <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('streetAddress') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
             <input
               {...register(`${prefix}.streetAddress` as Path<T>)}
               className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
               placeholder=""
             />
           </div>
-          {getFieldError('streetAddress') && (
-            <SubContent className="text-[#D11919] mt-1">
-              {getFieldError('streetAddress')}
-            </SubContent>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name={`${prefix}.streetAddress` as any}
+            render={({ message }) => (
+              <SubContent className="text-[#D11919] mt-1">
+                {message}
+              </SubContent>
+            )}
+          />
         </div>
       </div>
 
@@ -57,7 +62,7 @@ export function AddressFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               State*
             </label>
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center justify-between">
+            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center justify-between ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <select
                 {...register(`${prefix}.state` as Path<T>)}
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none"
@@ -127,11 +132,15 @@ export function AddressFields<T extends Record<string, any>>({
                 <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            {getFieldError('state') && (
-              <SubContent className="text-[#D11919] mt-1">
-                {getFieldError('state')}
-              </SubContent>
-            )}
+            <ErrorMessage
+              errors={errors}
+              name={`${prefix}.state` as any}
+              render={({ message }) => (
+                <SubContent className="text-[#D11919] mt-1">
+                  {message}
+                </SubContent>
+              )}
+            />
           </div>
         </div>
 
@@ -141,18 +150,22 @@ export function AddressFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               City*
             </label>
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('city') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.city` as Path<T>)}
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
               />
             </div>
-            {getFieldError('city') && (
-              <SubContent className="text-[#D11919] mt-1">
-                {getFieldError('city')}
-              </SubContent>
-            )}
+            <ErrorMessage
+              errors={errors}
+              name={`${prefix}.city` as any}
+              render={({ message }) => (
+                <SubContent className="text-[#D11919] mt-1">
+                  {message}
+                </SubContent>
+              )}
+            />
           </div>
         </div>
 
@@ -162,7 +175,7 @@ export function AddressFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               ZIP*
             </label>
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('zip') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.zip` as Path<T>)}
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
@@ -170,11 +183,15 @@ export function AddressFields<T extends Record<string, any>>({
                 maxLength={10}
               />
             </div>
-            {getFieldError('zip') && (
-              <SubContent className="text-[#D11919] mt-1">
-                {getFieldError('zip')}
-              </SubContent>
-            )}
+            <ErrorMessage
+              errors={errors}
+              name={`${prefix}.zip` as any}
+              render={({ message }) => (
+                <SubContent className="text-[#D11919] mt-1">
+                  {message}
+                </SubContent>
+              )}
+            />
           </div>
         </div>
       </div>

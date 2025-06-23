@@ -18,7 +18,7 @@ const About: NextPage = () => {
       <Head>
         <title>About RealTechee - Our History, Mission & Values</title>
         <meta name="description" content="Learn about RealTechee's mission, history, and values. Discover how we're transforming the real estate industry with innovative technology solutions." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

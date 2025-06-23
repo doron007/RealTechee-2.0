@@ -1,5 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { SubContent } from '../Typography';
 
 interface ContactInfo {
@@ -44,18 +45,22 @@ export function ContactInfoFields<T extends Record<string, any>>({
           <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
             {nameLabel}
           </label>
-          <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+          <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('fullName') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
             <input
               {...register(`${prefix}.fullName` as Path<T>)}
               className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
               placeholder=""
             />
           </div>
-          {getFieldError('fullName') && (
-            <SubContent className="text-[#D11919] mt-1">
-              {getFieldError('fullName')}
-            </SubContent>
-          )}
+          <ErrorMessage
+            errors={errors}
+            name={`${prefix}.fullName` as any}
+            render={({ message }) => (
+              <SubContent className="text-[#D11919] mt-1">
+                {message}
+              </SubContent>
+            )}
+          />
         </div>
       </div>
 
@@ -67,7 +72,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               {emailLabel}
             </label>
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('email') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.email` as Path<T>)}
                 type="email"
@@ -75,11 +80,15 @@ export function ContactInfoFields<T extends Record<string, any>>({
                 placeholder=""
               />
             </div>
-            {getFieldError('email') && (
-              <SubContent className="text-[#D11919] mt-1">
-                {getFieldError('email')}
-              </SubContent>
-            )}
+            <ErrorMessage
+              errors={errors}
+              name={`${prefix}.email` as any}
+              render={({ message }) => (
+                <SubContent className="text-[#D11919] mt-1">
+                  {message}
+                </SubContent>
+              )}
+            />
           </div>
         </div>
 
@@ -89,7 +98,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               {phoneLabel}
             </label>
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center">
+            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('phone') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.phone` as Path<T>)}
                 type="tel"
@@ -97,11 +106,15 @@ export function ContactInfoFields<T extends Record<string, any>>({
                 placeholder="Add 10 digits (numbers only) ..."
               />
             </div>
-            {getFieldError('phone') && (
-              <SubContent className="text-[#D11919] mt-1">
-                {getFieldError('phone')}
-              </SubContent>
-            )}
+            <ErrorMessage
+              errors={errors}
+              name={`${prefix}.phone` as any}
+              render={({ message }) => (
+                <SubContent className="text-[#D11919] mt-1">
+                  {message}
+                </SubContent>
+              )}
+            />
           </div>
         </div>
       </div>

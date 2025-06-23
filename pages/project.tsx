@@ -136,7 +136,7 @@ const ProjectDetails: NextPage = () => {
           name="description"
           content={project ? `View details for ${project.title}` : 'Project details page for RealTechee projects'}
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

@@ -14,10 +14,10 @@ class MyDocument extends Document {
           <meta charSet="utf-8" />
           
           {/* Favicons */}
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-          <link rel="apple-touch-icon" href="/assets/logos/favicon-192x192.png" />
+          <link rel="icon" href="/favicon_white.ico" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon_white-16x16.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon_white-32x32.png" />
+          <link rel="apple-touch-icon" href="/assets/logos/favicon_white-192x192.png" />
           <link rel="manifest" href="/site.webmanifest" />
           
           {/* Local fonts are used - no need for Google Fonts preconnect */}

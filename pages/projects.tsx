@@ -12,7 +12,7 @@ const ProjectsPage: NextPage = () => {
       <Head>
         <title>Projects | RealTechee</title>
         <meta name="description" content="Explore impeccable renovations completed by RealTechee." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="flex-grow">

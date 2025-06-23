@@ -11,7 +11,7 @@ const Affiliate: NextPage = () => {
       <Head>
         <title>Affiliate Inquiry - Contact Us</title>
         <meta name="description" content="Interested in becoming a RealTechee affiliate? Join our network of trusted service providers and contractors." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

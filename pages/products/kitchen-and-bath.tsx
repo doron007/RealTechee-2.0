@@ -10,7 +10,7 @@ const KitchenAndBath: NextPage = () => {
       <Head>
         <title>RealTechee - Kitchen and Bath</title>
         <meta name="description" content="Partner with RealTechee to enhance your showroom offerings with premium remodeling services and technology-based solutions." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

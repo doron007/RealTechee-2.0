@@ -11,7 +11,7 @@ const GetQualified: NextPage = () => {
       <Head>
         <title>Get Qualified - Contact Us</title>
         <meta name="description" content="Real Estate agents - schedule your training session to learn how RealTechee can help you win more listings and sell faster." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
