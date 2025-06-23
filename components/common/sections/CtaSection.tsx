@@ -51,7 +51,7 @@ export default function CtaSection({
   title = "Ready to win more big deals faster?",
   subtitle = "Get a Renovation Estimate Today",
   buttonText = "Get an Estimate",
-  buttonLink = "/get-estimate",
+  buttonLink = "/contact/get-estimate",
   className = "",
   backgroundImage = "/assets/images/shared_cta-background.jpg"
 }: CtaSectionProps) {

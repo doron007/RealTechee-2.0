@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       <Head>
         <title>RealTechee - Home Preparation Partner for Real Estate Professionals</title>
         <meta name="description" content="Supercharge your agents' success with a proven real estate home preparation platform. Attract the right customers, dominate the market, and achieve outstanding results effortlessly." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
           title="Ready to win more big deals faster?"
           subtitle="Get a Renovation Estimate Today"
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

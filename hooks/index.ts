@@ -6,6 +6,10 @@ export { useAmplifyData, usePaginatedAmplifyData } from './useAmplifyData';
 export { useListData } from './useListData';
 export { useCommentsData } from './useCommentsData';
 
+// Form-related hooks
+export { useFormFocus } from './useFormFocus';
+export { useFormSubmission } from './useFormSubmission';
+
 export type { 
   ProjectDataState, 
   UseProjectDataOptions 
@@ -23,3 +27,7 @@ export type {
   ListFilter, 
   UseListDataOptions 
 } from './useListData';
+
+// Form hook types
+export type { FormFieldRef, UseFormFocusOptions } from './useFormFocus';
+export type { SubmissionStatus, UseFormSubmissionOptions } from './useFormSubmission';

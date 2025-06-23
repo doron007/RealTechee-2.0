@@ -12,7 +12,7 @@ export default function CtaSection() {
       title="Get Started"
       subtitle="You'll receive a free estimate within 48 hours."
       buttonText="Get an Estimate"
-      buttonLink="/get-estimate"
+      buttonLink="/contact/get-estimate"
     />
   );
 }

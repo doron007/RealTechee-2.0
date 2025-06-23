@@ -10,7 +10,7 @@ const ArchitectsAndDesigners: NextPage = () => {
       <Head>
         <title>RealTechee - Architects & Designers</title>
         <meta name="description" content="Focus on creating exceptional designs and provide a seamless experience for your clients- from design to build." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -24,7 +24,7 @@ const ArchitectsAndDesigners: NextPage = () => {
           title="Get Started"
           subtitle="Grow Your Business Today."
           buttonText="Get Qualified"
-          buttonLink="/get-qualified"
+          buttonLink="/contact/get-qualified"
         />
       </main>
     </div>

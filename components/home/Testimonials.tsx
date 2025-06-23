@@ -14,6 +14,7 @@ export default function Testimonials({ className = '' }: TestimonialsProps) {
 
   return (
     <Section 
+      id="testimonials"
       className="testimonials-section"
       background="light" 
       spacing="large"

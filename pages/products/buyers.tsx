@@ -10,7 +10,7 @@ const Buyers: NextPage = () => {
       <Head>
         <title>RealTechee - Buyers</title>
         <meta name="description" content="Empower your buyer clients with our seamless renovation solutions, turning ordinary properties into their dream homes." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       
@@ -24,7 +24,7 @@ const Buyers: NextPage = () => {
           title="Get Started"
           subtitle="You'll receive a free estimate within 48 hours."
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>

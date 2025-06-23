@@ -10,7 +10,7 @@ const Commercial: NextPage = () => {
       <Head>
         <title>RealTechee - Commercial Real Estate</title>
         <meta name="description" content="Support Commercial Real Estate Owners and Tenants with enhanced renovation services for better ROI." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon_white.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -24,7 +24,7 @@ const Commercial: NextPage = () => {
           title="Get Started"
           subtitle="Close More Commercial Deals."
           buttonText="Get an Estimate"
-          buttonLink="/get-estimate"
+          buttonLink="/contact/get-estimate"
         />
       </main>
     </div>
