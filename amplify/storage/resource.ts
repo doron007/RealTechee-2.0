@@ -5,7 +5,7 @@ export const storage = defineStorage({
   access: (allow) => ({
     'public/*': [
       allow.authenticated.to(['read', 'write']),
-      allow.guest.to(['read'])
+      allow.guest.to(['read', 'write']) // Allow guests to upload files
     ],
     'private/{entity_id}/*': [
       allow.entity('identity').to(['read', 'write', 'delete'])

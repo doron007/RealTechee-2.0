@@ -205,6 +205,79 @@ const Contacts = a.model({
   allow.authenticated()
 ]);
 
+// Generic Audit Log for all DynamoDB table changes
+const AuditLog = a.model({
+  // Table and record identification
+  tableName: a.string().required(), // 'Contacts', 'Properties', 'Projects', etc.
+  recordId: a.id().required(), // ID of the record that was changed
+  
+  // Action performed
+  action: a.enum(['created', 'updated', 'deleted']),
+  
+  // Change context
+  changeType: a.string(), // 'form_submission', 'admin_update', 'bulk_import', etc.
+  
+  // Data snapshots (JSON strings for complete flexibility)
+  previousData: a.json(), // Full object before change (null for creates)
+  newData: a.json(), // Full object after change (null for deletes)
+  
+  // Change metadata  
+  changedFields: a.json(), // Array of field names that changed
+  source: a.string(), // 'get_estimate_form', 'admin_panel', 'api_endpoint', etc.
+  
+  // Request context
+  userAgent: a.string(),
+  ipAddress: a.string(),
+  sessionId: a.string(),
+  
+  // User context (when available)
+  userId: a.string(), // Cognito user ID if authenticated
+  userEmail: a.email(), // User email if available
+  userRole: a.string(), // 'admin', 'agent', 'member', 'public'
+  
+  // Timestamps
+  timestamp: a.datetime().required(),
+  createdDate: a.datetime(),
+  owner: a.string(),
+  
+  // TTL for automatic cleanup (configurable, default 30 days)
+  ttl: a.integer()
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent'])
+]);
+
+// Keep ContactAuditLog for backward compatibility during transition
+const ContactAuditLog = a.model({
+  contactId: a.id().required(), // ID of the contact that was changed
+  email: a.email().required(), // Email for easy reference
+  action: a.enum(['created', 'updated']),
+  changeType: a.string(), // 'contact_update', 'form_submission', etc.
+  
+  // Previous values (JSON string for flexibility)
+  previousData: a.json(),
+  
+  // New values (JSON string)
+  newData: a.json(),
+  
+  // Metadata
+  source: a.string(), // 'get_estimate_form', 'admin_panel', etc.
+  userAgent: a.string(),
+  ipAddress: a.string(),
+  
+  // Timestamps
+  timestamp: a.datetime().required(),
+  createdDate: a.datetime(),
+  owner: a.string(),
+  
+  // TTL for automatic cleanup (30 days = 2592000 seconds)
+  ttl: a.integer(),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
+
 const Legal = a.model({
   title: a.string(),
   createdDate: a.datetime(),
@@ -654,6 +727,8 @@ const schema = a.schema({
   BackOfficeRoleTypes,
   ContactUs,
   Contacts,
+  AuditLog,
+  ContactAuditLog,
   Legal,
   MemberSignature,
   PendingAppoitments,

@@ -29,6 +29,8 @@
     "@emotion/styled": "^11.14.0",
     "@fast-csv/format": "^5.0.2",
     "@fast-csv/parse": "^5.0.2",
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^5.1.1",
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
     "@parcel/watcher": "^2.5.1",
@@ -47,13 +49,15 @@
     "parse-address": "^1.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.58.1",
     "react-icons": "^5.5.0",
     "react-image-gallery": "^1.4.0",
     "react-intersection-observer": "^9.16.0",
     "reflect-metadata": "^0.2.2",
     "tailwind-merge": "^3.2.0",
     "typedjson": "^1.8.0",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@ardatan/relay-compiler": "^12.0.0",

@@ -64,7 +64,8 @@ module.exports = {
         heading: ["Nunito Sans", "sans-serif"],
         body: ["Roboto", "sans-serif"],
         inter: ["Inter", "sans-serif"],
-        playfair: ["Playfair Display", "serif"]
+        playfair: ["Playfair Display", "serif"],
+        nunito: ["Nunito Sans", "sans-serif"]
       },
       fontSize: {
         // Responsive font sizing system - updated to use px values

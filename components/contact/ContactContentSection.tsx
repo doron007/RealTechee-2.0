@@ -13,12 +13,14 @@ interface ContactContentSectionProps {
   processSteps: ProcessStep[];
   formTitle: string;
   formPlaceholder?: string;
+  form?: React.ReactNode; // New prop for actual form component
 }
 
 export default function ContactContentSection({ 
   processSteps, 
   formTitle, 
-  formPlaceholder = "Form implementation coming next..." 
+  formPlaceholder = "Form implementation coming next...",
+  form
 }: ContactContentSectionProps) {
   return (
     <Section background="white" spacing="none" className="pt-20 pb-12 sm:pt-20 sm:pb-16 md:pt-20 md:pb-20">
@@ -44,12 +46,18 @@ export default function ContactContentSection({
         <div className="lg:col-span-8">
           <SectionTitle spacing="none">{formTitle}</SectionTitle>
           
-          {/* Placeholder for the actual form */}
-          <div className="space-y-6 mt-6">
-            <div className="p-6 border-2 border-dashed border-gray-200 rounded-lg text-center bg-gray-50">
-              <p className="text-medium-gray mb-2">📝 {formTitle} Form</p>
-              <p className="text-sm text-light-gray">{formPlaceholder}</p>
-            </div>
+          {/* Actual form or placeholder */}
+          <div className="mt-6">
+            {form ? (
+              form
+            ) : (
+              <div className="space-y-6">
+                <div className="p-6 border-2 border-dashed border-gray-200 rounded-lg text-center bg-gray-50">
+                  <p className="text-medium-gray mb-2">📝 {formTitle} Form</p>
+                  <p className="text-sm text-light-gray">{formPlaceholder}</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
