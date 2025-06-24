@@ -9,9 +9,12 @@ import FileUploadField from './FileUploadField';
 import FormDropdown from './FormDropdown';
 import FormInput from './FormInput';
 import FormTextarea from './FormTextarea';
+import DynamicFieldRenderer from './DynamicFieldRenderer';
+import DynamicSectionRenderer from './DynamicSectionRenderer';
 import { SubContent, SectionTitle, BodyContent } from '../Typography';
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
+import { getFieldConfig, getSectionConfig } from '../../lib/constants/fieldConfigs';
 
 // Helper function to convert text to camelCase
 const toCamelCase = (str: string): string => {
@@ -309,30 +312,13 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
         logger.info('handleSubmit called with data:', data);
         onFormSubmit(data);
       }, onFormError)} className="w-full flex flex-col gap-8">
-        {/* Who Are You Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Who you are
-          </SectionTitle>
-          
-          <FormDropdown
-            register={register}
-            errors={errors}
-            name="relationToProperty"
-            label=""
-            placeholder="What would describe you the best?*"
-            options={[
-              { value: "Retailer", label: "Retailer" },
-              { value: "Architect / Designer", label: "Architect / Designer" },
-              { value: "Loan Officer", label: "Loan Officer" },
-              { value: "Broker", label: "Broker" },
-              { value: "Real Estate Agent", label: "Real Estate Agent" },
-              { value: "Homeowner", label: "Homeowner" },
-              { value: "Other", label: "Other" }
-            ]}
-            required
-          />
-        </div>
+        {/* Who Are You Section - Dynamic Rendering */}
+        <DynamicSectionRenderer
+          section={getSectionConfig('whoAreYou')!}
+          register={register}
+          errors={errors}
+          watch={watch}
+        />
 
         {/* Property Information Section */}
         <div className="flex flex-col gap-4">
@@ -436,47 +422,14 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
             />
           </div>
 
-          {/* Finance Needed Section */}
+          {/* Finance Needed Section - Dynamic Rendering */}
           <div className="flex flex-col gap-4 lg:min-w-[200px]">
-            <SectionTitle className="text-[#2A2B2E]">
-              Finance needed?
-            </SectionTitle>
-            
-            <div className="flex flex-col gap-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  {...register('needFinance')}
-                  type="radio"
-                  value="true"
-                  className="sr-only"
-                />
-                <div className="relative">
-                  <div className={`w-4 h-4 rounded-full border border-[#D2D2D4] bg-white flex items-center justify-center`}>
-                    {needFinance === true && (
-                      <div className="w-[10.67px] h-[10.67px] rounded-full bg-[#2A2B2E]" />
-                    )}
-                  </div>
-                </div>
-                <BodyContent as="span" className="text-[#2A2B2E]" spacing="none">Yes</BodyContent>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  {...register('needFinance')}
-                  type="radio"
-                  value="false"
-                  className="sr-only"
-                />
-                <div className="relative">
-                  <div className={`w-4 h-4 rounded-full border border-[#D2D2D4] bg-white flex items-center justify-center`}>
-                    {needFinance === false && (
-                      <div className="w-[10.67px] h-[10.67px] rounded-full bg-[#2A2B2E]" />
-                    )}
-                  </div>
-                </div>
-                <BodyContent as="span" className="text-[#2A2B2E]" spacing="none">No</BodyContent>
-              </label>
-            </div>
+            <DynamicFieldRenderer
+              field={getFieldConfig('financeNeeded')!}
+              register={register}
+              errors={errors}
+              watch={watch}
+            />
           </div>
         </div>
 

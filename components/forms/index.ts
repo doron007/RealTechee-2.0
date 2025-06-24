@@ -25,6 +25,10 @@ export { default as FormFieldContainer } from './FormFieldContainer';
 export { default as FormSideBySide } from './FormSideBySide';
 export { default as FormFooter } from './FormFooter';
 
+// Dynamic Form Rendering
+export { default as DynamicFieldRenderer } from './DynamicFieldRenderer';
+export { default as DynamicSectionRenderer } from './DynamicSectionRenderer';
+
 // Form Status Components
 export { 
   FormSuccessMessage, 
