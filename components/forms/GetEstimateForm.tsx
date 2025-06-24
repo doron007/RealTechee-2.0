@@ -6,6 +6,9 @@ import { ErrorMessage } from '@hookform/error-message';
 import ContactInfoFields from './ContactInfoFields';
 import AddressFields from './AddressFields';
 import FileUploadField from './FileUploadField';
+import FormDropdown from './FormDropdown';
+import FormInput from './FormInput';
+import FormTextarea from './FormTextarea';
 import { SubContent, SectionTitle, BodyContent } from '../Typography';
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
@@ -312,34 +315,22 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
             Who you are
           </SectionTitle>
           
-          <div className={`w-full bg-white border rounded px-6 py-4 flex items-center justify-between ${errors.relationToProperty ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-            <select
-              {...register('relationToProperty')}
-              className={`w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.6] appearance-none ${
-                watch('relationToProperty') ? 'text-[#2A2B2E]' : 'text-[#646469]'
-              }`}
-            >
-              <option value="">What would describe you the best?*</option>
-              <option value="Retailer">Retailer</option>
-              <option value="Architect / Designer">Architect / Designer</option>
-              <option value="Loan Officer">Loan Officer</option>
-              <option value="Broker">Broker</option>
-              <option value="Real Estate Agent">Real Estate Agent</option>
-              <option value="Homeowner">Homeowner</option>
-              <option value="Other">Other</option>
-            </select>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
-              <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <ErrorMessage
+          <FormDropdown
+            register={register}
             errors={errors}
             name="relationToProperty"
-            render={({ message }) => (
-              <SubContent className="text-[#D11919] mt-1">
-                {message}
-              </SubContent>
-            )}
+            label=""
+            placeholder="What would describe you the best?*"
+            options={[
+              { value: "Retailer", label: "Retailer" },
+              { value: "Architect / Designer", label: "Architect / Designer" },
+              { value: "Loan Officer", label: "Loan Officer" },
+              { value: "Broker", label: "Broker" },
+              { value: "Real Estate Agent", label: "Real Estate Agent" },
+              { value: "Homeowner", label: "Homeowner" },
+              { value: "Other", label: "Other" }
+            ]}
+            required
           />
         </div>
 
@@ -360,8 +351,7 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
         </div>
 
         {/* Agent Information Section (Required) */}
-        {/* {showAgentInfo && ( */}
-          <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
             <SectionTitle className="text-[#2A2B2E]">
               Agent Information
             </SectionTitle>
@@ -374,75 +364,41 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
               />
               
               {/* Brokerage Dropdown */}
-              <div className="w-full">
-                <div className="flex flex-col gap-1">
-                  <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                    Brokerage*
-                  </BodyContent>
-                  <div className={`w-full bg-white border rounded px-6 py-4 flex items-center justify-between ${errors.agentInfo?.brokerage ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                    <select
-                      {...register('agentInfo.brokerage')}
-                      className={`w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.6] appearance-none ${
-                        watch('agentInfo.brokerage') ? 'text-[#2A2B2E]' : 'text-[#646469]'
-                      }`}
-                    >
-                      <option value="">Select Brokerage*</option>
-                      <option value="Equity Union">Equity Union</option>
-                      <option value="Sync">Sync</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
-                      <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <ErrorMessage
+              <FormDropdown
+                register={register}
+                errors={errors}
+                name={"agentInfo.brokerage" as any}
+                label="Brokerage"
+                placeholder="Select Brokerage*"
+                options={[
+                  { value: "Equity Union", label: "Equity Union" },
+                  { value: "Sync", label: "Sync" },
+                  { value: "Other", label: "Other" }
+                ]}
+                required
+              />
+
+              {/* Custom Brokerage Input - Show when "Other" is selected */}
+              {watch('agentInfo.brokerage') === 'Other' && (
+                <div className="w-full mt-4">
+                  <FormInput
+                    register={register}
                     errors={errors}
-                    name="agentInfo.brokerage"
-                    render={({ message }) => (
-                      <SubContent className="text-[#D11919] mt-1">
-                        {message}
-                      </SubContent>
-                    )}
+                    name={"agentInfo.customBrokerage" as any}
+                    label="Enter Brokerage Name"
+                    placeholder="Enter brokerage name"
+                    required
+                    onBlur={(e) => {
+                      const camelCased = toCamelCase(e.target.value);
+                      e.target.value = camelCased;
+                      // Trigger re-validation after transformation
+                      e.target.dispatchEvent(new Event('input', { bubbles: true }));
+                    }}
                   />
                 </div>
-
-                {/* Custom Brokerage Input - Show when "Other" is selected */}
-                {watch('agentInfo.brokerage') === 'Other' && (
-                  <div className="w-full mt-4">
-                    <div className="flex flex-col gap-1">
-                      <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                        Enter Brokerage Name*
-                      </BodyContent>
-                      <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${errors.agentInfo?.customBrokerage ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                        <input
-                          {...register('agentInfo.customBrokerage')}
-                          type="text"
-                          className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
-                          placeholder="Enter brokerage name"
-                          onBlur={(e) => {
-                            const camelCased = toCamelCase(e.target.value);
-                            e.target.value = camelCased;
-                            // Trigger re-validation after transformation
-                            e.target.dispatchEvent(new Event('input', { bubbles: true }));
-                          }}
-                        />
-                      </div>
-                      <ErrorMessage
-                        errors={errors}
-                        name="agentInfo.customBrokerage"
-                        render={({ message }) => (
-                          <SubContent className="text-[#D11919] mt-1">
-                            {message}
-                          </SubContent>
-                        )}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
-        {/* )} */}
 
         {/* Homeowner Information Section - Optional */}
         <div className="flex flex-col gap-4">
@@ -470,13 +426,14 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
               Note
             </SectionTitle>
             
-            <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 h-[120px]">
-              <textarea
-                {...register('notes')}
-                className="w-full h-full bg-transparent border-0 outline-0 text-base font-normal text-[#646469] leading-[1.6] resize-none placeholder:text-[#646469]"
-                placeholder="Is there anything you'd like to share so we can assist you better?"
-              />
-            </div>
+            <FormTextarea
+              register={register}
+              errors={errors}
+              name="notes"
+              label=""
+              placeholder="Is there anything you'd like to share so we can assist you better?"
+              rows={5}
+            />
           </div>
 
           {/* Finance Needed Section */}

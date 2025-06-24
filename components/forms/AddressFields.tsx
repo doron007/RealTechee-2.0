@@ -62,10 +62,10 @@ export function AddressFields<T extends Record<string, any>>({
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
               State*
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center justify-between ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-6 py-4 relative ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <select
                 {...register(`${prefix}.state` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
                 defaultValue="CA"
               >
                 <option value="AL">Alabama</option>
@@ -128,7 +128,7 @@ export function AddressFields<T extends Record<string, any>>({
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
               </select>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
                 <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>

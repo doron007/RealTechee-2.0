@@ -44,10 +44,10 @@ export default function ContactContentSection({
 
         {/* Right Column: Form (692px equivalent - 8 columns) */}
         <div className="lg:col-span-8">
-          <SectionTitle spacing="none">{formTitle}</SectionTitle>
+          {/* <SectionTitle spacing="none">{formTitle}</SectionTitle> */}
           
           {/* Actual form or placeholder */}
-          <div className="mt-6">
+          <div className="mt-0">
             {form ? (
               form
             ) : (

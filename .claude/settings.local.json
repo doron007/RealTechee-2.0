@@ -5,7 +5,9 @@
       "Bash(npm list:*)",
       "Bash(npm run:*)",
       "Bash(npm uninstall:*)",
-      "Bash(npx tailwindcss:*)"
+      "Bash(npx tailwindcss:*)",
+      "WebFetch(domain:mui.com)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }
