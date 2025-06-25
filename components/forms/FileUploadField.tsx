@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { uploadData } from 'aws-amplify/storage';
+import { Close, Photo, VideoFile, Description } from '@mui/icons-material';
 import { SubContent } from '../Typography';
 import amplifyConfig from '../../amplify_outputs.json';
 
@@ -31,31 +32,36 @@ const ACCEPTED_FILE_TYPES = {
     accept: 'image/jpeg,image/png,image/gif,image/webp',
     types: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
     icon: (
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <path d="M13.32 31.33H26.68L34.68 10H40V31.33" stroke="#D2D2D4" strokeWidth="1" fill="none"/>
-        <path d="M8 31.34H27.68L35.68 39.17" stroke="#D2D2D4" strokeWidth="1" fill="none"/>
-        <circle cx="22.66" cy="19.32" r="2.66" stroke="#D2D2D4" strokeWidth="1" fill="none"/>
-      </svg>
+      <Photo 
+        sx={{ 
+          fontSize: 48, 
+          color: '#2A2B2E' 
+        }} 
+      />
     )
   },
   videos: {
     accept: 'video/mp4,video/avi,video/mov,video/wmv',
     types: ['video/mp4', 'video/avi', 'video/mov', 'video/wmv'],
     icon: (
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <path d="M8 32.02V16.02H31.08V32.02H8Z" stroke="#2A2B2E" strokeWidth="1" fill="none"/>
-        <path d="M32.28 32.02L40 16V32.02L32.28 32.02Z" stroke="#2A2B2E" strokeWidth="1" fill="none"/>
-      </svg>
+      <VideoFile 
+        sx={{ 
+          fontSize: 48, 
+          color: '#2A2B2E' 
+        }} 
+      />
     )
   },
   docs: {
     accept: 'application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.txt',
     types: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'],
     icon: (
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <path d="M14 6H34L40 12V40C40 41.1 39.1 42 38 42H10C8.9 42 8 41.1 8 40V8C8 6.9 8.9 6 10 6H14Z" stroke="#2A2B2E" strokeWidth="1" fill="none"/>
-        <path d="M32 6V14H40" stroke="#2A2B2E" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
+      <Description 
+        sx={{ 
+          fontSize: 48, 
+          color: '#2A2B2E' 
+        }} 
+      />
     )
   }
 };
@@ -323,9 +329,12 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
                 className="ml-2 p-1 text-[#D11919] hover:bg-red-50 rounded"
                 type="button"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <Close 
+                  sx={{ 
+                    fontSize: 16,
+                    color: 'currentColor'
+                  }} 
+                />
               </button>
             </div>
           ))}

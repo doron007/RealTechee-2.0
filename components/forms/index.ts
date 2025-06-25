@@ -16,6 +16,8 @@ export { default as FormRadioGroup } from './FormRadioGroup';
 export { default as FormCheckboxGroup } from './FormCheckboxGroup';
 export { default as FormButtonGroup } from './FormButtonGroup';
 export { default as FormDateTimeInput } from './FormDateTimeInput';
+export { default as FormDateInput } from './FormDateInput';
+export { default as FormTimeInput } from './FormTimeInput';
 export { default as FormSection } from './FormSection';
 export { default as FormSubmitButton } from './FormSubmitButton';
 

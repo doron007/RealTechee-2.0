@@ -15,15 +15,13 @@ import { SubContent, SectionTitle, BodyContent } from '../Typography';
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
 import { getFieldConfig, getSectionConfig } from '../../lib/constants/fieldConfigs';
+import { generateSessionId, toCamelCase, getTodayDateString, FORM_INPUT_CLASSES } from '../../lib/utils/formUtils';
+import FormFooter from './FormFooter';
+import FormSection from './FormSection';
+import FormDateInput from './FormDateInput';
+import FormTimeInput from './FormTimeInput';
 
-// Helper function to convert text to camelCase
-const toCamelCase = (str: string): string => {
-  return str
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-      return index === 0 ? word.toLowerCase() : word.toUpperCase();
-    })
-    .replace(/\s+/g, '');
-};
+// Utility functions imported from consolidated formUtils
 
 // Types based on backend field mappings from implementation plan
 interface BaseContactInfo {
@@ -61,6 +59,7 @@ interface EstimateFormData {
   
   // Meeting Details
   requestedVisitDateTime: string; // Optional when upload mode
+  requestedVisitTime: string; // Optional when upload mode
   rtDigitalSelection: 'upload' | 'video-call' | 'in-person';
   
   // File Uploads
@@ -107,7 +106,12 @@ const estimateValidationSchema = yup.object({
   notes: yup.string().optional(),
   requestedVisitDateTime: yup.string().when('rtDigitalSelection', {
     is: (val: string) => val !== 'upload',
-    then: (schema) => schema.required('Meeting date and time is required'),
+    then: (schema) => schema.required('Meeting date is required'),
+    otherwise: (schema) => schema.optional()
+  }),
+  requestedVisitTime: yup.string().when('rtDigitalSelection', {
+    is: (val: string) => val !== 'upload',
+    then: (schema) => schema.required('Meeting time is required'),
     otherwise: (schema) => schema.optional()
   }),
   rtDigitalSelection: yup.string().required('Please select meeting type')
@@ -118,18 +122,7 @@ interface GetEstimateFormProps {
   isLoading?: boolean;
 }
 
-// Generate session ID for consistent folder structure across all uploads
-const generateSessionId = (): string => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  
-  return `${year}${month}${day}_${hours}${minutes}${seconds}`;
-};
+// Session ID generation now consolidated in formUtils
 
 export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
   onSubmit,
@@ -145,6 +138,7 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(estimateValidationSchema),
@@ -174,7 +168,8 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
         customBrokerage: ''
       },
       notes: '',
-      requestedVisitDateTime: ''
+      requestedVisitDateTime: '',
+      requestedVisitTime: ''
     }
   });
 
@@ -227,6 +222,9 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
     if (data.rtDigitalSelection !== 'upload' && !data.requestedVisitDateTime) {
       validationErrors.push('requestedVisitDateTime is missing for non-upload mode');
     }
+    if (data.rtDigitalSelection !== 'upload' && !data.requestedVisitTime) {
+      validationErrors.push('requestedVisitTime is missing for non-upload mode');
+    }
 
     if (validationErrors.length > 0) {
       logger.error('=== VALIDATION FAILED - BLOCKING SUBMISSION ===', {
@@ -259,13 +257,18 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
       ? data.agentInfo.customBrokerage 
       : data.agentInfo.brokerage;
 
+    // Combine date and time into a single datetime string for backend
+    const combinedDateTime = data.requestedVisitDateTime && data.requestedVisitTime 
+      ? new Date(`${data.requestedVisitDateTime}T${data.requestedVisitTime}`).toISOString()
+      : undefined;
+
     const formattedData = {
       ...data,
       agentInfo: {
         ...data.agentInfo,
         brokerage: finalBrokerage // Use the actual brokerage name
       },
-      requestedVisitDateTime: data.requestedVisitDateTime ? new Date(data.requestedVisitDateTime).toISOString() : undefined,
+      requestedVisitDateTime: combinedDateTime,
       uploadedMedia: uploadedFiles,
       leadSource: 'Website',
       status: 'New',
@@ -321,105 +324,87 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
         />
 
         {/* Property Information Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Property information
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            <AddressFields
-              register={register}
-              errors={errors}
-              prefix="propertyAddress"
-              addressLabel="Address*"
-            />
-          </div>
-        </div>
+        <FormSection title="Property information">
+          <AddressFields
+            register={register}
+            errors={errors}
+            prefix="propertyAddress"
+            addressLabel="Address*"
+          />
+        </FormSection>
 
         {/* Agent Information Section (Required) */}
-        <div className="flex flex-col gap-4">
-            <SectionTitle className="text-[#2A2B2E]">
-              Agent Information
-            </SectionTitle>
-            
-            <div className="flex flex-col gap-4">
-              <ContactInfoFields
-                register={register}
-                errors={errors}
-                prefix="agentInfo"
-              />
-              
-              {/* Brokerage Dropdown */}
-              <FormDropdown
-                register={register}
-                errors={errors}
-                name={"agentInfo.brokerage" as any}
-                label="Brokerage"
-                placeholder="Select Brokerage*"
-                options={[
-                  { value: "Equity Union", label: "Equity Union" },
-                  { value: "Sync", label: "Sync" },
-                  { value: "Other", label: "Other" }
-                ]}
-                required
-              />
+        <FormSection title="Agent Information">
+          <ContactInfoFields
+            register={register}
+            errors={errors}
+            prefix="agentInfo"
+          />
+          
+          {/* Brokerage Dropdown */}
+          <FormDropdown
+            register={register}
+            errors={errors}
+            name={"agentInfo.brokerage" as any}
+            label="Brokerage"
+            placeholder="Select Brokerage*"
+            options={[
+              { value: "Equity Union", label: "Equity Union" },
+              { value: "Sync", label: "Sync" },
+              { value: "Other", label: "Other" }
+            ]}
+            required
+          />
 
-              {/* Custom Brokerage Input - Show when "Other" is selected */}
-              {watch('agentInfo.brokerage') === 'Other' && (
-                <div className="w-full mt-4">
-                  <FormInput
-                    register={register}
-                    errors={errors}
-                    name={"agentInfo.customBrokerage" as any}
-                    label="Enter Brokerage Name"
-                    placeholder="Enter brokerage name"
-                    required
-                    onBlur={(e) => {
-                      const camelCased = toCamelCase(e.target.value);
-                      e.target.value = camelCased;
-                      // Trigger re-validation after transformation
-                      e.target.dispatchEvent(new Event('input', { bubbles: true }));
-                    }}
-                  />
-                </div>
-              )}
+          {/* Custom Brokerage Input - Show when "Other" is selected */}
+          {watch('agentInfo.brokerage') === 'Other' && (
+            <div className="w-full mt-4">
+              <FormInput
+                register={register}
+                errors={errors}
+                name={"agentInfo.customBrokerage" as any}
+                label="Enter Brokerage Name"
+                placeholder="Enter brokerage name"
+                required
+                onBlur={(e) => {
+                  const camelCased = toCamelCase(e.target.value);
+                  // Use React Hook Form's setValue to properly update the form state
+                  setValue('agentInfo.customBrokerage', camelCased, { 
+                    shouldValidate: true, // Trigger validation
+                    shouldDirty: true     // Mark field as dirty
+                  });
+                }}
+              />
             </div>
-          </div>
+          )}
+        </FormSection>
 
         {/* Homeowner Information Section - Optional */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Homeowner Information (Optional)
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            <ContactInfoFields
-              register={register}
-              errors={errors}
-              prefix="homeownerInfo"
-              nameLabel="Full name"
-              emailLabel="Email Address"
-              phoneLabel="Phone Number"
-            />
-          </div>
-        </div>
+        <FormSection title="Homeowner Information (Optional)">
+          <ContactInfoFields
+            register={register}
+            errors={errors}
+            prefix="homeownerInfo"
+            nameLabel="Full name"
+            emailLabel="Email Address"
+            phoneLabel="Phone Number"
+          />
+        </FormSection>
 
         {/* Note and Finance Section - Side by Side on desktop, stacked on mobile */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 w-full">
           {/* Note Section */}
-          <div className="flex-1 flex flex-col gap-4">
-            <SectionTitle className="text-[#2A2B2E]">
-              Note
-            </SectionTitle>
-            
-            <FormTextarea
-              register={register}
-              errors={errors}
-              name="notes"
-              label=""
-              placeholder="Is there anything you'd like to share so we can assist you better?"
-              rows={5}
-            />
+          <div className="flex-1">
+            <FormSection title="Note">
+              <FormTextarea
+                register={register}
+                errors={errors}
+                name="notes"
+                label=""
+                placeholder="Is there anything you'd like to share so we can assist you better?"
+                rows={5}
+              />
+            </FormSection>
           </div>
 
           {/* Finance Needed Section - Dynamic Rendering */}
@@ -434,110 +419,45 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
         </div>
 
         {/* Meeting Details Section */}
-        <div className="flex flex-col gap-6 w-full">
-          <SectionTitle className="text-[#2A2B2E]">
-            Meeting details
-          </SectionTitle>
-          
+        <FormSection title="Meeting details" contentClassName="flex flex-col gap-6">
           <BodyContent className="text-[#2A2B2E] w-full">
             Walk us through your home over a video call, video and pictures uploading or in person home visit so that we can learn more about your needs and your property. Once we have a sense of your home's condition and your property Booster needs, we can start to prepare our most efficient proposal.
           </BodyContent>
 
-          {/* Meeting Type Buttons - Stack on mobile, row on desktop */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full">
-            <label className={`flex-1 px-6 py-4 rounded border text-base font-[800] leading-[1.2] font-nunito text-center cursor-pointer ${
-              rtDigitalSelection === 'video-call'
-                ? 'bg-[#000000] text-white border-[#2A2B2E]'
-                : 'bg-white text-[#2A2B2E] border-[#2A2B2E]'
-            }`}>
-              <input
-                {...register('rtDigitalSelection')}
-                type="radio"
-                value="video-call"
-                className="sr-only"
-              />
-              Video call
-            </label>
-            
-            <label className={`flex-1 px-6 py-4 rounded border text-base font-[800] leading-[1.2] font-nunito text-center cursor-pointer ${
-              rtDigitalSelection === 'upload'
-                ? 'bg-[#000000] text-white border-[#2A2B2E]'
-                : 'bg-white text-[#2A2B2E] border-[#2A2B2E]'
-            }`}>
-              <input
-                {...register('rtDigitalSelection')}
-                type="radio"
-                value="upload"
-                className="sr-only"
-              />
-              Pictures & video walkthrough
-            </label>
-            
-            <label className={`flex-1 px-6 py-4 rounded border text-base font-[800] leading-[1.2] font-nunito text-center cursor-pointer ${
-              rtDigitalSelection === 'in-person'
-                ? 'bg-[#000000] text-white border-[#2A2B2E]'
-                : 'bg-white text-[#2A2B2E] border-[#2A2B2E]'
-            }`}>
-              <input
-                {...register('rtDigitalSelection')}
-                type="radio"
-                value="in-person"
-                className="sr-only"
-              />
-              In-person home visit
-            </label>
-          </div>
+          {/* Meeting Type Buttons - Dynamic Rendering */}
+          <DynamicFieldRenderer
+            field={getFieldConfig('meeting-type')!}
+            register={register}
+            errors={errors}
+            watch={watch}
+          />
 
           {/* Date and Time Fields - Only show when not upload mode */}
           {rtDigitalSelection !== 'upload' && (
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 w-full">
               {/* Meeting Date */}
               <div className="flex-1">
-                <div className="flex flex-col gap-1">
-                  <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                    Meeting date*
-                  </BodyContent>
-                  <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center justify-between">
-                    <input
-                      {...register('requestedVisitDateTime')}
-                      type="date"
-                      className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#646469] leading-[1.6]"
-                      placeholder="Please pick a date"
-                      min={new Date().toISOString().split('T')[0]}
-                    />
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
-                      <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="#2A2B2E" strokeWidth="1" fill="none"/>
-                      <path d="M16 1V5" stroke="#2A2B2E" strokeWidth="1" strokeLinecap="round"/>
-                      <path d="M8 1V5" stroke="#2A2B2E" strokeWidth="1" strokeLinecap="round"/>
-                      <path d="M3 9H21" stroke="#2A2B2E" strokeWidth="1" strokeLinecap="round"/>
-                    </svg>
-                  </div>
-                  {errors.requestedVisitDateTime && (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {errors.requestedVisitDateTime.message as string}
-                    </SubContent>
-                  )}
-                </div>
+                <FormDateInput
+                  register={register}
+                  errors={errors}
+                  name="requestedVisitDateTime"
+                  label="Meeting date*"
+                  placeholder="Please pick a date"
+                  min={getTodayDateString()}
+                  required
+                />
               </div>
 
               {/* Meeting Time */}
               <div className="flex-1">
-                <div className="flex flex-col gap-1">
-                  <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                    Meeting time*
-                  </BodyContent>
-                  <div className="w-full bg-white border border-[#D2D2D4] rounded px-6 py-4 flex items-center justify-between">
-                    <input
-                      type="time"
-                      className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#646469] leading-[1.6]"
-                      placeholder="Please pick a time"
-                    />
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
-                      <circle cx="12" cy="12" r="10" stroke="#2A2B2E" strokeWidth="1" fill="none"/>
-                      <polyline points="12,6 12,12 16,14" stroke="#2A2B2E" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                </div>
+                <FormTimeInput
+                  register={register}
+                  errors={errors}
+                  name="requestedVisitTime"
+                  label="Meeting time*"
+                  placeholder="Please pick a time"
+                  required
+                />
               </div>
             </div>
           )}
@@ -550,27 +470,14 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
             addressInfo={watch('propertyAddress')}
             sessionId={sessionId}
           />
-        </div>
+        </FormSection>
 
         {/* Footer Section */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 w-full">
-          <SubContent className="text-[#2A2B2E] border border-[#FCF9F8]" spacing="none">
-            *Required field
-          </SubContent>
-          
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full sm:w-[203px] bg-[#2A2B2E] text-white rounded px-6 py-4 flex items-center justify-center gap-4 text-base font-[800] leading-[1.2] font-nunito"
-          >
-            <span>{isLoading ? 'Submitting...' : 'Send'}</span>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M10.82 4.45L15.37 9L10.82 13.55" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2.63 9H15.25" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </div>
+        <FormFooter
+          isLoading={isLoading}
+          submitText="Send"
+          loadingText="Submitting..."
+        />
       </form>
     </div>
   );
