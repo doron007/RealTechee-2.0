@@ -43,19 +43,30 @@ export function FormInput<T extends Record<string, any>>({
       required={required}
       className={className}
     >
-      {(hasError, fieldId) => (
-        <FormFieldContainer hasError={hasError} size="md">
-          <input
-            {...register(name)}
-            id={fieldId}
-            type={type}
-            className="w-full bg-transparent border-0 outline-0 text-sm font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469]"
-            placeholder={placeholder}
-            maxLength={maxLength}
-            onBlur={onBlur}
-          />
-        </FormFieldContainer>
-      )}
+      {(hasError, fieldId) => {
+        const registerProps = register(name);
+        
+        return (
+          <FormFieldContainer hasError={hasError} size="md">
+            <input
+              {...registerProps}
+              id={fieldId}
+              type={type}
+              className="w-full bg-transparent border-0 outline-0 text-sm font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469]"
+              placeholder={placeholder}
+              maxLength={maxLength}
+              onBlur={(e) => {
+                // Call React Hook Form's onBlur first
+                registerProps.onBlur(e);
+                // Then call our custom onBlur if provided
+                if (onBlur) {
+                  onBlur(e);
+                }
+              }}
+            />
+          </FormFieldContainer>
+        );
+      }}
     </FormFieldWrapper>
   );
 }

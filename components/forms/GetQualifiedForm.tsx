@@ -8,6 +8,18 @@ import ContactInfoFields from './ContactInfoFields';
 import AddressFields from './AddressFields';
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
+import { 
+  BROKERAGE_OPTIONS, 
+  SPECIALTY_OPTIONS, 
+  EXPERIENCE_YEARS_OPTIONS, 
+  TRANSACTION_VOLUME_OPTIONS 
+} from '../../lib/utils/formUtils';
+import FormFooter from './FormFooter';
+import FormSection from './FormSection';
+import FormInput from './FormInput';
+import FormDropdown from './FormDropdown';
+import FormTextarea from './FormTextarea';
+import FormCheckboxGroup from './FormCheckboxGroup';
 
 // Types based on backend field mappings for Get Qualified
 interface BaseContactInfo {
@@ -112,7 +124,6 @@ export const GetQualifiedForm: React.FC<GetQualifiedFormProps> = ({
   });
 
   const watchedBrokerage = watch('brokerage');
-  const watchedSpecialties = watch('specialties') || [];
 
   // Form submission with validation and logging
   const onFormSubmit = (data: GetQualifiedFormData) => {
@@ -157,355 +168,135 @@ export const GetQualifiedForm: React.FC<GetQualifiedFormProps> = ({
     }, 100);
   };
 
-  const handleSpecialtyChange = (specialty: string, checked: boolean) => {
-    const currentSpecialties = watchedSpecialties;
-    if (checked) {
-      register('specialties').onChange({
-        target: { 
-          name: 'specialties', 
-          value: [...currentSpecialties, specialty] 
-        }
-      });
-    } else {
-      register('specialties').onChange({
-        target: { 
-          name: 'specialties', 
-          value: currentSpecialties.filter(s => s !== specialty) 
-        }
-      });
-    }
-  };
 
-  const brokerageOptions = [
-    'Equity Union',
-    'Compass',
-    'Coldwell Banker',
-    'Keller Williams', 
-    'RE/MAX',
-    'Berkshire Hathaway HomeServices',
-    'Century 21',
-    'Sotheby\'s International Realty',
-    'eXp Realty',
-    'Realty ONE Group',
-    'Better Homes and Gardens Real Estate',
-    'other'
-  ];
-
-  const specialtyOptions = [
-    'Residential Sales',
-    'Luxury Properties',
-    'Commercial Real Estate',
-    'Investment Properties',
-    'First-Time Homebuyers',
-    'Relocation Services',
-    'Short Sales/Foreclosures',
-    'New Construction',
-    'Senior Housing',
-    'Vacation/Second Homes'
-  ];
 
   return (
     <div className="w-full max-w-[692px] flex flex-col gap-8">
       <form onSubmit={handleSubmit(onFormSubmit, onFormError)} className="w-full flex flex-col gap-8">
         
         {/* Contact Information Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Contact Information
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            <ContactInfoFields
-              register={register}
-              errors={errors}
-              prefix="contactInfo"
-            />
-          </div>
-        </div>
+        <FormSection title="Contact Information">
+          <ContactInfoFields
+            register={register}
+            errors={errors}
+            prefix="contactInfo"
+          />
+        </FormSection>
 
         {/* Address Information Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Address Information
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            <AddressFields
-              register={register}
-              errors={errors}
-              prefix="address"
-            />
-          </div>
-        </div>
+        <FormSection title="Address Information">
+          <AddressFields
+            register={register}
+            errors={errors}
+            prefix="address"
+          />
+        </FormSection>
 
         {/* Agent Qualification Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Agent Qualification
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            {/* License Number */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Real Estate License Number*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${errors.licenseNumber ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <input
-                    {...register('licenseNumber')}
-                    className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
-                    placeholder="Enter your license number"
-                  />
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="licenseNumber"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+        <FormSection title="Agent Qualification">
+          {/* License Number */}
+          <FormInput
+            register={register}
+            errors={errors}
+            name="licenseNumber"
+            label="Real Estate License Number*"
+            placeholder="Enter your license number"
+            required
+          />
 
-            {/* Brokerage */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Brokerage*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 relative flex items-center ${errors.brokerage ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <select
-                    {...register('brokerage')}
-                    className={`w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.6] appearance-none pr-8 ${
-                      watch('brokerage') ? 'text-[#2A2B2E]' : 'text-[#646469]'
-                    }`}
-                  >
-                    <option value="">Select your brokerage*</option>
-                    {brokerageOptions.map(option => (
-                      <option key={option} value={option}>
-                        {option === 'other' ? 'Other (please specify)' : option}
-                      </option>
-                    ))}
-                  </select>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="brokerage"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+          {/* Brokerage */}
+          <FormDropdown
+            register={register}
+            errors={errors}
+            name="brokerage"
+            label="Brokerage*"
+            placeholder="Select your brokerage*"
+            options={BROKERAGE_OPTIONS.map(option => ({
+              value: option,
+              label: option === 'other' ? 'Other (please specify)' : option
+            }))}
+            required
+          />
 
-            {/* Custom Brokerage (conditional) */}
-            {watchedBrokerage === 'other' && (
-              <div className="w-full">
-                <div className="flex flex-col gap-1">
-                  <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                    Specify Brokerage*
-                  </BodyContent>
-                  <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${errors.customBrokerage ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                    <input
-                      {...register('customBrokerage')}
-                      className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
-                      placeholder="Enter your brokerage name"
-                    />
-                  </div>
-                  <ErrorMessage
-                    errors={errors}
-                    name="customBrokerage"
-                    render={({ message }) => (
-                      <SubContent className="text-[#D11919] mt-1">
-                        {message}
-                      </SubContent>
-                    )}
-                  />
-                </div>
-              </div>
-            )}
+          {/* Custom Brokerage (conditional) */}
+          {watchedBrokerage === 'other' && (
+            <FormInput
+              register={register}
+              errors={errors}
+              name="customBrokerage"
+              label="Specify Brokerage*"
+              placeholder="Enter your brokerage name"
+              required
+            />
+          )}
 
-            {/* Experience Years */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Years of Experience*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 relative flex items-center ${errors.experienceYears ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <select
-                    {...register('experienceYears')}
-                    className={`w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.6] appearance-none pr-8 ${
-                      watch('experienceYears') ? 'text-[#2A2B2E]' : 'text-[#646469]'
-                    }`}
-                  >
-                    <option value="">Select experience level*</option>
-                    <option value="0-1">0-1 years (New Agent)</option>
-                    <option value="2-5">2-5 years</option>
-                    <option value="6-10">6-10 years</option>
-                    <option value="11-15">11-15 years</option>
-                    <option value="16+">16+ years (Veteran)</option>
-                  </select>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="experienceYears"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+          {/* Experience Years */}
+          <FormDropdown
+            register={register}
+            errors={errors}
+            name="experienceYears"
+            label="Years of Experience*"
+            placeholder="Select experience level*"
+            options={EXPERIENCE_YEARS_OPTIONS}
+            required
+          />
 
-            {/* Primary Markets */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Primary Markets*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 ${errors.primaryMarkets ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <textarea
-                    {...register('primaryMarkets')}
-                    className="w-full h-[80px] bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] resize-none placeholder:text-[#646469]"
-                    placeholder="List the cities, neighborhoods, or regions where you primarily work..."
-                  />
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="primaryMarkets"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919]">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+          {/* Primary Markets */}
+          <FormTextarea
+            register={register}
+            errors={errors}
+            name="primaryMarkets"
+            label="Primary Markets*"
+            placeholder="List the cities, neighborhoods, or regions where you primarily work..."
+            rows={3}
+            required
+          />
 
-            {/* Specialties (Checkboxes) */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Specialties* (Select all that apply)
-                </BodyContent>
-                <div className="grid grid-cols-2 gap-3">
-                  {specialtyOptions.map((specialty) => (
-                    <label key={specialty} className="flex items-center gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        {...register('specialties')}
-                        value={specialty}
-                        onChange={(e) => handleSpecialtyChange(specialty, e.target.checked)}
-                        className="w-5 h-5 text-[#000000] bg-gray-100 border-gray-300 rounded focus:ring-[#000000] focus:ring-2"
-                      />
-                      <BodyContent className="text-[#2A2B2E]" spacing="none">
-                        {specialty}
-                      </BodyContent>
-                    </label>
-                  ))}
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="specialties"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+          {/* Specialties (Checkboxes) */}
+          <FormCheckboxGroup
+            register={register}
+            watch={watch}
+            errors={errors}
+            name="specialties"
+            label="Specialties* (Select all that apply)"
+            options={SPECIALTY_OPTIONS.map(option => ({
+              value: option,
+              label: option
+            }))}
+            columns={2}
+            required
+          />
 
-            {/* Recent Transactions */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Recent Transaction Volume (Last 12 Months)*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 relative flex items-center ${errors.recentTransactions ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <select
-                    {...register('recentTransactions')}
-                    className={`w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.6] appearance-none pr-8 ${
-                      watch('recentTransactions') ? 'text-[#2A2B2E]' : 'text-[#646469]'
-                    }`}
-                  >
-                    <option value="">Select transaction volume*</option>
-                    <option value="0">0 transactions</option>
-                    <option value="1-5">1-5 transactions</option>
-                    <option value="6-10">6-10 transactions</option>
-                    <option value="11-25">11-25 transactions</option>
-                    <option value="26-50">26-50 transactions</option>
-                    <option value="50+">50+ transactions</option>
-                  </select>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="absolute right-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <path d="M4 8L12 16L20 8" stroke="#2A2B2E" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="recentTransactions"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919] mt-1">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
+          {/* Recent Transactions */}
+          <FormDropdown
+            register={register}
+            errors={errors}
+            name="recentTransactions"
+            label="Recent Transaction Volume (Last 12 Months)*"
+            placeholder="Select transaction volume*"
+            options={TRANSACTION_VOLUME_OPTIONS}
+            required
+          />
 
-            {/* Qualification Message */}
-            <div className="w-full">
-              <div className="flex flex-col gap-1">
-                <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
-                  Why do you want to work with RealTechee?*
-                </BodyContent>
-                <div className={`w-full bg-white border rounded px-6 py-4 h-[120px] ${errors.qualificationMessage ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
-                  <textarea
-                    {...register('qualificationMessage')}
-                    className="w-full h-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] resize-none placeholder:text-[#646469]"
-                    placeholder="Tell us about your goals, what makes you a great agent, and how you envision partnering with RealTechee..."
-                  />
-                </div>
-                <ErrorMessage
-                  errors={errors}
-                  name="qualificationMessage"
-                  render={({ message }) => (
-                    <SubContent className="text-[#D11919]">
-                      {message}
-                    </SubContent>
-                  )}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Qualification Message */}
+          <FormTextarea
+            register={register}
+            errors={errors}
+            name="qualificationMessage"
+            label="Why do you want to work with RealTechee?*"
+            placeholder="Tell us about your goals, what makes you a great agent, and how you envision partnering with RealTechee..."
+            rows={5}
+            required
+          />
+        </FormSection>
 
         {/* Submit Button */}
-        <div className="w-full pt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full px-6 py-4 rounded text-base font-[800] leading-[1.2] font-nunito text-center ${
-              isLoading
-                ? 'bg-[#919191] text-white cursor-not-allowed'
-                : 'bg-[#000000] text-white hover:bg-[#2A2B2E] transition-colors'
-            }`}
-          >
-            {isLoading ? 'Submitting...' : 'Submit Agent Qualification'}
-          </button>
-        </div>
+        <FormFooter
+          isLoading={isLoading}
+          submitText="Submit Agent Qualification"
+          loadingText="Submitting..."
+          showRequiredNote={false}
+        />
       </form>
     </div>
   );

@@ -11,6 +11,9 @@ import FormTextarea from './FormTextarea';
 import FormToggle from './FormToggle';
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
+import { SERVICE_TYPE_OPTIONS, EMPLOYEE_COUNT_OPTIONS } from '../../lib/utils/formUtils';
+import FormFooter from './FormFooter';
+import FormSection from './FormSection';
 
 // Types based on backend field mappings for Affiliate Inquiry
 interface BaseContactInfo {
@@ -175,173 +178,125 @@ export const AffiliateInquiryForm: React.FC<AffiliateInquiryFormProps> = ({
     }, 100);
   };
 
-  const serviceTypeOptions = [
-    'General Contractor',
-    'Architect',
-    'Interior Designer',
-    'Landscaper',
-    'Home Inspector',
-    'Photographer',
-    'Stager',
-    'Electrician',
-    'Plumber',
-    'HVAC Specialist',
-    'Roofing Contractor',
-    'Flooring Specialist',
-    'Painter',
-    'Handyman Services',
-    'Other'
-  ];
 
   return (
     <div className="w-full max-w-[692px] flex flex-col gap-8">
       <form onSubmit={handleSubmit(onFormSubmit as any, onFormError)} className="w-full flex flex-col gap-8">
         
         {/* Contact Information Section */}
-        <div className="flex flex-col gap-4">
-          <SectionTitle className="text-[#2A2B2E]">
-            Contact Information
-          </SectionTitle>
-          
-          <div className="flex flex-col gap-4">
-            <ContactInfoFields
-              register={register}
-              errors={errors}
-              prefix="contactInfo"
-            />
-          </div>
-        </div>
+        <FormSection title="Contact Information">
+          <ContactInfoFields
+            register={register}
+            errors={errors}
+            prefix="contactInfo"
+          />
+        </FormSection>
 
         {/* Address Information Section */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">
-            <AddressFields
-              register={register}
-              errors={errors}
-              prefix="address"
-              addressLabel="Address"
-            />
-          </div>
-        </div>
+        <FormSection title="Address Information">
+          <AddressFields
+            register={register}
+            errors={errors}
+            prefix="address"
+            addressLabel="Address"
+          />
+        </FormSection>
 
         {/* Business Information Section */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">
-            {/* Company Name */}
-            <FormInput
-              register={register}
-              errors={errors}
-              name="companyName"
-              label="Company Name"
-              placeholder="What is your company name?"
-              required
-            />
+        <FormSection title="Business Information">
+          {/* Company Name */}
+          <FormInput
+            register={register}
+            errors={errors}
+            name="companyName"
+            label="Company Name"
+            placeholder="What is your company name?"
+            required
+          />
 
-            {/* Service Type */}
-            <FormDropdown
-              register={register}
-              errors={errors}
-              name="serviceType"
-              label="Service Type"
-              placeholder="Select service type*"
-              options={serviceTypeOptions.map(option => ({ value: option, label: option }))}
-              required
-            />
-          </div>
-        </div>
+          {/* Service Type */}
+          <FormDropdown
+            register={register}
+            errors={errors}
+            name="serviceType"
+            label="Service Type"
+            placeholder="Select service type*"
+            options={SERVICE_TYPE_OPTIONS.map(option => ({ value: option, label: option }))}
+            required
+          />
+        </FormSection>
 
         {/* Conditional General Contractor Section */}
         {isGeneralContractor && (
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <BodyContent className="text-[#2A2B2E]" spacing="none">
-                For general contractor, please provide the following information to proceed with your qualification:
-              </BodyContent>
-            </div>
+          <FormSection title="General Contractor Information" contentClassName="flex flex-col gap-6">
+            <BodyContent className="text-[#2A2B2E]" spacing="none">
+              For general contractor, please provide the following information to proceed with your qualification:
+            </BodyContent>
             
-            <div className="flex flex-col gap-6">
-              {/* Boolean Fields - Two Column Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormToggle
-                  register={register}
-                  name={"generalContractorInfo.workersCompensation" as any}
-                  label="Worker's Compensation Ins."
-                />
-                
-                <FormToggle
-                  register={register}
-                  name={"generalContractorInfo.environmentalFactor" as any}
-                  label="Environmental Factor"
-                />
-                
-                <FormToggle
-                  register={register}
-                  name={"generalContractorInfo.oshaCompliance" as any}
-                  label="OSHA Compliance"
-                />
-                
-                <FormToggle
-                  register={register}
-                  name={"generalContractorInfo.signedNDA" as any}
-                  label="Signed NDA"
-                />
-                
-                <FormToggle
-                  register={register}
-                  name={"generalContractorInfo.safetyPlan" as any}
-                  label="Safety Plan"
-                />
-              </div>
-
-              {/* Text Fields - Better Spacing */}
-              <div className="flex flex-col gap-4">
-                {/* License */}
-                <FormTextarea
-                  register={register}
-                  errors={errors as any}
-                  name={"generalContractorInfo.license" as any}
-                  label="License"
-                  placeholder="Enter license information (optional)"
-                  rows={3}
-                />
-
-                {/* Number of Employees */}
-                <div className="w-full md:w-1/2">
-                  <FormDropdown
-                    register={register}
-                    errors={errors as any}
-                    name={"generalContractorInfo.numberOfEmployees" as any}
-                    label="# of Employees"
-                    placeholder="Select employee count"
-                    options={[
-                      { value: "1-5", label: "1-5 employees" },
-                      { value: "6-10", label: "6-10 employees" },
-                      { value: "11-25", label: "11-25 employees" },
-                      { value: "26-50", label: "26-50 employees" },
-                      { value: "51-100", label: "51-100 employees" },
-                      { value: "100+", label: "100+ employees" }
-                    ]}
-                  />
-                </div>
-              </div>
+            {/* Boolean Fields - Two Column Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormToggle
+                register={register}
+                name={"generalContractorInfo.workersCompensation" as any}
+                label="Worker's Compensation Ins."
+              />
+              
+              <FormToggle
+                register={register}
+                name={"generalContractorInfo.environmentalFactor" as any}
+                label="Environmental Factor"
+              />
+              
+              <FormToggle
+                register={register}
+                name={"generalContractorInfo.oshaCompliance" as any}
+                label="OSHA Compliance"
+              />
+              
+              <FormToggle
+                register={register}
+                name={"generalContractorInfo.signedNDA" as any}
+                label="Signed NDA"
+              />
+              
+              <FormToggle
+                register={register}
+                name={"generalContractorInfo.safetyPlan" as any}
+                label="Safety Plan"
+              />
             </div>
-          </div>
+
+            {/* Text Fields */}
+            <FormTextarea
+              register={register}
+              errors={errors as any}
+              name={"generalContractorInfo.license" as any}
+              label="License"
+              placeholder="Enter license information (optional)"
+              rows={3}
+            />
+
+            {/* Number of Employees */}
+            <div className="w-full md:w-1/2">
+              <FormDropdown
+                register={register}
+                errors={errors as any}
+                name={"generalContractorInfo.numberOfEmployees" as any}
+                label="# of Employees"
+                placeholder="Select employee count"
+                options={EMPLOYEE_COUNT_OPTIONS}
+              />
+            </div>
+          </FormSection>
         )}
 
         {/* Submit Button */}
-        <div className="w-full pt-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full px-6 py-4 rounded text-base font-[800] leading-[1.2] font-nunito text-center ${
-              isLoading
-                ? 'bg-[#919191] text-white cursor-not-allowed'
-                : 'bg-[#000000] text-white hover:bg-[#2A2B2E] transition-colors'
-            }`}
-          >
-            {isLoading ? 'Submitting...' : 'Send'}
-          </button>
-        </div>
+        <FormFooter
+          isLoading={isLoading}
+          submitText="Send"
+          loadingText="Submitting..."
+          showRequiredNote={false}
+        />
       </form>
     </div>
   );

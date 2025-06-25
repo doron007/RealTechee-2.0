@@ -4,6 +4,7 @@
  */
 
 import { RELATION_TO_PROPERTY_OPTIONS, BROKERAGE_OPTIONS } from './formOptions';
+import { handleCamelCaseTransformation } from '../utils/formUtils';
 
 // Base field configuration interface
 export interface BaseFieldConfig {
@@ -164,16 +165,7 @@ export const GET_ESTIMATE_FIELD_CONFIGS: DynamicFieldConfig[] = [
       label: 'Enter Brokerage Name',
       placeholder: 'Enter brokerage name',
       required: true,
-      onBlur: (e) => {
-        // toCamelCase transformation will be handled by renderer
-        const camelCased = e.target.value
-          .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-            return index === 0 ? word.toLowerCase() : word.toUpperCase();
-          })
-          .replace(/\s+/g, '');
-        e.target.value = camelCased;
-        e.target.dispatchEvent(new Event('input', { bubbles: true }));
-      }
+      onBlur: handleCamelCaseTransformation
     }
   },
 
@@ -236,6 +228,9 @@ export const GET_ESTIMATE_SECTION_CONFIGS: FormSectionConfig[] = [
 export const getFieldConfig = (fieldId: string): DynamicFieldConfig | undefined => {
   if (fieldId === 'financeNeeded') {
     return GET_ESTIMATE_FIELD_CONFIGS.find(field => field.id === 'finance-needed');
+  }
+  if (fieldId === 'meeting-type') {
+    return GET_ESTIMATE_FIELD_CONFIGS.find(field => field.id === 'meeting-type');
   }
   return GET_ESTIMATE_FIELD_CONFIGS.find(field => field.id === fieldId);
 };

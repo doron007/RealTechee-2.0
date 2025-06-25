@@ -1,5 +1,6 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
+import { KeyboardArrowDown } from '@mui/icons-material';
 import FormFieldWrapper from './FormFieldWrapper';
 import FormFieldContainer from './FormFieldContainer';
 
@@ -32,23 +33,19 @@ export function FormDropdown<T extends Record<string, any>>({
   className = ""
 }: FormDropdownProps<T>) {
 
-  // Dropdown arrow icon
+  // Dropdown arrow icon using MUI
   const DropdownIcon = () => (
-    <svg 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
-    >
-      <path 
-        d="M4 8L12 16L20 8" 
-        stroke="#2A2B2E" 
-        strokeWidth="0.4" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-      />
-    </svg>
+    <KeyboardArrowDown 
+      sx={{ 
+        color: '#2A2B2E',
+        fontSize: 24,
+        position: 'absolute',
+        right: 16,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        pointerEvents: 'none'
+      }}
+    />
   );
 
   return (

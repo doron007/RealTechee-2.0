@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import Button from '../common/buttons/Button';
 
 interface FormSubmitButtonProps {
   isLoading?: boolean;
@@ -26,36 +27,17 @@ export const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
   className = '',
   width = 'auto'
 }) => {
-  const baseClasses = "bg-[#2A2B2E] text-white rounded px-6 py-4 flex items-center justify-center gap-4 text-base font-[800] leading-[1.2] font-nunito";
-  const widthClass = width === 'full' ? 'w-full' : 'w-full sm:w-[203px]';
-  const disabledClass = (isLoading || disabled) ? 'opacity-50 cursor-not-allowed' : '';
-  
   return (
-    <button
+    <Button
       type="submit"
+      variant="primary"
+      size="lg"
       disabled={isLoading || disabled}
-      className={`${baseClasses} ${widthClass} ${disabledClass} ${className}`}
-    >
-      <span>{isLoading ? loadingText : text}</span>
-      {!isLoading && (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path 
-            d="M10.82 4.45L15.37 9L10.82 13.55" 
-            stroke="white" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          />
-          <path 
-            d="M2.63 9H15.25" 
-            stroke="white" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
-    </button>
+      withIcon={!isLoading}
+      text={isLoading ? loadingText : text}
+      fullWidth={width === 'full'}
+      className={`${width === 'auto' ? 'w-full sm:w-[203px]' : ''} ${className}`}
+    />
   );
 };
 
