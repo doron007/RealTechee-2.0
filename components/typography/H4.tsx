@@ -11,7 +11,7 @@ export const H4: React.FC<H4Props> = ({
   ...props 
 }) => (
   <h4 
-    className={`text-[clamp(1.125rem,2vw,1.75rem)] font-medium leading-snug ${className}`} 
+    className={`text-[clamp(1.125rem,2vw,1.75rem)] font-heading font-medium leading-snug ${className}`} 
     {...props}
   >
     {children}

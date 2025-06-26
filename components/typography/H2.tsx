@@ -11,7 +11,7 @@ export const H2: React.FC<H2Props> = ({
   ...props 
 }) => (
   <h2 
-    className={`text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-snug ${className}`} 
+    className={`text-[clamp(1.5rem,3vw,2.5rem)] font-heading font-semibold leading-snug ${className}`} 
     {...props}
   >
     {children}

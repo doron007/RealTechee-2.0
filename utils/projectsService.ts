@@ -38,7 +38,6 @@ const PROJECTS_CSV_PATH = path.join(process.cwd(), 'data', 'csv', 'Projects.csv'
 const DEFAULT_PROJECTS: Project[] = [
   {
     id: 'project-001',
-    projectID: '001',
     title: 'Modern Kitchen Renovation',
     status: 'Completed',
     description: 'A complete kitchen renovation with high-end appliances and custom cabinetry.',
@@ -53,7 +52,6 @@ const DEFAULT_PROJECTS: Project[] = [
   },
   {
     id: 'project-002',
-    projectID: '002',
     title: 'Master Bathroom Remodel',
     status: 'Completed',
     description: 'Luxurious bathroom remodel with walk-in shower and heated floors.',
@@ -68,7 +66,6 @@ const DEFAULT_PROJECTS: Project[] = [
   },
   {
     id: 'project-003',
-    projectID: '003',
     title: 'Open Concept Living Room',
     status: 'Completed',
     description: 'Created an open concept living space by removing walls and updating finishes.',
@@ -114,7 +111,7 @@ async function mapProjectForUI(project: Project): Promise<Project> {
   // For any project coming from the CSV, ensure it has the UI-compatible fields
   return {
     ...project,
-    id: project.id || project.projectID || uuidv4(),
+    id: project.id || uuidv4(),
     title: project.title || "",
     description: project.description || "",
     imageUrl: processedImageUrl || "/assets/images/hero-bg.png",
@@ -232,7 +229,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
     // Initialize if needed
     initializeProjectsFile();
     const rawProjects = readCsvFile<Project>(PROJECTS_CSV_PATH);
-    const project = rawProjects.find(p => p.id === id || p.projectID === id);
+    const project = rawProjects.find(p => p.id === id);
     return project ? await mapProjectForUI(project) : null;
   } catch (error) {
     console.error(`Error fetching project with id ${id}:`, error);

@@ -32,7 +32,7 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 
 ## Existing Comp Library
 
-**Typography:** `PageHeader` `SectionTitle` `Subtitle` `SectionLabel` `BodyContent` `SubContent` `CardTitle` `CardSubtitle` `CardContent` `ButtonText`
+**Typography:** `H1` `H2` `H3` `H4` `H5` `H6` `P1` `P2` `P3` (modern semantic system w/ CSS clamp() responsive scaling)
 
 **UI:** `Card` (default|feature|dealBreaker|step) • `Button` (primary|secondary|tertiary) • `FeatureCard` • `BenefitCard` • `OptionCard` • `BenefitBlock` • `TestimonialCard` • `StatItem` • `SliderNavBar`
 
@@ -48,6 +48,42 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 - **Utility:** ClickAwayListener, CssBaseline, Modal, NoSsr, Popover, Popper, Portal, TextareaAutosize, Transitions, useMediaQuery
 
 **MUI-X:** DataGrid, TreeView, Charts, DatePicker, TimePicker, DateTimePicker, DateRangePicker, CalendarPicker *(Pro/Premium licenses @)*
+
+## Typography System (H1-H6, P1-P3 ONLY)
+
+**CRITICAL:** Use ONLY H1-H6, P1-P3 comps. Legacy typography deprecated.
+
+**Headings:** H1=page titles | H2=sections | H3=subsections/cards | H4=minor | H5=small | H6=labels
+**Paragraphs:** P1=emphasis (20px->16px) | P2=standard (16px->14px) | P3=supporting (14px->12px)
+
+**Features:** CSS clamp() fluid scaling | Semantic HTML | ! complex props | Context-independent
+
+**Usage:**
+```tsx
+<H1>Page Title</H1>         // Always main page title
+<H2>Section</H2>            // Always section header
+<H3>Card Title</H3>         // Always subsection/card
+<P1>Important</P1>          // Emphasis body text
+<P2>Regular</P2>            // Standard paragraphs
+<P3>Small/labels</P3>       // Supporting info
+```
+
+**Legacy -> New:**
+```tsx
+PageHeader -> H1 | SectionTitle -> H2 | Subtitle -> H2/H3
+CardTitle -> H3 | BodyContent -> P1/P2 | SubContent -> P3
+```
+
+## Figma -> Code Migration (7-Step)
+1. **Figma Link** - Desktop+mobile URLs
+2. **Extract Tokens** - Size/weight/lineHeight both breakpoints  
+3. **Semantic Map** - Content hierarchy > Figma names (H1=page, H2=sections, H3=cards, P1=emphasis, P2=body, P3=labels)
+4. **Update Code** - Replace w/ H*/P* comps
+5. **Build Check** - `npm run build` verify
+6. **Visual Check** - Compare w/ Figma intent
+7. **Responsive Test** - Verify clamp() scaling
+
+**Rules:** Main title -> H1 (always, ! Figma semantic) | Use CSS clamp() | Readability > exact pixels | Semantic HTML priority
 
 ## Workflow
 1. Review existing comps before impl
@@ -120,23 +156,28 @@ Options:
 Issue: [problem] | Analysis: [findings] | Solution: [steps] | Impact: [risks] | Alternatives: [options] | Proceed?
 ```
 
-## Figma Extraction
+## Figma Extraction (Enhanced Methodology)
 
 **Analysis Structure:**
 1. **Comp Name:** [Figma node] - scope (reusable|section|layout)
 2. **Elements:** List top-down, map -> existing comps
 3. **Layout:** Type, direction, alignment, responsive (sm|md|lg|xl)  
-4. **Typography:** Map -> existing typo comps, note overrides
+4. **Typography:** Map -> H1-H6, P1-P3 (! legacy comps), semantic hierarchy > Figma names
 5. **Media:** Assets, sizes, interactions, a11y
+
+**Typography Extraction:**
+- Extract desktop+mobile tokens (size/weight/lineHeight)
+- Map by content hierarchy: page title=H1, sections=H2, cards=H3, emphasis=P1, body=P2, labels=P3
+- Priority: readability > exact pixels, semantic HTML > Figma component names
 
 **Impl Rules:**
 1. Map Figma -> existing comps first
-2. + comp props vs new comps
-3. Use typo comps vs raw HTML
+2. Use H1-H6, P1-P3 for * typography (! raw HTML)
+3. + comp props vs new comps
 4. Leverage existing layout comps
 5. Flat hierarchies
 
-**Goal:** Impl Figma w/ existing library, + vs duplicate.
+**Goal:** Impl Figma w/ existing library + semantic typography, + vs duplicate.
 
 ## Confirmation @
 Respond "Understood" to confirm compliance.

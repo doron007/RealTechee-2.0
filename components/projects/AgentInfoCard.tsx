@@ -39,7 +39,7 @@ const AgentInfoCard: React.FC<AgentInfoCardProps> = ({ project }) => {
   if (project.agent) {
     logger.info('Agent contact loaded successfully', { agentName });
   } else {
-    logger.warn('No agent contact data available, using fallback', { projectId: project.projectID });
+    logger.warn('No agent contact data available, using fallback', { projectId: project.id });
   }
 
   const content = (

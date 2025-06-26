@@ -378,7 +378,7 @@ const ProjectMilestones = a.model({
 ]);
 
 const ProjectPaymentTerms = a.model({
-  projectID: a.id(),
+  projectId: a.id(),
   type: a.string(),
   paymentName: a.string(),
   paymentAmount: a.float(),
@@ -394,7 +394,7 @@ const ProjectPaymentTerms = a.model({
   owner: a.string(),
   
   // Relationships
-  project: a.belongsTo('Projects', 'projectID'),
+  project: a.belongsTo('Projects', 'projectId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -413,7 +413,6 @@ const ProjectPermissions = a.model({
 ]);
 
 const Projects = a.model({
-  projectID: a.id(),
   title: a.string(),
   status: a.string(),
   statusImage: a.string(),
@@ -514,7 +513,8 @@ const Projects = a.model({
   quotes: a.hasMany('Quotes', 'projectId'),
   comments: a.hasMany('ProjectComments', 'projectId'),
   milestones: a.hasMany('ProjectMilestones', 'projectId'),
-  paymentTerms: a.hasMany('ProjectPaymentTerms', 'projectID'),
+  paymentTerms: a.hasMany('ProjectPaymentTerms', 'projectId'),
+  quoteItems: a.hasMany('QuoteItems', 'projectId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -549,7 +549,7 @@ const QuoteItems = a.model({
   createdDate: a.datetime(),
   updatedDate: a.datetime(),
   owner: a.string(),
-  projectID: a.id(),
+  projectId: a.id(),
   itemName: a.string(),
   itemCompleted: a.boolean(),
   parentStageId: a.id(),
@@ -566,6 +566,9 @@ const QuoteItems = a.model({
   marginPercent: a.float(),
   cost: a.float(),
   price: a.float(),
+  
+  // Relationships
+  project: a.belongsTo('Projects', 'projectId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()

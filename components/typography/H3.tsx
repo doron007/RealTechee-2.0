@@ -11,7 +11,7 @@ export const H3: React.FC<H3Props> = ({
   ...props 
 }) => (
   <h3 
-    className={`text-[clamp(1.25rem,2.5vw,2rem)] font-semibold leading-snug ${className}`} 
+    className={`text-[clamp(1.25rem,2.5vw,2rem)] font-heading font-semibold leading-snug ${className}`} 
     {...props}
   >
     {children}

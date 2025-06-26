@@ -534,7 +534,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -655,7 +654,6 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -777,7 +775,6 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -809,7 +806,7 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       zillowLink
       __typename
     }
-    projectID
+    projectId
     type
     updatedAt
     updatedDate
@@ -1006,12 +1003,15 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     permissionPublic
     priceQuoteInfo
     projectAdminProjectId
-    projectID
     projectManagerEmailList
     projectManagerPhone
     propertyType
     proposalDate
     quoteId
+    quoteItems {
+      nextToken
+      __typename
+    }
     quoteOpenedDate
     quoteSentDate
     quoteSignedDate
@@ -1096,7 +1096,103 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
     owner
     parentStageId
     price
-    projectID
+    project {
+      accountExecutive
+      addedValue
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bathrooms
+      bedrooms
+      boostPrice
+      boosterActualCost
+      boosterActualPrice
+      boosterCompletionDate
+      boosterEstimatedCost
+      brokerage
+      budget
+      carryCost
+      carryDays
+      closingDate
+      contractDate
+      contractSentDate
+      contractUrl
+      contractingStartDate
+      createdAt
+      createdDate
+      daysOnMarket
+      description
+      documents
+      escrowCompanyName
+      escrowContactInfo
+      escrowDate
+      escrowPaymentDate
+      estimate
+      estimatedClosingDate
+      estimatedGrossProfit
+      estimatedWeeksDuration
+      excludeFromDashboard
+      floors
+      gallery
+      grossProfit
+      homeowner2ContactId
+      homeowner3ContactId
+      homeownerContactId
+      id
+      image
+      invoiceDate
+      invoiceNumber
+      item04Projects
+      link04ProjectsTitle
+      linkProjects1Title2
+      listingPrice
+      loanBalance
+      officeNotes
+      openEscrowWithinDays
+      originalValue
+      owner
+      paidByEscrow
+      paidCost
+      permissionPrivateRoles
+      permissionPrivateUsers
+      permissionPublic
+      priceQuoteInfo
+      projectAdminProjectId
+      projectManagerEmailList
+      projectManagerPhone
+      propertyType
+      proposalDate
+      quoteId
+      quoteOpenedDate
+      quoteSentDate
+      quoteSignedDate
+      quoteUrl
+      redfinLink
+      requestDate
+      requestId
+      revShareAmount
+      revSharePayDate
+      salePrice
+      selectedProducts
+      signedContracts
+      sizeSqft
+      status
+      statusImage
+      statusOrder
+      title
+      underwritingDate
+      updatedAt
+      updatedDate
+      visitReviewDate
+      visitorId
+      yearBuilt
+      zillowLink
+      __typename
+    }
+    projectId
     quantity
     recommendItem
     total
@@ -1250,7 +1346,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -2074,7 +2169,7 @@ export const listProjectPaymentTerms = /* GraphQL */ `query ListProjectPaymentTe
       paymentAmount
       paymentDue
       paymentName
-      projectID
+      projectId
       type
       updatedAt
       updatedDate
@@ -2189,7 +2284,6 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -2287,7 +2381,7 @@ export const listQuoteItems = /* GraphQL */ `query ListQuoteItems(
       owner
       parentStageId
       price
-      projectID
+      projectId
       quantity
       recommendItem
       total

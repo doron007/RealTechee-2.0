@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import '../styles/image-gallery-custom.css';
 import '../styles/amplify-custom.css';
+import { allFonts } from '../lib/fonts';
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
 import type { ReactElement } from 'react';
@@ -36,9 +37,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 
   return (
-    <Authenticator.Provider>
-      {getLayout(<Component {...pageProps} />)}
-    </Authenticator.Provider>
+    <div className={allFonts}>
+      <Authenticator.Provider>
+        {getLayout(<Component {...pageProps} />)}
+      </Authenticator.Provider>
+    </div>
   );
 }
 

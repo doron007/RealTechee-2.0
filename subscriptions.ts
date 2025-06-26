@@ -571,7 +571,6 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -694,7 +693,6 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -818,7 +816,6 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -850,7 +847,7 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       zillowLink
       __typename
     }
-    projectID
+    projectId
     type
     updatedAt
     updatedDate
@@ -1049,12 +1046,15 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     permissionPublic
     priceQuoteInfo
     projectAdminProjectId
-    projectID
     projectManagerEmailList
     projectManagerPhone
     propertyType
     proposalDate
     quoteId
+    quoteItems {
+      nextToken
+      __typename
+    }
     quoteOpenedDate
     quoteSentDate
     quoteSignedDate
@@ -1143,7 +1143,103 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
     owner
     parentStageId
     price
-    projectID
+    project {
+      accountExecutive
+      addedValue
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bathrooms
+      bedrooms
+      boostPrice
+      boosterActualCost
+      boosterActualPrice
+      boosterCompletionDate
+      boosterEstimatedCost
+      brokerage
+      budget
+      carryCost
+      carryDays
+      closingDate
+      contractDate
+      contractSentDate
+      contractUrl
+      contractingStartDate
+      createdAt
+      createdDate
+      daysOnMarket
+      description
+      documents
+      escrowCompanyName
+      escrowContactInfo
+      escrowDate
+      escrowPaymentDate
+      estimate
+      estimatedClosingDate
+      estimatedGrossProfit
+      estimatedWeeksDuration
+      excludeFromDashboard
+      floors
+      gallery
+      grossProfit
+      homeowner2ContactId
+      homeowner3ContactId
+      homeownerContactId
+      id
+      image
+      invoiceDate
+      invoiceNumber
+      item04Projects
+      link04ProjectsTitle
+      linkProjects1Title2
+      listingPrice
+      loanBalance
+      officeNotes
+      openEscrowWithinDays
+      originalValue
+      owner
+      paidByEscrow
+      paidCost
+      permissionPrivateRoles
+      permissionPrivateUsers
+      permissionPublic
+      priceQuoteInfo
+      projectAdminProjectId
+      projectManagerEmailList
+      projectManagerPhone
+      propertyType
+      proposalDate
+      quoteId
+      quoteOpenedDate
+      quoteSentDate
+      quoteSignedDate
+      quoteUrl
+      redfinLink
+      requestDate
+      requestId
+      revShareAmount
+      revSharePayDate
+      salePrice
+      selectedProducts
+      signedContracts
+      sizeSqft
+      status
+      statusImage
+      statusOrder
+      title
+      underwritingDate
+      updatedAt
+      updatedDate
+      visitReviewDate
+      visitorId
+      yearBuilt
+      zillowLink
+      __typename
+    }
+    projectId
     quantity
     recommendItem
     total
@@ -1297,7 +1393,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -1977,7 +2072,6 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -2100,7 +2194,6 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -2224,7 +2317,6 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -2256,7 +2348,7 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       zillowLink
       __typename
     }
-    projectID
+    projectId
     type
     updatedAt
     updatedDate
@@ -2455,12 +2547,15 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     permissionPublic
     priceQuoteInfo
     projectAdminProjectId
-    projectID
     projectManagerEmailList
     projectManagerPhone
     propertyType
     proposalDate
     quoteId
+    quoteItems {
+      nextToken
+      __typename
+    }
     quoteOpenedDate
     quoteSentDate
     quoteSignedDate
@@ -2549,7 +2644,103 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
     owner
     parentStageId
     price
-    projectID
+    project {
+      accountExecutive
+      addedValue
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bathrooms
+      bedrooms
+      boostPrice
+      boosterActualCost
+      boosterActualPrice
+      boosterCompletionDate
+      boosterEstimatedCost
+      brokerage
+      budget
+      carryCost
+      carryDays
+      closingDate
+      contractDate
+      contractSentDate
+      contractUrl
+      contractingStartDate
+      createdAt
+      createdDate
+      daysOnMarket
+      description
+      documents
+      escrowCompanyName
+      escrowContactInfo
+      escrowDate
+      escrowPaymentDate
+      estimate
+      estimatedClosingDate
+      estimatedGrossProfit
+      estimatedWeeksDuration
+      excludeFromDashboard
+      floors
+      gallery
+      grossProfit
+      homeowner2ContactId
+      homeowner3ContactId
+      homeownerContactId
+      id
+      image
+      invoiceDate
+      invoiceNumber
+      item04Projects
+      link04ProjectsTitle
+      linkProjects1Title2
+      listingPrice
+      loanBalance
+      officeNotes
+      openEscrowWithinDays
+      originalValue
+      owner
+      paidByEscrow
+      paidCost
+      permissionPrivateRoles
+      permissionPrivateUsers
+      permissionPublic
+      priceQuoteInfo
+      projectAdminProjectId
+      projectManagerEmailList
+      projectManagerPhone
+      propertyType
+      proposalDate
+      quoteId
+      quoteOpenedDate
+      quoteSentDate
+      quoteSignedDate
+      quoteUrl
+      redfinLink
+      requestDate
+      requestId
+      revShareAmount
+      revSharePayDate
+      salePrice
+      selectedProducts
+      signedContracts
+      sizeSqft
+      status
+      statusImage
+      statusOrder
+      title
+      underwritingDate
+      updatedAt
+      updatedDate
+      visitReviewDate
+      visitorId
+      yearBuilt
+      zillowLink
+      __typename
+    }
+    projectId
     quantity
     recommendItem
     total
@@ -2703,7 +2894,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -3383,7 +3573,6 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -3506,7 +3695,6 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -3630,7 +3818,6 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType
@@ -3662,7 +3849,7 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       zillowLink
       __typename
     }
-    projectID
+    projectId
     type
     updatedAt
     updatedDate
@@ -3861,12 +4048,15 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     permissionPublic
     priceQuoteInfo
     projectAdminProjectId
-    projectID
     projectManagerEmailList
     projectManagerPhone
     propertyType
     proposalDate
     quoteId
+    quoteItems {
+      nextToken
+      __typename
+    }
     quoteOpenedDate
     quoteSentDate
     quoteSignedDate
@@ -3955,7 +4145,103 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
     owner
     parentStageId
     price
-    projectID
+    project {
+      accountExecutive
+      addedValue
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bathrooms
+      bedrooms
+      boostPrice
+      boosterActualCost
+      boosterActualPrice
+      boosterCompletionDate
+      boosterEstimatedCost
+      brokerage
+      budget
+      carryCost
+      carryDays
+      closingDate
+      contractDate
+      contractSentDate
+      contractUrl
+      contractingStartDate
+      createdAt
+      createdDate
+      daysOnMarket
+      description
+      documents
+      escrowCompanyName
+      escrowContactInfo
+      escrowDate
+      escrowPaymentDate
+      estimate
+      estimatedClosingDate
+      estimatedGrossProfit
+      estimatedWeeksDuration
+      excludeFromDashboard
+      floors
+      gallery
+      grossProfit
+      homeowner2ContactId
+      homeowner3ContactId
+      homeownerContactId
+      id
+      image
+      invoiceDate
+      invoiceNumber
+      item04Projects
+      link04ProjectsTitle
+      linkProjects1Title2
+      listingPrice
+      loanBalance
+      officeNotes
+      openEscrowWithinDays
+      originalValue
+      owner
+      paidByEscrow
+      paidCost
+      permissionPrivateRoles
+      permissionPrivateUsers
+      permissionPublic
+      priceQuoteInfo
+      projectAdminProjectId
+      projectManagerEmailList
+      projectManagerPhone
+      propertyType
+      proposalDate
+      quoteId
+      quoteOpenedDate
+      quoteSentDate
+      quoteSignedDate
+      quoteUrl
+      redfinLink
+      requestDate
+      requestId
+      revShareAmount
+      revSharePayDate
+      salePrice
+      selectedProducts
+      signedContracts
+      sizeSqft
+      status
+      statusImage
+      statusOrder
+      title
+      underwritingDate
+      updatedAt
+      updatedDate
+      visitReviewDate
+      visitorId
+      yearBuilt
+      zillowLink
+      __typename
+    }
+    projectId
     quantity
     recommendItem
     total
@@ -4109,7 +4395,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       permissionPublic
       priceQuoteInfo
       projectAdminProjectId
-      projectID
       projectManagerEmailList
       projectManagerPhone
       propertyType

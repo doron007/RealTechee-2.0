@@ -127,15 +127,15 @@ export function useProjectData({
         if (projectData && projectId) {
           console.log('useProjectData: Loading related data...');
           
-          // Use the numeric projectID for foreign key lookups, not the GUID
-          const numericProjectId = (projectData as any).projectID;
-          console.log('useProjectData: Using numeric projectID for related data:', numericProjectId);
+          // Use the GUID id for foreign key lookups
+          const projectIdForRelatedData = projectData.id;
+          console.log('useProjectData: Using project id for related data:', projectIdForRelatedData);
           
-          if (numericProjectId) {
+          if (projectIdForRelatedData) {
             const [milestonesResult, paymentsResult, commentsResult, contactsResult] = await Promise.all([
-              optimizedProjectsAPI.getProjectMilestones(numericProjectId),
-              optimizedProjectsAPI.getProjectPaymentTerms(numericProjectId),
-              optimizedProjectsAPI.getProjectComments(numericProjectId),
+              optimizedProjectsAPI.getProjectMilestones(projectIdForRelatedData),
+              optimizedProjectsAPI.getProjectPaymentTerms(projectIdForRelatedData),
+              optimizedProjectsAPI.getProjectComments(projectIdForRelatedData),
               optimizedProjectsAPI.getProjectContacts(projectData)
             ]);
 
@@ -162,7 +162,7 @@ export function useProjectData({
               loading: false
             }));
           } else {
-            console.warn('useProjectData: No numeric projectID found, cannot load related data');
+            console.warn('useProjectData: No project id found, cannot load related data');
             setState(prev => ({
               ...prev,
               loading: false

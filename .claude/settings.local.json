@@ -15,7 +15,8 @@
       "Bash(mkdir:*)",
       "Bash(rg:*)",
       "Bash(rm:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "mcp__context7__resolve-library-id"
     ],
     "deny": []
   }

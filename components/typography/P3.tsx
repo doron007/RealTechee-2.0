@@ -11,7 +11,7 @@ export const P3: React.FC<P3Props> = ({
   ...props 
 }) => (
   <p 
-    className={`text-[clamp(0.75rem,0.5vw,0.875rem)] leading-normal ${className}`} 
+    className={`text-[clamp(0.75rem,0.5vw,0.875rem)] font-body leading-normal ${className}`} 
     {...props}
   >
     {children}

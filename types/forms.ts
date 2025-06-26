@@ -22,7 +22,7 @@ export interface AddressInfo {
 export interface GeneralInquiryFormData {
   contactInfo: BaseContactInfo;
   address: AddressInfo;
-  product: 'Kitchen' | 'Living Areas' | 'Full Home' | 'Bath' | 'Commercial' | '';
+  product: 'Buyers Service' | 'Sellers Service' | 'Kitchen and Bath' | 'Architects and Designers' | 'Commercial' | 'Other' | '';
   subject: string;
   message: string;
 }

@@ -160,14 +160,14 @@ export default function ProjectsGridSection({
         const projectResult = await optimizedProjectsAPI.loadFullProject(projectId);
         
         if (projectResult.success && projectResult.data) {
-          // Use the numeric projectID for related data lookups
-          const numericProjectId = projectResult.data.projectID;
-          logger.debug('Using numeric projectID for related data', { numericProjectId });
+          // Use the project id for related data lookups
+          const projectIdForRelatedData = projectResult.data.id;
+          logger.debug('Using project id for related data', { projectIdForRelatedData });
           
           const [milestonesResult, paymentsResult, commentsResult] = await Promise.all([
-            optimizedProjectsAPI.getProjectMilestones(numericProjectId),
-            optimizedProjectsAPI.getProjectPaymentTerms(numericProjectId),
-            optimizedProjectsAPI.getProjectComments(numericProjectId)
+            optimizedProjectsAPI.getProjectMilestones(projectIdForRelatedData),
+            optimizedProjectsAPI.getProjectPaymentTerms(projectIdForRelatedData),
+            optimizedProjectsAPI.getProjectComments(projectIdForRelatedData)
           ]);
 
           logger.debug('API Results loaded', {
@@ -186,7 +186,6 @@ export default function ProjectsGridSection({
           };
           logger.debug('Complete project data prepared', {
             id: projectData.id,
-            projectID: projectData.projectID,
             hasMilestones: projectData.milestones?.length > 0,
             hasPayments: projectData.payments?.length > 0,
             hasComments: projectData.comments?.length > 0
