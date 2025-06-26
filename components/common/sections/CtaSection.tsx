@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { SectionTitle, SubContent, ButtonText } from '../../Typography';
+import H2 from '../../typography/H2';
+import P2 from '../../typography/P2';
+// span removed - button handles its own styling
 
 // Define CtaSectionProps interface with customizable text props
 export interface CtaSectionProps {
@@ -73,12 +75,12 @@ export default function CtaSection({
       {/* Content container with more compact responsive padding */}
       <div className="section-content relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 md:px-8 flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5 z-10">
         <div className="flex flex-col items-center gap-1 sm:gap-2">
-          <SectionTitle center className="text-white mb-0">
+          <H2 className="text-white text-center mb-0">
             {title}
-          </SectionTitle>
-          <SubContent center className="text-[#BCBCBF]">
+          </H2>
+          <P2 className="text-[#BCBCBF] text-center">
             {subtitle}
-          </SubContent>
+          </P2>
         </div>
 
         {/* Custom styled button with left-positioned arrow to match Figma design */}
@@ -87,9 +89,9 @@ export default function CtaSection({
           className="mt-1 inline-flex items-center justify-center gap-2 sm:gap-3 md:gap-4 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-white text-[#2A2B2E] border border-[#2A2B2E] rounded hover:bg-gray-100 transition-all"
         >
           <LeftArrowIcon />
-          <ButtonText className="font-extrabold text-dark-gray">
+          <span className="text-dark-gray">
             {buttonText}
-          </ButtonText>
+          </span>
         </Link>
       </div>
     </section>

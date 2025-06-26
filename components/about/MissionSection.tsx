@@ -1,9 +1,7 @@
 import Image from 'next/image';
-import { 
-  SectionLabel, 
-  SectionTitle, 
-  Body2
-} from '../../components/Typography';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
+import P2 from '../typography/P2';
 import { Section } from '../../components/common/layout';
 
 interface MissionSectionProps {
@@ -47,17 +45,17 @@ export const MissionSection: React.FC<MissionSectionProps> = ({
           />
         </div>
         <div className="order-1 md:order-2">
-          <SectionLabel className="text-accent-coral mb-3 tracking-widest">
+          <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-3">
             {label}
-          </SectionLabel>
-          <SectionTitle className="mb-6 text-xl md:text-2xl lg:text-3xl font-bold">
+          </P3>
+          <H2 className="mb-6">
             {title}
-          </SectionTitle>
+          </H2>
           <div className="space-y-5 md:space-y-6">
             {content.map((paragraph, index) => (
-              <Body2 key={index} className="text-medium-gray">
+              <P2 key={index} className="text-medium-gray">
                 {paragraph}
-              </Body2>
+              </P2>
             ))}
           </div>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
-import { SectionLabel, SectionTitle, BodyContent } from '../';
 import { Card } from '../common/ui';
+import H2 from '../typography/H2';
+import P2 from '../typography/P2';
+import P3 from '../typography/P3';
 
 const DealBreakers: React.FC = () => {
   const cards = [
@@ -30,16 +32,16 @@ const DealBreakers: React.FC = () => {
   return (
     <section className="section-container bg-white py-10 sm:py-12 md:py-16 lg:py-20">
       <div className="section-content">
-        <SectionLabel className="text-[#FF5F45] text-center">
-          WHY US
-        </SectionLabel>
-        <SectionTitle className="text-center">
+        <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold text-center mb-4">
+          Why Us
+        </P3>
+        <H2 className="text-center mb-4">
           Eliminate deal breakers & win the client
-        </SectionTitle>
+        </H2>
         
-        <BodyContent  className="text-center mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-[618px] px-4">
+        <P2 className="text-center mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-16 max-w-[618px] px-4 opacity-70">
           Are deals falling through due to homeowners not receiving enough value or buyers underestimating renovation costs
-        </BodyContent>
+        </P2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 :grid-cols-3 gap-2">
           {cards.map((card, index) => (

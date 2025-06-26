@@ -2,7 +2,11 @@ import React from 'react';
 import { Project } from '../../types/projects';
 import Card from '../common/ui/Card';
 import { Button } from '../common/buttons';
-import { PageHeader, SectionLabel, BodyContent, ButtonText, CardContent, CardTitle } from '../Typography';
+import { H1 } from '../typography/H1';
+import { H6 } from '../typography/H6';
+import { P1 } from '../typography/P1';
+import { P2 } from '../typography/P2';
+import { H4 } from '../typography/H4' 
 import Image from 'next/image';
 
 interface PropertyDetailsCardProps {
@@ -24,8 +28,8 @@ const ProjectStat = ({ icon, value, label }: { icon: string, value: string, labe
         }}
       />
     </div>
-    <CardContent spacing="none" className="font-medium text-[#2A2B2E] leading-none">{value}</CardContent>
-    <CardContent spacing="none" className="text-gray-500 text-xs leading-none ml-1">{label}</CardContent>
+    <P2 className="font-medium text-[#2A2B2E] leading-none">{value}</P2>
+    <P2 className="text-gray-500 text-xs leading-none ml-1">{label}</P2>
   </div>
 );
 
@@ -50,22 +54,22 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
                 }}
               />
             </div>
-            <BodyContent spacing="none" className="text-gray-600 leading-none">{project.title || project.address?.propertyFullAddress || 'Address'}</BodyContent>
+            <P1 className="text-gray-600 leading-none">{project.title || project.address?.propertyFullAddress || 'Address'}</P1>
           </div>
         </div>
       </div>
 
       <div className="flex h-8 pl-4">
         <div className="flex items-center w-full">
-          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Property Type:</BodyContent>
-          <BodyContent className="leading-none my-auto">{project.propertyType || 'Single Family'}</BodyContent>
+          <P1 className="text-gray-600 w-32 leading-none my-auto">Property Type:</P1>
+          <P1 className="leading-none my-auto">{project.propertyType || 'Single Family'}</P1>
         </div>
       </div>
 
       <div className="flex h-8 pl-4 bg-[#F9F9F9]">
         <div className="flex items-center w-full">
-          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Year Built:</BodyContent>
-          <BodyContent className="leading-none my-auto">{project.yearBuilt || '1971'}</BodyContent>
+          <P1 className="text-gray-600 w-32 leading-none my-auto">Year Built:</P1>
+          <P1 className="leading-none my-auto">{project.yearBuilt || '1971'}</P1>
         </div>
       </div>
 
@@ -109,7 +113,7 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({ project }) =>
 
   return (
     <Card
-      title={<CardTitle className="mb-0">Property Details</CardTitle>}
+      title={<H4 className="mb-0">Property Details</H4>}
       content={content}
       className="-my-5 sm:-my-6 md:-my-7"
     />

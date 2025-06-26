@@ -1,11 +1,14 @@
 import React from 'react';
-import { SectionTitle, CardTitle, CardSubtitle, CardContent } from '../';
+import H2 from '../typography/H2';
+import H3 from '../typography/H3';
+import H4 from '../typography/H4';
+import P2 from '../typography/P2';
 import { Card } from '../common/ui';
 
 export default function CardShowcase() {
   return (
     <div className="mt-16">
-      <SectionTitle className="mb-8">Card Components</SectionTitle>
+      <H2 className="mb-8">Card Components</H2>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <div>
@@ -57,7 +60,7 @@ export default function CardShowcase() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="p-6 border border-gray-200 rounded-lg">
             <h4 className="text-lg font-semibold mb-2">CardTitle</h4>
-            <CardTitle>This is a Card Title</CardTitle>
+            <H3>This is a Card Title</H3>
             <p className="mt-2 text-sm text-gray-500">
               Font: Heading font<br />
               Weight: Bold<br />
@@ -67,7 +70,7 @@ export default function CardShowcase() {
           
           <div className="p-6 border border-gray-200 rounded-lg">
             <h4 className="text-lg font-semibold mb-2">CardSubtitle</h4>
-            <CardSubtitle>This is a Card Subtitle</CardSubtitle>
+            <H4>This is a Card Subtitle</H4>
             <p className="mt-2 text-sm text-gray-500">
               Font: Heading font<br />
               Weight: Medium<br />
@@ -77,7 +80,7 @@ export default function CardShowcase() {
           
           <div className="p-6 border border-gray-200 rounded-lg">
             <h4 className="text-lg font-semibold mb-2">CardContent</h4>
-            <CardContent>This is Card Content text which is used for the main descriptive text in cards across the site.</CardContent>
+            <P2>This is Card Content text which is used for the main descriptive text in cards across the site.</P2>
             <p className="mt-2 text-sm text-gray-500">
               Font: Body font<br />
               Weight: Normal<br />
@@ -90,9 +93,9 @@ export default function CardShowcase() {
       <div className="mt-12 p-6 border border-gray-200 rounded-lg">
         <h3 className="text-xl font-bold mb-4">Card with Multiple Elements</h3>
         <Card
-          title={<CardTitle>Custom Card Title</CardTitle>}
-          subtitle={<CardSubtitle>Card Subtitle Example</CardSubtitle>}
-          content={<CardContent>This example shows how multiple typography components can be used together in a card to create a more complex layout with proper hierarchy.</CardContent>}
+          title={<H3>Custom Card Title</H3>}
+          subtitle={<H4>Card Subtitle Example</H4>}
+          content={<P2>This example shows how multiple typography components can be used together in a card to create a more complex layout with proper hierarchy.</P2>}
           footer={
             <div className="flex justify-end">
               <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">

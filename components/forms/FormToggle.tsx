@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister, Path } from 'react-hook-form';
-import { BodyContent } from '../Typography';
+import P1 from '../typography/P1';
 
 interface FormToggleProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
@@ -17,9 +17,9 @@ export function FormToggle<T extends Record<string, any>>({
 }: FormToggleProps<T>) {
   return (
     <div className={`flex items-center justify-between ${className}`}>
-      <BodyContent className="text-[#2A2B2E]" spacing="none">
+      <P1 className="text-[#2A2B2E] font-medium">
         {label}
-      </BodyContent>
+      </P1>
       <label className="relative inline-flex items-center cursor-pointer">
         <input
           {...register(name)}

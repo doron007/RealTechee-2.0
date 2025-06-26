@@ -9,7 +9,13 @@
       "WebFetch(domain:mui.com)",
       "Bash(npx tsc:*)",
       "Bash(grep:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "mcp__fetch__fetch",
+      "mcp__figma__get_figma_data",
+      "Bash(mkdir:*)",
+      "Bash(rg:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }

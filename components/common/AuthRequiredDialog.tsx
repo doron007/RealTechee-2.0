@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogTitle, Box, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from './buttons/Button';
-import { BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 import { useRouter } from 'next/router';
 
 interface AuthRequiredDialogProps {
@@ -53,9 +53,9 @@ export default function AuthRequiredDialog({
       </DialogTitle>
 
       <DialogContent>
-        <BodyContent className="mb-4">
+        <P2 className="mb-4">
           {message || defaultMessage}
-        </BodyContent>
+        </P2>
 
         <Box display="flex" justifyContent="space-between" mt={3}>
           <Button

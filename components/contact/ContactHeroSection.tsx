@@ -1,6 +1,7 @@
 import React from 'react';
 import Section from '../common/layout/Section';
-import { SectionTitle, SubContent } from '../Typography';
+import H1 from '../typography/H1';
+import P2 from '../typography/P2';
 import { ContactScenarioSelector } from './';
 
 export enum ContactType {
@@ -30,13 +31,13 @@ export default function ContactHeroSection({ contactType }: ContactHeroSectionPr
       paddingTop={{ default: 50, md: 80, '2xl': 100 }}
       paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
     >
-      <div className="flex flex-col sm:items-center text-left sm:text-center">
-        <SectionTitle spacing="medium">
+      <div className="flex flex-col items-center text-center gap-4 md:gap-6">
+        <H1 className="text-center">
           Contact
-        </SectionTitle>
-        <SubContent spacing="small">
+        </H1>
+        <P2 className="text-center">
           Please choose the best inquiry category below so we can help you best.
-        </SubContent>
+        </P2>
         
         {/* Button Row */}
         <div className="flex flex-wrap justify-center items-center gap-5 mt-8">

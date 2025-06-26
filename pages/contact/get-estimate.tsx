@@ -5,7 +5,9 @@ import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactTy
 import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { GetEstimateForm } from '../../components/forms/GetEstimateForm';
 import Button from '../../components/common/buttons/Button';
-import { PageHeader, BodyContent, SectionTitle } from '../../components/Typography';
+import H2 from '../../components/typography/H2';
+import H3 from '../../components/typography/H3';
+import P1 from '../../components/typography/P1';
 import logger from '../../lib/logger';
 import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createRequests, updateContacts } from '../../mutations';
@@ -503,15 +505,15 @@ const GetEstimate: NextPage = () => {
 
         {/* Success Message */}
         <div className="space-y-4">
-          <PageHeader className="text-[#22C55E]">Request Submitted Successfully!</PageHeader>
-          <BodyContent className="max-w-lg mx-auto">
+          <H2 className="text-[#22C55E]">Request Submitted Successfully!</H2>
+          <P1 className="max-w-lg mx-auto">
             Thank you for your estimate request. Our team at RealTechee will review your submission and connect back with you shortly to discuss your project and schedule the next steps.
-          </BodyContent>
+          </P1>
         </div>
 
         {/* Next Steps */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 w-full max-w-md mx-auto">
-          <SectionTitle className="text-green-800 text-lg mb-3">What happens next?</SectionTitle>
+          <H3 className="text-green-800 mb-3">What happens next?</H3>
           <div className="space-y-2 text-left">
             <div className="flex items-start gap-3">
               <span className="text-green-600 font-bold">1.</span>
@@ -558,10 +560,10 @@ const GetEstimate: NextPage = () => {
             <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-        <SectionTitle className="text-red-800 mb-2">Submission Failed</SectionTitle>
-        <BodyContent className="text-red-700 mb-4">
+        <H3 className="text-red-800 mb-2">Submission Failed</H3>
+        <P1 className="text-red-700 mb-4">
           There was an issue submitting your request. Please try again or contact us directly.
-        </BodyContent>
+        </P1>
         <Button 
           variant="primary" 
           onClick={() => setSubmitStatus('idle')}

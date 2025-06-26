@@ -1,7 +1,10 @@
-import { useIntersectionObserver } from '../../utils/animationUtils';
+import { useIntersectionObserver, withAnimation } from '../../utils/animationUtils';
 import { VideoPlayer } from '../common/ui';
 import { Section, ContainerTwoColumns, ContentWrapper } from '../common/layout';
-import { AnimatedBodyContent } from '../';
+import P1 from '../typography/P1';
+
+// Create animated version of P1 for this component
+const AnimatedP1 = withAnimation(P1);
 
 // Define TestimonialsProps interface directly in the file
 interface TestimonialsProps {
@@ -44,14 +47,14 @@ export default function Testimonials({ className = '' }: TestimonialsProps) {
               textAlign="left"
               maxWidth="90%"
             >
-              <AnimatedBodyContent 
+              <AnimatedP1 
                 animate={isVisible}
                 animationType="slideInUp" 
                 animationDelay="delay300"
-                spacing="medium"
+                className="text-center"
               >
-                We helped hundreds of clients to improve their living space and increase value to their properties. Here is how we help our clients.
-              </AnimatedBodyContent>
+                We helped 368 clients to improve their living space and increase value to their properties. Here is how we help our clients.
+              </AnimatedP1>
             </ContentWrapper>
           }
         />

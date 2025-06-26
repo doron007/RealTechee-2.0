@@ -1,6 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import { SectionLabel, SectionTitle, Subtitle, BodyContent, SubContent, CardTitle } from '../';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
+import H3 from '../typography/H3';
+import P2 from '../typography/P2';
 import Section from '../common/layout/Section';
 import { ProductType } from './HeroSection'; // Import the ProductType enum
 
@@ -253,8 +256,8 @@ export default function BenefitsSection({
     >
       {/* Header section */}
       <div className="text-center m-24 animate-on-scroll">
-        <SubContent className="text-[#FF5F45] mb-2">{finalSectionLabel}</SubContent>
-        <Subtitle className="text-white mb-4">{finalTitle}</Subtitle>
+        <P3 className="text-[#FF5F45] mb-2 uppercase tracking-wider">{finalSectionLabel}</P3>
+        <H2 className="text-white mb-4">{finalTitle}</H2>
       </div>
       
       {/* Benefits content section - compressed vertical spacing */}
@@ -288,8 +291,8 @@ export default function BenefitsSection({
                     />
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-white mb-0.5">{item.title}</CardTitle>
-                    <BodyContent className="text-white/80 mb-0.5">{item.content}</BodyContent>
+                    <H3 className="text-white mb-0.5">{item.title}</H3>
+                    <P2 className="text-white/80 mb-0.5">{item.content}</P2>
                   </div>
                 </div>
               ))}
@@ -316,8 +319,8 @@ export default function BenefitsSection({
                       />
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-white mb-0.5">{item.title}</CardTitle>
-                      <BodyContent className="text-white/80 mb-0.5">{item.content}</BodyContent>
+                      <H3 className="text-white mb-0.5">{item.title}</H3>
+                      <P2 className="text-white/80 mb-0.5">{item.content}</P2>
                     </div>
                   </div>
                 ))}

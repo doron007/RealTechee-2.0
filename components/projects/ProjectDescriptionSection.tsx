@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { CollapsibleSection } from '../common/ui';
-import { CardTitle, BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 import { formatCurrency } from '../../utils/formatUtils';
 
 export interface ProjectDescriptionSection {
@@ -25,7 +25,7 @@ export default function ProjectDescriptionSection({
   return (
     <div className={className}>
       <CollapsibleSection title={title} initialExpanded={initialExpanded}>
-        <BodyContent>{description}</BodyContent>
+        <P2>{description}</P2>
       </CollapsibleSection>
     </div>
   );

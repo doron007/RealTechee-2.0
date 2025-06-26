@@ -1,4 +1,6 @@
 import React from 'react';
+import H4 from '../typography/H4';
+import P2 from '../typography/P2';
 
 interface ProcessStepCardProps {
   stepNumber: number;
@@ -52,8 +54,8 @@ export default function ProcessStepCard({
       
       {/* Content */}
       <div className="flex-1 pt-2">
-        <h3 className="font-semibold text-primary mb-3 text-lg">{title}</h3>
-        <p className="text-medium-gray leading-relaxed">{description}</p>
+        <H4 className="text-primary mb-3">{title}</H4>
+        <P2 className="text-medium-gray">{description}</P2>
       </div>
     </div>
   );

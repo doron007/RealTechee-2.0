@@ -4,7 +4,9 @@
 
 import React from 'react';
 import Button from '../common/buttons/Button';
-import { PageHeader, BodyContent, SectionTitle } from '../Typography';
+import H2 from '../typography/H2';
+import H3 from '../typography/H3';
+import P1 from '../typography/P1';
 
 interface FormSuccessMessageProps {
   title: string;
@@ -46,15 +48,15 @@ export const FormSuccessMessage: React.FC<FormSuccessMessageProps> = ({
 
         {/* Success Message */}
         <div className="space-y-4">
-          <PageHeader className="text-[#22C55E]">{title}</PageHeader>
-          <BodyContent className="max-w-lg mx-auto">
+          <H2 className="text-[#22C55E]">{title}</H2>
+          <P1 className="max-w-lg mx-auto">
             {message}
-          </BodyContent>
+          </P1>
         </div>
 
         {/* Next Steps */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 w-full max-w-md mx-auto">
-          <SectionTitle className="text-green-800 text-lg mb-3">What happens next?</SectionTitle>
+          <H3 className="text-green-800 mb-3">What happens next?</H3>
           <div className="space-y-2 text-left">
             {steps.map((step) => (
               <div key={step.number} className="flex items-start gap-3">
@@ -116,10 +118,10 @@ export const FormErrorMessage: React.FC<FormErrorMessageProps> = ({
             <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-        <SectionTitle className="text-red-800 mb-2">{title}</SectionTitle>
-        <BodyContent className="text-red-700 mb-4">
+        <H3 className="text-red-800 mb-2">{title}</H3>
+        <P1 className="text-red-700 mb-4">
           {message}
-        </BodyContent>
+        </P1>
         {onRetry && (
           <Button 
             variant="primary" 

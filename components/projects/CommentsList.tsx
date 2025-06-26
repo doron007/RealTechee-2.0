@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Modal, Box } from '@mui/material';
 import { CollapsibleSection, AuthRequiredDialog } from '../common/ui';
-import { BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 import { formatDate } from '../../utils/formatUtils';
 import Button from '../common/buttons/Button';
 import AddCommentDialog from './AddCommentDialog';
@@ -231,7 +231,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
                 <div className="space-y-6">
                     {sortedComments.length === 0 ? (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                            <BodyContent className="text-gray-500 text-center">No comments yet</BodyContent>
+                            <P2 className="text-gray-500 text-center">No comments yet</P2>
                         </div>
                     ) : 
                     sortedComments.map((comment) => (
@@ -255,14 +255,14 @@ const CommentsList: React.FC<CommentsListProps> = ({
                                         </span>
                                     </div>
                                 )}
-                                <BodyContent className="font-medium !mb-0">
+                                <P2 className="font-medium mb-0">
                                     {comment.nickname}
-                                </BodyContent>
+                                </P2>
                             </div>
 
-                            <BodyContent className="whitespace-pre-line mb-3">
+                            <P2 className="whitespace-pre-line mb-3">
                                 {comment.comment}
-                            </BodyContent>
+                            </P2>
 
                             {comment.files && comment.files.length > 0 && (() => {
                                 // Handle different file formats - could be URLs or JSON
@@ -305,9 +305,9 @@ const CommentsList: React.FC<CommentsListProps> = ({
                                 ) : null;
                             })()}
 
-                            <BodyContent className="text-sm text-gray-500 !mb-0 mt-2">
+                            <P2 className="text-sm text-gray-500 mb-0 mt-2">
                                 {formatDate(new Date(comment.createdDate), { timeZone: 'America/Los_Angeles' })}
-                            </BodyContent>
+                            </P2>
                         </div>
                     ))}
                 </div>

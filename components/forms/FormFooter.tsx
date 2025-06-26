@@ -6,7 +6,7 @@
 
 import React from 'react';
 import FormSubmitButton from './FormSubmitButton';
-import { SubContent } from '../Typography';
+import P3 from '../typography/P3';
 
 interface FormFooterProps {
   isLoading?: boolean;
@@ -45,9 +45,9 @@ export const FormFooter: React.FC<FormFooterProps> = ({
       {/* Left side - Required note or custom content */}
       <div className="flex items-center gap-4">
         {showRequiredNote && (
-          <SubContent className="text-[#2A2B2E] border border-[#FCF9F8]" spacing="none">
+          <P3 className="text-[#2A2B2E] border border-[#FCF9F8]">
             {requiredNoteText}
-          </SubContent>
+          </P3>
         )}
         
         {/* Optional reset button */}

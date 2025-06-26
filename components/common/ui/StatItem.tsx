@@ -1,5 +1,7 @@
 import { useCounter } from '../../../utils/animationUtils';
-import { SectionTitle, BodyContent } from '../../Typography';
+import H2 from '../../typography/H2';
+import P2 from '../../typography/P2';
+import P3 from '../../typography/P3';
 import { twMerge } from 'tailwind-merge';
 
 // Define StatItemProps interface directly in the file
@@ -36,26 +38,16 @@ export default function StatItem({
   return (
     <div ref={counterRef} className="text-center">
       <div className="flex justify-center items-start mb-1 sm:mb-1.5 md:mb-2">
-        <SectionTitle 
-          as="span" 
-          className="text-white font-extrabold text-3xl sm:text-4xl md:text-4xl lg:text-5xl"
-        >
+        <H2 className="text-white font-extrabold">
           {count}{suffix}
-        </SectionTitle>
+        </H2>
         {showPlus && (
-          <span className="text-[14px] sm:text-[16px] md:text-[18px] font-bold text-[#F8E9E6] mt-1">+</span>
+          <P3 className="text-[#F8E9E6] font-bold mt-1">+</P3>
         )}
       </div>
-      <BodyContent 
-        as="p" 
-        className={twMerge(
-          "text-[#F8E9E6]",
-          // "font-extrabold", 
-          "text-center"
-        )}
-      >
+      <P2 className="text-[#F8E9E6] text-center font-bold">
         {label}
-      </BodyContent>
+      </P2>
     </div>
   );
 }

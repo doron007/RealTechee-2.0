@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { SectionLabel, SectionTitle, BodyContent, SubContent, SliderNavBar } from '../';
+import { SliderNavBar } from '../';
 import Button from '../common/buttons/Button';
+import H2 from '../typography/H2';
+import H4 from '../typography/H4';
+import P3 from '../typography/P3';
 
 export default function Portfolio() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,12 +61,12 @@ export default function Portfolio() {
       <div className="section-content flex flex-col">
         {/* Section header */}
         <div className="text-center mb-4 sm:mb-4 md:mb-6 lg:mb-8">
-          <SectionLabel className="text-[#FF5F45]">
-            PORTFOLIO
-          </SectionLabel>
-          <SectionTitle>
+          <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-4">
+            Portfolio
+          </P3>
+          <H2 className="text-center">
             Before and After Renovation Projects
-          </SectionTitle>
+          </H2>
         </div>
         
         <div className="w-full max-w-[1200px] bg-white flex flex-col justify-start items-start mx-auto">
@@ -82,7 +85,7 @@ export default function Portfolio() {
                 />
               </div>
               <div className="w-full py-2 sm:py-3 bg-[#F6F6F6] flex justify-center items-center">
-                <BodyContent className="text-zinc-800">Before</BodyContent>
+                <P3 className="text-zinc-800 font-bold">Before</P3>
               </div>
             </div>
             
@@ -99,7 +102,7 @@ export default function Portfolio() {
                 />
               </div>
               <div className="w-full py-2 sm:py-3 bg-[#F0E4DF] flex justify-center items-center">
-                <BodyContent className="text-red-500">After</BodyContent>
+                <P3 className="text-red-500 font-bold">After</P3>
               </div>
             </div>
           </div>
@@ -117,10 +120,10 @@ export default function Portfolio() {
             borderColor="#27272A" // zinc-800
             leftContent={
               <>
-                <div className="text-neutral-400 text-xs font-normal font-['Roboto'] leading-tight">{currentItem.location}</div>
+                <P3 className="text-neutral-400">{currentItem.location}</P3>
                 <div className="text-center sm:text-left">
-                  <span className="text-zinc-800 text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold font-['Nunito_Sans']">Value increased by </span>
-                  <span className="text-red-500 text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold font-['Nunito_Sans']">{currentItem.valueIncrease}</span>
+                  <H4 className="inline text-zinc-800">Value increased by </H4>
+                  <H4 className="inline text-red-500">{currentItem.valueIncrease}</H4>
                 </div>
               </>
             }

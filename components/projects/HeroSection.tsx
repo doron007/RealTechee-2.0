@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionTitle, SubContent } from '../Typography';
+import H1 from '../typography/H1';
+import P2 from '../typography/P2';
 import { Section } from '../common/layout';
 
 interface HeroSectionProps {
@@ -38,13 +39,13 @@ export default function HeroSection({
       marginTop={0}
       marginBottom={0}
     >
-      <div className="w-full sm:w-3/5 mx-auto flex flex-col items-start sm:items-center text-left sm:text-center">
-        <SectionTitle>
+      <div className="w-full sm:w-3/5 mx-auto flex flex-col items-center text-center gap-4">
+        <H1 className="text-center">
           {title}
-        </SectionTitle>
-        <SubContent>
+        </H1>
+        <P2 className="text-center">
           {description}
-        </SubContent>
+        </P2>
       </div>
     </Section>
   );

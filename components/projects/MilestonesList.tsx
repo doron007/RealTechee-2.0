@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from '@mui/material';
 import { CollapsibleSection } from '../common/ui';
-import { BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 
 export interface Milestone {
   id: string;
@@ -71,9 +71,9 @@ export default function MilestonesList({
                 className="!pt-1"
               />
               <div className="flex-1">
-                <BodyContent className="!mb-0 text-[#2A2B2E]">{milestone.name}</BodyContent>
+                <P2 className="mb-0 text-[#2A2B2E]">{milestone.name}</P2>
                 {milestone.description && (
-                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">{milestone.description}</BodyContent>
+                  <P2 className="mb-0 text-gray-600 whitespace-pre-line">{milestone.description}</P2>
                 )}
               </div>
             </div>

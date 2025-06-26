@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Heading5 } from '../../Typography';
+import { H5 } from '../../typography/H5' 
 
 interface TagLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   icon: string;
@@ -19,12 +19,9 @@ export const TagLabel: React.FC<TagLabelProps> = ({
       {...props}
     >
       <Image src={icon} alt="" width={24} height={24} />
-      <Heading5 
-        className="text-[#2A2B2E] font-extrabold"
-        spacing="none"
-      >
+      <H5 className="text-[#2A2B2E] font-extrabold">
         {label}
-      </Heading5>
+      </H5>
     </div>
   );
 };

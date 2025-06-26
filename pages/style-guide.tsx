@@ -2,34 +2,19 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../components/common/layout/Header';
 import Footer from '../components/common/layout/Footer';
-import {
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Heading5, 
-  Heading6,
-  Body1,
-  Body2,
-  Body3,
-  SectionLabel,
-  SubtitlePill,
-  BodyText,
-  BodyTextSecondary,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardContent,
-  PageHeader,
-  SectionTitle,
-  Subtitle,
-  BodyContent,
-  SubContent,
-  ButtonText
-} from '../components/Typography';
+import H1 from '../components/typography/H1';
+import H2 from '../components/typography/H2';
+import H3 from '../components/typography/H3';
+import H4 from '../components/typography/H4';
+import H5 from '../components/typography/H5';
+import H6 from '../components/typography/H6';
+import P1 from '../components/typography/P1';
+import P2 from '../components/typography/P2';
+import P3 from '../components/typography/P3';
 import Button from '../components/common/buttons/Button';
 import { ButtonShowcase, CardShowcase, GetAnEstimateShowcase, StatusPillShowcase } from '../components/style-guide';
 import ResponsiveTypographyShowcase from '../components/style-guide/ResponsiveTypographyShowcase';
+import TypographyTestPage from '../components/typography/test-page';
 
 export default function StyleGuidePage() {
   return (
@@ -38,475 +23,349 @@ export default function StyleGuidePage() {
         <title>RealTechee Design System</title>
         <meta name="description" content="RealTechee brand guidelines and design system documentation" />
       </Head>
-      
+
       <Header />
-      
+
       {/* Added pt-24 sm:pt-28 md:pt-32 lg:pt-36 for proper spacing below the fixed header */}
       <main className="flex-grow pt-24 sm:pt-28 md:pt-32 lg:pt-36">
         <div className="container mx-auto px-4 py-16">
-          <PageHeader className="mb-12 text-center">RealTechee 2.0 Design System</PageHeader>
-          
+          <H1 className="mb-12 text-center">RealTechee 2.0 Design System</H1>
+
           {/* Quick Navigation */}
           <nav className="mb-16 p-6 bg-gray-50 rounded-lg">
-            <Subtitle as="h2" className="mb-4">Quick Navigation</Subtitle>
+            <H2 className="mb-4">Quick Navigation</H2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <a href="#responsive-typography" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>01</SectionLabel>
-                <BodyText className="font-medium">Responsive Typography</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">01</P3>
+                <P2 className="font-medium">Responsive Typography</P2>
               </a>
               <a href="#typography-components" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>02</SectionLabel>
-                <BodyText className="font-medium">Typography Components</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">02</P3>
+                <P2 className="font-medium">Typography Components</P2>
               </a>
               <a href="#buttons" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>03</SectionLabel>
-                <BodyText className="font-medium">Buttons</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">03</P3>
+                <P2 className="font-medium">Buttons</P2>
               </a>
               <a href="#colors" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>04</SectionLabel>
-                <BodyText className="font-medium">Colors</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">04</P3>
+                <P2 className="font-medium">Colors</P2>
               </a>
               <a href="#status-pills" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>05</SectionLabel>
-                <BodyText className="font-medium">Status Pills</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">05</P3>
+                <P2 className="font-medium">Status Pills</P2>
               </a>
               <a href="#cards" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>06</SectionLabel>
-                <BodyText className="font-medium">Cards</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">06</P3>
+                <P2 className="font-medium">Cards</P2>
               </a>
               <a href="#component-library" className="p-3 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors">
-                <SectionLabel>07</SectionLabel>
-                <BodyText className="font-medium">Component Library</BodyText>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-1">07</P3>
+                <P2 className="font-medium">Component Library</P2>
               </a>
             </div>
           </nav>
-          
+
           {/* Responsive Typography Section */}
-          <section id="responsive-typography" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">01. Responsive Typography System</SectionTitle>
+          <div id="responsive-typography">
+            <TypographyTestPage />
+          </div>
+
+          <section className="mb-20 scroll-mt-40">
+            <H2 className="mb-6 pb-2 border-b">01. Responsive Typography System</H2>
             <ResponsiveTypographyShowcase />
           </section>
-          
+
           {/* Typography Components Section */}
           <section id="typography-components" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">02. Typography Components</SectionTitle>
-            
-            {/* Page & Section Headers */}
+            <H2 className="mb-6 pb-2 border-b">02. New Semantic Typography Components</H2>
+
+            {/* Semantic Headings */}
             <div className="mb-12">
-              <Subtitle className="mb-4">Page & Section Headers</Subtitle>
-              
+              <H3 className="mb-4">Semantic Headings (H1-H6)</H3>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Page Header</SectionLabel>
-                  <PageHeader>Main Page Heading</PageHeader>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>PageHeader</code><br/>
-                    Font: Nunito Sans | Weight: Semibold | Size: 20px-48px<br/>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H1</P3>
+                  <H1>Main Page Heading</H1>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H1</code><br />
+                    CSS clamp(): scales from 24px to 48px<br />
                     Used for main page titles
-                  </BodyTextSecondary>
+                  </P3>
                 </div>
-                
+
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Section Title</SectionLabel>
-                  <SectionTitle>Section Heading</SectionTitle>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>SectionTitle</code><br/>
-                    Font: Nunito Sans | Weight: Bold | Size: 18px-24px<br/>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H2</P3>
+                  <H2>Section Heading</H2>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H2</code><br />
+                    CSS clamp(): scales from 20px to 36px<br />
                     Used for major section headings
-                  </BodyTextSecondary>
+                  </P3>
                 </div>
-                
+
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Subtitle</SectionLabel>
-                  <Subtitle>Secondary Section Heading</Subtitle>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>Subtitle</code><br/>
-                    Font: Nunito Sans | Weight: Semibold | Size: 18px-20px<br/>
-                    Used for subsections and secondary headings
-                  </BodyTextSecondary>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H3</P3>
+                  <H3>Subsection Heading</H3>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H3</code><br />
+                    CSS clamp(): scales from 18px to 24px<br />
+                    Used for subsections and card titles
+                  </P3>
                 </div>
-                
+
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Section Label</SectionLabel>
-                  <SectionLabel className="mb-1">FEATURES</SectionLabel>
-                  <SectionLabel className="mb-1">TESTIMONIALS</SectionLabel>
-                  <SectionLabel>SERVICES</SectionLabel>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>SectionLabel</code><br/>
-                    Font: Nunito Sans | Weight: Semibold | Size: 12px-14px | Uppercase<br/>
-                    Used for labeling sections, typically above section titles
-                  </BodyTextSecondary>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H4</P3>
+                  <H4>Minor Heading</H4>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H4</code><br />
+                    CSS clamp(): scales from 16px to 20px<br />
+                    Used for minor headings and card subtitles
+                  </P3>
                 </div>
-              </div>
-              
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <SectionLabel className="mb-2">Subtitle Pills</SectionLabel>
-                <div className="mb-3">
-                  <SubtitlePill>Meet RealTechee, Your Home Preparation Partner</SubtitlePill>
+
+                <div className="p-6 bg-gray-50 rounded-lg">
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H5</P3>
+                  <H5>Small Heading</H5>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H5</code><br />
+                    CSS clamp(): scales from 14px to 18px<br />
+                    Used for small headings and labels
+                  </P3>
                 </div>
-                <BodyTextSecondary>
-                  Component: <code>SubtitlePill</code><br/>
-                  Font: Nunito Sans | Weight: Medium | Size: 12px-14px<br/>
-                  Used for highlighting short phrases, with soft peach background
-                </BodyTextSecondary>
+
+                <div className="p-6 bg-gray-50 rounded-lg">
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">H6</P3>
+                  <H6>Smallest Heading</H6>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>H6</code><br />
+                    CSS clamp(): scales from 12px to 16px<br />
+                    Used for smallest headings and navigation
+                  </P3>
+                </div>
               </div>
             </div>
-            
-            {/* Traditional Headings */}
+
+            {/* Semantic Paragraphs */}
             <div className="mb-12">
-              <Subtitle className="mb-4">Traditional Headings</Subtitle>
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <div className="space-y-6">
-                  <div>
-                    <SectionLabel className="mb-1">h1</SectionLabel>
-                    <Heading1>Heading 1 (48px)</Heading1>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Semibold | Line Height: tight</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">h2</SectionLabel>
-                    <Heading2>Heading 2 (39)</Heading2>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Semibold | Line Height: tight</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">h3</SectionLabel>
-                    <Heading3>Heading 3 (31)</Heading3>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Semibold | Line Height: snug</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">h4</SectionLabel>
-                    <Heading4>Heading 4 (25)</Heading4>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Medium | Line Height: snug</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">h5</SectionLabel>
-                    <Heading5>Heading 5 (20)</Heading5>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Medium | Line Height: normal</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">h6</SectionLabel>
-                    <Heading6>Heading 6 (16px)</Heading6>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Medium | Line Height: normal</BodyTextSecondary>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Traditional Body */}
-            <div className="mb-12">
-              <Subtitle className="mb-4">Traditional Body</Subtitle>
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <div className="space-y-6">
-                  <div>
-                    <SectionLabel className="mb-1">Body 1</SectionLabel>
-                    <Body1>Body 1 (20px) - Use for emphasis and large intro paragraphs. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</Body1>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Size: 20px | Line Height: 150%</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">Body 2</SectionLabel>
-                    <Body2>Body 2 (16px) - Standard body text for most paragraphs. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Body2>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Size: 16px | Line Height: 150%</BodyTextSecondary>
-                  </div>
-                  <div>
-                    <SectionLabel className="mb-1">Body 3</SectionLabel>
-                    <Body3>Body 3 (14px) - Smaller body text for captions, notes, and supporting content. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</Body3>
-                    <BodyTextSecondary className="mt-1">Font: Nunito Sans | Weight: Normal | Size: 14px | Line Height: 150%</BodyTextSecondary>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Body Text */}
-            <div className="mb-12">
-              <Subtitle className="mb-4">Body Text Components</Subtitle>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Body Content</SectionLabel>
-                  <BodyContent>
-                    Primary body text for most content on the site. This text adjusts responsively 
-                    from 14px to 18px with a comfortable line height for readability.
-                  </BodyContent>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>BodyContent</code><br/>
-                    Font: Roboto | Weight: Normal | Size: 14px-18px<br/>
-                    Line Height: relaxed (1.6)
-                  </BodyTextSecondary>
-                </div>
-                
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Sub Content</SectionLabel>
-                  <SubContent>
-                    Smaller body text for secondary information. This text is slightly 
-                    smaller than the main body text, used for supporting content.
-                  </SubContent>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>SubContent</code><br/>
-                    Font: Roboto | Weight: Normal | Size: 12px-16px<br/>
-                    Line Height: relaxed (1.6)
-                  </BodyTextSecondary>
-                </div>
-                
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Body Text (Legacy)</SectionLabel>
-                  <BodyText>
-                    Standard body text with 16px base size. This is used for content 
-                    that doesn't need responsive sizing beyond basic breakpoints.
-                  </BodyText>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>BodyText</code><br/>
-                    Font: Roboto | Weight: Normal | Size: 14px-16px<br/>
-                    Line Height: relaxed (1.6)
-                  </BodyTextSecondary>
-                </div>
-                
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <SectionLabel className="mb-2">Body Text Secondary (Legacy)</SectionLabel>
-                  <BodyTextSecondary>
-                    Secondary body text with reduced prominence. This text has a muted color 
-                    and is typically used for supplementary information.
-                  </BodyTextSecondary>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>BodyTextSecondary</code><br/>
-                    Font: Roboto | Weight: Normal | Size: 12px-14px<br/>
-                    Color: Medium Gray | Line Height: relaxed (1.6)
-                  </BodyTextSecondary>
-                </div>
-              </div>
-            </div>
-            
-            {/* Card Typography */}
-            <div className="mb-10">
-              <Subtitle className="mb-4">Card Typography</Subtitle>
-              
+              <H3 className="mb-4">Semantic Paragraphs (P1-P3)</H3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <CardTitle className="mb-3">Card Title</CardTitle>
-                  <BodyTextSecondary>
-                    Component: <code>CardTitle</code><br/>
-                    Font: Nunito Sans | Weight: Bold | Size: 14px-18px<br/>
-                    Used for card headers
-                  </BodyTextSecondary>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">P1</P3>
+                  <P1>
+                    Emphasis paragraph text for important content and large intro paragraphs. 
+                    This scales beautifully across all screen sizes with CSS clamp().
+                  </P1>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>P1</code><br />
+                    CSS clamp(): scales from 16px to 20px<br />
+                    Used for emphasis and form labels
+                  </P3>
                 </div>
-                
+
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <CardSubtitle className="mb-3">Card Subtitle</CardSubtitle>
-                  <BodyTextSecondary>
-                    Component: <code>CardSubtitle</code><br/>
-                    Font: Nunito Sans | Weight: Medium | Size: 12px-16px<br/>
-                    Used for card subtitles
-                  </BodyTextSecondary>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">P2</P3>
+                  <P2>
+                    Standard paragraph text for most body content. This is the most commonly 
+                    used paragraph component throughout the site with optimal readability.
+                  </P2>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>P2</code><br />
+                    CSS clamp(): scales from 14px to 18px<br />
+                    Used for standard body text
+                  </P3>
                 </div>
-                
+
                 <div className="p-6 bg-gray-50 rounded-lg">
-                  <CardContent>
-                    This is card content text, optimized for readability within compact card 
-                    containers while maintaining a clear visual hierarchy.
-                  </CardContent>
-                  <BodyTextSecondary className="mt-3">
-                    Component: <code>CardContent</code><br/>
-                    Font: Roboto | Weight: Normal | Size: 12px-14px<br/>
-                    Line Height: relaxed
-                  </BodyTextSecondary>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">P3</P3>
+                  <P3>
+                    Supporting text for captions, notes, and secondary content. 
+                    Smaller size but maintains readability across devices.
+                  </P3>
+                  <P3 className="mt-3 text-gray-600">
+                    Component: <code>P3</code><br />
+                    CSS clamp(): scales from 12px to 16px<br />
+                    Used for captions and supporting text
+                  </P3>
                 </div>
               </div>
-              
+
               <div className="mt-6 bg-gray-50 p-6 rounded-lg">
-                <SectionLabel className="mb-3">Complete Card Example</SectionLabel>
+                <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-3">Complete Example</P3>
                 <div className="p-6 border border-gray-200 rounded-lg bg-white">
-                  <CardTitle>Feature Card Example</CardTitle>
-                  <CardSubtitle className="mt-2 text-gray-600">Supporting information</CardSubtitle>
-                  <CardContent className="mt-4">
-                    This example shows how various card typography components work together 
-                    to create a cohesive and readable card design with proper hierarchy.
-                  </CardContent>
+                  <H2>Typography in Action</H2>
+                  <H3 className="mt-4">Semantic HTML Structure</H3>
+                  <P1 className="mt-4">
+                    This example demonstrates proper semantic hierarchy with our new typography system.
+                  </P1>
+                  <P2 className="mt-4">
+                    The new H1-H6 and P1-P3 components use CSS clamp() for fluid responsive scaling, 
+                    creating a seamless experience across all device sizes without complex breakpoints.
+                  </P2>
+                  <P3 className="mt-4 text-gray-600">
+                    Supporting information and notes use P3 for optimal hierarchy and readability.
+                  </P3>
                   <div className="mt-4">
-                    <Button variant="tertiary">Learn More</Button>
+                    <Button variant="primary">Learn More</Button>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            {/* Button Text */}
-            <div className="mb-10">
-              <Subtitle className="mb-4">Button Typography</Subtitle>
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <SectionLabel className="mb-2">Button Text</SectionLabel>
-                <div className="mb-4">
-                  <ButtonText>Button Text Component</ButtonText>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary">
-                    <ButtonText>Primary</ButtonText>
-                  </Button>
-                  <Button variant="secondary">
-                    <ButtonText>Secondary</ButtonText>
-                  </Button>
-                  <Button variant="tertiary">
-                    <ButtonText>Tertiary</ButtonText>
-                  </Button>
-                </div>
-                <BodyTextSecondary className="mt-4">
-                  Component: <code>ButtonText</code><br/>
-                  Font: Inter | Weight: Medium | Size: 12px-16px<br/>
-                  Line Height: none (tight)<br/>
-                  Used within buttons for consistent text styling
-                </BodyTextSecondary>
               </div>
             </div>
           </section>
-          
+
           {/* Buttons Section */}
           <section id="buttons" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">03. Buttons</SectionTitle>
-            <BodyContent className="mb-6">
+            <H2 className="mb-6 pb-2 border-b">03. Buttons</H2>
+            <P2 className="mb-6">
               The RealTechee button system follows the design guidelines with consistent styling across various states and variants.
               Each button type serves a specific purpose in the interface hierarchy.
-            </BodyContent>
-            
+            </P2>
+
             {/* Button Showcase Component */}
             <ButtonShowcase />
-            
+
             {/* Get an Estimate Button Showcase */}
             <div className="mt-12 pt-12 border-t">
               <GetAnEstimateShowcase />
             </div>
-            
+
             <div className="mt-10">
-              <Subtitle className="mb-4">Usage Examples</Subtitle>
+              <H3 className="mb-4">Usage Examples</H3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-6 border rounded">
-                  <SectionLabel className="mb-2">Primary Usage</SectionLabel>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">Primary Usage</P3>
                   <div className="mt-4">
                     <Button variant="primary">Get an Estimate</Button>
-                    <BodyTextSecondary className="mt-3">
+                    <P3 className="mt-3 text-gray-600">
                       Primary buttons are used for main CTAs such as "Get an Estimate" or "Contact Us"
-                    </BodyTextSecondary>
+                    </P3>
                   </div>
                 </div>
-                
+
                 <div className="p-6 border rounded">
-                  <SectionLabel className="mb-2">Secondary Usage</SectionLabel>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">Secondary Usage</P3>
                   <div className="mt-4">
                     <Button variant="secondary">Learn More</Button>
-                    <BodyTextSecondary className="mt-3">
+                    <P3 className="mt-3 text-gray-600">
                       Secondary buttons are used for supporting actions like "Learn More" or "View Details"
-                    </BodyTextSecondary>
+                    </P3>
                   </div>
                 </div>
-                
+
                 <div className="p-6 border rounded">
-                  <SectionLabel className="mb-2">Tertiary Usage</SectionLabel>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">Tertiary Usage</P3>
                   <div className="mt-4">
                     <Button variant="tertiary">View All</Button>
-                    <BodyTextSecondary className="mt-3">
+                    <P3 className="mt-3 text-gray-600">
                       Tertiary buttons are used for less prominent actions like "View All" or in-line links
-                    </BodyTextSecondary>
+                    </P3>
                   </div>
                 </div>
-                
+
                 <div className="p-6 border rounded">
-                  <SectionLabel className="mb-2">With Icon</SectionLabel>
+                  <P3 className="text-[#E9664A] uppercase tracking-wider font-semibold text-xs mb-2">With Icon</P3>
                   <div className="mt-4">
                     <Button variant="primary" withIcon iconPosition="right">Start Now</Button>
-                    <BodyTextSecondary className="mt-3">
+                    <P3 className="mt-3 text-gray-600">
                       Buttons with icons add visual emphasis to important actions
-                    </BodyTextSecondary>
+                    </P3>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          
+
           {/* Colors Section */}
           <section id="colors" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">04. Colors</SectionTitle>
-            
+            <H2 className="mb-6 pb-2 border-b">04. Colors</H2>
+
             <div className="mb-10">
-              <Subtitle className="mb-4">Primary Colors</Subtitle>
+              <H3 className="mb-4">Primary Colors</H3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="p-4 rounded">
                   <div className="h-20 bg-dark-gray rounded mb-2"></div>
-                  <BodyText className="font-bold">Dark Gray</BodyText>
-                  <BodyTextSecondary>#2A2B2E</BodyTextSecondary>
+                  <P2 className="font-bold">Dark Gray</P2>
+                  <P3 className="text-gray-600">#2A2B2E</P3>
                 </div>
-                
+
                 <div className="p-4 rounded">
                   <div className="h-20 bg-accent-coral rounded mb-2"></div>
-                  <BodyText className="font-bold">Coral</BodyText>
-                  <BodyTextSecondary>#E9664A</BodyTextSecondary>
+                  <P2 className="font-bold">Coral</P2>
+                  <P3 className="text-gray-600">#E9664A</P3>
                 </div>
-                
+
                 <div className="p-4 rounded">
                   <div className="h-20 bg-white border rounded mb-2"></div>
-                  <BodyText className="font-bold">White</BodyText>
-                  <BodyTextSecondary>#FFFFFF</BodyTextSecondary>
+                  <P2 className="font-bold">White</P2>
+                  <P3 className="text-gray-600">#FFFFFF</P3>
                 </div>
-                
+
                 <div className="p-4 rounded">
-                  <div className="h-20 rounded mb-2" style={{backgroundColor: "#FCF9F8"}}></div>
-                  <BodyText className="font-bold">Off-White</BodyText>
-                  <BodyTextSecondary>#FCF9F8</BodyTextSecondary>
+                  <div className="h-20 rounded mb-2" style={{ backgroundColor: "#FCF9F8" }}></div>
+                  <P2 className="font-bold">Off-White</P2>
+                  <P3 className="text-gray-600">#FCF9F8</P3>
                 </div>
               </div>
             </div>
-            
+
             <div>
-              <Subtitle className="mb-4">Supporting Colors</Subtitle>
+              <H3 className="mb-4">Supporting Colors</H3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded">
-                  <div className="h-20 rounded mb-2" style={{backgroundColor: "#FFF7F5"}}></div>
-                  <BodyText className="font-bold">Light Peach</BodyText>
-                  <BodyTextSecondary>#FFF7F5</BodyTextSecondary>
+                  <div className="h-20 rounded mb-2" style={{ backgroundColor: "#FFF7F5" }}></div>
+                  <P2 className="font-bold">Light Peach</P2>
+                  <P3 className="text-gray-600">#FFF7F5</P3>
                 </div>
-                
+
                 <div className="p-4 rounded">
-                  <div className="h-20 border rounded mb-2" style={{borderColor: "#F0E4DF"}}></div>
-                  <BodyText className="font-bold">Card Border</BodyText>
-                  <BodyTextSecondary>#F0E4DF</BodyTextSecondary>
+                  <div className="h-20 border rounded mb-2" style={{ borderColor: "#F0E4DF" }}></div>
+                  <P2 className="font-bold">Card Border</P2>
+                  <P3 className="text-gray-600">#F0E4DF</P3>
                 </div>
               </div>
             </div>
           </section>
-          
+
           {/* Status Pills Section */}
           <section id="status-pills" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">05. Status Pills</SectionTitle>
-            <BodyContent className="mb-6">
+            <H2 className="mb-6 pb-2 border-b">05. Status Pills</H2>
+            <P2 className="mb-6">
               Status pills provide visual indication of the current state of an entity (Project, Request, or Quote).
               The consistent color system helps users quickly identify status across the platform.
-            </BodyContent>
-            
+            </P2>
+
             {/* Status Pill Showcase Component */}
             <StatusPillShowcase />
           </section>
-          
+
           {/* Cards Section */}
           <section id="cards" className="mb-20 scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">06. Card Examples</SectionTitle>
-            
+            <H2 className="mb-6 pb-2 border-b">06. Card Examples</H2>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="card card-hover">
-                <CardTitle>Feature Card</CardTitle>
-                <CardText className="mt-4">
-                  This is an example of a feature card with standardized styling. 
-                  The card has consistent padding, border radius, and typography.
-                </CardText>
+              <div className="card card-hover p-6 border border-gray-200 rounded-lg bg-white">
+                <H3>Feature Card</H3>
+                <P2 className="mt-4">
+                  This is an example of a feature card with standardized styling using the new semantic typography components.
+                  The card maintains consistent padding, border radius, and typography hierarchy.
+                </P2>
                 <div className="mt-6">
-                  <Button variant="text" text="Learn More" showArrow={true} />
+                  <Button variant="tertiary">Learn More</Button>
                 </div>
               </div>
-              
-              <div className="card card-hover">
-                <CardTitle>Testimonial Card</CardTitle>
-                <CardText className="mt-4">
-                  "RealTechee has transformed how our agents prepare homes for sale. 
+
+              <div className="card card-hover p-6 border border-gray-200 rounded-lg bg-white">
+                <H3>Testimonial Card</H3>
+                <P2 className="mt-4">
+                  "RealTechee has transformed how our agents prepare homes for sale.
                   The platform is intuitive and the results are outstanding."
-                </CardText>
+                </P2>
                 <div className="mt-6 flex items-center">
                   <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
                   <div className="ml-3">
-                    <p className="font-heading font-bold text-sm">Jane Smith</p>
-                    <p className="text-sm text-gray-500">Realtor, ABC Realty</p>
+                    <P2 className="font-bold">Jane Smith</P2>
+                    <P3 className="text-gray-500">Realtor, ABC Realty</P3>
                   </div>
                 </div>
               </div>
@@ -515,46 +374,73 @@ export default function StyleGuidePage() {
             {/* Card Showcase Component */}
             <CardShowcase />
           </section>
-          
+
           {/* Component Library Section */}
           <section id="component-library" className="scroll-mt-40">
-            <SectionTitle className="mb-6 pb-2 border-b">07. Component Library</SectionTitle>
-            <BodyContent className="mb-6">
-              The RealTechee component library provides standardized UI elements that maintain 
-              consistent design patterns across the site. The major components are documented below.
-            </BodyContent>
-            
-            <div className="p-6 bg-gray-50 rounded-lg mb-8">
-              <Subtitle className="mb-4">Component Import Structure</Subtitle>
-              <pre className="bg-gray-800 text-white p-4 rounded overflow-x-auto">
-                <code>{`import { 
-  PageHeader, 
-  SectionTitle,
-  Subtitle,
-  BodyContent,
-  // ...other components
-} from '../components/Typography';
+            <H2 className="mb-6 pb-2 border-b">07. New Typography Component Library</H2>
+            <P2 className="mb-6">
+              The RealTechee typography system now uses semantic H1-H6 and P1-P3 components with CSS clamp() 
+              for fluid responsive scaling. This provides consistent design patterns and improved accessibility.
+            </P2>
 
-// Using components in your React component:
+            <div className="p-6 bg-gray-50 rounded-lg mb-8">
+              <H3 className="mb-4">Component Import Structure</H3>
+              <pre className="bg-gray-800 text-white p-4 rounded overflow-x-auto">
+                <code>{`import H1 from '../components/typography/H1';
+import H2 from '../components/typography/H2';
+import H3 from '../components/typography/H3';
+import P1 from '../components/typography/P1';
+import P2 from '../components/typography/P2';
+import P3 from '../components/typography/P3';
+
+// Or use barrel imports
+import { H1, H2, H3, P1, P2, P3 } from '../components';
+
 function MyComponent() {
   return (
     <div>
-      <PageHeader>Page Title</PageHeader>
-      <SectionTitle>Section Title</SectionTitle>
-      <BodyContent>Your content here...</BodyContent>
+      <H1>Page Title</H1>
+      <H2>Section Title</H2>
+      <P2>Your content here...</P2>
     </div>
   );
 }`}</code>
               </pre>
-              <BodyContent className="mt-4">
-                All typography components are now available from a single import, 
-                making it easy to maintain consistent typography across your project.
-              </BodyContent>
+              <P2 className="mt-4">
+                All typography components now use CSS clamp() for fluid responsive scaling, 
+                making it easy to maintain consistent typography across your project without complex breakpoints.
+              </P2>
+            </div>
+
+            <div className="p-6 bg-blue-50 rounded-lg">
+              <H3 className="mb-4">Migration Benefits</H3>
+              <ul className="space-y-2">
+                <li className="flex items-start">
+                  <span className="text-green-600 font-bold mr-2">✓</span>
+                  <P2>Semantic HTML structure improves accessibility and SEO</P2>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 font-bold mr-2">✓</span>
+                  <P2>CSS clamp() provides smooth responsive scaling without breakpoints</P2>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 font-bold mr-2">✓</span>
+                  <P2>Simplified component API reduces cognitive load for developers</P2>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 font-bold mr-2">✓</span>
+                  <P2>Consistent visual hierarchy across all pages and components</P2>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 font-bold mr-2">✓</span>
+                  <P2>Future-proof design system that scales with project growth</P2>
+                </li>
+              </ul>
             </div>
           </section>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

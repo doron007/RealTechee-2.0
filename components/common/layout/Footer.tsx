@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { SubContent, BodyContent } from '../../Typography';
+import P3 from '../../typography/P3';
+import H6 from '../../typography/H6';
 import Button from '../buttons/Button';
 
 // Define FooterProps interface directly in the file
@@ -32,11 +33,11 @@ export default function Footer(props: FooterProps) {
                 />
               </div>
             </Link>
-            <SubContent className="mt-4 text-gray-600 max-w-sm">
+            <P3 className="mt-4 text-gray-600 max-w-sm">
               Supercharge your agents' success with a proven real estate home 
               preparation platform. Attract the right customers, dominate the market, 
               and achieve outstanding results effortlessly.
-            </SubContent>
+            </P3>
             <div className="mt-6">
               <Button
                 variant="primary"
@@ -53,7 +54,7 @@ export default function Footer(props: FooterProps) {
           <div className="grid grid-cols-1 gap-8">
             {/* Quick Links Column */}
             <div>
-              <SubContent as="h3" className="text-gray-900 font-bold mb-3">Quick Links</SubContent>
+              <H6 className="text-gray-900 font-bold mb-3">Quick Links</H6>
               <div>
                 <div className="mb-1">
                   <Button
@@ -96,7 +97,7 @@ export default function Footer(props: FooterProps) {
             
             {/* Products Column */}
             <div>
-              <SubContent as="h3" className="text-gray-900 font-bold mb-3">Products</SubContent>
+              <H6 className="text-gray-900 font-bold mb-3">Products</H6>
               <div>
                 <div className="mb-1">
                   <Button
@@ -148,7 +149,7 @@ export default function Footer(props: FooterProps) {
             
             {/* Contact Column */}
             <div>
-              <SubContent as="h3" className="text-gray-900 font-bold mb-3">Contact</SubContent>
+              <H6 className="text-gray-900 font-bold mb-3">Contact</H6>
               <div>
                 <div className="mb-1">
                   <Button
@@ -208,11 +209,11 @@ export default function Footer(props: FooterProps) {
                   />
                 </div>
               </Link>
-              <SubContent className="mt-4 text-gray-600">
+              <P3 className="mt-4 text-gray-600">
                 Supercharge your agents' success with a proven real estate home 
                 preparation platform. Attract the right customers, dominate the market, 
                 and achieve outstanding results effortlessly.
-              </SubContent>
+              </P3>
               <div className="mt-6">
                 <Button
                   variant="primary"
@@ -228,7 +229,7 @@ export default function Footer(props: FooterProps) {
             <div className="col-span-9 grid grid-cols-3 gap-8">
               {/* Quick Links Column */}
               <div>
-                <SubContent as="h3" className="text-gray-900 font-bold mb-4">Quick Links</SubContent>
+                <H6 className="text-gray-900 font-bold mb-4">Quick Links</H6>
                 <div>
                   <div className="mb-0.5">
                     <Button
@@ -271,7 +272,7 @@ export default function Footer(props: FooterProps) {
               
               {/* Products Column */}
               <div>
-                <SubContent as="h3" className="text-gray-900 font-bold mb-4">Products</SubContent>
+                <H6 className="text-gray-900 font-bold mb-4">Products</H6>
                 <div>
                   <div className="mb-0.5">
                     <Button
@@ -323,7 +324,7 @@ export default function Footer(props: FooterProps) {
               
               {/* Contact Column */}
               <div>
-                <SubContent as="h3" className="text-gray-900 font-bold mb-4">Contact</SubContent>
+                <H6 className="text-gray-900 font-bold mb-4">Contact</H6>
                 <div>
                   <div className="mb-0.5">
                     <Button
@@ -370,12 +371,12 @@ export default function Footer(props: FooterProps) {
         {/* Copyright and Social Media - Shared between mobile and desktop */}
         <div className="mt-10 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
           <div className="mb-4 sm:mb-0 text-center sm:text-left">
-            <SubContent as="p" className="text-gray-600">
+            <P3 className="text-gray-600">
               &copy; {currentYear} RealTechee. All rights reserved.
-            </SubContent>
-            <SubContent as="p" className="text-gray-400 text-xs">
+            </P3>
+            <P3 className="text-gray-400 text-xs">
               Version {version}
-            </SubContent>
+            </P3>
           </div>
           
           {/* Social Media Icons */}

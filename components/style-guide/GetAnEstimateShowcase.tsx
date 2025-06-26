@@ -1,6 +1,6 @@
 import React from 'react';
 import EstimateButton from '../common/buttons/EstimateButton';
-import { ButtonText } from '../Typography';
+import P2 from '../typography/P2' 
 import { EstimateMode, EstimatePriority, EstimateStatus } from '../common/buttons/EstimateButton';
 
 const priorityOptions: EstimatePriority[] = ['primary', 'secondary', 'tertiary'];
@@ -212,7 +212,7 @@ const GetAnEstimateShowcase = () => {
           <div className="flex items-center gap-8">
             <div>
               <p className="mb-2 font-medium">Button Text Component</p>
-              <ButtonText>Get an Estimate</ButtonText>
+              <P2>Get an Estimate</P2>
               <ul className="mt-4 text-sm text-gray-600 list-disc pl-5 space-y-1">
                 <li>Component: <code>ButtonText</code></li>
                 <li>Font: Nunito Sans</li>

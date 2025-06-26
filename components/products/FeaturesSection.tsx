@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionLabel, SectionTitle, Subtitle, SubContent } from '../';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
 import { FeatureCard } from '../common/ui';
 import Section from '../common/layout/Section';
 import { ProductType } from './HeroSection'; // Import the ProductType enum
@@ -222,8 +223,8 @@ export default function FeaturesSection({
       paddingBottom={{ default: 24, md: 80, '2xl': 100 }}
     >
       <div className="text-center mb-8 md:mb-12 animate-on-scroll">
-        <SubContent className="text-[#FF5F45] mb-2">{finalSectionLabel}</SubContent>
-        <Subtitle className="mb-4 md:mb-6">{finalTitle}</Subtitle>
+        <P3 className="text-[#FF5F45] mb-2">{finalSectionLabel}</P3>
+        <H2 className="mb-4 md:mb-6">{finalTitle}</H2>
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 md:gap-6">

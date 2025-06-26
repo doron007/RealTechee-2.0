@@ -1,15 +1,11 @@
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
-import { 
-  SectionLabel,
-  SectionTitle,
-  ButtonText,
-  Subtitle,
-  BodyContent,
-  SubContent
-} from '../'; 
+import P1 from '../typography/P1';
+import P2 from '../typography/P2'; 
 import { Card } from '../common/ui';
 import Button from '../common/buttons/Button';
+import H2 from '../typography/H2';
+import P3 from '../typography/P3';
 import type { FeaturesProps } from '../../types/components/home';
 
 // Milestone item component
@@ -92,12 +88,12 @@ export default function Features(props: FeaturesProps) {
     <section className="section-container bg-stone-50 py-10 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden">
       <div className="section-content">
         <div ref={featuresRef} className="w-full max-w-[1200px] mx-auto mb-6 sm:mb-8">
-          <SectionLabel className="text-[#FF5F45]">
-            FEATURES
-          </SectionLabel>
-          <SectionTitle>
+          <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-4">
+            Features
+          </P3>
+          <H2 className="mb-8">
             Powerful Features to Win More Deals
-          </SectionTitle>
+          </H2>
         
           {/* Main content flex container - improved responsive layout */}
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-6 xl:gap-8">
@@ -143,7 +139,7 @@ export default function Features(props: FeaturesProps) {
                   //iconPosition="right"
                   text="Learn More"
                 >
-                  <ButtonText>Explore All Features</ButtonText>
+                  <P2>Explore All Features</P2>
                 </Button>
               </div>
             </div>
@@ -185,7 +181,7 @@ export default function Features(props: FeaturesProps) {
               <div className="hidden lg:flex w-[200px] lg:w-[280px] px-3 lg:px-6 pt-3 lg:pt-6 pb-4 lg:pb-8 absolute right-0 
                 sm:bottom-[0%] md:bottom-[0%] lg:bottom-[0%] bg-white/90 rounded-md shadow-[0px_4px_12px_0px_rgba(0,0,0,0.08)] 
                 backdrop-blur-sm flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
-                <BodyContent as="div" className="justify-start text-zinc-800 font-bold leading-loose">Project Milestones</BodyContent>
+                <P1 className="justify-start text-zinc-800 font-bold leading-loose">Project Milestones</P1>
                 <div className="self-stretch w-full flex flex-col justify-start items-start gap-2 sm:gap-3 md:gap-4">
                   <MilestoneItem isCompleted={true} />
                   <MilestoneItem isCompleted={true} />

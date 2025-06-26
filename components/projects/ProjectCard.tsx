@@ -4,15 +4,11 @@ import Image from 'next/image';
 import { Project } from '../../types/projects';
 import { safeImageUrl } from '../../utils/clientWixMediaUtils';
 import StatusPill from '../common/ui/StatusPill';
-import { 
-  CardTitle, 
-  CardContent, 
-  SubContent, 
-  SectionTitle,
-  Subtitle,
-  BodyContent,
-  ButtonText 
-} from '../Typography';
+import H3 from '../typography/H3';
+import H2 from '../typography/H2';
+import P1 from '../typography/P1';
+import P2 from '../typography/P2';
+import P3 from '../typography/P3';
 import Button from '../common/buttons/Button';
 import { formatCurrency } from '../../utils/formatUtils';
 
@@ -138,8 +134,8 @@ export default function ProjectCard({
           }}
         />
       </div>
-      <BodyContent spacing="none" className="font-medium text-[#2A2B2E] leading-tight">{value}</BodyContent>
-      <CardContent spacing="none" className="text-gray-500 text-xs ml-1">{label}</CardContent>
+      <P2 className="font-medium text-[#2A2B2E] leading-tight">{value}</P2>
+      <P3 className="text-gray-500 text-xs ml-1">{label}</P3>
     </div>
   );
 
@@ -192,20 +188,20 @@ export default function ProjectCard({
           {(project.addedValue || project.boosterEstimatedCost || project.boostPrice || project.salePrice) && (
             <div className="flex flex-col mb-3">
               {/* Show different label based on whether there's Added Value */}
-              <CardContent spacing="none" className="text-gray-500 mb-1">
+              <P3 className="text-gray-500 mb-1">
                 {project.addedValue && parseFloat(project.addedValue.toString()) > 0 ? 'Value Added' : 'Boost Cost'}
-              </CardContent>
+              </P3>
               
               {/* Main Price Value - Show Added Value or Boost Price */}
-              <SectionTitle spacing="none" className="mb-1">
+              <H2 className="mb-1">
                 ${AddedValue && parseFloat(project.addedValue?.toString() || '0') > 0 ? AddedValue : BoostPrice}
-              </SectionTitle>
+              </H2>
               
               {/* Price Comparison Section - Only show when there's Added Value */}
               {project.addedValue && parseFloat(project.addedValue.toString()) > 0 && (
                 <div className="flex items-center gap-3 mb-2">
                   {BoostPrice && (
-                    <Subtitle spacing="none" className="text-gray-500">${BoostPrice}</Subtitle>
+                    <P2 className="text-gray-500">${BoostPrice}</P2>
                   )}
                   {(BoostPrice && SalePrice) && (
                     <Image 
@@ -216,7 +212,7 @@ export default function ProjectCard({
                     />
                   )}
                   {SalePrice && (
-                    <Subtitle spacing="none" className="text-gray-500">${SalePrice}</Subtitle>
+                    <P2 className="text-gray-500">${SalePrice}</P2>
                   )}
                 </div>
               )}
@@ -225,8 +221,8 @@ export default function ProjectCard({
 
           {/* 4. Title with Address */}
           <div className="mb-3">
-            <CardTitle className="text-[#2A2B2E] font-bold mb-0">{address.line1}</CardTitle>
-            {address.line2 && <SubContent className="text-gray-500 tracking-wider">{address.line2}</SubContent>}
+            <H3 className="text-[#2A2B2E] font-bold mb-0">{address.line1}</H3>
+            {address.line2 && <P3 className="text-gray-500 tracking-wider">{address.line2}</P3>}
           </div>
 
           {/* 5. Project Stats Grid */}

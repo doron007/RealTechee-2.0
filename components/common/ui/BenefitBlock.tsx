@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { CardTitle, BodyContent } from '../../';
+import H3 from '../../typography/H3';
+import P2 from '../../typography/P2';
 
 interface BenefitItemProps {
   title: string;
@@ -21,9 +22,9 @@ const BenefitItem = ({ title, description, icon, className = '' }: BenefitItemPr
             height={20}
           />
         )}
-        <CardTitle className="text-[#2A2B2E]">{title}</CardTitle>
+        <H3 className="text-[#2A2B2E]">{title}</H3>
       </div>
-      <BodyContent className="text-[#2A2B2E] opacity-70">{description}</BodyContent>
+      <P2 className="text-[#2A2B2E] opacity-70">{description}</P2>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionLabel, SectionTitle } from '../';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
 import { Card } from '../common/ui';
 
 interface HowItWorksProps {
@@ -50,12 +51,12 @@ export default function HowItWorks(props: HowItWorksProps) {
     <section className="section-container bg-[#2A2B2E] py-10 sm:py-12 md:py-16 lg:py-20 relative">
       <div className="section-content relative z-10">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 space-y-2 sm:space-y-3 md:space-y-4">
-          <SectionLabel className="text-[#E9664A]">
+          <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold">
             Steps A-Z
-          </SectionLabel>
-          <SectionTitle className="text-white">
+          </P3>
+          <H2 className="text-white">
             How it Works
-          </SectionTitle>
+          </H2>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">

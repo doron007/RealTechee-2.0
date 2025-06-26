@@ -11,7 +11,9 @@ import FormInput from './FormInput';
 import FormTextarea from './FormTextarea';
 import DynamicFieldRenderer from './DynamicFieldRenderer';
 import DynamicSectionRenderer from './DynamicSectionRenderer';
-import { SubContent, SectionTitle, BodyContent } from '../Typography';
+import { P3 } from '../typography/P3';
+import { H2 } from '../typography/H2';
+import { P1 } from '../typography/P1' 
 import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
 import { getFieldConfig, getSectionConfig } from '../../lib/constants/fieldConfigs';
@@ -420,9 +422,9 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
 
         {/* Meeting Details Section */}
         <FormSection title="Meeting details" contentClassName="flex flex-col gap-6">
-          <BodyContent className="text-[#2A2B2E] w-full">
+          <P1 className="text-[#2A2B2E] w-full">
             Walk us through your home over a video call, video and pictures uploading or in person home visit so that we can learn more about your needs and your property. Once we have a sense of your home's condition and your property Booster needs, we can start to prepare our most efficient proposal.
-          </BodyContent>
+          </P1>
 
           {/* Meeting Type Buttons - Dynamic Rendering */}
           <DynamicFieldRenderer

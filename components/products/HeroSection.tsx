@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-    SectionTitle,
-    BodyContent,
-    SubContent
-} from '../';
+import H1 from '../typography/H1';
+import P2 from '../typography/P2';
 import Section from '../common/layout/Section';
 
 // Define product types as an enum for type safety
@@ -87,25 +84,20 @@ export default function HeroSection({
             paddingTop={{ default: 50, md: 80, '2xl': 100 }}
             paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
               >
-            <div className="flex flex-col sm:items-center text-left sm:text-center">
-                {content.titles.map((titleLine, index) => (
-                    <SectionTitle 
-                        key={index} 
-                        spacing={index < content.titles.length - 1 ? 'none' : 'medium'} 
-                        className={index > 0 ? "mt-2" : ""}
-                    >
-                        {titleLine}
-                    </SectionTitle>
-                ))}
-                {content.subContents.map((subContent, index) => (
-                    <SubContent 
-                        key={index} 
-                        spacing={index < content.subContents.length - 1 ? 'none' : 'small'} 
-                        className={index > 0 ? "mt-1" : ""}
-                    >
-                        {subContent}
-                    </SubContent>
-                ))}
+            <div className="flex flex-col items-center text-center gap-4 md:gap-6">
+                <H1 className="text-center">
+                    {content.titles.join(' ')}
+                </H1>
+                <div className="flex flex-col gap-2">
+                    {content.subContents.map((subContent, index) => (
+                        <P2 
+                            key={index} 
+                            className="text-center"
+                        >
+                            {subContent}
+                        </P2>
+                    ))}
+                </div>
             </div>
         </Section>
     );

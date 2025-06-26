@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heading4, BodyContent } from '../../Typography';
+import H4 from '../../typography/H4';
+import P2 from '../../typography/P2';
 
 interface BenefitCardProps {
   title: string;
@@ -29,18 +30,16 @@ export const BenefitCard: React.FC<BenefitCardProps> = ({
       onMouseEnter={onMouseEnter}
     >
       <div className="flex flex-col gap-[7px]">
-        <Heading4 
+        <H4 
           className={`${isActive ? 'text-white' : 'text-[#2A2B2E]'}`}
-          spacing="none"
         >
           {title}
-        </Heading4>
-        <BodyContent 
+        </H4>
+        <P2 
           className={`${isActive ? 'text-white' : 'text-black'}`}
-          spacing="none"
         >
           {description}
-        </BodyContent>
+        </P2>
       </div>
     </div>
   );

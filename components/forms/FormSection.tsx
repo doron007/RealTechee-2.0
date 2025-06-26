@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { SectionTitle } from '../Typography';
+import H3 from '../typography/H3';
 
 interface FormSectionProps {
   title: string;
@@ -27,9 +27,9 @@ export const FormSection: React.FC<FormSectionProps> = ({
 }) => {
   return (
     <div className={sectionClassName}>
-      <SectionTitle className={titleClassName}>
+      <H3 className={titleClassName}>
         {title}
-      </SectionTitle>
+      </H3>
       <div className={contentClassName}>
         {children}
       </div>
