@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import { Heading4, Body2, Body3 } from '../../Typography';
+import H4 from '../../typography/H4';
+import P2 from '../../typography/P2';
+import P3 from '../../typography/P3'; 
 
 interface OptionCardProps {
   title: string;
@@ -34,18 +36,12 @@ export const OptionCard: React.FC<OptionCardProps> = ({
       >
         {/* Header */}
         <div className="mb-2">
-          <Heading4 
-            className="text-[#2A2B2E] mb-2"
-            spacing="none"
-          >
+          <H4 className="text-[#2A2B2E] mb-2">
             {title}
-          </Heading4>
-          <Body2 
-            className="text-[#646469]"
-            spacing="none"
-          >
+          </H4>
+          <P2 className="text-[#646469]">
             {subtitle}
-          </Body2>
+          </P2>
         </div>
         
         {/* Divider */}
@@ -62,12 +58,9 @@ export const OptionCard: React.FC<OptionCardProps> = ({
                 height={16}
                 className="mt-1 flex-shrink-0"
               />
-              <Body3 
-                className="text-[#646469]"
-                spacing="none"
-              >
+              <P3 className="text-[#646469]">
                 {feature}
-              </Body3>
+              </P3>
             </div>
           ))}
         </div>

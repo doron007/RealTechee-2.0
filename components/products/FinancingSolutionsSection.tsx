@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Section } from '../common/layout';
-import { SubContent, Subtitle } from '../Typography';
+import P3 from '../typography/P3';
+import H3 from '../typography/H3' 
 import { TagLabel } from '../common/ui/TagLabel';
 import { BenefitCard } from '../common/ui/BenefitCard';
 import { OptionCard } from '../common/ui/OptionCard';
@@ -143,8 +144,8 @@ export const FinancingSolutionsSection: React.FC<FinancingSolutionsSectionProps>
     >
       {/* Header */}
       <div className="text-center mb-14 animate-on-scroll">
-        <SubContent className="text-[#E9664A] mb-4">{finalSectionLabel}</SubContent>
-        <Subtitle className="max-w-4xl mx-auto">{finalTitle}</Subtitle>
+        <P3 className="text-[#E9664A] mb-4">{finalSectionLabel}</P3>
+        <H3 className="max-w-4xl mx-auto">{finalTitle}</H3>
       </div>
 
       {/* Benefits Section */}

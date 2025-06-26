@@ -2,7 +2,7 @@ import React, { ReactNode, MouseEvent, forwardRef } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
-import { ButtonText } from '../../Typography';
+// Note: span removed - buttons handle their own text styling now
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -293,9 +293,9 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(({
       )}
       
       {contentText && typeof contentText === 'string' ? (
-        <ButtonText className={`text-center ${underline ? 'underline' : ''} text-${textSize}`}>
+        <span className={`text-center ${underline ? 'underline' : ''} text-${textSize}`}>
           {contentText}
-        </ButtonText>
+        </span>
       ) : (
         contentText
       )}

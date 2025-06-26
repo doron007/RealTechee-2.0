@@ -1,6 +1,6 @@
 import React from 'react';
 import Section from '../common/layout/Section';
-import { SectionTitle } from '../Typography';
+import H2 from '../typography/H2';
 import { ProcessStepCard } from './';
 
 interface ProcessStep {
@@ -27,7 +27,7 @@ export default function ContactContentSection({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Left Column: What to Expect (386px equivalent - 4 columns) */}
         <div className="lg:col-span-4">
-          <SectionTitle spacing="none">What to Expect</SectionTitle>
+          <H2>What to Expect</H2>
           
           <div className="mt-8 space-y-8">
             {processSteps.map((step, index) => (

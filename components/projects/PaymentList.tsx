@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from '@mui/material';
 import { CollapsibleSection } from '../common/ui';
-import { BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 import { formatCurrency } from '../../utils/formatUtils';
 
 export interface Payment {
@@ -76,19 +76,19 @@ export default function PaymentList({
               )}
               <div className={`flex-1 ${payment.isSummaryRow ? 'ml-8' : ''}`}>
                 <div className="flex justify-between items-center gap-4">
-                  <BodyContent className={`!mb-0 ${payment.isSummaryRow ? 'font-bold' : ''}`}>
+                  <P2 className={`mb-0 ${payment.isSummaryRow ? 'font-bold' : ''}`}>
                     {payment.paymentName}
-                  </BodyContent>
+                  </P2>
                   {!payment.isSummaryRow && (
-                    <BodyContent className="!mb-0 text-right">
+                    <P2 className="mb-0 text-right">
                       ${formatCurrency((payment.paymentAmount || 0).toString())}
-                    </BodyContent>
+                    </P2>
                   )}
                 </div>
                 {payment.description && !payment.isSummaryRow && (
-                  <BodyContent className="!mb-0 text-gray-600 whitespace-pre-line">
+                  <P2 className="mb-0 text-gray-600 whitespace-pre-line">
                     {payment.description}
-                  </BodyContent>
+                  </P2>
                 )}
               </div>
             </div>

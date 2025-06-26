@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { CardTitle, BodyContent } from '../../';
+import H3 from '../../typography/H3';
+import P2 from '../../typography/P2';
 
 interface FeatureCardProps {
   icon?: string;
@@ -34,8 +35,8 @@ export default function FeatureCard({
       )}
       
       <div className="flex flex-col gap-0 sm:gap-4">
-        <CardTitle className="text-[20px] sm:text-xl mb-0 sm:mb-0">{title}</CardTitle>
-        <BodyContent className="opacity-70 text-[18px] sm:text-base">{description}</BodyContent>
+        <H3 className="mb-0 sm:mb-0">{title}</H3>
+        <P2 className="opacity-70">{description}</P2>
       </div>
     </div>
   );

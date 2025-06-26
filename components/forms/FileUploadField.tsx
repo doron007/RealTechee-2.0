@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { uploadData } from 'aws-amplify/storage';
 import { Close, Photo, VideoFile, Description } from '@mui/icons-material';
-import { SubContent } from '../Typography';
+import { P3 } from '../typography/P3' 
 import amplifyConfig from '../../amplify_outputs.json';
 
 interface UploadedFile {
@@ -282,9 +282,9 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
       {/* Error Message */}
       {error && (
-        <SubContent className="text-[#D11919] mt-2">
+        <P3 className="text-[#D11919] mt-2">
           {error}
-        </SubContent>
+        </P3>
       )}
 
       {/* Uploaded Files List */}

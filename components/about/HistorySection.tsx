@@ -1,5 +1,6 @@
 import React from 'react';
-import { SectionTitle, SubContent } from '../Typography';
+import H2 from '../typography/H2';
+import P2 from '../typography/P2';
 import { Section } from '../common/layout';
 
 interface HistorySectionProps {
@@ -40,13 +41,13 @@ export default function HistorySection({
       paddingTop={{ default: 50, md: 80, '2xl': 100 }}
       paddingBottom={{ default: 50, md: 80, '2xl': 100 }}
     >
-      <div className="w-full sm:w-3/5 mx-auto flex flex-col items-start sm:items-center text-left sm:text-center">
-        <SectionTitle className="text-white">
+      <div className="w-full sm:w-3/5 mx-auto flex flex-col items-center text-center">
+        <H2 className="text-white text-center">
           {title}
-        </SectionTitle>
-        <SubContent className="text-white">
+        </H2>
+        <P2 className="text-white/90 text-center">
           {description}
-        </SubContent>
+        </P2>
       </div>
     </Section>
   );

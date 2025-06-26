@@ -1,9 +1,7 @@
-import { 
-  SectionLabel, 
-  SectionTitle, 
-  Body2, 
-  Heading4 
-} from '../../components/Typography';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
+import H3 from '../typography/H3';
+import P2 from '../typography/P2';
 import { Section } from '../../components/common/layout';
 import { FiUsers, FiTrendingUp, FiGlobe, FiZap } from 'react-icons/fi';
 
@@ -57,15 +55,15 @@ export const OperationsSection: React.FC<OperationsSectionProps> = ({
   return (
     <Section id="operations" background="white" spacing="large">
       <div className="text-center mb-12 md:mb-16">
-        <SectionLabel className="text-accent-coral mb-3 tracking-widest">
+        <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-3">
           {label}
-        </SectionLabel>
-        <SectionTitle className="mb-5 md:mb-6 text-xl md:text-2xl lg:text-3xl font-bold">
+        </P3>
+        <H2 className="mb-5 md:mb-6">
           {title}
-        </SectionTitle>
-        <Body2 className="max-w-3xl mx-auto text-medium-gray">
+        </H2>
+        <P2 className="max-w-3xl mx-auto text-medium-gray">
           {description}
-        </Body2>
+        </P2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
@@ -74,8 +72,8 @@ export const OperationsSection: React.FC<OperationsSectionProps> = ({
             <div className="mb-5 text-accent-blue">
               {operation.icon}
             </div>
-            <Heading4 className="mb-4 font-semibold">{operation.title}</Heading4>
-            <Body2 className="text-medium-gray">{operation.description}</Body2>
+            <H3 className="mb-4">{operation.title}</H3>
+            <P2 className="text-medium-gray">{operation.description}</P2>
           </div>
         ))}
       </div>

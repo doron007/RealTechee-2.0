@@ -1,8 +1,7 @@
-import { 
-  SectionLabel, 
-  SectionTitle, 
-  Body2 
-} from '../../components/Typography';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
+import H3 from '../typography/H3';
+import P2 from '../typography/P2';
 import { Section } from '../../components/common/layout';
 import { FiDatabase, FiLayout, FiSmartphone, FiShield, FiBarChart2, FiCloud } from 'react-icons/fi';
 
@@ -66,15 +65,15 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({
   return (
     <Section id="expertise" background="light" spacing="large">
       <div className="text-center mb-12">
-        <SectionLabel className="text-accent-coral mb-2">
+        <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-2">
           {label}
-        </SectionLabel>
-        <SectionTitle className="mb-4">
+        </P3>
+        <H2 className="mb-4">
           {title}
-        </SectionTitle>
-        <Body2 className="max-w-3xl mx-auto">
+        </H2>
+        <P2 className="max-w-3xl mx-auto">
           {description}
-        </Body2>
+        </P2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -82,9 +81,9 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({
           <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center mb-4">
               {item.icon}
-              <h4 className="text-lg font-semibold ml-3">{item.title}</h4>
+              <H3 className="ml-3">{item.title}</H3>
             </div>
-            <Body2>{item.description}</Body2>
+            <P2>{item.description}</P2>
           </div>
         ))}
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { CardTitle, CardContent } from '../Typography';
 
 export type ContactScenario = 'estimate' | 'inquiry' | 'qualified' | 'affiliate';
 

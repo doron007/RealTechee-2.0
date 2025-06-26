@@ -1,7 +1,7 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { SubContent } from '../Typography';
+import { P3 } from '../typography/P3' 
 
 interface AddressFieldsProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
@@ -46,9 +46,9 @@ export function AddressFields<T extends Record<string, any>>({
             errors={errors}
             name={`${prefix}.streetAddress` as any}
             render={({ message }) => (
-              <SubContent className="text-[#D11919] mt-1">
+              <P3 className="text-[#D11919] mt-1">
                 {message}
-              </SubContent>
+              </P3>
             )}
           />
         </div>
@@ -136,9 +136,9 @@ export function AddressFields<T extends Record<string, any>>({
               errors={errors}
               name={`${prefix}.state` as any}
               render={({ message }) => (
-                <SubContent className="text-[#D11919] mt-1">
+                <P3 className="text-[#D11919] mt-1">
                   {message}
-                </SubContent>
+                </P3>
               )}
             />
           </div>
@@ -161,9 +161,9 @@ export function AddressFields<T extends Record<string, any>>({
               errors={errors}
               name={`${prefix}.city` as any}
               render={({ message }) => (
-                <SubContent className="text-[#D11919] mt-1">
+                <P3 className="text-[#D11919] mt-1">
                   {message}
-                </SubContent>
+                </P3>
               )}
             />
           </div>
@@ -187,9 +187,9 @@ export function AddressFields<T extends Record<string, any>>({
               errors={errors}
               name={`${prefix}.zip` as any}
               render={({ message }) => (
-                <SubContent className="text-[#D11919] mt-1">
+                <P3 className="text-[#D11919] mt-1">
                   {message}
-                </SubContent>
+                </P3>
               )}
             />
           </div>

@@ -3,42 +3,28 @@
  * This file re-exports all components for easier imports
  */
 
-// Export all Typography components from consolidated file
-export {
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Heading5,
-  Heading6,
-  SectionLabel,
-  SubtitlePill,
-  BodyText,
-  BodyTextSecondary,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardContent,
-  PageHeader,
-  SectionTitle,
-  Subtitle,
-  BodyContent,
-  SubContent,
-  ButtonText
-} from './Typography';
+// Export ONLY modern semantic typography components
+export { default as H1 } from './typography/H1';
+export { default as H2 } from './typography/H2';
+export { default as H3 } from './typography/H3';
+export { default as H4 } from './typography/H4';
+export { default as H5 } from './typography/H5';
+export { default as H6 } from './typography/H6';
+export { default as P1 } from './typography/P1';
+export { default as P2 } from './typography/P2';
+export { default as P3 } from './typography/P3';
 
-// Export Animated Typography components
+// Export new Animated Typography components
 export {
-  AnimatedSectionLabel,
-  AnimatedSectionTitle,
-  AnimatedSubtitle,
-  AnimatedBodyContent,
-  AnimatedSubContent,
-  AnimatedPageHeader,
-  AnimatedButtonText,
-  AnimatedCardTitle,
-  AnimatedCardSubtitle,
-  AnimatedCardContent
+  AnimatedH1,
+  AnimatedH2,
+  AnimatedH3,
+  AnimatedH4,
+  AnimatedH5,
+  AnimatedH6,
+  AnimatedP1,
+  AnimatedP2,
+  AnimatedP3
 } from './AnimatedTypography';
 
 // Export specific UI components directly

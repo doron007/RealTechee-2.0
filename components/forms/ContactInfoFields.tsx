@@ -1,7 +1,7 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { SubContent } from '../Typography';
+import P3 from '../typography/P3';
 
 interface ContactInfo {
   fullName: string;
@@ -56,9 +56,9 @@ export function ContactInfoFields<T extends Record<string, any>>({
             errors={errors}
             name={`${prefix}.fullName` as any}
             render={({ message }) => (
-              <SubContent className="text-[#D11919] mt-1">
+              <P3 className="text-[#D11919] mt-1">
                 {message}
-              </SubContent>
+              </P3>
             )}
           />
         </div>
@@ -84,9 +84,9 @@ export function ContactInfoFields<T extends Record<string, any>>({
               errors={errors}
               name={`${prefix}.email` as any}
               render={({ message }) => (
-                <SubContent className="text-[#D11919] mt-1">
+                <P3 className="text-[#D11919] mt-1">
                   {message}
-                </SubContent>
+                </P3>
               )}
             />
           </div>
@@ -110,9 +110,9 @@ export function ContactInfoFields<T extends Record<string, any>>({
               errors={errors}
               name={`${prefix}.phone` as any}
               render={({ message }) => (
-                <SubContent className="text-[#D11919] mt-1">
+                <P3 className="text-[#D11919] mt-1">
                   {message}
-                </SubContent>
+                </P3>
               )}
             />
           </div>

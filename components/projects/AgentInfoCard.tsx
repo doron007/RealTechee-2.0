@@ -2,7 +2,8 @@ import React from 'react';
 import { Project } from '../../types/projects';
 import Card from '../common/ui/Card';
 import { Button } from '../common/buttons';
-import { BodyContent, CardTitle } from '../Typography';
+import P2 from '../typography/P2';
+import H3 from '../typography/H3';
 import Image from 'next/image';
 import { formatPhoneNumber } from '../../utils/formatUtils';
 import { createLogger } from '../../utils/logger';
@@ -46,22 +47,22 @@ const AgentInfoCard: React.FC<AgentInfoCardProps> = ({ project }) => {
       <div className="flex items-center mb-3">
         <div className="w-16 h-16 rounded-full bg-gray-300 mr-4 flex-shrink-0"></div>
         <div>
-          <BodyContent className="font-semibold leading-none mb-1">{agentName}</BodyContent>
+          <P2 className="font-semibold leading-none mb-1">{agentName}</P2>
           {/* <BodyContent className="text-gray-600 text-sm leading-none">Real Estate Specialist</BodyContent> */}
         </div>
       </div>
 
       <div className="flex h-8">
         <div className="flex items-center w-full">
-          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Phone:</BodyContent>
-          <BodyContent className="leading-none my-auto">{formatPhoneNumber(agentPhone)}</BodyContent>
+          <P2 className="text-gray-600 w-32 leading-none my-auto">Phone:</P2>
+          <P2 className="leading-none my-auto">{formatPhoneNumber(agentPhone)}</P2>
         </div>
       </div>
       
       <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
         <div className="flex items-center w-full">
-          <BodyContent className="text-gray-600 w-32 leading-none my-auto">Email:</BodyContent>
-          <BodyContent className="leading-none my-auto">{agentEmail}</BodyContent>
+          <P2 className="text-gray-600 w-32 leading-none my-auto">Email:</P2>
+          <P2 className="leading-none my-auto">{agentEmail}</P2>
         </div>
       </div>
 
@@ -77,7 +78,7 @@ const AgentInfoCard: React.FC<AgentInfoCardProps> = ({ project }) => {
 
   return (
     <Card 
-      title={<CardTitle className="mb-0">Agent Information</CardTitle>}
+      title={<H3 className="mb-0">Agent Information</H3>}
       content={content}
       className="-my-5 sm:-my-6 md:-my-7"
     />

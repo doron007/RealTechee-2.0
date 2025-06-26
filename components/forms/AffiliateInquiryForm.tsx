@@ -2,7 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { SectionTitle, BodyContent } from '../Typography';
+import { H2 } from '../typography/H2';
+import { P1 } from '../typography/P1' 
 import ContactInfoFields from './ContactInfoFields';
 import AddressFields from './AddressFields';
 import FormDropdown from './FormDropdown';
@@ -229,9 +230,9 @@ export const AffiliateInquiryForm: React.FC<AffiliateInquiryFormProps> = ({
         {/* Conditional General Contractor Section */}
         {isGeneralContractor && (
           <FormSection title="General Contractor Information" contentClassName="flex flex-col gap-6">
-            <BodyContent className="text-[#2A2B2E]" spacing="none">
+            <P1 className="text-[#2A2B2E]">
               For general contractor, please provide the following information to proceed with your qualification:
-            </BodyContent>
+            </P1>
             
             {/* Boolean Fields - Two Column Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

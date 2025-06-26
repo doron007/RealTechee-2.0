@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { SectionTitle, CardTitle } from '../../Typography';
+import H3 from '../../typography/H3';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -21,7 +21,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         className="w-full flex justify-between items-center py-2 hover:bg-gray-100 transition-colors text-left"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <SectionTitle className="!mb-0 text-xl font-bold">{title}</SectionTitle>
+        <H3 className="mb-0">{title}</H3>
         <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
           <Image 
             src="/assets/icons/ic-arrow-down.svg"

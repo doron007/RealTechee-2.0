@@ -1,5 +1,7 @@
 import React from 'react';
-import { SectionLabel, SectionTitle, BodyContent } from '../Typography';
+import P3 from '../typography/P3';
+import H2 from '../typography/H2';
+import P2 from '../typography/P2';
 import { Section } from '../common/layout';
 import { Card } from '../common/ui';
 
@@ -71,15 +73,15 @@ export default function ValuesSection({
   return (
     <Section id="our-values" background="white" spacing="large" className={className}>
       <div className="text-center mb-12">
-        <SectionLabel className="text-accent-coral mb-2">
+        <P3 className="text-[#E9664A] uppercase tracking-[0.18em] font-bold mb-2">
           {sectionLabel}
-        </SectionLabel>
-        <SectionTitle className="mb-4">
+        </P3>
+        <H2 className="mb-4">
           {title}
-        </SectionTitle>
-        <BodyContent className="max-w-2xl mx-auto">
+        </H2>
+        <P2 className="max-w-2xl mx-auto">
           {description}
-        </BodyContent>
+        </P2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">

@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ErrorMessage } from '@hookform/error-message';
-import { SubContent, SectionTitle, BodyContent } from '../Typography';
+import { P3 } from '../typography/P3';
+import { H2 } from '../typography/H2';
+import { P1 } from '../typography/P1' 
 import ContactInfoFields from './ContactInfoFields';
 import AddressFields from './AddressFields';
 import { scrollToTop } from '../../lib/scrollUtils';

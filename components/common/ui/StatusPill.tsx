@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardContent } from '../../Typography';
+import { P3 } from '../../typography/P3' 
 
 export type StatusType = 
   // Shared statuses
@@ -151,9 +151,9 @@ const StatusPill: React.FC<StatusPillProps> = ({ status, className = '' }) => {
   
   return (
     <div className={`inline-flex px-3 py-1.5 rounded-full ${styles.bg} ${className}`}>
-      <CardContent spacing="none" className={`${styles.text} text-center`}>
+      <P3 className={`${styles.text} text-center`}>
         {status.charAt(0).toUpperCase() + status.slice(1)}
-      </CardContent>
+      </P3>
     </div>
   );
 };

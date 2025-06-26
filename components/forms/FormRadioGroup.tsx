@@ -1,7 +1,8 @@
 import React from 'react';
 import { UseFormRegister, UseFormWatch, FieldErrors, Path } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { BodyContent, SubContent } from '../Typography';
+import P1 from '../typography/P1';
+import P3 from '../typography/P3';
 
 interface RadioOption {
   value: string;
@@ -37,9 +38,9 @@ export function FormRadioGroup<T extends Record<string, any>>({
   return (
     <div className={`w-full ${className}`}>
       <div className="flex flex-col gap-3">
-        <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
+        <P1 className="text-[#2A2B2E] font-medium">
           {label}{required && '*'}
-        </BodyContent>
+        </P1>
         
         <div className={`flex gap-4 ${direction === 'vertical' ? 'flex-col' : 'flex-row flex-wrap'}`}>
           {options.map((option) => (
@@ -63,9 +64,9 @@ export function FormRadioGroup<T extends Record<string, any>>({
                   )}
                 </div>
               </div>
-              <BodyContent as="span" className="text-[#2A2B2E]" spacing="none">
+              <P1 className="text-[#2A2B2E]">
                 {option.label}
-              </BodyContent>
+              </P1>
             </label>
           ))}
         </div>
@@ -74,9 +75,9 @@ export function FormRadioGroup<T extends Record<string, any>>({
           errors={errors}
           name={name as any}
           render={({ message }) => (
-            <SubContent className="text-[#D11919] mt-1">
+            <P3 className="text-[#D11919] mt-1">
               {message}
-            </SubContent>
+            </P3>
           )}
         />
       </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { BodyContent, SubContent } from '../Typography';
+import P1 from '../typography/P1';
+import P3 from '../typography/P3';
 
 interface FormDateTimeInputProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
@@ -57,9 +58,9 @@ export function FormDateTimeInput<T extends Record<string, any>>({
   return (
     <div className={`w-full ${className}`}>
       <div className="flex flex-col gap-1">
-        <BodyContent as="label" className="text-[#2A2B2E]" spacing="none">
+        <P1 className="text-[#2A2B2E] font-medium">
           {label}{required && '*'}
-        </BodyContent>
+        </P1>
         <div className={`w-full bg-white border rounded px-4 py-3 flex items-center justify-between ${
           hasError ? 'border-[#D11919]' : 'border-[#D2D2D4]'
         }`}>
@@ -77,9 +78,9 @@ export function FormDateTimeInput<T extends Record<string, any>>({
           errors={errors}
           name={name as any}
           render={({ message }) => (
-            <SubContent className="text-[#D11919] mt-1">
+            <P3 className="text-[#D11919] mt-1">
               {message}
-            </SubContent>
+            </P3>
           )}
         />
       </div>

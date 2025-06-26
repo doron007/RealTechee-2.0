@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogTitle, Box, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '../common/buttons/Button';
-import { BodyContent } from '../Typography';
+import P2 from '../typography/P2';
 import { useRouter } from 'next/router';
 
 interface LoginPromptDialogProps {
@@ -40,9 +40,9 @@ export default function LoginPromptDialog({ open, onClose }: LoginPromptDialogPr
       </DialogTitle>
 
       <DialogContent>
-        <BodyContent className="mb-4">
+        <P2 className="mb-4">
           You need to be logged in to add comments. Please sign in to your existing account or create a free account to continue.
-        </BodyContent>
+        </P2>
 
         <Box display="flex" justifyContent="space-between" mt={3}>
           <Button

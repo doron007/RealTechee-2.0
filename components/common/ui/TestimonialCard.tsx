@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { CardText, SubtitlePill } from '../../Typography';
+import { P2 } from '../../typography/P2'
+import { P3 } from '../../typography/P3' 
 
 interface TestimonialCardProps {
   /**
@@ -60,23 +61,27 @@ export default function TestimonialCard({
           {pills.length > 0 && (
             <div className="flex flex-col items-center gap-2 mb-4">
               {pills.map((pill, pillIndex) => (
-                <SubtitlePill 
+                <div 
                   key={pillIndex}
-                  backgroundColor={pillBackgroundColor}
-                  textColor={pillTextColor}
-                  uppercase={false}
+                  className="inline-flex px-3 py-1.5 rounded-full"
+                  style={{
+                    backgroundColor: pillBackgroundColor,
+                    color: pillTextColor
+                  }}
                 >
-                  {pill}
-                </SubtitlePill>
+                  <P3 className="text-center">
+                    {pill}
+                  </P3>
+                </div>
               ))}
             </div>
           )}
           
-          {/* Testimonial text using CardText for better design consistency */}
+          {/* Testimonial text using P2 for better design consistency */}
           {testimonial && 
-            <CardText className="text-gray-700 italic">
+            <P2 className="text-gray-700 italic">
               {testimonial}
-            </CardText>
+            </P2>
           }
         </>
       )}

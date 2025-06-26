@@ -1,6 +1,8 @@
 import React from 'react';
 import StatusPill, { StatusType } from '../common/ui/StatusPill';
-import { SectionTitle, Subtitle, Body2 } from '../Typography';
+import { H2 } from '../typography/H2';
+import { H3 } from '../typography/H3';
+import { P2 } from '../typography/P2' 
 
 interface StatusFlowProps {
   title: string;
@@ -13,7 +15,7 @@ interface StatusFlowProps {
 const StatusFlow: React.FC<StatusFlowProps> = ({ title, statuses }) => {
   return (
     <div className="flex-1">
-      <Subtitle className="mb-4">{title}</Subtitle>
+      <H3 className="mb-4">{title}</H3>
       <div className="flex flex-col space-y-1">
         {statuses.map((status, index) => (
           <div key={status} className="flex items-center space-x-3">
@@ -71,12 +73,12 @@ const StatusPillShowcase: React.FC = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-sm">
-      <SectionTitle className="mb-6">Status Pills</SectionTitle>
+      <H2 className="mb-6">Status Pills</H2>
       
-      <Body2 className="mb-8">
+      <P2 className="mb-8">
         Status pills are used to visually indicate the status of Projects, Requests, and Quotes throughout the platform.
         Each column below shows the workflow progression for each entity type, from start to finish.
-      </Body2>
+      </P2>
       
       <div className="flex flex-col md:flex-row gap-8">
         <StatusFlow title="Request Statuses" statuses={requestStatuses} />

@@ -1,9 +1,12 @@
 // filepath: /Users/doron/Projects/RealTechee 2.0/components/home/AboutSection.tsx
 import React from 'react';
-import { useIntersectionObserver } from '../../utils/animationUtils';
+import { useIntersectionObserver, withAnimation } from '../../utils/animationUtils';
 import { VideoPlayer } from '../common/ui';
 import { Section, ContainerTwoColumns, ContentWrapper } from '../common/layout';
-import { AnimatedSectionLabel, AnimatedSectionTitle, AnimatedBodyContent } from '..';
+import P1 from '../typography/P1';
+
+// Create animated version of P1 for this component
+const AnimatedP1 = withAnimation(P1);
 
 interface AboutSectionProps {
   className?: string;
@@ -19,25 +22,7 @@ export default function AboutSection({ className = '' }: AboutSectionProps) {
       background="light" 
       spacing="large"
     >
-      {/* Section Title and Label - using animated typography */}
       <div ref={ref}>
-        <AnimatedSectionLabel 
-          animate={isVisible} 
-          center 
-          className="text-primary"
-        >
-          About Us
-        </AnimatedSectionLabel>
-        
-        <AnimatedSectionTitle 
-          animate={isVisible} 
-          animationDelay="delay200" 
-          center 
-          className="mt-2"
-        >
-          Our Mission
-        </AnimatedSectionTitle>
-
         {/* Using ContainerTwoColumns with videoSide="left" to match Figma 56/44 proportions and 64px gap */}
         <ContainerTwoColumns
           videoSide="left"
@@ -60,18 +45,19 @@ export default function AboutSection({ className = '' }: AboutSectionProps) {
           rightContent={
             <ContentWrapper
               verticalAlign="center"
-              textAlign="left"
+              textAlign="center"
               maxWidth="90%"
             >
-              <AnimatedBodyContent
+              <AnimatedP1
                 animate={isVisible}
                 animationType="slideInUp"
                 animationDelay="delay300"
+                className="text-center"
               >
                 RealTechee was founded with a vision: to provide turn-key tools and technology to various industries, 
                 including automated programs, virtual walk-throughs, CRM, and UI. Our goal is to enhance user experience 
                 and execution for professionals and their clients, driving improved performance, conversion rates, and value.
-              </AnimatedBodyContent>
+              </AnimatedP1>
             </ContentWrapper>
           }
         />

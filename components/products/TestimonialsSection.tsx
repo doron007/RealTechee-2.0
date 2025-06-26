@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TestimonialCard from '../common/ui/TestimonialCard';
-import { Subtitle, SubContent } from '../';
+import H2 from '../typography/H2';
+import P3 from '../typography/P3';
 import Section from '../common/layout/Section';
 import { ProductType } from './HeroSection';
 import SliderNavigation from '../common/ui/SliderNavigation';
@@ -222,8 +223,8 @@ export default function TestimonialsSection({
       paddingBottom={{ default: 74, md: 130, '2xl': 150 }}
     >
       <div className="text-center mb-8 md:mb-12 animate-on-scroll">
-        <SubContent textColor={content.text_color} className="mb-2">TESTIMONIALS</SubContent>
-        <Subtitle className="mb-4 md:mb-6">{content.title || title}</Subtitle>
+        <P3 className="mb-2" style={{color: content.text_color}}>TESTIMONIALS</P3>
+        <H2 className="mb-4 md:mb-6">{content.title || title}</H2>
       </div>
 
       {/* Testimonials 3-column grid */}

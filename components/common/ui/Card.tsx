@@ -1,7 +1,10 @@
 import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import { CardTitle, CardSubtitle, CardContent, SubContent } from '../../';
+import H4 from '../../typography/H4';
+import P3 from '../../typography/P3';
+import H3 from '../../typography/H3';
+import P2 from '../../typography/P2';
 
 // Variants based on different cards in the site
 export type CardVariant = 'default' | 'feature' | 'dealBreaker' | 'step';
@@ -200,15 +203,23 @@ const Card: React.FC<CardProps> = ({
   const renderTitle = () => {
     if (variant === 'step' && step) {
       return (
-        <CardTitle className={getTextColorClass()}>
+        <H4 className={getTextColorClass()}>
           Step {step}<br/>
           {title}
-        </CardTitle>
+        </H4>
+      );
+    }
+    
+    if (variant === 'feature' || variant === 'dealBreaker') {
+      return typeof title === 'string' ? (
+        <H3 className={getTextColorClass()}>{title}</H3>
+      ) : (
+        title
       );
     }
     
     return typeof title === 'string' ? (
-      <CardTitle className={getTextColorClass()}>{title}</CardTitle>
+      <H4 className={getTextColorClass()}>{title}</H4>
     ) : (
       title
     );
@@ -218,7 +229,7 @@ const Card: React.FC<CardProps> = ({
     if (!subtitle) return null;
     
     return typeof subtitle === 'string' ? (
-      <CardSubtitle className={getDescriptionColorClass()}>{subtitle}</CardSubtitle>
+      <H4 className={getDescriptionColorClass()}>{subtitle}</H4>
     ) : (
       subtitle
     );
@@ -227,8 +238,16 @@ const Card: React.FC<CardProps> = ({
   const renderContent = () => {
     if (!content) return null;
     
+    if (variant === 'feature' || variant === 'dealBreaker') {
+      return typeof content === 'string' ? (
+        <P2 className={getDescriptionColorClass()}>{content}</P2>
+      ) : (
+        content
+      );
+    }
+    
     return typeof content === 'string' ? (
-      <SubContent className={getDescriptionColorClass()}>{content}</SubContent>
+      <P3 className={getDescriptionColorClass()}>{content}</P3>
     ) : (
       content
     );

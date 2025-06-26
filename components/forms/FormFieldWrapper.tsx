@@ -7,7 +7,7 @@
 import React from 'react';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import { BodyContent, SubContent } from '../Typography';
+import P3 from '../typography/P3';
 
 interface FormFieldWrapperProps<T extends Record<string, any>> {
   register: UseFormRegister<T>;
@@ -69,9 +69,9 @@ export function FormFieldWrapper<T extends Record<string, any>>({
           errors={errors}
           name={name as any}
           render={({ message }) => (
-            <SubContent className={errorClassName}>
+            <P3 className={errorClassName}>
               {message}
-            </SubContent>
+            </P3>
           )}
         />
       </div>
