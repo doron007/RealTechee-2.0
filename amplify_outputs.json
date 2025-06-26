@@ -1835,6 +1835,376 @@
             "sortKeyFieldNames": []
           }
         },
+        "AuditLog": {
+          "name": "AuditLog",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "tableName": {
+              "name": "tableName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "recordId": {
+              "name": "recordId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "action": {
+              "name": "action",
+              "isArray": false,
+              "type": {
+                "enum": "AuditLogAction"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "changeType": {
+              "name": "changeType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "previousData": {
+              "name": "previousData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "newData": {
+              "name": "newData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "changedFields": {
+              "name": "changedFields",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "source": {
+              "name": "source",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "userAgent": {
+              "name": "userAgent",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "ipAddress": {
+              "name": "ipAddress",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "sessionId": {
+              "name": "sessionId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "userId": {
+              "name": "userId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "userEmail": {
+              "name": "userEmail",
+              "isArray": false,
+              "type": "AWSEmail",
+              "isRequired": false,
+              "attributes": []
+            },
+            "userRole": {
+              "name": "userRole",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "timestamp": {
+              "name": "timestamp",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": true,
+              "attributes": []
+            },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "ttl": {
+              "name": "ttl",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "AuditLogs",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "ContactAuditLog": {
+          "name": "ContactAuditLog",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "contactId": {
+              "name": "contactId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "email": {
+              "name": "email",
+              "isArray": false,
+              "type": "AWSEmail",
+              "isRequired": true,
+              "attributes": []
+            },
+            "action": {
+              "name": "action",
+              "isArray": false,
+              "type": {
+                "enum": "ContactAuditLogAction"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "changeType": {
+              "name": "changeType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "previousData": {
+              "name": "previousData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "newData": {
+              "name": "newData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "source": {
+              "name": "source",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "userAgent": {
+              "name": "userAgent",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "ipAddress": {
+              "name": "ipAddress",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "timestamp": {
+              "name": "timestamp",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": true,
+              "attributes": []
+            },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "ttl": {
+              "name": "ttl",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "ContactAuditLogs",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
         "Legal": {
           "name": "Legal",
           "fields": {
@@ -2664,8 +3034,8 @@
               "isRequired": true,
               "attributes": []
             },
-            "projectID": {
-              "name": "projectID",
+            "projectId": {
+              "name": "projectId",
               "isArray": false,
               "type": "ID",
               "isRequired": false,
@@ -2773,7 +3143,7 @@
               "association": {
                 "connectionType": "BELONGS_TO",
                 "targetNames": [
-                  "projectID"
+                  "projectId"
                 ]
               }
             },
@@ -2951,13 +3321,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "projectID": {
-              "name": "projectID",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": false,
               "attributes": []
             },
             "title": {
@@ -3725,7 +4088,23 @@
               "association": {
                 "connectionType": "HAS_MANY",
                 "associatedWith": [
-                  "projectID"
+                  "projectId"
+                ]
+              }
+            },
+            "quoteItems": {
+              "name": "quoteItems",
+              "isArray": true,
+              "type": {
+                "model": "QuoteItems"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "projectId"
                 ]
               }
             },
@@ -4012,8 +4391,8 @@
               "isRequired": false,
               "attributes": []
             },
-            "projectID": {
-              "name": "projectID",
+            "projectId": {
+              "name": "projectId",
               "isArray": false,
               "type": "ID",
               "isRequired": false,
@@ -4130,6 +4509,21 @@
               "type": "Float",
               "isRequired": false,
               "attributes": []
+            },
+            "project": {
+              "name": "project",
+              "isArray": false,
+              "type": {
+                "model": "Projects"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "projectId"
+                ]
+              }
             },
             "createdAt": {
               "name": "createdAt",
@@ -5268,7 +5662,23 @@
           }
         }
       },
-      "enums": {},
+      "enums": {
+        "AuditLogAction": {
+          "name": "AuditLogAction",
+          "values": [
+            "created",
+            "updated",
+            "deleted"
+          ]
+        },
+        "ContactAuditLogAction": {
+          "name": "ContactAuditLogAction",
+          "values": [
+            "created",
+            "updated"
+          ]
+        }
+      },
       "nonModels": {}
     }
   },
@@ -5289,7 +5699,8 @@
             ],
             "guest": [
               "get",
-              "list"
+              "list",
+              "write"
             ]
           },
           "private/${cognito-identity.amazonaws.com:sub}/*": {

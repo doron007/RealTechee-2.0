@@ -8,7 +8,6 @@ import { ProjectStatus } from '../utils/projectsService';
 export interface Project {
   // Core Amplify fields
   id: string;
-  projectID: string;
   title: string;
   status: ProjectStatus;
   statusImage?: string;

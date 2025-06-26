@@ -19,6 +19,69 @@
 
 **Backend Access:** Use generated GraphQL hooks (useQuery, useMutation) from `npx ampx generate` - ! custom /api routes for backend operations
 
+## Typography System (MODERN H1-H6, P1-P3)
+
+### New Semantic Typography Components
+**CRITICAL:** Use ONLY H1-H6, P1-P3 components. Legacy typography components deprecated.
+
+**Headings (H1-H6):**
+- `H1` - Main page titles (semantic page hierarchy)
+- `H2` - Section headings (primary sections)
+- `H3` - Subsection titles (cards, features)
+- `H4` - Minor headings (form sections)
+- `H5` - Small headings (navigation)
+- `H6` - Labels and smallest headings
+
+**Paragraphs (P1-P3):**
+- `P1` - Important/emphasis body text (20px→16px responsive)
+- `P2` - Standard body text (16px→14px responsive)
+- `P3` - Supporting text, captions, labels (14px→12px responsive)
+
+**Key Features:**
+- CSS clamp() for fluid responsive scaling
+- Semantic HTML for accessibility/SEO
+- No complex props - just pick hierarchy level
+- Context-independent styling
+
+**Usage Examples:**
+```tsx
+<H1>Page Title</H1>              // Always main page title
+<H2>Section Heading</H2>         // Always section header
+<H3>Card Title</H3>              // Always subsection/card
+<P1>Important content</P1>       // Emphasis body text
+<P2>Regular content</P2>         // Standard paragraphs
+<P3>Small text/labels</P3>       // Supporting info
+```
+
+**Migration from Legacy:**
+```tsx
+// OLD (DEPRECATED) → NEW (REQUIRED)
+PageHeader → H1              // Page titles
+SectionTitle → H2            // Section headers  
+Subtitle → H2 or H3          // Depends on hierarchy
+CardTitle → H3               // Card headers
+BodyContent → P1 or P2       // Based on importance
+SubContent → P3              // Supporting text
+SectionLabel → P3            // Labels with styling
+```
+
+### Figma → Code Migration (7-Step Process)
+**When updating components w/ Figma reference:**
+
+1. **Figma Link** - Provide desktop+mobile URLs
+2. **Extract Tokens** - Capture size/weight/lineHeight for both breakpoints
+3. **Semantic Map** - Content hierarchy > Figma names (H1=page title, H2=sections, H3=cards, P1=emphasis, P2=body, P3=labels)
+4. **Update Code** - Replace w/ H*/P* components
+5. **Build Check** - `npm run build` verify
+6. **Visual Check** - Compare w/ Figma intent
+7. **Responsive Test** - Verify clamp() scaling
+
+**Mapping Rules:**
+- Main page title → H1 (always, ! Figma semantic)
+- Section headers → H2 | Subsections → H3 | Cards → H3
+- Important text → P1 | Standard body → P2 | Labels/small → P3
+- Use CSS clamp() | Readability > exact pixels | Semantic HTML priority
+
 ## COO: Component-Oriented Output
 
 ### Rules
@@ -28,12 +91,13 @@
 4. Props = sole config method + prop config over class overrides
 
 ### Component Priority (for consistent look + single customization point)
-1. **Existing custom comps** (first choice - Typography/UI/Layout below)
-2. **MUI/MUI-X** (second choice - comprehensive component library)  
-3. **Native Next.js/React** (last resort only)
+1. **H1-H6, P1-P3 Typography** (ALWAYS use semantic typography first)
+2. **Existing custom comps** (UI/Layout components below)
+3. **MUI/MUI-X** (comprehensive component library)  
+4. **Native Next.js/React** (last resort only)
 
 ### Available Components
-**Typography:** `PageHeader` `SectionTitle` `Subtitle` `SectionLabel` `BodyContent` `SubContent` `CardTitle` `CardSubtitle` `CardContent` `ButtonText`
+**Typography:** `H1` `H2` `H3` `H4` `H5` `H6` `P1` `P2` `P3` (modern semantic system with CSS clamp() responsive scaling)
 **UI:** `Card` `Button` `FeatureCard` `BenefitCard` `OptionCard` `BenefitBlock` `TestimonialCard` `StatItem` `SliderNavBar`
 **Layout:** `Layout` `Section` `Header` `Footer` `ContentWrapper` `GridContainer` `ContainerTwoColumns` `ContainerThreeColumns`
 **MUI:** All standard components available - Input, Display, Feedback, Surface, Navigation, Layout, Utility

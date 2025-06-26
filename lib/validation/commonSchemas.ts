@@ -102,11 +102,12 @@ export const workTypeSchema = yup.string()
 
 // Product validation options (for general inquiry)
 export const productOptions = [
-  'Kitchen',
-  'Living Areas', 
-  'Full Home',
-  'Bath',
-  'Commercial'
+  'Buyers Service',
+  'Sellers Service',
+  'Kitchen and Bath',
+  'Architects and Designers',
+  'Commercial',
+  'Other'
 ] as const;
 
 export const productSchema = yup.string()

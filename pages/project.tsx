@@ -182,7 +182,7 @@ const ProjectDetails: NextPage = () => {
                 {/* Project Comments */}
                 <CommentsList 
                   commentsData={comments} 
-                  projectId={project.projectID || project.id} 
+                  projectId={project.id} 
                   onCommentAdded={handleCommentAdded} 
                 />
               </div>

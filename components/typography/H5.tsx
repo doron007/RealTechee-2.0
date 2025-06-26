@@ -11,7 +11,7 @@ export const H5: React.FC<H5Props> = ({
   ...props 
 }) => (
   <h5 
-    className={`text-[clamp(1rem,1.5vw,1.5rem)] font-medium leading-normal ${className}`} 
+    className={`text-[clamp(1rem,1.5vw,1.5rem)] font-heading font-medium leading-normal ${className}`} 
     {...props}
   >
     {children}

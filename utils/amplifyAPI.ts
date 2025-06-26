@@ -325,11 +325,11 @@ export const relationAPI = {
     try {
       console.log('relationAPI.getProjectPaymentTerms: Looking for projectId:', projectId, 'type:', typeof projectId, '(filtering for type="byClient" only)');
       
-      // Use the correct field name from schema: projectID (note: uppercase ID)
-      // Filter by projectID AND type = "byClient" to only show client payments
+      // Use the correct field name from schema: projectId (updated to match)
+      // Filter by projectId AND type = "byClient" to only show client payments
       const filter = { 
         and: [
-          { projectID: { eq: projectId } },
+          { projectId: { eq: projectId } },
           { type: { eq: "byClient" } }
         ]
       };
@@ -345,14 +345,14 @@ export const relationAPI = {
         hasErrors: !!result.errors,
         sampleData: result.data?.slice(0, 2)?.map((item: any) => ({
           id: item?.id,
-          projectID: item?.projectID,
+          projectId: item?.projectId,
           paymentName: item?.paymentName,
           order: item?.order,
           paid: item?.paid
         })),
         allData: result.data?.map((item: any) => ({
           id: item?.id,
-          projectID: item?.projectID,
+          projectId: item?.projectId,
           paymentName: item?.paymentName
         }))
       });
@@ -367,13 +367,13 @@ export const relationAPI = {
         try {
           // Search with higher limit to find project 68 records
           const allResult = await (client.models as any).ProjectPaymentTerms.list({ limit: 100 });
-          const project68Records = allResult.data?.filter((item: any) => item?.projectID === "68");
+          const project68Records = allResult.data?.filter((item: any) => item?.projectId === "68");
           console.log('relationAPI.getProjectPaymentTerms: Searching 100 records for project 68...');
           console.log('relationAPI.getProjectPaymentTerms: Found project 68 records:', project68Records?.length || 0);
           if (project68Records?.length > 0) {
             console.log('relationAPI.getProjectPaymentTerms: Project 68 payment details:', project68Records.map((item: any) => ({
               id: item?.id,
-              projectID: item?.projectID,
+              projectId: item?.projectId,
               paymentName: item?.paymentName
             })));
           }
@@ -561,35 +561,31 @@ export const optimizedProjectsAPI = {
 
   // Tier 3: Full project with all relationships (for project detail page)
   async loadFullProject(projectId: string) {
-    projectsLogger.info('Loading project by projectID', { projectId });
+    projectsLogger.info('Loading project by id', { projectId });
     
     try {
-      // Query by projectID field, not the DynamoDB id field
-      const filter = { projectID: { eq: projectId } };
-      const result = await (client.models as any).Projects.list({ 
-        filter,
-        limit: 1 // Should only be one project with this projectID
+      // Query by auto-generated id field
+      const result = await (client.models as any).Projects.get({ 
+        id: projectId
       });
       
       projectsLogger.debug('Project query result', {
         success: !!result.data,
-        count: result.data?.length || 0,
-        filter: filter,
         hasErrors: !!result.errors,
-        projectFound: result.data?.[0]?.projectID
+        projectFound: result.data?.id
       });
       
       if (result.errors) {
-        projectsLogger.error('Projects query failed', result.errors);
+        projectsLogger.error('Project get failed', result.errors);
         return { success: false, error: result.errors };
       }
       
-      if (result.data && result.data.length > 0) {
-        projectsLogger.info('Project loaded successfully', { projectId: result.data[0].projectID });
-        return { success: true, data: result.data[0] };
+      if (result.data) {
+        projectsLogger.info('Project loaded successfully', { projectId: result.data.id });
+        return { success: true, data: result.data };
       } else {
         projectsLogger.warn('No project found', { projectId });
-        return { success: false, error: `No project found with projectID: ${projectId}` };
+        return { success: false, error: `No project found with id: ${projectId}` };
       }
     } catch (error) {
       projectsLogger.error('Error loading full project', error);
@@ -615,7 +611,7 @@ export const optimizedProjectsAPI = {
   // Get project contacts (agent, homeowner, etc.) by contact IDs
   async getProjectContacts(project: any) {
     try {
-      relationLogger.info('Loading contacts for project', { projectID: project.projectID });
+      relationLogger.info('Loading contacts for project', { projectId: project.id });
       
       const contactIds = [
         project.agentContactId,
@@ -627,7 +623,7 @@ export const optimizedProjectsAPI = {
       relationLogger.debug('Contact IDs to fetch', { contactIds });
 
       if (contactIds.length === 0) {
-        relationLogger.warn('No contact IDs found in project', { projectID: project.projectID });
+        relationLogger.warn('No contact IDs found in project', { projectId: project.id });
         return { success: true, data: { agent: null, homeowner: null, homeowner2: null, homeowner3: null } };
       }
 

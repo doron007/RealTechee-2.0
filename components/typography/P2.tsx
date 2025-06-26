@@ -11,7 +11,7 @@ export const P2: React.FC<P2Props> = ({
   ...props 
 }) => (
   <p 
-    className={`text-[clamp(0.875rem,1vw,1rem)] leading-relaxed ${className}`} 
+    className={`text-[clamp(0.875rem,1vw,1rem)] font-body leading-relaxed ${className}`} 
     {...props}
   >
     {children}

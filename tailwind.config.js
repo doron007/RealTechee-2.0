@@ -60,12 +60,13 @@ module.exports = {
         "accent-blue": "#17619C",
       },
       fontFamily: {
-        sans: ["Inter", "Nunito Sans", "Roboto", "sans-serif"],
-        heading: ["Nunito Sans", "sans-serif"],
-        body: ["Roboto", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-heading)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        inter: ["var(--font-inter)", "system-ui", "sans-serif"],
+        // Keep legacy font names for backward compatibility during transition
         playfair: ["Playfair Display", "serif"],
-        nunito: ["Nunito Sans", "sans-serif"]
+        nunito: ["var(--font-heading)", "system-ui", "sans-serif"]
       },
       fontSize: {
         // Responsive font sizing system - updated to use px values
