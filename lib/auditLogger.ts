@@ -68,7 +68,7 @@ export class AuditLogger {
     
     for (const key of Array.from(allKeys)) {
       // Skip system fields that always change
-      if (['updatedAt', 'updatedDate', '__typename'].includes(key)) continue;
+      if (['updatedAt', '__typename'].includes(key)) continue;
       
       const oldValue = oldData[key];
       const newValue = newData[key];
@@ -125,7 +125,7 @@ export class AuditLogger {
         
         // Timestamps
         timestamp: new Date().toISOString(),
-        createdDate: new Date().toISOString(),
+        // createdAt is automatically managed by Amplify
         owner: entry.context.userId || 'system',
         
         // TTL for automatic cleanup

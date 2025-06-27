@@ -21,8 +21,8 @@ export interface Comment {
     isPrivate: boolean;
     postedByProfileImage?: string;
     addToGallery?: string;
-    createdDate: string;
-    updatedDate: string;
+    createdAt: string;
+    updatedAt: string;
     owner: string;
 }
 
@@ -105,8 +105,8 @@ const CommentsList: React.FC<CommentsListProps> = ({
     // Sort comments by creation date based on sort order
     const sortedComments = React.useMemo(() => {
         return [...commentsData].sort((a, b) => {
-            const dateA = new Date(a.createdDate);
-            const dateB = new Date(b.createdDate);
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
             return sortOrder === 'newest' 
                 ? dateB.getTime() - dateA.getTime() 
                 : dateA.getTime() - dateB.getTime();
@@ -306,7 +306,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
                             })()}
 
                             <P2 className="text-sm text-gray-500 mb-0 mt-2">
-                                {formatDate(new Date(comment.createdDate), { timeZone: 'America/Los_Angeles' })}
+                                {formatDate(new Date(comment.createdAt), { timeZone: 'America/Los_Angeles' })}
                             </P2>
                         </div>
                     ))}

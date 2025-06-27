@@ -62,11 +62,11 @@ export default function ProjectsGridSection({
             imageUrl: amplifyProject.image || '',
             category: amplifyProject.status || '',
             location: '', // Will be filled from address relationship
-            completionDate: amplifyProject.updatedDate || amplifyProject.createdDate || '',
+            completionDate: amplifyProject.updatedAt || amplifyProject.createdAt || '',
             budget: amplifyProject.budget || '',
             featured: amplifyProject.status === 'Completed',
-            createdAt: amplifyProject.createdDate || '',
-            updatedAt: amplifyProject.updatedDate || '',
+            createdAt: amplifyProject.createdAt || '',
+            updatedAt: amplifyProject.updatedAt || '',
             
             // Map Amplify field names to CSV field names for ProjectCard compatibility
             'Status': amplifyProject.status,

@@ -115,20 +115,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -392,20 +378,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,
@@ -471,20 +443,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
               "attributes": []
             },
             "owner": {
@@ -624,20 +582,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -723,20 +667,6 @@
               "name": "title",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -826,20 +756,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
               "attributes": []
             },
             "owner": {
@@ -972,20 +888,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -1071,20 +973,6 @@
               "name": "title",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -1176,20 +1064,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -1278,20 +1152,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -1377,20 +1237,6 @@
               "name": "title",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -1514,20 +1360,6 @@
               "name": "owner",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -1658,20 +1490,6 @@
               "name": "brokerage",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -1952,13 +1770,6 @@
               "isRequired": true,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -2127,13 +1938,6 @@
               "isRequired": true,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -2219,20 +2023,6 @@
               "name": "title",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -2391,20 +2181,6 @@
               "name": "signatureWixUrl",
               "isArray": false,
               "type": "AWSURL",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -2594,20 +2370,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -2738,20 +2500,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -2866,20 +2614,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
               "attributes": []
             },
             "owner": {
@@ -3111,20 +2845,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -3212,20 +2932,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
               "attributes": []
             },
             "projectId": {
@@ -3570,20 +3276,6 @@
             },
             "visitReviewDate": {
               "name": "visitReviewDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
               "isArray": false,
               "type": "AWSDateTime",
               "isRequired": false,
@@ -4266,20 +3958,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "owner": {
               "name": "owner",
               "isArray": false,
@@ -4368,20 +4046,6 @@
               "isArray": false,
               "type": "ID",
               "isRequired": true,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
               "attributes": []
             },
             "owner": {
@@ -4641,13 +4305,6 @@
               "isRequired": false,
               "attributes": []
             },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "quoteNumber": {
               "name": "quoteNumber",
               "isArray": false,
@@ -4825,13 +4482,6 @@
             },
             "visitDate": {
               "name": "visitDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
               "isArray": false,
               "type": "AWSDateTime",
               "isRequired": false,
@@ -5166,13 +4816,6 @@
               "isRequired": true,
               "attributes": []
             },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
             "status": {
               "name": "status",
               "isArray": false,
@@ -5338,13 +4981,6 @@
               "name": "visitorId",
               "isArray": false,
               "type": "ID",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -5573,20 +5209,6 @@
               "name": "homeownerEmail",
               "isArray": false,
               "type": "AWSEmail",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdDate": {
-              "name": "createdDate",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": []
-            },
-            "updatedDate": {
-              "name": "updatedDate",
-              "isArray": false,
-              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },

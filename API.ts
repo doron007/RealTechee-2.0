@@ -10,7 +10,6 @@ export type Affiliates = {
   company?: string | null,
   contactId?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   date?: string | null,
   email?: string | null,
   environmentalFactor?: string | null,
@@ -35,7 +34,6 @@ export type Affiliates = {
   slaCompanyEmail?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
   warrantyPeriod?: string | null,
   waterSystem?: string | null,
   workersCompensationInsurance?: string | null,
@@ -47,7 +45,6 @@ export type AuditLog = {
   changeType?: string | null,
   changedFields?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   ipAddress?: string | null,
   newData?: string | null,
@@ -76,14 +73,12 @@ export enum AuditLogAction {
 export type Auth = {
   __typename: "Auth",
   createdAt: string,
-  createdDate?: string | null,
   email?: string | null,
   hash?: boolean | null,
   id: string,
   owner?: string | null,
   token?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeAssignTo = {
@@ -91,7 +86,6 @@ export type BackOfficeAssignTo = {
   active?: boolean | null,
   contactId?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   email?: string | null,
   id: string,
   mobile?: string | null,
@@ -101,32 +95,27 @@ export type BackOfficeAssignTo = {
   sendEmailNotifications?: boolean | null,
   sendSmsNotifications?: boolean | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeBookingStatuses = {
   __typename: "BackOfficeBookingStatuses",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeBrokerage = {
   __typename: "BackOfficeBrokerage",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   live?: boolean | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeNotifications = {
@@ -136,74 +125,62 @@ export type BackOfficeNotifications = {
   bodyAsSimpleText?: string | null,
   cc?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   key?: string | null,
   owner?: string | null,
   subject?: string | null,
   to?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeProducts = {
   __typename: "BackOfficeProducts",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeProjectStatuses = {
   __typename: "BackOfficeProjectStatuses",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeQuoteStatuses = {
   __typename: "BackOfficeQuoteStatuses",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeRequestStatuses = {
   __typename: "BackOfficeRequestStatuses",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type BackOfficeRoleTypes = {
   __typename: "BackOfficeRoleTypes",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ContactAuditLog = {
@@ -212,7 +189,6 @@ export type ContactAuditLog = {
   changeType?: string | null,
   contactId: string,
   createdAt: string,
-  createdDate?: string | null,
   email: string,
   id: string,
   ipAddress?: string | null,
@@ -237,7 +213,6 @@ export type ContactUs = {
   addressId?: string | null,
   contactId?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   message?: string | null,
   owner?: string | null,
@@ -245,7 +220,6 @@ export type ContactUs = {
   subject?: string | null,
   submissionTime?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type Contacts = {
@@ -255,7 +229,6 @@ export type Contacts = {
   brokerage?: string | null,
   company?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   email?: string | null,
   firstName?: string | null,
   fullName?: string | null,
@@ -269,7 +242,6 @@ export type Contacts = {
   owner?: string | null,
   phone?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectsConnection = {
@@ -308,7 +280,6 @@ export type Projects = {
   contractUrl?: string | null,
   contractingStartDate?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -378,7 +349,6 @@ export type Projects = {
   title?: string | null,
   underwritingDate?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -391,7 +361,6 @@ export type Properties = {
   bedrooms?: number | null,
   city?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   floors?: number | null,
   houseAddress?: string | null,
   id: string,
@@ -403,7 +372,6 @@ export type Properties = {
   sizeSqft?: number | null,
   state?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
   yearBuilt?: number | null,
   zillowLink?: string | null,
   zip?: string | null,
@@ -420,7 +388,6 @@ export type ProjectComments = {
   addToGallery?: string | null,
   comment?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   files?: string | null,
   id: string,
   isPrivate?: boolean | null,
@@ -431,7 +398,6 @@ export type ProjectComments = {
   project?: Projects | null,
   projectId?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectMilestonesConnection = {
@@ -443,7 +409,6 @@ export type ModelProjectMilestonesConnection = {
 export type ProjectMilestones = {
   __typename: "ProjectMilestones",
   createdAt: string,
-  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -457,7 +422,6 @@ export type ProjectMilestones = {
   project?: Projects | null,
   projectId?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectPaymentTermsConnection = {
@@ -469,7 +433,6 @@ export type ModelProjectPaymentTermsConnection = {
 export type ProjectPaymentTerms = {
   __typename: "ProjectPaymentTerms",
   createdAt: string,
-  createdDate?: string | null,
   description?: string | null,
   id: string,
   internal?: boolean | null,
@@ -485,7 +448,6 @@ export type ProjectPaymentTerms = {
   projectId?: string | null,
   type?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ModelQuoteItemsConnection = {
@@ -498,7 +460,6 @@ export type QuoteItems = {
   __typename: "QuoteItems",
   cost?: number | null,
   createdAt: string,
-  createdDate?: string | null,
   description?: string | null,
   id: string,
   image?: string | null,
@@ -519,7 +480,6 @@ export type QuoteItems = {
   type?: string | null,
   unitPrice?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type ModelQuotesConnection = {
@@ -548,7 +508,6 @@ export type Quotes = {
   contractingStartDate?: string | null,
   convertedDate?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   creditScore?: number | null,
   document?: string | null,
   documents?: string | null,
@@ -597,7 +556,6 @@ export type Quotes = {
   underwritingApproved?: boolean | null,
   underwritingApprovedDate?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
   viewedBy?: string | null,
   visitDate?: string | null,
   visitorId?: string | null,
@@ -608,7 +566,6 @@ export type eSignatureDocuments = {
   __typename: "eSignatureDocuments",
   addressId?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   document?: string | null,
   documentData?: string | null,
   homeownerEmail?: string | null,
@@ -626,27 +583,23 @@ export type eSignatureDocuments = {
   signedQuotePdfPublicUrl?: string | null,
   templateId?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type Legal = {
   __typename: "Legal",
   content?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   documentId?: string | null,
   id: string,
   legalDocumentId?: string | null,
   owner?: string | null,
   title?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type MemberSignature = {
   __typename: "MemberSignature",
   createdAt: string,
-  createdDate?: string | null,
   fullName?: string | null,
   id: string,
   initials?: string | null,
@@ -659,7 +612,6 @@ export type MemberSignature = {
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type PendingAppoitments = {
@@ -671,7 +623,6 @@ export type PendingAppoitments = {
   assignedTo?: string | null,
   brokerage?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   email?: string | null,
   id: string,
   name?: string | null,
@@ -684,21 +635,18 @@ export type PendingAppoitments = {
   serviceName?: string | null,
   status?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
   visitorId?: string | null,
 };
 
 export type ProjectPermissions = {
   __typename: "ProjectPermissions",
   createdAt: string,
-  createdDate?: string | null,
   id: string,
   na?: string | null,
   owner?: string | null,
   permissions?: boolean | null,
   projectId?: string | null,
   updatedAt: string,
-  updatedDate?: string | null,
 };
 
 export type Requests = {
@@ -713,7 +661,6 @@ export type Requests = {
   bookingId?: string | null,
   budget?: string | null,
   createdAt: string,
-  createdDate?: string | null,
   expiredDate?: string | null,
   homeownerContactId?: string | null,
   id: string,
@@ -734,7 +681,6 @@ export type Requests = {
   statusImage?: string | null,
   statusOrder?: number | null,
   updatedAt: string,
-  updatedDate?: string | null,
   uploadedMedia?: string | null,
   uploadedVideos?: string | null,
   uplodedDocuments?: string | null,
@@ -751,7 +697,6 @@ export type ModelAffiliatesFilterInput = {
   company?: ModelStringInput | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   date?: ModelStringInput | null,
   email?: ModelStringInput | null,
   environmentalFactor?: ModelStringInput | null,
@@ -778,7 +723,6 @@ export type ModelAffiliatesFilterInput = {
   slaCompanyEmail?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   warrantyPeriod?: ModelStringInput | null,
   waterSystem?: ModelStringInput | null,
   workersCompensationInsurance?: ModelStringInput | null,
@@ -883,7 +827,6 @@ export type ModelAuditLogFilterInput = {
   changeType?: ModelStringInput | null,
   changedFields?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   ipAddress?: ModelStringInput | null,
   newData?: ModelStringInput | null,
@@ -918,7 +861,6 @@ export type ModelAuditLogConnection = {
 export type ModelAuthFilterInput = {
   and?: Array< ModelAuthFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   hash?: ModelBooleanInput | null,
   id?: ModelIDInput | null,
@@ -927,7 +869,6 @@ export type ModelAuthFilterInput = {
   owner?: ModelStringInput | null,
   token?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelAuthConnection = {
@@ -941,7 +882,6 @@ export type ModelBackOfficeAssignToFilterInput = {
   and?: Array< ModelBackOfficeAssignToFilterInput | null > | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   id?: ModelIDInput | null,
   mobile?: ModelStringInput | null,
@@ -953,7 +893,6 @@ export type ModelBackOfficeAssignToFilterInput = {
   sendEmailNotifications?: ModelBooleanInput | null,
   sendSmsNotifications?: ModelBooleanInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeAssignToConnection = {
@@ -965,7 +904,6 @@ export type ModelBackOfficeAssignToConnection = {
 export type ModelBackOfficeBookingStatusesFilterInput = {
   and?: Array< ModelBackOfficeBookingStatusesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeBookingStatusesFilterInput | null,
   or?: Array< ModelBackOfficeBookingStatusesFilterInput | null > | null,
@@ -973,7 +911,6 @@ export type ModelBackOfficeBookingStatusesFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeBookingStatusesConnection = {
@@ -985,7 +922,6 @@ export type ModelBackOfficeBookingStatusesConnection = {
 export type ModelBackOfficeBrokerageFilterInput = {
   and?: Array< ModelBackOfficeBrokerageFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   live?: ModelBooleanInput | null,
   not?: ModelBackOfficeBrokerageFilterInput | null,
@@ -994,7 +930,6 @@ export type ModelBackOfficeBrokerageFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeBrokerageConnection = {
@@ -1010,7 +945,6 @@ export type ModelBackOfficeNotificationsFilterInput = {
   bodyAsSimpleText?: ModelStringInput | null,
   cc?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   key?: ModelStringInput | null,
   not?: ModelBackOfficeNotificationsFilterInput | null,
@@ -1019,7 +953,6 @@ export type ModelBackOfficeNotificationsFilterInput = {
   subject?: ModelStringInput | null,
   to?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeNotificationsConnection = {
@@ -1031,7 +964,6 @@ export type ModelBackOfficeNotificationsConnection = {
 export type ModelBackOfficeProductsFilterInput = {
   and?: Array< ModelBackOfficeProductsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeProductsFilterInput | null,
   or?: Array< ModelBackOfficeProductsFilterInput | null > | null,
@@ -1039,7 +971,6 @@ export type ModelBackOfficeProductsFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeProductsConnection = {
@@ -1051,7 +982,6 @@ export type ModelBackOfficeProductsConnection = {
 export type ModelBackOfficeProjectStatusesFilterInput = {
   and?: Array< ModelBackOfficeProjectStatusesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeProjectStatusesFilterInput | null,
   or?: Array< ModelBackOfficeProjectStatusesFilterInput | null > | null,
@@ -1059,7 +989,6 @@ export type ModelBackOfficeProjectStatusesFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeProjectStatusesConnection = {
@@ -1071,7 +1000,6 @@ export type ModelBackOfficeProjectStatusesConnection = {
 export type ModelBackOfficeQuoteStatusesFilterInput = {
   and?: Array< ModelBackOfficeQuoteStatusesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeQuoteStatusesFilterInput | null,
   or?: Array< ModelBackOfficeQuoteStatusesFilterInput | null > | null,
@@ -1079,7 +1007,6 @@ export type ModelBackOfficeQuoteStatusesFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeQuoteStatusesConnection = {
@@ -1091,7 +1018,6 @@ export type ModelBackOfficeQuoteStatusesConnection = {
 export type ModelBackOfficeRequestStatusesFilterInput = {
   and?: Array< ModelBackOfficeRequestStatusesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeRequestStatusesFilterInput | null,
   or?: Array< ModelBackOfficeRequestStatusesFilterInput | null > | null,
@@ -1099,7 +1025,6 @@ export type ModelBackOfficeRequestStatusesFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeRequestStatusesConnection = {
@@ -1111,7 +1036,6 @@ export type ModelBackOfficeRequestStatusesConnection = {
 export type ModelBackOfficeRoleTypesFilterInput = {
   and?: Array< ModelBackOfficeRoleTypesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   not?: ModelBackOfficeRoleTypesFilterInput | null,
   or?: Array< ModelBackOfficeRoleTypesFilterInput | null > | null,
@@ -1119,7 +1043,6 @@ export type ModelBackOfficeRoleTypesFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelBackOfficeRoleTypesConnection = {
@@ -1134,7 +1057,6 @@ export type ModelContactAuditLogFilterInput = {
   changeType?: ModelStringInput | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   id?: ModelIDInput | null,
   ipAddress?: ModelStringInput | null,
@@ -1166,7 +1088,6 @@ export type ModelContactsFilterInput = {
   brokerage?: ModelStringInput | null,
   company?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   firstName?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
@@ -1178,7 +1099,6 @@ export type ModelContactsFilterInput = {
   owner?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelContactsConnection = {
@@ -1192,7 +1112,6 @@ export type ModelContactUsFilterInput = {
   and?: Array< ModelContactUsFilterInput | null > | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   message?: ModelStringInput | null,
   not?: ModelContactUsFilterInput | null,
@@ -1202,7 +1121,6 @@ export type ModelContactUsFilterInput = {
   subject?: ModelStringInput | null,
   submissionTime?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelContactUsConnection = {
@@ -1215,7 +1133,6 @@ export type ModelESignatureDocumentsFilterInput = {
   addressId?: ModelIDInput | null,
   and?: Array< ModelESignatureDocumentsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   document?: ModelStringInput | null,
   documentData?: ModelStringInput | null,
   homeownerEmail?: ModelStringInput | null,
@@ -1235,7 +1152,6 @@ export type ModelESignatureDocumentsFilterInput = {
   signedQuotePdfPublicUrl?: ModelStringInput | null,
   templateId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelESignatureDocumentsConnection = {
@@ -1248,7 +1164,6 @@ export type ModelLegalFilterInput = {
   and?: Array< ModelLegalFilterInput | null > | null,
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   documentId?: ModelIDInput | null,
   id?: ModelIDInput | null,
   legalDocumentId?: ModelIDInput | null,
@@ -1257,7 +1172,6 @@ export type ModelLegalFilterInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelLegalConnection = {
@@ -1269,7 +1183,6 @@ export type ModelLegalConnection = {
 export type ModelMemberSignatureFilterInput = {
   and?: Array< ModelMemberSignatureFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
   id?: ModelIDInput | null,
   initials?: ModelStringInput | null,
@@ -1284,7 +1197,6 @@ export type ModelMemberSignatureFilterInput = {
   signaturePublicUrl?: ModelStringInput | null,
   signatureWixUrl?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelMemberSignatureConnection = {
@@ -1302,7 +1214,6 @@ export type ModelPendingAppoitmentsFilterInput = {
   assignedTo?: ModelStringInput | null,
   brokerage?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -1317,7 +1228,6 @@ export type ModelPendingAppoitmentsFilterInput = {
   serviceName?: ModelStringInput | null,
   status?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
 };
 
@@ -1332,7 +1242,6 @@ export type ModelProjectCommentsFilterInput = {
   and?: Array< ModelProjectCommentsFilterInput | null > | null,
   comment?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   files?: ModelStringInput | null,
   id?: ModelIDInput | null,
   isPrivate?: ModelBooleanInput | null,
@@ -1344,13 +1253,11 @@ export type ModelProjectCommentsFilterInput = {
   postedByProfileImage?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectMilestonesFilterInput = {
   and?: Array< ModelProjectMilestonesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   estimatedFinish?: ModelStringInput | null,
   estimatedStart?: ModelStringInput | null,
@@ -1365,13 +1272,11 @@ export type ModelProjectMilestonesFilterInput = {
   owner?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectPaymentTermsFilterInput = {
   and?: Array< ModelProjectPaymentTermsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   id?: ModelIDInput | null,
   internal?: ModelBooleanInput | null,
@@ -1388,13 +1293,11 @@ export type ModelProjectPaymentTermsFilterInput = {
   projectId?: ModelIDInput | null,
   type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectPermissionsFilterInput = {
   and?: Array< ModelProjectPermissionsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   id?: ModelIDInput | null,
   na?: ModelStringInput | null,
   not?: ModelProjectPermissionsFilterInput | null,
@@ -1403,7 +1306,6 @@ export type ModelProjectPermissionsFilterInput = {
   permissions?: ModelBooleanInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectPermissionsConnection = {
@@ -1439,7 +1341,6 @@ export type ModelProjectsFilterInput = {
   contractUrl?: ModelStringInput | null,
   contractingStartDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   daysOnMarket?: ModelStringInput | null,
   description?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -1504,7 +1405,6 @@ export type ModelProjectsFilterInput = {
   title?: ModelStringInput | null,
   underwritingDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   visitReviewDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
   yearBuilt?: ModelIntInput | null,
@@ -1517,7 +1417,6 @@ export type ModelPropertiesFilterInput = {
   bedrooms?: ModelFloatInput | null,
   city?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   floors?: ModelIntInput | null,
   houseAddress?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -1530,7 +1429,6 @@ export type ModelPropertiesFilterInput = {
   sizeSqft?: ModelFloatInput | null,
   state?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   yearBuilt?: ModelIntInput | null,
   zillowLink?: ModelStringInput | null,
   zip?: ModelStringInput | null,
@@ -1546,7 +1444,6 @@ export type ModelQuoteItemsFilterInput = {
   and?: Array< ModelQuoteItemsFilterInput | null > | null,
   cost?: ModelFloatInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   id?: ModelIDInput | null,
   image?: ModelStringInput | null,
@@ -1568,7 +1465,6 @@ export type ModelQuoteItemsFilterInput = {
   type?: ModelStringInput | null,
   unitPrice?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelQuotesFilterInput = {
@@ -1590,7 +1486,6 @@ export type ModelQuotesFilterInput = {
   contractingStartDate?: ModelStringInput | null,
   convertedDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   creditScore?: ModelFloatInput | null,
   document?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -1639,7 +1534,6 @@ export type ModelQuotesFilterInput = {
   underwritingApproved?: ModelBooleanInput | null,
   underwritingApprovedDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   viewedBy?: ModelStringInput | null,
   visitDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
@@ -1658,7 +1552,6 @@ export type ModelRequestsFilterInput = {
   bookingId?: ModelIDInput | null,
   budget?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   expiredDate?: ModelStringInput | null,
   homeownerContactId?: ModelIDInput | null,
   id?: ModelIDInput | null,
@@ -1681,7 +1574,6 @@ export type ModelRequestsFilterInput = {
   statusImage?: ModelStringInput | null,
   statusOrder?: ModelFloatInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   uploadedMedia?: ModelStringInput | null,
   uploadedVideos?: ModelStringInput | null,
   uplodedDocuments?: ModelStringInput | null,
@@ -1704,7 +1596,6 @@ export type ModelAffiliatesConditionInput = {
   company?: ModelStringInput | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   date?: ModelStringInput | null,
   email?: ModelStringInput | null,
   environmentalFactor?: ModelStringInput | null,
@@ -1730,7 +1621,6 @@ export type ModelAffiliatesConditionInput = {
   slaCompanyEmail?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   warrantyPeriod?: ModelStringInput | null,
   waterSystem?: ModelStringInput | null,
   workersCompensationInsurance?: ModelStringInput | null,
@@ -1742,7 +1632,6 @@ export type CreateAffiliatesInput = {
   communication?: string | null,
   company?: string | null,
   contactId?: string | null,
-  createdDate?: string | null,
   date?: string | null,
   email?: string | null,
   environmentalFactor?: string | null,
@@ -1766,7 +1655,6 @@ export type CreateAffiliatesInput = {
   slaAll?: string | null,
   slaCompanyEmail?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
   warrantyPeriod?: string | null,
   waterSystem?: string | null,
   workersCompensationInsurance?: string | null,
@@ -1778,7 +1666,6 @@ export type ModelAuditLogConditionInput = {
   changeType?: ModelStringInput | null,
   changedFields?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   ipAddress?: ModelStringInput | null,
   newData?: ModelStringInput | null,
   not?: ModelAuditLogConditionInput | null,
@@ -1802,7 +1689,6 @@ export type CreateAuditLogInput = {
   action?: AuditLogAction | null,
   changeType?: string | null,
   changedFields?: string | null,
-  createdDate?: string | null,
   id?: string | null,
   ipAddress?: string | null,
   newData?: string | null,
@@ -1823,7 +1709,6 @@ export type CreateAuditLogInput = {
 export type ModelAuthConditionInput = {
   and?: Array< ModelAuthConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   hash?: ModelBooleanInput | null,
   not?: ModelAuthConditionInput | null,
@@ -1831,17 +1716,14 @@ export type ModelAuthConditionInput = {
   owner?: ModelStringInput | null,
   token?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateAuthInput = {
-  createdDate?: string | null,
   email?: string | null,
   hash?: boolean | null,
   id?: string | null,
   owner?: string | null,
   token?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeAssignToConditionInput = {
@@ -1849,7 +1731,6 @@ export type ModelBackOfficeAssignToConditionInput = {
   and?: Array< ModelBackOfficeAssignToConditionInput | null > | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   mobile?: ModelStringInput | null,
   name?: ModelStringInput | null,
@@ -1860,13 +1741,11 @@ export type ModelBackOfficeAssignToConditionInput = {
   sendEmailNotifications?: ModelBooleanInput | null,
   sendSmsNotifications?: ModelBooleanInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeAssignToInput = {
   active?: boolean | null,
   contactId?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   id?: string | null,
   mobile?: string | null,
@@ -1875,35 +1754,29 @@ export type CreateBackOfficeAssignToInput = {
   owner?: string | null,
   sendEmailNotifications?: boolean | null,
   sendSmsNotifications?: boolean | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeBookingStatusesConditionInput = {
   and?: Array< ModelBackOfficeBookingStatusesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeBookingStatusesConditionInput | null,
   or?: Array< ModelBackOfficeBookingStatusesConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeBookingStatusesInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeBrokerageConditionInput = {
   and?: Array< ModelBackOfficeBrokerageConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   live?: ModelBooleanInput | null,
   not?: ModelBackOfficeBrokerageConditionInput | null,
   or?: Array< ModelBackOfficeBrokerageConditionInput | null > | null,
@@ -1911,17 +1784,14 @@ export type ModelBackOfficeBrokerageConditionInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeBrokerageInput = {
-  createdDate?: string | null,
   id?: string | null,
   live?: boolean | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeNotificationsConditionInput = {
@@ -1931,7 +1801,6 @@ export type ModelBackOfficeNotificationsConditionInput = {
   bodyAsSimpleText?: ModelStringInput | null,
   cc?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   key?: ModelStringInput | null,
   not?: ModelBackOfficeNotificationsConditionInput | null,
   or?: Array< ModelBackOfficeNotificationsConditionInput | null > | null,
@@ -1939,7 +1808,6 @@ export type ModelBackOfficeNotificationsConditionInput = {
   subject?: ModelStringInput | null,
   to?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeNotificationsInput = {
@@ -1947,123 +1815,101 @@ export type CreateBackOfficeNotificationsInput = {
   body?: string | null,
   bodyAsSimpleText?: string | null,
   cc?: string | null,
-  createdDate?: string | null,
   id?: string | null,
   key?: string | null,
   owner?: string | null,
   subject?: string | null,
   to?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeProductsConditionInput = {
   and?: Array< ModelBackOfficeProductsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeProductsConditionInput | null,
   or?: Array< ModelBackOfficeProductsConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeProductsInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeProjectStatusesConditionInput = {
   and?: Array< ModelBackOfficeProjectStatusesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeProjectStatusesConditionInput | null,
   or?: Array< ModelBackOfficeProjectStatusesConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeProjectStatusesInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeQuoteStatusesConditionInput = {
   and?: Array< ModelBackOfficeQuoteStatusesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeQuoteStatusesConditionInput | null,
   or?: Array< ModelBackOfficeQuoteStatusesConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeQuoteStatusesInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeRequestStatusesConditionInput = {
   and?: Array< ModelBackOfficeRequestStatusesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeRequestStatusesConditionInput | null,
   or?: Array< ModelBackOfficeRequestStatusesConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeRequestStatusesInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelBackOfficeRoleTypesConditionInput = {
   and?: Array< ModelBackOfficeRoleTypesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   not?: ModelBackOfficeRoleTypesConditionInput | null,
   or?: Array< ModelBackOfficeRoleTypesConditionInput | null > | null,
   order?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateBackOfficeRoleTypesInput = {
-  createdDate?: string | null,
   id?: string | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelContactAuditLogConditionInput = {
@@ -2072,7 +1918,6 @@ export type ModelContactAuditLogConditionInput = {
   changeType?: ModelStringInput | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   ipAddress?: ModelStringInput | null,
   newData?: ModelStringInput | null,
@@ -2091,7 +1936,6 @@ export type CreateContactAuditLogInput = {
   action?: ContactAuditLogAction | null,
   changeType?: string | null,
   contactId: string,
-  createdDate?: string | null,
   email: string,
   id?: string | null,
   ipAddress?: string | null,
@@ -2109,7 +1953,6 @@ export type ModelContactUsConditionInput = {
   and?: Array< ModelContactUsConditionInput | null > | null,
   contactId?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   message?: ModelStringInput | null,
   not?: ModelContactUsConditionInput | null,
   or?: Array< ModelContactUsConditionInput | null > | null,
@@ -2118,20 +1961,17 @@ export type ModelContactUsConditionInput = {
   subject?: ModelStringInput | null,
   submissionTime?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateContactUsInput = {
   addressId?: string | null,
   contactId?: string | null,
-  createdDate?: string | null,
   id?: string | null,
   message?: string | null,
   owner?: string | null,
   product?: string | null,
   subject?: string | null,
   submissionTime?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelContactsConditionInput = {
@@ -2139,7 +1979,6 @@ export type ModelContactsConditionInput = {
   brokerage?: ModelStringInput | null,
   company?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   firstName?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
@@ -2150,13 +1989,11 @@ export type ModelContactsConditionInput = {
   owner?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateContactsInput = {
   brokerage?: string | null,
   company?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   firstName?: string | null,
   fullName?: string | null,
@@ -2165,14 +2002,12 @@ export type CreateContactsInput = {
   mobile?: string | null,
   owner?: string | null,
   phone?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelESignatureDocumentsConditionInput = {
   addressId?: ModelIDInput | null,
   and?: Array< ModelESignatureDocumentsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   document?: ModelStringInput | null,
   documentData?: ModelStringInput | null,
   homeownerEmail?: ModelStringInput | null,
@@ -2191,12 +2026,10 @@ export type ModelESignatureDocumentsConditionInput = {
   signedQuotePdfPublicUrl?: ModelStringInput | null,
   templateId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateESignatureDocumentsInput = {
   addressId?: string | null,
-  createdDate?: string | null,
   document?: string | null,
   documentData?: string | null,
   homeownerEmail?: string | null,
@@ -2213,14 +2046,12 @@ export type CreateESignatureDocumentsInput = {
   signedPdfGeneratorUrl?: string | null,
   signedQuotePdfPublicUrl?: string | null,
   templateId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelLegalConditionInput = {
   and?: Array< ModelLegalConditionInput | null > | null,
   content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   documentId?: ModelIDInput | null,
   legalDocumentId?: ModelIDInput | null,
   not?: ModelLegalConditionInput | null,
@@ -2228,24 +2059,20 @@ export type ModelLegalConditionInput = {
   owner?: ModelStringInput | null,
   title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateLegalInput = {
   content?: string | null,
-  createdDate?: string | null,
   documentId?: string | null,
   id?: string | null,
   legalDocumentId?: string | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelMemberSignatureConditionInput = {
   and?: Array< ModelMemberSignatureConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
   initials?: ModelStringInput | null,
   initialsPublicUrl?: ModelStringInput | null,
@@ -2259,11 +2086,9 @@ export type ModelMemberSignatureConditionInput = {
   signaturePublicUrl?: ModelStringInput | null,
   signatureWixUrl?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateMemberSignatureInput = {
-  createdDate?: string | null,
   fullName?: string | null,
   id?: string | null,
   initials?: string | null,
@@ -2275,7 +2100,6 @@ export type CreateMemberSignatureInput = {
   signature?: string | null,
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelPendingAppoitmentsConditionInput = {
@@ -2287,7 +2111,6 @@ export type ModelPendingAppoitmentsConditionInput = {
   assignedTo?: ModelStringInput | null,
   brokerage?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   email?: ModelStringInput | null,
   name?: ModelStringInput | null,
   not?: ModelPendingAppoitmentsConditionInput | null,
@@ -2301,7 +2124,6 @@ export type ModelPendingAppoitmentsConditionInput = {
   serviceName?: ModelStringInput | null,
   status?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
 };
 
@@ -2312,7 +2134,6 @@ export type CreatePendingAppoitmentsInput = {
   assignedDate?: string | null,
   assignedTo?: string | null,
   brokerage?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   id?: string | null,
   name?: string | null,
@@ -2324,7 +2145,6 @@ export type CreatePendingAppoitmentsInput = {
   requestedSlot?: string | null,
   serviceName?: string | null,
   status?: string | null,
-  updatedDate?: string | null,
   visitorId?: string | null,
 };
 
@@ -2333,7 +2153,6 @@ export type ModelProjectCommentsConditionInput = {
   and?: Array< ModelProjectCommentsConditionInput | null > | null,
   comment?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   files?: ModelStringInput | null,
   isPrivate?: ModelBooleanInput | null,
   nickname?: ModelStringInput | null,
@@ -2344,13 +2163,11 @@ export type ModelProjectCommentsConditionInput = {
   postedByProfileImage?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectCommentsInput = {
   addToGallery?: string | null,
   comment?: string | null,
-  createdDate?: string | null,
   files?: string | null,
   id?: string | null,
   isPrivate?: boolean | null,
@@ -2359,13 +2176,11 @@ export type CreateProjectCommentsInput = {
   postedByContactId?: string | null,
   postedByProfileImage?: string | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectMilestonesConditionInput = {
   and?: Array< ModelProjectMilestonesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   estimatedFinish?: ModelStringInput | null,
   estimatedStart?: ModelStringInput | null,
@@ -2379,11 +2194,9 @@ export type ModelProjectMilestonesConditionInput = {
   owner?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectMilestonesInput = {
-  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -2395,13 +2208,11 @@ export type CreateProjectMilestonesInput = {
   order?: number | null,
   owner?: string | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectPaymentTermsConditionInput = {
   and?: Array< ModelProjectPaymentTermsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   internal?: ModelBooleanInput | null,
   isCategory?: ModelBooleanInput | null,
@@ -2417,11 +2228,9 @@ export type ModelProjectPaymentTermsConditionInput = {
   projectId?: ModelIDInput | null,
   type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectPaymentTermsInput = {
-  createdDate?: string | null,
   description?: string | null,
   id?: string | null,
   internal?: boolean | null,
@@ -2435,13 +2244,11 @@ export type CreateProjectPaymentTermsInput = {
   paymentName?: string | null,
   projectId?: string | null,
   type?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectPermissionsConditionInput = {
   and?: Array< ModelProjectPermissionsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   na?: ModelStringInput | null,
   not?: ModelProjectPermissionsConditionInput | null,
   or?: Array< ModelProjectPermissionsConditionInput | null > | null,
@@ -2449,17 +2256,14 @@ export type ModelProjectPermissionsConditionInput = {
   permissions?: ModelBooleanInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectPermissionsInput = {
-  createdDate?: string | null,
   id?: string | null,
   na?: string | null,
   owner?: string | null,
   permissions?: boolean | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelProjectsConditionInput = {
@@ -2489,7 +2293,6 @@ export type ModelProjectsConditionInput = {
   contractUrl?: ModelStringInput | null,
   contractingStartDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   daysOnMarket?: ModelStringInput | null,
   description?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -2553,7 +2356,6 @@ export type ModelProjectsConditionInput = {
   title?: ModelStringInput | null,
   underwritingDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   visitReviewDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
   yearBuilt?: ModelIntInput | null,
@@ -2585,7 +2387,6 @@ export type CreateProjectsInput = {
   contractSentDate?: string | null,
   contractUrl?: string | null,
   contractingStartDate?: string | null,
-  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -2647,7 +2448,6 @@ export type CreateProjectsInput = {
   statusOrder?: number | null,
   title?: string | null,
   underwritingDate?: string | null,
-  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -2660,7 +2460,6 @@ export type ModelPropertiesConditionInput = {
   bedrooms?: ModelFloatInput | null,
   city?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   floors?: ModelIntInput | null,
   houseAddress?: ModelStringInput | null,
   not?: ModelPropertiesConditionInput | null,
@@ -2672,7 +2471,6 @@ export type ModelPropertiesConditionInput = {
   sizeSqft?: ModelFloatInput | null,
   state?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   yearBuilt?: ModelIntInput | null,
   zillowLink?: ModelStringInput | null,
   zip?: ModelStringInput | null,
@@ -2682,7 +2480,6 @@ export type CreatePropertiesInput = {
   bathrooms?: number | null,
   bedrooms?: number | null,
   city?: string | null,
-  createdDate?: string | null,
   floors?: number | null,
   houseAddress?: string | null,
   id?: string | null,
@@ -2692,7 +2489,6 @@ export type CreatePropertiesInput = {
   redfinLink?: string | null,
   sizeSqft?: number | null,
   state?: string | null,
-  updatedDate?: string | null,
   yearBuilt?: number | null,
   zillowLink?: string | null,
   zip?: string | null,
@@ -2702,7 +2498,6 @@ export type ModelQuoteItemsConditionInput = {
   and?: Array< ModelQuoteItemsConditionInput | null > | null,
   cost?: ModelFloatInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   image?: ModelStringInput | null,
   internal?: ModelBooleanInput | null,
@@ -2723,12 +2518,10 @@ export type ModelQuoteItemsConditionInput = {
   type?: ModelStringInput | null,
   unitPrice?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateQuoteItemsInput = {
   cost?: number | null,
-  createdDate?: string | null,
   description?: string | null,
   id?: string | null,
   image?: string | null,
@@ -2747,7 +2540,6 @@ export type CreateQuoteItemsInput = {
   total?: string | null,
   type?: string | null,
   unitPrice?: string | null,
-  updatedDate?: string | null,
 };
 
 export type ModelQuotesConditionInput = {
@@ -2769,7 +2561,6 @@ export type ModelQuotesConditionInput = {
   contractingStartDate?: ModelStringInput | null,
   convertedDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   creditScore?: ModelFloatInput | null,
   document?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -2817,7 +2608,6 @@ export type ModelQuotesConditionInput = {
   underwritingApproved?: ModelBooleanInput | null,
   underwritingApprovedDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   viewedBy?: ModelStringInput | null,
   visitDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
@@ -2841,7 +2631,6 @@ export type CreateQuotesInput = {
   contractSignedDate?: string | null,
   contractingStartDate?: string | null,
   convertedDate?: string | null,
-  createdDate?: string | null,
   creditScore?: number | null,
   document?: string | null,
   documents?: string | null,
@@ -2887,7 +2676,6 @@ export type CreateQuotesInput = {
   totalPrice?: number | null,
   underwritingApproved?: boolean | null,
   underwritingApprovedDate?: string | null,
-  updatedDate?: string | null,
   viewedBy?: string | null,
   visitDate?: string | null,
   visitorId?: string | null,
@@ -2906,7 +2694,6 @@ export type ModelRequestsConditionInput = {
   bookingId?: ModelIDInput | null,
   budget?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  createdDate?: ModelStringInput | null,
   expiredDate?: ModelStringInput | null,
   homeownerContactId?: ModelIDInput | null,
   leadFromSync?: ModelStringInput | null,
@@ -2928,7 +2715,6 @@ export type ModelRequestsConditionInput = {
   statusImage?: ModelStringInput | null,
   statusOrder?: ModelFloatInput | null,
   updatedAt?: ModelStringInput | null,
-  updatedDate?: ModelStringInput | null,
   uploadedMedia?: ModelStringInput | null,
   uploadedVideos?: ModelStringInput | null,
   uplodedDocuments?: ModelStringInput | null,
@@ -2947,7 +2733,6 @@ export type CreateRequestsInput = {
   assignedTo?: string | null,
   bookingId?: string | null,
   budget?: string | null,
-  createdDate?: string | null,
   expiredDate?: string | null,
   homeownerContactId?: string | null,
   id?: string | null,
@@ -2967,7 +2752,6 @@ export type CreateRequestsInput = {
   status?: string | null,
   statusImage?: string | null,
   statusOrder?: number | null,
-  updatedDate?: string | null,
   uploadedMedia?: string | null,
   uploadedVideos?: string | null,
   uplodedDocuments?: string | null,
@@ -3094,7 +2878,6 @@ export type UpdateAffiliatesInput = {
   communication?: string | null,
   company?: string | null,
   contactId?: string | null,
-  createdDate?: string | null,
   date?: string | null,
   email?: string | null,
   environmentalFactor?: string | null,
@@ -3118,7 +2901,6 @@ export type UpdateAffiliatesInput = {
   slaAll?: string | null,
   slaCompanyEmail?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
   warrantyPeriod?: string | null,
   waterSystem?: string | null,
   workersCompensationInsurance?: string | null,
@@ -3128,7 +2910,6 @@ export type UpdateAuditLogInput = {
   action?: AuditLogAction | null,
   changeType?: string | null,
   changedFields?: string | null,
-  createdDate?: string | null,
   id: string,
   ipAddress?: string | null,
   newData?: string | null,
@@ -3147,19 +2928,16 @@ export type UpdateAuditLogInput = {
 };
 
 export type UpdateAuthInput = {
-  createdDate?: string | null,
   email?: string | null,
   hash?: boolean | null,
   id: string,
   owner?: string | null,
   token?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeAssignToInput = {
   active?: boolean | null,
   contactId?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   id: string,
   mobile?: string | null,
@@ -3168,26 +2946,21 @@ export type UpdateBackOfficeAssignToInput = {
   owner?: string | null,
   sendEmailNotifications?: boolean | null,
   sendSmsNotifications?: boolean | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeBookingStatusesInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeBrokerageInput = {
-  createdDate?: string | null,
   id: string,
   live?: boolean | null,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeNotificationsInput = {
@@ -3195,65 +2968,52 @@ export type UpdateBackOfficeNotificationsInput = {
   body?: string | null,
   bodyAsSimpleText?: string | null,
   cc?: string | null,
-  createdDate?: string | null,
   id: string,
   key?: string | null,
   owner?: string | null,
   subject?: string | null,
   to?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeProductsInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeProjectStatusesInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeQuoteStatusesInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeRequestStatusesInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateBackOfficeRoleTypesInput = {
-  createdDate?: string | null,
   id: string,
   order?: number | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateContactAuditLogInput = {
   action?: ContactAuditLogAction | null,
   changeType?: string | null,
   contactId?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   id: string,
   ipAddress?: string | null,
@@ -3269,20 +3029,17 @@ export type UpdateContactAuditLogInput = {
 export type UpdateContactUsInput = {
   addressId?: string | null,
   contactId?: string | null,
-  createdDate?: string | null,
   id: string,
   message?: string | null,
   owner?: string | null,
   product?: string | null,
   subject?: string | null,
   submissionTime?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateContactsInput = {
   brokerage?: string | null,
   company?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   firstName?: string | null,
   fullName?: string | null,
@@ -3291,12 +3048,10 @@ export type UpdateContactsInput = {
   mobile?: string | null,
   owner?: string | null,
   phone?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateESignatureDocumentsInput = {
   addressId?: string | null,
-  createdDate?: string | null,
   document?: string | null,
   documentData?: string | null,
   homeownerEmail?: string | null,
@@ -3313,22 +3068,18 @@ export type UpdateESignatureDocumentsInput = {
   signedPdfGeneratorUrl?: string | null,
   signedQuotePdfPublicUrl?: string | null,
   templateId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateLegalInput = {
   content?: string | null,
-  createdDate?: string | null,
   documentId?: string | null,
   id: string,
   legalDocumentId?: string | null,
   owner?: string | null,
   title?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateMemberSignatureInput = {
-  createdDate?: string | null,
   fullName?: string | null,
   id: string,
   initials?: string | null,
@@ -3340,7 +3091,6 @@ export type UpdateMemberSignatureInput = {
   signature?: string | null,
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdatePendingAppoitmentsInput = {
@@ -3350,7 +3100,6 @@ export type UpdatePendingAppoitmentsInput = {
   assignedDate?: string | null,
   assignedTo?: string | null,
   brokerage?: string | null,
-  createdDate?: string | null,
   email?: string | null,
   id: string,
   name?: string | null,
@@ -3362,14 +3111,12 @@ export type UpdatePendingAppoitmentsInput = {
   requestedSlot?: string | null,
   serviceName?: string | null,
   status?: string | null,
-  updatedDate?: string | null,
   visitorId?: string | null,
 };
 
 export type UpdateProjectCommentsInput = {
   addToGallery?: string | null,
   comment?: string | null,
-  createdDate?: string | null,
   files?: string | null,
   id: string,
   isPrivate?: boolean | null,
@@ -3378,11 +3125,9 @@ export type UpdateProjectCommentsInput = {
   postedByContactId?: string | null,
   postedByProfileImage?: string | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateProjectMilestonesInput = {
-  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -3394,11 +3139,9 @@ export type UpdateProjectMilestonesInput = {
   order?: number | null,
   owner?: string | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateProjectPaymentTermsInput = {
-  createdDate?: string | null,
   description?: string | null,
   id: string,
   internal?: boolean | null,
@@ -3412,17 +3155,14 @@ export type UpdateProjectPaymentTermsInput = {
   paymentName?: string | null,
   projectId?: string | null,
   type?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateProjectPermissionsInput = {
-  createdDate?: string | null,
   id: string,
   na?: string | null,
   owner?: string | null,
   permissions?: boolean | null,
   projectId?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateProjectsInput = {
@@ -3450,7 +3190,6 @@ export type UpdateProjectsInput = {
   contractSentDate?: string | null,
   contractUrl?: string | null,
   contractingStartDate?: string | null,
-  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -3512,7 +3251,6 @@ export type UpdateProjectsInput = {
   statusOrder?: number | null,
   title?: string | null,
   underwritingDate?: string | null,
-  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -3523,7 +3261,6 @@ export type UpdatePropertiesInput = {
   bathrooms?: number | null,
   bedrooms?: number | null,
   city?: string | null,
-  createdDate?: string | null,
   floors?: number | null,
   houseAddress?: string | null,
   id: string,
@@ -3533,7 +3270,6 @@ export type UpdatePropertiesInput = {
   redfinLink?: string | null,
   sizeSqft?: number | null,
   state?: string | null,
-  updatedDate?: string | null,
   yearBuilt?: number | null,
   zillowLink?: string | null,
   zip?: string | null,
@@ -3541,7 +3277,6 @@ export type UpdatePropertiesInput = {
 
 export type UpdateQuoteItemsInput = {
   cost?: number | null,
-  createdDate?: string | null,
   description?: string | null,
   id: string,
   image?: string | null,
@@ -3560,7 +3295,6 @@ export type UpdateQuoteItemsInput = {
   total?: string | null,
   type?: string | null,
   unitPrice?: string | null,
-  updatedDate?: string | null,
 };
 
 export type UpdateQuotesInput = {
@@ -3580,7 +3314,6 @@ export type UpdateQuotesInput = {
   contractSignedDate?: string | null,
   contractingStartDate?: string | null,
   convertedDate?: string | null,
-  createdDate?: string | null,
   creditScore?: number | null,
   document?: string | null,
   documents?: string | null,
@@ -3626,7 +3359,6 @@ export type UpdateQuotesInput = {
   totalPrice?: number | null,
   underwritingApproved?: boolean | null,
   underwritingApprovedDate?: string | null,
-  updatedDate?: string | null,
   viewedBy?: string | null,
   visitDate?: string | null,
   visitorId?: string | null,
@@ -3643,7 +3375,6 @@ export type UpdateRequestsInput = {
   assignedTo?: string | null,
   bookingId?: string | null,
   budget?: string | null,
-  createdDate?: string | null,
   expiredDate?: string | null,
   homeownerContactId?: string | null,
   id: string,
@@ -3663,7 +3394,6 @@ export type UpdateRequestsInput = {
   status?: string | null,
   statusImage?: string | null,
   statusOrder?: number | null,
-  updatedDate?: string | null,
   uploadedMedia?: string | null,
   uploadedVideos?: string | null,
   uplodedDocuments?: string | null,
@@ -3680,7 +3410,6 @@ export type ModelSubscriptionAffiliatesFilterInput = {
   company?: ModelSubscriptionStringInput | null,
   contactId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   date?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   environmentalFactor?: ModelSubscriptionStringInput | null,
@@ -3706,7 +3435,6 @@ export type ModelSubscriptionAffiliatesFilterInput = {
   slaCompanyEmail?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   warrantyPeriod?: ModelSubscriptionStringInput | null,
   waterSystem?: ModelSubscriptionStringInput | null,
   workersCompensationInsurance?: ModelSubscriptionStringInput | null,
@@ -3777,7 +3505,6 @@ export type ModelSubscriptionAuditLogFilterInput = {
   changeType?: ModelSubscriptionStringInput | null,
   changedFields?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   ipAddress?: ModelSubscriptionStringInput | null,
   newData?: ModelSubscriptionStringInput | null,
@@ -3800,7 +3527,6 @@ export type ModelSubscriptionAuditLogFilterInput = {
 export type ModelSubscriptionAuthFilterInput = {
   and?: Array< ModelSubscriptionAuthFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   hash?: ModelSubscriptionBooleanInput | null,
   id?: ModelSubscriptionIDInput | null,
@@ -3808,7 +3534,6 @@ export type ModelSubscriptionAuthFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   token?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeAssignToFilterInput = {
@@ -3816,7 +3541,6 @@ export type ModelSubscriptionBackOfficeAssignToFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeAssignToFilterInput | null > | null,
   contactId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   mobile?: ModelSubscriptionStringInput | null,
@@ -3827,26 +3551,22 @@ export type ModelSubscriptionBackOfficeAssignToFilterInput = {
   sendEmailNotifications?: ModelSubscriptionBooleanInput | null,
   sendSmsNotifications?: ModelSubscriptionBooleanInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeBookingStatusesFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeBookingStatusesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeBookingStatusesFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeBrokerageFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeBrokerageFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   live?: ModelSubscriptionBooleanInput | null,
   or?: Array< ModelSubscriptionBackOfficeBrokerageFilterInput | null > | null,
@@ -3854,7 +3574,6 @@ export type ModelSubscriptionBackOfficeBrokerageFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeNotificationsFilterInput = {
@@ -3864,7 +3583,6 @@ export type ModelSubscriptionBackOfficeNotificationsFilterInput = {
   bodyAsSimpleText?: ModelSubscriptionStringInput | null,
   cc?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   key?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionBackOfficeNotificationsFilterInput | null > | null,
@@ -3872,72 +3590,61 @@ export type ModelSubscriptionBackOfficeNotificationsFilterInput = {
   subject?: ModelSubscriptionStringInput | null,
   to?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeProductsFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeProductsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeProductsFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeProjectStatusesFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeProjectStatusesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeProjectStatusesFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeQuoteStatusesFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeQuoteStatusesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeQuoteStatusesFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeRequestStatusesFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeRequestStatusesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeRequestStatusesFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionBackOfficeRoleTypesFilterInput = {
   and?: Array< ModelSubscriptionBackOfficeRoleTypesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionBackOfficeRoleTypesFilterInput | null > | null,
   order?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionContactAuditLogFilterInput = {
@@ -3946,7 +3653,6 @@ export type ModelSubscriptionContactAuditLogFilterInput = {
   changeType?: ModelSubscriptionStringInput | null,
   contactId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   ipAddress?: ModelSubscriptionStringInput | null,
@@ -3966,7 +3672,6 @@ export type ModelSubscriptionContactUsFilterInput = {
   and?: Array< ModelSubscriptionContactUsFilterInput | null > | null,
   contactId?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   message?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionContactUsFilterInput | null > | null,
@@ -3975,7 +3680,6 @@ export type ModelSubscriptionContactUsFilterInput = {
   subject?: ModelSubscriptionStringInput | null,
   submissionTime?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionContactsFilterInput = {
@@ -3983,7 +3687,6 @@ export type ModelSubscriptionContactsFilterInput = {
   brokerage?: ModelSubscriptionStringInput | null,
   company?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   firstName?: ModelSubscriptionStringInput | null,
   fullName?: ModelSubscriptionStringInput | null,
@@ -3994,14 +3697,12 @@ export type ModelSubscriptionContactsFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   phone?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionESignatureDocumentsFilterInput = {
   addressId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionESignatureDocumentsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   document?: ModelSubscriptionStringInput | null,
   documentData?: ModelSubscriptionStringInput | null,
   homeownerEmail?: ModelSubscriptionStringInput | null,
@@ -4020,14 +3721,12 @@ export type ModelSubscriptionESignatureDocumentsFilterInput = {
   signedQuotePdfPublicUrl?: ModelSubscriptionStringInput | null,
   templateId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionLegalFilterInput = {
   and?: Array< ModelSubscriptionLegalFilterInput | null > | null,
   content?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   documentId?: ModelSubscriptionIDInput | null,
   id?: ModelSubscriptionIDInput | null,
   legalDocumentId?: ModelSubscriptionIDInput | null,
@@ -4035,13 +3734,11 @@ export type ModelSubscriptionLegalFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   title?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionMemberSignatureFilterInput = {
   and?: Array< ModelSubscriptionMemberSignatureFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   fullName?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   initials?: ModelSubscriptionStringInput | null,
@@ -4055,7 +3752,6 @@ export type ModelSubscriptionMemberSignatureFilterInput = {
   signaturePublicUrl?: ModelSubscriptionStringInput | null,
   signatureWixUrl?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionPendingAppoitmentsFilterInput = {
@@ -4067,7 +3763,6 @@ export type ModelSubscriptionPendingAppoitmentsFilterInput = {
   assignedTo?: ModelSubscriptionStringInput | null,
   brokerage?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -4081,7 +3776,6 @@ export type ModelSubscriptionPendingAppoitmentsFilterInput = {
   serviceName?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   visitorId?: ModelSubscriptionIDInput | null,
 };
 
@@ -4090,7 +3784,6 @@ export type ModelSubscriptionProjectCommentsFilterInput = {
   and?: Array< ModelSubscriptionProjectCommentsFilterInput | null > | null,
   comment?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   files?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   isPrivate?: ModelSubscriptionBooleanInput | null,
@@ -4101,13 +3794,11 @@ export type ModelSubscriptionProjectCommentsFilterInput = {
   postedByProfileImage?: ModelSubscriptionStringInput | null,
   projectId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectMilestonesFilterInput = {
   and?: Array< ModelSubscriptionProjectMilestonesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   estimatedFinish?: ModelSubscriptionStringInput | null,
   estimatedStart?: ModelSubscriptionStringInput | null,
@@ -4121,13 +3812,11 @@ export type ModelSubscriptionProjectMilestonesFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   projectId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectPaymentTermsFilterInput = {
   and?: Array< ModelSubscriptionProjectPaymentTermsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   internal?: ModelSubscriptionBooleanInput | null,
@@ -4143,13 +3832,11 @@ export type ModelSubscriptionProjectPaymentTermsFilterInput = {
   projectId?: ModelSubscriptionIDInput | null,
   type?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectPermissionsFilterInput = {
   and?: Array< ModelSubscriptionProjectPermissionsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   na?: ModelSubscriptionStringInput | null,
   or?: Array< ModelSubscriptionProjectPermissionsFilterInput | null > | null,
@@ -4157,7 +3844,6 @@ export type ModelSubscriptionProjectPermissionsFilterInput = {
   permissions?: ModelSubscriptionBooleanInput | null,
   projectId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectsFilterInput = {
@@ -4187,7 +3873,6 @@ export type ModelSubscriptionProjectsFilterInput = {
   contractUrl?: ModelSubscriptionStringInput | null,
   contractingStartDate?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   daysOnMarket?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   documents?: ModelSubscriptionStringInput | null,
@@ -4251,7 +3936,6 @@ export type ModelSubscriptionProjectsFilterInput = {
   title?: ModelSubscriptionStringInput | null,
   underwritingDate?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   visitReviewDate?: ModelSubscriptionStringInput | null,
   visitorId?: ModelSubscriptionIDInput | null,
   yearBuilt?: ModelSubscriptionIntInput | null,
@@ -4264,7 +3948,6 @@ export type ModelSubscriptionPropertiesFilterInput = {
   bedrooms?: ModelSubscriptionFloatInput | null,
   city?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   floors?: ModelSubscriptionIntInput | null,
   houseAddress?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
@@ -4276,7 +3959,6 @@ export type ModelSubscriptionPropertiesFilterInput = {
   sizeSqft?: ModelSubscriptionFloatInput | null,
   state?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   yearBuilt?: ModelSubscriptionIntInput | null,
   zillowLink?: ModelSubscriptionStringInput | null,
   zip?: ModelSubscriptionStringInput | null,
@@ -4286,7 +3968,6 @@ export type ModelSubscriptionQuoteItemsFilterInput = {
   and?: Array< ModelSubscriptionQuoteItemsFilterInput | null > | null,
   cost?: ModelSubscriptionFloatInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   image?: ModelSubscriptionStringInput | null,
@@ -4307,7 +3988,6 @@ export type ModelSubscriptionQuoteItemsFilterInput = {
   type?: ModelSubscriptionStringInput | null,
   unitPrice?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionQuotesFilterInput = {
@@ -4329,7 +4009,6 @@ export type ModelSubscriptionQuotesFilterInput = {
   contractingStartDate?: ModelSubscriptionStringInput | null,
   convertedDate?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   creditScore?: ModelSubscriptionFloatInput | null,
   document?: ModelSubscriptionStringInput | null,
   documents?: ModelSubscriptionStringInput | null,
@@ -4377,7 +4056,6 @@ export type ModelSubscriptionQuotesFilterInput = {
   underwritingApproved?: ModelSubscriptionBooleanInput | null,
   underwritingApprovedDate?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   viewedBy?: ModelSubscriptionStringInput | null,
   visitDate?: ModelSubscriptionStringInput | null,
   visitorId?: ModelSubscriptionIDInput | null,
@@ -4396,7 +4074,6 @@ export type ModelSubscriptionRequestsFilterInput = {
   bookingId?: ModelSubscriptionIDInput | null,
   budget?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
-  createdDate?: ModelSubscriptionStringInput | null,
   expiredDate?: ModelSubscriptionStringInput | null,
   homeownerContactId?: ModelSubscriptionIDInput | null,
   id?: ModelSubscriptionIDInput | null,
@@ -4418,7 +4095,6 @@ export type ModelSubscriptionRequestsFilterInput = {
   statusImage?: ModelSubscriptionStringInput | null,
   statusOrder?: ModelSubscriptionFloatInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  updatedDate?: ModelSubscriptionStringInput | null,
   uploadedMedia?: ModelSubscriptionStringInput | null,
   uploadedVideos?: ModelSubscriptionStringInput | null,
   uplodedDocuments?: ModelSubscriptionStringInput | null,
@@ -4440,7 +4116,6 @@ export type GetAffiliatesQuery = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -4465,7 +4140,6 @@ export type GetAffiliatesQuery = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -4483,7 +4157,6 @@ export type GetAuditLogQuery = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -4511,14 +4184,12 @@ export type GetAuthQuery = {
   getAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4532,7 +4203,6 @@ export type GetBackOfficeAssignToQuery = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -4542,7 +4212,6 @@ export type GetBackOfficeAssignToQuery = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4554,13 +4223,11 @@ export type GetBackOfficeBookingStatusesQuery = {
   getBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4572,14 +4239,12 @@ export type GetBackOfficeBrokerageQuery = {
   getBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4595,14 +4260,12 @@ export type GetBackOfficeNotificationsQuery = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4614,13 +4277,11 @@ export type GetBackOfficeProductsQuery = {
   getBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4632,13 +4293,11 @@ export type GetBackOfficeProjectStatusesQuery = {
   getBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4650,13 +4309,11 @@ export type GetBackOfficeQuoteStatusesQuery = {
   getBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4668,13 +4325,11 @@ export type GetBackOfficeRequestStatusesQuery = {
   getBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4686,13 +4341,11 @@ export type GetBackOfficeRoleTypesQuery = {
   getBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4707,7 +4360,6 @@ export type GetContactAuditLogQuery = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -4732,7 +4384,6 @@ export type GetContactUsQuery = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -4740,7 +4391,6 @@ export type GetContactUsQuery = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4762,7 +4412,6 @@ export type GetContactsQuery = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -4788,7 +4437,6 @@ export type GetContactsQuery = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4801,7 +4449,6 @@ export type GetESignatureDocumentsQuery = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -4819,7 +4466,6 @@ export type GetESignatureDocumentsQuery = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4832,14 +4478,12 @@ export type GetLegalQuery = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4851,7 +4495,6 @@ export type GetMemberSignatureQuery = {
   getMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -4864,7 +4507,6 @@ export type GetMemberSignatureQuery = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -4882,7 +4524,6 @@ export type GetPendingAppoitmentsQuery = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -4895,7 +4536,6 @@ export type GetPendingAppoitmentsQuery = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -4910,7 +4550,6 @@ export type GetProjectCommentsQuery = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -4945,7 +4584,6 @@ export type GetProjectCommentsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5008,7 +4646,6 @@ export type GetProjectCommentsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5016,7 +4653,6 @@ export type GetProjectCommentsQuery = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -5028,7 +4664,6 @@ export type GetProjectMilestonesQuery = {
   getProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -5066,7 +4701,6 @@ export type GetProjectMilestonesQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5129,7 +4763,6 @@ export type GetProjectMilestonesQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5137,7 +4770,6 @@ export type GetProjectMilestonesQuery = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -5149,7 +4781,6 @@ export type GetProjectPaymentTermsQuery = {
   getProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -5188,7 +4819,6 @@ export type GetProjectPaymentTermsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5251,7 +4881,6 @@ export type GetProjectPaymentTermsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5260,7 +4889,6 @@ export type GetProjectPaymentTermsQuery = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -5272,14 +4900,12 @@ export type GetProjectPermissionsQuery = {
   getProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -5298,7 +4924,6 @@ export type GetProjectsQuery = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -5309,7 +4934,6 @@ export type GetProjectsQuery = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -5320,7 +4944,6 @@ export type GetProjectsQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5330,7 +4953,6 @@ export type GetProjectsQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -5358,7 +4980,6 @@ export type GetProjectsQuery = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -5379,7 +5000,6 @@ export type GetProjectsQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5389,14 +5009,12 @@ export type GetProjectsQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5406,7 +5024,6 @@ export type GetProjectsQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -5414,7 +5031,6 @@ export type GetProjectsQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5424,7 +5040,6 @@ export type GetProjectsQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -5488,7 +5103,6 @@ export type GetProjectsQuery = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -5507,7 +5121,6 @@ export type GetPropertiesQuery = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -5522,7 +5135,6 @@ export type GetPropertiesQuery = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -5538,7 +5150,6 @@ export type GetQuoteItemsQuery = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -5578,7 +5189,6 @@ export type GetQuoteItemsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5641,7 +5251,6 @@ export type GetQuoteItemsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5654,7 +5263,6 @@ export type GetQuoteItemsQuery = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -5672,7 +5280,6 @@ export type GetQuotesQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5682,7 +5289,6 @@ export type GetQuotesQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -5699,7 +5305,6 @@ export type GetQuotesQuery = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -5712,7 +5317,6 @@ export type GetQuotesQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -5722,7 +5326,6 @@ export type GetQuotesQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -5764,7 +5367,6 @@ export type GetQuotesQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5827,7 +5429,6 @@ export type GetQuotesQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5859,7 +5460,6 @@ export type GetQuotesQuery = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -5884,7 +5484,6 @@ export type GetRequestsQuery = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -5905,7 +5504,6 @@ export type GetRequestsQuery = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -5932,7 +5530,6 @@ export type ListAffiliatesQuery = {
       company?: string | null,
       contactId?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       date?: string | null,
       email?: string | null,
       environmentalFactor?: string | null,
@@ -5957,7 +5554,6 @@ export type ListAffiliatesQuery = {
       slaCompanyEmail?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       warrantyPeriod?: string | null,
       waterSystem?: string | null,
       workersCompensationInsurance?: string | null,
@@ -5981,7 +5577,6 @@ export type ListAuditLogsQuery = {
       changeType?: string | null,
       changedFields?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       ipAddress?: string | null,
       newData?: string | null,
@@ -6015,14 +5610,12 @@ export type ListAuthsQuery = {
     items:  Array< {
       __typename: "Auth",
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       hash?: boolean | null,
       id: string,
       owner?: string | null,
       token?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6042,7 +5635,6 @@ export type ListBackOfficeAssignTosQuery = {
       active?: boolean | null,
       contactId?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       id: string,
       mobile?: string | null,
@@ -6052,7 +5644,6 @@ export type ListBackOfficeAssignTosQuery = {
       sendEmailNotifications?: boolean | null,
       sendSmsNotifications?: boolean | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6070,13 +5661,11 @@ export type ListBackOfficeBookingStatusesQuery = {
     items:  Array< {
       __typename: "BackOfficeBookingStatuses",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6094,14 +5683,12 @@ export type ListBackOfficeBrokeragesQuery = {
     items:  Array< {
       __typename: "BackOfficeBrokerage",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       live?: boolean | null,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6123,14 +5710,12 @@ export type ListBackOfficeNotificationsQuery = {
       bodyAsSimpleText?: string | null,
       cc?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       key?: string | null,
       owner?: string | null,
       subject?: string | null,
       to?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6148,13 +5733,11 @@ export type ListBackOfficeProductsQuery = {
     items:  Array< {
       __typename: "BackOfficeProducts",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6172,13 +5755,11 @@ export type ListBackOfficeProjectStatusesQuery = {
     items:  Array< {
       __typename: "BackOfficeProjectStatuses",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6196,13 +5777,11 @@ export type ListBackOfficeQuoteStatusesQuery = {
     items:  Array< {
       __typename: "BackOfficeQuoteStatuses",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6220,13 +5799,11 @@ export type ListBackOfficeRequestStatusesQuery = {
     items:  Array< {
       __typename: "BackOfficeRequestStatuses",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6244,13 +5821,11 @@ export type ListBackOfficeRoleTypesQuery = {
     items:  Array< {
       __typename: "BackOfficeRoleTypes",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       order?: number | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6271,7 +5846,6 @@ export type ListContactAuditLogsQuery = {
       changeType?: string | null,
       contactId: string,
       createdAt: string,
-      createdDate?: string | null,
       email: string,
       id: string,
       ipAddress?: string | null,
@@ -6302,7 +5876,6 @@ export type ListContactsQuery = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -6312,7 +5885,6 @@ export type ListContactsQuery = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6332,7 +5904,6 @@ export type ListContactusesQuery = {
       addressId?: string | null,
       contactId?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       message?: string | null,
       owner?: string | null,
@@ -6340,7 +5911,6 @@ export type ListContactusesQuery = {
       subject?: string | null,
       submissionTime?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6359,7 +5929,6 @@ export type ListESignatureDocumentsQuery = {
       __typename: "eSignatureDocuments",
       addressId?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       document?: string | null,
       documentData?: string | null,
       homeownerEmail?: string | null,
@@ -6377,7 +5946,6 @@ export type ListESignatureDocumentsQuery = {
       signedQuotePdfPublicUrl?: string | null,
       templateId?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6396,14 +5964,12 @@ export type ListLegalsQuery = {
       __typename: "Legal",
       content?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       documentId?: string | null,
       id: string,
       legalDocumentId?: string | null,
       owner?: string | null,
       title?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6421,7 +5987,6 @@ export type ListMemberSignaturesQuery = {
     items:  Array< {
       __typename: "MemberSignature",
       createdAt: string,
-      createdDate?: string | null,
       fullName?: string | null,
       id: string,
       initials?: string | null,
@@ -6434,7 +5999,6 @@ export type ListMemberSignaturesQuery = {
       signaturePublicUrl?: string | null,
       signatureWixUrl?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6458,7 +6022,6 @@ export type ListPendingAppoitmentsQuery = {
       assignedTo?: string | null,
       brokerage?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       id: string,
       name?: string | null,
@@ -6471,7 +6034,6 @@ export type ListPendingAppoitmentsQuery = {
       serviceName?: string | null,
       status?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitorId?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -6492,7 +6054,6 @@ export type ListProjectCommentsQuery = {
       addToGallery?: string | null,
       comment?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       files?: string | null,
       id: string,
       isPrivate?: boolean | null,
@@ -6502,7 +6063,6 @@ export type ListProjectCommentsQuery = {
       postedByProfileImage?: string | null,
       projectId?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6520,7 +6080,6 @@ export type ListProjectMilestonesQuery = {
     items:  Array< {
       __typename: "ProjectMilestones",
       createdAt: string,
-      createdDate?: string | null,
       description?: string | null,
       estimatedFinish?: string | null,
       estimatedStart?: string | null,
@@ -6533,7 +6092,6 @@ export type ListProjectMilestonesQuery = {
       owner?: string | null,
       projectId?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6551,7 +6109,6 @@ export type ListProjectPaymentTermsQuery = {
     items:  Array< {
       __typename: "ProjectPaymentTerms",
       createdAt: string,
-      createdDate?: string | null,
       description?: string | null,
       id: string,
       internal?: boolean | null,
@@ -6566,7 +6123,6 @@ export type ListProjectPaymentTermsQuery = {
       projectId?: string | null,
       type?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6584,14 +6140,12 @@ export type ListProjectPermissionsQuery = {
     items:  Array< {
       __typename: "ProjectPermissions",
       createdAt: string,
-      createdDate?: string | null,
       id: string,
       na?: string | null,
       owner?: string | null,
       permissions?: boolean | null,
       projectId?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6633,7 +6187,6 @@ export type ListProjectsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -6696,7 +6249,6 @@ export type ListProjectsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -6721,7 +6273,6 @@ export type ListPropertiesQuery = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -6732,7 +6283,6 @@ export type ListPropertiesQuery = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -6754,7 +6304,6 @@ export type ListQuoteItemsQuery = {
       __typename: "QuoteItems",
       cost?: number | null,
       createdAt: string,
-      createdDate?: string | null,
       description?: string | null,
       id: string,
       image?: string | null,
@@ -6774,7 +6323,6 @@ export type ListQuoteItemsQuery = {
       type?: string | null,
       unitPrice?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6808,7 +6356,6 @@ export type ListQuotesQuery = {
       contractingStartDate?: string | null,
       convertedDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       creditScore?: number | null,
       document?: string | null,
       documents?: string | null,
@@ -6855,7 +6402,6 @@ export type ListQuotesQuery = {
       underwritingApproved?: boolean | null,
       underwritingApprovedDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       viewedBy?: string | null,
       visitDate?: string | null,
       visitorId?: string | null,
@@ -6886,7 +6432,6 @@ export type ListRequestsQuery = {
       bookingId?: string | null,
       budget?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       expiredDate?: string | null,
       homeownerContactId?: string | null,
       id: string,
@@ -6907,7 +6452,6 @@ export type ListRequestsQuery = {
       statusImage?: string | null,
       statusOrder?: number | null,
       updatedAt: string,
-      updatedDate?: string | null,
       uploadedMedia?: string | null,
       uploadedVideos?: string | null,
       uplodedDocuments?: string | null,
@@ -6933,7 +6477,6 @@ export type CreateAffiliatesMutation = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -6958,7 +6501,6 @@ export type CreateAffiliatesMutation = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -6977,7 +6519,6 @@ export type CreateAuditLogMutation = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -7006,14 +6547,12 @@ export type CreateAuthMutation = {
   createAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7028,7 +6567,6 @@ export type CreateBackOfficeAssignToMutation = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -7038,7 +6576,6 @@ export type CreateBackOfficeAssignToMutation = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7051,13 +6588,11 @@ export type CreateBackOfficeBookingStatusesMutation = {
   createBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7070,14 +6605,12 @@ export type CreateBackOfficeBrokerageMutation = {
   createBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7094,14 +6627,12 @@ export type CreateBackOfficeNotificationsMutation = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7114,13 +6645,11 @@ export type CreateBackOfficeProductsMutation = {
   createBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7133,13 +6662,11 @@ export type CreateBackOfficeProjectStatusesMutation = {
   createBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7152,13 +6679,11 @@ export type CreateBackOfficeQuoteStatusesMutation = {
   createBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7171,13 +6696,11 @@ export type CreateBackOfficeRequestStatusesMutation = {
   createBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7190,13 +6713,11 @@ export type CreateBackOfficeRoleTypesMutation = {
   createBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7212,7 +6733,6 @@ export type CreateContactAuditLogMutation = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -7238,7 +6758,6 @@ export type CreateContactUsMutation = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -7246,7 +6765,6 @@ export type CreateContactUsMutation = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7269,7 +6787,6 @@ export type CreateContactsMutation = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -7295,7 +6812,6 @@ export type CreateContactsMutation = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7309,7 +6825,6 @@ export type CreateESignatureDocumentsMutation = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -7327,7 +6842,6 @@ export type CreateESignatureDocumentsMutation = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7341,14 +6855,12 @@ export type CreateLegalMutation = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7361,7 +6873,6 @@ export type CreateMemberSignatureMutation = {
   createMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -7374,7 +6885,6 @@ export type CreateMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7393,7 +6903,6 @@ export type CreatePendingAppoitmentsMutation = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -7406,7 +6915,6 @@ export type CreatePendingAppoitmentsMutation = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -7422,7 +6930,6 @@ export type CreateProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -7457,7 +6964,6 @@ export type CreateProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7520,7 +7026,6 @@ export type CreateProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7528,7 +7033,6 @@ export type CreateProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7541,7 +7045,6 @@ export type CreateProjectMilestonesMutation = {
   createProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -7579,7 +7082,6 @@ export type CreateProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7642,7 +7144,6 @@ export type CreateProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7650,7 +7151,6 @@ export type CreateProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7663,7 +7163,6 @@ export type CreateProjectPaymentTermsMutation = {
   createProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -7702,7 +7201,6 @@ export type CreateProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7765,7 +7263,6 @@ export type CreateProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7774,7 +7271,6 @@ export type CreateProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7787,14 +7283,12 @@ export type CreateProjectPermissionsMutation = {
   createProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -7814,7 +7308,6 @@ export type CreateProjectsMutation = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -7825,7 +7318,6 @@ export type CreateProjectsMutation = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -7836,7 +7328,6 @@ export type CreateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -7846,7 +7337,6 @@ export type CreateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -7874,7 +7364,6 @@ export type CreateProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -7895,7 +7384,6 @@ export type CreateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -7905,14 +7393,12 @@ export type CreateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -7922,7 +7408,6 @@ export type CreateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -7930,7 +7415,6 @@ export type CreateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -7940,7 +7424,6 @@ export type CreateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -8004,7 +7487,6 @@ export type CreateProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -8024,7 +7506,6 @@ export type CreatePropertiesMutation = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -8039,7 +7520,6 @@ export type CreatePropertiesMutation = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -8056,7 +7536,6 @@ export type CreateQuoteItemsMutation = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -8096,7 +7575,6 @@ export type CreateQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -8159,7 +7637,6 @@ export type CreateQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -8172,7 +7649,6 @@ export type CreateQuoteItemsMutation = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8191,7 +7667,6 @@ export type CreateQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -8201,7 +7676,6 @@ export type CreateQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -8218,7 +7692,6 @@ export type CreateQuotesMutation = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -8231,7 +7704,6 @@ export type CreateQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -8241,7 +7713,6 @@ export type CreateQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -8283,7 +7754,6 @@ export type CreateQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -8346,7 +7816,6 @@ export type CreateQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -8378,7 +7847,6 @@ export type CreateQuotesMutation = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -8404,7 +7872,6 @@ export type CreateRequestsMutation = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -8425,7 +7892,6 @@ export type CreateRequestsMutation = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -8449,7 +7915,6 @@ export type DeleteAffiliatesMutation = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -8474,7 +7939,6 @@ export type DeleteAffiliatesMutation = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -8493,7 +7957,6 @@ export type DeleteAuditLogMutation = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -8522,14 +7985,12 @@ export type DeleteAuthMutation = {
   deleteAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8544,7 +8005,6 @@ export type DeleteBackOfficeAssignToMutation = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -8554,7 +8014,6 @@ export type DeleteBackOfficeAssignToMutation = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8567,13 +8026,11 @@ export type DeleteBackOfficeBookingStatusesMutation = {
   deleteBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8586,14 +8043,12 @@ export type DeleteBackOfficeBrokerageMutation = {
   deleteBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8610,14 +8065,12 @@ export type DeleteBackOfficeNotificationsMutation = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8630,13 +8083,11 @@ export type DeleteBackOfficeProductsMutation = {
   deleteBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8649,13 +8100,11 @@ export type DeleteBackOfficeProjectStatusesMutation = {
   deleteBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8668,13 +8117,11 @@ export type DeleteBackOfficeQuoteStatusesMutation = {
   deleteBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8687,13 +8134,11 @@ export type DeleteBackOfficeRequestStatusesMutation = {
   deleteBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8706,13 +8151,11 @@ export type DeleteBackOfficeRoleTypesMutation = {
   deleteBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8728,7 +8171,6 @@ export type DeleteContactAuditLogMutation = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -8754,7 +8196,6 @@ export type DeleteContactUsMutation = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -8762,7 +8203,6 @@ export type DeleteContactUsMutation = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8785,7 +8225,6 @@ export type DeleteContactsMutation = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -8811,7 +8250,6 @@ export type DeleteContactsMutation = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8825,7 +8263,6 @@ export type DeleteESignatureDocumentsMutation = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -8843,7 +8280,6 @@ export type DeleteESignatureDocumentsMutation = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8857,14 +8293,12 @@ export type DeleteLegalMutation = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8877,7 +8311,6 @@ export type DeleteMemberSignatureMutation = {
   deleteMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -8890,7 +8323,6 @@ export type DeleteMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -8909,7 +8341,6 @@ export type DeletePendingAppoitmentsMutation = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -8922,7 +8353,6 @@ export type DeletePendingAppoitmentsMutation = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -8938,7 +8368,6 @@ export type DeleteProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -8973,7 +8402,6 @@ export type DeleteProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9036,7 +8464,6 @@ export type DeleteProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9044,7 +8471,6 @@ export type DeleteProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -9057,7 +8483,6 @@ export type DeleteProjectMilestonesMutation = {
   deleteProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -9095,7 +8520,6 @@ export type DeleteProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9158,7 +8582,6 @@ export type DeleteProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9166,7 +8589,6 @@ export type DeleteProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -9179,7 +8601,6 @@ export type DeleteProjectPaymentTermsMutation = {
   deleteProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -9218,7 +8639,6 @@ export type DeleteProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9281,7 +8701,6 @@ export type DeleteProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9290,7 +8709,6 @@ export type DeleteProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -9303,14 +8721,12 @@ export type DeleteProjectPermissionsMutation = {
   deleteProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -9330,7 +8746,6 @@ export type DeleteProjectsMutation = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -9341,7 +8756,6 @@ export type DeleteProjectsMutation = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -9352,7 +8766,6 @@ export type DeleteProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9362,7 +8775,6 @@ export type DeleteProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -9390,7 +8802,6 @@ export type DeleteProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -9411,7 +8822,6 @@ export type DeleteProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9421,14 +8831,12 @@ export type DeleteProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9438,7 +8846,6 @@ export type DeleteProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -9446,7 +8853,6 @@ export type DeleteProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9456,7 +8862,6 @@ export type DeleteProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -9520,7 +8925,6 @@ export type DeleteProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -9540,7 +8944,6 @@ export type DeletePropertiesMutation = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -9555,7 +8958,6 @@ export type DeletePropertiesMutation = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -9572,7 +8974,6 @@ export type DeleteQuoteItemsMutation = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -9612,7 +9013,6 @@ export type DeleteQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9675,7 +9075,6 @@ export type DeleteQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9688,7 +9087,6 @@ export type DeleteQuoteItemsMutation = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -9707,7 +9105,6 @@ export type DeleteQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9717,7 +9114,6 @@ export type DeleteQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -9734,7 +9130,6 @@ export type DeleteQuotesMutation = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -9747,7 +9142,6 @@ export type DeleteQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -9757,7 +9151,6 @@ export type DeleteQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -9799,7 +9192,6 @@ export type DeleteQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9862,7 +9254,6 @@ export type DeleteQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9894,7 +9285,6 @@ export type DeleteQuotesMutation = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -9920,7 +9310,6 @@ export type DeleteRequestsMutation = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -9941,7 +9330,6 @@ export type DeleteRequestsMutation = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -9965,7 +9353,6 @@ export type UpdateAffiliatesMutation = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -9990,7 +9377,6 @@ export type UpdateAffiliatesMutation = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -10009,7 +9395,6 @@ export type UpdateAuditLogMutation = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -10038,14 +9423,12 @@ export type UpdateAuthMutation = {
   updateAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10060,7 +9443,6 @@ export type UpdateBackOfficeAssignToMutation = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -10070,7 +9452,6 @@ export type UpdateBackOfficeAssignToMutation = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10083,13 +9464,11 @@ export type UpdateBackOfficeBookingStatusesMutation = {
   updateBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10102,14 +9481,12 @@ export type UpdateBackOfficeBrokerageMutation = {
   updateBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10126,14 +9503,12 @@ export type UpdateBackOfficeNotificationsMutation = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10146,13 +9521,11 @@ export type UpdateBackOfficeProductsMutation = {
   updateBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10165,13 +9538,11 @@ export type UpdateBackOfficeProjectStatusesMutation = {
   updateBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10184,13 +9555,11 @@ export type UpdateBackOfficeQuoteStatusesMutation = {
   updateBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10203,13 +9572,11 @@ export type UpdateBackOfficeRequestStatusesMutation = {
   updateBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10222,13 +9589,11 @@ export type UpdateBackOfficeRoleTypesMutation = {
   updateBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10244,7 +9609,6 @@ export type UpdateContactAuditLogMutation = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -10270,7 +9634,6 @@ export type UpdateContactUsMutation = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -10278,7 +9641,6 @@ export type UpdateContactUsMutation = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10301,7 +9663,6 @@ export type UpdateContactsMutation = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -10327,7 +9688,6 @@ export type UpdateContactsMutation = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10341,7 +9701,6 @@ export type UpdateESignatureDocumentsMutation = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -10359,7 +9718,6 @@ export type UpdateESignatureDocumentsMutation = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10373,14 +9731,12 @@ export type UpdateLegalMutation = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10393,7 +9749,6 @@ export type UpdateMemberSignatureMutation = {
   updateMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -10406,7 +9761,6 @@ export type UpdateMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10425,7 +9779,6 @@ export type UpdatePendingAppoitmentsMutation = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -10438,7 +9791,6 @@ export type UpdatePendingAppoitmentsMutation = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -10454,7 +9806,6 @@ export type UpdateProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -10489,7 +9840,6 @@ export type UpdateProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10552,7 +9902,6 @@ export type UpdateProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10560,7 +9909,6 @@ export type UpdateProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10573,7 +9921,6 @@ export type UpdateProjectMilestonesMutation = {
   updateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -10611,7 +9958,6 @@ export type UpdateProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10674,7 +10020,6 @@ export type UpdateProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10682,7 +10027,6 @@ export type UpdateProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10695,7 +10039,6 @@ export type UpdateProjectPaymentTermsMutation = {
   updateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -10734,7 +10077,6 @@ export type UpdateProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10797,7 +10139,6 @@ export type UpdateProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10806,7 +10147,6 @@ export type UpdateProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10819,14 +10159,12 @@ export type UpdateProjectPermissionsMutation = {
   updateProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -10846,7 +10184,6 @@ export type UpdateProjectsMutation = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -10857,7 +10194,6 @@ export type UpdateProjectsMutation = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -10868,7 +10204,6 @@ export type UpdateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -10878,7 +10213,6 @@ export type UpdateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -10906,7 +10240,6 @@ export type UpdateProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -10927,7 +10260,6 @@ export type UpdateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -10937,14 +10269,12 @@ export type UpdateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -10954,7 +10284,6 @@ export type UpdateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -10962,7 +10291,6 @@ export type UpdateProjectsMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -10972,7 +10300,6 @@ export type UpdateProjectsMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -11036,7 +10363,6 @@ export type UpdateProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -11056,7 +10382,6 @@ export type UpdatePropertiesMutation = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -11071,7 +10396,6 @@ export type UpdatePropertiesMutation = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -11088,7 +10412,6 @@ export type UpdateQuoteItemsMutation = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -11128,7 +10451,6 @@ export type UpdateQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -11191,7 +10513,6 @@ export type UpdateQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -11204,7 +10525,6 @@ export type UpdateQuoteItemsMutation = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11223,7 +10543,6 @@ export type UpdateQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -11233,7 +10552,6 @@ export type UpdateQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -11250,7 +10568,6 @@ export type UpdateQuotesMutation = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -11263,7 +10580,6 @@ export type UpdateQuotesMutation = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -11273,7 +10589,6 @@ export type UpdateQuotesMutation = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -11315,7 +10630,6 @@ export type UpdateQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -11378,7 +10692,6 @@ export type UpdateQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -11410,7 +10723,6 @@ export type UpdateQuotesMutation = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -11436,7 +10748,6 @@ export type UpdateRequestsMutation = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -11457,7 +10768,6 @@ export type UpdateRequestsMutation = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -11480,7 +10790,6 @@ export type OnCreateAffiliatesSubscription = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -11505,7 +10814,6 @@ export type OnCreateAffiliatesSubscription = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -11523,7 +10831,6 @@ export type OnCreateAuditLogSubscription = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -11551,14 +10858,12 @@ export type OnCreateAuthSubscription = {
   onCreateAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11572,7 +10877,6 @@ export type OnCreateBackOfficeAssignToSubscription = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -11582,7 +10886,6 @@ export type OnCreateBackOfficeAssignToSubscription = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11594,13 +10897,11 @@ export type OnCreateBackOfficeBookingStatusesSubscription = {
   onCreateBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11612,14 +10913,12 @@ export type OnCreateBackOfficeBrokerageSubscription = {
   onCreateBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11635,14 +10934,12 @@ export type OnCreateBackOfficeNotificationsSubscription = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11654,13 +10951,11 @@ export type OnCreateBackOfficeProductsSubscription = {
   onCreateBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11672,13 +10967,11 @@ export type OnCreateBackOfficeProjectStatusesSubscription = {
   onCreateBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11690,13 +10983,11 @@ export type OnCreateBackOfficeQuoteStatusesSubscription = {
   onCreateBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11708,13 +10999,11 @@ export type OnCreateBackOfficeRequestStatusesSubscription = {
   onCreateBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11726,13 +11015,11 @@ export type OnCreateBackOfficeRoleTypesSubscription = {
   onCreateBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11747,7 +11034,6 @@ export type OnCreateContactAuditLogSubscription = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -11772,7 +11058,6 @@ export type OnCreateContactUsSubscription = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -11780,7 +11065,6 @@ export type OnCreateContactUsSubscription = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11802,7 +11086,6 @@ export type OnCreateContactsSubscription = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -11828,7 +11111,6 @@ export type OnCreateContactsSubscription = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11841,7 +11123,6 @@ export type OnCreateESignatureDocumentsSubscription = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -11859,7 +11140,6 @@ export type OnCreateESignatureDocumentsSubscription = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11872,14 +11152,12 @@ export type OnCreateLegalSubscription = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11891,7 +11169,6 @@ export type OnCreateMemberSignatureSubscription = {
   onCreateMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -11904,7 +11181,6 @@ export type OnCreateMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -11922,7 +11198,6 @@ export type OnCreatePendingAppoitmentsSubscription = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -11935,7 +11210,6 @@ export type OnCreatePendingAppoitmentsSubscription = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -11951,7 +11225,6 @@ export type OnCreateProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -11986,7 +11259,6 @@ export type OnCreateProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12049,7 +11321,6 @@ export type OnCreateProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12057,7 +11328,6 @@ export type OnCreateProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -12069,7 +11339,6 @@ export type OnCreateProjectMilestonesSubscription = {
   onCreateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -12107,7 +11376,6 @@ export type OnCreateProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12170,7 +11438,6 @@ export type OnCreateProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12178,7 +11445,6 @@ export type OnCreateProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -12190,7 +11456,6 @@ export type OnCreateProjectPaymentTermsSubscription = {
   onCreateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -12229,7 +11494,6 @@ export type OnCreateProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12292,7 +11556,6 @@ export type OnCreateProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12301,7 +11564,6 @@ export type OnCreateProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -12313,14 +11575,12 @@ export type OnCreateProjectPermissionsSubscription = {
   onCreateProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -12339,7 +11599,6 @@ export type OnCreateProjectsSubscription = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -12350,7 +11609,6 @@ export type OnCreateProjectsSubscription = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -12361,7 +11619,6 @@ export type OnCreateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12371,7 +11628,6 @@ export type OnCreateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -12399,7 +11655,6 @@ export type OnCreateProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -12420,7 +11675,6 @@ export type OnCreateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12430,14 +11684,12 @@ export type OnCreateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12447,7 +11699,6 @@ export type OnCreateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -12455,7 +11706,6 @@ export type OnCreateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12465,7 +11715,6 @@ export type OnCreateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -12529,7 +11778,6 @@ export type OnCreateProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -12548,7 +11796,6 @@ export type OnCreatePropertiesSubscription = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -12563,7 +11810,6 @@ export type OnCreatePropertiesSubscription = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -12579,7 +11825,6 @@ export type OnCreateQuoteItemsSubscription = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -12619,7 +11864,6 @@ export type OnCreateQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12682,7 +11926,6 @@ export type OnCreateQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12695,7 +11938,6 @@ export type OnCreateQuoteItemsSubscription = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -12713,7 +11955,6 @@ export type OnCreateQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12723,7 +11964,6 @@ export type OnCreateQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -12740,7 +11980,6 @@ export type OnCreateQuotesSubscription = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -12753,7 +11992,6 @@ export type OnCreateQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -12763,7 +12001,6 @@ export type OnCreateQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -12805,7 +12042,6 @@ export type OnCreateQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12868,7 +12104,6 @@ export type OnCreateQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12900,7 +12135,6 @@ export type OnCreateQuotesSubscription = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -12925,7 +12159,6 @@ export type OnCreateRequestsSubscription = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -12946,7 +12179,6 @@ export type OnCreateRequestsSubscription = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -12969,7 +12201,6 @@ export type OnDeleteAffiliatesSubscription = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -12994,7 +12225,6 @@ export type OnDeleteAffiliatesSubscription = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -13012,7 +12242,6 @@ export type OnDeleteAuditLogSubscription = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -13040,14 +12269,12 @@ export type OnDeleteAuthSubscription = {
   onDeleteAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13061,7 +12288,6 @@ export type OnDeleteBackOfficeAssignToSubscription = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -13071,7 +12297,6 @@ export type OnDeleteBackOfficeAssignToSubscription = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13083,13 +12308,11 @@ export type OnDeleteBackOfficeBookingStatusesSubscription = {
   onDeleteBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13101,14 +12324,12 @@ export type OnDeleteBackOfficeBrokerageSubscription = {
   onDeleteBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13124,14 +12345,12 @@ export type OnDeleteBackOfficeNotificationsSubscription = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13143,13 +12362,11 @@ export type OnDeleteBackOfficeProductsSubscription = {
   onDeleteBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13161,13 +12378,11 @@ export type OnDeleteBackOfficeProjectStatusesSubscription = {
   onDeleteBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13179,13 +12394,11 @@ export type OnDeleteBackOfficeQuoteStatusesSubscription = {
   onDeleteBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13197,13 +12410,11 @@ export type OnDeleteBackOfficeRequestStatusesSubscription = {
   onDeleteBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13215,13 +12426,11 @@ export type OnDeleteBackOfficeRoleTypesSubscription = {
   onDeleteBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13236,7 +12445,6 @@ export type OnDeleteContactAuditLogSubscription = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -13261,7 +12469,6 @@ export type OnDeleteContactUsSubscription = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -13269,7 +12476,6 @@ export type OnDeleteContactUsSubscription = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13291,7 +12497,6 @@ export type OnDeleteContactsSubscription = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -13317,7 +12522,6 @@ export type OnDeleteContactsSubscription = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13330,7 +12534,6 @@ export type OnDeleteESignatureDocumentsSubscription = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -13348,7 +12551,6 @@ export type OnDeleteESignatureDocumentsSubscription = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13361,14 +12563,12 @@ export type OnDeleteLegalSubscription = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13380,7 +12580,6 @@ export type OnDeleteMemberSignatureSubscription = {
   onDeleteMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -13393,7 +12592,6 @@ export type OnDeleteMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13411,7 +12609,6 @@ export type OnDeletePendingAppoitmentsSubscription = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -13424,7 +12621,6 @@ export type OnDeletePendingAppoitmentsSubscription = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -13440,7 +12636,6 @@ export type OnDeleteProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -13475,7 +12670,6 @@ export type OnDeleteProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13538,7 +12732,6 @@ export type OnDeleteProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13546,7 +12739,6 @@ export type OnDeleteProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13558,7 +12750,6 @@ export type OnDeleteProjectMilestonesSubscription = {
   onDeleteProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -13596,7 +12787,6 @@ export type OnDeleteProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13659,7 +12849,6 @@ export type OnDeleteProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13667,7 +12856,6 @@ export type OnDeleteProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13679,7 +12867,6 @@ export type OnDeleteProjectPaymentTermsSubscription = {
   onDeleteProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -13718,7 +12905,6 @@ export type OnDeleteProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13781,7 +12967,6 @@ export type OnDeleteProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13790,7 +12975,6 @@ export type OnDeleteProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13802,14 +12986,12 @@ export type OnDeleteProjectPermissionsSubscription = {
   onDeleteProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -13828,7 +13010,6 @@ export type OnDeleteProjectsSubscription = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -13839,7 +13020,6 @@ export type OnDeleteProjectsSubscription = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -13850,7 +13030,6 @@ export type OnDeleteProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -13860,7 +13039,6 @@ export type OnDeleteProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -13888,7 +13066,6 @@ export type OnDeleteProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -13909,7 +13086,6 @@ export type OnDeleteProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -13919,14 +13095,12 @@ export type OnDeleteProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -13936,7 +13110,6 @@ export type OnDeleteProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -13944,7 +13117,6 @@ export type OnDeleteProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -13954,7 +13126,6 @@ export type OnDeleteProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -14018,7 +13189,6 @@ export type OnDeleteProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -14037,7 +13207,6 @@ export type OnDeletePropertiesSubscription = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -14052,7 +13221,6 @@ export type OnDeletePropertiesSubscription = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -14068,7 +13236,6 @@ export type OnDeleteQuoteItemsSubscription = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -14108,7 +13275,6 @@ export type OnDeleteQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -14171,7 +13337,6 @@ export type OnDeleteQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -14184,7 +13349,6 @@ export type OnDeleteQuoteItemsSubscription = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14202,7 +13366,6 @@ export type OnDeleteQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -14212,7 +13375,6 @@ export type OnDeleteQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -14229,7 +13391,6 @@ export type OnDeleteQuotesSubscription = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -14242,7 +13403,6 @@ export type OnDeleteQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -14252,7 +13412,6 @@ export type OnDeleteQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -14294,7 +13453,6 @@ export type OnDeleteQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -14357,7 +13515,6 @@ export type OnDeleteQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -14389,7 +13546,6 @@ export type OnDeleteQuotesSubscription = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -14414,7 +13570,6 @@ export type OnDeleteRequestsSubscription = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -14435,7 +13590,6 @@ export type OnDeleteRequestsSubscription = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,
@@ -14458,7 +13612,6 @@ export type OnUpdateAffiliatesSubscription = {
     company?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     date?: string | null,
     email?: string | null,
     environmentalFactor?: string | null,
@@ -14483,7 +13636,6 @@ export type OnUpdateAffiliatesSubscription = {
     slaCompanyEmail?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     warrantyPeriod?: string | null,
     waterSystem?: string | null,
     workersCompensationInsurance?: string | null,
@@ -14501,7 +13653,6 @@ export type OnUpdateAuditLogSubscription = {
     changeType?: string | null,
     changedFields?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     ipAddress?: string | null,
     newData?: string | null,
@@ -14529,14 +13680,12 @@ export type OnUpdateAuthSubscription = {
   onUpdateAuth?:  {
     __typename: "Auth",
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     hash?: boolean | null,
     id: string,
     owner?: string | null,
     token?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14550,7 +13699,6 @@ export type OnUpdateBackOfficeAssignToSubscription = {
     active?: boolean | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     mobile?: string | null,
@@ -14560,7 +13708,6 @@ export type OnUpdateBackOfficeAssignToSubscription = {
     sendEmailNotifications?: boolean | null,
     sendSmsNotifications?: boolean | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14572,13 +13719,11 @@ export type OnUpdateBackOfficeBookingStatusesSubscription = {
   onUpdateBackOfficeBookingStatuses?:  {
     __typename: "BackOfficeBookingStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14590,14 +13735,12 @@ export type OnUpdateBackOfficeBrokerageSubscription = {
   onUpdateBackOfficeBrokerage?:  {
     __typename: "BackOfficeBrokerage",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     live?: boolean | null,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14613,14 +13756,12 @@ export type OnUpdateBackOfficeNotificationsSubscription = {
     bodyAsSimpleText?: string | null,
     cc?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     key?: string | null,
     owner?: string | null,
     subject?: string | null,
     to?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14632,13 +13773,11 @@ export type OnUpdateBackOfficeProductsSubscription = {
   onUpdateBackOfficeProducts?:  {
     __typename: "BackOfficeProducts",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14650,13 +13789,11 @@ export type OnUpdateBackOfficeProjectStatusesSubscription = {
   onUpdateBackOfficeProjectStatuses?:  {
     __typename: "BackOfficeProjectStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14668,13 +13805,11 @@ export type OnUpdateBackOfficeQuoteStatusesSubscription = {
   onUpdateBackOfficeQuoteStatuses?:  {
     __typename: "BackOfficeQuoteStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14686,13 +13821,11 @@ export type OnUpdateBackOfficeRequestStatusesSubscription = {
   onUpdateBackOfficeRequestStatuses?:  {
     __typename: "BackOfficeRequestStatuses",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14704,13 +13837,11 @@ export type OnUpdateBackOfficeRoleTypesSubscription = {
   onUpdateBackOfficeRoleTypes?:  {
     __typename: "BackOfficeRoleTypes",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     order?: number | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14725,7 +13856,6 @@ export type OnUpdateContactAuditLogSubscription = {
     changeType?: string | null,
     contactId: string,
     createdAt: string,
-    createdDate?: string | null,
     email: string,
     id: string,
     ipAddress?: string | null,
@@ -14750,7 +13880,6 @@ export type OnUpdateContactUsSubscription = {
     addressId?: string | null,
     contactId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     message?: string | null,
     owner?: string | null,
@@ -14758,7 +13887,6 @@ export type OnUpdateContactUsSubscription = {
     subject?: string | null,
     submissionTime?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14780,7 +13908,6 @@ export type OnUpdateContactsSubscription = {
     brokerage?: string | null,
     company?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     firstName?: string | null,
     fullName?: string | null,
@@ -14806,7 +13933,6 @@ export type OnUpdateContactsSubscription = {
     owner?: string | null,
     phone?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14819,7 +13945,6 @@ export type OnUpdateESignatureDocumentsSubscription = {
     __typename: "eSignatureDocuments",
     addressId?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     document?: string | null,
     documentData?: string | null,
     homeownerEmail?: string | null,
@@ -14837,7 +13962,6 @@ export type OnUpdateESignatureDocumentsSubscription = {
     signedQuotePdfPublicUrl?: string | null,
     templateId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14850,14 +13974,12 @@ export type OnUpdateLegalSubscription = {
     __typename: "Legal",
     content?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     documentId?: string | null,
     id: string,
     legalDocumentId?: string | null,
     owner?: string | null,
     title?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14869,7 +13991,6 @@ export type OnUpdateMemberSignatureSubscription = {
   onUpdateMemberSignature?:  {
     __typename: "MemberSignature",
     createdAt: string,
-    createdDate?: string | null,
     fullName?: string | null,
     id: string,
     initials?: string | null,
@@ -14882,7 +14003,6 @@ export type OnUpdateMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -14900,7 +14020,6 @@ export type OnUpdatePendingAppoitmentsSubscription = {
     assignedTo?: string | null,
     brokerage?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     email?: string | null,
     id: string,
     name?: string | null,
@@ -14913,7 +14032,6 @@ export type OnUpdatePendingAppoitmentsSubscription = {
     serviceName?: string | null,
     status?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitorId?: string | null,
   } | null,
 };
@@ -14929,7 +14047,6 @@ export type OnUpdateProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -14964,7 +14081,6 @@ export type OnUpdateProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15027,7 +14143,6 @@ export type OnUpdateProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15035,7 +14150,6 @@ export type OnUpdateProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -15047,7 +14161,6 @@ export type OnUpdateProjectMilestonesSubscription = {
   onUpdateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -15085,7 +14198,6 @@ export type OnUpdateProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15148,7 +14260,6 @@ export type OnUpdateProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15156,7 +14267,6 @@ export type OnUpdateProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -15168,7 +14278,6 @@ export type OnUpdateProjectPaymentTermsSubscription = {
   onUpdateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -15207,7 +14316,6 @@ export type OnUpdateProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15270,7 +14378,6 @@ export type OnUpdateProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15279,7 +14386,6 @@ export type OnUpdateProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -15291,14 +14397,12 @@ export type OnUpdateProjectPermissionsSubscription = {
   onUpdateProjectPermissions?:  {
     __typename: "ProjectPermissions",
     createdAt: string,
-    createdDate?: string | null,
     id: string,
     na?: string | null,
     owner?: string | null,
     permissions?: boolean | null,
     projectId?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -15317,7 +14421,6 @@ export type OnUpdateProjectsSubscription = {
       bedrooms?: number | null,
       city?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       floors?: number | null,
       houseAddress?: string | null,
       id: string,
@@ -15328,7 +14431,6 @@ export type OnUpdateProjectsSubscription = {
       sizeSqft?: number | null,
       state?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       yearBuilt?: number | null,
       zillowLink?: string | null,
       zip?: string | null,
@@ -15339,7 +14441,6 @@ export type OnUpdateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15349,7 +14450,6 @@ export type OnUpdateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archived?: string | null,
@@ -15377,7 +14477,6 @@ export type OnUpdateProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -15398,7 +14497,6 @@ export type OnUpdateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15408,14 +14506,12 @@ export type OnUpdateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2?:  {
       __typename: "Contacts",
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15425,7 +14521,6 @@ export type OnUpdateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3?:  {
@@ -15433,7 +14528,6 @@ export type OnUpdateProjectsSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15443,7 +14537,6 @@ export type OnUpdateProjectsSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner3ContactId?: string | null,
     homeownerContactId?: string | null,
@@ -15507,7 +14600,6 @@ export type OnUpdateProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -15526,7 +14618,6 @@ export type OnUpdatePropertiesSubscription = {
     bedrooms?: number | null,
     city?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     floors?: number | null,
     houseAddress?: string | null,
     id: string,
@@ -15541,7 +14632,6 @@ export type OnUpdatePropertiesSubscription = {
     sizeSqft?: number | null,
     state?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     yearBuilt?: number | null,
     zillowLink?: string | null,
     zip?: string | null,
@@ -15557,7 +14647,6 @@ export type OnUpdateQuoteItemsSubscription = {
     __typename: "QuoteItems",
     cost?: number | null,
     createdAt: string,
-    createdDate?: string | null,
     description?: string | null,
     id: string,
     image?: string | null,
@@ -15597,7 +14686,6 @@ export type OnUpdateQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15660,7 +14748,6 @@ export type OnUpdateQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15673,7 +14760,6 @@ export type OnUpdateQuoteItemsSubscription = {
     type?: string | null,
     unitPrice?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
   } | null,
 };
 
@@ -15691,7 +14777,6 @@ export type OnUpdateQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15701,7 +14786,6 @@ export type OnUpdateQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     agentContactId?: string | null,
     archivedDate?: string | null,
@@ -15718,7 +14802,6 @@ export type OnUpdateQuotesSubscription = {
     contractingStartDate?: string | null,
     convertedDate?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     creditScore?: number | null,
     document?: string | null,
     documents?: string | null,
@@ -15731,7 +14814,6 @@ export type OnUpdateQuotesSubscription = {
       brokerage?: string | null,
       company?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       email?: string | null,
       firstName?: string | null,
       fullName?: string | null,
@@ -15741,7 +14823,6 @@ export type OnUpdateQuotesSubscription = {
       owner?: string | null,
       phone?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
     } | null,
     homeowner2ContactId?: string | null,
     homeowner3ContactId?: string | null,
@@ -15783,7 +14864,6 @@ export type OnUpdateQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
-      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15846,7 +14926,6 @@ export type OnUpdateQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
-      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15878,7 +14957,6 @@ export type OnUpdateQuotesSubscription = {
     underwritingApproved?: boolean | null,
     underwritingApprovedDate?: string | null,
     updatedAt: string,
-    updatedDate?: string | null,
     viewedBy?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
@@ -15903,7 +14981,6 @@ export type OnUpdateRequestsSubscription = {
     bookingId?: string | null,
     budget?: string | null,
     createdAt: string,
-    createdDate?: string | null,
     expiredDate?: string | null,
     homeownerContactId?: string | null,
     id: string,
@@ -15924,7 +15001,6 @@ export type OnUpdateRequestsSubscription = {
     statusImage?: string | null,
     statusOrder?: number | null,
     updatedAt: string,
-    updatedDate?: string | null,
     uploadedMedia?: string | null,
     uploadedVideos?: string | null,
     uplodedDocuments?: string | null,

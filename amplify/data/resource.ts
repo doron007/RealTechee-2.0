@@ -11,8 +11,6 @@ const Affiliates = a.model({
   name: a.string(),
   email: a.email(),
   phone: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   workersCompensationInsurance: a.string(),
   license: a.string(),
@@ -47,16 +45,12 @@ const Auth = a.model({
   email: a.email(),
   hash: a.boolean(),
   token: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
 ]);
 
 const BackOfficeAssignTo = a.model({
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   name: a.string(),
   email: a.email(),
@@ -73,8 +67,6 @@ const BackOfficeAssignTo = a.model({
 
 const BackOfficeBookingStatuses = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -84,8 +76,6 @@ const BackOfficeBookingStatuses = a.model({
 
 const BackOfficeBrokerage = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.float(),
   live: a.boolean(),
@@ -95,8 +85,6 @@ const BackOfficeBrokerage = a.model({
 ]);
 
 const BackOfficeNotifications = a.model({
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   key: a.string(),
   to: a.string(),
@@ -112,8 +100,6 @@ const BackOfficeNotifications = a.model({
 
 const BackOfficeProducts = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -123,8 +109,6 @@ const BackOfficeProducts = a.model({
 
 const BackOfficeProjectStatuses = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -134,8 +118,6 @@ const BackOfficeProjectStatuses = a.model({
 
 const BackOfficeQuoteStatuses = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -145,8 +127,6 @@ const BackOfficeQuoteStatuses = a.model({
 
 const BackOfficeRequestStatuses = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -156,8 +136,6 @@ const BackOfficeRequestStatuses = a.model({
 
 const BackOfficeRoleTypes = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   order: a.integer(),
 }).authorization((allow) => [
@@ -172,8 +150,6 @@ const ContactUs = a.model({
   message: a.string(),
   product: a.string(),
   owner: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   addressId: a.id(),
 }).authorization((allow) => [
   allow.publicApiKey(),
@@ -189,8 +165,6 @@ const Contacts = a.model({
   mobile: a.string(),
   company: a.string(),
   brokerage: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   
   // Reverse relationships - see all projects for this contact
@@ -237,7 +211,6 @@ const AuditLog = a.model({
   
   // Timestamps
   timestamp: a.datetime().required(),
-  createdDate: a.datetime(),
   owner: a.string(),
   
   // TTL for automatic cleanup (configurable, default 30 days)
@@ -268,7 +241,6 @@ const ContactAuditLog = a.model({
   
   // Timestamps
   timestamp: a.datetime().required(),
-  createdDate: a.datetime(),
   owner: a.string(),
   
   // TTL for automatic cleanup (30 days = 2592000 seconds)
@@ -280,8 +252,6 @@ const ContactAuditLog = a.model({
 
 const Legal = a.model({
   title: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   content: a.string(),
   legalDocumentId: a.id(),
@@ -301,8 +271,6 @@ const MemberSignature = a.model({
   initialsWixUrl: a.url(),
   signaturePublicUrl: a.url(),
   signatureWixUrl: a.url(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
 }).authorization((allow) => [
   allow.publicApiKey(),
@@ -326,8 +294,6 @@ const PendingAppoitments = a.model({
   preferredLocation: a.string(),
   requestId: a.id(),
   assignedDate: a.datetime(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
 }).authorization((allow) => [
   allow.publicApiKey(),
@@ -343,8 +309,6 @@ const ProjectComments = a.model({
   isPrivate: a.boolean(),
   postedByProfileImage: a.string(),
   addToGallery: a.string(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   
   // Relationships
@@ -357,8 +321,6 @@ const ProjectComments = a.model({
 ]);
 
 const ProjectMilestones = a.model({
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   name: a.string(),
   description: a.string(),
@@ -389,8 +351,6 @@ const ProjectPaymentTerms = a.model({
   parentPaymentId: a.id(),
   isCategory: a.boolean(),
   internal: a.boolean(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   
   // Relationships
@@ -401,8 +361,6 @@ const ProjectPaymentTerms = a.model({
 ]);
 
 const ProjectPermissions = a.model({
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   projectId: a.id(),
   owner: a.string(),
   na: a.string(),
@@ -449,8 +407,6 @@ const Projects = a.model({
   budget: a.string(),
   requestDate: a.datetime(),
   visitReviewDate: a.datetime(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   proposalDate: a.datetime(),
   contractDate: a.datetime(),
   escrowDate: a.datetime(),
@@ -534,8 +490,6 @@ const Properties = a.model({
   yearBuilt: a.integer(),
   redfinLink: a.url(),
   zillowLink: a.url(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   
   // Reverse relationships - see all projects for this property
@@ -546,8 +500,6 @@ const Properties = a.model({
 ]);
 
 const QuoteItems = a.model({
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   projectId: a.id(),
   itemName: a.string(),
@@ -582,7 +534,6 @@ const Quotes = a.model({
   statusOrder: a.float(),
   assignedTo: a.string(),
   assignedDate: a.datetime(),
-  updatedDate: a.datetime(),
   quoteNumber: a.integer(),
   title: a.string(),
   visitorId: a.id(),
@@ -609,7 +560,6 @@ const Quotes = a.model({
   changeOrder: a.string(),
   requestDate: a.datetime(),
   visitDate: a.datetime(),
-  createdDate: a.datetime(),
   operationManagerApprovedDate: a.datetime(),
   sentDate: a.datetime(),
   openedDate: a.datetime(),
@@ -652,7 +602,6 @@ const Quotes = a.model({
 ]);
 
 const Requests = a.model({
-  createdDate: a.datetime(),
   status: a.string(),
   statusImage: a.string(),
   statusOrder: a.float(),
@@ -677,7 +626,6 @@ const Requests = a.model({
   requestedSlot: a.string(),
   requestedVisitDateTime: a.datetime(),
   visitorId: a.id(),
-  updatedDate: a.datetime(),
   visitDate: a.datetime(),
   moveToQuotingDate: a.datetime(),
   expiredDate: a.datetime(),
@@ -707,8 +655,6 @@ const eSignatureDocuments = a.model({
   signedPdfGeneratorUrl: a.url(),
   signedQuotePdfPublicUrl: a.url(),
   homeownerEmail: a.email(),
-  createdDate: a.datetime(),
-  updatedDate: a.datetime(),
   owner: a.string(),
   addressId: a.id(),
 }).authorization((allow) => [

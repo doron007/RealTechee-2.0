@@ -10,8 +10,8 @@ export interface Milestone {
   description?: string;
   isComplete: boolean;
   order?: number;
-  createdDate?: string;
-  updatedDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
   owner?: string;
   isCategory?: boolean;
   isInternal?: boolean;
