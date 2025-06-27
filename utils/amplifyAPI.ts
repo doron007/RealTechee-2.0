@@ -524,9 +524,9 @@ export const optimizedProjectsAPI = {
           return aOrder - bOrder;
         }
         
-        // Then sort by updated date in descending order
-        const aDate = new Date(a.updatedDate || a.createdDate || 0);
-        const bDate = new Date(b.updatedDate || b.createdDate || 0);
+        // Then sort by updated date in descending order (using automatic timestamps)
+        const aDate = new Date(a.updatedAt || a.createdAt || 0);
+        const bDate = new Date(b.updatedAt || b.createdAt || 0);
         return bDate.getTime() - aDate.getTime();
       });
 

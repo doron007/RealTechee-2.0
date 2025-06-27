@@ -147,8 +147,7 @@ const GetEstimate: NextPage = () => {
           city: formData.propertyAddress.city,
           state: formData.propertyAddress.state,
           zip: formData.propertyAddress.zip,
-          createdDate: new Date().toISOString(),
-          updatedDate: new Date().toISOString(),
+              // createdAt/updatedAt are automatically managed by Amplify
           owner: recordOwner
         };
         
@@ -212,7 +211,7 @@ const GetEstimate: NextPage = () => {
           email: formData.agentInfo.email,
           phone: formData.agentInfo.phone,
           brokerage: formData.agentInfo.brokerage,
-          updatedDate: new Date().toISOString(),
+              // updatedAt is automatically managed by Amplify
           owner: recordOwner
         };
 
@@ -247,8 +246,8 @@ const GetEstimate: NextPage = () => {
             query: createContacts,
             variables: { 
               input: {
-                ...agentContactData,
-                createdDate: new Date().toISOString()
+                ...agentContactData
+              // createdAt is automatically managed by Amplify
               }
             }
           });
@@ -289,7 +288,7 @@ const GetEstimate: NextPage = () => {
             email: formData.agentInfo.email,
             phone: formData.agentInfo.phone,
             brokerage: formData.agentInfo.brokerage,
-            updatedDate: new Date().toISOString(),
+              // updatedAt is automatically managed by Amplify
             owner: recordOwner
           };
 
@@ -316,8 +315,8 @@ const GetEstimate: NextPage = () => {
               query: createContacts,
               variables: { 
                 input: {
-                  ...agentContactData,
-                  createdDate: new Date().toISOString()
+                  ...agentContactData
+              // createdAt is automatically managed by Amplify
                 }
               }
             });
@@ -354,7 +353,7 @@ const GetEstimate: NextPage = () => {
             lastName: formData.homeownerInfo.fullName.split(' ').slice(1).join(' ') || '',
             email: formData.homeownerInfo.email,
             phone: formData.homeownerInfo.phone,
-            updatedDate: new Date().toISOString(),
+              // updatedAt is automatically managed by Amplify
             owner: recordOwner
           };
 
@@ -381,8 +380,8 @@ const GetEstimate: NextPage = () => {
               query: createContacts,
               variables: { 
                 input: {
-                  ...homeownerContactData,
-                  createdDate: new Date().toISOString()
+                  ...homeownerContactData
+              // createdAt is automatically managed by Amplify
                 }
               }
             });
@@ -434,8 +433,7 @@ const GetEstimate: NextPage = () => {
         agentContactId: finalAgentContactId, // primary contact when emails match
         
         // System fields with proper user attribution
-        createdDate: new Date().toISOString(),
-        updatedDate: new Date().toISOString(),
+              // createdAt/updatedAt are automatically managed by Amplify
         owner: recordOwner
       };
       

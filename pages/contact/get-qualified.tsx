@@ -127,8 +127,7 @@ const GetQualified: NextPage = () => {
           city: formData.address.city,
           state: formData.address.state,
           zip: formData.address.zip,
-          createdDate: new Date().toISOString(),
-          updatedDate: new Date().toISOString(),
+              // createdAt/updatedAt are automatically managed by Amplify
           owner: recordOwner
         };
         
@@ -169,7 +168,7 @@ const GetQualified: NextPage = () => {
         lastName: formData.contactInfo.fullName.split(' ').slice(1).join(' ') || '',
         email: formData.contactInfo.email,
         phone: formData.contactInfo.phone,
-        updatedDate: new Date().toISOString(),
+              // updatedAt is automatically managed by Amplify
         owner: recordOwner
       };
 
@@ -204,8 +203,8 @@ const GetQualified: NextPage = () => {
           query: createContacts,
           variables: { 
             input: {
-              ...contactData,
-              createdDate: new Date().toISOString()
+              ...contactData
+              // createdAt is automatically managed by Amplify
             }
           }
         });
@@ -284,8 +283,7 @@ ${JSON.stringify({
         addressId: propertyData.id,
         
         // System fields with proper user attribution
-        createdDate: new Date().toISOString(),
-        updatedDate: new Date().toISOString(),
+              // createdAt/updatedAt are automatically managed by Amplify
         owner: recordOwner
       };
       

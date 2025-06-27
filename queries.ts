@@ -16,7 +16,6 @@ export const getAffiliates = /* GraphQL */ `query GetAffiliates($id: ID!) {
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -41,7 +40,6 @@ export const getAffiliates = /* GraphQL */ `query GetAffiliates($id: ID!) {
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -58,7 +56,6 @@ export const getAuditLog = /* GraphQL */ `query GetAuditLog($id: ID!) {
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -85,14 +82,12 @@ export const getAuditLog = /* GraphQL */ `query GetAuditLog($id: ID!) {
 export const getAuth = /* GraphQL */ `query GetAuth($id: ID!) {
   getAuth(id: $id) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -102,7 +97,6 @@ export const getBackOfficeAssignTo = /* GraphQL */ `query GetBackOfficeAssignTo(
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -112,7 +106,6 @@ export const getBackOfficeAssignTo = /* GraphQL */ `query GetBackOfficeAssignTo(
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -123,13 +116,11 @@ export const getBackOfficeAssignTo = /* GraphQL */ `query GetBackOfficeAssignTo(
 export const getBackOfficeBookingStatuses = /* GraphQL */ `query GetBackOfficeBookingStatuses($id: ID!) {
   getBackOfficeBookingStatuses(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -140,14 +131,12 @@ export const getBackOfficeBookingStatuses = /* GraphQL */ `query GetBackOfficeBo
 export const getBackOfficeBrokerage = /* GraphQL */ `query GetBackOfficeBrokerage($id: ID!) {
   getBackOfficeBrokerage(id: $id) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -162,14 +151,12 @@ export const getBackOfficeNotifications = /* GraphQL */ `query GetBackOfficeNoti
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -180,13 +167,11 @@ export const getBackOfficeNotifications = /* GraphQL */ `query GetBackOfficeNoti
 export const getBackOfficeProducts = /* GraphQL */ `query GetBackOfficeProducts($id: ID!) {
   getBackOfficeProducts(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -197,13 +182,11 @@ export const getBackOfficeProducts = /* GraphQL */ `query GetBackOfficeProducts(
 export const getBackOfficeProjectStatuses = /* GraphQL */ `query GetBackOfficeProjectStatuses($id: ID!) {
   getBackOfficeProjectStatuses(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -214,13 +197,11 @@ export const getBackOfficeProjectStatuses = /* GraphQL */ `query GetBackOfficePr
 export const getBackOfficeQuoteStatuses = /* GraphQL */ `query GetBackOfficeQuoteStatuses($id: ID!) {
   getBackOfficeQuoteStatuses(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -231,13 +212,11 @@ export const getBackOfficeQuoteStatuses = /* GraphQL */ `query GetBackOfficeQuot
 export const getBackOfficeRequestStatuses = /* GraphQL */ `query GetBackOfficeRequestStatuses($id: ID!) {
   getBackOfficeRequestStatuses(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -248,13 +227,11 @@ export const getBackOfficeRequestStatuses = /* GraphQL */ `query GetBackOfficeRe
 export const getBackOfficeRoleTypes = /* GraphQL */ `query GetBackOfficeRoleTypes($id: ID!) {
   getBackOfficeRoleTypes(id: $id) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -268,7 +245,6 @@ export const getContactAuditLog = /* GraphQL */ `query GetContactAuditLog($id: I
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -292,7 +268,6 @@ export const getContactUs = /* GraphQL */ `query GetContactUs($id: ID!) {
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -300,7 +275,6 @@ export const getContactUs = /* GraphQL */ `query GetContactUs($id: ID!) {
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -321,7 +295,6 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -347,7 +320,6 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -359,7 +331,6 @@ export const getESignatureDocuments = /* GraphQL */ `query GetESignatureDocument
   getESignatureDocuments(id: $id) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -377,7 +348,6 @@ export const getESignatureDocuments = /* GraphQL */ `query GetESignatureDocument
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -389,14 +359,12 @@ export const getLegal = /* GraphQL */ `query GetLegal($id: ID!) {
   getLegal(id: $id) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -404,7 +372,6 @@ export const getLegal = /* GraphQL */ `query GetLegal($id: ID!) {
 export const getMemberSignature = /* GraphQL */ `query GetMemberSignature($id: ID!) {
   getMemberSignature(id: $id) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -417,7 +384,6 @@ export const getMemberSignature = /* GraphQL */ `query GetMemberSignature($id: I
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -434,7 +400,6 @@ export const getPendingAppoitments = /* GraphQL */ `query GetPendingAppoitments(
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -447,7 +412,6 @@ export const getPendingAppoitments = /* GraphQL */ `query GetPendingAppoitments(
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -461,7 +425,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -495,7 +458,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -558,7 +520,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -567,7 +528,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -578,7 +538,6 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
 export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($id: ID!) {
   getProjectMilestones(id: $id) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -615,7 +574,6 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -678,7 +636,6 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -687,7 +644,6 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -698,7 +654,6 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
 export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerms($id: ID!) {
   getProjectPaymentTerms(id: $id) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -736,7 +691,6 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -799,7 +753,6 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -809,7 +762,6 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -820,14 +772,12 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
 export const getProjectPermissions = /* GraphQL */ `query GetProjectPermissions($id: ID!) {
   getProjectPermissions(id: $id) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -844,7 +794,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -855,7 +804,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -866,7 +814,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -876,7 +823,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -905,7 +851,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -925,7 +870,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -935,14 +879,12 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -952,7 +894,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -960,7 +901,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -970,7 +910,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -1035,7 +974,6 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1053,7 +991,6 @@ export const getProperties = /* GraphQL */ `query GetProperties($id: ID!) {
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -1068,7 +1005,6 @@ export const getProperties = /* GraphQL */ `query GetProperties($id: ID!) {
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -1083,7 +1019,6 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
   getQuoteItems(id: $id) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -1122,7 +1057,6 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1185,7 +1119,6 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1199,7 +1132,6 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1215,7 +1147,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1225,7 +1156,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -1243,7 +1173,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -1255,7 +1184,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1265,7 +1193,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -1307,7 +1234,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1370,7 +1296,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1403,7 +1328,6 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -1424,7 +1348,6 @@ export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -1445,7 +1368,6 @@ export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments
@@ -1472,7 +1394,6 @@ export const listAffiliates = /* GraphQL */ `query ListAffiliates(
       company
       contactId
       createdAt
-      createdDate
       date
       email
       environmentalFactor
@@ -1497,7 +1418,6 @@ export const listAffiliates = /* GraphQL */ `query ListAffiliates(
       slaCompanyEmail
       title
       updatedAt
-      updatedDate
       warrantyPeriod
       waterSystem
       workersCompensationInsurance
@@ -1522,7 +1442,6 @@ export const listAuditLogs = /* GraphQL */ `query ListAuditLogs(
       changeType
       changedFields
       createdAt
-      createdDate
       id
       ipAddress
       newData
@@ -1557,14 +1476,12 @@ export const listAuths = /* GraphQL */ `query ListAuths(
   listAuths(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       createdAt
-      createdDate
       email
       hash
       id
       owner
       token
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1586,7 +1503,6 @@ export const listBackOfficeAssignTos = /* GraphQL */ `query ListBackOfficeAssign
       active
       contactId
       createdAt
-      createdDate
       email
       id
       mobile
@@ -1596,7 +1512,6 @@ export const listBackOfficeAssignTos = /* GraphQL */ `query ListBackOfficeAssign
       sendEmailNotifications
       sendSmsNotifications
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1619,13 +1534,11 @@ export const listBackOfficeBookingStatuses = /* GraphQL */ `query ListBackOffice
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1648,14 +1561,12 @@ export const listBackOfficeBrokerages = /* GraphQL */ `query ListBackOfficeBroke
   ) {
     items {
       createdAt
-      createdDate
       id
       live
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1682,14 +1593,12 @@ export const listBackOfficeNotifications = /* GraphQL */ `query ListBackOfficeNo
       bodyAsSimpleText
       cc
       createdAt
-      createdDate
       id
       key
       owner
       subject
       to
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1712,13 +1621,11 @@ export const listBackOfficeProducts = /* GraphQL */ `query ListBackOfficeProduct
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1741,13 +1648,11 @@ export const listBackOfficeProjectStatuses = /* GraphQL */ `query ListBackOffice
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1770,13 +1675,11 @@ export const listBackOfficeQuoteStatuses = /* GraphQL */ `query ListBackOfficeQu
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1799,13 +1702,11 @@ export const listBackOfficeRequestStatuses = /* GraphQL */ `query ListBackOffice
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1828,13 +1729,11 @@ export const listBackOfficeRoleTypes = /* GraphQL */ `query ListBackOfficeRoleTy
   ) {
     items {
       createdAt
-      createdDate
       id
       order
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1856,7 +1755,6 @@ export const listContactAuditLogs = /* GraphQL */ `query ListContactAuditLogs(
       changeType
       contactId
       createdAt
-      createdDate
       email
       id
       ipAddress
@@ -1888,7 +1786,6 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1898,7 +1795,6 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1919,7 +1815,6 @@ export const listContactuses = /* GraphQL */ `query ListContactuses(
       addressId
       contactId
       createdAt
-      createdDate
       id
       message
       owner
@@ -1927,7 +1822,6 @@ export const listContactuses = /* GraphQL */ `query ListContactuses(
       subject
       submissionTime
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1951,7 +1845,6 @@ export const listESignatureDocuments = /* GraphQL */ `query ListESignatureDocume
     items {
       addressId
       createdAt
-      createdDate
       document
       documentData
       homeownerEmail
@@ -1969,7 +1862,6 @@ export const listESignatureDocuments = /* GraphQL */ `query ListESignatureDocume
       signedQuotePdfPublicUrl
       templateId
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -1989,14 +1881,12 @@ export const listLegals = /* GraphQL */ `query ListLegals(
     items {
       content
       createdAt
-      createdDate
       documentId
       id
       legalDocumentId
       owner
       title
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2015,7 +1905,6 @@ export const listMemberSignatures = /* GraphQL */ `query ListMemberSignatures(
   listMemberSignatures(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       createdAt
-      createdDate
       fullName
       id
       initials
@@ -2028,7 +1917,6 @@ export const listMemberSignatures = /* GraphQL */ `query ListMemberSignatures(
       signaturePublicUrl
       signatureWixUrl
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2057,7 +1945,6 @@ export const listPendingAppoitments = /* GraphQL */ `query ListPendingAppoitment
       assignedTo
       brokerage
       createdAt
-      createdDate
       email
       id
       name
@@ -2070,7 +1957,6 @@ export const listPendingAppoitments = /* GraphQL */ `query ListPendingAppoitment
       serviceName
       status
       updatedAt
-      updatedDate
       visitorId
       __typename
     }
@@ -2092,7 +1978,6 @@ export const listProjectComments = /* GraphQL */ `query ListProjectComments(
       addToGallery
       comment
       createdAt
-      createdDate
       files
       id
       isPrivate
@@ -2102,7 +1987,6 @@ export const listProjectComments = /* GraphQL */ `query ListProjectComments(
       postedByProfileImage
       projectId
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2121,7 +2005,6 @@ export const listProjectMilestones = /* GraphQL */ `query ListProjectMilestones(
   listProjectMilestones(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       createdAt
-      createdDate
       description
       estimatedFinish
       estimatedStart
@@ -2134,7 +2017,6 @@ export const listProjectMilestones = /* GraphQL */ `query ListProjectMilestones(
       owner
       projectId
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2157,7 +2039,6 @@ export const listProjectPaymentTerms = /* GraphQL */ `query ListProjectPaymentTe
   ) {
     items {
       createdAt
-      createdDate
       description
       id
       internal
@@ -2172,7 +2053,6 @@ export const listProjectPaymentTerms = /* GraphQL */ `query ListProjectPaymentTe
       projectId
       type
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2195,14 +2075,12 @@ export const listProjectPermissions = /* GraphQL */ `query ListProjectPermission
   ) {
     items {
       createdAt
-      createdDate
       id
       na
       owner
       permissions
       projectId
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2245,7 +2123,6 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2308,7 +2185,6 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2334,7 +2210,6 @@ export const listProperties = /* GraphQL */ `query ListProperties(
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -2345,7 +2220,6 @@ export const listProperties = /* GraphQL */ `query ListProperties(
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -2368,7 +2242,6 @@ export const listQuoteItems = /* GraphQL */ `query ListQuoteItems(
     items {
       cost
       createdAt
-      createdDate
       description
       id
       image
@@ -2388,7 +2261,6 @@ export const listQuoteItems = /* GraphQL */ `query ListQuoteItems(
       type
       unitPrice
       updatedAt
-      updatedDate
       __typename
     }
     nextToken
@@ -2423,7 +2295,6 @@ export const listQuotes = /* GraphQL */ `query ListQuotes(
       contractingStartDate
       convertedDate
       createdAt
-      createdDate
       creditScore
       document
       documents
@@ -2470,7 +2341,6 @@ export const listQuotes = /* GraphQL */ `query ListQuotes(
       underwritingApproved
       underwritingApprovedDate
       updatedAt
-      updatedDate
       viewedBy
       visitDate
       visitorId
@@ -2502,7 +2372,6 @@ export const listRequests = /* GraphQL */ `query ListRequests(
       bookingId
       budget
       createdAt
-      createdDate
       expiredDate
       homeownerContactId
       id
@@ -2523,7 +2392,6 @@ export const listRequests = /* GraphQL */ `query ListRequests(
       statusImage
       statusOrder
       updatedAt
-      updatedDate
       uploadedMedia
       uploadedVideos
       uplodedDocuments

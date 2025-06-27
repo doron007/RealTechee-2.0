@@ -18,7 +18,6 @@ export const onCreateAffiliates = /* GraphQL */ `subscription OnCreateAffiliates
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -43,7 +42,6 @@ export const onCreateAffiliates = /* GraphQL */ `subscription OnCreateAffiliates
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -60,7 +58,6 @@ export const onCreateAuditLog = /* GraphQL */ `subscription OnCreateAuditLog($fi
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -87,14 +84,12 @@ export const onCreateAuditLog = /* GraphQL */ `subscription OnCreateAuditLog($fi
 export const onCreateAuth = /* GraphQL */ `subscription OnCreateAuth($filter: ModelSubscriptionAuthFilterInput) {
   onCreateAuth(filter: $filter) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -109,7 +104,6 @@ export const onCreateBackOfficeAssignTo = /* GraphQL */ `subscription OnCreateBa
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -119,7 +113,6 @@ export const onCreateBackOfficeAssignTo = /* GraphQL */ `subscription OnCreateBa
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -132,13 +125,11 @@ export const onCreateBackOfficeBookingStatuses = /* GraphQL */ `subscription OnC
 ) {
   onCreateBackOfficeBookingStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -151,14 +142,12 @@ export const onCreateBackOfficeBrokerage = /* GraphQL */ `subscription OnCreateB
 ) {
   onCreateBackOfficeBrokerage(filter: $filter) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -175,14 +164,12 @@ export const onCreateBackOfficeNotifications = /* GraphQL */ `subscription OnCre
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -195,13 +182,11 @@ export const onCreateBackOfficeProducts = /* GraphQL */ `subscription OnCreateBa
 ) {
   onCreateBackOfficeProducts(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -214,13 +199,11 @@ export const onCreateBackOfficeProjectStatuses = /* GraphQL */ `subscription OnC
 ) {
   onCreateBackOfficeProjectStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -233,13 +216,11 @@ export const onCreateBackOfficeQuoteStatuses = /* GraphQL */ `subscription OnCre
 ) {
   onCreateBackOfficeQuoteStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -252,13 +233,11 @@ export const onCreateBackOfficeRequestStatuses = /* GraphQL */ `subscription OnC
 ) {
   onCreateBackOfficeRequestStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -271,13 +250,11 @@ export const onCreateBackOfficeRoleTypes = /* GraphQL */ `subscription OnCreateB
 ) {
   onCreateBackOfficeRoleTypes(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -293,7 +270,6 @@ export const onCreateContactAuditLog = /* GraphQL */ `subscription OnCreateConta
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -317,7 +293,6 @@ export const onCreateContactUs = /* GraphQL */ `subscription OnCreateContactUs($
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -325,7 +300,6 @@ export const onCreateContactUs = /* GraphQL */ `subscription OnCreateContactUs($
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -346,7 +320,6 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -372,7 +345,6 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -386,7 +358,6 @@ export const onCreateESignatureDocuments = /* GraphQL */ `subscription OnCreateE
   onCreateESignatureDocuments(filter: $filter) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -404,7 +375,6 @@ export const onCreateESignatureDocuments = /* GraphQL */ `subscription OnCreateE
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -416,14 +386,12 @@ export const onCreateLegal = /* GraphQL */ `subscription OnCreateLegal($filter: 
   onCreateLegal(filter: $filter) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -436,7 +404,6 @@ export const onCreateMemberSignature = /* GraphQL */ `subscription OnCreateMembe
 ) {
   onCreateMemberSignature(filter: $filter) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -449,7 +416,6 @@ export const onCreateMemberSignature = /* GraphQL */ `subscription OnCreateMembe
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -468,7 +434,6 @@ export const onCreatePendingAppoitments = /* GraphQL */ `subscription OnCreatePe
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -481,7 +446,6 @@ export const onCreatePendingAppoitments = /* GraphQL */ `subscription OnCreatePe
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -498,7 +462,6 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -532,7 +495,6 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -595,7 +557,6 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -604,7 +565,6 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -617,7 +577,6 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
 ) {
   onCreateProjectMilestones(filter: $filter) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -654,7 +613,6 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -717,7 +675,6 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -726,7 +683,6 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -739,7 +695,6 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
 ) {
   onCreateProjectPaymentTerms(filter: $filter) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -777,7 +732,6 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -840,7 +794,6 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -850,7 +803,6 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -863,14 +815,12 @@ export const onCreateProjectPermissions = /* GraphQL */ `subscription OnCreatePr
 ) {
   onCreateProjectPermissions(filter: $filter) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -887,7 +837,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -898,7 +847,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -909,7 +857,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -919,7 +866,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -948,7 +894,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -968,7 +913,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -978,14 +922,12 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -995,7 +937,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -1003,7 +944,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1013,7 +953,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -1078,7 +1017,6 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1098,7 +1036,6 @@ export const onCreateProperties = /* GraphQL */ `subscription OnCreateProperties
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -1113,7 +1050,6 @@ export const onCreateProperties = /* GraphQL */ `subscription OnCreateProperties
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -1130,7 +1066,6 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
   onCreateQuoteItems(filter: $filter) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -1169,7 +1104,6 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1232,7 +1166,6 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1246,7 +1179,6 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1262,7 +1194,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1272,7 +1203,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -1290,7 +1220,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -1302,7 +1231,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1312,7 +1240,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -1354,7 +1281,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1417,7 +1343,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1450,7 +1375,6 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -1474,7 +1398,6 @@ export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($fi
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -1495,7 +1418,6 @@ export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($fi
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments
@@ -1519,7 +1441,6 @@ export const onDeleteAffiliates = /* GraphQL */ `subscription OnDeleteAffiliates
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -1544,7 +1465,6 @@ export const onDeleteAffiliates = /* GraphQL */ `subscription OnDeleteAffiliates
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -1561,7 +1481,6 @@ export const onDeleteAuditLog = /* GraphQL */ `subscription OnDeleteAuditLog($fi
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -1588,14 +1507,12 @@ export const onDeleteAuditLog = /* GraphQL */ `subscription OnDeleteAuditLog($fi
 export const onDeleteAuth = /* GraphQL */ `subscription OnDeleteAuth($filter: ModelSubscriptionAuthFilterInput) {
   onDeleteAuth(filter: $filter) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1610,7 +1527,6 @@ export const onDeleteBackOfficeAssignTo = /* GraphQL */ `subscription OnDeleteBa
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -1620,7 +1536,6 @@ export const onDeleteBackOfficeAssignTo = /* GraphQL */ `subscription OnDeleteBa
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1633,13 +1548,11 @@ export const onDeleteBackOfficeBookingStatuses = /* GraphQL */ `subscription OnD
 ) {
   onDeleteBackOfficeBookingStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1652,14 +1565,12 @@ export const onDeleteBackOfficeBrokerage = /* GraphQL */ `subscription OnDeleteB
 ) {
   onDeleteBackOfficeBrokerage(filter: $filter) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1676,14 +1587,12 @@ export const onDeleteBackOfficeNotifications = /* GraphQL */ `subscription OnDel
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1696,13 +1605,11 @@ export const onDeleteBackOfficeProducts = /* GraphQL */ `subscription OnDeleteBa
 ) {
   onDeleteBackOfficeProducts(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1715,13 +1622,11 @@ export const onDeleteBackOfficeProjectStatuses = /* GraphQL */ `subscription OnD
 ) {
   onDeleteBackOfficeProjectStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1734,13 +1639,11 @@ export const onDeleteBackOfficeQuoteStatuses = /* GraphQL */ `subscription OnDel
 ) {
   onDeleteBackOfficeQuoteStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1753,13 +1656,11 @@ export const onDeleteBackOfficeRequestStatuses = /* GraphQL */ `subscription OnD
 ) {
   onDeleteBackOfficeRequestStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1772,13 +1673,11 @@ export const onDeleteBackOfficeRoleTypes = /* GraphQL */ `subscription OnDeleteB
 ) {
   onDeleteBackOfficeRoleTypes(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1794,7 +1693,6 @@ export const onDeleteContactAuditLog = /* GraphQL */ `subscription OnDeleteConta
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -1818,7 +1716,6 @@ export const onDeleteContactUs = /* GraphQL */ `subscription OnDeleteContactUs($
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -1826,7 +1723,6 @@ export const onDeleteContactUs = /* GraphQL */ `subscription OnDeleteContactUs($
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1847,7 +1743,6 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -1873,7 +1768,6 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1887,7 +1781,6 @@ export const onDeleteESignatureDocuments = /* GraphQL */ `subscription OnDeleteE
   onDeleteESignatureDocuments(filter: $filter) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -1905,7 +1798,6 @@ export const onDeleteESignatureDocuments = /* GraphQL */ `subscription OnDeleteE
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1917,14 +1809,12 @@ export const onDeleteLegal = /* GraphQL */ `subscription OnDeleteLegal($filter: 
   onDeleteLegal(filter: $filter) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1937,7 +1827,6 @@ export const onDeleteMemberSignature = /* GraphQL */ `subscription OnDeleteMembe
 ) {
   onDeleteMemberSignature(filter: $filter) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -1950,7 +1839,6 @@ export const onDeleteMemberSignature = /* GraphQL */ `subscription OnDeleteMembe
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1969,7 +1857,6 @@ export const onDeletePendingAppoitments = /* GraphQL */ `subscription OnDeletePe
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -1982,7 +1869,6 @@ export const onDeletePendingAppoitments = /* GraphQL */ `subscription OnDeletePe
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -1999,7 +1885,6 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -2033,7 +1918,6 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2096,7 +1980,6 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2105,7 +1988,6 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2118,7 +2000,6 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
 ) {
   onDeleteProjectMilestones(filter: $filter) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -2155,7 +2036,6 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2218,7 +2098,6 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2227,7 +2106,6 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2240,7 +2118,6 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
 ) {
   onDeleteProjectPaymentTerms(filter: $filter) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -2278,7 +2155,6 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2341,7 +2217,6 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2351,7 +2226,6 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2364,14 +2238,12 @@ export const onDeleteProjectPermissions = /* GraphQL */ `subscription OnDeletePr
 ) {
   onDeleteProjectPermissions(filter: $filter) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2388,7 +2260,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -2399,7 +2270,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -2410,7 +2280,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2420,7 +2289,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -2449,7 +2317,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -2469,7 +2336,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2479,14 +2345,12 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2496,7 +2360,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -2504,7 +2367,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2514,7 +2376,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -2579,7 +2440,6 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -2599,7 +2459,6 @@ export const onDeleteProperties = /* GraphQL */ `subscription OnDeleteProperties
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -2614,7 +2473,6 @@ export const onDeleteProperties = /* GraphQL */ `subscription OnDeleteProperties
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -2631,7 +2489,6 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
   onDeleteQuoteItems(filter: $filter) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -2670,7 +2527,6 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2733,7 +2589,6 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2747,7 +2602,6 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2763,7 +2617,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2773,7 +2626,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -2791,7 +2643,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -2803,7 +2654,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2813,7 +2663,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -2855,7 +2704,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2918,7 +2766,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2951,7 +2798,6 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -2975,7 +2821,6 @@ export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($fi
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -2996,7 +2841,6 @@ export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($fi
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments
@@ -3020,7 +2864,6 @@ export const onUpdateAffiliates = /* GraphQL */ `subscription OnUpdateAffiliates
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -3045,7 +2888,6 @@ export const onUpdateAffiliates = /* GraphQL */ `subscription OnUpdateAffiliates
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -3062,7 +2904,6 @@ export const onUpdateAuditLog = /* GraphQL */ `subscription OnUpdateAuditLog($fi
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -3089,14 +2930,12 @@ export const onUpdateAuditLog = /* GraphQL */ `subscription OnUpdateAuditLog($fi
 export const onUpdateAuth = /* GraphQL */ `subscription OnUpdateAuth($filter: ModelSubscriptionAuthFilterInput) {
   onUpdateAuth(filter: $filter) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3111,7 +2950,6 @@ export const onUpdateBackOfficeAssignTo = /* GraphQL */ `subscription OnUpdateBa
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -3121,7 +2959,6 @@ export const onUpdateBackOfficeAssignTo = /* GraphQL */ `subscription OnUpdateBa
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3134,13 +2971,11 @@ export const onUpdateBackOfficeBookingStatuses = /* GraphQL */ `subscription OnU
 ) {
   onUpdateBackOfficeBookingStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3153,14 +2988,12 @@ export const onUpdateBackOfficeBrokerage = /* GraphQL */ `subscription OnUpdateB
 ) {
   onUpdateBackOfficeBrokerage(filter: $filter) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3177,14 +3010,12 @@ export const onUpdateBackOfficeNotifications = /* GraphQL */ `subscription OnUpd
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3197,13 +3028,11 @@ export const onUpdateBackOfficeProducts = /* GraphQL */ `subscription OnUpdateBa
 ) {
   onUpdateBackOfficeProducts(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3216,13 +3045,11 @@ export const onUpdateBackOfficeProjectStatuses = /* GraphQL */ `subscription OnU
 ) {
   onUpdateBackOfficeProjectStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3235,13 +3062,11 @@ export const onUpdateBackOfficeQuoteStatuses = /* GraphQL */ `subscription OnUpd
 ) {
   onUpdateBackOfficeQuoteStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3254,13 +3079,11 @@ export const onUpdateBackOfficeRequestStatuses = /* GraphQL */ `subscription OnU
 ) {
   onUpdateBackOfficeRequestStatuses(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3273,13 +3096,11 @@ export const onUpdateBackOfficeRoleTypes = /* GraphQL */ `subscription OnUpdateB
 ) {
   onUpdateBackOfficeRoleTypes(filter: $filter) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3295,7 +3116,6 @@ export const onUpdateContactAuditLog = /* GraphQL */ `subscription OnUpdateConta
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -3319,7 +3139,6 @@ export const onUpdateContactUs = /* GraphQL */ `subscription OnUpdateContactUs($
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -3327,7 +3146,6 @@ export const onUpdateContactUs = /* GraphQL */ `subscription OnUpdateContactUs($
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3348,7 +3166,6 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -3374,7 +3191,6 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3388,7 +3204,6 @@ export const onUpdateESignatureDocuments = /* GraphQL */ `subscription OnUpdateE
   onUpdateESignatureDocuments(filter: $filter) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -3406,7 +3221,6 @@ export const onUpdateESignatureDocuments = /* GraphQL */ `subscription OnUpdateE
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3418,14 +3232,12 @@ export const onUpdateLegal = /* GraphQL */ `subscription OnUpdateLegal($filter: 
   onUpdateLegal(filter: $filter) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3438,7 +3250,6 @@ export const onUpdateMemberSignature = /* GraphQL */ `subscription OnUpdateMembe
 ) {
   onUpdateMemberSignature(filter: $filter) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -3451,7 +3262,6 @@ export const onUpdateMemberSignature = /* GraphQL */ `subscription OnUpdateMembe
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3470,7 +3280,6 @@ export const onUpdatePendingAppoitments = /* GraphQL */ `subscription OnUpdatePe
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -3483,7 +3292,6 @@ export const onUpdatePendingAppoitments = /* GraphQL */ `subscription OnUpdatePe
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -3500,7 +3308,6 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -3534,7 +3341,6 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3597,7 +3403,6 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3606,7 +3411,6 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3619,7 +3423,6 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
 ) {
   onUpdateProjectMilestones(filter: $filter) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -3656,7 +3459,6 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3719,7 +3521,6 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3728,7 +3529,6 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3741,7 +3541,6 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
 ) {
   onUpdateProjectPaymentTerms(filter: $filter) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -3779,7 +3578,6 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3842,7 +3640,6 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3852,7 +3649,6 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3865,14 +3661,12 @@ export const onUpdateProjectPermissions = /* GraphQL */ `subscription OnUpdatePr
 ) {
   onUpdateProjectPermissions(filter: $filter) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3889,7 +3683,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -3900,7 +3693,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -3911,7 +3703,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -3921,7 +3712,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -3950,7 +3740,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -3970,7 +3759,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -3980,14 +3768,12 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -3997,7 +3783,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -4005,7 +3790,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4015,7 +3799,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -4080,7 +3863,6 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -4100,7 +3882,6 @@ export const onUpdateProperties = /* GraphQL */ `subscription OnUpdateProperties
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -4115,7 +3896,6 @@ export const onUpdateProperties = /* GraphQL */ `subscription OnUpdateProperties
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -4132,7 +3912,6 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
   onUpdateQuoteItems(filter: $filter) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -4171,7 +3950,6 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -4234,7 +4012,6 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4248,7 +4025,6 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -4264,7 +4040,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4274,7 +4049,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -4292,7 +4066,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -4304,7 +4077,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4314,7 +4086,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -4356,7 +4127,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -4419,7 +4189,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4452,7 +4221,6 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -4476,7 +4244,6 @@ export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($fi
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -4497,7 +4264,6 @@ export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($fi
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments

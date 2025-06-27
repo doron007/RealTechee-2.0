@@ -118,11 +118,11 @@ async function mapProjectForUI(project: Project): Promise<Project> {
     gallery: processedGallery, // Use processed Gallery
     category: project.propertyType || "",
     location: locationPart,
-    completionDate: project.createdDate || "",
+    completionDate: project.createdAt || "",
     budget: project.budget || "",
     featured: project.status === "Completed",
-    createdAt: project.createdDate || "",
-    updatedAt: project.updatedDate || ""
+    createdAt: project.createdAt || "",
+    updatedAt: project.updatedAt || ""
   };
 }
 
@@ -210,9 +210,9 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
         return aOrder - bOrder;
       }
       
-      // Then sort by updated date in descending order
-      const aDate = new Date(a.updatedAt || a.updatedDate || 0);
-      const bDate = new Date(b.updatedAt || b.updatedDate || 0);
+      // Then sort by updated date in descending order (using automatic timestamps)
+      const aDate = new Date(a.updatedAt || 0);
+      const bDate = new Date(b.updatedAt || 0);
       return bDate.getTime() - aDate.getTime();
     });
   } catch (error) {
@@ -246,13 +246,11 @@ export async function createProject(projectData: Omit<Project, 'id' | 'createdAt
     initializeProjectsFile();
     const projects = readCsvFile<Project>(PROJECTS_CSV_PATH);
     
-    // Create a new project with generated ID and timestamps
-    const now = new Date().toISOString();
+    // Create a new project with generated ID (timestamps managed by Amplify)
     const newProject: Project = {
       ...projectData,
-      id: `project-${uuidv4().substring(0, 8)}`,
-      createdAt: now,
-      updatedAt: now
+      id: `project-${uuidv4().substring(0, 8)}`
+      // createdAt/updatedAt are automatically managed by Amplify
     };
     
     // Add to projects and write back to CSV
@@ -280,11 +278,11 @@ export async function updateProject(id: string, projectData: Partial<Project>): 
       return null;
     }
     
-    // Update the project with new data
+    // Update the project with new data (updatedAt managed by Amplify)
     const updatedProject: Project = {
       ...projects[projectIndex],
-      ...projectData,
-      updatedAt: new Date().toISOString()
+      ...projectData
+      // updatedAt is automatically managed by Amplify
     };
     
     // Replace the project in the array and write back to CSV

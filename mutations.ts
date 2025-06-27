@@ -19,7 +19,6 @@ export const createAffiliates = /* GraphQL */ `mutation CreateAffiliates(
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -44,7 +43,6 @@ export const createAffiliates = /* GraphQL */ `mutation CreateAffiliates(
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -64,7 +62,6 @@ export const createAuditLog = /* GraphQL */ `mutation CreateAuditLog(
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -94,14 +91,12 @@ export const createAuth = /* GraphQL */ `mutation CreateAuth(
 ) {
   createAuth(condition: $condition, input: $input) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -117,7 +112,6 @@ export const createBackOfficeAssignTo = /* GraphQL */ `mutation CreateBackOffice
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -127,7 +121,6 @@ export const createBackOfficeAssignTo = /* GraphQL */ `mutation CreateBackOffice
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -141,13 +134,11 @@ export const createBackOfficeBookingStatuses = /* GraphQL */ `mutation CreateBac
 ) {
   createBackOfficeBookingStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -161,14 +152,12 @@ export const createBackOfficeBrokerage = /* GraphQL */ `mutation CreateBackOffic
 ) {
   createBackOfficeBrokerage(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -186,14 +175,12 @@ export const createBackOfficeNotifications = /* GraphQL */ `mutation CreateBackO
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -207,13 +194,11 @@ export const createBackOfficeProducts = /* GraphQL */ `mutation CreateBackOffice
 ) {
   createBackOfficeProducts(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -227,13 +212,11 @@ export const createBackOfficeProjectStatuses = /* GraphQL */ `mutation CreateBac
 ) {
   createBackOfficeProjectStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -247,13 +230,11 @@ export const createBackOfficeQuoteStatuses = /* GraphQL */ `mutation CreateBackO
 ) {
   createBackOfficeQuoteStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -267,13 +248,11 @@ export const createBackOfficeRequestStatuses = /* GraphQL */ `mutation CreateBac
 ) {
   createBackOfficeRequestStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -287,13 +266,11 @@ export const createBackOfficeRoleTypes = /* GraphQL */ `mutation CreateBackOffic
 ) {
   createBackOfficeRoleTypes(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -310,7 +287,6 @@ export const createContactAuditLog = /* GraphQL */ `mutation CreateContactAuditL
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -337,7 +313,6 @@ export const createContactUs = /* GraphQL */ `mutation CreateContactUs(
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -345,7 +320,6 @@ export const createContactUs = /* GraphQL */ `mutation CreateContactUs(
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -369,7 +343,6 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -395,7 +368,6 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -410,7 +382,6 @@ export const createESignatureDocuments = /* GraphQL */ `mutation CreateESignatur
   createESignatureDocuments(condition: $condition, input: $input) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -428,7 +399,6 @@ export const createESignatureDocuments = /* GraphQL */ `mutation CreateESignatur
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -443,14 +413,12 @@ export const createLegal = /* GraphQL */ `mutation CreateLegal(
   createLegal(condition: $condition, input: $input) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -464,7 +432,6 @@ export const createMemberSignature = /* GraphQL */ `mutation CreateMemberSignatu
 ) {
   createMemberSignature(condition: $condition, input: $input) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -477,7 +444,6 @@ export const createMemberSignature = /* GraphQL */ `mutation CreateMemberSignatu
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -497,7 +463,6 @@ export const createPendingAppoitments = /* GraphQL */ `mutation CreatePendingApp
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -510,7 +475,6 @@ export const createPendingAppoitments = /* GraphQL */ `mutation CreatePendingApp
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -527,7 +491,6 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -561,7 +524,6 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -624,7 +586,6 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -633,7 +594,6 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -647,7 +607,6 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
 ) {
   createProjectMilestones(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -684,7 +643,6 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -747,7 +705,6 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -756,7 +713,6 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -770,7 +726,6 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
 ) {
   createProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -808,7 +763,6 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -871,7 +825,6 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -881,7 +834,6 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -895,14 +847,12 @@ export const createProjectPermissions = /* GraphQL */ `mutation CreateProjectPer
 ) {
   createProjectPermissions(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -922,7 +872,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -933,7 +882,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -944,7 +892,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -954,7 +901,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -983,7 +929,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -1003,7 +948,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1013,14 +957,12 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1030,7 +972,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -1038,7 +979,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1048,7 +988,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -1113,7 +1052,6 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1134,7 +1072,6 @@ export const createProperties = /* GraphQL */ `mutation CreateProperties(
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -1149,7 +1086,6 @@ export const createProperties = /* GraphQL */ `mutation CreateProperties(
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -1167,7 +1103,6 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
   createQuoteItems(condition: $condition, input: $input) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -1206,7 +1141,6 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1269,7 +1203,6 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1283,7 +1216,6 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1302,7 +1234,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1312,7 +1243,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -1330,7 +1260,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -1342,7 +1271,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -1352,7 +1280,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -1394,7 +1321,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -1457,7 +1383,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1490,7 +1415,6 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -1517,7 +1441,6 @@ export const createRequests = /* GraphQL */ `mutation CreateRequests(
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -1538,7 +1461,6 @@ export const createRequests = /* GraphQL */ `mutation CreateRequests(
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments
@@ -1563,7 +1485,6 @@ export const deleteAffiliates = /* GraphQL */ `mutation DeleteAffiliates(
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -1588,7 +1509,6 @@ export const deleteAffiliates = /* GraphQL */ `mutation DeleteAffiliates(
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -1608,7 +1528,6 @@ export const deleteAuditLog = /* GraphQL */ `mutation DeleteAuditLog(
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -1638,14 +1557,12 @@ export const deleteAuth = /* GraphQL */ `mutation DeleteAuth(
 ) {
   deleteAuth(condition: $condition, input: $input) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1661,7 +1578,6 @@ export const deleteBackOfficeAssignTo = /* GraphQL */ `mutation DeleteBackOffice
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -1671,7 +1587,6 @@ export const deleteBackOfficeAssignTo = /* GraphQL */ `mutation DeleteBackOffice
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1685,13 +1600,11 @@ export const deleteBackOfficeBookingStatuses = /* GraphQL */ `mutation DeleteBac
 ) {
   deleteBackOfficeBookingStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1705,14 +1618,12 @@ export const deleteBackOfficeBrokerage = /* GraphQL */ `mutation DeleteBackOffic
 ) {
   deleteBackOfficeBrokerage(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1730,14 +1641,12 @@ export const deleteBackOfficeNotifications = /* GraphQL */ `mutation DeleteBackO
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1751,13 +1660,11 @@ export const deleteBackOfficeProducts = /* GraphQL */ `mutation DeleteBackOffice
 ) {
   deleteBackOfficeProducts(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1771,13 +1678,11 @@ export const deleteBackOfficeProjectStatuses = /* GraphQL */ `mutation DeleteBac
 ) {
   deleteBackOfficeProjectStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1791,13 +1696,11 @@ export const deleteBackOfficeQuoteStatuses = /* GraphQL */ `mutation DeleteBackO
 ) {
   deleteBackOfficeQuoteStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1811,13 +1714,11 @@ export const deleteBackOfficeRequestStatuses = /* GraphQL */ `mutation DeleteBac
 ) {
   deleteBackOfficeRequestStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1831,13 +1732,11 @@ export const deleteBackOfficeRoleTypes = /* GraphQL */ `mutation DeleteBackOffic
 ) {
   deleteBackOfficeRoleTypes(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1854,7 +1753,6 @@ export const deleteContactAuditLog = /* GraphQL */ `mutation DeleteContactAuditL
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -1881,7 +1779,6 @@ export const deleteContactUs = /* GraphQL */ `mutation DeleteContactUs(
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -1889,7 +1786,6 @@ export const deleteContactUs = /* GraphQL */ `mutation DeleteContactUs(
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1913,7 +1809,6 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -1939,7 +1834,6 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1954,7 +1848,6 @@ export const deleteESignatureDocuments = /* GraphQL */ `mutation DeleteESignatur
   deleteESignatureDocuments(condition: $condition, input: $input) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -1972,7 +1865,6 @@ export const deleteESignatureDocuments = /* GraphQL */ `mutation DeleteESignatur
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -1987,14 +1879,12 @@ export const deleteLegal = /* GraphQL */ `mutation DeleteLegal(
   deleteLegal(condition: $condition, input: $input) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2008,7 +1898,6 @@ export const deleteMemberSignature = /* GraphQL */ `mutation DeleteMemberSignatu
 ) {
   deleteMemberSignature(condition: $condition, input: $input) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -2021,7 +1910,6 @@ export const deleteMemberSignature = /* GraphQL */ `mutation DeleteMemberSignatu
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2041,7 +1929,6 @@ export const deletePendingAppoitments = /* GraphQL */ `mutation DeletePendingApp
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -2054,7 +1941,6 @@ export const deletePendingAppoitments = /* GraphQL */ `mutation DeletePendingApp
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -2071,7 +1957,6 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -2105,7 +1990,6 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2168,7 +2052,6 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2177,7 +2060,6 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2191,7 +2073,6 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
 ) {
   deleteProjectMilestones(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -2228,7 +2109,6 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2291,7 +2171,6 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2300,7 +2179,6 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2314,7 +2192,6 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
 ) {
   deleteProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -2352,7 +2229,6 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2415,7 +2291,6 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2425,7 +2300,6 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2439,14 +2313,12 @@ export const deleteProjectPermissions = /* GraphQL */ `mutation DeleteProjectPer
 ) {
   deleteProjectPermissions(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2466,7 +2338,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -2477,7 +2348,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -2488,7 +2358,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2498,7 +2367,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -2527,7 +2395,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -2547,7 +2414,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2557,14 +2423,12 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2574,7 +2438,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -2582,7 +2445,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2592,7 +2454,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -2657,7 +2518,6 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -2678,7 +2538,6 @@ export const deleteProperties = /* GraphQL */ `mutation DeleteProperties(
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -2693,7 +2552,6 @@ export const deleteProperties = /* GraphQL */ `mutation DeleteProperties(
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -2711,7 +2569,6 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
   deleteQuoteItems(condition: $condition, input: $input) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -2750,7 +2607,6 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -2813,7 +2669,6 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2827,7 +2682,6 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -2846,7 +2700,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2856,7 +2709,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -2874,7 +2726,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -2886,7 +2737,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -2896,7 +2746,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -2938,7 +2787,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3001,7 +2849,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3034,7 +2881,6 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -3061,7 +2907,6 @@ export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -3082,7 +2927,6 @@ export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments
@@ -3107,7 +2951,6 @@ export const updateAffiliates = /* GraphQL */ `mutation UpdateAffiliates(
     company
     contactId
     createdAt
-    createdDate
     date
     email
     environmentalFactor
@@ -3132,7 +2975,6 @@ export const updateAffiliates = /* GraphQL */ `mutation UpdateAffiliates(
     slaCompanyEmail
     title
     updatedAt
-    updatedDate
     warrantyPeriod
     waterSystem
     workersCompensationInsurance
@@ -3152,7 +2994,6 @@ export const updateAuditLog = /* GraphQL */ `mutation UpdateAuditLog(
     changeType
     changedFields
     createdAt
-    createdDate
     id
     ipAddress
     newData
@@ -3182,14 +3023,12 @@ export const updateAuth = /* GraphQL */ `mutation UpdateAuth(
 ) {
   updateAuth(condition: $condition, input: $input) {
     createdAt
-    createdDate
     email
     hash
     id
     owner
     token
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3205,7 +3044,6 @@ export const updateBackOfficeAssignTo = /* GraphQL */ `mutation UpdateBackOffice
     active
     contactId
     createdAt
-    createdDate
     email
     id
     mobile
@@ -3215,7 +3053,6 @@ export const updateBackOfficeAssignTo = /* GraphQL */ `mutation UpdateBackOffice
     sendEmailNotifications
     sendSmsNotifications
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3229,13 +3066,11 @@ export const updateBackOfficeBookingStatuses = /* GraphQL */ `mutation UpdateBac
 ) {
   updateBackOfficeBookingStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3249,14 +3084,12 @@ export const updateBackOfficeBrokerage = /* GraphQL */ `mutation UpdateBackOffic
 ) {
   updateBackOfficeBrokerage(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     live
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3274,14 +3107,12 @@ export const updateBackOfficeNotifications = /* GraphQL */ `mutation UpdateBackO
     bodyAsSimpleText
     cc
     createdAt
-    createdDate
     id
     key
     owner
     subject
     to
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3295,13 +3126,11 @@ export const updateBackOfficeProducts = /* GraphQL */ `mutation UpdateBackOffice
 ) {
   updateBackOfficeProducts(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3315,13 +3144,11 @@ export const updateBackOfficeProjectStatuses = /* GraphQL */ `mutation UpdateBac
 ) {
   updateBackOfficeProjectStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3335,13 +3162,11 @@ export const updateBackOfficeQuoteStatuses = /* GraphQL */ `mutation UpdateBackO
 ) {
   updateBackOfficeQuoteStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3355,13 +3180,11 @@ export const updateBackOfficeRequestStatuses = /* GraphQL */ `mutation UpdateBac
 ) {
   updateBackOfficeRequestStatuses(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3375,13 +3198,11 @@ export const updateBackOfficeRoleTypes = /* GraphQL */ `mutation UpdateBackOffic
 ) {
   updateBackOfficeRoleTypes(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     order
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3398,7 +3219,6 @@ export const updateContactAuditLog = /* GraphQL */ `mutation UpdateContactAuditL
     changeType
     contactId
     createdAt
-    createdDate
     email
     id
     ipAddress
@@ -3425,7 +3245,6 @@ export const updateContactUs = /* GraphQL */ `mutation UpdateContactUs(
     addressId
     contactId
     createdAt
-    createdDate
     id
     message
     owner
@@ -3433,7 +3252,6 @@ export const updateContactUs = /* GraphQL */ `mutation UpdateContactUs(
     subject
     submissionTime
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3457,7 +3275,6 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
     brokerage
     company
     createdAt
-    createdDate
     email
     firstName
     fullName
@@ -3483,7 +3300,6 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
     owner
     phone
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3498,7 +3314,6 @@ export const updateESignatureDocuments = /* GraphQL */ `mutation UpdateESignatur
   updateESignatureDocuments(condition: $condition, input: $input) {
     addressId
     createdAt
-    createdDate
     document
     documentData
     homeownerEmail
@@ -3516,7 +3331,6 @@ export const updateESignatureDocuments = /* GraphQL */ `mutation UpdateESignatur
     signedQuotePdfPublicUrl
     templateId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3531,14 +3345,12 @@ export const updateLegal = /* GraphQL */ `mutation UpdateLegal(
   updateLegal(condition: $condition, input: $input) {
     content
     createdAt
-    createdDate
     documentId
     id
     legalDocumentId
     owner
     title
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3552,7 +3364,6 @@ export const updateMemberSignature = /* GraphQL */ `mutation UpdateMemberSignatu
 ) {
   updateMemberSignature(condition: $condition, input: $input) {
     createdAt
-    createdDate
     fullName
     id
     initials
@@ -3565,7 +3376,6 @@ export const updateMemberSignature = /* GraphQL */ `mutation UpdateMemberSignatu
     signaturePublicUrl
     signatureWixUrl
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3585,7 +3395,6 @@ export const updatePendingAppoitments = /* GraphQL */ `mutation UpdatePendingApp
     assignedTo
     brokerage
     createdAt
-    createdDate
     email
     id
     name
@@ -3598,7 +3407,6 @@ export const updatePendingAppoitments = /* GraphQL */ `mutation UpdatePendingApp
     serviceName
     status
     updatedAt
-    updatedDate
     visitorId
     __typename
   }
@@ -3615,7 +3423,6 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
     addToGallery
     comment
     createdAt
-    createdDate
     files
     id
     isPrivate
@@ -3649,7 +3456,6 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3712,7 +3518,6 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3721,7 +3526,6 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3735,7 +3539,6 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
 ) {
   updateProjectMilestones(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -3772,7 +3575,6 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3835,7 +3637,6 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3844,7 +3645,6 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
     }
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3858,7 +3658,6 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
 ) {
   updateProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
-    createdDate
     description
     id
     internal
@@ -3896,7 +3695,6 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -3959,7 +3757,6 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3969,7 +3766,6 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
     projectId
     type
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -3983,14 +3779,12 @@ export const updateProjectPermissions = /* GraphQL */ `mutation UpdateProjectPer
 ) {
   updateProjectPermissions(condition: $condition, input: $input) {
     createdAt
-    createdDate
     id
     na
     owner
     permissions
     projectId
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -4010,7 +3804,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       bedrooms
       city
       createdAt
-      createdDate
       floors
       houseAddress
       id
@@ -4021,7 +3814,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       sizeSqft
       state
       updatedAt
-      updatedDate
       yearBuilt
       zillowLink
       zip
@@ -4032,7 +3824,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4042,7 +3833,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -4071,7 +3861,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     contractUrl
     contractingStartDate
     createdAt
-    createdDate
     daysOnMarket
     description
     documents
@@ -4091,7 +3880,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4101,14 +3889,12 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2 {
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4118,7 +3904,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -4126,7 +3911,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4136,7 +3920,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner3ContactId
@@ -4201,7 +3984,6 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     title
     underwritingDate
     updatedAt
-    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -4222,7 +4004,6 @@ export const updateProperties = /* GraphQL */ `mutation UpdateProperties(
     bedrooms
     city
     createdAt
-    createdDate
     floors
     houseAddress
     id
@@ -4237,7 +4018,6 @@ export const updateProperties = /* GraphQL */ `mutation UpdateProperties(
     sizeSqft
     state
     updatedAt
-    updatedDate
     yearBuilt
     zillowLink
     zip
@@ -4255,7 +4035,6 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
   updateQuoteItems(condition: $condition, input: $input) {
     cost
     createdAt
-    createdDate
     description
     id
     image
@@ -4294,7 +4073,6 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -4357,7 +4135,6 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4371,7 +4148,6 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
     type
     unitPrice
     updatedAt
-    updatedDate
     __typename
   }
 }
@@ -4390,7 +4166,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4400,7 +4175,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     agentContactId
@@ -4418,7 +4192,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
     contractingStartDate
     convertedDate
     createdAt
-    createdDate
     creditScore
     document
     documents
@@ -4430,7 +4203,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       brokerage
       company
       createdAt
-      createdDate
       email
       firstName
       fullName
@@ -4440,7 +4212,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       owner
       phone
       updatedAt
-      updatedDate
       __typename
     }
     homeowner2ContactId
@@ -4482,7 +4253,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       contractUrl
       contractingStartDate
       createdAt
-      createdDate
       daysOnMarket
       description
       documents
@@ -4545,7 +4315,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       title
       underwritingDate
       updatedAt
-      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4578,7 +4347,6 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
     underwritingApproved
     underwritingApprovedDate
     updatedAt
-    updatedDate
     viewedBy
     visitDate
     visitorId
@@ -4605,7 +4373,6 @@ export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
     bookingId
     budget
     createdAt
-    createdDate
     expiredDate
     homeownerContactId
     id
@@ -4626,7 +4393,6 @@ export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
     statusImage
     statusOrder
     updatedAt
-    updatedDate
     uploadedMedia
     uploadedVideos
     uplodedDocuments

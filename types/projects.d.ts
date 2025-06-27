@@ -41,9 +41,7 @@ export interface Project {
   homeowner2ContactId?: string;
   homeowner3ContactId?: string;
   
-  // Dates
-  createdDate?: string;
-  updatedDate?: string;
+  // Dates (automatic timestamps)
   createdAt?: string;
   updatedAt?: string;
   requestDate?: string;

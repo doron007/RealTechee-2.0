@@ -40,8 +40,8 @@ interface Comment {
   files?: string;
   isPrivate: boolean;
   postedByProfileImage?: string;
-  createdDate: string;
-  updatedDate: string;
+  createdAt: string;
+  updatedAt: string;
   owner: string;
 }
 
@@ -147,7 +147,6 @@ export const useCommentsData = () => {
       }
       
       // Prepare the input data for the GraphQL mutation
-      const now = new Date().toISOString();
       const input = {
         id: uuidv4(),
         projectId: commentData.projectId,
@@ -157,9 +156,8 @@ export const useCommentsData = () => {
         files: fileUrls.length > 0 ? JSON.stringify(fileUrls) : null,
         isPrivate: commentData.isPrivate || false,
         postedByProfileImage: commentData.postedByProfileImage || null,
-        owner: commentData.owner || commentData.postedByContactId,
-        createdDate: now,
-        updatedDate: now
+        owner: commentData.owner || commentData.postedByContactId
+        // createdAt/updatedAt are automatically managed by Amplify
       };
       
       // Call the mutation
