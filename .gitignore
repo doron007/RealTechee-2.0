@@ -44,3 +44,6 @@ next-env.d.ts
 .amplify
 #amplify_outputs*
 amplifyconfiguration*
+
+# claude code local settings
+.claude/settings.local.json

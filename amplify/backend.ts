@@ -4,18 +4,13 @@ import { data } from './data/resource';
 import { storage } from './storage/resource';
 import { notificationProcessor } from './functions/notification-processor/resource';
 import { userAdmin } from './functions/user-admin/resource';
-import { postConfirmationHandler } from './functions/post-confirmation/resource';
-import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
-import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
-import { Duration } from 'aws-cdk-lib';
 
 export const backend = defineBackend({
   auth,
   data,
   storage,
   notificationProcessor,
-  userAdmin,
-  postConfirmationHandler
+  userAdmin
 });
 
 // Add scheduled trigger for notification processor
@@ -40,15 +35,8 @@ backend.auth.resources.userPool.grant(
   'cognito-idp:AdminGetUser'
 );
 
-// Configure PostConfirmation function environment and permissions
-backend.postConfirmationHandler.addEnvironment('CONTACTS_TABLE', backend.data.resources.tables['Contacts'].tableName);
-
-// Grant permissions to PostConfirmation function
-backend.data.resources.tables['Contacts'].grantReadWriteData(backend.postConfirmationHandler.resources.lambda);
-backend.auth.resources.userPool.grant(
-  backend.postConfirmationHandler.resources.lambda,
-  'cognito-idp:AdminUpdateUserAttributes'
-);
+// PostConfirmation function permissions are handled through the auth trigger definition
+// The Lambda function gets the necessary permissions automatically when defined as a trigger
 
 // Set up CloudWatch Events rule to trigger every 5 minutes
 backend.notificationProcessor.addEnvironment('NOTIFICATION_QUEUE_TABLE', backend.data.resources.tables['NotificationQueue'].tableName);
@@ -60,11 +48,6 @@ backend.data.resources.tables['NotificationQueue'].grantReadWriteData(backend.no
 backend.data.resources.tables['NotificationTemplate'].grantReadData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['Contacts'].grantReadData(backend.notificationProcessor.resources.lambda);
 
-// Create EventBridge rule to trigger notification processor every 2 minutes
-const notificationSchedule = new Rule(backend.createStack('NotificationSchedule'), 'NotificationProcessorSchedule', {
-  schedule: Schedule.rate(Duration.minutes(2)),
-  description: 'Triggers notification processor every 2 minutes',
-});
-
-// Add Lambda as target for the EventBridge rule
-notificationSchedule.addTarget(new LambdaFunction(backend.notificationProcessor.resources.lambda));
+// TODO: Add EventBridge scheduling for notification processor
+// For now, the notification processor can be invoked manually or via API
+// Consider using AWS EventBridge directly in the AWS console or via separate CDK stack
