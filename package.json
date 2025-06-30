@@ -35,6 +35,7 @@
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
     "@parcel/watcher": "^2.5.1",
+    "@sendgrid/mail": "^8.1.5",
     "@types/formidable": "^3.4.5",
     "@types/react-image-gallery": "^1.2.4",
     "aws-amplify": "^6.15.0",
