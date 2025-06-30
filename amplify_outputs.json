@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "us-west-1_MslEKKYko",
+    "user_pool_id": "us-west-1_5pFbWcwtU",
     "aws_region": "us-west-1",
-    "user_pool_client_id": "5f57srii5rv7sfma9f4b0vn5q",
-    "identity_pool_id": "us-west-1:85ee6fc7-2c74-48e1-adef-2330f5b1f44a",
+    "user_pool_client_id": "4pdj4qp05o47a0g42cqlt99ccs",
+    "identity_pool_id": "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -16,28 +16,43 @@
     ],
     "groups": [
       {
-        "public": {
+        "super_admin": {
           "precedence": 0
         }
       },
       {
-        "basic": {
+        "admin": {
           "precedence": 1
         }
       },
       {
-        "member": {
+        "accounting": {
           "precedence": 2
         }
       },
       {
-        "agent": {
+        "srm": {
           "precedence": 3
         }
       },
       {
-        "admin": {
+        "agent": {
           "precedence": 4
+        }
+      },
+      {
+        "homeowner": {
+          "precedence": 5
+        }
+      },
+      {
+        "provider": {
+          "precedence": 6
+        }
+      },
+      {
+        "guest": {
+          "precedence": 7
         }
       }
     ],
@@ -52,9 +67,9 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://6dll3lrn2fhxdilg4b54pjoaeu.appsync-api.us-west-1.amazonaws.com/graphql",
+    "url": "https://yq2katnwbbeqjecywrptfgecwa.appsync-api.us-west-1.amazonaws.com/graphql",
     "aws_region": "us-west-1",
-    "api_key": "da2-lrosef5ukff73bwl4zagpdbfre",
+    "api_key": "da2-ixuofep625ge7famggthwwq5fi",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
       "API_KEY",
@@ -1500,6 +1515,20 @@
               "isRequired": false,
               "attributes": []
             },
+            "emailNotifications": {
+              "name": "emailNotifications",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "smsNotifications": {
+              "name": "smsNotifications",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
             "agentProjects": {
               "name": "agentProjects",
               "isArray": true,
@@ -2231,6 +2260,336 @@
                   },
                   {
                     "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "NotificationTemplate": {
+          "name": "NotificationTemplate",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "subject": {
+              "name": "subject",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "contentHtml": {
+              "name": "contentHtml",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "contentText": {
+              "name": "contentText",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "channel": {
+              "name": "channel",
+              "isArray": false,
+              "type": {
+                "enum": "NotificationTemplateChannel"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "variables": {
+              "name": "variables",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isActive": {
+              "name": "isActive",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "notifications": {
+              "name": "notifications",
+              "isArray": true,
+              "type": {
+                "model": "NotificationQueue"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "templateId"
+                ]
+              }
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "NotificationTemplates",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "NotificationQueue": {
+          "name": "NotificationQueue",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "eventType": {
+              "name": "eventType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "payload": {
+              "name": "payload",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": true,
+              "attributes": []
+            },
+            "recipientIds": {
+              "name": "recipientIds",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": true,
+              "attributes": []
+            },
+            "channels": {
+              "name": "channels",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": true,
+              "attributes": []
+            },
+            "templateId": {
+              "name": "templateId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "scheduledAt": {
+              "name": "scheduledAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "status": {
+              "name": "status",
+              "isArray": false,
+              "type": {
+                "enum": "NotificationQueueStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "retryCount": {
+              "name": "retryCount",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "errorMessage": {
+              "name": "errorMessage",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "sentAt": {
+              "name": "sentAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "template": {
+              "name": "template",
+              "isArray": false,
+              "type": {
+                "model": "NotificationTemplate"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "templateId"
+                ]
+              }
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "NotificationQueues",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin"
+                    ],
                     "operations": [
                       "create",
                       "update",
@@ -5299,6 +5658,24 @@
             "created",
             "updated"
           ]
+        },
+        "NotificationTemplateChannel": {
+          "name": "NotificationTemplateChannel",
+          "values": [
+            "EMAIL",
+            "SMS",
+            "TELEGRAM",
+            "WHATSAPP"
+          ]
+        },
+        "NotificationQueueStatus": {
+          "name": "NotificationQueueStatus",
+          "values": [
+            "PENDING",
+            "SENT",
+            "FAILED",
+            "RETRYING"
+          ]
         }
       },
       "nonModels": {}
@@ -5306,11 +5683,11 @@
   },
   "storage": {
     "aws_region": "us-west-1",
-    "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-p7hml7cayg9g",
+    "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu",
     "buckets": [
       {
         "name": "RealTecheeUserUploads",
-        "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-p7hml7cayg9g",
+        "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu",
         "aws_region": "us-west-1",
         "paths": {
           "public/*": {
@@ -5337,5 +5714,9 @@
       }
     ]
   },
-  "version": "1.4"
+  "version": "1.4",
+  "custom": {
+    "notificationProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-notificationprocessorlam-sLgeFvCfN0xX",
+    "userAdminArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-do-useradminlambda0B2D5BDC-PxJhVxRHwhMc"
+  }
 }

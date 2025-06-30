@@ -14,6 +14,7 @@ import { createProperties, createContacts, createRequests, updateContacts } from
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
+import { NotificationService } from '../../utils/notificationService';
 
 const GetEstimate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.ESTIMATE];
@@ -172,7 +173,7 @@ const GetEstimate: NextPage = () => {
       const hasAgentInfo = formData.agentInfo && formData.agentInfo.email; // Always should be true now
       const hasHomeownerInfo = formData.homeownerInfo?.email;
       const emailsMatch = hasAgentInfo && hasHomeownerInfo && 
-        formData.agentInfo.email === formData.homeownerInfo.email;
+        formData.agentInfo.email.toLowerCase().trim() === formData.homeownerInfo.email.toLowerCase().trim();
 
       logger.info('Step 4a: Contact analysis', {
         hasAgentInfo: !!hasAgentInfo,
@@ -190,9 +191,9 @@ const GetEstimate: NextPage = () => {
         // Case 1: Agent and homeowner emails match - create only agent contact
         logger.info('Step 4b: Emails match - creating single contact as agent');
         
-        const contactEmail = formData.agentInfo.email;
+        const contactEmail = formData.agentInfo.email.toLowerCase().trim();
         
-        // Search for existing contact by email
+        // Search for existing contact by email (case-insensitive, trimmed)
         const existingContactResponse = await client.graphql({
           query: listContacts,
           variables: {
@@ -208,7 +209,7 @@ const GetEstimate: NextPage = () => {
           fullName: formData.agentInfo.fullName,
           firstName: formData.agentInfo.fullName.split(' ')[0],
           lastName: formData.agentInfo.fullName.split(' ').slice(1).join(' ') || '',
-          email: formData.agentInfo.email,
+          email: formData.agentInfo.email.toLowerCase().trim(),
           phone: formData.agentInfo.phone,
           brokerage: formData.agentInfo.brokerage,
               // updatedAt is automatically managed by Amplify
@@ -275,7 +276,7 @@ const GetEstimate: NextPage = () => {
             variables: {
               filter: {
                 email: {
-                  eq: formData.agentInfo.email
+                  eq: formData.agentInfo.email.toLowerCase().trim()
                 }
               }
             }
@@ -285,7 +286,7 @@ const GetEstimate: NextPage = () => {
             fullName: formData.agentInfo.fullName,
             firstName: formData.agentInfo.fullName.split(' ')[0],
             lastName: formData.agentInfo.fullName.split(' ').slice(1).join(' ') || '',
-            email: formData.agentInfo.email,
+            email: formData.agentInfo.email.toLowerCase().trim(),
             phone: formData.agentInfo.phone,
             brokerage: formData.agentInfo.brokerage,
               // updatedAt is automatically managed by Amplify
@@ -341,7 +342,7 @@ const GetEstimate: NextPage = () => {
             variables: {
               filter: {
                 email: {
-                  eq: formData.homeownerInfo.email
+                  eq: formData.homeownerInfo.email.toLowerCase().trim()
                 }
               }
             }
@@ -351,7 +352,7 @@ const GetEstimate: NextPage = () => {
             fullName: formData.homeownerInfo.fullName,
             firstName: formData.homeownerInfo.fullName.split(' ')[0],
             lastName: formData.homeownerInfo.fullName.split(' ').slice(1).join(' ') || '',
-            email: formData.homeownerInfo.email,
+            email: formData.homeownerInfo.email.toLowerCase().trim(),
             phone: formData.homeownerInfo.phone,
               // updatedAt is automatically managed by Amplify
             owner: recordOwner
@@ -450,6 +451,30 @@ const GetEstimate: NextPage = () => {
       await logRequestAudit(requestData.id, cleanRequestData);
       
       logger.info('Step 5b: ✅ Request record created', { requestData: cleanRequestData });
+
+      // Step 5c: Queue notification for the new estimate request
+      try {
+        logger.info('Step 5c: Queueing notification for estimate request');
+        
+        await NotificationService.queueGetEstimateNotification({
+          customerName: agentData?.fullName || formData.agentInfo.fullName,
+          customerEmail: agentData?.email || formData.agentInfo.email,
+          customerPhone: agentData?.phone || formData.agentInfo.phone,
+          customerCompany: agentData?.company || formData.agentInfo.company,
+          propertyAddress: propertyData.propertyFullAddress || undefined,
+          productType: formData.rtDigitalSelection || 'General Renovation',
+          message: formData.notes || 'No additional notes provided',
+          submissionId: requestData.id,
+          contactId: agentData?.id || undefined // Pass contact ID to respect user preferences
+        });
+        
+        logger.info('Step 5c: ✅ Notification queued successfully');
+      } catch (notificationError) {
+        // Don't fail the entire form submission if notification fails
+        logger.error('Step 5c: ⚠️ Notification failed (form submission continues)', {
+          error: notificationError instanceof Error ? notificationError.message : String(notificationError)
+        });
+      }
 
       // Step 6: Success
       logger.info('=== FORM SUBMISSION COMPLETED SUCCESSFULLY ===', {

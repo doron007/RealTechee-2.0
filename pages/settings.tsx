@@ -4,6 +4,13 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 import { getCurrentUser, updatePassword, deleteUser, fetchUserAttributes } from 'aws-amplify/auth';
 import Head from 'next/head';
 import Button from '../components/common/buttons/Button';
+import { UserNotificationPreferences } from '../components/notifications/UserNotificationPreferences';
+import { AuthorizationService } from '../utils/authorizationHelpers';
+import { UserService } from '../utils/userService';
+import { generateClient } from 'aws-amplify/api';
+import { type Schema } from '../amplify/data/resource';
+
+const client = generateClient<any>();
 
 const SettingsPage = () => {
   const router = useRouter();
@@ -15,6 +22,7 @@ const SettingsPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Redirect if not authenticated and fetch user attributes
   useEffect(() => {
@@ -25,6 +33,16 @@ const SettingsPage = () => {
         try {
           const attributes = await fetchUserAttributes();
           setUserAttributes(attributes);
+          
+          // Check if user has admin access
+          const email = attributes.email || '';
+          const isSuperAdminEmail = email === 'info@realtechee.com';
+          
+          const hasSuperAdminRole = await AuthorizationService.hasMinimumRole('super_admin');
+          const hasAdminAccess = await AuthorizationService.hasMinimumRole('admin');
+          setIsAdmin(isSuperAdminEmail || hasSuperAdminRole || hasAdminAccess);
+          
+          console.log('✅ User attributes loaded successfully');
         } catch (error) {
           console.error('Error fetching user attributes:', error);
         } finally {
@@ -121,6 +139,25 @@ const SettingsPage = () => {
           </div>
 
           <div className="space-y-8">
+            {/* Notification Preferences */}
+            <div className="bg-white rounded-lg shadow">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-medium text-gray-900">
+                  Notification Preferences
+                </h2>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage how and when you receive notifications from RealTechee
+                </p>
+              </div>
+              <div className="p-6">
+                <UserNotificationPreferences 
+                  onSave={(preferences) => {
+                    console.log('User notification preferences saved:', preferences);
+                  }}
+                />
+              </div>
+            </div>
+
             {/* Security Settings */}
             <div className="bg-white rounded-lg shadow">
               <div className="px-6 py-4 border-b border-gray-200">
@@ -295,6 +332,26 @@ const SettingsPage = () => {
                       size="sm"
                     />
                   </div>
+                  
+                  {/* Admin Panel Link - Only show for admin users */}
+                  {isAdmin && (
+                    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-900">
+                          Admin Panel
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          Manage users, contacts, and system settings
+                        </p>
+                      </div>
+                      <Button
+                        variant="primary"
+                        href="/admin"
+                        text="Admin Panel"
+                        size="sm"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -296,6 +296,7 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
     company
     createdAt
     email
+    emailNotifications
     firstName
     fullName
     homeowner2Projects {
@@ -319,6 +320,7 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
     mobile
     owner
     phone
+    smsNotifications
     updatedAt
     __typename
   }
@@ -390,6 +392,67 @@ export const getMemberSignature = /* GraphQL */ `query GetMemberSignature($id: I
 ` as GeneratedQuery<
   APITypes.GetMemberSignatureQueryVariables,
   APITypes.GetMemberSignatureQuery
+>;
+export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($id: ID!) {
+  getNotificationQueue(id: $id) {
+    channels
+    createdAt
+    errorMessage
+    eventType
+    id
+    owner
+    payload
+    recipientIds
+    retryCount
+    scheduledAt
+    sentAt
+    status
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    templateId
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetNotificationQueueQueryVariables,
+  APITypes.GetNotificationQueueQuery
+>;
+export const getNotificationTemplate = /* GraphQL */ `query GetNotificationTemplate($id: ID!) {
+  getNotificationTemplate(id: $id) {
+    channel
+    contentHtml
+    contentText
+    createdAt
+    id
+    isActive
+    name
+    notifications {
+      nextToken
+      __typename
+    }
+    owner
+    subject
+    updatedAt
+    variables
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetNotificationTemplateQueryVariables,
+  APITypes.GetNotificationTemplateQuery
 >;
 export const getPendingAppoitments = /* GraphQL */ `query GetPendingAppoitments($id: ID!) {
   getPendingAppoitments(id: $id) {
@@ -815,6 +878,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -822,6 +886,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -871,6 +936,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -878,6 +944,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -886,6 +953,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -893,6 +961,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -902,6 +971,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -909,6 +979,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -1148,6 +1219,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -1155,6 +1227,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -1185,6 +1258,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -1192,6 +1266,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -1787,6 +1862,7 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       company
       createdAt
       email
+      emailNotifications
       firstName
       fullName
       id
@@ -1794,6 +1870,7 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       mobile
       owner
       phone
+      smsNotifications
       updatedAt
       __typename
     }
@@ -1926,6 +2003,73 @@ export const listMemberSignatures = /* GraphQL */ `query ListMemberSignatures(
 ` as GeneratedQuery<
   APITypes.ListMemberSignaturesQueryVariables,
   APITypes.ListMemberSignaturesQuery
+>;
+export const listNotificationQueues = /* GraphQL */ `query ListNotificationQueues(
+  $filter: ModelNotificationQueueFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationQueues(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      channels
+      createdAt
+      errorMessage
+      eventType
+      id
+      owner
+      payload
+      recipientIds
+      retryCount
+      scheduledAt
+      sentAt
+      status
+      templateId
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListNotificationQueuesQueryVariables,
+  APITypes.ListNotificationQueuesQuery
+>;
+export const listNotificationTemplates = /* GraphQL */ `query ListNotificationTemplates(
+  $filter: ModelNotificationTemplateFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationTemplates(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListNotificationTemplatesQueryVariables,
+  APITypes.ListNotificationTemplatesQuery
 >;
 export const listPendingAppoitments = /* GraphQL */ `query ListPendingAppoitments(
   $filter: ModelPendingAppoitmentsFilterInput

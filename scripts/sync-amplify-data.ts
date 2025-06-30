@@ -269,7 +269,7 @@ Examples:
   }
   
   const modelsArg = args[args.indexOf('--models') + 1];
-  const models = modelsArg ? modelsArg.split(',').map(m => m.trim()) : ['Contact', 'Property', 'Project', 'Quote', 'Request'];
+  const models = modelsArg ? modelsArg.split(',').map((m: any) => m.trim()) : ['Contact', 'Property', 'Project', 'Quote', 'Request'];
   
   const options: SyncOptions = {
     models,

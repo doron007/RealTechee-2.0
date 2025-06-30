@@ -1,0 +1,19 @@
+{
+  "name": "post-confirmation-handler",
+  "version": "1.0.0",
+  "description": "PostConfirmation trigger for automatic user-contact linking",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.450.0",
+    "@aws-sdk/lib-dynamodb": "^3.450.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.450.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "typescript": "^5.0.0"
+  }
+}

@@ -5,6 +5,8 @@
 
 ## Commands
 **Dev:** `npm run dev|build|test|lint` • `npm run type-check` • `npx ampx sandbox`
+**Data Protection:** `./scripts/backup-data.sh` • `node ./scripts/restore-cognito-users.js <backup> <pool-id>`
+**Data Cleanup:** `node ./scripts/deduplicateContacts.js [--dry-run]` • `node ./scripts/createUsersFromContacts.js`
 
 ## Amplify Gen 2 (NOT Gen 1)
 **CRITICAL:** This project uses Amplify Gen 2. ! use deprecated Gen 1 patterns/commands.
@@ -124,6 +126,7 @@ Next.js 15.2.1 + React 18.3.1 + TS + AWS Amplify Gen 2 + GraphQL + DynamoDB + S3
 4. React + TS best practices + Next.js App Router (app/ directory, server components, route.ts)
 5. Structure mutations + queries for performance/scalability (pagination, filtering)
 6. TS strict mode + proper error handling + Tailwind consistency
+7. **MANDATORY DATA BACKUP**: Always backup data before schema changes that may cause AWS to purge/recreate resources
 
 ## Decision Rules
 **Proceed if:** Issue identified + clear plan + aligns w/ COO + impact understood
@@ -133,8 +136,55 @@ Next.js 15.2.1 + React 18.3.1 + TS + AWS Amplify Gen 2 + GraphQL + DynamoDB + S3
 ## Workflow
 1. Review existing comps before impl
 2. Doc @ exts, submit change proposal  
-3. Impl w/ backward compat
-4. Notify about CLI commands, schema updates, config changes + side effects
+3. **BACKUP DATA** if schema changes required: `./scripts/backup-data.sh`
+4. Impl w/ backward compat
+5. Notify about CLI commands, schema updates, config changes + side effects
+6. If data loss occurred, restore using backup scripts in `./scripts/`
+
+## Data Protection & Schema Changes
+
+### **CRITICAL: Data Backup Requirements**
+**MANDATORY BEFORE ANY SCHEMA CHANGE:**
+
+1. **Backup All Data Before Schema Changes**
+   - **DynamoDB Tables**: Export all tables using AWS CLI or console
+   - **Cognito Users**: Export user pool data including custom attributes
+   - **S3 Files**: Backup critical files if storage config changes
+   - **Create restore scripts** before making changes
+
+2. **Schema Change Protocol**
+   - ✅ **ALWAYS** backup data first
+   - ✅ **ALWAYS** create restore strategy
+   - ✅ **TEST** on development/staging first
+   - ❌ **NEVER** deploy schema changes without backup
+   - ❌ **NEVER** assume AWS won't purge data
+
+3. **Backup Commands**
+   ```bash
+   # DynamoDB backup
+   aws dynamodb list-tables --region us-west-1
+   aws dynamodb scan --table-name TableName --region us-west-1 > backup_table.json
+   
+   # Cognito backup
+   aws cognito-idp list-users --user-pool-id USER_POOL_ID --region us-west-1 > backup_users.json
+   
+   # S3 backup (if needed)
+   aws s3 sync s3://bucket-name/path/ ./backup/s3/ --region us-west-1
+   ```
+
+4. **Restore Strategy**
+   - Document restore procedure before changes
+   - Test restore process on development
+   - Have rollback plan ready
+   - Validate data integrity post-restore
+
+5. **When Schema Changes Require Recreation**
+   - Adding Cognito custom attributes
+   - Changing DynamoDB key schemas
+   - Modifying S3 bucket configurations
+   - Any change that AWS marks as "requires replacement"
+
+**Remember: AWS will purge data without warning when resources are recreated. Always backup first!**
 
 ## Testing & Quality
 Jest + React Testing Library + custom render helpers + mock Amplify hooks/GraphQL operations
