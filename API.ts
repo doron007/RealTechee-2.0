@@ -230,6 +230,7 @@ export type Contacts = {
   company?: string | null,
   createdAt: string,
   email?: string | null,
+  emailNotifications?: boolean | null,
   firstName?: string | null,
   fullName?: string | null,
   homeowner2Projects?: ModelProjectsConnection | null,
@@ -241,6 +242,7 @@ export type Contacts = {
   mobile?: string | null,
   owner?: string | null,
   phone?: string | null,
+  smsNotifications?: boolean | null,
   updatedAt: string,
 };
 
@@ -612,6 +614,63 @@ export type MemberSignature = {
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
   updatedAt: string,
+};
+
+export type NotificationQueue = {
+  __typename: "NotificationQueue",
+  channels: string,
+  createdAt: string,
+  errorMessage?: string | null,
+  eventType: string,
+  id: string,
+  owner?: string | null,
+  payload: string,
+  recipientIds: string,
+  retryCount?: number | null,
+  scheduledAt?: string | null,
+  sentAt?: string | null,
+  status?: NotificationQueueStatus | null,
+  template?: NotificationTemplate | null,
+  templateId: string,
+  updatedAt: string,
+};
+
+export enum NotificationQueueStatus {
+  FAILED = "FAILED",
+  PENDING = "PENDING",
+  RETRYING = "RETRYING",
+  SENT = "SENT",
+}
+
+
+export type NotificationTemplate = {
+  __typename: "NotificationTemplate",
+  channel?: NotificationTemplateChannel | null,
+  contentHtml?: string | null,
+  contentText?: string | null,
+  createdAt: string,
+  id: string,
+  isActive?: boolean | null,
+  name: string,
+  notifications?: ModelNotificationQueueConnection | null,
+  owner?: string | null,
+  subject?: string | null,
+  updatedAt: string,
+  variables?: string | null,
+};
+
+export enum NotificationTemplateChannel {
+  EMAIL = "EMAIL",
+  SMS = "SMS",
+  TELEGRAM = "TELEGRAM",
+  WHATSAPP = "WHATSAPP",
+}
+
+
+export type ModelNotificationQueueConnection = {
+  __typename: "ModelNotificationQueueConnection",
+  items:  Array<NotificationQueue | null >,
+  nextToken?: string | null,
 };
 
 export type PendingAppoitments = {
@@ -1089,6 +1148,7 @@ export type ModelContactsFilterInput = {
   company?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  emailNotifications?: ModelBooleanInput | null,
   firstName?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -1098,6 +1158,7 @@ export type ModelContactsFilterInput = {
   or?: Array< ModelContactsFilterInput | null > | null,
   owner?: ModelStringInput | null,
   phone?: ModelStringInput | null,
+  smsNotifications?: ModelBooleanInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
@@ -1202,6 +1263,59 @@ export type ModelMemberSignatureFilterInput = {
 export type ModelMemberSignatureConnection = {
   __typename: "ModelMemberSignatureConnection",
   items:  Array<MemberSignature | null >,
+  nextToken?: string | null,
+};
+
+export type ModelNotificationQueueFilterInput = {
+  and?: Array< ModelNotificationQueueFilterInput | null > | null,
+  channels?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  errorMessage?: ModelStringInput | null,
+  eventType?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelNotificationQueueFilterInput | null,
+  or?: Array< ModelNotificationQueueFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+  payload?: ModelStringInput | null,
+  recipientIds?: ModelStringInput | null,
+  retryCount?: ModelIntInput | null,
+  scheduledAt?: ModelStringInput | null,
+  sentAt?: ModelStringInput | null,
+  status?: ModelNotificationQueueStatusInput | null,
+  templateId?: ModelIDInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelNotificationQueueStatusInput = {
+  eq?: NotificationQueueStatus | null,
+  ne?: NotificationQueueStatus | null,
+};
+
+export type ModelNotificationTemplateFilterInput = {
+  and?: Array< ModelNotificationTemplateFilterInput | null > | null,
+  channel?: ModelNotificationTemplateChannelInput | null,
+  contentHtml?: ModelStringInput | null,
+  contentText?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  isActive?: ModelBooleanInput | null,
+  name?: ModelStringInput | null,
+  not?: ModelNotificationTemplateFilterInput | null,
+  or?: Array< ModelNotificationTemplateFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+  subject?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  variables?: ModelStringInput | null,
+};
+
+export type ModelNotificationTemplateChannelInput = {
+  eq?: NotificationTemplateChannel | null,
+  ne?: NotificationTemplateChannel | null,
+};
+
+export type ModelNotificationTemplateConnection = {
+  __typename: "ModelNotificationTemplateConnection",
+  items:  Array<NotificationTemplate | null >,
   nextToken?: string | null,
 };
 
@@ -1980,6 +2094,7 @@ export type ModelContactsConditionInput = {
   company?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  emailNotifications?: ModelBooleanInput | null,
   firstName?: ModelStringInput | null,
   fullName?: ModelStringInput | null,
   lastName?: ModelStringInput | null,
@@ -1988,6 +2103,7 @@ export type ModelContactsConditionInput = {
   or?: Array< ModelContactsConditionInput | null > | null,
   owner?: ModelStringInput | null,
   phone?: ModelStringInput | null,
+  smsNotifications?: ModelBooleanInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
@@ -1995,6 +2111,7 @@ export type CreateContactsInput = {
   brokerage?: string | null,
   company?: string | null,
   email?: string | null,
+  emailNotifications?: boolean | null,
   firstName?: string | null,
   fullName?: string | null,
   id?: string | null,
@@ -2002,6 +2119,7 @@ export type CreateContactsInput = {
   mobile?: string | null,
   owner?: string | null,
   phone?: string | null,
+  smsNotifications?: boolean | null,
 };
 
 export type ModelESignatureDocumentsConditionInput = {
@@ -2100,6 +2218,68 @@ export type CreateMemberSignatureInput = {
   signature?: string | null,
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
+};
+
+export type ModelNotificationQueueConditionInput = {
+  and?: Array< ModelNotificationQueueConditionInput | null > | null,
+  channels?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  errorMessage?: ModelStringInput | null,
+  eventType?: ModelStringInput | null,
+  not?: ModelNotificationQueueConditionInput | null,
+  or?: Array< ModelNotificationQueueConditionInput | null > | null,
+  owner?: ModelStringInput | null,
+  payload?: ModelStringInput | null,
+  recipientIds?: ModelStringInput | null,
+  retryCount?: ModelIntInput | null,
+  scheduledAt?: ModelStringInput | null,
+  sentAt?: ModelStringInput | null,
+  status?: ModelNotificationQueueStatusInput | null,
+  templateId?: ModelIDInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateNotificationQueueInput = {
+  channels: string,
+  errorMessage?: string | null,
+  eventType: string,
+  id?: string | null,
+  owner?: string | null,
+  payload: string,
+  recipientIds: string,
+  retryCount?: number | null,
+  scheduledAt?: string | null,
+  sentAt?: string | null,
+  status?: NotificationQueueStatus | null,
+  templateId: string,
+};
+
+export type ModelNotificationTemplateConditionInput = {
+  and?: Array< ModelNotificationTemplateConditionInput | null > | null,
+  channel?: ModelNotificationTemplateChannelInput | null,
+  contentHtml?: ModelStringInput | null,
+  contentText?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  isActive?: ModelBooleanInput | null,
+  name?: ModelStringInput | null,
+  not?: ModelNotificationTemplateConditionInput | null,
+  or?: Array< ModelNotificationTemplateConditionInput | null > | null,
+  owner?: ModelStringInput | null,
+  subject?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  variables?: ModelStringInput | null,
+};
+
+export type CreateNotificationTemplateInput = {
+  channel?: NotificationTemplateChannel | null,
+  contentHtml?: string | null,
+  contentText?: string | null,
+  id?: string | null,
+  isActive?: boolean | null,
+  name: string,
+  owner?: string | null,
+  subject?: string | null,
+  variables?: string | null,
 };
 
 export type ModelPendingAppoitmentsConditionInput = {
@@ -2832,6 +3012,14 @@ export type DeleteMemberSignatureInput = {
   id: string,
 };
 
+export type DeleteNotificationQueueInput = {
+  id: string,
+};
+
+export type DeleteNotificationTemplateInput = {
+  id: string,
+};
+
 export type DeletePendingAppoitmentsInput = {
   id: string,
 };
@@ -3041,6 +3229,7 @@ export type UpdateContactsInput = {
   brokerage?: string | null,
   company?: string | null,
   email?: string | null,
+  emailNotifications?: boolean | null,
   firstName?: string | null,
   fullName?: string | null,
   id: string,
@@ -3048,6 +3237,7 @@ export type UpdateContactsInput = {
   mobile?: string | null,
   owner?: string | null,
   phone?: string | null,
+  smsNotifications?: boolean | null,
 };
 
 export type UpdateESignatureDocumentsInput = {
@@ -3091,6 +3281,33 @@ export type UpdateMemberSignatureInput = {
   signature?: string | null,
   signaturePublicUrl?: string | null,
   signatureWixUrl?: string | null,
+};
+
+export type UpdateNotificationQueueInput = {
+  channels?: string | null,
+  errorMessage?: string | null,
+  eventType?: string | null,
+  id: string,
+  owner?: string | null,
+  payload?: string | null,
+  recipientIds?: string | null,
+  retryCount?: number | null,
+  scheduledAt?: string | null,
+  sentAt?: string | null,
+  status?: NotificationQueueStatus | null,
+  templateId?: string | null,
+};
+
+export type UpdateNotificationTemplateInput = {
+  channel?: NotificationTemplateChannel | null,
+  contentHtml?: string | null,
+  contentText?: string | null,
+  id: string,
+  isActive?: boolean | null,
+  name?: string | null,
+  owner?: string | null,
+  subject?: string | null,
+  variables?: string | null,
 };
 
 export type UpdatePendingAppoitmentsInput = {
@@ -3688,6 +3905,7 @@ export type ModelSubscriptionContactsFilterInput = {
   company?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
+  emailNotifications?: ModelSubscriptionBooleanInput | null,
   firstName?: ModelSubscriptionStringInput | null,
   fullName?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
@@ -3696,6 +3914,7 @@ export type ModelSubscriptionContactsFilterInput = {
   or?: Array< ModelSubscriptionContactsFilterInput | null > | null,
   owner?: ModelSubscriptionStringInput | null,
   phone?: ModelSubscriptionStringInput | null,
+  smsNotifications?: ModelSubscriptionBooleanInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
@@ -3752,6 +3971,41 @@ export type ModelSubscriptionMemberSignatureFilterInput = {
   signaturePublicUrl?: ModelSubscriptionStringInput | null,
   signatureWixUrl?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionNotificationQueueFilterInput = {
+  and?: Array< ModelSubscriptionNotificationQueueFilterInput | null > | null,
+  channels?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  errorMessage?: ModelSubscriptionStringInput | null,
+  eventType?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  or?: Array< ModelSubscriptionNotificationQueueFilterInput | null > | null,
+  owner?: ModelSubscriptionStringInput | null,
+  payload?: ModelSubscriptionStringInput | null,
+  recipientIds?: ModelSubscriptionStringInput | null,
+  retryCount?: ModelSubscriptionIntInput | null,
+  scheduledAt?: ModelSubscriptionStringInput | null,
+  sentAt?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
+  templateId?: ModelSubscriptionIDInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionNotificationTemplateFilterInput = {
+  and?: Array< ModelSubscriptionNotificationTemplateFilterInput | null > | null,
+  channel?: ModelSubscriptionStringInput | null,
+  contentHtml?: ModelSubscriptionStringInput | null,
+  contentText?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  isActive?: ModelSubscriptionBooleanInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionNotificationTemplateFilterInput | null > | null,
+  owner?: ModelSubscriptionStringInput | null,
+  subject?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  variables?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionPendingAppoitmentsFilterInput = {
@@ -4413,6 +4667,7 @@ export type GetContactsQuery = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -4436,6 +4691,7 @@ export type GetContactsQuery = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -4507,6 +4763,69 @@ export type GetMemberSignatureQuery = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type GetNotificationQueueQueryVariables = {
+  id: string,
+};
+
+export type GetNotificationQueueQuery = {
+  getNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetNotificationTemplateQueryVariables = {
+  id: string,
+};
+
+export type GetNotificationTemplateQuery = {
+  getNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -4945,6 +5264,7 @@ export type GetProjectsQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -4952,6 +5272,7 @@ export type GetProjectsQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -5001,6 +5322,7 @@ export type GetProjectsQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5008,6 +5330,7 @@ export type GetProjectsQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -5016,6 +5339,7 @@ export type GetProjectsQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5023,6 +5347,7 @@ export type GetProjectsQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -5032,6 +5357,7 @@ export type GetProjectsQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5039,6 +5365,7 @@ export type GetProjectsQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -5281,6 +5608,7 @@ export type GetQuotesQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5288,6 +5616,7 @@ export type GetQuotesQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -5318,6 +5647,7 @@ export type GetQuotesQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5325,6 +5655,7 @@ export type GetQuotesQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -5877,6 +6208,7 @@ export type ListContactsQuery = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -5884,6 +6216,7 @@ export type ListContactsQuery = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
@@ -5999,6 +6332,63 @@ export type ListMemberSignaturesQuery = {
       signaturePublicUrl?: string | null,
       signatureWixUrl?: string | null,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListNotificationQueuesQueryVariables = {
+  filter?: ModelNotificationQueueFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListNotificationQueuesQuery = {
+  listNotificationQueues?:  {
+    __typename: "ModelNotificationQueueConnection",
+    items:  Array< {
+      __typename: "NotificationQueue",
+      channels: string,
+      createdAt: string,
+      errorMessage?: string | null,
+      eventType: string,
+      id: string,
+      owner?: string | null,
+      payload: string,
+      recipientIds: string,
+      retryCount?: number | null,
+      scheduledAt?: string | null,
+      sentAt?: string | null,
+      status?: NotificationQueueStatus | null,
+      templateId: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListNotificationTemplatesQueryVariables = {
+  filter?: ModelNotificationTemplateFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListNotificationTemplatesQuery = {
+  listNotificationTemplates?:  {
+    __typename: "ModelNotificationTemplateConnection",
+    items:  Array< {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6788,6 +7178,7 @@ export type CreateContactsMutation = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -6811,6 +7202,7 @@ export type CreateContactsMutation = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -6885,6 +7277,71 @@ export type CreateMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateNotificationQueueMutationVariables = {
+  condition?: ModelNotificationQueueConditionInput | null,
+  input: CreateNotificationQueueInput,
+};
+
+export type CreateNotificationQueueMutation = {
+  createNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateNotificationTemplateMutationVariables = {
+  condition?: ModelNotificationTemplateConditionInput | null,
+  input: CreateNotificationTemplateInput,
+};
+
+export type CreateNotificationTemplateMutation = {
+  createNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -7329,6 +7786,7 @@ export type CreateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7336,6 +7794,7 @@ export type CreateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -7385,6 +7844,7 @@ export type CreateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7392,6 +7852,7 @@ export type CreateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -7400,6 +7861,7 @@ export type CreateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7407,6 +7869,7 @@ export type CreateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -7416,6 +7879,7 @@ export type CreateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7423,6 +7887,7 @@ export type CreateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -7668,6 +8133,7 @@ export type CreateQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7675,6 +8141,7 @@ export type CreateQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -7705,6 +8172,7 @@ export type CreateQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -7712,6 +8180,7 @@ export type CreateQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -8226,6 +8695,7 @@ export type DeleteContactsMutation = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -8249,6 +8719,7 @@ export type DeleteContactsMutation = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -8323,6 +8794,71 @@ export type DeleteMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type DeleteNotificationQueueMutationVariables = {
+  condition?: ModelNotificationQueueConditionInput | null,
+  input: DeleteNotificationQueueInput,
+};
+
+export type DeleteNotificationQueueMutation = {
+  deleteNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteNotificationTemplateMutationVariables = {
+  condition?: ModelNotificationTemplateConditionInput | null,
+  input: DeleteNotificationTemplateInput,
+};
+
+export type DeleteNotificationTemplateMutation = {
+  deleteNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -8767,6 +9303,7 @@ export type DeleteProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -8774,6 +9311,7 @@ export type DeleteProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -8823,6 +9361,7 @@ export type DeleteProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -8830,6 +9369,7 @@ export type DeleteProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -8838,6 +9378,7 @@ export type DeleteProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -8845,6 +9386,7 @@ export type DeleteProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -8854,6 +9396,7 @@ export type DeleteProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -8861,6 +9404,7 @@ export type DeleteProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -9106,6 +9650,7 @@ export type DeleteQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -9113,6 +9658,7 @@ export type DeleteQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -9143,6 +9689,7 @@ export type DeleteQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -9150,6 +9697,7 @@ export type DeleteQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -9664,6 +10212,7 @@ export type UpdateContactsMutation = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -9687,6 +10236,7 @@ export type UpdateContactsMutation = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -9761,6 +10311,71 @@ export type UpdateMemberSignatureMutation = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type UpdateNotificationQueueMutationVariables = {
+  condition?: ModelNotificationQueueConditionInput | null,
+  input: UpdateNotificationQueueInput,
+};
+
+export type UpdateNotificationQueueMutation = {
+  updateNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateNotificationTemplateMutationVariables = {
+  condition?: ModelNotificationTemplateConditionInput | null,
+  input: UpdateNotificationTemplateInput,
+};
+
+export type UpdateNotificationTemplateMutation = {
+  updateNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -10205,6 +10820,7 @@ export type UpdateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10212,6 +10828,7 @@ export type UpdateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -10261,6 +10878,7 @@ export type UpdateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10268,6 +10886,7 @@ export type UpdateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -10276,6 +10895,7 @@ export type UpdateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10283,6 +10903,7 @@ export type UpdateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -10292,6 +10913,7 @@ export type UpdateProjectsMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10299,6 +10921,7 @@ export type UpdateProjectsMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -10544,6 +11167,7 @@ export type UpdateQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10551,6 +11175,7 @@ export type UpdateQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -10581,6 +11206,7 @@ export type UpdateQuotesMutation = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -10588,6 +11214,7 @@ export type UpdateQuotesMutation = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -11087,6 +11714,7 @@ export type OnCreateContactsSubscription = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -11110,6 +11738,7 @@ export type OnCreateContactsSubscription = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -11181,6 +11810,69 @@ export type OnCreateMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateNotificationQueueSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationQueueFilterInput | null,
+};
+
+export type OnCreateNotificationQueueSubscription = {
+  onCreateNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateNotificationTemplateSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationTemplateFilterInput | null,
+};
+
+export type OnCreateNotificationTemplateSubscription = {
+  onCreateNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -11620,6 +12312,7 @@ export type OnCreateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -11627,6 +12320,7 @@ export type OnCreateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -11676,6 +12370,7 @@ export type OnCreateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -11683,6 +12378,7 @@ export type OnCreateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -11691,6 +12387,7 @@ export type OnCreateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -11698,6 +12395,7 @@ export type OnCreateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -11707,6 +12405,7 @@ export type OnCreateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -11714,6 +12413,7 @@ export type OnCreateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -11956,6 +12656,7 @@ export type OnCreateQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -11963,6 +12664,7 @@ export type OnCreateQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -11993,6 +12695,7 @@ export type OnCreateQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -12000,6 +12703,7 @@ export type OnCreateQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -12498,6 +13202,7 @@ export type OnDeleteContactsSubscription = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -12521,6 +13226,7 @@ export type OnDeleteContactsSubscription = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -12592,6 +13298,69 @@ export type OnDeleteMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteNotificationQueueSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationQueueFilterInput | null,
+};
+
+export type OnDeleteNotificationQueueSubscription = {
+  onDeleteNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteNotificationTemplateSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationTemplateFilterInput | null,
+};
+
+export type OnDeleteNotificationTemplateSubscription = {
+  onDeleteNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -13031,6 +13800,7 @@ export type OnDeleteProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13038,6 +13808,7 @@ export type OnDeleteProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -13087,6 +13858,7 @@ export type OnDeleteProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13094,6 +13866,7 @@ export type OnDeleteProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -13102,6 +13875,7 @@ export type OnDeleteProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13109,6 +13883,7 @@ export type OnDeleteProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -13118,6 +13893,7 @@ export type OnDeleteProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13125,6 +13901,7 @@ export type OnDeleteProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -13367,6 +14144,7 @@ export type OnDeleteQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13374,6 +14152,7 @@ export type OnDeleteQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -13404,6 +14183,7 @@ export type OnDeleteQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -13411,6 +14191,7 @@ export type OnDeleteQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -13909,6 +14690,7 @@ export type OnUpdateContactsSubscription = {
     company?: string | null,
     createdAt: string,
     email?: string | null,
+    emailNotifications?: boolean | null,
     firstName?: string | null,
     fullName?: string | null,
     homeowner2Projects?:  {
@@ -13932,6 +14714,7 @@ export type OnUpdateContactsSubscription = {
     mobile?: string | null,
     owner?: string | null,
     phone?: string | null,
+    smsNotifications?: boolean | null,
     updatedAt: string,
   } | null,
 };
@@ -14003,6 +14786,69 @@ export type OnUpdateMemberSignatureSubscription = {
     signaturePublicUrl?: string | null,
     signatureWixUrl?: string | null,
     updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateNotificationQueueSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationQueueFilterInput | null,
+};
+
+export type OnUpdateNotificationQueueSubscription = {
+  onUpdateNotificationQueue?:  {
+    __typename: "NotificationQueue",
+    channels: string,
+    createdAt: string,
+    errorMessage?: string | null,
+    eventType: string,
+    id: string,
+    owner?: string | null,
+    payload: string,
+    recipientIds: string,
+    retryCount?: number | null,
+    scheduledAt?: string | null,
+    sentAt?: string | null,
+    status?: NotificationQueueStatus | null,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    templateId: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateNotificationTemplateSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationTemplateFilterInput | null,
+};
+
+export type OnUpdateNotificationTemplateSubscription = {
+  onUpdateNotificationTemplate?:  {
+    __typename: "NotificationTemplate",
+    channel?: NotificationTemplateChannel | null,
+    contentHtml?: string | null,
+    contentText?: string | null,
+    createdAt: string,
+    id: string,
+    isActive?: boolean | null,
+    name: string,
+    notifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+    subject?: string | null,
+    updatedAt: string,
+    variables?: string | null,
   } | null,
 };
 
@@ -14442,6 +15288,7 @@ export type OnUpdateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14449,6 +15296,7 @@ export type OnUpdateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -14498,6 +15346,7 @@ export type OnUpdateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14505,6 +15354,7 @@ export type OnUpdateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2?:  {
@@ -14513,6 +15363,7 @@ export type OnUpdateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14520,6 +15371,7 @@ export type OnUpdateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,
@@ -14529,6 +15381,7 @@ export type OnUpdateProjectsSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14536,6 +15389,7 @@ export type OnUpdateProjectsSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner3ContactId?: string | null,
@@ -14778,6 +15632,7 @@ export type OnUpdateQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14785,6 +15640,7 @@ export type OnUpdateQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     agentContactId?: string | null,
@@ -14815,6 +15671,7 @@ export type OnUpdateQuotesSubscription = {
       company?: string | null,
       createdAt: string,
       email?: string | null,
+      emailNotifications?: boolean | null,
       firstName?: string | null,
       fullName?: string | null,
       id: string,
@@ -14822,6 +15679,7 @@ export type OnUpdateQuotesSubscription = {
       mobile?: string | null,
       owner?: string | null,
       phone?: string | null,
+      smsNotifications?: boolean | null,
       updatedAt: string,
     } | null,
     homeowner2ContactId?: string | null,

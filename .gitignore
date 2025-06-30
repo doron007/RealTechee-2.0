@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+**/node_modules
 /.pnp
 .pnp.js
 
@@ -24,6 +25,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+
+# notification system - prevent accidental credential commits
+env-vars*.json
+*-template*.json
+test-payload*.json
+lambda-response*.json
+schema.ts
 
 # vercel
 .vercel

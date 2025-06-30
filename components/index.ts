@@ -40,3 +40,4 @@ import * as CommonComponents from './common';
 export { CommonComponents };
 
 export * from './style-guide';
+export * from './notifications';

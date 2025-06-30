@@ -167,6 +167,10 @@ const Contacts = a.model({
   brokerage: a.string(),
   owner: a.string(),
   
+  // Notification preferences - simplified
+  emailNotifications: a.boolean().default(true), // Email notifications enabled
+  smsNotifications: a.boolean().default(false),  // SMS notifications enabled
+  
   // Reverse relationships - see all projects for this contact
   agentProjects: a.hasMany('Projects', 'agentContactId'),
   homeownerProjects: a.hasMany('Projects', 'homeownerContactId'),
@@ -662,6 +666,46 @@ const eSignatureDocuments = a.model({
   allow.authenticated()
 ]);
 
+// Notification System Models
+const NotificationTemplate = a.model({
+  name: a.string().required(),
+  subject: a.string(),
+  contentHtml: a.string(),
+  contentText: a.string(),
+  channel: a.enum(['EMAIL', 'SMS', 'TELEGRAM', 'WHATSAPP']),
+  variables: a.json(), // Array of required variables for template
+  isActive: a.boolean(),
+  owner: a.string(),
+  
+  // Reverse relationship
+  notifications: a.hasMany('NotificationQueue', 'templateId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin'])
+]);
+
+const NotificationQueue = a.model({
+  eventType: a.string().required(),
+  payload: a.json().required(), // Dynamic data for template injection
+  recipientIds: a.json().required(), // Array of Contact IDs
+  channels: a.json().required(), // Array of channel types
+  templateId: a.id().required(),
+  scheduledAt: a.datetime(),
+  status: a.enum(['PENDING', 'SENT', 'FAILED', 'RETRYING']),
+  retryCount: a.integer(),
+  errorMessage: a.string(),
+  sentAt: a.datetime(),
+  owner: a.string(),
+  
+  // Relationships
+  template: a.belongsTo('NotificationTemplate', 'templateId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin'])
+]);
+
 const schema = a.schema({
   Affiliates,
   Auth,
@@ -680,6 +724,8 @@ const schema = a.schema({
   ContactAuditLog,
   Legal,
   MemberSignature,
+  NotificationTemplate,
+  NotificationQueue,
   PendingAppoitments,
   ProjectComments,
   ProjectMilestones,

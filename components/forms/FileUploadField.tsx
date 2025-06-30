@@ -151,8 +151,9 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
       // Generate direct S3 public URL (not presigned) for inline viewing
       // This matches the AddComment system approach for proper inline display
-      const bucketName = amplifyConfig.storage.bucket_name;
-      const region = amplifyConfig.storage.aws_region;
+      const config = amplifyConfig as any;
+      const bucketName = config.storage?.bucket_name || 'default-bucket';
+      const region = config.storage?.aws_region || 'us-west-1';
       const directUrl = `https://${bucketName}.s3.${region}.amazonaws.com/public/${fileKey}`;
 
       // Remove from uploading state

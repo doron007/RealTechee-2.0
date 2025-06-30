@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { generateClient } from 'aws-amplify/api';
-import { uploadData, getUrl } from 'aws-amplify/storage';
+import { uploadData } from 'aws-amplify/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { createLogger } from '../utils/logger';
+import { generateS3Key, getRelativePathForUpload, convertPathsToJson } from '../utils/s3Utils';
 
 // Custom mutation that matches the actual DynamoDB schema
 const CREATE_PROJECT_COMMENT = /* GraphQL */ `
@@ -11,7 +12,6 @@ const CREATE_PROJECT_COMMENT = /* GraphQL */ `
       id
       comment
       createdAt
-      createdDate
       files
       isPrivate
       nickname
@@ -20,7 +20,6 @@ const CREATE_PROJECT_COMMENT = /* GraphQL */ `
       postedByProfileImage
       projectId
       updatedAt
-      updatedDate
     }
   }
 `;
@@ -83,18 +82,17 @@ export const useCommentsData = () => {
   ): Promise<string[]> => {
     if (!files.length) return [];
     
-    const urls: string[] = [];
+    const relativePaths: string[] = [];
     const totalFiles = files.length;
     let completedFiles = 0;
     
     try {
       for (const file of files) {
-        // Create a unique file key using timestamp and original name
-        const timestamp = new Date().getTime();
-        const key = `${projectId}/${timestamp}-${file.name.replace(/\s+/g, '_')}`;
+        // Generate S3 key using utility function
+        const key = generateS3Key(projectId, file.name);
         
         // Upload the file to S3
-        const result = await uploadData({
+        await uploadData({
           key,
           data: file,
           options: {
@@ -111,16 +109,13 @@ export const useCommentsData = () => {
           }
         }).result;
         
-        // Get the public URL for the uploaded file
-        const fileUrl = await getUrl({ 
-          key,
-          options: { accessLevel: 'guest' }
-        });
-        urls.push(fileUrl.url.toString());
+        // Store relative path instead of full URL
+        const relativePath = `/${key}`;
+        relativePaths.push(relativePath);
         completedFiles++;
       }
       
-      return urls;
+      return relativePaths;
     } catch (err) {
       logger.error('Error uploading files', err);
       setError('Error uploading files');
@@ -141,9 +136,9 @@ export const useCommentsData = () => {
     
     try {
       // Upload files first if there are any
-      let fileUrls: string[] = [];
+      let filePaths: string[] = [];
       if (files.length > 0) {
-        fileUrls = await uploadFiles(files, commentData.projectId, onProgress);
+        filePaths = await uploadFiles(files, commentData.projectId, onProgress);
       }
       
       // Prepare the input data for the GraphQL mutation
@@ -153,7 +148,7 @@ export const useCommentsData = () => {
         postedByContactId: commentData.postedByContactId,
         nickname: commentData.nickname,
         comment: commentData.comment,
-        files: fileUrls.length > 0 ? JSON.stringify(fileUrls) : null,
+        files: filePaths.length > 0 ? convertPathsToJson(filePaths) : null,
         isPrivate: commentData.isPrivate || false,
         postedByProfileImage: commentData.postedByProfileImage || null,
         owner: commentData.owner || commentData.postedByContactId
