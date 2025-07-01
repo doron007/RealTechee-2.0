@@ -32,6 +32,11 @@ env-vars*.json
 test-payload*.json
 lambda-response*.json
 schema.ts
+setup-notification-env-vars.sh
+
+# data backups - should not be committed to git
+/backups/
+backups/
 
 # vercel
 .vercel
