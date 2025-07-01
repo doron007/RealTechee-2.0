@@ -459,11 +459,7 @@ export const optimizedProjectsAPI = {
         return { success: false, error: 'Failed to fetch projects' };
       }
 
-      console.log('loadProjectCards: Raw projects data:', {
-        totalProjects: result.data?.length || 0,
-        sampleProject: result.data?.[0],
-        hasNullProjects: result.data?.some((p: any) => !p)
-      });
+      projectsLogger.info('Loaded projects', { totalProjects: result.data?.length || 0 });
 
       // Apply filters (matching original CSV logic)
       const filteredProjects = result.data.filter((project: any) => {
@@ -524,9 +520,12 @@ export const optimizedProjectsAPI = {
           return aOrder - bOrder;
         }
         
-        // Then sort by updated date in descending order (using automatic timestamps)
-        const aDate = new Date(a.updatedAt || a.createdAt || 0);
-        const bDate = new Date(b.updatedAt || b.createdAt || 0);
+        // Then sort by business date in descending order (prioritize business dates over system timestamps)
+        // Priority: createdDate > updatedDate > contractDate > requestDate > updatedAt > createdAt
+        let aBusinessDate = a.createdDate || a.updatedDate || a.contractDate || a.requestDate || a.updatedAt || a.createdAt || 0;
+        let bBusinessDate = b.createdDate || b.updatedDate || b.contractDate || b.requestDate || b.updatedAt || b.createdAt || 0;
+        const aDate = new Date(aBusinessDate);
+        const bDate = new Date(bBusinessDate);
         return bDate.getTime() - aDate.getTime();
       });
 

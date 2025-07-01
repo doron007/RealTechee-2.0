@@ -463,6 +463,8 @@ const Projects = a.model({
   homeowner2ContactId: a.id(),
   homeowner3ContactId: a.id(),
   addressId: a.id(),
+  createdDate: a.datetime(),
+  updatedDate: a.datetime(),
   
   // Relationships - This is the Gen2 superpower!
   agent: a.belongsTo('Contacts', 'agentContactId'),
