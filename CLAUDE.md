@@ -21,6 +21,8 @@
 
 **Backend Access:** Use generated GraphQL hooks (useQuery, useMutation) from `npx ampx generate` - ! custom /api routes for backend operations
 
+**GraphQL Field Access:** For models w/ custom business date fields (e.g., Projects.createdDate/updatedDate), use direct GraphQL queries rather than client.models to ensure all schema fields are retrieved. Amplify Gen 2 client.models may not include all fields by default.
+
 ## Typography System (MODERN H1-H6, P1-P3)
 
 ### New Semantic Typography Components

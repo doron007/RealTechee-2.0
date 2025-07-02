@@ -488,6 +488,7 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -521,6 +522,7 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -583,6 +585,7 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -591,6 +594,7 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -601,6 +605,7 @@ export const getProjectComments = /* GraphQL */ `query GetProjectComments($id: I
 export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($id: ID!) {
   getProjectMilestones(id: $id) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -637,6 +642,7 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -699,6 +705,7 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -707,6 +714,7 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -717,6 +725,7 @@ export const getProjectMilestones = /* GraphQL */ `query GetProjectMilestones($i
 export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerms($id: ID!) {
   getProjectPaymentTerms(id: $id) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -754,6 +763,7 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -816,6 +826,7 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -825,6 +836,7 @@ export const getProjectPaymentTerms = /* GraphQL */ `query GetProjectPaymentTerm
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -916,6 +928,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -1045,6 +1058,7 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1128,6 +1142,7 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1190,6 +1205,7 @@ export const getQuoteItems = /* GraphQL */ `query GetQuoteItems($id: ID!) {
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1309,6 +1325,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1371,6 +1388,7 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2122,6 +2140,7 @@ export const listProjectComments = /* GraphQL */ `query ListProjectComments(
       addToGallery
       comment
       createdAt
+      createdDate
       files
       id
       isPrivate
@@ -2131,6 +2150,7 @@ export const listProjectComments = /* GraphQL */ `query ListProjectComments(
       postedByProfileImage
       projectId
       updatedAt
+      updatedDate
       __typename
     }
     nextToken
@@ -2149,6 +2169,7 @@ export const listProjectMilestones = /* GraphQL */ `query ListProjectMilestones(
   listProjectMilestones(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       createdAt
+      createdDate
       description
       estimatedFinish
       estimatedStart
@@ -2161,6 +2182,7 @@ export const listProjectMilestones = /* GraphQL */ `query ListProjectMilestones(
       owner
       projectId
       updatedAt
+      updatedDate
       __typename
     }
     nextToken
@@ -2183,6 +2205,7 @@ export const listProjectPaymentTerms = /* GraphQL */ `query ListProjectPaymentTe
   ) {
     items {
       createdAt
+      createdDate
       description
       id
       internal
@@ -2197,6 +2220,7 @@ export const listProjectPaymentTerms = /* GraphQL */ `query ListProjectPaymentTe
       projectId
       type
       updatedAt
+      updatedDate
       __typename
     }
     nextToken
@@ -2267,6 +2291,7 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2329,6 +2354,7 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt

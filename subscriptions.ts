@@ -529,6 +529,7 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -562,6 +563,7 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -624,6 +626,7 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -632,6 +635,7 @@ export const onCreateProjectComments = /* GraphQL */ `subscription OnCreateProje
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -644,6 +648,7 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
 ) {
   onCreateProjectMilestones(filter: $filter) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -680,6 +685,7 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -742,6 +748,7 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -750,6 +757,7 @@ export const onCreateProjectMilestones = /* GraphQL */ `subscription OnCreatePro
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -762,6 +770,7 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
 ) {
   onCreateProjectPaymentTerms(filter: $filter) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -799,6 +808,7 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -861,6 +871,7 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -870,6 +881,7 @@ export const onCreateProjectPaymentTerms = /* GraphQL */ `subscription OnCreateP
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -963,6 +975,7 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -1092,6 +1105,7 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1179,6 +1193,7 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1241,6 +1256,7 @@ export const onCreateQuoteItems = /* GraphQL */ `subscription OnCreateQuoteItems
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1360,6 +1376,7 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1422,6 +1439,7 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2031,6 +2049,7 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -2064,6 +2083,7 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2126,6 +2146,7 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2134,6 +2155,7 @@ export const onDeleteProjectComments = /* GraphQL */ `subscription OnDeleteProje
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2146,6 +2168,7 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
 ) {
   onDeleteProjectMilestones(filter: $filter) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -2182,6 +2205,7 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2244,6 +2268,7 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2252,6 +2277,7 @@ export const onDeleteProjectMilestones = /* GraphQL */ `subscription OnDeletePro
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2264,6 +2290,7 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
 ) {
   onDeleteProjectPaymentTerms(filter: $filter) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -2301,6 +2328,7 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2363,6 +2391,7 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2372,6 +2401,7 @@ export const onDeleteProjectPaymentTerms = /* GraphQL */ `subscription OnDeleteP
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2465,6 +2495,7 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -2594,6 +2625,7 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -2681,6 +2713,7 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2743,6 +2776,7 @@ export const onDeleteQuoteItems = /* GraphQL */ `subscription OnDeleteQuoteItems
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2862,6 +2896,7 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2924,6 +2959,7 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3533,6 +3569,7 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -3566,6 +3603,7 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3628,6 +3666,7 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3636,6 +3675,7 @@ export const onUpdateProjectComments = /* GraphQL */ `subscription OnUpdateProje
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -3648,6 +3688,7 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
 ) {
   onUpdateProjectMilestones(filter: $filter) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -3684,6 +3725,7 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3746,6 +3788,7 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3754,6 +3797,7 @@ export const onUpdateProjectMilestones = /* GraphQL */ `subscription OnUpdatePro
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -3766,6 +3810,7 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
 ) {
   onUpdateProjectPaymentTerms(filter: $filter) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -3803,6 +3848,7 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3865,6 +3911,7 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3874,6 +3921,7 @@ export const onUpdateProjectPaymentTerms = /* GraphQL */ `subscription OnUpdateP
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -3967,6 +4015,7 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -4096,6 +4145,7 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -4183,6 +4233,7 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -4245,6 +4296,7 @@ export const onUpdateQuoteItems = /* GraphQL */ `subscription OnUpdateQuoteItems
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4364,6 +4416,7 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -4426,6 +4479,7 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt

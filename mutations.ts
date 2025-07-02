@@ -560,6 +560,7 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -593,6 +594,7 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -655,6 +657,7 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -663,6 +666,7 @@ export const createProjectComments = /* GraphQL */ `mutation CreateProjectCommen
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -676,6 +680,7 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
 ) {
   createProjectMilestones(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -712,6 +717,7 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -774,6 +780,7 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -782,6 +789,7 @@ export const createProjectMilestones = /* GraphQL */ `mutation CreateProjectMile
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -795,6 +803,7 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
 ) {
   createProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -832,6 +841,7 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -894,6 +904,7 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -903,6 +914,7 @@ export const createProjectPaymentTerms = /* GraphQL */ `mutation CreateProjectPa
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -1000,6 +1012,7 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -1129,6 +1142,7 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -1218,6 +1232,7 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1280,6 +1295,7 @@ export const createQuoteItems = /* GraphQL */ `mutation CreateQuoteItems(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -1402,6 +1418,7 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -1464,6 +1481,7 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2107,6 +2125,7 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -2140,6 +2159,7 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2202,6 +2222,7 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2210,6 +2231,7 @@ export const deleteProjectComments = /* GraphQL */ `mutation DeleteProjectCommen
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2223,6 +2245,7 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
 ) {
   deleteProjectMilestones(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -2259,6 +2282,7 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2321,6 +2345,7 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2329,6 +2354,7 @@ export const deleteProjectMilestones = /* GraphQL */ `mutation DeleteProjectMile
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2342,6 +2368,7 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
 ) {
   deleteProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -2379,6 +2406,7 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2441,6 +2469,7 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2450,6 +2479,7 @@ export const deleteProjectPaymentTerms = /* GraphQL */ `mutation DeleteProjectPa
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -2547,6 +2577,7 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -2676,6 +2707,7 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -2765,6 +2797,7 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -2827,6 +2860,7 @@ export const deleteQuoteItems = /* GraphQL */ `mutation DeleteQuoteItems(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -2949,6 +2983,7 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3011,6 +3046,7 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3654,6 +3690,7 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
     addToGallery
     comment
     createdAt
+    createdDate
     files
     id
     isPrivate
@@ -3687,6 +3724,7 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3749,6 +3787,7 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3757,6 +3796,7 @@ export const updateProjectComments = /* GraphQL */ `mutation UpdateProjectCommen
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -3770,6 +3810,7 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
 ) {
   updateProjectMilestones(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     estimatedFinish
     estimatedStart
@@ -3806,6 +3847,7 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3868,6 +3910,7 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3876,6 +3919,7 @@ export const updateProjectMilestones = /* GraphQL */ `mutation UpdateProjectMile
     }
     projectId
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -3889,6 +3933,7 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
 ) {
   updateProjectPaymentTerms(condition: $condition, input: $input) {
     createdAt
+    createdDate
     description
     id
     internal
@@ -3926,6 +3971,7 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -3988,6 +4034,7 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -3997,6 +4044,7 @@ export const updateProjectPaymentTerms = /* GraphQL */ `mutation UpdateProjectPa
     projectId
     type
     updatedAt
+    updatedDate
     __typename
   }
 }
@@ -4094,6 +4142,7 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     contractUrl
     contractingStartDate
     createdAt
+    createdDate
     daysOnMarket
     description
     documents
@@ -4223,6 +4272,7 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     title
     underwritingDate
     updatedAt
+    updatedDate
     visitReviewDate
     visitorId
     yearBuilt
@@ -4312,6 +4362,7 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -4374,6 +4425,7 @@ export const updateQuoteItems = /* GraphQL */ `mutation UpdateQuoteItems(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt
@@ -4496,6 +4548,7 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       contractUrl
       contractingStartDate
       createdAt
+      createdDate
       daysOnMarket
       description
       documents
@@ -4558,6 +4611,7 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       title
       underwritingDate
       updatedAt
+      updatedDate
       visitReviewDate
       visitorId
       yearBuilt

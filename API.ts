@@ -282,6 +282,7 @@ export type Projects = {
   contractUrl?: string | null,
   contractingStartDate?: string | null,
   createdAt: string,
+  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -351,6 +352,7 @@ export type Projects = {
   title?: string | null,
   underwritingDate?: string | null,
   updatedAt: string,
+  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -390,6 +392,7 @@ export type ProjectComments = {
   addToGallery?: string | null,
   comment?: string | null,
   createdAt: string,
+  createdDate?: string | null,
   files?: string | null,
   id: string,
   isPrivate?: boolean | null,
@@ -400,6 +403,7 @@ export type ProjectComments = {
   project?: Projects | null,
   projectId?: string | null,
   updatedAt: string,
+  updatedDate?: string | null,
 };
 
 export type ModelProjectMilestonesConnection = {
@@ -411,6 +415,7 @@ export type ModelProjectMilestonesConnection = {
 export type ProjectMilestones = {
   __typename: "ProjectMilestones",
   createdAt: string,
+  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -424,6 +429,7 @@ export type ProjectMilestones = {
   project?: Projects | null,
   projectId?: string | null,
   updatedAt: string,
+  updatedDate?: string | null,
 };
 
 export type ModelProjectPaymentTermsConnection = {
@@ -435,6 +441,7 @@ export type ModelProjectPaymentTermsConnection = {
 export type ProjectPaymentTerms = {
   __typename: "ProjectPaymentTerms",
   createdAt: string,
+  createdDate?: string | null,
   description?: string | null,
   id: string,
   internal?: boolean | null,
@@ -450,6 +457,7 @@ export type ProjectPaymentTerms = {
   projectId?: string | null,
   type?: string | null,
   updatedAt: string,
+  updatedDate?: string | null,
 };
 
 export type ModelQuoteItemsConnection = {
@@ -1356,6 +1364,7 @@ export type ModelProjectCommentsFilterInput = {
   and?: Array< ModelProjectCommentsFilterInput | null > | null,
   comment?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   files?: ModelStringInput | null,
   id?: ModelIDInput | null,
   isPrivate?: ModelBooleanInput | null,
@@ -1367,11 +1376,13 @@ export type ModelProjectCommentsFilterInput = {
   postedByProfileImage?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectMilestonesFilterInput = {
   and?: Array< ModelProjectMilestonesFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   estimatedFinish?: ModelStringInput | null,
   estimatedStart?: ModelStringInput | null,
@@ -1386,11 +1397,13 @@ export type ModelProjectMilestonesFilterInput = {
   owner?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectPaymentTermsFilterInput = {
   and?: Array< ModelProjectPaymentTermsFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   id?: ModelIDInput | null,
   internal?: ModelBooleanInput | null,
@@ -1407,6 +1420,7 @@ export type ModelProjectPaymentTermsFilterInput = {
   projectId?: ModelIDInput | null,
   type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type ModelProjectPermissionsFilterInput = {
@@ -1455,6 +1469,7 @@ export type ModelProjectsFilterInput = {
   contractUrl?: ModelStringInput | null,
   contractingStartDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   daysOnMarket?: ModelStringInput | null,
   description?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -1519,6 +1534,7 @@ export type ModelProjectsFilterInput = {
   title?: ModelStringInput | null,
   underwritingDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
   visitReviewDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
   yearBuilt?: ModelIntInput | null,
@@ -2333,6 +2349,7 @@ export type ModelProjectCommentsConditionInput = {
   and?: Array< ModelProjectCommentsConditionInput | null > | null,
   comment?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   files?: ModelStringInput | null,
   isPrivate?: ModelBooleanInput | null,
   nickname?: ModelStringInput | null,
@@ -2343,11 +2360,13 @@ export type ModelProjectCommentsConditionInput = {
   postedByProfileImage?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectCommentsInput = {
   addToGallery?: string | null,
   comment?: string | null,
+  createdDate?: string | null,
   files?: string | null,
   id?: string | null,
   isPrivate?: boolean | null,
@@ -2356,11 +2375,13 @@ export type CreateProjectCommentsInput = {
   postedByContactId?: string | null,
   postedByProfileImage?: string | null,
   projectId?: string | null,
+  updatedDate?: string | null,
 };
 
 export type ModelProjectMilestonesConditionInput = {
   and?: Array< ModelProjectMilestonesConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   estimatedFinish?: ModelStringInput | null,
   estimatedStart?: ModelStringInput | null,
@@ -2374,9 +2395,11 @@ export type ModelProjectMilestonesConditionInput = {
   owner?: ModelStringInput | null,
   projectId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectMilestonesInput = {
+  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -2388,11 +2411,13 @@ export type CreateProjectMilestonesInput = {
   order?: number | null,
   owner?: string | null,
   projectId?: string | null,
+  updatedDate?: string | null,
 };
 
 export type ModelProjectPaymentTermsConditionInput = {
   and?: Array< ModelProjectPaymentTermsConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   description?: ModelStringInput | null,
   internal?: ModelBooleanInput | null,
   isCategory?: ModelBooleanInput | null,
@@ -2408,9 +2433,11 @@ export type ModelProjectPaymentTermsConditionInput = {
   projectId?: ModelIDInput | null,
   type?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
 };
 
 export type CreateProjectPaymentTermsInput = {
+  createdDate?: string | null,
   description?: string | null,
   id?: string | null,
   internal?: boolean | null,
@@ -2424,6 +2451,7 @@ export type CreateProjectPaymentTermsInput = {
   paymentName?: string | null,
   projectId?: string | null,
   type?: string | null,
+  updatedDate?: string | null,
 };
 
 export type ModelProjectPermissionsConditionInput = {
@@ -2473,6 +2501,7 @@ export type ModelProjectsConditionInput = {
   contractUrl?: ModelStringInput | null,
   contractingStartDate?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  createdDate?: ModelStringInput | null,
   daysOnMarket?: ModelStringInput | null,
   description?: ModelStringInput | null,
   documents?: ModelStringInput | null,
@@ -2536,6 +2565,7 @@ export type ModelProjectsConditionInput = {
   title?: ModelStringInput | null,
   underwritingDate?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+  updatedDate?: ModelStringInput | null,
   visitReviewDate?: ModelStringInput | null,
   visitorId?: ModelIDInput | null,
   yearBuilt?: ModelIntInput | null,
@@ -2567,6 +2597,7 @@ export type CreateProjectsInput = {
   contractSentDate?: string | null,
   contractUrl?: string | null,
   contractingStartDate?: string | null,
+  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -2628,6 +2659,7 @@ export type CreateProjectsInput = {
   statusOrder?: number | null,
   title?: string | null,
   underwritingDate?: string | null,
+  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -3334,6 +3366,7 @@ export type UpdatePendingAppoitmentsInput = {
 export type UpdateProjectCommentsInput = {
   addToGallery?: string | null,
   comment?: string | null,
+  createdDate?: string | null,
   files?: string | null,
   id: string,
   isPrivate?: boolean | null,
@@ -3342,9 +3375,11 @@ export type UpdateProjectCommentsInput = {
   postedByContactId?: string | null,
   postedByProfileImage?: string | null,
   projectId?: string | null,
+  updatedDate?: string | null,
 };
 
 export type UpdateProjectMilestonesInput = {
+  createdDate?: string | null,
   description?: string | null,
   estimatedFinish?: string | null,
   estimatedStart?: string | null,
@@ -3356,9 +3391,11 @@ export type UpdateProjectMilestonesInput = {
   order?: number | null,
   owner?: string | null,
   projectId?: string | null,
+  updatedDate?: string | null,
 };
 
 export type UpdateProjectPaymentTermsInput = {
+  createdDate?: string | null,
   description?: string | null,
   id: string,
   internal?: boolean | null,
@@ -3372,6 +3409,7 @@ export type UpdateProjectPaymentTermsInput = {
   paymentName?: string | null,
   projectId?: string | null,
   type?: string | null,
+  updatedDate?: string | null,
 };
 
 export type UpdateProjectPermissionsInput = {
@@ -3407,6 +3445,7 @@ export type UpdateProjectsInput = {
   contractSentDate?: string | null,
   contractUrl?: string | null,
   contractingStartDate?: string | null,
+  createdDate?: string | null,
   daysOnMarket?: string | null,
   description?: string | null,
   documents?: string | null,
@@ -3468,6 +3507,7 @@ export type UpdateProjectsInput = {
   statusOrder?: number | null,
   title?: string | null,
   underwritingDate?: string | null,
+  updatedDate?: string | null,
   visitReviewDate?: string | null,
   visitorId?: string | null,
   yearBuilt?: number | null,
@@ -4038,6 +4078,7 @@ export type ModelSubscriptionProjectCommentsFilterInput = {
   and?: Array< ModelSubscriptionProjectCommentsFilterInput | null > | null,
   comment?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  createdDate?: ModelSubscriptionStringInput | null,
   files?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   isPrivate?: ModelSubscriptionBooleanInput | null,
@@ -4048,11 +4089,13 @@ export type ModelSubscriptionProjectCommentsFilterInput = {
   postedByProfileImage?: ModelSubscriptionStringInput | null,
   projectId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectMilestonesFilterInput = {
   and?: Array< ModelSubscriptionProjectMilestonesFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  createdDate?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   estimatedFinish?: ModelSubscriptionStringInput | null,
   estimatedStart?: ModelSubscriptionStringInput | null,
@@ -4066,11 +4109,13 @@ export type ModelSubscriptionProjectMilestonesFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   projectId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectPaymentTermsFilterInput = {
   and?: Array< ModelSubscriptionProjectPaymentTermsFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  createdDate?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   internal?: ModelSubscriptionBooleanInput | null,
@@ -4086,6 +4131,7 @@ export type ModelSubscriptionProjectPaymentTermsFilterInput = {
   projectId?: ModelSubscriptionIDInput | null,
   type?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  updatedDate?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionProjectPermissionsFilterInput = {
@@ -4127,6 +4173,7 @@ export type ModelSubscriptionProjectsFilterInput = {
   contractUrl?: ModelSubscriptionStringInput | null,
   contractingStartDate?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  createdDate?: ModelSubscriptionStringInput | null,
   daysOnMarket?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   documents?: ModelSubscriptionStringInput | null,
@@ -4190,6 +4237,7 @@ export type ModelSubscriptionProjectsFilterInput = {
   title?: ModelSubscriptionStringInput | null,
   underwritingDate?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
+  updatedDate?: ModelSubscriptionStringInput | null,
   visitReviewDate?: ModelSubscriptionStringInput | null,
   visitorId?: ModelSubscriptionIDInput | null,
   yearBuilt?: ModelSubscriptionIntInput | null,
@@ -4869,6 +4917,7 @@ export type GetProjectCommentsQuery = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -4903,6 +4952,7 @@ export type GetProjectCommentsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -4965,6 +5015,7 @@ export type GetProjectCommentsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -4972,6 +5023,7 @@ export type GetProjectCommentsQuery = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -4983,6 +5035,7 @@ export type GetProjectMilestonesQuery = {
   getProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -5020,6 +5073,7 @@ export type GetProjectMilestonesQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5082,6 +5136,7 @@ export type GetProjectMilestonesQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5089,6 +5144,7 @@ export type GetProjectMilestonesQuery = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -5100,6 +5156,7 @@ export type GetProjectPaymentTermsQuery = {
   getProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -5138,6 +5195,7 @@ export type GetProjectPaymentTermsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5200,6 +5258,7 @@ export type GetProjectPaymentTermsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5208,6 +5267,7 @@ export type GetProjectPaymentTermsQuery = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -5301,6 +5361,7 @@ export type GetProjectsQuery = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -5430,6 +5491,7 @@ export type GetProjectsQuery = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -5516,6 +5578,7 @@ export type GetQuoteItemsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5578,6 +5641,7 @@ export type GetQuoteItemsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -5698,6 +5762,7 @@ export type GetQuotesQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -5760,6 +5825,7 @@ export type GetQuotesQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -6444,6 +6510,7 @@ export type ListProjectCommentsQuery = {
       addToGallery?: string | null,
       comment?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       files?: string | null,
       id: string,
       isPrivate?: boolean | null,
@@ -6453,6 +6520,7 @@ export type ListProjectCommentsQuery = {
       postedByProfileImage?: string | null,
       projectId?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6470,6 +6538,7 @@ export type ListProjectMilestonesQuery = {
     items:  Array< {
       __typename: "ProjectMilestones",
       createdAt: string,
+      createdDate?: string | null,
       description?: string | null,
       estimatedFinish?: string | null,
       estimatedStart?: string | null,
@@ -6482,6 +6551,7 @@ export type ListProjectMilestonesQuery = {
       owner?: string | null,
       projectId?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6499,6 +6569,7 @@ export type ListProjectPaymentTermsQuery = {
     items:  Array< {
       __typename: "ProjectPaymentTerms",
       createdAt: string,
+      createdDate?: string | null,
       description?: string | null,
       id: string,
       internal?: boolean | null,
@@ -6513,6 +6584,7 @@ export type ListProjectPaymentTermsQuery = {
       projectId?: string | null,
       type?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -6577,6 +6649,7 @@ export type ListProjectsQuery = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -6639,6 +6712,7 @@ export type ListProjectsQuery = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7387,6 +7461,7 @@ export type CreateProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -7421,6 +7496,7 @@ export type CreateProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7483,6 +7559,7 @@ export type CreateProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7490,6 +7567,7 @@ export type CreateProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -7502,6 +7580,7 @@ export type CreateProjectMilestonesMutation = {
   createProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -7539,6 +7618,7 @@ export type CreateProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7601,6 +7681,7 @@ export type CreateProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7608,6 +7689,7 @@ export type CreateProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -7620,6 +7702,7 @@ export type CreateProjectPaymentTermsMutation = {
   createProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -7658,6 +7741,7 @@ export type CreateProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -7720,6 +7804,7 @@ export type CreateProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -7728,6 +7813,7 @@ export type CreateProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -7823,6 +7909,7 @@ export type CreateProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -7952,6 +8039,7 @@ export type CreateProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -8040,6 +8128,7 @@ export type CreateQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -8102,6 +8191,7 @@ export type CreateQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -8223,6 +8313,7 @@ export type CreateQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -8285,6 +8376,7 @@ export type CreateQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -8904,6 +8996,7 @@ export type DeleteProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -8938,6 +9031,7 @@ export type DeleteProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9000,6 +9094,7 @@ export type DeleteProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9007,6 +9102,7 @@ export type DeleteProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -9019,6 +9115,7 @@ export type DeleteProjectMilestonesMutation = {
   deleteProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -9056,6 +9153,7 @@ export type DeleteProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9118,6 +9216,7 @@ export type DeleteProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9125,6 +9224,7 @@ export type DeleteProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -9137,6 +9237,7 @@ export type DeleteProjectPaymentTermsMutation = {
   deleteProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -9175,6 +9276,7 @@ export type DeleteProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9237,6 +9339,7 @@ export type DeleteProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9245,6 +9348,7 @@ export type DeleteProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -9340,6 +9444,7 @@ export type DeleteProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -9469,6 +9574,7 @@ export type DeleteProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -9557,6 +9663,7 @@ export type DeleteQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9619,6 +9726,7 @@ export type DeleteQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -9740,6 +9848,7 @@ export type DeleteQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -9802,6 +9911,7 @@ export type DeleteQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10421,6 +10531,7 @@ export type UpdateProjectCommentsMutation = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -10455,6 +10566,7 @@ export type UpdateProjectCommentsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10517,6 +10629,7 @@ export type UpdateProjectCommentsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10524,6 +10637,7 @@ export type UpdateProjectCommentsMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -10536,6 +10650,7 @@ export type UpdateProjectMilestonesMutation = {
   updateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -10573,6 +10688,7 @@ export type UpdateProjectMilestonesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10635,6 +10751,7 @@ export type UpdateProjectMilestonesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10642,6 +10759,7 @@ export type UpdateProjectMilestonesMutation = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -10654,6 +10772,7 @@ export type UpdateProjectPaymentTermsMutation = {
   updateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -10692,6 +10811,7 @@ export type UpdateProjectPaymentTermsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -10754,6 +10874,7 @@ export type UpdateProjectPaymentTermsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -10762,6 +10883,7 @@ export type UpdateProjectPaymentTermsMutation = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -10857,6 +10979,7 @@ export type UpdateProjectsMutation = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -10986,6 +11109,7 @@ export type UpdateProjectsMutation = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -11074,6 +11198,7 @@ export type UpdateQuoteItemsMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -11136,6 +11261,7 @@ export type UpdateQuoteItemsMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -11257,6 +11383,7 @@ export type UpdateQuotesMutation = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -11319,6 +11446,7 @@ export type UpdateQuotesMutation = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -11917,6 +12045,7 @@ export type OnCreateProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -11951,6 +12080,7 @@ export type OnCreateProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12013,6 +12143,7 @@ export type OnCreateProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12020,6 +12151,7 @@ export type OnCreateProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -12031,6 +12163,7 @@ export type OnCreateProjectMilestonesSubscription = {
   onCreateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -12068,6 +12201,7 @@ export type OnCreateProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12130,6 +12264,7 @@ export type OnCreateProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12137,6 +12272,7 @@ export type OnCreateProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -12148,6 +12284,7 @@ export type OnCreateProjectPaymentTermsSubscription = {
   onCreateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -12186,6 +12323,7 @@ export type OnCreateProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12248,6 +12386,7 @@ export type OnCreateProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12256,6 +12395,7 @@ export type OnCreateProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -12349,6 +12489,7 @@ export type OnCreateProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -12478,6 +12619,7 @@ export type OnCreateProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -12564,6 +12706,7 @@ export type OnCreateQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12626,6 +12769,7 @@ export type OnCreateQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -12746,6 +12890,7 @@ export type OnCreateQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -12808,6 +12953,7 @@ export type OnCreateQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13405,6 +13551,7 @@ export type OnDeleteProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -13439,6 +13586,7 @@ export type OnDeleteProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13501,6 +13649,7 @@ export type OnDeleteProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13508,6 +13657,7 @@ export type OnDeleteProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -13519,6 +13669,7 @@ export type OnDeleteProjectMilestonesSubscription = {
   onDeleteProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -13556,6 +13707,7 @@ export type OnDeleteProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13618,6 +13770,7 @@ export type OnDeleteProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13625,6 +13778,7 @@ export type OnDeleteProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -13636,6 +13790,7 @@ export type OnDeleteProjectPaymentTermsSubscription = {
   onDeleteProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -13674,6 +13829,7 @@ export type OnDeleteProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -13736,6 +13892,7 @@ export type OnDeleteProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -13744,6 +13901,7 @@ export type OnDeleteProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -13837,6 +13995,7 @@ export type OnDeleteProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -13966,6 +14125,7 @@ export type OnDeleteProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -14052,6 +14212,7 @@ export type OnDeleteQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -14114,6 +14275,7 @@ export type OnDeleteQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -14234,6 +14396,7 @@ export type OnDeleteQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -14296,6 +14459,7 @@ export type OnDeleteQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -14893,6 +15057,7 @@ export type OnUpdateProjectCommentsSubscription = {
     addToGallery?: string | null,
     comment?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     files?: string | null,
     id: string,
     isPrivate?: boolean | null,
@@ -14927,6 +15092,7 @@ export type OnUpdateProjectCommentsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -14989,6 +15155,7 @@ export type OnUpdateProjectCommentsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -14996,6 +15163,7 @@ export type OnUpdateProjectCommentsSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -15007,6 +15175,7 @@ export type OnUpdateProjectMilestonesSubscription = {
   onUpdateProjectMilestones?:  {
     __typename: "ProjectMilestones",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     estimatedFinish?: string | null,
     estimatedStart?: string | null,
@@ -15044,6 +15213,7 @@ export type OnUpdateProjectMilestonesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15106,6 +15276,7 @@ export type OnUpdateProjectMilestonesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15113,6 +15284,7 @@ export type OnUpdateProjectMilestonesSubscription = {
     } | null,
     projectId?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -15124,6 +15296,7 @@ export type OnUpdateProjectPaymentTermsSubscription = {
   onUpdateProjectPaymentTerms?:  {
     __typename: "ProjectPaymentTerms",
     createdAt: string,
+    createdDate?: string | null,
     description?: string | null,
     id: string,
     internal?: boolean | null,
@@ -15162,6 +15335,7 @@ export type OnUpdateProjectPaymentTermsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15224,6 +15398,7 @@ export type OnUpdateProjectPaymentTermsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15232,6 +15407,7 @@ export type OnUpdateProjectPaymentTermsSubscription = {
     projectId?: string | null,
     type?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
   } | null,
 };
 
@@ -15325,6 +15501,7 @@ export type OnUpdateProjectsSubscription = {
     contractUrl?: string | null,
     contractingStartDate?: string | null,
     createdAt: string,
+    createdDate?: string | null,
     daysOnMarket?: string | null,
     description?: string | null,
     documents?: string | null,
@@ -15454,6 +15631,7 @@ export type OnUpdateProjectsSubscription = {
     title?: string | null,
     underwritingDate?: string | null,
     updatedAt: string,
+    updatedDate?: string | null,
     visitReviewDate?: string | null,
     visitorId?: string | null,
     yearBuilt?: number | null,
@@ -15540,6 +15718,7 @@ export type OnUpdateQuoteItemsSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15602,6 +15781,7 @@ export type OnUpdateQuoteItemsSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,
@@ -15722,6 +15902,7 @@ export type OnUpdateQuotesSubscription = {
       contractUrl?: string | null,
       contractingStartDate?: string | null,
       createdAt: string,
+      createdDate?: string | null,
       daysOnMarket?: string | null,
       description?: string | null,
       documents?: string | null,
@@ -15784,6 +15965,7 @@ export type OnUpdateQuotesSubscription = {
       title?: string | null,
       underwritingDate?: string | null,
       updatedAt: string,
+      updatedDate?: string | null,
       visitReviewDate?: string | null,
       visitorId?: string | null,
       yearBuilt?: number | null,

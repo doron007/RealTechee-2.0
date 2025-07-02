@@ -12,6 +12,8 @@ export interface Milestone {
   order?: number;
   createdAt?: string;
   updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
   owner?: string;
   isCategory?: boolean;
   isInternal?: boolean;
@@ -34,7 +36,7 @@ export default function MilestonesList({
   className = "",
   onMilestoneToggle
 }: MilestonesListProps) {
-  // Sort milestones: completed first, then by order
+  // Sort milestones: completed first, then by order, then by creation date (legacy first)
   const sortedMilestones = [...milestones].sort((a, b) => {
     // First sort by completion status (completed items first)
     if (a.isComplete !== b.isComplete) {
@@ -50,8 +52,11 @@ export default function MilestonesList({
     if (a.order !== undefined) return -1;
     if (b.order !== undefined) return 1;
 
-    // If neither has order, maintain original order
-    return 0;
+    // If neither has order, sort by creation date (legacy business date first)
+    // Priority: createdDate (legacy) > createdAt (Amplify auto-generated)
+    const dateA = new Date(a.createdDate || a.createdAt || 0);
+    const dateB = new Date(b.createdDate || b.createdAt || 0);
+    return dateA.getTime() - dateB.getTime(); // Earliest first for milestones
   });
 
   return (

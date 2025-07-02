@@ -314,6 +314,8 @@ const ProjectComments = a.model({
   postedByProfileImage: a.string(),
   addToGallery: a.string(),
   owner: a.string(),
+  createdDate: a.datetime(),
+  updatedDate: a.datetime(),
   
   // Relationships
   project: a.belongsTo('Projects', 'projectId'),
@@ -335,6 +337,8 @@ const ProjectMilestones = a.model({
   estimatedFinish: a.datetime(),
   isCategory: a.boolean(),
   isInternal: a.boolean(),
+  createdDate: a.datetime(),
+  updatedDate: a.datetime(),
   
   // Relationships
   project: a.belongsTo('Projects', 'projectId'),
@@ -356,6 +360,8 @@ const ProjectPaymentTerms = a.model({
   isCategory: a.boolean(),
   internal: a.boolean(),
   owner: a.string(),
+  createdDate: a.datetime(),
+  updatedDate: a.datetime(),
   
   // Relationships
   project: a.belongsTo('Projects', 'projectId'),
