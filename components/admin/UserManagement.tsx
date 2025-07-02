@@ -7,10 +7,10 @@ import { listContacts } from '../../queries';
 const client = generateClient();
 
 interface UserManagementProps {
-  userRole: string;
+  userRole?: string;
 }
 
-const UserManagement: React.FC<UserManagementProps> = ({ userRole }) => {
+const UserManagement: React.FC<UserManagementProps> = ({ userRole = 'admin' }) => {
   const [users, setUsers] = useState<CognitoUser[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [error, setError] = useState<string>('');

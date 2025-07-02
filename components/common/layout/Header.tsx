@@ -9,6 +9,7 @@ import {
 } from '../../../utils/componentUtils';
 import Button from '../buttons/Button';
 import EstimateButton from '../buttons/EstimateButton';
+import { AuthorizationService } from '../../../utils/authorizationHelpers';
 
 // Define HeaderProps interface directly in the file
 interface HeaderProps {
@@ -26,6 +27,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
   const [productsDropdownOpen, setProductsDropdownOpen] = useState<boolean>(false);
   const [contactDropdownOpen, setContactDropdownOpen] = useState<boolean>(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState<boolean>(false);
+  const [hasAdminAccess, setHasAdminAccess] = useState<boolean>(false);
 
   // Helper functions to extract user data
   const getUserDisplayName = () => {
@@ -58,6 +60,24 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
     setProfileDropdownOpen(false);
   };
   const headerRef = useRef<HTMLDivElement>(null);
+
+  // Check admin access when user logs in
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      if (userLoggedIn && user) {
+        try {
+          const isAdmin = await AuthorizationService.hasMinimumRole('admin');
+          setHasAdminAccess(isAdmin);
+        } catch (err) {
+          console.error('Failed to check admin access:', err);
+          setHasAdminAccess(false);
+        }
+      } else {
+        setHasAdminAccess(false);
+      }
+    };
+    checkAdminAccess();
+  }, [userLoggedIn, user]);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -282,6 +302,15 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                     text="Account Settings"
                     onClick={() => setProfileDropdownOpen(false)}
                   />
+                  {hasAdminAccess && (
+                    <Link
+                      href="/admin"
+                      className="block px-4 py-2 text-sm font-heading font-medium text-blue-700 bg-blue-50 border-l-2 border-blue-500 hover:bg-blue-100 transition-colors"
+                      onClick={() => setProfileDropdownOpen(false)}
+                    >
+                      🛡️ Admin Panel
+                    </Link>
+                  )}
                   <button
                     className="w-full text-left px-4 py-2 text-responsive-sm xl:text-responsive-base text-dark-gray hover:bg-[#FAFAFA] font-medium transition-colors"
                     onClick={handleSignOut}
@@ -535,6 +564,17 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                     />
                     Account Settings
                   </Link>
+                  
+                  {hasAdminAccess && (
+                    <Link 
+                      href="/admin" 
+                      className="flex items-center px-3 py-2.5 text-sm text-blue-600 hover:bg-blue-50 rounded font-medium border-l-2 border-blue-500 bg-blue-50"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="mr-3 text-lg">🛡️</span>
+                      Admin Panel
+                    </Link>
+                  )}
                   
                   <button
                     className="flex items-center w-full px-3 py-2.5 text-sm text-dark-gray hover:bg-gray-50 rounded"

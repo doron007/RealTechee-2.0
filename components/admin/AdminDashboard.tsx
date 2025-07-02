@@ -186,14 +186,7 @@ const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-8">
-        <H1>Admin Dashboard</H1>
-        <P2 className="text-gray-600 mt-2">
-          Backoffice management and system overview
-        </P2>
-      </div>
-
+    <div>
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
           {error}
