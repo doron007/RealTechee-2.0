@@ -210,9 +210,12 @@ export async function getProjects(filter?: ProjectFilter): Promise<Project[]> {
         return aOrder - bOrder;
       }
       
-      // Then sort by updated date in descending order (using automatic timestamps)
-      const aDate = new Date(a.updatedAt || 0);
-      const bDate = new Date(b.updatedAt || 0);
+      // Then sort by updated date in descending order (prioritize business dates over system timestamps)
+      // Priority: updatedDate (legacy) > updatedAt (Amplify auto-generated)
+      const aBusinessDate = (a as any).updatedDate || a.updatedAt || 0;
+      const bBusinessDate = (b as any).updatedDate || b.updatedAt || 0;
+      const aDate = new Date(aBusinessDate);
+      const bDate = new Date(bBusinessDate);
       return bDate.getTime() - aDate.getTime();
     });
   } catch (error) {

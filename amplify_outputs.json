@@ -2866,6 +2866,20 @@
               "isRequired": false,
               "attributes": []
             },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedDate": {
+              "name": "updatedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
             "project": {
               "name": "project",
               "isArray": false,
@@ -3045,6 +3059,20 @@
               "isRequired": false,
               "attributes": []
             },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedDate": {
+              "name": "updatedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
             "project": {
               "name": "project",
               "isArray": false,
@@ -3208,6 +3236,20 @@
               "name": "owner",
               "isArray": false,
               "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedDate": {
+              "name": "updatedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },
@@ -4001,6 +4043,20 @@
               "name": "addressId",
               "isArray": false,
               "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdDate": {
+              "name": "createdDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedDate": {
+              "name": "updatedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
               "isRequired": false,
               "attributes": []
             },

@@ -11,6 +11,10 @@ export interface Payment {
   paymentAmount: number;
   order?: number;
   isSummaryRow?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
 }
 
 interface PaymentListProps {
@@ -28,14 +32,14 @@ export default function PaymentList({
   className = "",
   onPaymentToggle
 }: PaymentListProps) {
-  // Sort payments: summary rows at the end, others by paid status and order
+  // Sort payments: summary rows at the end, others by paid status, order, then creation date (legacy first)
   const sortedPayments = [...payments].sort((a, b) => {
     // Summary rows always go at the end
     if (a.isSummaryRow !== b.isSummaryRow) {
       return a.isSummaryRow ? 1 : -1;
     }
 
-    // For non-summary rows, sort by paid status and order
+    // For non-summary rows, sort by paid status, order, then date
     if (!a.isSummaryRow && !b.isSummaryRow) {
       if (a.paid !== b.paid) {
         return a.paid ? -1 : 1;
@@ -47,6 +51,12 @@ export default function PaymentList({
 
       if (a.order !== undefined) return -1;
       if (b.order !== undefined) return 1;
+
+      // If neither has order, sort by creation date (legacy business date first)
+      // Priority: createdDate (legacy) > createdAt (Amplify auto-generated)
+      const dateA = new Date(a.createdDate || a.createdAt || 0);
+      const dateB = new Date(b.createdDate || b.createdAt || 0);
+      return dateA.getTime() - dateB.getTime(); // Earliest first for payment terms
     }
 
     return 0;

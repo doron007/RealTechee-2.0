@@ -2,6 +2,8 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../amplify/data/resource';
 import outputs from '../amplify_outputs.json';
 import { Amplify } from 'aws-amplify';
+import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
+import { listProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms } from '../queries';
 import { createLogger } from './logger';
 
 // Configure Amplify with your sandbox outputs
@@ -9,6 +11,11 @@ Amplify.configure(outputs);
 
 // Generate a typed client for your schema with API key auth for anonymous access
 const client = generateClient<Schema>({
+  authMode: 'apiKey'
+});
+
+// Generate GraphQL client for custom queries
+const graphqlClient = generateGraphQLClient({
   authMode: 'apiKey'
 });
 
@@ -31,6 +38,39 @@ const createModelAPI = (modelName: string) => ({
 
   async list() {
     try {
+      // Use GraphQL query for models with createdDate/updatedDate to get all fields
+      if (modelName === 'Projects') {
+        const result = await graphqlClient.graphql({
+          query: listProjects,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listProjects.items };
+      }
+      
+      if (modelName === 'ProjectComments') {
+        const result = await graphqlClient.graphql({
+          query: listProjectComments,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listProjectComments.items };
+      }
+      
+      if (modelName === 'ProjectMilestones') {
+        const result = await graphqlClient.graphql({
+          query: listProjectMilestones,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listProjectMilestones.items };
+      }
+      
+      if (modelName === 'ProjectPaymentTerms') {
+        const result = await graphqlClient.graphql({
+          query: listProjectPaymentTerms,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listProjectPaymentTerms.items };
+      }
+      
       const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };
     } catch (error) {
@@ -53,6 +93,59 @@ const createModelAPI = (modelName: string) => ({
       
       if (options?.filter) queryOptions.filter = options.filter;
       if (options?.nextToken) queryOptions.nextToken = options.nextToken;
+      
+      // Use GraphQL query for models with createdDate/updatedDate to get all fields
+      if (modelName === 'Projects') {
+        const result = await graphqlClient.graphql({
+          query: listProjects,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listProjects.items, 
+          nextToken: result.data.listProjects.nextToken,
+          totalCount: result.data.listProjects.items?.length 
+        };
+      }
+      
+      if (modelName === 'ProjectComments') {
+        const result = await graphqlClient.graphql({
+          query: listProjectComments,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listProjectComments.items, 
+          nextToken: result.data.listProjectComments.nextToken,
+          totalCount: result.data.listProjectComments.items?.length 
+        };
+      }
+      
+      if (modelName === 'ProjectMilestones') {
+        const result = await graphqlClient.graphql({
+          query: listProjectMilestones,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listProjectMilestones.items, 
+          nextToken: result.data.listProjectMilestones.nextToken,
+          totalCount: result.data.listProjectMilestones.items?.length 
+        };
+      }
+      
+      if (modelName === 'ProjectPaymentTerms') {
+        const result = await graphqlClient.graphql({
+          query: listProjectPaymentTerms,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listProjectPaymentTerms.items, 
+          nextToken: result.data.listProjectPaymentTerms.nextToken,
+          totalCount: result.data.listProjectPaymentTerms.items?.length 
+        };
+      }
       
       const result = await (client.models as any)[modelName].list(queryOptions);
       return { 
@@ -215,29 +308,34 @@ export const relationAPI = {
   // Get all project comments for a specific project  
   async getProjectComments(projectId: string): Promise<{ success: boolean; data?: any[]; filterUsed?: any; note?: string; error?: any }> {
     try {
-      console.log('relationAPI.getProjectComments: Looking for projectId:', projectId, 'type:', typeof projectId);
+      relationLogger.info('Looking for project comments', { projectId, projectIdType: typeof projectId });
       
-      // Use the correct field name from schema: projectId
+      // Use simple client.models approach (working version)
       const filter = { projectId: { eq: projectId } };
-      const result = await (client.models as any).ProjectComments.list({ 
-        filter,
-        limit: 1000 // Use high limit to ensure we get ALL related records
-      });
+      const result = await (client.models as any).ProjectComments.list({ filter, limit: 1000 });
       
-      console.log('relationAPI.getProjectComments: Raw result:', {
+      relationLogger.info('Comments query result', {
         success: !!result.data,
         count: result.data?.length || 0,
-        filter: filter,
         hasErrors: !!result.errors,
-        sampleData: result.data?.slice(0, 2)?.map((item: any) => ({
-          id: item?.id,
-          projectId: item?.projectId,
-          nickname: item?.nickname
-        }))
+        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
       });
       
+      // Enhanced debugging for date fields investigation
+      if (result.data?.[0]) {
+        relationLogger.debug('Sample comment date fields', {
+          id: result.data[0].id,
+          createdAt: result.data[0].createdAt,
+          createdDate: result.data[0].createdDate,
+          updatedAt: result.data[0].updatedAt,
+          updatedDate: result.data[0].updatedDate,
+          hasCreatedDate: 'createdDate' in result.data[0],
+          hasUpdatedDate: 'updatedDate' in result.data[0]
+        });
+      }
+      
       if (result.errors) {
-        console.error('ProjectComments query errors:', result.errors);
+        relationLogger.error('ProjectComments query errors', result.errors);
       }
       
       return { 
@@ -247,7 +345,7 @@ export const relationAPI = {
         note: result.data?.length === 0 ? 'No comments found for this project' : undefined
       };
     } catch (error) {
-      console.error('Error getting project comments:', error);
+      relationLogger.error('Error getting project comments', error);
       return { success: false, error };
     }
   },
@@ -255,36 +353,35 @@ export const relationAPI = {
   // Get all project milestones for a specific project
   async getProjectMilestones(projectId: string): Promise<{ success: boolean; data?: any[]; filterUsed?: any; note?: string; error?: any }> {
     try {
-      console.log('relationAPI.getProjectMilestones: Looking for projectId:', projectId, 'type:', typeof projectId);
+      relationLogger.info('Looking for project milestones', { projectId, projectIdType: typeof projectId });
       
-      // Use the correct field name from schema: projectId
+      // Use client.models to get all fields (including legacy fields from DynamoDB)
       const filter = { projectId: { eq: projectId } };
-      const result = await (client.models as any).ProjectMilestones.list({ 
-        filter,
-        limit: 1000 // Use high limit to ensure we get ALL related records
-      });
+      const result = await (client.models as any).ProjectMilestones.list({ filter, limit: 1000 });
       
-      console.log('relationAPI.getProjectMilestones: Raw result:', {
+      relationLogger.info('Milestones query result', {
         success: !!result.data,
         count: result.data?.length || 0,
-        filter: filter,
         hasErrors: !!result.errors,
-        sampleData: result.data?.slice(0, 2)?.map((item: any) => ({
-          id: item?.id,
-          projectId: item?.projectId,
-          name: item?.name,
-          order: item?.order,
-          isComplete: item?.isComplete
-        })),
-        allData: result.data?.map((item: any) => ({
-          id: item?.id,
-          projectId: item?.projectId,
-          name: item?.name
-        }))
+        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
       });
       
+      // Enhanced debugging for date fields investigation
+      if (result.data?.[0]) {
+        relationLogger.debug('Sample milestone date fields', {
+          id: result.data[0].id,
+          name: result.data[0].name,
+          createdAt: result.data[0].createdAt,
+          createdDate: result.data[0].createdDate,
+          updatedAt: result.data[0].updatedAt,
+          updatedDate: result.data[0].updatedDate,
+          hasCreatedDate: 'createdDate' in result.data[0],
+          hasUpdatedDate: 'updatedDate' in result.data[0]
+        });
+      }
+      
       if (result.errors) {
-        console.error('ProjectMilestones query errors:', result.errors);
+        relationLogger.error('ProjectMilestones query errors', result.errors);
       }
       
       // Always check what exists in the table for debugging
@@ -323,9 +420,9 @@ export const relationAPI = {
   // Get all project payment terms for a specific project
   async getProjectPaymentTerms(projectId: string): Promise<{ success: boolean; data?: any[]; filterUsed?: any; note?: string; error?: any }> {
     try {
-      console.log('relationAPI.getProjectPaymentTerms: Looking for projectId:', projectId, 'type:', typeof projectId, '(filtering for type="byClient" only)');
+      relationLogger.info('Looking for project payment terms', { projectId, projectIdType: typeof projectId, filterNote: 'filtering for type="byClient" only' });
       
-      // Use the correct field name from schema: projectId (updated to match)
+      // Use client.models to get all fields (including legacy fields from DynamoDB)
       // Filter by projectId AND type = "byClient" to only show client payments
       const filter = { 
         and: [
@@ -333,32 +430,31 @@ export const relationAPI = {
           { type: { eq: "byClient" } }
         ]
       };
-      const result = await (client.models as any).ProjectPaymentTerms.list({ 
-        filter,
-        limit: 1000 // Use high limit to ensure we get ALL related records
-      });
+      const result = await (client.models as any).ProjectPaymentTerms.list({ filter, limit: 1000 });
       
-      console.log('relationAPI.getProjectPaymentTerms: Raw result:', {
+      relationLogger.info('Payment terms query result', {
         success: !!result.data,
         count: result.data?.length || 0,
-        filter: filter,
         hasErrors: !!result.errors,
-        sampleData: result.data?.slice(0, 2)?.map((item: any) => ({
-          id: item?.id,
-          projectId: item?.projectId,
-          paymentName: item?.paymentName,
-          order: item?.order,
-          paid: item?.paid
-        })),
-        allData: result.data?.map((item: any) => ({
-          id: item?.id,
-          projectId: item?.projectId,
-          paymentName: item?.paymentName
-        }))
+        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
       });
       
+      // Enhanced debugging for date fields investigation
+      if (result.data?.[0]) {
+        relationLogger.debug('Sample payment term date fields', {
+          id: result.data[0].id,
+          paymentName: result.data[0].paymentName,
+          createdAt: result.data[0].createdAt,
+          createdDate: result.data[0].createdDate,
+          updatedAt: result.data[0].updatedAt,
+          updatedDate: result.data[0].updatedDate,
+          hasCreatedDate: 'createdDate' in result.data[0],
+          hasUpdatedDate: 'updatedDate' in result.data[0]
+        });
+      }
+      
       if (result.errors) {
-        console.error('ProjectPaymentTerms query errors:', JSON.stringify(result.errors, null, 2));
+        relationLogger.error('ProjectPaymentTerms query errors', result.errors);
       }
       
       // Always check what exists in the table for debugging if we get <= 1 results
@@ -522,8 +618,8 @@ export const optimizedProjectsAPI = {
         
         // Then sort by business date in descending order (prioritize business dates over system timestamps)
         // Priority: createdDate > updatedDate > contractDate > requestDate > updatedAt > createdAt
-        let aBusinessDate = a.createdDate || a.updatedDate || a.contractDate || a.requestDate || a.updatedAt || a.createdAt || 0;
-        let bBusinessDate = b.createdDate || b.updatedDate || b.contractDate || b.requestDate || b.updatedAt || b.createdAt || 0;
+        let aBusinessDate = a.createdDate || a.createdAt || 0;
+        let bBusinessDate = b.createdDate || b.createdAt || 0;
         const aDate = new Date(aBusinessDate);
         const bDate = new Date(bBusinessDate);
         return bDate.getTime() - aDate.getTime();

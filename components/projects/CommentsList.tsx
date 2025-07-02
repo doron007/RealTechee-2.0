@@ -31,6 +31,8 @@ export interface Comment {
     addToGallery?: string;
     createdAt: string;
     updatedAt: string;
+    createdDate?: string;
+    updatedDate?: string;
     owner: string;
 }
 
@@ -165,10 +167,11 @@ const CommentsList: React.FC<CommentsListProps> = ({
     }, [router.query.action, authStatus, user, router]);
 
     // Sort comments by creation date based on sort order
+    // Priority: createdDate (legacy) > createdAt (Amplify auto-generated)
     const sortedComments = React.useMemo(() => {
         return [...commentsData].sort((a, b) => {
-            const dateA = new Date(a.createdAt);
-            const dateB = new Date(b.createdAt);
+            const dateA = new Date(a.createdDate || a.createdAt);
+            const dateB = new Date(b.createdDate || b.createdAt);
             return sortOrder === 'newest' 
                 ? dateB.getTime() - dateA.getTime() 
                 : dateA.getTime() - dateB.getTime();
@@ -400,7 +403,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
                             })()}
 
                             <P2 className="text-sm text-gray-500 mb-0 mt-2">
-                                {formatDate(new Date(comment.createdAt), { timeZone: 'America/Los_Angeles' })}
+                                {formatDate(new Date(comment.createdDate || comment.createdAt), { timeZone: 'America/Los_Angeles' })}
                             </P2>
                         </div>
                     ))}
