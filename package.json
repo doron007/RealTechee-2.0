@@ -46,6 +46,7 @@
     "csv-stringify": "^6.5.2",
     "esbuild-register": "^3.6.0",
     "formidable": "^3.5.4",
+    "material-react-table": "^3.2.1",
     "next": "^15.2.1",
     "next-connect": "^1.0.0",
     "parse-address": "^1.1.2",
