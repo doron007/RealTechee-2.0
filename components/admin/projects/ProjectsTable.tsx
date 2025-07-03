@@ -382,6 +382,39 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
         fontSize: '13px',
         lineHeight: '1.6',
         borderBottom: 'none',
+        // Fix filter input styling for dark background
+        '& .MuiTextField-root': {
+          '& .MuiInputBase-root': {
+            color: '#FFFFFF',
+            fontSize: '13px',
+            fontFamily: 'Roboto',
+            '& input': {
+              color: '#FFFFFF',
+              '&::placeholder': {
+                color: '#CCCCCC',
+                opacity: 1,
+              },
+            },
+            '& .MuiInputBase-input': {
+              color: '#FFFFFF',
+              '&::placeholder': {
+                color: '#CCCCCC',
+                opacity: 1,
+              },
+            },
+          },
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: '#555555',
+            },
+            '&:hover fieldset': {
+              borderColor: '#777777',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#FFFFFF',
+            },
+          },
+        },
       },
     },
     muiTableBodyCellProps: {
