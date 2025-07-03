@@ -36,14 +36,14 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       name: 'Projects',
       route: '/admin/projects',
       icon: '/assets/icons/ic-projects.svg',
-      isImplemented: false
+      isImplemented: true
     },
     {
       id: 'quotes',
       name: 'Quotes',
       route: '/admin/quotes',
       icon: '/assets/icons/ic-quotes.svg',
-      isImplemented: false
+      isImplemented: true
     },
     {
       id: 'requests',

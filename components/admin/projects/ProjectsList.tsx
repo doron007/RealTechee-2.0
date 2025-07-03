@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { H1, H2, H3, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
+import ProjectCard from './ProjectCard';
+import ProjectTableHeader from './ProjectTableHeader';
 import { projectsAPI } from '../../../utils/amplifyAPI';
 
 interface Project {
@@ -17,6 +19,9 @@ interface Project {
   updatedAt?: string;
   businessCreatedDate?: string;
   businessUpdatedDate?: string;
+  agentName?: string;
+  projectType?: string;
+  brokerage?: string;
 }
 
 interface ProjectsListState {
@@ -26,6 +31,8 @@ interface ProjectsListState {
   searchTerm: string;
   statusFilter: string;
   selectedProjects: string[];
+  sortField: string;
+  sortDirection: 'asc' | 'desc';
 }
 
 const ProjectsList: React.FC = () => {
@@ -36,7 +43,9 @@ const ProjectsList: React.FC = () => {
     error: '',
     searchTerm: '',
     statusFilter: 'all',
-    selectedProjects: []
+    selectedProjects: [],
+    sortField: 'created',
+    sortDirection: 'desc'
   });
 
   // Seed project ID for safe testing as per plan
@@ -107,9 +116,33 @@ const ProjectsList: React.FC = () => {
     }));
   };
 
+  const handleSort = (field: string) => {
+    setState(prev => ({
+      ...prev,
+      sortField: field,
+      sortDirection: prev.sortField === field && prev.sortDirection === 'asc' ? 'desc' : 'asc'
+    }));
+  };
+
+  const handleRefresh = () => {
+    loadProjects();
+  };
+
+  const handleUndo = () => {
+    // Reset filters and search
+    setState(prev => ({
+      ...prev,
+      searchTerm: '',
+      statusFilter: 'all',
+      selectedProjects: [],
+      sortField: 'created',
+      sortDirection: 'desc'
+    }));
+  };
+
   const handleOpenProject = (projectId: string) => {
     // Navigate to public project page
-    router.push(`/project?id=${projectId}`);
+    router.push(`/project?projectId=${projectId}`);
   };
 
   const handleEditProject = (projectId: string) => {
@@ -145,6 +178,20 @@ const ProjectsList: React.FC = () => {
     }
   };
 
+  const handleArchiveProject = async (projectId: string) => {
+    // Safety check - only allow operations on seed project
+    if (projectId !== SEED_PROJECT_ID) {
+      alert('For safety, operations are only allowed on the seed project during testing');
+      return;
+    }
+
+    const confirmed = confirm('Archive this project?');
+    if (!confirmed) return;
+
+    // In Phase 3, we'll just show success message - actual implementation would update status
+    alert('Project archived successfully! (Phase 3 - simulated action)');
+  };
+
   const getFilteredProjects = (): Project[] => {
     let filtered = state.projects;
 
@@ -163,6 +210,50 @@ const ProjectsList: React.FC = () => {
     if (state.statusFilter !== 'all') {
       filtered = filtered.filter(project => project.status === state.statusFilter);
     }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let aValue: any, bValue: any;
+      
+      switch (state.sortField) {
+        case 'created':
+          aValue = new Date(a.businessCreatedDate || a.createdAt || '').getTime();
+          bValue = new Date(b.businessCreatedDate || b.createdAt || '').getTime();
+          break;
+        case 'owner':
+          aValue = a.clientName || '';
+          bValue = b.clientName || '';
+          break;
+        case 'agent':
+          aValue = a.agentName || '';
+          bValue = b.agentName || '';
+          break;
+        case 'price':
+          aValue = a.estimatedValue || 0;
+          bValue = b.estimatedValue || 0;
+          break;
+        case 'type':
+          aValue = a.projectType || '';
+          bValue = b.projectType || '';
+          break;
+        case 'brokerage':
+          aValue = a.brokerage || '';
+          bValue = b.brokerage || '';
+          break;
+        default:
+          aValue = a.title || '';
+          bValue = b.title || '';
+      }
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (aValue < bValue) return state.sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return state.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
 
     return filtered;
   };
@@ -215,14 +306,6 @@ const ProjectsList: React.FC = () => {
             Manage and track all project records
           </P2>
         </div>
-        <Button
-          variant="primary"
-          withIcon
-          iconSvg="/assets/icons/ic-projects.svg"
-          onClick={() => alert('Add new project will be implemented in Phase 4')}
-        >
-          Add Project
-        </Button>
       </div>
 
       {/* Error Display */}
@@ -284,29 +367,24 @@ const ProjectsList: React.FC = () => {
         </div>
       </div>
 
-      {/* Projects List */}
-      <div className="space-y-4">
-        {/* List Header */}
-        <div className="flex items-center justify-between py-2 border-b border-gray-200">
-          <div className="flex items-center gap-4">
-            <input
-              type="checkbox"
-              checked={state.selectedProjects.length === filteredProjects.length && filteredProjects.length > 0}
-              onChange={handleSelectAll}
-              className="rounded border-gray-300"
-            />
-            <P3 className="text-gray-600 font-medium">
-              {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''}
-            </P3>
-          </div>
-          <P3 className="text-gray-600">
-            Sort by: Last Updated
-          </P3>
-        </div>
+      {/* Projects List - Figma Design */}
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        {/* Table Header - Pixel Perfect Figma Match */}
+        <ProjectTableHeader
+          selectedCount={state.selectedProjects.length}
+          totalCount={filteredProjects.length}
+          sortField={state.sortField}
+          sortDirection={state.sortDirection}
+          onSort={handleSort}
+          onSelectAll={handleSelectAll}
+          onRefresh={handleRefresh}
+          onUndo={handleUndo}
+          allSelected={state.selectedProjects.length === filteredProjects.length && filteredProjects.length > 0}
+        />
 
         {/* Project Cards */}
         {filteredProjects.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          <div className="p-8 text-center">
             <P2 className="text-gray-500">
               {state.searchTerm || state.statusFilter !== 'all' 
                 ? 'No projects match your filters' 
@@ -315,89 +393,27 @@ const ProjectsList: React.FC = () => {
             </P2>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="divide-y divide-[#F6F6F6]">
             {filteredProjects.map((project) => (
-              <div key={project.id} className="bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-4">
-                  {/* Checkbox */}
-                  <input
-                    type="checkbox"
-                    checked={state.selectedProjects.includes(project.id)}
-                    onChange={() => handleProjectSelect(project.id)}
-                    className="mt-1 rounded border-gray-300"
-                  />
-
-                  {/* Project Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <H3 className="truncate">{project.title}</H3>
-                        <div className="flex items-center gap-4 mt-1">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
-                            {project.status}
-                          </span>
-                          {project.clientName && (
-                            <P3 className="text-gray-600">Client: {project.clientName}</P3>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Project Value */}
-                      {project.estimatedValue && (
-                        <div className="text-right">
-                          <P2 className="font-semibold text-green-600">
-                            {formatCurrency(project.estimatedValue)}
-                          </P2>
-                          <P3 className="text-gray-500">Estimated Value</P3>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Project Details */}
-                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {project.propertyAddress && (
-                        <div>
-                          <P3 className="text-gray-500 font-medium">Property Address</P3>
-                          <P3 className="text-gray-700">{project.propertyAddress}</P3>
-                        </div>
-                      )}
-                      <div>
-                        <P3 className="text-gray-500 font-medium">Last Updated</P3>
-                        <P3 className="text-gray-700">
-                          {formatDate(project.businessUpdatedDate || project.updatedAt)}
-                        </P3>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    {project.description && (
-                      <div className="mt-3">
-                        <P3 className="text-gray-700 line-clamp-2">
-                          {project.description}
-                        </P3>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex gap-2">
-                    <Button
-                      variant="tertiary"
-                      size="sm"
-                      onClick={() => handleOpenProject(project.id)}
-                    >
-                      View Public
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleEditProject(project.id)}
-                    >
-                      Edit
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                status={project.status}
+                propertyAddress={project.propertyAddress}
+                clientName={project.clientName}
+                agentName={project.agentName || 'Agent Name'}
+                estimatedValue={project.estimatedValue}
+                projectType={project.projectType || 'Buyer'}
+                brokerage={project.brokerage || 'Brokerage'}
+                businessCreatedDate={project.businessCreatedDate}
+                createdAt={project.createdAt}
+                selected={state.selectedProjects.includes(project.id)}
+                onSelect={handleProjectSelect}
+                onOpen={handleOpenProject}
+                onEdit={handleEditProject}
+                onDelete={(id) => handleArchiveProject(id)}
+              />
             ))}
           </div>
         )}

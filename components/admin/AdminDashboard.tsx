@@ -162,9 +162,17 @@ const AdminDashboard: React.FC = () => {
   };
 
   const navigateToSection = (section: string) => {
-    // For Phase 1, these will route to existing pages or show placeholder
-    // In later phases, these will route to the proper CRUD pages
+    // Navigate to appropriate admin section
     switch (section) {
+      case 'projects':
+        router.push('/admin/projects');
+        break;
+      case 'quotes':
+        router.push('/admin/quotes');
+        break;
+      case 'requests':
+        router.push('/admin/requests');
+        break;
       case 'users':
       case 'contacts':
       case 'notifications':

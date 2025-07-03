@@ -65,7 +65,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       await loadComments();
     };
     loadData();
-  }, [projectId]);
+  }, [projectId]); // loadProject and loadComments defined below, safe to omit from deps
 
   const loadProject = async () => {
     setState(prev => ({ ...prev, loading: true, error: '' }));
@@ -235,7 +235,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
         <div className="flex gap-3">
           <Button
             variant="secondary"
-            onClick={() => window.open(`/project?id=${projectId}`, '_blank')}
+            onClick={() => window.open(`/project?projectId=${projectId}`, '_blank')}
           >
             View Public Page
           </Button>
