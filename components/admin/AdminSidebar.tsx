@@ -1,71 +1,55 @@
-import { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { H3, P3 } from '../typography';
+import { H3, H4, P3 } from '../typography';
+import Button from '../common/buttons/Button';
+import Card from '../common/ui/Card';
+import { useAdminSidebar } from '../../hooks/useAdminSidebar';
 
 interface SidebarItem {
   id: string;
   name: string;
   route: string;
-  icon: React.ReactNode;
+  icon: string | null; // Icon path for reusable assets
   badge?: number; // For showing counts/notifications
   isImplemented?: boolean; // Track which sections are implemented
 }
 
 interface AdminSidebarProps {
-  isCollapsed?: boolean;
-  onToggle?: () => void;
+  // Remove props since we'll manage state internally
 }
 
-const AdminSidebar: React.FC<AdminSidebarProps> = ({ 
-  isCollapsed = false, 
-  onToggle 
-}) => {
+const AdminSidebar: React.FC<AdminSidebarProps> = () => {
   const router = useRouter();
+  const { isCollapsed, toggle: handleToggle } = useAdminSidebar();
 
   const sidebarItems: SidebarItem[] = [
     {
       id: 'dashboard',
       name: 'Dashboard',
       route: '/admin',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-dashboard.svg',
       isImplemented: true
     },
     {
       id: 'projects',
       name: 'Projects',
       route: '/admin/projects',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-projects.svg',
       isImplemented: false
     },
     {
       id: 'quotes',
       name: 'Quotes',
       route: '/admin/quotes',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-quotes.svg',
       isImplemented: false
     },
     {
       id: 'requests',
       name: 'Requests',
       route: '/admin/requests',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-requests.svg',
       isImplemented: false
     },
     {
@@ -79,39 +63,39 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
       id: 'users',
       name: 'Users',
       route: '/admin-legacy?tab=users',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-users.svg',
       isImplemented: true
     },
     {
       id: 'contacts',
       name: 'Contacts',
       route: '/admin-legacy?tab=contacts',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-contacts.svg',
       isImplemented: true
     },
     {
       id: 'notifications',
       name: 'Notifications',
       route: '/admin-legacy?tab=notifications',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM11 19H6.5A2.5 2.5 0 014 16.5v-9A2.5 2.5 0 016.5 5h11A2.5 2.5 0 0120 7.5v3.5" />
-        </svg>
-      ),
+      icon: '/assets/icons/ic-notifications.svg',
+      isImplemented: true
+    },
+    {
+      id: 'expand-toggle',
+      name: 'Expand',
+      route: '',
+      icon: '/assets/icons/ic-arrow-down.svg',
       isImplemented: true
     }
   ];
 
   const handleItemClick = (item: SidebarItem) => {
     if (item.id.startsWith('divider')) return;
+    
+    if (item.id === 'expand-toggle') {
+      handleToggle();
+      return;
+    }
     
     if (!item.isImplemented) {
       alert(`${item.name} management will be implemented in upcoming phases`);
@@ -138,61 +122,67 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
         isCollapsed ? 'w-16' : 'w-64'
       }`}
     >
-      {/* Header with Logo */}
-      <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+      {/* Header with Logo - Improved Design */}
+      <div className="pt-5 pb-4 border-b border-gray-700">
         {!isCollapsed ? (
-          <div className="flex flex-col space-y-3">
+          <div>
+            {/* Logo gets dedicated prominent space */}
+            <div className="px-3 pb-3">
+              <button 
+                onClick={handleLogoClick}
+                className="w-full hover:opacity-90 transition-opacity cursor-pointer mb-1.5"
+              >
+                <div className="bg-white p-2 shadow-sm w-full flex justify-center items-center min-h-[52px]">
+                  <Image
+                    src="/assets/logos/realtechee-horizontal.png"
+                    alt="RealTechee"
+                    width={200}
+                    height={40}
+                    className="h-8 w-auto"
+                    priority
+                  />
+                </div>
+              </button>
+            </div>
+            
+            {/* Admin title with collapse button to the right */}
+            <div className="px-3 flex items-center justify-between">
+              <H3 className="text-white font-bold opacity-90">Admin</H3>
+              <Button
+                onClick={handleToggle}
+                variant="tertiary"
+                mode="dark"
+                withIcon
+                iconSvg="/assets/icons/ic-arrow-down.svg"
+                iconPosition="right"
+                className="p-2 hover:bg-white hover:bg-opacity-10 rounded-md transform rotate-90"
+                aria-label="Collapse sidebar"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center">
             <button 
               onClick={handleLogoClick}
               className="hover:opacity-90 transition-opacity cursor-pointer"
             >
-              <div className="bg-white rounded px-2 py-1 shadow-sm">
+              <div className="bg-white rounded-lg p-1 shadow-sm w-14 h-14 flex items-center justify-center">
                 <Image
-                  src="/assets/images/brand_logos_web_Small logo 118x16.png"
+                  src="/assets/logos/app_realtechee for AppIcon.png"
                   alt="RealTechee"
-                  width={118}
-                  height={16}
-                  className="h-4 w-auto"
+                  width={48}
+                  height={48}
+                  className="w-12 h-12"
                 />
               </div>
             </button>
-            <H3 className="text-white font-bold text-sm">Admin</H3>
           </div>
-        ) : (
-          <button 
-            onClick={handleLogoClick}
-            className="hover:opacity-90 transition-opacity cursor-pointer mx-auto"
-          >
-            <div className="bg-white rounded p-1 shadow-sm">
-              <Image
-                src="/assets/images/brand_logos_web_Small logo 118x16.png"
-                alt="RealTechee"
-                width={28}
-                height={4}
-                className="h-3 w-auto"
-              />
-            </div>
-          </button>
         )}
-        <button
-          onClick={onToggle}
-          className="p-2 hover:bg-gray-700 rounded transition-colors"
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          <svg 
-            className={`w-4 h-4 transform transition-transform ${isCollapsed ? 'rotate-180' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
       </div>
 
       {/* Navigation Items */}
       <nav className="flex-1 overflow-y-auto">
-        <div className="p-2">
+        <div className={isCollapsed ? "p-2" : "p-3"}>
           {sidebarItems.map((item) => {
             // Render divider
             if (item.id.startsWith('divider')) {
@@ -205,26 +195,43 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
             const isActive = isActiveRoute(item.route);
             
-            return (
-              <button
+            // COO-compliant navigation button styling
+            const getNavigationButtonClasses = () => {
+              if (isActive) {
+                return 'bg-gray-700/50 text-white border-l-4 border-blue-500 !border-t-0 !border-r-0 !border-b-0';
+              }
+              if (item.isImplemented) {
+                return 'text-white hover:bg-gray-700 hover:text-white !border-0';
+              }
+              return '!text-gray-300 hover:!text-gray-200 cursor-default !border-0 bg-gray-800/30 hover:bg-gray-700/50';
+            };
+            
+            // Use regular icons - Button component will handle disabled styling
+            
+            // Special handling for expand toggle in collapsed mode
+            if (item.id === 'expand-toggle' && !isCollapsed) {
+              return null; // Don't show expand button when sidebar is expanded
+            }
+            
+            // Apply rotation for expand toggle
+            const iconClasses = item.id === 'expand-toggle' ? 'transform -rotate-90' : '';
+            
+            const buttonElement = (
+              <Button
                 key={item.id}
                 onClick={() => handleItemClick(item)}
-                className={`w-full flex items-center p-3 mb-1 rounded-lg transition-all duration-200 group ${
-                  isActive
-                    ? 'bg-blue-600 text-white'
-                    : item.isImplemented
-                    ? 'hover:bg-gray-700 text-gray-300 hover:text-white'
-                    : 'text-gray-500 hover:text-gray-400 cursor-default'
-                }`}
                 disabled={!item.isImplemented}
+                variant="tertiary"
+                mode="dark"
+                fullWidth={!isCollapsed}
+                withIcon={!!item.icon}
+                iconSvg={item.icon || undefined}
+                iconPosition="left"
+                className={`mb-1 ${isCollapsed ? 'justify-center items-center px-2 py-2.5 w-12 mx-auto [&_img]:!w-8 [&_img]:!h-8 [&>div]:!transform-none [&>div]:hover:!transform-none [&>div]:!flex [&>div]:!items-center [&>div]:!justify-center' : 'justify-start py-2.5 px-3.5'} rounded-xl h-auto ${getNavigationButtonClasses()} ${iconClasses}`}
               >
-                <span className={`${!item.isImplemented ? 'opacity-50' : ''}`}>
-                  {item.icon}
-                </span>
-                
                 {!isCollapsed && (
                   <>
-                    <span className={`ml-3 text-sm font-medium ${!item.isImplemented ? 'opacity-50' : ''}`}>
+                    <span className={`text-sm font-medium ml-3 ${!item.isImplemented ? 'opacity-50' : ''}`}>
                       {item.name}
                     </span>
                     
@@ -241,20 +248,31 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
                     )}
                   </>
                 )}
-              </button>
+              </Button>
             );
+
+            // Add tooltip using title attribute when collapsed
+            if (isCollapsed) {
+              const buttonWithTooltip = React.cloneElement(buttonElement, {
+                title: item.name,
+                key: item.id
+              });
+              return buttonWithTooltip;
+            }
+            
+            return buttonElement;
           })}
         </div>
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-700">
-        {!isCollapsed && (
+      {!isCollapsed && (
+        <div className="p-4 border-t border-gray-700">
           <P3 className="text-gray-400 text-center">
             Admin Panel v2.0
           </P3>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

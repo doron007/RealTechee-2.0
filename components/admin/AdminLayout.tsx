@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { H2, P2 } from '../typography';
 import { AuthorizationService } from '../../utils/authorizationHelpers';
 import AdminSidebar from './AdminSidebar';
+import { useAdminSidebar } from '../../hooks/useAdminSidebar';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -25,7 +26,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const [userEmail, setUserEmail] = useState('');
   const [userRole, setUserRole] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { isCollapsed } = useAdminSidebar();
 
   // Check authorization on mount
   useEffect(() => {
@@ -61,10 +62,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
     checkAuthorization();
   }, [user, router]);
 
-  // Handle sidebar toggle
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
+  // AdminSidebar handles its own toggle internally
 
   // Loading state
   if (isLoading) {
@@ -126,15 +124,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 
       <div className="min-h-screen bg-gray-50 flex">
         {/* Sidebar */}
-        <AdminSidebar 
-          isCollapsed={sidebarCollapsed} 
-          onToggle={toggleSidebar} 
-        />
+        <AdminSidebar />
 
         {/* Main Content Area */}
         <div 
           className={`flex-1 flex flex-col transition-all duration-300 ${
-            sidebarCollapsed ? 'ml-16' : 'ml-64'
+            isCollapsed ? 'ml-16' : 'ml-64'
           }`}
         >
           {/* Top Header */}

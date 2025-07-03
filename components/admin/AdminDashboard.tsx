@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { H1, H2, H3, P2, P3 } from '../typography';
+import { H1, H2, H3, P1, P2, P3 } from '../typography';
 import { projectsAPI, quotesAPI, requestsAPI, contactsAPI, backOfficeProjectStatusesAPI, backOfficeQuoteStatusesAPI, backOfficeRequestStatusesAPI } from '../../utils/amplifyAPI';
 import { AdminService } from '../../utils/adminService';
 
@@ -208,24 +208,24 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Projects</P3>
-              <P3 className="font-semibold">{stats.projects.total}</P3>
+              <P2 className="text-gray-600">Total Projects</P2>
+              <P2 className="font-semibold">{stats.projects.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-green-600">New</P3>
-              <P3 className="font-semibold">{stats.projects.new}</P3>
+              <P2 className="text-green-600">New</P2>
+              <P2 className="font-semibold">{stats.projects.new}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-blue-600">Active</P3>
-              <P3 className="font-semibold">{stats.projects.active}</P3>
+              <P2 className="text-blue-600">Active</P2>
+              <P2 className="font-semibold">{stats.projects.active}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Completed</P3>
-              <P3 className="font-semibold">{stats.projects.completed}</P3>
+              <P2 className="text-gray-600">Completed</P2>
+              <P2 className="font-semibold">{stats.projects.completed}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-blue-600 font-medium">View All Projects →</P3>
+            <P2 className="text-blue-600 font-medium">View All Projects →</P2>
           </div>
         </div>
 
@@ -241,24 +241,24 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Quotes</P3>
-              <P3 className="font-semibold">{stats.quotes.total}</P3>
+              <P2 className="text-gray-600">Total Quotes</P2>
+              <P2 className="font-semibold">{stats.quotes.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-yellow-600">Pending</P3>
-              <P3 className="font-semibold">{stats.quotes.pending}</P3>
+              <P2 className="text-yellow-600">Pending</P2>
+              <P2 className="font-semibold">{stats.quotes.pending}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-green-600">Signed</P3>
-              <P3 className="font-semibold">{stats.quotes.signed}</P3>
+              <P2 className="text-green-600">Signed</P2>
+              <P2 className="font-semibold">{stats.quotes.signed}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-red-600">Expired</P3>
-              <P3 className="font-semibold">{stats.quotes.expired}</P3>
+              <P2 className="text-red-600">Expired</P2>
+              <P2 className="font-semibold">{stats.quotes.expired}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-purple-600 font-medium">View All Quotes →</P3>
+            <P2 className="text-purple-600 font-medium">View All Quotes →</P2>
           </div>
         </div>
 
@@ -274,24 +274,24 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Requests</P3>
-              <P3 className="font-semibold">{stats.requests.total}</P3>
+              <P2 className="text-gray-600">Total Requests</P2>
+              <P2 className="font-semibold">{stats.requests.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-blue-600">Submitted</P3>
-              <P3 className="font-semibold">{stats.requests.submitted}</P3>
+              <P2 className="text-blue-600">Submitted</P2>
+              <P2 className="font-semibold">{stats.requests.submitted}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-yellow-600">In Review</P3>
-              <P3 className="font-semibold">{stats.requests.inReview}</P3>
+              <P2 className="text-yellow-600">In Review</P2>
+              <P2 className="font-semibold">{stats.requests.inReview}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-green-600">Quoted</P3>
-              <P3 className="font-semibold">{stats.requests.quoted}</P3>
+              <P2 className="text-green-600">Quoted</P2>
+              <P2 className="font-semibold">{stats.requests.quoted}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-orange-600 font-medium">View All Requests →</P3>
+            <P2 className="text-orange-600 font-medium">View All Requests →</P2>
           </div>
         </div>
 
@@ -307,20 +307,20 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Users</P3>
-              <P3 className="font-semibold">{stats.users.total}</P3>
+              <P2 className="text-gray-600">Total Users</P2>
+              <P2 className="font-semibold">{stats.users.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-green-600">Active</P3>
-              <P3 className="font-semibold">{stats.users.active}</P3>
+              <P2 className="text-green-600">Active</P2>
+              <P2 className="font-semibold">{stats.users.active}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-yellow-600">Pending</P3>
-              <P3 className="font-semibold">{stats.users.pending}</P3>
+              <P2 className="text-yellow-600">Pending</P2>
+              <P2 className="font-semibold">{stats.users.pending}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-indigo-600 font-medium">Manage Users →</P3>
+            <P2 className="text-indigo-600 font-medium">Manage Users →</P2>
           </div>
         </div>
 
@@ -336,20 +336,20 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Contacts</P3>
-              <P3 className="font-semibold">{stats.contacts.total}</P3>
+              <P2 className="text-gray-600">Total Contacts</P2>
+              <P2 className="font-semibold">{stats.contacts.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-blue-600">Email Enabled</P3>
-              <P3 className="font-semibold">{stats.contacts.withEmail}</P3>
+              <P2 className="text-blue-600">Email Enabled</P2>
+              <P2 className="font-semibold">{stats.contacts.withEmail}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-purple-600">SMS Enabled</P3>
-              <P3 className="font-semibold">{stats.contacts.withSms}</P3>
+              <P2 className="text-purple-600">SMS Enabled</P2>
+              <P2 className="font-semibold">{stats.contacts.withSms}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-green-600 font-medium">Manage Contacts →</P3>
+            <P2 className="text-green-600 font-medium">Manage Contacts →</P2>
           </div>
         </div>
 
@@ -365,24 +365,24 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P3 className="text-gray-600">Total Sent</P3>
-              <P3 className="font-semibold">{stats.notifications.total}</P3>
+              <P2 className="text-gray-600">Total Sent</P2>
+              <P2 className="font-semibold">{stats.notifications.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-green-600">Delivered</P3>
-              <P3 className="font-semibold">{stats.notifications.sent}</P3>
+              <P2 className="text-green-600">Delivered</P2>
+              <P2 className="font-semibold">{stats.notifications.sent}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-yellow-600">Pending</P3>
-              <P3 className="font-semibold">{stats.notifications.pending}</P3>
+              <P2 className="text-yellow-600">Pending</P2>
+              <P2 className="font-semibold">{stats.notifications.pending}</P2>
             </div>
             <div className="flex justify-between">
-              <P3 className="text-red-600">Failed</P3>
-              <P3 className="font-semibold">{stats.notifications.failed}</P3>
+              <P2 className="text-red-600">Failed</P2>
+              <P2 className="font-semibold">{stats.notifications.failed}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P3 className="text-red-600 font-medium">View Notifications →</P3>
+            <P2 className="text-red-600 font-medium">View Notifications →</P2>
           </div>
         </div>
       </div>
@@ -395,29 +395,29 @@ const AdminDashboard: React.FC = () => {
             onClick={() => navigateToSection('projects')}
             className="p-4 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors text-left"
           >
-            <P3 className="font-semibold">Add New Project</P3>
-            <P3 className="text-blue-600 text-sm">Create a new project record</P3>
+            <P2 className="font-semibold">Add New Project</P2>
+            <P2 className="text-blue-600 text-sm">Create a new project record</P2>
           </button>
           <button
             onClick={() => navigateToSection('quotes')}
             className="p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors text-left"
           >
-            <P3 className="font-semibold">Generate Quote</P3>
-            <P3 className="text-purple-600 text-sm">Create quote from request</P3>
+            <P2 className="font-semibold">Generate Quote</P2>
+            <P2 className="text-purple-600 text-sm">Create quote from request</P2>
           </button>
           <button
             onClick={() => navigateToSection('users')}
             className="p-4 bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition-colors text-left"
           >
-            <P3 className="font-semibold">Manage Users</P3>
-            <P3 className="text-indigo-600 text-sm">User roles and permissions</P3>
+            <P2 className="font-semibold">Manage Users</P2>
+            <P2 className="text-indigo-600 text-sm">User roles and permissions</P2>
           </button>
           <button
             onClick={() => loadDashboardStats()}
             className="p-4 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors text-left"
           >
-            <P3 className="font-semibold">Refresh Data</P3>
-            <P3 className="text-gray-600 text-sm">Update dashboard statistics</P3>
+            <P2 className="font-semibold">Refresh Data</P2>
+            <P2 className="text-gray-600 text-sm">Update dashboard statistics</P2>
           </button>
         </div>
       </div>
