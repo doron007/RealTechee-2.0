@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
@@ -65,9 +65,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       await loadComments();
     };
     loadData();
-  }, [projectId]); // loadProject and loadComments defined below, safe to omit from deps
+  }, [projectId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const loadProject = async () => {
+  const loadProject = useCallback(async () => {
     setState(prev => ({ ...prev, loading: true, error: '' }));
     
     try {
@@ -94,9 +94,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
         loading: false
       }));
     }
-  };
+  }, [projectId]);
 
-  const loadComments = async () => {
+  const loadComments = useCallback(async () => {
     try {
       const result = await optimizedProjectsAPI.getProjectComments(projectId);
       
@@ -109,7 +109,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
     } catch (err) {
       console.error('Error loading comments:', err);
     }
-  };
+  }, [projectId]);
 
   const handleSave = async () => {
     if (!state.project) return;

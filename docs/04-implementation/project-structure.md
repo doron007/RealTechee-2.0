@@ -8,12 +8,17 @@ This document provides an overview of the project structure and organization.
   - `/common` - Reusable components shared across multiple pages
     - `/buttons` - Button components
     - `/layout` - Layout components (Header, Footer, Layout)
-    - `/ui` - UI elements and design components
+    - `/ui` - UI elements and design components (StatusPill, Card, etc.)
   - `/home` - Components specific to the home page
   - `/about` - Components for the about page
   - `/products` - Product-specific components
   - `/style-guide` - Components for the style guide
   - `/contact` - Contact page components
+  - `/admin` - Admin/backoffice components with CRUD functionality
+    - `/projects` - Project management components (ProjectsTable, ProjectDetail)
+    - `/quotes` - Quote management components
+    - Contains Material React Table implementations with business logic separation
+  - `/typography` - Modern semantic typography system (H1-H6, P1-P3)
 
 - `/pages` - Next.js pages that define routes
   - `/products` - Pages for product sections
@@ -36,6 +41,16 @@ This document provides an overview of the project structure and organization.
 - `/utils` - Utility functions and helpers
   - `componentUtils.ts` - Utility functions for components
   - `animationUtils.ts` - Animation-related utilities
+  - `amplifyAPI.ts` - AWS Amplify API wrapper with generic model interface
+  - `memoryMonitor.ts` - Memory usage monitoring and leak detection
+  - `logger.ts` - Structured logging system
+
+- `/services` - Business logic layer (NEW)
+  - `projectsService.ts` - Projects with contact resolution and caching
+  - Implements MVC separation with optimized memory management
+
+- `/hooks` - Custom React hooks
+  - `useMemoryMonitor.ts` - Development memory monitoring hook
 
 - `/scripts` - Utility scripts for the project
   - `convertToTypeScript.js` - Script used for JS to TS conversion

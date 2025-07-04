@@ -5,24 +5,13 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
-import { Box, Chip, IconButton, Tooltip } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import Image from 'next/image';
-import { P3 } from '../../typography';
-import { projectsAPI } from '../../../utils/amplifyAPI';
-
-interface Project {
-  id: string;
-  title?: string;
-  status: string;
-  propertyAddress?: string;
-  clientName?: string;
-  agentName?: string;
-  estimatedValue?: number;
-  projectType?: string;
-  brokerage?: string;
-  businessCreatedDate?: string;
-  createdAt?: string;
-}
+import { P2 } from '../../typography';
+import StatusPill from '../../common/ui/StatusPill';
+import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
+import { projectsService, type EnhancedProject } from '../../../services/projectsService';
+import { memoryMonitor } from '../../../utils/memoryMonitor';
 
 interface ProjectsTableProps {
   onRefresh?: () => void;
@@ -30,7 +19,7 @@ interface ProjectsTableProps {
 
 const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
   const router = useRouter();
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<EnhancedProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -39,74 +28,41 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
 
   useEffect(() => {
     loadProjects();
+
+    // Cleanup function to clear cache when component unmounts
+    return () => {
+      if (process.env.NODE_ENV === 'development') {
+        memoryMonitor.track('ProjectsTable: Component unmounting');
+        // Clear cache to free memory (only in development)
+        projectsService.clearCache();
+      }
+    };
   }, []);
 
   const loadProjects = async () => {
     setLoading(true);
     setError('');
-    
+
     try {
-      const result = await projectsAPI.list();
+      memoryMonitor.track('ProjectsTable: Before loading');
       
-      if (result.success) {
-        // Filter out archived projects by default as per plan
-        const activeProjects = result.data.filter((project: Project) => 
-          project.status !== 'Archived'
-        );
-        
-        setProjects(activeProjects);
+      const result = await projectsService.getEnhancedProjects({
+        includeArchived: false // Already filtered in service
+      });
+
+      if (result.success && result.data) {
+        setProjects(result.data);
+        memoryMonitor.track(`ProjectsTable: Loaded ${result.data.length} projects`);
       } else {
         setError('Failed to load projects');
       }
     } catch (err) {
       console.error('Error loading projects:', err);
       setError('Error loading projects');
+      memoryMonitor.track('ProjectsTable: Error occurred');
     } finally {
       setLoading(false);
     }
-  };
-
-  // Status chip styling based on Figma design
-  const getStatusStyles = (status: string) => {
-    switch (status) {
-      case 'Pre-listing':
-        return { bg: '#F2EFFA', text: '#5632BA' };
-      case 'New':
-        return { bg: '#E8F5E8', text: '#2E7D2E' };
-      case 'Active':
-      case 'Boosting':
-      case 'Listed':
-        return { bg: '#E3F2FD', text: '#1976D2' };
-      case 'In-escrow':
-        return { bg: '#FFF3E0', text: '#F57C00' };
-      case 'Sold':
-      case 'Completed':
-        return { bg: '#F3E5F5', text: '#7B1FA2' };
-      default:
-        return { bg: '#F5F5F5', text: '#666666' };
-    }
-  };
-
-  // Format currency according to Figma
-  const formatCurrency = (value?: number): string => {
-    if (!value) return 'N/A';
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value);
-  };
-
-  // Format date according to Figma (MM/DD/YYYY)
-  const formatDate = (dateString?: string): string => {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    });
   };
 
   const handleOpenProject = useCallback((projectId: string) => {
@@ -131,120 +87,57 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
     alert('Project archived successfully! (Phase 3 - simulated action)');
   }, [SEED_PROJECT_ID]);
 
-  const columns = useMemo<MRT_ColumnDef<Project>[]>(
+  const columns = useMemo<MRT_ColumnDef<EnhancedProject>[]>(
     () => [
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 112,
-        enableSorting: false,
+        size: 150,
+        enableSorting: true,
+        enableResizing: true,
         Cell: ({ cell }) => {
           const status = cell.getValue<string>();
-          const statusStyles = getStatusStyles(status);
-          
           return (
-            <Chip
-              label={
-                <P3 
-                  style={{ 
-                    fontFamily: 'Roboto',
-                    fontWeight: 400,
-                    fontSize: '13px',
-                    lineHeight: '1.6',
-                    color: statusStyles.text
-                  }}
-                >
-                  {status}
-                </P3>
-              }
-              sx={{
-                backgroundColor: statusStyles.bg,
-                color: statusStyles.text,
-                width: '112px',
-                minWidth: '112px',
-                height: '28px',
-                borderRadius: '14px',
-                '& .MuiChip-label': {
-                  padding: '6px 16px',
-                }
-              }}
-            />
+            <div className="mb-2">
+              <StatusPill status={status} />
+            </div>
           );
         },
       },
       {
-        accessorKey: 'propertyAddress',
+        accessorFn: (row) => row.propertyAddress || row.title || 'No address provided',
+        id: 'address',
         header: 'Address',
-        size: 168,
-        enableSorting: false,
-        Cell: ({ cell, row }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E',
-              width: '168px'
-            }}
-          >
-            {cell.getValue<string>() || row.original.title || 'No address provided'}
-          </P3>
+        size: 250,
+        enableSorting: true,
+        enableResizing: true,
+        Cell: ({ cell }) => (
+          <P2>{cell.getValue<string>()}</P2>
         ),
       },
       {
-        accessorFn: (row) => row.businessCreatedDate || row.createdAt,
+        accessorFn: (row) => row.createdDate || row.createdAt,
         id: 'created',
         header: 'Created',
-        size: 100,
+        size: 150,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {formatDate(cell.getValue<string>())}
-          </P3>
+          <P2>{formatDateShort(cell.getValue<string>())}</P2>
         ),
       },
       {
         accessorKey: 'clientName',
         header: 'Owner',
-        size: 120,
+        size: 150,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {cell.getValue<string>() || 'N/A'}
-          </P3>
+          <P2>{cell.getValue<string>() || 'N/A'}</P2>
         ),
       },
       {
         accessorKey: 'agentName',
         header: 'Agent',
-        size: 120,
+        size: 150,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {cell.getValue<string>() || 'N/A'}
-          </P3>
+          <P2>{cell.getValue<string>() || 'N/A'}</P2>
         ),
       },
       {
@@ -252,17 +145,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
         header: 'Price',
         size: 120,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {formatCurrency(cell.getValue<number>())}
-          </P3>
+          <P2>{formatCurrencyFull(cell.getValue<number>())}</P2>
         ),
       },
       {
@@ -270,43 +153,30 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
         header: 'Type',
         size: 100,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {cell.getValue<string>() || 'Buyer'}
-          </P3>
+          <P2>{cell.getValue<string>()}</P2>
         ),
       },
       {
-        accessorKey: 'brokerage',
+        accessorFn: (row) => row.brokerage || row.agentBrokerage || 'N/A',
+        id: 'brokerage',
         header: 'Brokerage',
-        size: 120,
+        size: 150,
         Cell: ({ cell }) => (
-          <P3 
-            style={{ 
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '13px',
-              lineHeight: '1.6',
-              color: '#2A2B2E'
-            }}
-          >
-            {cell.getValue<string>() || 'Brokerage'}
-          </P3>
+          <P2>
+            {cell.getValue<string>()}
+          </P2>
         ),
       },
       {
         id: 'actions',
         header: '',
-        size: 100,
+        size: 120,
+        minSize: 120,
+        maxSize: 120,
         enableSorting: false,
         enableColumnFilter: false,
+        enableResizing: false,
+        enableHiding: false,
         Cell: ({ row }) => (
           <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <Tooltip title="Open Project">
@@ -322,7 +192,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
                 />
               </IconButton>
             </Tooltip>
-            
+
             <Tooltip title="Edit Project">
               <IconButton
                 onClick={() => handleEditProject(row.original.id)}
@@ -336,7 +206,7 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
                 />
               </IconButton>
             </Tooltip>
-            
+
             <Tooltip title="Delete Project">
               <IconButton
                 onClick={() => handleArchiveProject(row.original.id)}
@@ -362,32 +232,54 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
     data: projects,
     enableRowSelection: true,
     enableColumnOrdering: true,
+    enableColumnActions: true,
+    enableColumnFilterModes: true,
+    enableColumnResizing: true,
+    enableColumnDragging: false, // Disabled by default as requested
+    enableHiding: true,
     enableGlobalFilter: true,
     enableFilters: true,
     enablePagination: true,
     enableSorting: true,
+    enableSortingRemoval: false,
     enableBottomToolbar: true,
     enableTopToolbar: true,
+    enableFullScreenToggle: true,
+    enableDensityToggle: true,
+    enableGlobalFilterModes: true,
+    columnFilterModeOptions: ['contains', 'equals', 'startsWith', 'endsWith'],
+    globalFilterModeOptions: ['contains', 'equals', 'startsWith', 'endsWith'],
+    // Page size options: 10, 25, 50, All
+    muiPaginationProps: {
+      rowsPerPageOptions: [10, 25, 50, 100] as any,
+      showFirstButton: true,
+      showLastButton: true,
+    },
     initialState: {
       pagination: { pageSize: 10, pageIndex: 0 },
       sorting: [{ id: 'created', desc: true }],
+      showGlobalFilter: true,
     },
     // Custom styling to match Figma design
     muiTableHeadCellProps: {
       sx: {
         backgroundColor: '#2A2B2E',
-        color: '#FFFFFF',
-        fontFamily: 'Roboto',
+        color: '#FFFFFF', 
+        borderRight: '1px solid #555555', // Add light border for column separators
+        '&:last-child': {
+          borderRight: 'none', // Remove border from last column
+        },
+        fontFamily: 'roboto',
         fontWeight: 400,
-        fontSize: '13px',
+        fontSize: '16px',
         lineHeight: '1.6',
         borderBottom: 'none',
         // Fix filter input styling for dark background
         '& .MuiTextField-root': {
           '& .MuiInputBase-root': {
             color: '#FFFFFF',
-            fontSize: '13px',
-            fontFamily: 'Roboto',
+            fontSize: '16px',
+            fontFamily: 'roboto',
             '& input': {
               color: '#FFFFFF',
               '&::placeholder': {
@@ -415,6 +307,55 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
             },
           },
         },
+        // Fix header icons (filter, sort, column menu) for dark background
+        '& .MuiButtonBase-root': {
+          color: '#FFFFFF !important',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          },
+        },
+        '& .MuiIconButton-root': {
+          color: '#FFFFFF !important',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          },
+          '& .MuiSvgIcon-root': {
+            color: '#FFFFFF !important',
+          },
+        },
+        '& .MuiSvgIcon-root': {
+          color: '#FFFFFF !important',
+        },
+        // Fix sorting hover effects
+        '& .MuiTableSortLabel-root': {
+          color: '#FFFFFF !important',
+          '&:hover': {
+            color: '#FFFFFF !important',
+            backgroundColor: 'rgba(255, 255, 255, 0.1) !important',
+          },
+          '&.Mui-active': {
+            color: '#FFFFFF !important',
+            '& .MuiTableSortLabel-icon': {
+              color: '#FFFFFF !important',
+            },
+          },
+        },
+        '& .MuiTableSortLabel-icon': {
+          color: '#FFFFFF !important',
+        },
+        // Fix column menu and filter icons specifically
+        '& [data-testid="ExpandMoreIcon"]': {
+          color: '#FFFFFF !important',
+        },
+        '& [data-testid="FilterListIcon"]': {
+          color: '#FFFFFF !important',
+        },
+        '& [data-testid="DragIndicatorIcon"]': {
+          color: '#FFFFFF !important',
+        },
+        '& [data-testid="MoreVertIcon"]': {
+          color: '#FFFFFF !important',
+        },
       },
     },
     muiTableBodyCellProps: {
@@ -433,9 +374,47 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
     muiTableProps: {
       sx: {
         borderRadius: '8px',
-        overflow: 'hidden',
+        overflow: 'visible',
+        width: '100%',
         '& .MuiTable-root': {
           borderCollapse: 'separate',
+          width: '100%',
+          tableLayout: 'fixed',
+          minWidth: '100%',
+        },
+      },
+    },
+    // Fix dropdown menu and popup styling
+    muiFilterTextFieldProps: {
+      sx: {
+        '& .MuiInputBase-root': {
+          color: '#FFFFFF',
+          '& input': {
+            color: '#FFFFFF',
+            '&::placeholder': {
+              color: '#CCCCCC',
+              opacity: 1,
+            },
+          },
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#555555',
+          },
+          '&:hover fieldset': {
+            borderColor: '#777777',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: '#FFFFFF',
+          },
+        },
+      },
+    },
+    muiTableHeadRowProps: {
+      sx: {
+        backgroundColor: '#2A2B2E',
+        '& .MuiTableCell-root': {
+          backgroundColor: '#2A2B2E',
         },
       },
     },
@@ -457,7 +436,15 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{
+      width: '100%',
+      maxWidth: 'none',
+      marginLeft: '0',
+      marginRight: '0',
+      paddingLeft: '0',
+      paddingRight: '0',
+      boxSizing: 'border-box'
+    }}>
       <MaterialReactTable table={table} />
     </div>
   );

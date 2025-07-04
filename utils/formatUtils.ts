@@ -1,8 +1,19 @@
-// Utility function to format currency values without decimals
+// Legacy format: format currency values without decimals (for backward compatibility)
 export const formatCurrency = (value: string | undefined): string => {
   if (!value) return '0';
   // Convert to number, round to remove decimals, then format with commas
   return Math.round(parseFloat(value)).toLocaleString('en-US');
+};
+
+// Standard currency formatting with $ sign and decimals (project-wide standard)
+export const formatCurrencyFull = (value?: number): string => {
+  if (!value) return 'N/A';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
 };
 
 // Format phone number to (XXX) XXX-XXXX format
@@ -17,9 +28,13 @@ interface FormatDateOptions {
   withTime?: boolean;
 }
 
-// Format date with optional timezone and time display
-export const formatDate = (date: Date, options: FormatDateOptions = {}): string => {
+// Format date with optional timezone and time display (can handle Date objects or date strings)
+export const formatDate = (dateInput: Date | string, options: FormatDateOptions = {}): string => {
   const { timeZone, withTime = false } = options;
+  
+  // Handle both Date objects and date strings
+  if (!dateInput) return 'N/A';
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
   
   try {
     const formatOptions: Intl.DateTimeFormatOptions = {
@@ -38,5 +53,22 @@ export const formatDate = (date: Date, options: FormatDateOptions = {}): string 
   } catch (error) {
     console.warn('Error formatting date:', error);
     return date.toLocaleDateString();
+  }
+};
+
+// Format date as MM/DD/YYYY (common format for tables and forms)
+export const formatDateShort = (dateInput?: Date | string): string => {
+  if (!dateInput) return 'N/A';
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  
+  try {
+    return date.toLocaleDateString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric'
+    });
+  } catch (error) {
+    console.warn('Error formatting date:', error);
+    return 'N/A';
   }
 };

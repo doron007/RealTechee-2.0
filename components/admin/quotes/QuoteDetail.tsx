@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
@@ -69,9 +69,9 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       await loadQuoteItems();
     };
     loadData();
-  }, [quoteId]); // loadQuote and loadQuoteItems defined below, safe to omit from deps
+  }, [quoteId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const loadQuote = async () => {
+  const loadQuote = useCallback(async () => {
     setState(prev => ({ ...prev, loading: true, error: '' }));
     
     try {
@@ -98,9 +98,9 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
         loading: false
       }));
     }
-  };
+  }, [quoteId]);
 
-  const loadQuoteItems = async () => {
+  const loadQuoteItems = useCallback(async () => {
     try {
       const result = await quoteItemsAPI.list();
       
@@ -118,7 +118,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     } catch (err) {
       console.error('Error loading quote items:', err);
     }
-  };
+  }, [quoteId]);
 
   const handleSave = async () => {
     if (!state.quote) return;
