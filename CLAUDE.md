@@ -7,6 +7,7 @@
 **Dev:** `npm run dev|build|test|lint` • `npm run type-check` • `npx ampx sandbox`
 **Data Protection:** `./scripts/backup-data.sh` • `node ./scripts/restore-cognito-users.js <backup> <pool-id>`
 **Data Cleanup:** `node ./scripts/deduplicateContacts.js [--dry-run]` • `node ./scripts/createUsersFromContacts.js`
+**Testing:** `node test-comprehensive-ui.js` • `node test-admin-responsive-standardized.js` • View reports in `test-results/` • Credentials: info@realtechee.com / Sababa123!
 
 ## Amplify Gen 2 (NOT Gen 1)
 **CRITICAL:** This project uses Amplify Gen 2. ! use deprecated Gen 1 patterns/commands.
@@ -190,3 +191,56 @@ Next.js 15.2.1 + React 18.3.1 + TS + AWS Amplify Gen 2 + GraphQL + DynamoDB + S3
 
 ## Testing & Quality
 Jest + React Testing Library + custom render helpers + mock Amplify hooks/GraphQL operations
+
+## Test Credentials
+**Admin Testing:** Always use `info@realtechee.com` / `Sababa123!` for admin/authentication testing
+- This user has admin privileges for testing admin pages
+- Use consistently across all Puppeteer tests and manual testing
+- Required for admin/projects, admin/quotes, admin/dashboard access
+
+## Standardized Test Framework
+
+### Test Structure
+**Location:** `test-results/[TestSuiteName]-[Timestamp]/`
+```
+test-results/
+├── Admin-Projects-Responsive-2024-01-15T10-30-00-000Z/
+│   ├── report.html          # Interactive HTML report
+│   ├── report.json          # Detailed JSON data
+│   ├── summary.txt          # Quick text summary
+│   ├── screenshots/
+│   │   ├── passed/          # Screenshots of successful tests
+│   │   ├── failed/          # Screenshots of failed tests
+│   │   └── errors/          # Screenshots of error states
+│   ├── artifacts/           # Additional test files
+│   └── logs/
+│       └── test.log         # Detailed test execution logs
+```
+
+### Test Framework Usage
+```javascript
+const ResponsiveTestFramework = require('./test-framework/ResponsiveTestFramework');
+
+// Create test suite
+const testFramework = new ResponsiveTestFramework('TestSuiteName', {
+  baseUrl: 'http://localhost:3000',
+  credentials: { email: 'info@realtechee.com', password: 'Sababa123!' }
+});
+
+// Run standardized responsive tests
+await testFramework.runFullSuite('/admin/projects', customTests);
+```
+
+### Key Features
+- **Automatic Authentication** with configurable credentials
+- **Cross-Device Testing** across 7 standard breakpoints
+- **Screenshot Capture** for passed/failed/error states
+- **HTML Reports** with interactive test details
+- **CI/CD Integration** with exit codes (0=success, 1=failure)
+- **Custom Test Support** for app-specific functionality
+- **Standardized Directory Structure** for easy result management
+
+### Commands
+- **Run Admin Responsive Tests:** `node test-admin-responsive-standardized.js`
+- **View Results:** Open `test-results/[latest]/report.html` in browser
+- **CI Integration:** Uses exit codes for automated pipelines

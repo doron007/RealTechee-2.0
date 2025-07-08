@@ -16,6 +16,8 @@ export interface EnhancedProject {
   businessCreatedDate?: string;
   createdAt?: string;
   createdDate?: string;
+  addedValue?: number;
+  boostPrice?: number;
   
   // Resolved contact information
   clientName?: string;
@@ -27,6 +29,7 @@ export interface EnhancedProject {
   agentBrokerage?: string;
   
   // Additional homeowners (if any)
+  homeownerName?: string;
   homeowner2Name?: string;
   homeowner3Name?: string;
   
@@ -35,6 +38,57 @@ export interface EnhancedProject {
   homeownerContactId?: string;
   homeowner2ContactId?: string;
   homeowner3ContactId?: string;
+  
+  // Property details
+  bedrooms?: string;
+  bathrooms?: string;
+  sizeSqft?: string;
+  yearBuilt?: string;
+  floors?: string;
+  zillowLink?: string;
+  
+  // Financial information
+  listingPrice?: number;
+  originalValue?: number;
+  grossProfit?: number;
+  estimatedGrossProfit?: number;
+  revShareAmount?: number;
+  salePrice?: number;
+  loanBalance?: number;
+  boosterEstimatedCost?: number;
+  boosterActualCost?: number;
+  paidCost?: number;
+  paidByEscrow?: number;
+  
+  // Project management
+  selectedProducts?: string;
+  projectManagerEmailList?: string;
+  projectManagerPhone?: string;
+  projectID?: string;
+  projectAdminProjectId?: string;
+  statusOrder?: string;
+  visitorId?: string;
+  excludeFromDashboard?: boolean;
+  
+  // Dates
+  requestDate?: string;
+  proposalDate?: string;
+  visitReviewDate?: string;
+  quoteSentDate?: string;
+  quoteOpenedDate?: string;
+  quoteSignedDate?: string;
+  contractDate?: string;
+  contractSentDate?: string;
+  contractingStartDate?: string;
+  underwritingDate?: string;
+  updatedDate?: string;
+  
+  // Additional fields
+  description?: string;
+  officeNotes?: string;
+  gallery?: string;
+  documents?: string;
+  image?: string;
 }
 
 interface Contact {
@@ -61,6 +115,8 @@ interface RawProject {
   businessCreatedDate?: string;
   createdAt?: string;
   createdDate?: string;
+  addedValue?: number;
+  boostPrice?: number;
   agentContactId?: string;
   homeownerContactId?: string;
   homeowner2ContactId?: string;
@@ -222,6 +278,8 @@ export class ProjectsService {
       businessCreatedDate: project.businessCreatedDate,
       createdAt: project.createdAt,
       createdDate: project.createdDate,
+      addedValue: project.addedValue,
+      boostPrice: project.boostPrice,
       
       // Store raw contact IDs for reference
       agentContactId: project.agentContactId,

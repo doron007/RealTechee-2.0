@@ -52,3 +52,9 @@ amplifyconfiguration*
 
 # claude code local settings
 .claude/settings.local.json
+
+# Test Results - Standardized Test Framework
+test-results/
+test-*.js
+*.png
+dev-server.log

@@ -1,0 +1,1064 @@
+{
+  "summary": {
+    "totalTests": 18,
+    "successfulTests": 0,
+    "totalIssues": 18,
+    "criticalIssues": 18,
+    "highIssues": 0,
+    "resultsByUrl": {
+      "http://localhost:3000": [
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "320px",
+          "width": 320,
+          "height": 568,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 320,
+              "viewportWidth": 320,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-320px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 320px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:33:49.442Z"
+        },
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "375px",
+          "width": 375,
+          "height": 667,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 375,
+              "viewportWidth": 375,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-375px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 375px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:33:55.271Z"
+        },
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "414px",
+          "width": 414,
+          "height": 896,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 414,
+              "viewportWidth": 414,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-414px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 414px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:00.794Z"
+        },
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "768px",
+          "width": 768,
+          "height": 1024,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 768,
+              "viewportWidth": 768,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-768px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 768px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:06.322Z"
+        },
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "1024px",
+          "width": 1024,
+          "height": 768,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1024,
+              "viewportWidth": 1024,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-1024px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 1024px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:12.168Z"
+        },
+        {
+          "url": "http://localhost:3000",
+          "breakpoint": "1920px",
+          "width": 1920,
+          "height": 1080,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1920,
+              "viewportWidth": 1920,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-1920px-error.png",
+              "description": "Error screenshot of http://localhost:3000 at 1920px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:17.939Z"
+        }
+      ],
+      "http://localhost:3000/login": [
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "320px",
+          "width": 320,
+          "height": 568,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 320,
+              "viewportWidth": 320,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-320px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 320px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:24.108Z"
+        },
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "375px",
+          "width": 375,
+          "height": 667,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 375,
+              "viewportWidth": 375,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-375px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 375px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:29.100Z"
+        },
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "414px",
+          "width": 414,
+          "height": 896,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 414,
+              "viewportWidth": 414,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-414px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 414px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:34.098Z"
+        },
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "768px",
+          "width": 768,
+          "height": 1024,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 768,
+              "viewportWidth": 768,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-768px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 768px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:39.106Z"
+        },
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "1024px",
+          "width": 1024,
+          "height": 768,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1024,
+              "viewportWidth": 1024,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-1024px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 1024px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:44.151Z"
+        },
+        {
+          "url": "http://localhost:3000/login",
+          "breakpoint": "1920px",
+          "width": 1920,
+          "height": 1080,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1920,
+              "viewportWidth": 1920,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-login-1920px-error.png",
+              "description": "Error screenshot of http://localhost:3000/login at 1920px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:49.210Z"
+        }
+      ],
+      "http://localhost:3000/admin/projects": [
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "320px",
+          "width": 320,
+          "height": 568,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 320,
+              "viewportWidth": 320,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-320px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 320px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:54.304Z"
+        },
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "375px",
+          "width": 375,
+          "height": 667,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 375,
+              "viewportWidth": 375,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-375px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 375px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:34:59.588Z"
+        },
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "414px",
+          "width": 414,
+          "height": 896,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 414,
+              "viewportWidth": 414,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-414px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 414px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:35:05.007Z"
+        },
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "768px",
+          "width": 768,
+          "height": 1024,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 768,
+              "viewportWidth": 768,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-768px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 768px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:35:10.438Z"
+        },
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "1024px",
+          "width": 1024,
+          "height": 768,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1024,
+              "viewportWidth": 1024,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-1024px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 1024px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:35:15.767Z"
+        },
+        {
+          "url": "http://localhost:3000/admin/projects",
+          "breakpoint": "1920px",
+          "width": 1920,
+          "height": 1080,
+          "issues": [
+            {
+              "type": "test_error",
+              "severity": "critical",
+              "message": "Test failed: element.getBoundingClientRect is not a function",
+              "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+            }
+          ],
+          "measurements": {
+            "overflow": {
+              "documentWidth": 1920,
+              "viewportWidth": 1920,
+              "hasOverflow": false,
+              "difference": 0
+            }
+          },
+          "screenshots": [
+            {
+              "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-1920px-error.png",
+              "description": "Error screenshot of http://localhost:3000/admin/projects at 1920px"
+            }
+          ],
+          "timestamp": "2025-07-05T18:35:21.105Z"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "320px",
+      "width": 320,
+      "height": 568,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 320,
+          "viewportWidth": 320,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-320px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 320px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:33:49.442Z"
+    },
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "375px",
+      "width": 375,
+      "height": 667,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 375,
+          "viewportWidth": 375,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-375px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 375px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:33:55.271Z"
+    },
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "414px",
+      "width": 414,
+      "height": 896,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 414,
+          "viewportWidth": 414,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-414px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 414px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:00.794Z"
+    },
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "768px",
+      "width": 768,
+      "height": 1024,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 768,
+          "viewportWidth": 768,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-768px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 768px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:06.322Z"
+    },
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "1024px",
+      "width": 1024,
+      "height": 768,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1024,
+          "viewportWidth": 1024,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-1024px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 1024px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:12.168Z"
+    },
+    {
+      "url": "http://localhost:3000",
+      "breakpoint": "1920px",
+      "width": 1920,
+      "height": 1080,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1920,
+          "viewportWidth": 1920,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-1920px-error.png",
+          "description": "Error screenshot of http://localhost:3000 at 1920px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:17.939Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "320px",
+      "width": 320,
+      "height": 568,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 320,
+          "viewportWidth": 320,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-320px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 320px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:24.108Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "375px",
+      "width": 375,
+      "height": 667,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 375,
+          "viewportWidth": 375,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-375px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 375px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:29.100Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "414px",
+      "width": 414,
+      "height": 896,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 414,
+          "viewportWidth": 414,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-414px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 414px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:34.098Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "768px",
+      "width": 768,
+      "height": 1024,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 768,
+          "viewportWidth": 768,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-768px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 768px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:39.106Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "1024px",
+      "width": 1024,
+      "height": 768,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1024,
+          "viewportWidth": 1024,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-1024px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 1024px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:44.151Z"
+    },
+    {
+      "url": "http://localhost:3000/login",
+      "breakpoint": "1920px",
+      "width": 1920,
+      "height": 1080,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1920,
+          "viewportWidth": 1920,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-login-1920px-error.png",
+          "description": "Error screenshot of http://localhost:3000/login at 1920px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:49.210Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "320px",
+      "width": 320,
+      "height": 568,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 320,
+          "viewportWidth": 320,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-320px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 320px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:54.304Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "375px",
+      "width": 375,
+      "height": 667,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 375,
+          "viewportWidth": 375,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-375px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 375px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:34:59.588Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "414px",
+      "width": 414,
+      "height": 896,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 414,
+          "viewportWidth": 414,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-414px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 414px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:35:05.007Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "768px",
+      "width": 768,
+      "height": 1024,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 768,
+          "viewportWidth": 768,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-768px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 768px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:35:10.438Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "1024px",
+      "width": 1024,
+      "height": 768,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1024,
+          "viewportWidth": 1024,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-1024px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 1024px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:35:15.767Z"
+    },
+    {
+      "url": "http://localhost:3000/admin/projects",
+      "breakpoint": "1920px",
+      "width": 1920,
+      "height": 1080,
+      "issues": [
+        {
+          "type": "test_error",
+          "severity": "critical",
+          "message": "Test failed: element.getBoundingClientRect is not a function",
+          "stack": "TypeError: element.getBoundingClientRect is not a function\n    at evaluate (evaluate at analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:21), <anonymous>:16:29)\n    at #evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:391:56)\n    at async ExecutionContext.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/ExecutionContext.js:277:16)\n    at async IsolatedWorld.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/IsolatedWorld.js:100:16)\n    at async CdpFrame.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Frame.js:364:20)\n    at async CdpPage.evaluate (/Users/doron/Projects/RealTechee 2.0/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:817:20)\n    at async analyzeResponsiveElements (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:67:10)\n    at async testBreakpoint (/Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:160:29)\n    at async /Users/doron/Projects/RealTechee 2.0/test-responsive-analysis.js:422:24"
+        }
+      ],
+      "measurements": {
+        "overflow": {
+          "documentWidth": 1920,
+          "viewportWidth": 1920,
+          "hasOverflow": false,
+          "difference": 0
+        }
+      },
+      "screenshots": [
+        {
+          "path": "e2e/reports/screenshots/http---localhost-3000-admin-projects-1920px-error.png",
+          "description": "Error screenshot of http://localhost:3000/admin/projects at 1920px"
+        }
+      ],
+      "timestamp": "2025-07-05T18:35:21.105Z"
+    }
+  ],
+  "timestamp": "2025-07-05T18:35:26.418Z"
+}

@@ -26,7 +26,19 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const [userEmail, setUserEmail] = useState('');
   const [userRole, setUserRole] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const { isCollapsed } = useAdminSidebar();
+  const { isCollapsed, isMobile } = useAdminSidebar();
+  
+  // Debug information for troubleshooting
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).adminLayoutDebugInfo = {
+        isCollapsed,
+        isMobile,
+        windowWidth: window.innerWidth,
+        sidebarWidth: isCollapsed ? 64 : 256
+      };
+    }
+  }, [isCollapsed, isMobile]);
 
   // Check authorization on mount
   useEffect(() => {
@@ -126,33 +138,45 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Sidebar */}
         <AdminSidebar />
 
-        {/* Main Content Area */}
+        {/* Main Content Container - Takes remaining viewport width after sidebar */}
         <div 
-          className={`flex-1 flex flex-col transition-all duration-300 ${
-            isCollapsed ? 'ml-16' : 'ml-64'
-          }`}
+          className={`
+            flex-1 flex flex-col min-h-screen
+            ${isMobile ? (isCollapsed ? 'ml-16' : 'ml-64') : ''}
+          `}
+          style={{
+            width: isMobile 
+              ? `calc(100vw - ${isCollapsed ? '64px' : '256px'})` 
+              : 'calc(100vw - var(--sidebar-width, 64px))',
+            maxWidth: isMobile 
+              ? `calc(100vw - ${isCollapsed ? '64px' : '256px'})` 
+              : 'calc(100vw - var(--sidebar-width, 64px))'
+          }}
         >
-          {/* Top Header */}
-          <div className="bg-white shadow-sm border-b border-gray-200">
-            <div className="px-6 py-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
-                  <P2 className="text-gray-600">
+          {/* Top Div: Title Bar + CTA Buttons - 100% width of parent container */}
+          <div className="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0">
+            <div className="w-full px-4 sm:px-6 py-3 sm:py-4">
+              <div className="flex items-center justify-between w-full">
+                {/* Left side - Title and user info */}
+                <div className="flex-1 min-w-0 pr-4">
+                  <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 mb-1">
+                    {title}
+                  </h1>
+                  <P2 className="text-gray-600 text-sm">
                     Logged in as: {userEmail} ({userRole})
                   </P2>
                 </div>
                 
-                <div className="flex items-center space-x-4">
-                  {/* Quick actions */}
+                {/* Right side - CTA Actions */}
+                <div className="flex items-center space-x-3 flex-shrink-0">
                   <button
                     onClick={() => router.push('/')}
-                    className="text-gray-600 hover:text-gray-900 text-sm"
+                    className="text-gray-600 hover:text-gray-900 text-sm px-3 py-2 rounded hover:bg-gray-100"
+                    title="View Site"
                   >
                     View Site
                   </button>
                   
-                  {/* User menu could go here */}
                   <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
                     <span className="text-sm font-medium text-gray-700">
                       {userEmail.charAt(0).toUpperCase()}
@@ -165,22 +189,22 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 
           {/* Error Display */}
           {error && (
-            <div className="px-6 pt-4">
+            <div className="w-full px-6 pt-4">
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
                 {error}
               </div>
             </div>
           )}
 
-          {/* Main Content */}
-          <main className="flex-1 overflow-auto">
-            <div className="p-6">
+          {/* Bottom Div: DataGrid/Cards - 100% width, no min-width constraints */}
+          <main className="flex-1 w-full overflow-hidden">
+            <div className="w-full h-full p-4 sm:p-6">
               {children}
             </div>
           </main>
 
           {/* Footer */}
-          <div className="bg-white border-t border-gray-200 px-6 py-4">
+          <div className="w-full bg-white border-t border-gray-200 px-6 py-4 flex-shrink-0">
             <P2 className="text-gray-500 text-center">
               RealTechee Admin Panel - Phase 2 Implementation
             </P2>

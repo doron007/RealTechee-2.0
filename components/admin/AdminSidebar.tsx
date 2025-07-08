@@ -21,7 +21,7 @@ interface AdminSidebarProps {
 
 const AdminSidebar: React.FC<AdminSidebarProps> = () => {
   const router = useRouter();
-  const { isCollapsed, toggle: handleToggle } = useAdminSidebar();
+  const { isCollapsed, isMobile, toggle: handleToggle } = useAdminSidebar();
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -118,8 +118,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
 
   return (
     <div
-      className={`fixed left-0 top-0 h-full bg-gray-900 text-white transition-all duration-300 z-50 shadow-lg flex flex-col ${
+      className={`fixed left-0 top-0 h-full bg-gray-900 text-white transition-all duration-300 z-50 shadow-lg flex flex-col lg:relative ${
         isCollapsed ? 'w-16' : 'w-64'
+      } ${
+        // Hide completely on mobile when expanded (should never happen but safety)
+        isMobile && !isCollapsed ? 'hidden' : ''
       }`}
     >
       {/* Header with Logo - Improved Design */}

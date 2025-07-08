@@ -19,6 +19,18 @@ export class MemoryMonitor {
     external: string;
     arrayBuffers: string;
   } {
+    // Check if we're on the server side (Node.js)
+    if (typeof process === 'undefined' || typeof process.memoryUsage !== 'function') {
+      // Client-side fallback - return placeholder values
+      return {
+        rss: 'N/A (client)',
+        heapUsed: 'N/A (client)',
+        heapTotal: 'N/A (client)',
+        external: 'N/A (client)',
+        arrayBuffers: 'N/A (client)'
+      };
+    }
+
     const usage = process.memoryUsage();
     return {
       rss: this.formatBytes(usage.rss),
@@ -42,6 +54,14 @@ export class MemoryMonitor {
    * Track memory usage over time
    */
   static track(label?: string): void {
+    // Only track on server side
+    if (typeof process === 'undefined' || typeof process.memoryUsage !== 'function') {
+      if (label && process.env.NODE_ENV === 'development') {
+        console.log(`[MemoryMonitor] ${label} - client-side (skipping memory tracking)`);
+      }
+      return;
+    }
+
     const usage = process.memoryUsage();
     this.measurements.push({
       timestamp: Date.now(),
@@ -182,8 +202,11 @@ export class MemoryMonitor {
    * Start periodic monitoring (development only)
    */
   static startPeriodicMonitoring(intervalMs: number = 30000): () => void {
-    if (process.env.NODE_ENV === 'production') {
-      logger.warn('Periodic memory monitoring disabled in production');
+    // Only run on server side and in development
+    if (process.env.NODE_ENV === 'production' || typeof process === 'undefined') {
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[MemoryMonitor] Periodic monitoring disabled on client-side');
+      }
       return () => {};
     }
 
