@@ -58,3 +58,4 @@ test-results/
 test-*.js
 *.png
 dev-server.log
+dev-server.pid
