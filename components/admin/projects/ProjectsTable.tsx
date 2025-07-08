@@ -558,10 +558,13 @@ const ProjectCard: React.FC<{
                               );
                             }}
                           >
-                            <img 
+                            <Image 
                               src={item.src || item.url} 
                               alt={item.alt || item.title || `Gallery ${index + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                              fill
+                              sizes="80px"
+                              className="object-cover group-hover:scale-105 transition-transform duration-200"
+                              unoptimized={true}
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
                               }}
@@ -848,22 +851,10 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
       clearTimeout(timeout);
       clearInterval(intervalId);
     };
-  }, [projects.length, viewMode]); // Re-run when projects data or view mode changes
+  }, [projects.length, viewMode, loading, error]); // Re-run when projects data, view mode, loading, or error state changes
 
-  useEffect(() => {
-    loadProjects();
-
-    // Cleanup function to clear cache when component unmounts
-    return () => {
-      if (process.env.NODE_ENV === 'development') {
-        memoryMonitor.track('ProjectsTable: Component unmounting');
-        // Clear cache to free memory (only in development)
-        projectsService.clearCache();
-      }
-    };
-  }, []);
-
-  const loadProjects = async () => {
+  // Load projects function
+  const loadProjects = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -885,7 +876,21 @@ const ProjectsTable: React.FC<ProjectsTableProps> = ({ onRefresh }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []); // Empty dependency array since this function only uses state setters
+
+  useEffect(() => {
+    loadProjects();
+
+    // Cleanup function to clear cache when component unmounts
+    return () => {
+      if (process.env.NODE_ENV === 'development') {
+        memoryMonitor.track('ProjectsTable: Component unmounting');
+        // Clear cache to free memory (only in development)
+        projectsService.clearCache();
+      }
+    };
+  }, [loadProjects]);
+
 
   const handleOpenProject = useCallback((projectId: string) => {
     window.open(`/project?projectId=${projectId}`, '_blank');
