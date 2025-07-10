@@ -76,6 +76,11 @@ export interface AdminDataGridProps<T extends AdminDataItem> {
     density: 'comfortable' | 'compact';
     allStatuses?: string[];
   }>;
+  // Archive toggle props
+  showArchiveToggle?: boolean;
+  showArchived?: boolean;
+  onArchiveToggle?: (showArchived: boolean) => void;
+  allData?: T[]; // For showing total counts
 }
 
 const AdminDataGrid = <T extends AdminDataItem>({
@@ -97,7 +102,11 @@ const AdminDataGrid = <T extends AdminDataItem>({
   getStatusColor,
   formatCurrency,
   formatDate,
-  cardComponent: CardComponent
+  cardComponent: CardComponent,
+  showArchiveToggle = false,
+  showArchived = false,
+  onArchiveToggle,
+  allData
 }: AdminDataGridProps<T>) => {
   const router = useRouter();
   
@@ -437,6 +446,35 @@ const AdminDataGrid = <T extends AdminDataItem>({
           ))}
         </div>
 
+        {/* Archive Toggle - positioned between filters and results */}
+        {showArchiveToggle && (
+          <div className="flex justify-end">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`show-archived-${itemDisplayName}`}
+                  checked={showArchived}
+                  onChange={(e) => onArchiveToggle?.(e.target.checked)}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor={`show-archived-${itemDisplayName}`} className="ml-2 text-sm font-medium text-gray-700">
+                  Show Archived {itemDisplayName.charAt(0).toUpperCase() + itemDisplayName.slice(1)}
+                </label>
+              </div>
+              
+              {/* Archive count display */}
+              <div className="text-sm text-gray-500">
+                {showArchived ? (
+                  <>📁 {data.length} archived {data.length === 1 ? itemDisplayName.slice(0, -1) : itemDisplayName}</>
+                ) : (
+                  <>📊 {data.length} active {data.length === 1 ? itemDisplayName.slice(0, -1) : itemDisplayName}</>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Results Summary */}
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
@@ -459,13 +497,55 @@ const AdminDataGrid = <T extends AdminDataItem>({
             </P3>
           </div>
           
-          {/* Bulk Actions */}
-          {selectedItems.size > 0 && (
+          {/* Sort Controls and Bulk Actions */}
+          <div className="flex items-center gap-4">
+            {/* Sort Controls */}
             <div className="flex items-center gap-2">
-              <P3 className="text-gray-600">{selectedItems.size} selected</P3>
-              {/* Add bulk action buttons here */}
+              <P3 className="text-gray-600">Sort by:</P3>
+              <FormControl size="small" className="min-w-[120px]">
+                <Select
+                  value={sortField}
+                  onChange={(e) => setSortField(e.target.value)}
+                  displayEmpty
+                  sx={{ height: '32px' }}
+                >
+                  {columns.filter(col => col.enableSorting !== false).map((col) => {
+                    const key = String(col.id || col.accessorKey || col.header);
+                    return (
+                      <MenuItem key={key} value={key}>
+                        {col.header}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+              
+              <Tooltip title={`Sort ${sortDirection === 'asc' ? 'Descending' : 'Ascending'}`}>
+                <IconButton
+                  onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                  size="small"
+                  sx={{ 
+                    backgroundColor: 'rgba(0,0,0,0.04)',
+                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.08)' }
+                  }}
+                >
+                  {sortDirection === 'asc' ? (
+                    <span className="text-sm font-bold">↑</span>
+                  ) : (
+                    <span className="text-sm font-bold">↓</span>
+                  )}
+                </IconButton>
+              </Tooltip>
             </div>
-          )}
+
+            {/* Bulk Actions */}
+            {selectedItems.size > 0 && (
+              <div className="flex items-center gap-2">
+                <P3 className="text-gray-600">{selectedItems.size} selected</P3>
+                {/* Add bulk action buttons here */}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

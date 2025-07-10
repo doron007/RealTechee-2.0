@@ -8,6 +8,7 @@ import AdminDataGrid, {
 } from '../common/AdminDataGrid';
 import AdminCard, { AdminCardGroup, AdminCardField, AdminCardAction } from '../common/AdminCard';
 import StatusPill from '../../common/ui/StatusPill';
+import { H1, P2 } from '../../typography';
 import { quotesAPI } from '../../../utils/amplifyAPI';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 
@@ -70,10 +71,14 @@ const QuotesDataGrid: React.FC = () => {
     setError('');
     
     try {
+      // Get all quotes - API should return all including archived
       const result = await quotesAPI.list();
       
       if (result.success) {
-        setQuotes(result.data || []);
+        const allQuotes = result.data || [];
+        console.log('Loaded quotes:', allQuotes.length, 'Total');
+        console.log('Archived quotes:', allQuotes.filter((q: any) => q.status === 'Archived').length);
+        setQuotes(allQuotes);
       } else {
         setError('Failed to load quotes');
       }
@@ -96,13 +101,14 @@ const QuotesDataGrid: React.FC = () => {
 
   // Removed getStatusColor - now using StatusPill component
 
-  // Define table columns
+  // Define table columns - following required order: Status, Address, Created, Owner, Agent, Brokerage, Opportunity
   const columns: AdminDataGridColumn<Quote>[] = [
     {
       accessorKey: 'status',
       header: 'Status',
       size: 100,
-      enableHiding: false,
+      enableSorting: true,
+      enableHiding: false, // Always show status
       Cell: ({ cell }) => {
         const status = cell.getValue() as string;
         return (
@@ -113,47 +119,79 @@ const QuotesDataGrid: React.FC = () => {
       },
     },
     {
-      accessorFn: (row) => row.title || `Quote #${row.quoteNumber || row.id.slice(0, 8)}`,
-      id: 'title',
-      header: 'Quote',
+      accessorFn: (row) => row.propertyAddress || row.title || 'No address provided',
+      id: 'address',
+      header: 'Address',
       size: 200,
-      enableHiding: false,
-    },
-    {
-      accessorKey: 'clientName',
-      header: 'Client',
-      size: 150,
-      enableHiding: true,
-    },
-    {
-      accessorKey: 'agentName',
-      header: 'Agent',
-      size: 150,
-      enableHiding: true,
-    },
-    {
-      accessorKey: 'product',
-      header: 'Product',
-      size: 120,
-      enableHiding: true,
-    },
-    {
-      accessorKey: 'totalPrice',
-      header: 'Amount',
-      size: 120,
-      enableHiding: true,
-      Cell: ({ cell }) => {
-        const value = cell.getValue() as number;
-        return value ? formatCurrencyFull(value) : 'N/A';
-      },
+      enableSorting: true,
+      enableHiding: false, // Always show address (primary info)
+      Cell: ({ cell }) => (
+        <div title={cell.getValue() as string}>
+          <P2 className="max-w-xs sm:max-w-sm lg:max-w-md xl:max-w-lg break-words">
+            {cell.getValue() as string}
+          </P2>
+        </div>
+      ),
     },
     {
       accessorFn: (row) => row.businessCreatedDate || row.createdAt,
       id: 'created',
       header: 'Created',
       size: 120,
-      enableHiding: true,
-      Cell: ({ cell }) => formatDateShort(cell.getValue() as string),
+      enableHiding: true, // Can hide on mobile
+      Cell: ({ cell }) => (
+        <P2>{formatDateShort(cell.getValue() as string)}</P2>
+      ),
+    },
+    {
+      accessorKey: 'clientName',
+      header: 'Owner',
+      size: 130,
+      enableHiding: true, // Can hide on mobile
+      Cell: ({ cell }) => (
+        <div title={cell.getValue() as string || 'N/A'}>
+          <P2 className="max-w-xs truncate">
+            {cell.getValue() as string || 'N/A'}
+          </P2>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'agentName',
+      header: 'Agent',
+      size: 130,
+      enableHiding: true, // Can hide on mobile
+      Cell: ({ cell }) => (
+        <div title={cell.getValue() as string || 'N/A'}>
+          <P2 className="max-w-xs truncate">
+            {cell.getValue() as string || 'N/A'}
+          </P2>
+        </div>
+      ),
+    },
+    {
+      accessorFn: (row) => row.brokerage || 'N/A',
+      id: 'brokerage',
+      header: 'Brokerage',
+      size: 140,
+      enableHiding: true, // Can hide on mobile
+      Cell: ({ cell }) => (
+        <div title={cell.getValue() as string}>
+          <P2 className="max-w-xs truncate">
+            {cell.getValue() as string}
+          </P2>
+        </div>
+      ),
+    },
+    {
+      accessorFn: (row) => row.totalPrice || row.budget,
+      id: 'opportunity',
+      header: 'Opportunity',
+      size: 110,
+      enableHiding: true, // Can hide on mobile
+      Cell: ({ cell }) => (
+        <P2>{formatCurrencyFull(cell.getValue() as number)}</P2>
+      ),
     },
   ];
 
@@ -382,60 +420,50 @@ const QuotesDataGrid: React.FC = () => {
   );
 
   return (
-    <div className="space-y-4">
-      {/* Archive Toggle */}
-      <div className="bg-white rounded-lg shadow p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showArchived}
-                onChange={(e) => setShowArchived(e.target.checked)}
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-sm font-medium text-gray-700">
-                {showArchived ? 'Show Archived Quotes' : 'Show Active Quotes'}
-              </span>
-            </label>
-            <div className="text-sm text-gray-500">
-              {showArchived 
-                ? `${filteredQuotes.length} archived quotes`
-                : `${filteredQuotes.length} active quotes`
-              }
-            </div>
-          </div>
-          {showArchived && (
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <span>🗑️</span>
-              <span>Archived Items</span>
-            </div>
-          )}
+    <div className="w-full max-w-full overflow-hidden space-y-6">
+      {/* Page Title */}
+      <div className="flex items-center justify-between">
+        <div>
+          <H1>Quotes</H1>
+          <P2 className="text-gray-600 mt-1">
+            {showArchived ? "View archived quotes" : "Manage quotes, proposals, and estimates"}
+          </P2>
         </div>
       </div>
-      
-      <div className="w-full max-w-full overflow-hidden">
-        <AdminDataGrid
-          title={showArchived ? "Archived Quotes" : "Quotes"}
-          subtitle={showArchived ? "View archived quotes" : "Manage quotes, proposals, and estimates"}
-          data={filteredQuotes}
-          columns={columns}
-          actions={actions}
-          loading={loading}
-          error={error}
-          onRefresh={loadQuotes}
-          createButtonLabel="New Quote"
-          onCreateNew={handleCreateNew}
-          searchFields={['title', 'description', 'clientName', 'clientEmail', 'agentName', 'status']}
-          filters={filters}
-          defaultSortField="created"
-          defaultSortDirection="desc"
-          itemDisplayName="quotes"
-          formatCurrency={formatCurrencyFull}
-          formatDate={formatDateShort}
-          cardComponent={QuoteCard}
-        />
+
+      {/* Aggregation Bar */}
+      <div className="bg-white rounded-lg shadow p-4">
+        <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <span>📋 Total: {quotes.length}</span>
+          <span>🏃 Active: {quotes.filter(q => q.status !== 'Archived').length}</span>
+          <span>📁 Archived: {quotes.filter(q => q.status === 'Archived').length}</span>
+        </div>
       </div>
+
+      <AdminDataGrid
+        title={showArchived ? "Archived Quotes" : "Quotes"}
+        subtitle={showArchived ? "View archived quotes" : "Manage quotes, proposals, and estimates"}
+        data={filteredQuotes}
+        columns={columns}
+        actions={actions}
+        loading={loading}
+        error={error}
+        onRefresh={loadQuotes}
+        createButtonLabel="New Quote"
+        onCreateNew={handleCreateNew}
+        searchFields={['title', 'description', 'clientName', 'clientEmail', 'agentName', 'status']}
+        filters={filters}
+        defaultSortField="created"
+        defaultSortDirection="desc"
+        itemDisplayName="quotes"
+        formatCurrency={formatCurrencyFull}
+        formatDate={formatDateShort}
+        cardComponent={QuoteCard}
+        showArchiveToggle={true}
+        showArchived={showArchived}
+        onArchiveToggle={setShowArchived}
+        allData={quotes}
+      />
     </div>
   );
 };

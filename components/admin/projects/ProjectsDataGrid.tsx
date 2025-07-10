@@ -8,7 +8,7 @@ import AdminDataGrid, {
 } from '../common/AdminDataGrid';
 import ProgressiveProjectCard from './ProgressiveProjectCard';
 import StatusPill from '../../common/ui/StatusPill';
-import { P2 } from '../../typography';
+import { H1, P2 } from '../../typography';
 import { enhancedProjectsService, type FullyEnhancedProject } from '../../../services/enhancedProjectsService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 
@@ -262,40 +262,23 @@ export default function ProjectsDataGrid() {
   };
 
   return (
-    <div className="w-full max-w-full overflow-hidden">
-      {/* Archive Toggle Section */}
-      <div className="bg-white rounded-lg shadow p-4 mb-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="show-archived-projects"
-                checked={showArchived}
-                onChange={(e) => setShowArchived(e.target.checked)}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="show-archived-projects" className="ml-2 text-sm font-medium text-gray-700">
-                Show Archived Projects
-              </label>
-            </div>
-            
-            {/* Archive count display */}
-            <div className="text-sm text-gray-500">
-              {showArchived ? (
-                <>📁 {filteredProjects.length} archived {filteredProjects.length === 1 ? 'project' : 'projects'}</>
-              ) : (
-                <>📊 {filteredProjects.length} active {filteredProjects.length === 1 ? 'project' : 'projects'}</>
-              )}
-            </div>
-          </div>
+    <div className="w-full max-w-full overflow-hidden space-y-6">
+      {/* Page Title */}
+      <div className="flex items-center justify-between">
+        <div>
+          <H1>Projects</H1>
+          <P2 className="text-gray-600 mt-1">
+            {showArchived ? "View and manage archived project records" : "Manage and track all project records"}
+          </P2>
+        </div>
+      </div>
 
-          {/* Status counts */}
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
-            <span>📋 Total: {projects.length}</span>
-            <span>🏃 Active: {projects.filter(p => p.status !== 'archived').length}</span>
-            <span>📁 Archived: {projects.filter(p => p.status === 'archived').length}</span>
-          </div>
+      {/* Aggregation Bar */}
+      <div className="bg-white rounded-lg shadow p-4">
+        <div className="flex items-center space-x-4 text-sm text-gray-500">
+          <span>📋 Total: {projects.length}</span>
+          <span>🏃 Active: {projects.filter(p => p.status !== 'archived').length}</span>
+          <span>📁 Archived: {projects.filter(p => p.status === 'archived').length}</span>
         </div>
       </div>
 
@@ -315,6 +298,10 @@ export default function ProjectsDataGrid() {
         searchFields={['title', 'propertyAddress', 'clientName', 'agentName', 'status']}
         defaultSortField="created"
         cardComponent={ProgressiveProjectCard}
+        showArchiveToggle={true}
+        showArchived={showArchived}
+        onArchiveToggle={setShowArchived}
+        allData={projects}
       />
     </div>
   );
