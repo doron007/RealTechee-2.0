@@ -63,7 +63,7 @@ export default function ProjectsDataGrid() {
       },
     },
     {
-      accessorFn: (row) => row.propertyAddress || row.title || 'No address provided',
+      accessorFn: (row) => row.propertyAddress || 'No address provided',
       id: 'address',
       header: 'Address',
       size: 200,

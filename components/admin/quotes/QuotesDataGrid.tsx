@@ -10,47 +10,11 @@ import AdminCard, { AdminCardGroup, AdminCardField, AdminCardAction } from '../c
 import StatusPill from '../../common/ui/StatusPill';
 import { H1, P2 } from '../../typography';
 import { quotesAPI } from '../../../utils/amplifyAPI';
+import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 
-interface Quote extends AdminDataItem {
-  id: string;
-  title?: string;
-  description?: string;
-  status: string;
-  quoteNumber?: number;
-  clientName?: string;
-  clientEmail?: string;
-  agentName?: string;
-  brokerage?: string;
-  product?: string;
-  totalPrice?: number;
-  totalCost?: number;
-  budget?: number;
-  projectedListingPrice?: number;
-  requestDate?: string;
-  sentDate?: string;
-  openedDate?: string;
-  signedDate?: string;
-  expiredDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  businessCreatedDate?: string;
-  businessUpdatedDate?: string;
-  requestId?: string;
-  projectId?: string;
-  propertyAddress?: string;
-  bedrooms?: string;
-  bathrooms?: string;
-  sizeSqft?: string;
-  yearBuilt?: string;
-  officeNotes?: string;
-  assignedTo?: string;
-  operationManagerApproved?: boolean;
-  underwritingApproved?: boolean;
-  signed?: boolean;
-  creditScore?: number;
-  estimatedWeeksDuration?: string;
-}
+// Use the enhanced interface with FK resolution
+type Quote = FullyEnhancedQuote & AdminDataItem;
 
 const QuotesDataGrid: React.FC = () => {
   const router = useRouter();
@@ -71,13 +35,20 @@ const QuotesDataGrid: React.FC = () => {
     setError('');
     
     try {
-      // Get all quotes - API should return all including archived
-      const result = await quotesAPI.list();
+      // Use enhanced service to get quotes with FK resolution
+      const result = await enhancedQuotesService.getFullyEnhancedQuotes();
       
       if (result.success) {
         const allQuotes = result.data || [];
-        console.log('Loaded quotes:', allQuotes.length, 'Total');
+        console.log('Loaded enhanced quotes:', allQuotes.length, 'Total');
         console.log('Archived quotes:', allQuotes.filter((q: any) => q.status === 'Archived').length);
+        console.log('Sample enhanced quote:', allQuotes[0] ? {
+          id: allQuotes[0].id,
+          propertyAddress: allQuotes[0].propertyAddress,
+          clientName: allQuotes[0].clientName,
+          agentName: allQuotes[0].agentName,
+          brokerage: allQuotes[0].brokerage
+        } : 'No quotes');
         setQuotes(allQuotes);
       } else {
         setError('Failed to load quotes');
@@ -119,7 +90,7 @@ const QuotesDataGrid: React.FC = () => {
       },
     },
     {
-      accessorFn: (row) => row.propertyAddress || row.title || 'No address provided',
+      accessorFn: (row) => row.propertyAddress || 'No address provided',
       id: 'address',
       header: 'Address',
       size: 200,

@@ -10,49 +10,11 @@ import AdminCard, { AdminCardGroup, AdminCardField, AdminCardAction } from '../c
 import StatusPill from '../../common/ui/StatusPill';
 import { H1, P2 } from '../../typography';
 import { requestsAPI } from '../../../utils/amplifyAPI';
+import { enhancedRequestsService, FullyEnhancedRequest } from '../../../services/enhancedRequestsService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 
-interface Request extends AdminDataItem {
-  id: string;
-  status: string;
-  product?: string;
-  message?: string;
-  relationToProperty?: string;
-  needFinance?: boolean;
-  budget?: string;
-  clientName?: string;
-  clientEmail?: string;
-  clientPhone?: string;
-  agentName?: string;
-  propertyAddress?: string;
-  leadSource?: string;
-  assignedTo?: string;
-  assignedDate?: string;
-  requestedVisitDateTime?: string;
-  visitDate?: string;
-  moveToQuotingDate?: string;
-  expiredDate?: string;
-  archivedDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  businessCreatedDate?: string;
-  businessUpdatedDate?: string;
-  officeNotes?: string;
-  archived?: string;
-  visitorId?: string;
-  bookingId?: string;
-  requestedSlot?: string;
-  uploadedMedia?: string;
-  uplodedDocuments?: string; // Note: typo in schema
-  uploadedVideos?: string;
-  virtualWalkthrough?: string;
-  rtDigitalSelection?: string;
-  leadFromSync?: string;
-  leadFromVenturaStone?: string;
-  agentContactId?: string;
-  homeownerContactId?: string;
-  addressId?: string;
-}
+// Use the enhanced interface with FK resolution
+type Request = FullyEnhancedRequest & AdminDataItem;
 
 const RequestsDataGrid: React.FC = () => {
   const router = useRouter();
@@ -73,18 +35,25 @@ const RequestsDataGrid: React.FC = () => {
     setError('');
     
     try {
-      // Try API first, fallback to mock data
+      // Try enhanced service first, fallback to mock data
       try {
-        const result = await requestsAPI.list();
+        const result = await enhancedRequestsService.getFullyEnhancedRequests();
         
         if (result.success && result.data && result.data.length > 0) {
-          console.log('Loaded requests:', result.data.length, 'Total');
+          console.log('Loaded enhanced requests:', result.data.length, 'Total');
           console.log('Archived requests:', result.data.filter((r: any) => r.status === 'Archived').length);
+          console.log('Sample enhanced request:', result.data[0] ? {
+            id: result.data[0].id,
+            propertyAddress: result.data[0].propertyAddress,
+            clientName: result.data[0].clientName,
+            agentName: result.data[0].agentName,
+            brokerage: result.data[0].brokerage
+          } : 'No requests');
           setRequests(result.data);
           return;
         }
       } catch (apiErr) {
-        console.log('API call failed, using mock data:', apiErr);
+        console.log('Enhanced API call failed, using mock data:', apiErr);
       }
       
       // Use mock data with archived items for testing

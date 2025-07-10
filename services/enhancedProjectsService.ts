@@ -81,12 +81,17 @@ export interface FullyEnhancedProject {
 
 interface Property {
   id: string;
+  propertyFullAddress?: string;
+  houseAddress?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
   propertyType?: string;
-  bedrooms?: string;
-  bathrooms?: string;
-  floors?: string;
-  sizeSqft?: string;
-  yearBuilt?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  floors?: number;
+  sizeSqft?: number;
+  yearBuilt?: number;
   zillowLink?: string;
   redfinLink?: string;
 }
@@ -229,12 +234,28 @@ export class EnhancedProjectsService {
     const homeowner3 = rawProject.homeowner3ContactId ? this.contactCache.get(rawProject.homeowner3ContactId) : null;
     const agent = rawProject.agentContactId ? this.contactCache.get(rawProject.agentContactId) : null;
 
+    // Build property address from Properties table
+    let propertyAddress = rawProject.propertyAddress; // Fallback to existing field
+    if (property) {
+      if (property.propertyFullAddress) {
+        propertyAddress = property.propertyFullAddress;
+      } else if (property.houseAddress) {
+        // Build address from components
+        const parts = [property.houseAddress, property.city, property.state, property.zip].filter(Boolean);
+        propertyAddress = parts.join(', ');
+      }
+    }
+    // Final fallback to project title if no address found
+    if (!propertyAddress) {
+      propertyAddress = rawProject.title || 'No address provided';
+    }
+
     return {
       // Core project data
       id: rawProject.id,
       title: rawProject.title,
       status: rawProject.status,
-      propertyAddress: rawProject.title, // Use title as address for compatibility
+      propertyAddress, // Use resolved address from Properties table
       description: rawProject.description,
       image: rawProject.image,
       gallery: rawProject.gallery,
@@ -244,11 +265,11 @@ export class EnhancedProjectsService {
       
       // Property data (prefer Properties table, fallback to project data)
       propertyType: property?.propertyType || rawProject.propertyType,
-      bedrooms: property?.bedrooms || (rawProject.bedrooms ? String(rawProject.bedrooms) : undefined),
-      bathrooms: property?.bathrooms || (rawProject.bathrooms ? String(rawProject.bathrooms) : undefined),
-      floors: property?.floors || (rawProject.floors ? String(rawProject.floors) : undefined),
-      sizeSqft: property?.sizeSqft || (rawProject.sizeSqft ? String(rawProject.sizeSqft) : undefined),
-      yearBuilt: property?.yearBuilt || (rawProject.yearBuilt ? String(rawProject.yearBuilt) : undefined),
+      bedrooms: property?.bedrooms ? String(property.bedrooms) : (rawProject.bedrooms ? String(rawProject.bedrooms) : undefined),
+      bathrooms: property?.bathrooms ? String(property.bathrooms) : (rawProject.bathrooms ? String(rawProject.bathrooms) : undefined),
+      floors: property?.floors ? String(property.floors) : (rawProject.floors ? String(rawProject.floors) : undefined),
+      sizeSqft: property?.sizeSqft ? String(property.sizeSqft) : (rawProject.sizeSqft ? String(rawProject.sizeSqft) : undefined),
+      yearBuilt: property?.yearBuilt ? String(property.yearBuilt) : (rawProject.yearBuilt ? String(rawProject.yearBuilt) : undefined),
       zillowLink: property?.zillowLink || rawProject.zillowLink,
       redfinLink: property?.redfinLink || rawProject.redfinLink,
       
