@@ -9,6 +9,19 @@
 **Data Cleanup:** `node ./scripts/deduplicateContacts.js [--dry-run]` • `node ./scripts/createUsersFromContacts.js`
 **Testing:** `node test-comprehensive-ui.js` • `node test-admin-responsive-standardized.js` • View reports in `test-results/` • Credentials: info@realtechee.com / Sababa123!
 
+## Session Management (CRITICAL)
+**ALWAYS run `killall "node"` before starting dev server or build processes:**
+- `killall "node" && npm run dev` - Clean dev server start
+- `killall "node" && npm run build` - Clean build (prevents _document errors)
+- Port 3000 conflicts cause navigation timeouts in tests
+- Multiple node processes cause compilation errors and server conflicts
+
+## Performance Characteristics
+**First access after build/changes**: SLOW (seconds) - Next.js compilation
+**Subsequent access**: FAST (milliseconds) - Cached/compiled
+**Test Strategy**: Monitor server terminal logs + Chrome console for compilation status
+**Polling**: Use intelligent polling that adapts to compilation vs cached access patterns
+
 ## Amplify Gen 2 (NOT Gen 1)
 **CRITICAL:** This project uses Amplify Gen 2. ! use deprecated Gen 1 patterns/commands.
 

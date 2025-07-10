@@ -50,7 +50,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       name: 'Requests',
       route: '/admin/requests',
       icon: '/assets/icons/ic-requests.svg',
-      isImplemented: false
+      isImplemented: true
     },
     {
       id: 'divider-1',
@@ -117,14 +117,24 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
   };
 
   return (
-    <div
-      className={`fixed left-0 top-0 h-full bg-gray-900 text-white transition-all duration-300 z-50 shadow-lg flex flex-col lg:relative ${
-        isCollapsed ? 'w-16' : 'w-64'
-      } ${
-        // Hide completely on mobile when expanded (should never happen but safety)
-        isMobile && !isCollapsed ? 'hidden' : ''
-      }`}
-    >
+    <>
+      {/* Mobile backdrop overlay when sidebar is expanded */}
+      {isMobile && !isCollapsed && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
+          onClick={handleToggle}
+          aria-label="Close sidebar"
+        />
+      )}
+      
+      <div
+        className={`fixed left-0 top-0 h-full bg-gray-900 text-white transition-all duration-300 shadow-lg flex flex-col lg:relative ${
+          isCollapsed ? 'w-16' : 'w-64'
+        } ${
+          // On mobile, use higher z-index overlay when expanded instead of hiding
+          isMobile && !isCollapsed ? 'z-[60] shadow-2xl' : 'z-50'
+        }`}
+      >
       {/* Header with Logo - Improved Design */}
       <div className="pt-5 pb-4 border-b border-gray-700">
         {!isCollapsed ? (
@@ -277,6 +287,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

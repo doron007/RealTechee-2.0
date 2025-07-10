@@ -267,13 +267,13 @@ export class EnhancedProjectsService {
       revShareAmount: rawProject.revShareAmount,
       
       // Contact data (resolved from Contacts table)
-      clientName: homeowner?.fullName || homeowner?.firstName + ' ' + homeowner?.lastName || 'N/A',
+      clientName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName) || 'N/A',
       clientEmail: homeowner?.email,
       clientPhone: homeowner?.phone || homeowner?.mobile,
-      homeownerName: homeowner?.fullName || homeowner?.firstName + ' ' + homeowner?.lastName,
-      homeowner2Name: homeowner2?.fullName || homeowner2?.firstName + ' ' + homeowner2?.lastName,
-      homeowner3Name: homeowner3?.fullName || homeowner3?.firstName + ' ' + homeowner3?.lastName,
-      agentName: agent?.fullName || agent?.firstName + ' ' + agent?.lastName,
+      homeownerName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName),
+      homeowner2Name: homeowner2?.fullName || (homeowner2?.firstName && homeowner2?.lastName ? `${homeowner2.firstName} ${homeowner2.lastName}` : homeowner2?.firstName || homeowner2?.lastName),
+      homeowner3Name: homeowner3?.fullName || (homeowner3?.firstName && homeowner3?.lastName ? `${homeowner3.firstName} ${homeowner3.lastName}` : homeowner3?.firstName || homeowner3?.lastName),
+      agentName: agent?.fullName || (agent?.firstName && agent?.lastName ? `${agent.firstName} ${agent.lastName}` : agent?.firstName || agent?.lastName),
       agentEmail: agent?.email,
       agentPhone: agent?.phone || agent?.mobile,
       brokerage: agent?.brokerage || rawProject.brokerage,

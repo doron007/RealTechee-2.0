@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import QuotesList from '../../components/admin/quotes/QuotesList';
+import QuotesDataGrid from '../../components/admin/quotes/QuotesDataGrid';
 
 const QuotesPage = () => {
   return (
@@ -8,7 +8,7 @@ const QuotesPage = () => {
       title="Quotes" 
       description="Quote management and CRUD operations"
     >
-      <QuotesList />
+      <QuotesDataGrid />
     </AdminLayout>
   );
 };

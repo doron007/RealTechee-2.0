@@ -16,7 +16,16 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "deploy:prod": "git push origin prod",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:e2e:admin": "node e2e/admin/admin-comprehensive/test-admin-comprehensive.js",
+    "test:e2e:admin:projects": "node e2e/admin/admin-comprehensive/test-admin-projects-enhanced.js",
+    "test:e2e:admin:quotes": "node e2e/admin/admin-comprehensive/test-admin-quotes-comprehensive.js",
+    "test:e2e:admin:complete": "node e2e/runners/test-runner-admin-complete.js",
+    "test:unified": "node e2e/runners/test-runner-unified.js",
+    "test:unified:critical": "node e2e/runners/test-runner-unified.js --critical",
+    "test:unified:parallel": "node e2e/runners/test-runner-unified.js --parallel",
+    "test:admin:runner": "bash e2e/runners/run-admin-tests.sh"
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.16.1",

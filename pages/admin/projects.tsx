@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import ProjectsList from '../../components/admin/projects/ProjectsList';
+import ProjectsDataGrid from '../../components/admin/projects/ProjectsDataGrid';
 
 const ProjectsPage = () => {
   return (
@@ -8,7 +8,7 @@ const ProjectsPage = () => {
       title="Projects" 
       description="Project management and CRUD operations"
     >
-      <ProjectsList />
+      <ProjectsDataGrid />
     </AdminLayout>
   );
 };

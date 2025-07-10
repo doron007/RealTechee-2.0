@@ -65,6 +65,22 @@ class ResponsiveTestFramework {
       this.browser = await puppeteer.launch(this.config.puppeteer);
       this.page = await this.browser.newPage();
       
+      // Disable animations and transitions for faster, more reliable testing
+      await this.page.evaluateOnNewDocument(() => {
+        // Disable CSS animations and transitions
+        const style = document.createElement('style');
+        style.textContent = `
+          *, *::before, *::after {
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+            transition-duration: 0s !important;
+            transition-delay: 0s !important;
+            scroll-behavior: auto !important;
+          }
+        `;
+        document.head.appendChild(style);
+      });
+      
       // Set timeouts
       this.page.setDefaultTimeout(this.config.timeouts.pageLoad);
       this.page.setDefaultNavigationTimeout(this.config.timeouts.navigation);
@@ -100,6 +116,18 @@ class ResponsiveTestFramework {
     const testStart = new Date().toISOString();
     
     try {
+      // Validate URL parameter
+      if (!targetUrl || typeof targetUrl !== 'string') {
+        throw new Error(`Invalid targetUrl parameter: ${targetUrl}. Expected a valid URL string.`);
+      }
+      
+      // Basic URL format validation
+      try {
+        new URL(targetUrl);
+      } catch (urlError) {
+        throw new Error(`Invalid URL format: ${targetUrl}. ${urlError.message}`);
+      }
+      
       this.reporter.logMessage('info', `Starting authentication to ${targetUrl}`);
       
       // Navigate to target page (should redirect to login)
@@ -113,9 +141,23 @@ class ResponsiveTestFramework {
         timeout: this.config.timeouts.authentication 
       });
 
-      // Fill credentials
-      await this.page.type('input[type="email"]', this.config.credentials.email);
-      await this.page.type('input[type="password"]', this.config.credentials.password);
+      // Fill credentials instantly without typing simulation
+      await this.page.evaluate((credentials) => {
+        const emailInput = document.querySelector('input[type="email"]');
+        const passwordInput = document.querySelector('input[type="password"]');
+        
+        if (emailInput) {
+          emailInput.value = credentials.email;
+          emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+          emailInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        
+        if (passwordInput) {
+          passwordInput.value = credentials.password;
+          passwordInput.dispatchEvent(new Event('input', { bubbles: true }));
+          passwordInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, this.config.credentials);
 
       // Submit login
       await Promise.all([
