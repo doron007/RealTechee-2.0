@@ -1,0 +1,464 @@
+[
+  {
+    "breakpoint": "320px",
+    "width": 320,
+    "height": 568,
+    "type": "mobile",
+    "page": "login",
+    "issues": [
+      {
+        "type": "form_too_wide_mobile",
+        "severity": "medium",
+        "message": "Form width 288px may be too wide for 320px (viewport: 320px)"
+      }
+    ],
+    "measurements": {
+      "layout": {
+        "documentWidth": 320,
+        "documentHeight": 1262,
+        "viewportWidth": 320,
+        "viewportHeight": 568,
+        "bodyWidth": 320,
+        "bodyHeight": 1262,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 288,
+        "formHeight": 648.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-320px.png",
+        "description": "login page at 320px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "375px",
+    "width": 375,
+    "height": 667,
+    "type": "mobile",
+    "page": "login",
+    "issues": [
+      {
+        "type": "form_too_wide_mobile",
+        "severity": "medium",
+        "message": "Form width 343px may be too wide for 375px (viewport: 375px)"
+      }
+    ],
+    "measurements": {
+      "layout": {
+        "documentWidth": 375,
+        "documentHeight": 1223,
+        "viewportWidth": 375,
+        "viewportHeight": 667,
+        "bodyWidth": 375,
+        "bodyHeight": 1223,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 343,
+        "formHeight": 648.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-375px.png",
+        "description": "login page at 375px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "414px",
+    "width": 414,
+    "height": 896,
+    "type": "mobile",
+    "page": "login",
+    "issues": [
+      {
+        "type": "form_too_wide_mobile",
+        "severity": "medium",
+        "message": "Form width 382px may be too wide for 414px (viewport: 414px)"
+      }
+    ],
+    "measurements": {
+      "layout": {
+        "documentWidth": 414,
+        "documentHeight": 1179,
+        "viewportWidth": 414,
+        "viewportHeight": 896,
+        "bodyWidth": 414,
+        "bodyHeight": 1179,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 382,
+        "formHeight": 624.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-414px.png",
+        "description": "login page at 414px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "768px",
+    "width": 768,
+    "height": 1024,
+    "type": "tablet",
+    "page": "login",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 768,
+        "documentHeight": 1310,
+        "viewportWidth": 768,
+        "viewportHeight": 1024,
+        "bodyWidth": 768,
+        "bodyHeight": 1310,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 512,
+        "formHeight": 640.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-768px.png",
+        "description": "login page at 768px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "1024px",
+    "width": 1024,
+    "height": 768,
+    "type": "desktop",
+    "page": "login",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 1024,
+        "documentHeight": 1283,
+        "viewportWidth": 1024,
+        "viewportHeight": 768,
+        "bodyWidth": 1024,
+        "bodyHeight": 1283,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 576,
+        "formHeight": 640.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-1024px.png",
+        "description": "login page at 1024px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "1920px",
+    "width": 1920,
+    "height": 1080,
+    "type": "desktop",
+    "page": "login",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 1920,
+        "documentHeight": 1283,
+        "viewportWidth": 1920,
+        "viewportHeight": 1080,
+        "bodyWidth": 1920,
+        "bodyHeight": 1283,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "login": {
+        "hasAuthenticator": true,
+        "hasInputs": 2,
+        "hasButtons": 5,
+        "hasLogo": true,
+        "formWidth": 672,
+        "formHeight": 640.59375,
+        "isFormCentered": true
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/login-1920px.png",
+        "description": "login page at 1920px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "320px",
+    "width": 320,
+    "height": 568,
+    "type": "mobile",
+    "page": "admin",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 320,
+        "documentHeight": 1262,
+        "viewportWidth": 320,
+        "viewportHeight": 568,
+        "bodyWidth": 320,
+        "bodyHeight": 1262,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-320px.png",
+        "description": "admin page at 320px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "375px",
+    "width": 375,
+    "height": 667,
+    "type": "mobile",
+    "page": "admin",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 375,
+        "documentHeight": 1223,
+        "viewportWidth": 375,
+        "viewportHeight": 667,
+        "bodyWidth": 375,
+        "bodyHeight": 1223,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-375px.png",
+        "description": "admin page at 375px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "414px",
+    "width": 414,
+    "height": 896,
+    "type": "mobile",
+    "page": "admin",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 414,
+        "documentHeight": 1179,
+        "viewportWidth": 414,
+        "viewportHeight": 896,
+        "bodyWidth": 414,
+        "bodyHeight": 1179,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-414px.png",
+        "description": "admin page at 414px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "768px",
+    "width": 768,
+    "height": 1024,
+    "type": "tablet",
+    "page": "admin",
+    "issues": [],
+    "measurements": {
+      "layout": {
+        "documentWidth": 768,
+        "documentHeight": 1310,
+        "viewportWidth": 768,
+        "viewportHeight": 1024,
+        "bodyWidth": 768,
+        "bodyHeight": 1310,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-768px.png",
+        "description": "admin page at 768px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "1024px",
+    "width": 1024,
+    "height": 768,
+    "type": "desktop",
+    "page": "admin",
+    "issues": [
+      {
+        "type": "no_content_desktop",
+        "severity": "high",
+        "message": "No table or card content visible on desktop (1024px)"
+      }
+    ],
+    "measurements": {
+      "layout": {
+        "documentWidth": 1024,
+        "documentHeight": 1283,
+        "viewportWidth": 1024,
+        "viewportHeight": 768,
+        "bodyWidth": 1024,
+        "bodyHeight": 1283,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-1024px.png",
+        "description": "admin page at 1024px"
+      }
+    ]
+  },
+  {
+    "breakpoint": "1920px",
+    "width": 1920,
+    "height": 1080,
+    "type": "desktop",
+    "page": "admin",
+    "issues": [
+      {
+        "type": "no_content_desktop",
+        "severity": "high",
+        "message": "No table or card content visible on desktop (1920px)"
+      }
+    ],
+    "measurements": {
+      "layout": {
+        "documentWidth": 1920,
+        "documentHeight": 1283,
+        "viewportWidth": 1920,
+        "viewportHeight": 1080,
+        "bodyWidth": 1920,
+        "bodyHeight": 1283,
+        "hasHorizontalScroll": false,
+        "hasVerticalScroll": true
+      },
+      "admin": {
+        "hasSidebar": false,
+        "sidebarWidth": 0,
+        "hasMainContent": false,
+        "mainContentMargin": 0,
+        "hasHeader": false,
+        "hasTitle": false,
+        "hasTable": false,
+        "hasCards": false,
+        "headerHeight": 0
+      }
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/admin-1920px.png",
+        "description": "admin page at 1920px"
+      }
+    ]
+  }
+]

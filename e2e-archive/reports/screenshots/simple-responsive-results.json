@@ -1,0 +1,650 @@
+[
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "320px",
+    "width": 320,
+    "height": 568,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 320,
+      "documentHeight": 11179,
+      "viewportWidth": 320,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--320px.png",
+        "name": "--320px.png",
+        "description": "http://localhost:3000 at 320px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "375px",
+    "width": 375,
+    "height": 667,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 375,
+      "documentHeight": 10541,
+      "viewportWidth": 375,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--375px.png",
+        "name": "--375px.png",
+        "description": "http://localhost:3000 at 375px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "414px",
+    "width": 414,
+    "height": 896,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 414,
+      "documentHeight": 10300,
+      "viewportWidth": 414,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--414px.png",
+        "name": "--414px.png",
+        "description": "http://localhost:3000 at 414px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "768px",
+    "width": 768,
+    "height": 1024,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 768,
+      "documentHeight": 9575,
+      "viewportWidth": 768,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--768px.png",
+        "name": "--768px.png",
+        "description": "http://localhost:3000 at 768px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "1024px",
+    "width": 1024,
+    "height": 768,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1024,
+      "documentHeight": 8549,
+      "viewportWidth": 1024,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--1024px.png",
+        "name": "--1024px.png",
+        "description": "http://localhost:3000 at 1024px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000",
+    "breakpoint": "1920px",
+    "width": 1920,
+    "height": 1080,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1920,
+      "documentHeight": 8334,
+      "viewportWidth": 1920,
+      "hasHorizontalOverflow": false,
+      "title": "RealTechee - Home Preparation Partner for Real Estate Professionals",
+      "url": "http://localhost:3000/",
+      "elementCounts": {
+        "buttons": 11,
+        "inputs": 0,
+        "forms": 0,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 1,
+        "headers": 13,
+        "navigation": 1
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": false,
+      "isLoginPage": false,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/--1920px.png",
+        "name": "--1920px.png",
+        "description": "http://localhost:3000 at 1920px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "320px",
+    "width": 320,
+    "height": 568,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 320,
+      "documentHeight": 1262,
+      "viewportWidth": 320,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-320px.png",
+        "name": "-login-320px.png",
+        "description": "http://localhost:3000/login at 320px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "375px",
+    "width": 375,
+    "height": 667,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 375,
+      "documentHeight": 1223,
+      "viewportWidth": 375,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-375px.png",
+        "name": "-login-375px.png",
+        "description": "http://localhost:3000/login at 375px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "414px",
+    "width": 414,
+    "height": 896,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 414,
+      "documentHeight": 1179,
+      "viewportWidth": 414,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-414px.png",
+        "name": "-login-414px.png",
+        "description": "http://localhost:3000/login at 414px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "768px",
+    "width": 768,
+    "height": 1024,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 768,
+      "documentHeight": 1310,
+      "viewportWidth": 768,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-768px.png",
+        "name": "-login-768px.png",
+        "description": "http://localhost:3000/login at 768px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "1024px",
+    "width": 1024,
+    "height": 768,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1024,
+      "documentHeight": 1283,
+      "viewportWidth": 1024,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-1024px.png",
+        "name": "-login-1024px.png",
+        "description": "http://localhost:3000/login at 1024px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/login",
+    "breakpoint": "1920px",
+    "width": 1920,
+    "height": 1080,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1920,
+      "documentHeight": 1283,
+      "viewportWidth": 1920,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-login-1920px.png",
+        "name": "-login-1920px.png",
+        "description": "http://localhost:3000/login at 1920px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "320px",
+    "width": 320,
+    "height": 568,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 320,
+      "documentHeight": 1262,
+      "viewportWidth": 320,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-320px.png",
+        "name": "-admin-projects-320px.png",
+        "description": "http://localhost:3000/admin/projects at 320px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "375px",
+    "width": 375,
+    "height": 667,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 375,
+      "documentHeight": 1223,
+      "viewportWidth": 375,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-375px.png",
+        "name": "-admin-projects-375px.png",
+        "description": "http://localhost:3000/admin/projects at 375px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "414px",
+    "width": 414,
+    "height": 896,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 414,
+      "documentHeight": 1179,
+      "viewportWidth": 414,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-414px.png",
+        "name": "-admin-projects-414px.png",
+        "description": "http://localhost:3000/admin/projects at 414px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "768px",
+    "width": 768,
+    "height": 1024,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 768,
+      "documentHeight": 1310,
+      "viewportWidth": 768,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-768px.png",
+        "name": "-admin-projects-768px.png",
+        "description": "http://localhost:3000/admin/projects at 768px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "1024px",
+    "width": 1024,
+    "height": 768,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1024,
+      "documentHeight": 1283,
+      "viewportWidth": 1024,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-1024px.png",
+        "name": "-admin-projects-1024px.png",
+        "description": "http://localhost:3000/admin/projects at 1024px"
+      }
+    ]
+  },
+  {
+    "url": "http://localhost:3000/admin/projects",
+    "breakpoint": "1920px",
+    "width": 1920,
+    "height": 1080,
+    "issues": [],
+    "analysis": {
+      "documentWidth": 1920,
+      "documentHeight": 1283,
+      "viewportWidth": 1920,
+      "hasHorizontalOverflow": false,
+      "title": "Login | RealTechee - Home Preparation Partner",
+      "url": "http://localhost:3000/login?redirect=%2Fadmin%2Fprojects",
+      "elementCounts": {
+        "buttons": 5,
+        "inputs": 2,
+        "forms": 1,
+        "tables": 0,
+        "cards": 1,
+        "sidebars": 0,
+        "headers": 1,
+        "navigation": 0
+      },
+      "bodyClasses": "",
+      "hasAmplifyAuth": true,
+      "isLoginPage": true,
+      "isAdminPage": false
+    },
+    "screenshots": [
+      {
+        "path": "e2e/reports/screenshots/-admin-projects-1920px.png",
+        "name": "-admin-projects-1920px.png",
+        "description": "http://localhost:3000/admin/projects at 1920px"
+      }
+    ]
+  }
+]
