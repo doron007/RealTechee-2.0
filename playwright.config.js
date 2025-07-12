@@ -188,6 +188,27 @@ module.exports = defineConfig({
       },
     },
     
+    // Authentication flow testing
+    {
+      name: 'auth-flows',
+      testMatch: '**/auth/auth-flows.spec.js',
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: { cookies: [], origins: [] } // Clean state for auth testing
+      },
+    },
+    
+    // Member portal testing (requires authentication)
+    {
+      name: 'member-portal',
+      testMatch: '**/member/member-portal.spec.js',
+      dependencies: ['auth-setup'],
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json'
+      },
+    },
+    
     // Cross-browser testing (optional)
     {
       name: 'cross-browser-firefox',
