@@ -142,7 +142,9 @@ const AdminCard: React.FC<AdminCardProps> = ({
     return { streetAddress: address, cityStateZip: '' };
   };
 
-  const { streetAddress, cityStateZip } = splitAddress(primaryValue);
+  // Use secondary field (address) if available, otherwise use primary field
+  const addressToSplit = secondaryValue || primaryValue;
+  const { streetAddress, cityStateZip } = splitAddress(addressToSplit);
 
   // Dynamic styling based on density
   const getDensityClasses = () => {
@@ -211,23 +213,35 @@ const AdminCard: React.FC<AdminCardProps> = ({
               </Tooltip>
             )}
             
-            {/* Primary Value - Mobile responsive */}
+            {/* Content - Show address if available, otherwise primary value */}
             <div className="flex-1 min-w-0">
-              <div className="hidden sm:block">
-                <P2 className={`font-medium truncate ${density === 'compact' ? 'text-sm' : ''}`}>
-                  {primaryValue}
-                </P2>
-              </div>
-              <div className="block sm:hidden">
-                <P2 className={`font-medium ${density === 'compact' ? 'text-sm leading-tight' : 'leading-tight'}`}>
-                  {streetAddress}
-                </P2>
-                {cityStateZip && (
-                  <P3 className={`text-gray-500 ${density === 'compact' ? 'text-xs mt-0.5' : 'text-xs mt-1'}`}>
-                    {cityStateZip}
-                  </P3>
-                )}
-              </div>
+              {secondaryValue ? (
+                // Show address when available
+                <>
+                  <div className="hidden sm:block">
+                    <P2 className={`font-medium truncate ${density === 'compact' ? 'text-sm' : ''}`}>
+                      {secondaryValue}
+                    </P2>
+                  </div>
+                  <div className="block sm:hidden">
+                    <P2 className={`font-medium ${density === 'compact' ? 'text-sm leading-tight' : 'leading-tight'}`}>
+                      {streetAddress}
+                    </P2>
+                    {cityStateZip && (
+                      <P3 className={`text-gray-500 ${density === 'compact' ? 'text-xs mt-0.5' : 'text-xs mt-1'}`}>
+                        {cityStateZip}
+                      </P3>
+                    )}
+                  </div>
+                </>
+              ) : (
+                // Fallback to primary value
+                <div className="hidden sm:block">
+                  <P2 className={`font-medium truncate ${density === 'compact' ? 'text-sm' : ''}`}>
+                    {primaryValue}
+                  </P2>
+                </div>
+              )}
             </div>
           </div>
           
@@ -301,6 +315,16 @@ const AdminCard: React.FC<AdminCardProps> = ({
                 {primaryField.charAt(0).toUpperCase() + primaryField.slice(1)}
               </P3>
               <H4 className="text-gray-900 break-words leading-relaxed">{primaryValue}</H4>
+              
+              {/* Show secondary field (address) if available */}
+              {secondaryValue && secondaryField && (
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <P3 className="text-gray-500 text-xs font-medium uppercase tracking-wider mb-2">
+                    {secondaryField.charAt(0).toUpperCase() + secondaryField.slice(1)}
+                  </P3>
+                  <P2 className="text-gray-700 break-words">{secondaryValue}</P2>
+                </div>
+              )}
             </div>
 
             {/* High priority fields */}
@@ -358,9 +382,15 @@ const AdminCard: React.FC<AdminCardProps> = ({
         <div className="space-y-4 max-h-[80vh] overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between sticky top-0 bg-white py-2 border-b border-gray-200">
-            <div className="flex items-center gap-3">
-              {statusValue && <StatusPill status={statusValue} />}
-              <H5 className="text-gray-900 break-words leading-relaxed">{primaryValue}</H5>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                {statusValue && <StatusPill status={statusValue} />}
+                <H5 className="text-gray-900 break-words leading-relaxed">{primaryValue}</H5>
+              </div>
+              {/* Show secondary field (address) if available */}
+              {secondaryValue && (
+                <P2 className="text-gray-600 break-words leading-relaxed ml-0">{secondaryValue}</P2>
+              )}
             </div>
             <button
               onClick={(e) => { e.stopPropagation(); setCardState('collapsed'); }}

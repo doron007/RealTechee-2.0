@@ -139,10 +139,10 @@ export default function ProjectsDataGrid() {
     },
   ];
 
-  // Define actions
+  // Define actions - workflow-based actions
   const actions: AdminDataGridAction<Project>[] = [
     {
-      label: 'View',
+      label: 'Open',
       icon: '/assets/icons/ic-newpage.svg',
       onClick: (project) => window.open(`/project?projectId=${project.id}`, '_blank'),
       tooltip: 'Open Project',
@@ -154,10 +154,16 @@ export default function ProjectsDataGrid() {
       tooltip: 'Edit Project',
     },
     {
-      label: 'Convert to Quote',
-      onClick: (project) => handleConvertToQuote(project.id),
-      tooltip: 'Convert Project to Quote',
-      variant: 'primary',
+      label: 'View Request',
+      onClick: (project) => handleViewRequest(project.id),
+      tooltip: 'View Related Request',
+      variant: 'secondary',
+    },
+    {
+      label: 'View Quotes',
+      onClick: (project) => handleViewQuotes(project.id),
+      tooltip: 'View Related Quotes',
+      variant: 'secondary',
     },
     {
       label: 'Archive',
@@ -205,18 +211,31 @@ export default function ProjectsDataGrid() {
   }, [filteredProjects]);
 
 
-  // Handle convert to quote
-  const handleConvertToQuote = async (projectId: string) => {
+  // Action handlers - workflow-based
+  const handleViewRequest = async (projectId: string) => {
     try {
-      const confirmed = confirm('Convert this project to a quote?');
-      if (!confirmed) return;
+      // Find the project first to get the requestId
+      const project = projects.find(p => p.id === projectId);
+      const requestId = (project as any)?.requestId; // Use type assertion for now until type is updated
       
-      // Implementation would depend on your API
-      console.log('Converting project to quote:', projectId);
-      alert('Project converted to quote successfully! (Feature in development)');
+      if (project && requestId) {
+        router.push(`/admin/requests/${requestId}`);
+      } else {
+        alert('No related request found for this project');
+      }
     } catch (error) {
-      console.error('Error converting project to quote:', error);
-      alert('Failed to convert project to quote');
+      console.error('Error viewing request:', error);
+      alert('Failed to view request');
+    }
+  };
+
+  const handleViewQuotes = async (projectId: string) => {
+    try {
+      // Navigate to quotes page filtered by this project
+      router.push(`/admin/quotes?projectId=${projectId}`);
+    } catch (error) {
+      console.error('Error viewing quotes:', error);
+      alert('Failed to view quotes');
     }
   };
 
@@ -263,15 +282,6 @@ export default function ProjectsDataGrid() {
 
   return (
     <div className="w-full max-w-full overflow-hidden space-y-6">
-      {/* Page Title */}
-      <div className="flex items-center justify-between">
-        <div>
-          <H1>Projects</H1>
-          <P2 className="text-gray-600 mt-1">
-            {showArchived ? "View and manage archived project records" : "Manage and track all project records"}
-          </P2>
-        </div>
-      </div>
 
       {/* Aggregation Bar */}
       <div className="bg-white rounded-lg shadow p-4">
@@ -283,7 +293,7 @@ export default function ProjectsDataGrid() {
       </div>
 
       <AdminDataGrid<Project>
-        title={showArchived ? "Archived Projects" : "Projects"}
+        title="Projects"
         subtitle={showArchived ? "View and manage archived project records" : "Manage and track all project records"}
         data={filteredProjects}
         columns={columns}
@@ -302,6 +312,23 @@ export default function ProjectsDataGrid() {
         showArchived={showArchived}
         onArchiveToggle={setShowArchived}
         allData={projects}
+        customActions={{
+          label: 'Project Actions',
+          items: [
+            {
+              label: 'Export to PDF',
+              onClick: () => alert('Export to PDF functionality will be implemented'),
+            },
+            {
+              label: 'Generate Report',
+              onClick: () => alert('Generate Report functionality will be implemented'),
+            },
+            {
+              label: 'Bulk Operations',
+              onClick: () => alert('Bulk Operations functionality will be implemented'),
+            },
+          ]
+        }}
       />
     </div>
   );

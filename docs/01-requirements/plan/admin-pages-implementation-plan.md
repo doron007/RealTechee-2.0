@@ -365,38 +365,118 @@ The following areas are likely to be challenging for an AI agent. For each, the 
 ## 13. Next session intructions
 We want to continue the admin pages implementation for RealTechee 2.0. (plan link: /docs/01-requirements/plan/admin-pages-implementation-plan.md).
 
-  **CURRENT STATUS**: Archive functionality and admin/requests are complete and working.
-  Authentication is confirmed working (test suites prove this). Build compiles successfully.
+  **CURRENT STATUS**: I found out that something obviously wrong with the test suit we have. based on my input and what we found broken in the test, please provide concise and precise requirement for AI code agent to review the  test-framework, and the details of we want the test to do  (requirements). e.g. "following is the test-report folder for the 
+  last one: '/Users/doron/Projects/RealTechee 2.0/test-results/20250710-17_52_15-comprehensive-admin-functional-test'. There is no report, 
+  most of the folders are empty, and there are still react errors on 
+  the login, so not sure how do you suggest the test passed. You 
+  should revalidate what is the success criteria, because it should have failed."
 
-  **NEXT PRIORITIES**:
-  1. Fix mobile responsive test framework (currently expects tables but should handle card on mobile <768px). First task is to make the test framwork more robust, and have it as criteria to visually confirm CX and UI before advising task is complete. Main challeges observer is that test framework (for all tests) should start with `killall "node"` before any `npm run *` (build, dev, type-check). after the build or type-check it should run the server and allow it to prime the system and any new page loaded after the kill, buile, and restart should wait for the page to compile. currently it seems that you are timing out before page is loaded. Prefer polling for status and looping until load over static lengthy timeout that slows down the entire script. You should also bias toward using single open session when you perform the login and first page load, as this session is primed. for the login screen you should type fast the user and pas cred and make sure you click on the "Sign in" button to make sure form is submitted and auth is in progress. you should not make any changes until you confirmed with screenshot from puppteer that you identify the issue, so that you can also confirm the fix once complete. if any question ask me for manual intervension and assistance. At this time Manual testing I can confirm that Auth and Authorization is work perfect. The admin pages are loading and showing in table and card mode. You should focus on fixing the test framwork, test reporting and test suits to make sure it works 100% of the time. if any issues at this time, assume this is the test system. if you need to change something else, let me know what, why and the impact and wait for confirmation before making the change.
-  2. Add navigation buttons between request→quote→project entities using schema relationships
-  3. Implement quote and request detail/edit pages following the same pattern as projects
-  4. Achieve 100% test pass rate after framework fixes
+  **NEXT PRIORITIES**: review the tests suite and comeup with a plan to review and have robust complete and repeatable test runner suite, that we can trust it mimic exact user actions, and measure and report results based on actual review of screenshots from the puppeteer, as well as the Chrome console log, and the terminal log, watching for errors, looking for testing content, testing functionality of all actions. Tests should fail when functionality is broken. 
 
   **KEY FILES**:
-  - Plan: `docs/01-requirements/plan/admin-pages-implementation-plan.md` (updated with current
-  status)
-  - Test results: `test-results/` directory (shows authentication working, desktop tests
-  passing)
+  - Plan: `docs/01-requirements/plan/admin-pages-implementation-plan.md` (updated with current status)
+  - Test results: `test-results/` directory (shows authentication working, desktop tests passing)
   - Test framework: `e2e/framework/ResponsiveTestFramework.js` (needs mobile card mode support)
 
   **IMPORTANT NOTES**:
   - Authentication is working perfectly - tests confirm this
   - Admin/quotes and admin/requests pages are functional
-  - Desktop tests pass, mobile tests fail due to test framework expecting tables instead of
-  cards
-  - Column sorting issue fixed (defaultSortField corrected in both quotes and requests)
+  - Desktop tests pass, mobile tests fail due to test framework expecting tables instead of cards
   - Test credentials: info@realtechee.com / Sababa123!
 
   **SESSION MANAGEMENT (CRITICAL)**:
-  - ALWAYS run `killall "node"` before starting dev server or build processes
-  - Use `killall "node" && npm run dev` for clean dev server start
-  - Use `killall "node" && npm run build` for clean build (prevents _document errors)
+  - Before starting any test ALWAYS run:  `killall "node" && npm run dev` for clean dev server start, or `killall "node" && npm run build` for clean build (prevents _document errors)
   - Port 3000 conflicts cause navigation timeouts in tests
-  - Test framework now supports session reuse for faster testing (login once, test multiple times)
+  - Test framework should supports session reuse for faster testing (login once, test multiple times)
 
 ---
 
 **Note:**
 - The AI agent must never proceed in any of these areas without explicit user approval if there is any ambiguity, risk, or deviation from the plan. All checkpoints must be documented in the status tracker and implementation notes.
+
+---
+
+Core Requirements
+
+  1. Fail-Fast Validation: Test MUST fail immediately if:
+    - Server not running on localhost:3000
+    - Authentication fails with info@realtechee.com / Sababa123!
+    - Directory creation fails
+    - Any critical error occurs
+  2. Comprehensive Evidence Collection:
+    - Screenshot every test step (before/after actions)
+    - Capture Chrome console logs for errors
+    - Monitor server terminal output
+    - Record all network requests/responses
+  3. Robust Success Criteria:
+    - Visual verification via screenshot analysis
+    - DOM element presence validation
+    - Content verification (actual text matching)
+    - Functional interaction testing (clicks, form submissions)
+
+  Specific Test Validations
+
+  1. Login Process: Must capture and verify each step
+  2. Page Navigation: Verify URL changes and page loading
+  3. Data Display: Confirm tables/cards contain expected data
+  4. Responsive Behavior: Validate mobile vs desktop layouts
+  5. Error States: Test and document failure scenarios
+  6. **CRITICAL - Business Logic & User Actions Testing:
+    - Button Functionality: Every clickable element must be tested
+    - Form Submissions: All forms must submit with validation
+    - Data CRUD Operations: Create, Read, Update, Delete workflows
+    - Search & Filter Functions: All search/filter controls
+    - Sorting & Pagination: Table/grid sorting and navigation
+    - Modal/Dialog Interactions: Open, close, submit, cancel actions
+    - Navigation Flows: Multi-step workflows and user journeys
+    - Data Validation: Form validation, error messages, success states
+    - Permission Testing: Role-based access control validation
+    - Real Data Integration: Test with actual data from GraphQL/DynamoDB
+    - State Management: Verify UI state changes reflect backend updates
+    - Edge Cases: Empty states, error conditions, network failures
+
+  Report Generation Requirements
+
+  1. Interactive HTML Report: With screenshot galleries
+  2. Detailed JSON Output: For CI/CD integration
+  3. Test Execution Logs: Complete audit trail
+  4. Performance Metrics: Page load times, interaction delays
+
+  Immediate Action Plan
+
+⏺ Update Todos
+  ⎿  ☐ Fix TestReporter.js with proper error handling and validation   
+     ☐ Standardize test integration to use TestReporter consistently
+     ☐ Implement fail-fast logic to stop execution on critical failures
+     ☐ Add screenshot verification to ensure artifacts are created
+     ☐ Create comprehensive business logic testing framework
+     ☐ Implement button and action testing for all interactive elements
+     ☐ Add form validation and CRUD operation testing
+     ☐ Create test validation framework to verify success criteria
+
+⏺ Implementation Priority
+
+  1. Fix TestReporter.js: Add proper error handling and validation
+  2. Standardize Test Integration: Use TestReporter consistently
+  3. Implement Fail-Fast Logic: Stop execution on critical failures
+  4. Add Screenshot Verification: Ensure artifacts are actually created
+  5. Create Comprehensive Business Logic Testing Framework: Test all interactive
+  elements
+  6. Implement Button and Action Testing: Every clickable element validation
+  7. Add Form Validation and CRUD Operation Testing: Complete workflow validation
+  8. Create Test Validation Framework: Verify success criteria are met
+
+  Critical Success Criteria
+
+  Tests MUST fail when:
+  - Any button doesn't respond to clicks
+  - Forms don't submit or validate properly
+  - Data doesn't load or display correctly
+  - Navigation doesn't work as expected
+  - Business logic produces incorrect results
+  - Error states aren't handled properly
+  - User workflows are broken
+
+  The current test framework gives false confidence - it needs complete reliability
+  overhaul with comprehensive business logic testing to be trustworthy for admin pages
+  validation.

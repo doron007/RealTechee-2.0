@@ -15,9 +15,14 @@ import {
   FormControl, 
   InputLabel, 
   Button,
-  Pagination 
+  Pagination,
+  Menu,
+  MenuList,
+  ListItemText,
+  ListItemIcon,
+  Divider
 } from '@mui/material';
-import { ViewAgenda, ViewComfy, TableChart, ViewModule } from '@mui/icons-material';
+import { ViewAgenda, ViewComfy, TableChart, ViewModule, MoreVert } from '@mui/icons-material';
 import Image from 'next/image';
 import { H1, P2, P3 } from '../../typography';
 
@@ -52,7 +57,7 @@ export interface AdminDataGridFilter {
 }
 
 export interface AdminDataGridProps<T extends AdminDataItem> {
-  title: string;
+  title?: string;
   subtitle?: string;
   data: T[];
   columns: AdminDataGridColumn<T>[];
@@ -81,6 +86,15 @@ export interface AdminDataGridProps<T extends AdminDataItem> {
   showArchived?: boolean;
   onArchiveToggle?: (showArchived: boolean) => void;
   allData?: T[]; // For showing total counts
+  // Custom business logic dropdown
+  customActions?: {
+    label: string;
+    items: {
+      label: string;
+      onClick: () => void;
+      disabled?: boolean;
+    }[];
+  };
 }
 
 const AdminDataGrid = <T extends AdminDataItem>({
@@ -106,7 +120,8 @@ const AdminDataGrid = <T extends AdminDataItem>({
   showArchiveToggle = false,
   showArchived = false,
   onArchiveToggle,
-  allData
+  allData,
+  customActions
 }: AdminDataGridProps<T>) => {
   const router = useRouter();
   
@@ -143,6 +158,9 @@ const AdminDataGrid = <T extends AdminDataItem>({
   // Responsive state
   const [isMobile, setIsMobile] = useState(false);
   const [columnVisibility, setColumnVisibility] = useState({});
+  
+  // Custom actions dropdown state
+  const [customActionsAnchor, setCustomActionsAnchor] = useState<null | HTMLElement>(null);
 
   // Persist preferences
   useEffect(() => {
@@ -211,16 +229,41 @@ const AdminDataGrid = <T extends AdminDataItem>({
 
     // Apply sorting
     filtered.sort((a, b) => {
-      const aValue = a[sortField];
-      const bValue = b[sortField];
+      // Find the column definition to get the proper accessor
+      const column = columns.find(col => 
+        (col.id === sortField) || 
+        (col.accessorKey === sortField) || 
+        (String(col.accessorKey) === sortField)
+      );
       
-      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      let aValue, bValue;
+      
+      if (column?.accessorFn) {
+        // Use accessorFn for FK-resolved fields
+        aValue = column.accessorFn(a);
+        bValue = column.accessorFn(b);
+      } else {
+        // Use direct field access for simple fields
+        aValue = a[sortField];
+        bValue = b[sortField];
+      }
+      
+      // Handle null/undefined values
+      if (aValue == null && bValue == null) return 0;
+      if (aValue == null) return sortDirection === 'asc' ? 1 : -1;
+      if (bValue == null) return sortDirection === 'asc' ? -1 : 1;
+      
+      // Convert to string for consistent comparison
+      const aStr = String(aValue).toLowerCase();
+      const bStr = String(bValue).toLowerCase();
+      
+      if (aStr < bStr) return sortDirection === 'asc' ? -1 : 1;
+      if (aStr > bStr) return sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
 
     return filtered;
-  }, [data, searchTerm, searchFields, activeFilters, sortField, sortDirection]);
+  }, [data, searchTerm, searchFields, activeFilters, sortField, sortDirection, columns]);
 
   // Paginated data for cards view
   const paginatedData = useMemo(() => {
@@ -383,14 +426,16 @@ const AdminDataGrid = <T extends AdminDataItem>({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <H1>{title}</H1>
-          {subtitle && <P2 className="text-gray-600 mt-1">{subtitle}</P2>}
+      {/* Header - only render if title is provided */}
+      {title && (
+        <div className="flex items-center justify-between">
+          <div>
+            <H1>{title}</H1>
+            {subtitle && <P2 className="text-gray-600 mt-1">{subtitle}</P2>}
+          </div>
+          {/* New Project button removed per business requirements */}
         </div>
-        {/* New Project button removed per business requirements */}
-      </div>
+      )}
 
       {/* Controls */}
       <div className="bg-white rounded-lg shadow p-4 space-y-4">
@@ -420,6 +465,48 @@ const AdminDataGrid = <T extends AdminDataItem>({
             onChange={(e) => setSearchTerm(e.target.value)}
             size="small"
           />
+          
+          {/* Custom Actions Dropdown */}
+          {customActions && (
+            <div>
+              <Tooltip title={customActions.label}>
+                <IconButton
+                  onClick={(e) => setCustomActionsAnchor(e.currentTarget)}
+                  size="small"
+                  sx={{ 
+                    backgroundColor: 'rgba(0,0,0,0.04)',
+                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.08)' }
+                  }}
+                >
+                  <MoreVert />
+                </IconButton>
+              </Tooltip>
+              
+              <Menu
+                anchorEl={customActionsAnchor}
+                open={Boolean(customActionsAnchor)}
+                onClose={() => setCustomActionsAnchor(null)}
+                PaperProps={{
+                  sx: { minWidth: '200px' }
+                }}
+              >
+                <MenuList>
+                  {customActions.items.map((item, index) => (
+                    <MenuItem 
+                      key={index}
+                      onClick={() => {
+                        item.onClick();
+                        setCustomActionsAnchor(null);
+                      }}
+                      disabled={item.disabled}
+                    >
+                      <ListItemText primary={item.label} />
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </div>
+          )}
         </div>
         
         {/* Filters Row */}
@@ -499,44 +586,46 @@ const AdminDataGrid = <T extends AdminDataItem>({
           
           {/* Sort Controls and Bulk Actions */}
           <div className="flex items-center gap-4">
-            {/* Sort Controls */}
-            <div className="flex items-center gap-2">
-              <P3 className="text-gray-600">Sort by:</P3>
-              <FormControl size="small" className="min-w-[120px]">
-                <Select
-                  value={sortField}
-                  onChange={(e) => setSortField(e.target.value)}
-                  displayEmpty
-                  sx={{ height: '32px' }}
-                >
-                  {columns.filter(col => col.enableSorting !== false).map((col) => {
-                    const key = String(col.id || col.accessorKey || col.header);
-                    return (
-                      <MenuItem key={key} value={key}>
-                        {col.header}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-              
-              <Tooltip title={`Sort ${sortDirection === 'asc' ? 'Descending' : 'Ascending'}`}>
-                <IconButton
-                  onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
-                  size="small"
-                  sx={{ 
-                    backgroundColor: 'rgba(0,0,0,0.04)',
-                    '&:hover': { backgroundColor: 'rgba(0,0,0,0.08)' }
-                  }}
-                >
-                  {sortDirection === 'asc' ? (
-                    <span className="text-sm font-bold">↑</span>
-                  ) : (
-                    <span className="text-sm font-bold">↓</span>
-                  )}
-                </IconButton>
-              </Tooltip>
-            </div>
+            {/* Sort Controls - Only show in cards view */}
+            {shouldShowCards && (
+              <div className="flex items-center gap-2">
+                <P3 className="text-gray-600">Sort by:</P3>
+                <FormControl size="small" className="min-w-[120px]">
+                  <Select
+                    value={sortField}
+                    onChange={(e) => setSortField(e.target.value)}
+                    displayEmpty
+                    sx={{ height: '32px' }}
+                  >
+                    {columns.filter(col => col.enableSorting !== false).map((col) => {
+                      const key = String(col.id || col.accessorKey || col.header);
+                      return (
+                        <MenuItem key={key} value={key}>
+                          {col.header}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+                
+                <Tooltip title={`Sort ${sortDirection === 'asc' ? 'Descending' : 'Ascending'}`}>
+                  <IconButton
+                    onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                    size="small"
+                    sx={{ 
+                      backgroundColor: 'rgba(0,0,0,0.04)',
+                      '&:hover': { backgroundColor: 'rgba(0,0,0,0.08)' }
+                    }}
+                  >
+                    {sortDirection === 'asc' ? (
+                      <span className="text-sm font-bold">↑</span>
+                    ) : (
+                      <span className="text-sm font-bold">↓</span>
+                    )}
+                  </IconButton>
+                </Tooltip>
+              </div>
+            )}
 
             {/* Bulk Actions */}
             {selectedItems.size > 0 && (

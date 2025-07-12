@@ -6,7 +6,7 @@ import AdminDataGrid, {
   AdminDataGridFilter,
   AdminDataItem 
 } from '../common/AdminDataGrid';
-import AdminCard, { AdminCardGroup, AdminCardField, AdminCardAction } from '../common/AdminCard';
+import ProgressiveQuoteCard from './ProgressiveQuoteCard';
 import StatusPill from '../../common/ui/StatusPill';
 import { H1, P2 } from '../../typography';
 import { quotesAPI } from '../../../utils/amplifyAPI';
@@ -166,14 +166,8 @@ const QuotesDataGrid: React.FC = () => {
     },
   ];
 
-  // Define actions
+  // Define actions - workflow-based actions
   const actions: AdminDataGridAction<Quote>[] = [
-    {
-      label: 'View',
-      icon: '/assets/icons/ic-newpage.svg',
-      onClick: (quote) => window.open(`/quote?quoteId=${quote.id}`, '_blank'),
-      tooltip: 'Open Quote',
-    },
     {
       label: 'Edit',
       icon: '/assets/icons/ic-edit.svg',
@@ -181,23 +175,30 @@ const QuotesDataGrid: React.FC = () => {
       tooltip: 'Edit Quote',
     },
     {
+      label: 'View Request',
+      onClick: (quote) => handleViewRequest(quote.id),
+      tooltip: 'View Related Request',
+      variant: 'secondary',
+    },
+    {
+      label: 'Create Project',
+      icon: '/assets/icons/ic-newpage.svg',
+      onClick: (quote) => handleCreateProject(quote.id),
+      tooltip: 'Create Project from Quote',
+      variant: 'primary',
+    },
+    {
+      label: 'View Project',
+      onClick: (quote) => handleViewProject(quote.id),
+      tooltip: 'View Related Project',
+      variant: 'secondary',
+    },
+    {
       label: 'Archive',
       icon: '/assets/icons/ic-delete.svg',
       onClick: (quote) => handleArchiveQuote(quote.id),
       tooltip: 'Archive Quote',
       variant: 'tertiary',
-    },
-    {
-      label: 'Convert to Project',
-      onClick: (quote) => handleConvertToProject(quote.id),
-      tooltip: 'Convert Quote to Project',
-      variant: 'primary',
-    },
-    {
-      label: 'Send to Client',
-      onClick: (quote) => handleSendQuote(quote.id),
-      tooltip: 'Send Quote to Client',
-      variant: 'secondary',
     },
   ];
 
@@ -236,171 +237,68 @@ const QuotesDataGrid: React.FC = () => {
     ];
   }, [filteredQuotes]);
 
-  // Action handlers
+  // Action handlers - workflow-based
+  const handleViewRequest = async (quoteId: string) => {
+    try {
+      // Find the quote first to get the requestId
+      const quote = quotes.find(q => q.id === quoteId);
+      const requestId = (quote as any)?.requestId; // Use type assertion for now until type is updated
+      
+      if (quote && requestId) {
+        router.push(`/admin/requests/${requestId}`);
+      } else {
+        alert('No related request found for this quote');
+      }
+    } catch (error) {
+      console.error('Error viewing request:', error);
+      alert('Failed to view request');
+    }
+  };
+
+  const handleCreateProject = async (quoteId: string) => {
+    try {
+      const confirmed = confirm('Create a new project from this quote?');
+      if (!confirmed) return;
+      
+      // Navigate to create project page with quote ID
+      router.push(`/admin/projects/new?quoteId=${quoteId}`);
+    } catch (error) {
+      console.error('Error creating project:', error);
+      alert('Failed to create project');
+    }
+  };
+
+  const handleViewProject = async (quoteId: string) => {
+    try {
+      // Find related project by quoteId
+      router.push(`/admin/projects?quoteId=${quoteId}`);
+    } catch (error) {
+      console.error('Error viewing project:', error);
+      alert('Failed to view project');
+    }
+  };
+
   const handleArchiveQuote = async (quoteId: string) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, operations are only allowed on the seed quote during testing');
-      return;
+    try {
+      const confirmed = confirm('Archive this quote?');
+      if (!confirmed) return;
+      
+      // Implementation would depend on your API
+      console.log('Archiving quote:', quoteId);
+      alert('Quote archived successfully! (Feature in development)');
+    } catch (error) {
+      console.error('Error archiving quote:', error);
+      alert('Failed to archive quote');
     }
-
-    const confirmed = confirm('Archive this quote?');
-    if (!confirmed) return;
-
-    alert('Quote archived successfully! (Simulated action)');
-  };
-
-  const handleConvertToProject = async (quoteId: string) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, operations are only allowed on the seed quote during testing');
-      return;
-    }
-
-    const confirmed = confirm('Convert this quote to a project?');
-    if (!confirmed) return;
-
-    alert('Quote converted to project successfully! (Simulated action)');
-  };
-
-  const handleSendQuote = async (quoteId: string) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, operations are only allowed on the seed quote during testing');
-      return;
-    }
-
-    alert('Quote sent to client successfully! (Simulated action)');
   };
 
   const handleCreateNew = () => {
     alert('Create new quote will be implemented in Phase 6');
   };
 
-  // Define card groups for detailed view with actual quote data
-  const getCardGroups = (quote: Quote): AdminCardGroup[] => [
-    {
-      title: 'Quote Information',
-      icon: '📋',
-      color: 'bg-blue-50 hover:bg-blue-100',
-      fields: [
-        { key: 'quoteNumber', label: 'Quote Number', value: quote.quoteNumber || `Q-${quote.id.slice(0, 8)}`, type: 'text', priority: 'high' },
-        { key: 'title', label: 'Title', value: quote.title || 'Untitled Quote', type: 'text', priority: 'high' },
-        { key: 'description', label: 'Description', value: quote.description || 'No description provided', type: 'text', priority: 'medium' },
-        { key: 'product', label: 'Product', value: quote.product || 'N/A', type: 'text', priority: 'high' },
-        { key: 'assignedTo', label: 'Assigned To', value: quote.assignedTo || 'Unassigned', type: 'text', priority: 'medium' },
-        { key: 'estimatedWeeksDuration', label: 'Duration', value: quote.estimatedWeeksDuration || 'TBD', type: 'text', priority: 'medium' },
-      ],
-    },
-    {
-      title: 'Client Information',
-      icon: '👤',
-      color: 'bg-green-50 hover:bg-green-100',
-      fields: [
-        { key: 'clientName', label: 'Client Name', value: quote.clientName || 'N/A', type: 'text', priority: 'high' },
-        { key: 'clientEmail', label: 'Client Email', value: quote.clientEmail || 'N/A', type: 'text', priority: 'high' },
-        { key: 'agentName', label: 'Agent', value: quote.agentName || 'N/A', type: 'text', priority: 'high' },
-        { key: 'brokerage', label: 'Brokerage', value: quote.brokerage || 'N/A', type: 'text', priority: 'medium' },
-        { key: 'creditScore', label: 'Credit Score', value: quote.creditScore ? quote.creditScore.toString() : 'N/A', type: 'text', priority: 'low' },
-      ],
-    },
-    {
-      title: 'Financial Details',
-      icon: '💰',
-      color: 'bg-yellow-50 hover:bg-yellow-100',
-      fields: [
-        { key: 'totalPrice', label: 'Total Price', value: quote.totalPrice || 0, type: 'currency', priority: 'high' },
-        { key: 'totalCost', label: 'Total Cost', value: quote.totalCost || 0, type: 'currency', priority: 'medium' },
-        { key: 'budget', label: 'Client Budget', value: quote.budget || 0, type: 'currency', priority: 'high' },
-        { key: 'projectedListingPrice', label: 'Projected Listing', value: quote.projectedListingPrice || 0, type: 'currency', priority: 'medium' },
-      ],
-    },
-    {
-      title: 'Property Details',
-      icon: '🏠',
-      color: 'bg-emerald-50 hover:bg-emerald-100',
-      fields: [
-        { key: 'propertyAddress', label: 'Address', value: quote.propertyAddress || 'N/A', type: 'text', priority: 'high' },
-        { key: 'bedrooms', label: 'Bedrooms', value: quote.bedrooms || 'N/A', type: 'text', priority: 'medium' },
-        { key: 'bathrooms', label: 'Bathrooms', value: quote.bathrooms || 'N/A', type: 'text', priority: 'medium' },
-        { key: 'sizeSqft', label: 'Square Feet', value: quote.sizeSqft || 'N/A', type: 'text', priority: 'medium' },
-        { key: 'yearBuilt', label: 'Year Built', value: quote.yearBuilt || 'N/A', type: 'text', priority: 'low' },
-      ],
-    },
-    {
-      title: 'Timeline',
-      icon: '📅',
-      color: 'bg-purple-50 hover:bg-purple-100',
-      fields: [
-        { key: 'requestDate', label: 'Request Date', value: quote.requestDate || quote.businessCreatedDate || quote.createdAt, type: 'date', priority: 'medium' },
-        { key: 'sentDate', label: 'Sent Date', value: quote.sentDate || 'Not sent', type: 'date', priority: 'high' },
-        { key: 'openedDate', label: 'Opened Date', value: quote.openedDate || 'Not opened', type: 'date', priority: 'medium' },
-        { key: 'signedDate', label: 'Signed Date', value: quote.signedDate || 'Not signed', type: 'date', priority: 'high' },
-        { key: 'expiredDate', label: 'Expiry Date', value: quote.expiredDate || 'No expiry', type: 'date', priority: 'medium' },
-      ],
-    },
-    {
-      title: 'Approval Status',
-      icon: '✅',
-      color: 'bg-indigo-50 hover:bg-indigo-100',
-      fields: [
-        { 
-          key: 'operationManagerApproved', 
-          label: 'Operations Approved', 
-          value: quote.operationManagerApproved,
-          type: 'custom',
-          render: (value) => value ? '✅ Yes' : '❌ No',
-          priority: 'medium'
-        },
-        { 
-          key: 'underwritingApproved', 
-          label: 'Underwriting Approved', 
-          value: quote.underwritingApproved,
-          type: 'custom',
-          render: (value) => value ? '✅ Yes' : '❌ No',
-          priority: 'medium'
-        },
-        { 
-          key: 'signed', 
-          label: 'Client Signed', 
-          value: quote.signed,
-          type: 'custom',
-          render: (value) => value ? '✅ Yes' : '❌ No',
-          priority: 'high'
-        },
-      ],
-    },
-  ];
-
-  // Custom card component
-  const QuoteCard: React.FC<{
-    item: Quote;
-    actions: AdminCardAction[];
-    density: 'comfortable' | 'compact';
-    allStatuses?: string[];
-  }> = ({ item, actions, density, allStatuses }) => (
-    <AdminCard
-      item={item}
-      primaryField="title"
-      secondaryField="description"
-      statusField="status"
-      groups={getCardGroups(item)}
-      actions={actions}
-      density={density}
-      allStatuses={allStatuses}
-      formatCurrency={formatCurrencyFull}
-      formatDate={formatDateShort}
-    />
-  );
 
   return (
     <div className="w-full max-w-full overflow-hidden space-y-6">
-      {/* Page Title */}
-      <div className="flex items-center justify-between">
-        <div>
-          <H1>Quotes</H1>
-          <P2 className="text-gray-600 mt-1">
-            {showArchived ? "View archived quotes" : "Manage quotes, proposals, and estimates"}
-          </P2>
-        </div>
-      </div>
 
       {/* Aggregation Bar */}
       <div className="bg-white rounded-lg shadow p-4">
@@ -412,7 +310,7 @@ const QuotesDataGrid: React.FC = () => {
       </div>
 
       <AdminDataGrid
-        title={showArchived ? "Archived Quotes" : "Quotes"}
+        title="Quotes"
         subtitle={showArchived ? "View archived quotes" : "Manage quotes, proposals, and estimates"}
         data={filteredQuotes}
         columns={columns}
@@ -429,11 +327,28 @@ const QuotesDataGrid: React.FC = () => {
         itemDisplayName="quotes"
         formatCurrency={formatCurrencyFull}
         formatDate={formatDateShort}
-        cardComponent={QuoteCard}
+        cardComponent={ProgressiveQuoteCard}
         showArchiveToggle={true}
         showArchived={showArchived}
         onArchiveToggle={setShowArchived}
         allData={quotes}
+        customActions={{
+          label: 'Quote Actions',
+          items: [
+            {
+              label: 'Send to Client',
+              onClick: () => alert('Send to Client functionality will be implemented'),
+            },
+            {
+              label: 'Convert to Project',
+              onClick: () => alert('Convert to Project functionality will be implemented'),
+            },
+            {
+              label: 'Export Quotes',
+              onClick: () => alert('Export Quotes functionality will be implemented'),
+            },
+          ]
+        }}
       />
     </div>
   );

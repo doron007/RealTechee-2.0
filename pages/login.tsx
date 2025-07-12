@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { I18n } from 'aws-amplify/utils';
@@ -18,6 +18,12 @@ I18n.putVocabulariesForLanguage('en', {
 const LoginPage = () => {
   const router = useRouter();
   const { user } = useAuthenticator((context) => [context.user]);
+  const [mounted, setMounted] = useState(false);
+
+  // Handle client-side mounting to prevent hydration issues
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Redirect if already authenticated - must be before early return
   useEffect(() => {
@@ -35,13 +41,43 @@ const LoginPage = () => {
     }
   }, [user, router.isReady, router.query, router]);
 
-  // Wait for router to be ready to ensure query params are available
-  if (!router.isReady) {
-    return null; // or a loading spinner
+  // Wait for router to be ready and component to be mounted
+  if (!router.isReady || !mounted) {
+    return (
+      <>
+        <Head>
+          <title>Login | RealTechee - Home Preparation Partner</title>
+          <meta name="description" content="Sign in to your RealTechee account to access exclusive features and manage your projects." />
+        </Head>
+        <div className="min-h-screen bg-off-white flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+            <div className="flex justify-center">
+              <Link href="/" className="flex items-center">
+                <div className="border border-very-light-gray p-3 rounded-lg bg-white shadow-sm">
+                  <Image
+                    src="/assets/logos/web_realtechee_horizontal_no_border.png"
+                    alt="RealTechee Logo"
+                    width={240}
+                    height={48}
+                    className="h-10 sm:h-12 w-auto"
+                    priority
+                  />
+                </div>
+              </Link>
+            </div>
+            <div className="mt-8 text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-teal mx-auto"></div>
+              <p className="mt-4 text-sm text-medium-gray">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </>
+    );
   }
 
   const { signup } = router.query;
-  const isSignUp = signup === 'true';
+  // Ensure consistent behavior between server and client
+  const isSignUp = router.isReady && signup === 'true';
 
   // Debug: log the values to verify they're correct
   logger.debug('Router query parameters', router.query);
