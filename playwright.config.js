@@ -100,6 +100,17 @@ module.exports = defineConfig({
       },
     },
     
+    // Isolated admin dashboard testing
+    {
+      name: 'isolated-admin-dashboard',
+      testMatch: '**/admin/dashboard.spec.js',
+      dependencies: ['auth-setup'],
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json'
+      },
+    },
+    
     // Full admin suite (all admin pages)
     {
       name: 'full-admin-suite',

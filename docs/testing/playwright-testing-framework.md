@@ -55,10 +55,32 @@ Each admin page includes comprehensive testing:
 - ✅ Progressive card features
 - ✅ Error handling and responsiveness
 
-#### Quotes & Requests Pages
-- Similar comprehensive coverage as Projects
-- Specific functionality per page type
-- Consistent testing patterns across admin interface
+#### Quotes Page (`admin/quotes.spec.js`)
+- ✅ Quote management and CRUD operations
+- ✅ Search across quote details, customer info, and products
+- ✅ Filter operations (status, product type, date ranges)
+- ✅ Quote workflow and status management (pending, approved, rejected, expired)
+- ✅ Action buttons (Create Quote, Edit, Export)
+- ✅ Progressive disclosure in card view
+- ✅ Quote-specific field validation and organization
+
+#### Requests Page (`admin/requests.spec.js`)
+- ✅ Service request management and tracking
+- ✅ Search across request details, customer info, and service types
+- ✅ Filter operations (status, priority, service type, date ranges)
+- ✅ Request workflow and status transitions (Open → In Progress → Completed)
+- ✅ Assignment and technician management
+- ✅ Customer communication tracking
+- ✅ Request prioritization and queue management
+
+#### Dashboard Page (`admin/dashboard.spec.js`)
+- ✅ Executive dashboard overview and key metrics
+- ✅ Real-time data monitoring and alerts
+- ✅ Interactive charts and data visualization
+- ✅ Quick action panels and navigation shortcuts
+- ✅ Performance indicators and business intelligence
+- ✅ System health monitoring
+- ✅ Data refresh and export capabilities
 
 ### 3. Responsive Tests (`responsive/admin-responsive.spec.js`)
 - ✅ Cross-breakpoint testing (mobile, tablet, desktop, large)
@@ -71,10 +93,13 @@ Each admin page includes comprehensive testing:
 
 ### Run Specific Test Suites
 ```bash
-# Isolated admin projects testing
+# Individual admin page testing
 npx playwright test --project=isolated-admin-projects
+npx playwright test --project=isolated-admin-quotes
+npx playwright test --project=isolated-admin-requests
+npx playwright test --project=isolated-admin-dashboard
 
-# Full admin suite
+# Full admin suite (all admin pages)
 npx playwright test --project=full-admin-suite
 
 # Responsive testing across devices
