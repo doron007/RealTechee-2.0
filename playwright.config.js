@@ -12,10 +12,10 @@ module.exports = defineConfig({
   testDir: './tests',
   
   // Global test configuration
-  fullyParallel: false, // Sequential execution for admin tests that may have dependencies
+  fullyParallel: process.env.CI ? true : false, // Parallel in CI, sequential locally
   forbidOnly: !!process.env.CI, // Prevent .only() in CI
   retries: process.env.CI ? 2 : 0, // Retry failed tests in CI
-  workers: process.env.CI ? 1 : 1, // Single worker for stability with admin tests
+  workers: process.env.CI ? 4 : 1, // Multiple workers in CI for faster feedback
   
   // Reporting configuration
   reporter: [
