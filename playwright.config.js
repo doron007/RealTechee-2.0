@@ -153,6 +153,41 @@ module.exports = defineConfig({
       },
     },
     
+    // Public pages testing (no authentication required)
+    {
+      name: 'public-homepage',
+      testMatch: '**/public/homepage.spec.js',
+      use: { 
+        ...devices['Desktop Chrome']
+        // No storageState needed for public pages
+      },
+    },
+    
+    {
+      name: 'public-contact',
+      testMatch: '**/public/contact.spec.js',
+      use: { 
+        ...devices['Desktop Chrome']
+      },
+    },
+    
+    {
+      name: 'public-products',
+      testMatch: '**/public/products.spec.js',
+      use: { 
+        ...devices['Desktop Chrome']
+      },
+    },
+    
+    // Full public suite (all public pages)
+    {
+      name: 'full-public-suite',
+      testMatch: '**/public/*.spec.js',
+      use: { 
+        ...devices['Desktop Chrome']
+      },
+    },
+    
     // Cross-browser testing (optional)
     {
       name: 'cross-browser-firefox',
