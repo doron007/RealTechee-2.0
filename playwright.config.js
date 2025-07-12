@@ -40,7 +40,7 @@ module.exports = defineConfig({
     
     // Browser settings
     headless: false, // Visible browser for development
-    viewport: { width: 1280, height: 720 },
+    viewport: { width: 1280, height: 1080 }, // Increased height for pagination visibility
     
     // Interaction settings
     actionTimeout: 15000, // 15 seconds for actions
