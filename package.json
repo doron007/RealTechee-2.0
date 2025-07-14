@@ -3,8 +3,9 @@
   "version": "2.10.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "dev:debug": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev --turbo",
+    "dev:primed": "npm run dev & sleep 8 && ./scripts/prime-pages.sh && fg",
+    "dev:debug": "NODE_OPTIONS='--inspect' next dev --turbo",
     "dev:debug-alt": "NODE_OPTIONS='--inspect' PORT=3001 next dev",
     "debug:full-stack": "node scripts/debug-full-stack.js",
     "build": "next build",

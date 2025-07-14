@@ -33,17 +33,8 @@ const nextConfig = {
       }
     ]
   },
-  // Improve Fast Refresh and development experience
-  webpack: (config, { dev, isServer }) => {
-    if (dev && !isServer) {
-      // Improve Fast Refresh behavior
-      config.watchOptions = {
-        poll: 1000,
-        aggregateTimeout: 300,
-      };
-    }
-    return config;
-  },
+  // Turbopack handles Fast Refresh and development optimizations automatically
+  // Removed webpack polling configuration as it conflicts with Turbopack
 };
 
 module.exports = nextConfig;

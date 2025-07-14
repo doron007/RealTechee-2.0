@@ -231,9 +231,9 @@ module.exports = defineConfig({
     },
   ],
 
-  // Development server configuration
+  // Development server configuration with Turbopack optimization
   webServer: {
-    command: 'npm run dev',
+    command: 'npm run dev', // Using regular dev for webServer, priming handled separately
     port: 3000,
     reuseExistingServer: true, // Don't restart if already running
     timeout: 120000, // 2 minutes to start
