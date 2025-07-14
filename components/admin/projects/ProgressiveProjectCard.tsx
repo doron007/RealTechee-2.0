@@ -221,8 +221,13 @@ const ProgressiveProjectCard: React.FC<ProgressiveProjectCardProps> = ({
               ))}
             </div>
             
-            {/* Expand Icon */}
-            <div className={`flex items-center justify-center ${density === 'compact' ? 'px-1' : 'px-2'}`}>
+            {/* Expand Icon - Make it clickable */}
+            <button 
+              className={`flex items-center justify-center hover:bg-gray-100 rounded transition-colors ${density === 'compact' ? 'px-1 py-1' : 'px-2 py-1'}`}
+              onClick={handleTitleRowClick}
+              title="Expand/Collapse card"
+              type="button"
+            >
               <Image 
                 src="/assets/icons/ic-arrow-down.svg" 
                 alt="Expand" 
@@ -230,7 +235,7 @@ const ProgressiveProjectCard: React.FC<ProgressiveProjectCardProps> = ({
                 height={density === 'compact' ? 12 : 14}
                 className="text-gray-400 transition-transform duration-200"
               />
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -588,10 +593,11 @@ const ProgressiveProjectCard: React.FC<ProgressiveProjectCardProps> = ({
                               );
                             }}
                           >
-                            <img 
+                            <Image 
                               src={item.src || item.url || item} 
                               alt={item.alt || item.title || `Gallery ${index + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-200"
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
                               }}

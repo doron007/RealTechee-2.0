@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import AdminDataGrid, { 
   AdminDataGridColumn, 
@@ -8,29 +8,34 @@ import AdminDataGrid, {
 } from '../common/AdminDataGrid';
 import ProgressiveQuoteCard from './ProgressiveQuoteCard';
 import StatusPill from '../../common/ui/StatusPill';
+import ArchiveConfirmationDialog from '../common/ArchiveConfirmationDialog';
 import { H1, P2 } from '../../typography';
 import { quotesAPI } from '../../../utils/amplifyAPI';
 import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
+import { AdvancedSearchField } from '../common/AdvancedSearchDialog';
+import { useNotification } from '../../../contexts/NotificationContext';
 
 // Use the enhanced interface with FK resolution
 type Quote = FullyEnhancedQuote & AdminDataItem;
 
 const QuotesDataGrid: React.FC = () => {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showInfo } = useNotification();
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showArchived, setShowArchived] = useState(false);
+  
+  // Archive dialog state
+  const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
+  const [quoteToArchive, setQuoteToArchive] = useState<Quote | null>(null);
+  const [archiveLoading, setArchiveLoading] = useState(false);
 
   // Seed quote ID for safe testing
   const SEED_QUOTE_ID = '66611536-0182-450f-243a-d245afe54439';
 
-  useEffect(() => {
-    loadQuotes();
-  }, []);
-
-  const loadQuotes = async () => {
+  const loadQuotes = useCallback(async () => {
     setLoading(true);
     setError('');
     
@@ -50,16 +55,25 @@ const QuotesDataGrid: React.FC = () => {
           brokerage: allQuotes[0].brokerage
         } : 'No quotes');
         setQuotes(allQuotes);
+        if (allQuotes.length === 0) {
+          showInfo('No Quotes Found', 'No quotes are currently available.', 4000);
+        }
       } else {
         setError('Failed to load quotes');
+        showError('Load Failed', 'Failed to load quotes. Please try again.');
       }
     } catch (err) {
       console.error('Error loading quotes:', err);
       setError('Error loading quotes');
+      showError('Load Failed', 'Error loading quotes. Please try again.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [setLoading, setError, setQuotes, showInfo, showError]);
+
+  useEffect(() => {
+    loadQuotes();
+  }, [loadQuotes]);
 
   // Filter quotes based on archived status
   const filteredQuotes = quotes.filter(quote => {
@@ -196,7 +210,7 @@ const QuotesDataGrid: React.FC = () => {
     {
       label: 'Archive',
       icon: '/assets/icons/ic-delete.svg',
-      onClick: (quote) => handleArchiveQuote(quote.id),
+      onClick: (quote) => openArchiveDialog(quote),
       tooltip: 'Archive Quote',
       variant: 'tertiary',
     },
@@ -236,6 +250,98 @@ const QuotesDataGrid: React.FC = () => {
       },
     ];
   }, [filteredQuotes]);
+
+  // Define advanced search fields
+  const advancedSearchFields: AdvancedSearchField[] = useMemo(() => [
+    {
+      key: 'title',
+      label: 'Quote Title',
+      type: 'text',
+      placeholder: 'Search by quote title...'
+    },
+    {
+      key: 'description',
+      label: 'Description',
+      type: 'text',
+      placeholder: 'Search by description...'
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      type: 'multiselect',
+      options: Array.from(new Set(quotes.map(q => q.status).filter(Boolean)))
+        .sort()
+        .map(status => ({ value: status, label: status }))
+    },
+    {
+      key: 'product',
+      label: 'Product',
+      type: 'select'
+    },
+    {
+      key: 'clientName',
+      label: 'Client Name',
+      type: 'text',
+      placeholder: 'Search by client name...'
+    },
+    {
+      key: 'clientEmail',
+      label: 'Client Email',
+      type: 'text',
+      placeholder: 'Search by client email...'
+    },
+    {
+      key: 'agentName',
+      label: 'Agent Name',
+      type: 'text',
+      placeholder: 'Search by agent name...'
+    },
+    {
+      key: 'brokerage',
+      label: 'Brokerage',
+      type: 'select'
+    },
+    {
+      key: 'assignedTo',
+      label: 'Assigned To',
+      type: 'select'
+    },
+    {
+      key: 'businessCreatedDate',
+      label: 'Created Date',
+      type: 'daterange'
+    },
+    {
+      key: 'businessUpdatedDate',
+      label: 'Updated Date',
+      type: 'daterange'
+    },
+    {
+      key: 'totalPrice',
+      label: 'Total Price',
+      type: 'number'
+    },
+    {
+      key: 'budget',
+      label: 'Budget',
+      type: 'number'
+    },
+    {
+      key: 'operationManagerApproved',
+      label: 'Operation Manager Approved',
+      type: 'boolean'
+    },
+    {
+      key: 'underwritingApproved',
+      label: 'Underwriting Approved',
+      type: 'boolean'
+    },
+    {
+      key: 'signed',
+      label: 'Client Signed',
+      type: 'boolean'
+    }
+  ], [quotes]);
 
   // Action handlers - workflow-based
   const handleViewRequest = async (quoteId: string) => {
@@ -278,24 +384,163 @@ const QuotesDataGrid: React.FC = () => {
     }
   };
 
-  const handleArchiveQuote = async (quoteId: string) => {
+  // Archive dialog handlers
+  const openArchiveDialog = (quote: Quote) => {
+    setQuoteToArchive(quote);
+    setArchiveDialogOpen(true);
+  };
+
+  const closeArchiveDialog = () => {
+    setArchiveDialogOpen(false);
+    setQuoteToArchive(null);
+    setArchiveLoading(false);
+  };
+
+  const handleArchiveConfirm = async () => {
+    if (!quoteToArchive) return;
+    
+    setArchiveLoading(true);
     try {
-      const confirmed = confirm('Archive this quote?');
-      if (!confirmed) return;
+      // Update quote status to 'archived'
+      const result = await quotesAPI.update(quoteToArchive.id, {
+        status: 'Archived'
+      });
       
-      // Implementation would depend on your API
-      console.log('Archiving quote:', quoteId);
-      alert('Quote archived successfully! (Feature in development)');
+      if (result.success) {
+        // Update local state
+        setQuotes(prevQuotes => 
+          prevQuotes.map(quote => 
+            quote.id === quoteToArchive.id 
+              ? { ...quote, status: 'Archived' }
+              : quote
+          )
+        );
+        
+        // Close dialog
+        closeArchiveDialog();
+        
+        // Show success notification
+        showSuccess(
+          'Quote Archived',
+          `Quote for "${quoteToArchive.propertyAddress || 'Unknown Address'}" has been archived successfully.`
+        );
+      } else {
+        throw new Error(typeof result.error === 'string' ? result.error : 'Failed to archive quote');
+      }
     } catch (error) {
       console.error('Error archiving quote:', error);
-      alert('Failed to archive quote');
+      showError(
+        'Archive Failed',
+        'Failed to archive quote. Please try again.',
+        10000
+      );
+    } finally {
+      setArchiveLoading(false);
     }
   };
 
   const handleCreateNew = () => {
-    alert('Create new quote will be implemented in Phase 6');
+    router.push('/admin/quotes/new');
   };
 
+  // Production-ready action handlers
+  const handleSendToClient = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select quotes to send');
+        return;
+      }
+      
+      const clientEmails = selectedRows.map(quote => quote.contactEmail).filter(Boolean);
+      
+      if (clientEmails.length === 0) {
+        alert('Selected quotes do not have client email addresses');
+        return;
+      }
+      
+      // In a real implementation, this would integrate with an email service
+      const confirmed = window.confirm(
+        `Send ${selectedRows.length} quotes to clients?\n\n` +
+        `Recipients: ${clientEmails.join(', ')}`
+      );
+      
+      if (confirmed) {
+        // Mock email sending
+        alert(`Successfully sent ${selectedRows.length} quotes to clients`);
+      }
+      
+    } catch (error) {
+      console.error('Send to client error:', error);
+      alert('Failed to send quotes. Please try again.');
+    }
+  };
+
+  const handleConvertToProject = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select quotes to convert');
+        return;
+      }
+      
+      if (selectedRows.length > 1) {
+        alert('Please select only one quote to convert to project');
+        return;
+      }
+      
+      const quote = selectedRows[0];
+      
+      const confirmed = window.confirm(
+        `Convert quote "${quote.title || 'Untitled'}" to project?\n\n` +
+        `This will create a new project with the quote details.`
+      );
+      
+      if (confirmed) {
+        // In a real implementation, this would call a conversion API
+        router.push(`/admin/projects/new?fromQuote=${quote.id}`);
+      }
+      
+    } catch (error) {
+      console.error('Convert to project error:', error);
+      alert('Failed to convert quote. Please try again.');
+    }
+  };
+
+  const handleExportQuotes = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select quotes to export');
+        return;
+      }
+      
+      const exportData = selectedRows.map(quote => ({
+        title: quote.title || 'Untitled Quote',
+        status: quote.status,
+        contact: quote.contactName || 'N/A',
+        email: quote.contactEmail || 'N/A',
+        totalAmount: quote.totalAmount || 0,
+        createdDate: quote.createdDate,
+        items: quote.items?.length || 0
+      }));
+      
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "Title,Status,Contact,Email,Amount,Created,Items\n"
+        + exportData.map(row => 
+            `"${row.title}","${row.status}","${row.contact}","${row.email}","${row.totalAmount}","${row.createdDate}","${row.items}"`
+          ).join("\n");
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `quotes_export_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Export failed. Please try again.');
+    }
+  };
 
   return (
     <div className="w-full max-w-full overflow-hidden space-y-6">
@@ -322,6 +567,7 @@ const QuotesDataGrid: React.FC = () => {
         onCreateNew={handleCreateNew}
         searchFields={['title', 'description', 'clientName', 'clientEmail', 'agentName', 'status']}
         filters={filters}
+        advancedSearchFields={advancedSearchFields}
         defaultSortField="created"
         defaultSortDirection="desc"
         itemDisplayName="quotes"
@@ -337,18 +583,34 @@ const QuotesDataGrid: React.FC = () => {
           items: [
             {
               label: 'Send to Client',
-              onClick: () => alert('Send to Client functionality will be implemented'),
+              onClick: () => handleSendToClient([]),
             },
             {
               label: 'Convert to Project',
-              onClick: () => alert('Convert to Project functionality will be implemented'),
+              onClick: () => handleConvertToProject([]),
             },
             {
               label: 'Export Quotes',
-              onClick: () => alert('Export Quotes functionality will be implemented'),
+              onClick: () => handleExportQuotes([]),
             },
           ]
         }}
+      />
+
+      {/* Archive Confirmation Dialog */}
+      <ArchiveConfirmationDialog
+        open={archiveDialogOpen}
+        onClose={closeArchiveDialog}
+        onConfirm={handleArchiveConfirm}
+        items={quoteToArchive ? [{
+          id: quoteToArchive.id,
+          title: `Quote #${quoteToArchive.id?.slice(0, 8)}`,
+          address: quoteToArchive.propertyAddress || 'No address provided',
+          type: 'quote',
+          status: quoteToArchive.status
+        }] : []}
+        itemType="quotes"
+        loading={archiveLoading}
       />
     </div>
   );

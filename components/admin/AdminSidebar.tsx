@@ -53,6 +53,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       isImplemented: true
     },
     {
+      id: 'analytics',
+      name: 'Analytics',
+      route: '/admin/analytics',
+      icon: '/assets/icons/ic-chart.svg',
+      isImplemented: true
+    },
+    {
       id: 'divider-1',
       name: '',
       route: '',

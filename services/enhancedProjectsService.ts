@@ -326,6 +326,35 @@ export class EnhancedProjectsService {
     };
   }
 
+  /**
+   * Update a project
+   */
+  async updateProject(projectId: string, updates: Partial<FullyEnhancedProject>): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      logger.info(`Updating project ${projectId}`, updates);
+      
+      const result = await projectsAPI.update(projectId, updates);
+      
+      if (result.success) {
+        // Clear caches to ensure fresh data on next fetch
+        this.clearCaches();
+        logger.info(`Successfully updated project ${projectId}`);
+        return { success: true, data: result.data };
+      } else {
+        return { 
+          success: false, 
+          error: typeof result.error === 'string' ? result.error : 'Unknown error' 
+        };
+      }
+    } catch (error) {
+      logger.error(`Failed to update project ${projectId}:`, error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      };
+    }
+  }
+
   private isCacheExpired(): boolean {
     return Date.now() - this.cacheTimestamp > this.CACHE_TTL;
   }

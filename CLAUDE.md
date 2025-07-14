@@ -5,9 +5,9 @@
 
 ## Commands
 **Dev:** `npm run dev|build|test|lint` • `npm run type-check` • `npx ampx sandbox`
+**E2E Testing:** `npm run test:e2e` • `npm run test:e2e:admin` • `npm run test:e2e:ui` • `npm run test:e2e:report` • Tests in `/e2e/` • Credentials: info@realtechee.com / Sababa123!
 **Data Protection:** `./scripts/backup-data.sh` • `node ./scripts/restore-cognito-users.js <backup> <pool-id>`
 **Data Cleanup:** `node ./scripts/deduplicateContacts.js [--dry-run]` • `node ./scripts/createUsersFromContacts.js`
-**Testing:** `node test-comprehensive-ui.js` • `node test-admin-responsive-standardized.js` • View reports in `test-results/` • Credentials: info@realtechee.com / Sababa123!
 
 ## Session Management (CRITICAL)
 **ALWAYS run `killall "node"` before starting dev server or build processes:**
@@ -211,49 +211,54 @@ Jest + React Testing Library + custom render helpers + mock Amplify hooks/GraphQ
 - Use consistently across all Puppeteer tests and manual testing
 - Required for admin/projects, admin/quotes, admin/dashboard access
 
-## Standardized Test Framework
+## Enterprise E2E Testing Framework (Playwright)
 
-### Test Structure
-**Location:** `test-results/[TestSuiteName]-[Timestamp]/`
+### Directory Structure
+**Location:** `/e2e/` - All testing infrastructure consolidated
 ```
-test-results/
-├── Admin-Projects-Responsive-2024-01-15T10-30-00-000Z/
-│   ├── report.html          # Interactive HTML report
-│   ├── report.json          # Detailed JSON data
-│   ├── summary.txt          # Quick text summary
-│   ├── screenshots/
-│   │   ├── passed/          # Screenshots of successful tests
-│   │   ├── failed/          # Screenshots of failed tests
-│   │   └── errors/          # Screenshots of error states
-│   ├── artifacts/           # Additional test files
-│   └── logs/
-│       └── test.log         # Detailed test execution logs
-```
-
-### Test Framework Usage
-```javascript
-const ResponsiveTestFramework = require('./test-framework/ResponsiveTestFramework');
-
-// Create test suite
-const testFramework = new ResponsiveTestFramework('TestSuiteName', {
-  baseUrl: 'http://localhost:3000',
-  credentials: { email: 'info@realtechee.com', password: 'Sababa123!' }
-});
-
-// Run standardized responsive tests
-await testFramework.runFullSuite('/admin/projects', customTests);
+e2e/
+├── tests/                   # All test files organized by category
+│   ├── admin/              # Admin interface tests
+│   ├── public/             # Public page tests  
+│   ├── responsive/         # Device/breakpoint tests
+│   ├── accessibility/      # WCAG compliance tests
+│   ├── performance/        # Lighthouse & Core Web Vitals
+│   ├── visual/             # Screenshot regression tests
+│   └── api/                # GraphQL API tests
+├── playwright-report/      # Interactive HTML reports
+├── test-results/           # JSON results & artifacts
+├── playwright/             # Browser storage & auth state
+└── legacy-framework/       # Archived Puppeteer frameworks
 ```
 
-### Key Features
-- **Automatic Authentication** with configurable credentials
-- **Cross-Device Testing** across 7 standard breakpoints
-- **Screenshot Capture** for passed/failed/error states
-- **HTML Reports** with interactive test details
-- **CI/CD Integration** with exit codes (0=success, 1=failure)
-- **Custom Test Support** for app-specific functionality
-- **Standardized Directory Structure** for easy result management
+### Modern Playwright Commands:
+```bash
+npm run test:e2e                # Run all tests
+npm run test:e2e:admin          # All admin pages
+npm run test:e2e:public         # All public pages
+npm run test:e2e:responsive     # Cross-device testing
+npm run test:e2e:ui            # Interactive test runner
+npm run test:e2e:report        # View HTML reports
 
-### Commands
-- **Run Admin Responsive Tests:** `node test-admin-responsive-standardized.js`
-- **View Results:** Open `test-results/[latest]/report.html` in browser
-- **CI Integration:** Uses exit codes for automated pipelines
+# Individual admin pages
+npm run test:e2e:admin:projects
+npm run test:e2e:admin:quotes  
+npm run test:e2e:admin:requests
+
+# Interactive debugging
+npm run test:e2e:ui           # Visual test runner
+npm run test:e2e:debug        # Debug mode
+npm run test:e2e:report       # View HTML reports
+```
+
+### Enterprise Features
+- **584+ Comprehensive Tests** across all functionality
+- **Project-Based Execution** for isolated testing
+- **Automatic Authentication** with persistent state
+- **Cross-Device Testing** (mobile, tablet, desktop)
+- **Visual Regression Testing** with screenshot comparison
+- **Performance Monitoring** with Lighthouse integration
+- **Accessibility Testing** with axe-core WCAG 2.1 AA compliance
+- **Load Testing** with concurrent user simulation
+- **Test Analytics Dashboard** with health scoring
+- **Database Seeding** for consistent test environments

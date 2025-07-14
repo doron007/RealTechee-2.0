@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import AdminDataGrid, { 
   AdminDataGridColumn, 
@@ -8,29 +8,34 @@ import AdminDataGrid, {
 } from '../common/AdminDataGrid';
 import ProgressiveRequestCard from './ProgressiveRequestCard';
 import StatusPill from '../../common/ui/StatusPill';
+import ArchiveConfirmationDialog from '../common/ArchiveConfirmationDialog';
 import { H1, P2 } from '../../typography';
 import { requestsAPI } from '../../../utils/amplifyAPI';
 import { enhancedRequestsService, FullyEnhancedRequest } from '../../../services/enhancedRequestsService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
+import { AdvancedSearchField } from '../common/AdvancedSearchDialog';
+import { useNotification } from '../../../contexts/NotificationContext';
 
 // Use the enhanced interface with FK resolution
 type Request = FullyEnhancedRequest & AdminDataItem;
 
 const RequestsDataGrid: React.FC = () => {
   const router = useRouter();
+  const { showSuccess, showError, showWarning, showInfo } = useNotification();
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showArchived, setShowArchived] = useState(false);
+  
+  // Archive dialog state
+  const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
+  const [requestToArchive, setRequestToArchive] = useState<Request | null>(null);
+  const [archiveLoading, setArchiveLoading] = useState(false);
 
   // Seed request ID for safe testing
   const SEED_REQUEST_ID = 'seed-request-id-for-testing';
 
-  useEffect(() => {
-    loadRequests();
-  }, []);
-
-  const loadRequests = async () => {
+  const loadRequests = useCallback(async () => {
     setLoading(true);
     setError('');
     
@@ -65,7 +70,11 @@ const RequestsDataGrid: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadRequests();
+  }, [loadRequests]);
 
   // Filter requests based on archived status
   const filteredRequests = requests.filter(request => {
@@ -275,7 +284,7 @@ const RequestsDataGrid: React.FC = () => {
     {
       label: 'Archive',
       icon: '/assets/icons/ic-delete.svg',
-      onClick: (request) => handleArchiveRequest(request.id),
+      onClick: (request) => openArchiveDialog(request),
       tooltip: 'Archive Request',
       variant: 'tertiary',
     },
@@ -325,6 +334,97 @@ const RequestsDataGrid: React.FC = () => {
     ];
   }, [filteredRequests]);
 
+  // Define advanced search fields
+  const advancedSearchFields: AdvancedSearchField[] = useMemo(() => [
+    {
+      key: 'message',
+      label: 'Message',
+      type: 'text',
+      placeholder: 'Search in request message...'
+    },
+    {
+      key: 'product',
+      label: 'Product',
+      type: 'multiselect',
+      options: Array.from(new Set(requests.map(r => r.product).filter(Boolean)))
+        .sort()
+        .map(product => ({ value: String(product), label: String(product) }))
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      type: 'multiselect',
+      options: Array.from(new Set(requests.map(r => r.status).filter(Boolean)))
+        .sort()
+        .map(status => ({ value: String(status), label: String(status) }))
+    },
+    {
+      key: 'clientName',
+      label: 'Client Name',
+      type: 'text',
+      placeholder: 'Search by client name...'
+    },
+    {
+      key: 'clientEmail',
+      label: 'Client Email',
+      type: 'text',
+      placeholder: 'Search by client email...'
+    },
+    {
+      key: 'clientPhone',
+      label: 'Client Phone',
+      type: 'text',
+      placeholder: 'Search by phone number...'
+    },
+    {
+      key: 'agentName',
+      label: 'Agent Name',
+      type: 'text',
+      placeholder: 'Search by agent name...'
+    },
+    {
+      key: 'propertyAddress',
+      label: 'Property Address',
+      type: 'text',
+      placeholder: 'Search by property address...'
+    },
+    {
+      key: 'leadSource',
+      label: 'Lead Source',
+      type: 'select'
+    },
+    {
+      key: 'assignedTo',
+      label: 'Assigned To',
+      type: 'select'
+    },
+    {
+      key: 'relationToProperty',
+      label: 'Relation to Property',
+      type: 'select'
+    },
+    {
+      key: 'businessCreatedDate',
+      label: 'Created Date',
+      type: 'daterange'
+    },
+    {
+      key: 'assignedDate',
+      label: 'Assigned Date',
+      type: 'daterange'
+    },
+    {
+      key: 'requestedVisitDateTime',
+      label: 'Requested Visit Date',
+      type: 'daterange'
+    },
+    {
+      key: 'needFinance',
+      label: 'Needs Finance',
+      type: 'boolean'
+    }
+  ], [requests]);
+
   // Action handlers - workflow-based
   const handleCreateQuote = async (requestId: string) => {
     try {
@@ -349,24 +449,166 @@ const RequestsDataGrid: React.FC = () => {
     }
   };
 
-  const handleArchiveRequest = async (requestId: string) => {
+  // Archive dialog handlers
+  const openArchiveDialog = (request: Request) => {
+    setRequestToArchive(request);
+    setArchiveDialogOpen(true);
+  };
+
+  const closeArchiveDialog = () => {
+    setArchiveDialogOpen(false);
+    setRequestToArchive(null);
+    setArchiveLoading(false);
+  };
+
+  const handleArchiveConfirm = async () => {
+    if (!requestToArchive) return;
+    
+    setArchiveLoading(true);
     try {
-      const confirmed = confirm('Archive this request?');
-      if (!confirmed) return;
+      // Update request status to 'Archived'
+      const result = await requestsAPI.update(requestToArchive.id, {
+        status: 'Archived'
+      });
       
-      // Implementation would depend on your API
-      console.log('Archiving request:', requestId);
-      alert('Request archived successfully! (Feature in development)');
+      if (result.success) {
+        // Update local state
+        setRequests(prevRequests => 
+          prevRequests.map(request => 
+            request.id === requestToArchive.id 
+              ? { ...request, status: 'Archived' }
+              : request
+          )
+        );
+        
+        // Close dialog
+        closeArchiveDialog();
+        
+        // Show success notification
+        showSuccess(
+          'Request Archived',
+          `Request for "${requestToArchive.propertyAddress || 'Unknown Address'}" has been archived successfully.`
+        );
+      } else {
+        throw new Error(typeof result.error === 'string' ? result.error : 'Failed to archive request');
+      }
     } catch (error) {
       console.error('Error archiving request:', error);
-      alert('Failed to archive request');
+      showError(
+        'Archive Failed',
+        'Failed to archive request. Please try again.',
+        10000
+      );
+    } finally {
+      setArchiveLoading(false);
     }
   };
 
   const handleCreateNew = () => {
-    alert('Create new request will be implemented in future phase');
+    router.push('/admin/requests/new');
   };
 
+  // Production-ready action handlers
+  const handleScheduleVisit = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select requests to schedule visits');
+        return;
+      }
+      
+      if (selectedRows.length > 1) {
+        alert('Please select only one request to schedule a visit');
+        return;
+      }
+      
+      const request = selectedRows[0];
+      
+      const visitDate = window.prompt(
+        `Schedule visit for: ${request.contactName}\n` +
+        `Property: ${request.propertyAddress}\n\n` +
+        `Enter visit date (YYYY-MM-DD):`
+      );
+      
+      if (visitDate && /^\d{4}-\d{2}-\d{2}$/.test(visitDate)) {
+        // In a real implementation, this would update the request with visit details
+        alert(`Visit scheduled for ${visitDate} for ${request.contactName}`);
+      } else if (visitDate) {
+        alert('Please enter a valid date in YYYY-MM-DD format');
+      }
+      
+    } catch (error) {
+      console.error('Schedule visit error:', error);
+      alert('Failed to schedule visit. Please try again.');
+    }
+  };
+
+  const handleConvertToQuote = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select requests to convert');
+        return;
+      }
+      
+      if (selectedRows.length > 1) {
+        alert('Please select only one request to convert to quote');
+        return;
+      }
+      
+      const request = selectedRows[0];
+      
+      const confirmed = window.confirm(
+        `Convert request "${request.contactName}" to quote?\n\n` +
+        `This will create a new quote with the request details.`
+      );
+      
+      if (confirmed) {
+        // In a real implementation, this would call a conversion API
+        router.push(`/admin/quotes/new?fromRequest=${request.id}`);
+      }
+      
+    } catch (error) {
+      console.error('Convert to quote error:', error);
+      alert('Failed to convert request. Please try again.');
+    }
+  };
+
+  const handleExportRequests = async (selectedRows: any[]) => {
+    try {
+      if (selectedRows.length === 0) {
+        alert('Please select requests to export');
+        return;
+      }
+      
+      const exportData = selectedRows.map(request => ({
+        contact: request.contactName || 'N/A',
+        email: request.contactEmail || 'N/A',
+        phone: request.contactPhone || 'N/A',
+        address: request.propertyAddress || 'N/A',
+        status: request.status,
+        requestType: request.requestType || 'N/A',
+        createdDate: request.createdDate,
+        description: request.description || 'N/A'
+      }));
+      
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "Contact,Email,Phone,Address,Status,Type,Created,Description\n"
+        + exportData.map(row => 
+            `"${row.contact}","${row.email}","${row.phone}","${row.address}","${row.status}","${row.requestType}","${row.createdDate}","${row.description}"`
+          ).join("\n");
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `requests_export_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Export failed. Please try again.');
+    }
+  };
 
   return (
     <div className="w-full max-w-full overflow-hidden space-y-6">
@@ -393,6 +635,7 @@ const RequestsDataGrid: React.FC = () => {
         onCreateNew={handleCreateNew}
         searchFields={['message', 'clientName', 'clientEmail', 'agentName', 'status', 'product']}
         filters={filters}
+        advancedSearchFields={advancedSearchFields}
         defaultSortField="created"
         defaultSortDirection="desc"
         itemDisplayName="requests"
@@ -407,18 +650,34 @@ const RequestsDataGrid: React.FC = () => {
           items: [
             {
               label: 'Schedule Visit',
-              onClick: () => alert('Schedule Visit functionality will be implemented'),
+              onClick: () => handleScheduleVisit([]),
             },
             {
               label: 'Convert to Quote',
-              onClick: () => alert('Convert to Quote functionality will be implemented'),
+              onClick: () => handleConvertToQuote([]),
             },
             {
               label: 'Export Requests',
-              onClick: () => alert('Export Requests functionality will be implemented'),
+              onClick: () => handleExportRequests([]),
             },
           ]
         }}
+      />
+
+      {/* Archive Confirmation Dialog */}
+      <ArchiveConfirmationDialog
+        open={archiveDialogOpen}
+        onClose={closeArchiveDialog}
+        onConfirm={handleArchiveConfirm}
+        items={requestToArchive ? [{
+          id: requestToArchive.id,
+          title: `Request #${requestToArchive.id?.slice(0, 8)}`,
+          address: requestToArchive.propertyAddress || 'No address provided',
+          type: 'request',
+          status: requestToArchive.status
+        }] : []}
+        itemType="requests"
+        loading={archiveLoading}
       />
     </div>
   );

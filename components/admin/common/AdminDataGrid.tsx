@@ -22,9 +22,10 @@ import {
   ListItemIcon,
   Divider
 } from '@mui/material';
-import { ViewAgenda, ViewComfy, TableChart, ViewModule, MoreVert } from '@mui/icons-material';
+import { ViewAgenda, ViewComfy, TableChart, ViewModule, MoreVert, Search, FilterList } from '@mui/icons-material';
 import Image from 'next/image';
 import { H1, P2, P3 } from '../../typography';
+import AdvancedSearchDialog, { AdvancedSearchField, AdvancedSearchCriteria } from './AdvancedSearchDialog';
 
 export interface AdminDataItem {
   id: string;
@@ -95,6 +96,9 @@ export interface AdminDataGridProps<T extends AdminDataItem> {
       disabled?: boolean;
     }[];
   };
+  // Advanced search configuration
+  advancedSearchFields?: AdvancedSearchField[];
+  onAdvancedSearch?: (criteria: AdvancedSearchCriteria) => void;
 }
 
 const AdminDataGrid = <T extends AdminDataItem>({
@@ -121,7 +125,9 @@ const AdminDataGrid = <T extends AdminDataItem>({
   showArchived = false,
   onArchiveToggle,
   allData,
-  customActions
+  customActions,
+  advancedSearchFields = [],
+  onAdvancedSearch
 }: AdminDataGridProps<T>) => {
   const router = useRouter();
   
@@ -161,6 +167,11 @@ const AdminDataGrid = <T extends AdminDataItem>({
   
   // Custom actions dropdown state
   const [customActionsAnchor, setCustomActionsAnchor] = useState<null | HTMLElement>(null);
+  
+  // Advanced search state
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+  const [advancedSearchCriteria, setAdvancedSearchCriteria] = useState<AdvancedSearchCriteria>({});
+  const [hasAdvancedFilters, setHasAdvancedFilters] = useState(false);
 
   // Persist preferences
   useEffect(() => {
@@ -205,11 +216,11 @@ const AdminDataGrid = <T extends AdminDataItem>({
     return () => window.removeEventListener('resize', updateLayout);
   }, [columns, viewMode]);
 
-  // Filter and search logic
+  // Enhanced filtering logic with advanced search support
   const filteredData = useMemo(() => {
     let filtered = [...data];
 
-    // Apply search
+    // Apply basic search
     if (searchTerm && searchFields.length > 0) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(item =>
@@ -220,11 +231,48 @@ const AdminDataGrid = <T extends AdminDataItem>({
       );
     }
 
-    // Apply filters
+    // Apply basic filters
     Object.entries(activeFilters).forEach(([field, value]) => {
       if (value && value !== 'all') {
         filtered = filtered.filter(item => item[field] === value);
       }
+    });
+
+    // Apply advanced search criteria
+    Object.entries(advancedSearchCriteria).forEach(([field, criteria]) => {
+      if (!criteria || (typeof criteria === 'string' && !criteria.trim())) return;
+      
+      filtered = filtered.filter(item => {
+        const itemValue = item[field];
+        
+        // Handle different criteria types
+        if (typeof criteria === 'string') {
+          // Text search
+          return itemValue && String(itemValue).toLowerCase().includes(criteria.toLowerCase());
+        } else if (Array.isArray(criteria)) {
+          // Multi-select
+          return criteria.length === 0 || criteria.includes(String(itemValue));
+        } else if (typeof criteria === 'object' && criteria !== null) {
+          // Range queries (date, number)
+          if (criteria.from || criteria.to) {
+            const value = itemValue ? new Date(itemValue).getTime() : 0;
+            const from = criteria.from ? new Date(criteria.from).getTime() : 0;
+            const to = criteria.to ? new Date(criteria.to).getTime() : Infinity;
+            return value >= from && value <= to;
+          }
+          if (criteria.min !== undefined || criteria.max !== undefined) {
+            const value = parseFloat(itemValue) || 0;
+            const min = criteria.min !== undefined ? parseFloat(criteria.min) : -Infinity;
+            const max = criteria.max !== undefined ? parseFloat(criteria.max) : Infinity;
+            return value >= min && value <= max;
+          }
+        } else if (typeof criteria === 'boolean') {
+          // Boolean criteria
+          return Boolean(itemValue) === criteria;
+        }
+        
+        return true;
+      });
     });
 
     // Apply sorting
@@ -263,7 +311,7 @@ const AdminDataGrid = <T extends AdminDataItem>({
     });
 
     return filtered;
-  }, [data, searchTerm, searchFields, activeFilters, sortField, sortDirection, columns]);
+  }, [data, searchTerm, searchFields, activeFilters, advancedSearchCriteria, sortField, sortDirection, columns]);
 
   // Paginated data for cards view
   const paginatedData = useMemo(() => {
@@ -294,6 +342,22 @@ const AdminDataGrid = <T extends AdminDataItem>({
     const allIds = new Set(filteredData.map(item => item.id));
     const isAllSelected = filteredData.every(item => selectedItems.has(item.id));
     setSelectedItems(isAllSelected ? new Set() : allIds);
+  };
+
+  // Advanced search handlers
+  const handleAdvancedSearch = (criteria: AdvancedSearchCriteria) => {
+    setAdvancedSearchCriteria(criteria);
+    setHasAdvancedFilters(Object.keys(criteria).length > 0);
+    setCardsPage(0); // Reset pagination
+    if (onAdvancedSearch) {
+      onAdvancedSearch(criteria);
+    }
+  };
+
+  const handleClearAdvancedSearch = () => {
+    setAdvancedSearchCriteria({});
+    setHasAdvancedFilters(false);
+    setCardsPage(0);
   };
 
   // Create MRT columns with actions
@@ -465,6 +529,40 @@ const AdminDataGrid = <T extends AdminDataItem>({
             onChange={(e) => setSearchTerm(e.target.value)}
             size="small"
           />
+          
+          {/* Advanced Search Button */}
+          {advancedSearchFields.length > 0 && (
+            <Tooltip title="Advanced Search">
+              <IconButton
+                onClick={() => setShowAdvancedSearch(true)}
+                size="small"
+                sx={{ 
+                  backgroundColor: hasAdvancedFilters ? 'rgba(25, 118, 210, 0.08)' : 'rgba(0,0,0,0.04)',
+                  color: hasAdvancedFilters ? 'primary.main' : 'inherit',
+                  '&:hover': { backgroundColor: hasAdvancedFilters ? 'rgba(25, 118, 210, 0.12)' : 'rgba(0,0,0,0.08)' }
+                }}
+              >
+                <FilterList />
+              </IconButton>
+            </Tooltip>
+          )}
+          
+          {/* Clear Advanced Filters Button */}
+          {hasAdvancedFilters && (
+            <Tooltip title="Clear Advanced Filters">
+              <IconButton
+                onClick={handleClearAdvancedSearch}
+                size="small"
+                sx={{ 
+                  backgroundColor: 'rgba(211, 47, 47, 0.08)',
+                  color: 'error.main',
+                  '&:hover': { backgroundColor: 'rgba(211, 47, 47, 0.12)' }
+                }}
+              >
+                <Search sx={{ transform: 'rotate(45deg)' }} />
+              </IconButton>
+            </Tooltip>
+          )}
           
           {/* Custom Actions Dropdown */}
           {customActions && (
@@ -714,6 +812,19 @@ const AdminDataGrid = <T extends AdminDataItem>({
             </div>
           </div>
         </div>
+      )}
+      
+      {/* Advanced Search Dialog */}
+      {advancedSearchFields.length > 0 && (
+        <AdvancedSearchDialog
+          open={showAdvancedSearch}
+          onClose={() => setShowAdvancedSearch(false)}
+          onSearch={handleAdvancedSearch}
+          fields={advancedSearchFields}
+          entityType={itemDisplayName}
+          initialCriteria={advancedSearchCriteria}
+          data={data}
+        />
       )}
     </div>
   );

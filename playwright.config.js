@@ -9,7 +9,7 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 module.exports = defineConfig({
   // Test directory structure
-  testDir: './tests',
+  testDir: './e2e/tests',
   
   // Global test configuration
   fullyParallel: process.env.CI ? true : false, // Parallel in CI, sequential locally
@@ -20,14 +20,14 @@ module.exports = defineConfig({
   // Reporting configuration
   reporter: [
     ['html', { 
-      outputFolder: 'playwright-report',
+      outputFolder: 'e2e/playwright-report',
       open: 'never' // Don't auto-open in CI
     }],
     ['json', { 
-      outputFile: 'test-results/playwright-results.json' 
+      outputFile: 'e2e/test-results/playwright-results.json' 
     }],
     ['line'], // Console output
-    ['./tests/reporters/enhanced-reporter.js'] // Custom reporter for compatibility
+    ['./e2e/tests/reporters/enhanced-reporter.js'] // Custom reporter for compatibility
   ],
 
   // Global test timeout
@@ -74,7 +74,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json' // Reuse authenticated state
+        storageState: 'e2e/playwright/.auth/user.json' // Reuse authenticated state
       },
     },
     
@@ -85,7 +85,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -96,7 +96,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -107,7 +107,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -118,7 +118,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -129,7 +129,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['iPhone 13'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -139,7 +139,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['iPad Pro'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -149,7 +149,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -205,7 +205,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -216,7 +216,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Firefox'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
     
@@ -226,7 +226,7 @@ module.exports = defineConfig({
       dependencies: ['auth-setup'],
       use: { 
         ...devices['Desktop Safari'],
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       },
     },
   ],

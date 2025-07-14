@@ -11,6 +11,12 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import outputs from '../amplify_outputs.json';
+import { NotificationProvider } from '../contexts/NotificationContext';
+import NotificationContainer from '../components/common/notifications/NotificationContainer';
+import { UnsavedChangesProvider } from '../contexts/UnsavedChangesContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '../lib/queryClient';
 
 // Define types for pages with custom layouts
 type NextPageWithLayout = NextPage & {
@@ -38,9 +44,17 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <div className={allFonts}>
-      <Authenticator.Provider>
-        {getLayout(<Component {...pageProps} />)}
-      </Authenticator.Provider>
+      <QueryClientProvider client={queryClient}>
+        <Authenticator.Provider>
+          <NotificationProvider>
+            <UnsavedChangesProvider>
+              {getLayout(<Component {...pageProps} />)}
+              <NotificationContainer />
+            </UnsavedChangesProvider>
+          </NotificationProvider>
+        </Authenticator.Provider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </div>
   );
 }
