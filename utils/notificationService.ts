@@ -150,6 +150,7 @@ export class NotificationService {
     message?: string;
     submissionId?: string;
     contactId?: string; // Add contact ID to respect preferences
+    requestId?: string; // Add request ID for admin link
   }): Promise<string> {
     
     const payload: GetEstimatePayload = {
@@ -171,9 +172,13 @@ export class NotificationService {
         timestamp: new Date().toLocaleString()
       },
       admin: {
-        dashboardUrl: typeof window !== 'undefined' 
-          ? `${window.location.origin}/admin/requests`
-          : 'https://localhost:3000/admin/requests' // Fallback for server-side
+        dashboardUrl: data.requestId 
+          ? (typeof window !== 'undefined' 
+            ? `${window.location.origin}/admin/requests/${data.requestId}`
+            : `https://localhost:3000/admin/requests/${data.requestId}`)
+          : (typeof window !== 'undefined' 
+            ? `${window.location.origin}/admin/requests`
+            : 'https://localhost:3000/admin/requests') // Fallback for server-side
       }
     };
 

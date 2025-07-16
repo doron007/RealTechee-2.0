@@ -4,6 +4,7 @@ import { data } from './data/resource';
 import { storage } from './storage/resource';
 import { notificationProcessor } from './functions/notification-processor/resource';
 import { userAdmin } from './functions/user-admin/resource';
+import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';
 
 export const backend = defineBackend({
   auth,
@@ -41,12 +42,29 @@ backend.auth.resources.userPool.grant(
 // Set up CloudWatch Events rule to trigger every 5 minutes
 backend.notificationProcessor.addEnvironment('NOTIFICATION_QUEUE_TABLE', backend.data.resources.tables['NotificationQueue'].tableName);
 backend.notificationProcessor.addEnvironment('NOTIFICATION_TEMPLATE_TABLE', backend.data.resources.tables['NotificationTemplate'].tableName);
+backend.notificationProcessor.addEnvironment('NOTIFICATION_EVENTS_TABLE', backend.data.resources.tables['NotificationEvents'].tableName);
 backend.notificationProcessor.addEnvironment('CONTACTS_TABLE', backend.data.resources.tables['Contacts'].tableName);
 
 // Grant permissions to read/write DynamoDB tables
 backend.data.resources.tables['NotificationQueue'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['NotificationTemplate'].grantReadData(backend.notificationProcessor.resources.lambda);
+backend.data.resources.tables['NotificationEvents'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['Contacts'].grantReadData(backend.notificationProcessor.resources.lambda);
+
+// Grant SSM Parameter Store permissions for secure configuration
+backend.notificationProcessor.resources.lambda.addToRolePolicy(
+  new PolicyStatement({
+    effect: Effect.ALLOW,
+    actions: [
+      'ssm:GetParameters',
+      'ssm:GetParameter',
+      'ssm:GetParametersByPath'
+    ],
+    resources: [
+      'arn:aws:ssm:*:*:parameter/realtechee/*'
+    ]
+  })
+);
 
 // TODO: Add EventBridge scheduling for notification processor
 // For now, the notification processor can be invoked manually or via API

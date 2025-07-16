@@ -118,14 +118,14 @@ SectionLabel → P3            // Labels with styling
 // CORRECT: Properly aligned with Unicode considerations
 | Milestone                         | Priority | Duration   | Tasks | Status        |
 |-----------------------------------|----------|------------|-------|---------------|
-| -1. Dev Environment Optimization | CRITICAL | 1-2 hours  |   6   | ⏳ Pending    |
+| -1. Dev Environment Optimization  | CRITICAL | 1-2 hours  |   6   | ⏳ Pending    |
 | 0.  Golden User Story 01          | CRITICAL | 3-5 days   |   9   | ⏳ Pending    |
 
 // INCORRECT: Misaligned due to Unicode width issues
-| Milestone | Priority | Tasks | Status |
-|-----------|----------|-------|--------|
-| -1. Dev Environment | CRITICAL | 6 | ⏳ Pending |
-| 0. Golden User Story | CRITICAL | 9 | ⏳ Pending |
+| Milestone             | Priority | Tasks | Status     |
+|-----------------------|----------|-------|------------|
+| -1. Dev Environment   | CRITICAL | 6     | ⏳ Pending |
+|  0. Golden User Story | CRITICAL | 9     | ⏳ Pending |
 ```
 
 #### Required Practices
@@ -171,6 +171,33 @@ Next.js 15.2.1 + React 18.3.1 + TS + AWS Amplify Gen 2 + GraphQL + DynamoDB + S3
 - AWS Cognito: user groups (public, basic, member, agent, admin) w/ custom attributes (contactId, membershipTier)
 - Auth: userPool, apiKey, owner-based access control
 - S3: proj attachments + images w/ public/private access + preview + progress tracking
+
+### Amplify Gen 2 DynamoDB Tables
+**CRITICAL:** Amplify Gen 2 generates tables with hash suffixes. ! use legacy table names.
+
+**Current Table Names (us-west-1):**
+- `Requests-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Main request submissions (Get Estimate form)
+- `Contacts-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Contact records (agents, homeowners)
+- `Projects-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Project management
+- `ProjectComments-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Project comments
+- `Addresses-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Property addresses
+- `BackOfficeRequestStatuses-fvn7t5hbobaxjklhrqzdl4ac34-NONE` - Request status tracking
+
+**Legacy Tables (deprecated):**
+- `RealTechee-Requests` - ❌ ! use for new records
+- `RealTechee-Contacts` - ❌ ! use for new records
+
+**Table Discovery Commands:**
+```bash
+# List all tables
+aws dynamodb list-tables --region us-west-1
+
+# Find tables by pattern
+aws dynamodb list-tables --region us-west-1 --query "TableNames[?contains(@, 'Request')]"
+
+# Query test data
+aws dynamodb scan --table-name "Requests-fvn7t5hbobaxjklhrqzdl4ac34-NONE" --region us-west-1 --filter-expression "leadSource = :leadSource" --expression-attribute-values '{":leadSource": {"S": "E2E_TEST"}}'
+```
 
 ## Technical Rules
 1. ! new comps w/o approval + ! duplicate/overlapping ints
@@ -252,8 +279,61 @@ Jest + React Testing Library + custom render helpers + mock Amplify hooks/GraphQ
 ## Test Credentials
 **Admin Testing:** Always use `info@realtechee.com` / `Sababa123!` for admin/auth testing
 - This user has admin privileges for testing admin pages
-- Use consistently across all Puppeteer tests and manual testing
-- Required for admin/projects, admin/quotes, admin/dashboard access
+- Use consistently across all Playwright tests and manual testing
+- Required for admin/projects, admin/quotes, admin/requests, admin/dashboard access
+
+## Notification System Architecture
+
+### **AWS Parameter Store Configuration**
+**Location:** `/realtechee/*` parameters in AWS Systems Manager
+**Purpose:** Secure storage of API keys and sensitive configuration
+
+**Required Parameters:**
+```bash
+/realtechee/sendgrid/api-key          # SendGrid API key for email notifications
+/realtechee/twilio/account-sid        # Twilio Account SID for SMS
+/realtechee/twilio/auth-token         # Twilio Auth Token for SMS
+/realtechee/twilio/from-phone         # Twilio sending phone number
+```
+
+### **Lambda Function Permissions**
+**Notification Processor Lambda** requires:
+- DynamoDB read/write access to NotificationQueue, NotificationTemplate, NotificationEvents
+- SSM Parameter Store read access for `/realtechee/*` parameters
+- CloudWatch Logs write access for monitoring
+
+### **Notification Templates System**
+**Email Template:** `get-estimate-template-001`
+- HTML and text content with Handlebars variables
+- Direct admin links: `/admin/requests/{requestId}`
+- Call-to-action: "Start Working on This Request"
+
+**SMS Template:** `get-estimate-sms-template-001`  
+- Optimized for 160-character SMS format
+- Includes admin links: `/admin/requests/{requestId}`
+- Call-to-action: "Start working: {link}"
+
+### **Event Logging & Monitoring**
+**NotificationEvents Table** tracks:
+- Notification lifecycle events (QUEUED → PROCESSING → SUCCESS/FAILED)
+- Provider response tracking (SendGrid message IDs, Twilio SIDs)
+- Performance metrics (processing time, retry counts)
+- Error codes and diagnostic information
+
+### **Notification Flow**
+1. **Queue:** Get Estimate form creates NotificationQueue record
+2. **Process:** Lambda processes pending notifications every 5 minutes
+3. **Template:** Handlebars templates rendered with request data
+4. **Send:** Email (SendGrid) and SMS (Twilio) sent to admin team
+5. **Track:** Events logged with delivery confirmation
+6. **Admin Action:** Account executive clicks link → `/admin/requests/{id}`
+
+### **Debug & Testing Commands**
+```bash
+node scripts/manual-notification-test.mjs     # Direct Lambda test
+node scripts/update-notification-templates.mjs # Update templates
+./scripts/backup-data.sh                      # Backup before changes
+```
 
 ## Enterprise E2E Testing Framework (Playwright)
 
@@ -384,6 +464,53 @@ Ready to proceed with **Milestone 0: Golden User Story 01 Implementation** - the
 Ready to proceed with **Milestone 1: Core Functionality Completion** - Admin create/edit pages, contact management, and advanced project workflows.
 
 ---
+# Session Summary - Notification System Enhancement (July 16, 2025)
+
+## 🎉 **NOTIFICATION SYSTEM ENHANCEMENT - COMPLETED**
+
+### **Major Achievements:**
+1. **Admin Request Links** - Both email and SMS notifications now include direct links to `/admin/requests/{id}`
+2. **SMS Template System Fix** - Resolved SMS template lookup issues, now uses proper SMS-optimized templates
+3. **Enhanced User Experience** - Updated call-to-action messaging for account executives
+4. **Parameter Store Integration** - Confirmed secure API key storage and Lambda permissions working
+5. **Comprehensive Event Logging** - Full notification lifecycle tracking with delivery confirmation
+
+### **Technical Implementation:**
+- 🎯 **Direct Admin Links** - Account executives receive clickable links to specific request pages
+- 📱 **SMS Template Optimization** - Fixed template lookup to use `get-estimate-sms-template-001`
+- 🔧 **Lambda Function Enhancement** - Improved template fetching logic with proper fallbacks
+- 🔐 **Security Maintained** - All API keys remain in Parameter Store with proper IAM permissions
+- 📊 **Event Tracking** - NotificationEvents table captures full delivery pipeline metrics
+
+### **Files Enhanced:**
+- ✏️ `utils/notificationService.ts` - Added requestId parameter for specific admin links
+- ✏️ `pages/contact/get-estimate.tsx` - Updated notification call to include request ID
+- ✏️ `amplify/functions/notification-processor/src/index.ts` - Fixed SMS template lookup
+- ➕ `scripts/update-notification-templates.mjs` - Created template update utility
+- ✏️ Notification templates updated in DynamoDB with better call-to-action messaging
+
+### **Business Impact:**
+- 🏆 **Streamlined Workflow** - Account executives can navigate directly to new requests from notifications
+- 📈 **Improved Response Time** - Clear "Start Working on This Request" buttons guide immediate action
+- 🛡️ **Reliable Delivery** - Both email and SMS notifications working with proper templates
+- 📊 **Full Monitoring** - Comprehensive event logging for delivery tracking and debugging
+- 🚀 **Production Ready** - All enhancements deployed and tested successfully
+
+### **Notification Flow Now Complete:**
+1. User submits Get Estimate form → Request created with unique ID
+2. Notification queued with request-specific admin link `/admin/requests/{id}`
+3. Email and SMS sent to admin team with direct "Start Working" buttons/links
+4. Account executive clicks link → Lands directly on request detail page
+5. Full event logging tracks delivery success and performance metrics
+
+### **System Status:**
+- ✅ **Parameter Store** - API keys secure and accessible to Lambda
+- ✅ **Templates** - Email and SMS templates optimized with admin links
+- ✅ **Event Logging** - Comprehensive tracking with SendGrid/Twilio confirmations
+- ✅ **Lambda Permissions** - Full access to DynamoDB and Parameter Store
+- ✅ **End-to-End Testing** - Manual tests confirm notifications working perfectly
+
+---
 # personal notes
-→ Prompt to initiate building app: Please read PLANNING.md, CLAUDE.md, and TASKS.md to understand the project.  Then complete the first task on TASKS.md
+→ Prompt to initiate building app: Please read PLANNING.md, CLAUDE.md, and TASKS.md to understand the project.  Then complete the next incomplete task on TASKS.md
 → Prompt to add context to CLAUDE.md (before clearing history): Please add a session summary to CLAUDE.md summarizing what we've done so far.

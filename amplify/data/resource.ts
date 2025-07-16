@@ -714,6 +714,89 @@ const NotificationQueue = a.model({
   allow.groups(['admin'])
 ]);
 
+// App Preferences and Settings
+const AppPreferences = a.model({
+  // Core settings
+  id: a.id(),
+  category: a.string().required(), // e.g., 'notifications', 'general', 'security'
+  key: a.string().required(), // e.g., 'debug_mode', 'default_timezone'
+  value: a.string().required(), // JSON string for complex values
+  dataType: a.enum(['string', 'number', 'boolean', 'json', 'encrypted']),
+  
+  // Metadata
+  description: a.string(),
+  isSystemSetting: a.boolean().default(false),
+  isEncrypted: a.boolean().default(false),
+  environment: a.enum(['dev', 'staging', 'prod', 'all']),
+  
+  // Validation
+  validationRules: a.string(), // JSON string with validation rules
+  defaultValue: a.string(),
+  
+  // Audit
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  createdBy: a.string(),
+  updatedBy: a.string(),
+  owner: a.string(),
+  
+  // Composite key for category + key uniqueness
+  categoryKey: a.string().required() // Will be set to `${category}:${key}`
+}).authorization((allow) => [
+  allow.publicApiKey().to(['read']),
+  allow.authenticated().to(['read']),
+  allow.groups(['admin']).to(['create', 'read', 'update', 'delete']),
+  allow.groups(['super_admin']).to(['create', 'read', 'update', 'delete'])
+]);
+
+// Secure Configuration (for sensitive data)
+const SecureConfig = a.model({
+  id: a.id(),
+  key: a.string().required(), // e.g., 'sendgrid_api_key'
+  service: a.string().required(), // e.g., 'sendgrid', 'twilio'
+  environment: a.enum(['dev', 'staging', 'prod']),
+  
+  // Metadata only - actual values stored in Parameter Store
+  parameterPath: a.string().required(), // AWS SSM Parameter Store path
+  description: a.string(),
+  isActive: a.boolean().default(true),
+  
+  // Audit
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  createdBy: a.string(),
+  updatedBy: a.string(),
+  owner: a.string()
+}).authorization((allow) => [
+  allow.groups(['admin']).to(['read']),
+  allow.groups(['super_admin']).to(['create', 'read', 'update', 'delete'])
+]);
+
+// Notification Events for comprehensive logging
+const NotificationEvents = a.model({
+  eventId: a.string().required(),
+  notificationId: a.string().required(),
+  eventType: a.enum(['NOTIFICATION_QUEUED', 'NOTIFICATION_PROCESSING', 'EMAIL_ATTEMPT', 'SMS_ATTEMPT', 'EMAIL_SUCCESS', 'SMS_SUCCESS', 'EMAIL_FAILED', 'SMS_FAILED', 'NOTIFICATION_COMPLETED', 'NOTIFICATION_FAILED']),
+  channel: a.enum(['EMAIL', 'SMS', 'WHATSAPP', 'TELEGRAM']),
+  recipient: a.string(),
+  provider: a.enum(['SENDGRID', 'TWILIO', 'DEBUG']),
+  providerId: a.string(), // SendGrid message ID or Twilio SID
+  providerStatus: a.string(), // Provider-specific status
+  errorCode: a.string(),
+  errorMessage: a.string(),
+  metadata: a.json(), // Additional provider-specific data
+  timestamp: a.datetime().required(),
+  processingTimeMs: a.integer(),
+  owner: a.string(),
+  
+  // TTL for automatic cleanup (configurable, default 90 days)
+  ttl: a.integer()
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent'])
+]);
+
 const schema = a.schema({
   Affiliates,
   Auth,
@@ -734,6 +817,7 @@ const schema = a.schema({
   MemberSignature,
   NotificationTemplate,
   NotificationQueue,
+  NotificationEvents,
   PendingAppoitments,
   ProjectComments,
   ProjectMilestones,
@@ -744,7 +828,9 @@ const schema = a.schema({
   QuoteItems,
   Quotes,
   Requests,
-  eSignatureDocuments
+  eSignatureDocuments,
+  AppPreferences,
+  SecureConfig
 });
 
 // Export the data configuration

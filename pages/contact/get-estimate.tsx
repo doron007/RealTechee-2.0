@@ -442,8 +442,8 @@ const GetEstimate: NextPage = () => {
         assignedTo: 'Unassigned',
         status: 'New',
         
-        // Add test session ID to additionalNotes if this is a test (using existing field)
-        additionalNotes: isTestSubmission ? `TEST_SESSION: ${testSessionId}` : '',
+        // Add test session ID to officeNotes if this is a test (using existing field)
+        officeNotes: isTestSubmission ? `TEST_SESSION: ${testSessionId}` : '',
         
         // File URLs as JSON strings (matching schema)
         uploadedMedia: JSON.stringify(mediaFiles.map((f: any) => f.url)),
@@ -487,7 +487,8 @@ const GetEstimate: NextPage = () => {
           productType: formData.rtDigitalSelection || 'General Renovation',
           message: formData.notes || 'No additional notes provided',
           submissionId: requestData.id,
-          contactId: agentData?.id || undefined // Pass contact ID to respect user preferences
+          contactId: agentData?.id || undefined, // Pass contact ID to respect user preferences
+          requestId: requestData.id // Add request ID for admin link
         });
         
         logger.info('Step 5c: ✅ Notification queued successfully');
