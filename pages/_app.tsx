@@ -53,7 +53,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             </UnsavedChangesProvider>
           </NotificationProvider>
         </Authenticator.Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {process.env.NODE_ENV === 'development' && process.env.REACT_QUERY_DEVTOOLS === 'true' && (
+          <ReactQueryDevtools initialIsOpen={false} />
+        )}
       </QueryClientProvider>
     </div>
   );

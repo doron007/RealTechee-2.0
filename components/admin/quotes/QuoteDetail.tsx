@@ -121,8 +121,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     editingPayment: null
   });
 
-  // Seed quote ID for safe testing as per plan
-  const SEED_QUOTE_ID = '66611536-0182-450f-243a-d245afe54439';
+  // Development protection removed - all quotes can be edited
 
   useEffect(() => {
     const loadData = async () => {
@@ -264,10 +263,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     if (!state.quote) return;
 
     // Safety check - only allow editing seed quote for testing
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, editing is only allowed on the seed quote during testing');
-      return;
-    }
+    // All quotes can be edited
 
     setState(prev => ({ ...prev, saving: true }));
 
@@ -341,10 +337,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
   };
 
   const handleAddQuoteItem = async (itemData: Partial<QuoteItem>) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, editing is only allowed on the seed quote during testing');
-      return;
-    }
+    // All quotes can be edited
 
     try {
       const newItem = {
@@ -369,10 +362,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
   };
 
   const handleUpdateQuoteItem = async (itemId: string, itemData: Partial<QuoteItem>) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, editing is only allowed on the seed quote during testing');
-      return;
-    }
+    // All quotes can be edited
 
     try {
       const result = await quoteItemsAPI.update(itemId, itemData);
@@ -390,10 +380,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
   };
 
   const handleDeleteQuoteItem = async (itemId: string) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, editing is only allowed on the seed quote during testing');
-      return;
-    }
+    // All quotes can be edited
 
     if (!confirm('Are you sure you want to delete this quote item?')) {
       return;
@@ -416,10 +403,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
   };
 
   const handleAddPaymentTerm = async (termData: Partial<PaymentTerm>) => {
-    if (quoteId !== SEED_QUOTE_ID) {
-      alert('For safety, editing is only allowed on the seed quote during testing');
-      return;
-    }
+    // All quotes can be edited
 
     try {
       const newTerm = {
@@ -722,16 +706,6 @@ Generated: ${new Date().toLocaleDateString()}
         </div>
       )}
 
-      {/* Warning for non-seed quote */}
-      {quoteId !== SEED_QUOTE_ID && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <H4 className="text-yellow-800 mb-2">Testing Mode</H4>
-          <P2 className="text-yellow-700">
-            For safety during Phase 6 implementation, editing is only enabled for the seed quote ({SEED_QUOTE_ID}). 
-            Other quotes are in view-only mode.
-          </P2>
-        </div>
-      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -751,7 +725,7 @@ Generated: ${new Date().toLocaleDateString()}
                   type="text"
                   value={quote.title || ''}
                   onChange={(e) => handleFieldChange('title', e.target.value)}
-                  disabled={quoteId !== SEED_QUOTE_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -762,7 +736,7 @@ Generated: ${new Date().toLocaleDateString()}
                 <select
                   value={quote.status}
                   onChange={(e) => handleFieldChange('status', e.target.value)}
-                  disabled={quoteId !== SEED_QUOTE_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 >
                   <option value="Draft">Draft</option>
@@ -782,7 +756,7 @@ Generated: ${new Date().toLocaleDateString()}
                   step="0.01"
                   value={quote.totalAmount || ''}
                   onChange={(e) => handleFieldChange('totalAmount', parseFloat(e.target.value) || 0)}
-                  disabled={quoteId !== SEED_QUOTE_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -794,7 +768,7 @@ Generated: ${new Date().toLocaleDateString()}
                   type="date"
                   value={quote.validUntil ? new Date(quote.validUntil).toISOString().split('T')[0] : ''}
                   onChange={(e) => handleFieldChange('validUntil', e.target.value)}
-                  disabled={quoteId !== SEED_QUOTE_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -807,7 +781,7 @@ Generated: ${new Date().toLocaleDateString()}
                 rows={4}
                 value={quote.description || ''}
                 onChange={(e) => handleFieldChange('description', e.target.value)}
-                disabled={quoteId !== SEED_QUOTE_ID}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
               />
             </div>
@@ -848,7 +822,7 @@ Generated: ${new Date().toLocaleDateString()}
                     <Button
                       variant="primary"
                       onClick={() => setState(prev => ({ ...prev, showAddItemModal: true }))}
-                      disabled={quoteId !== SEED_QUOTE_ID}
+                      disabled={false}
                     >
                       Add Item
                     </Button>
@@ -898,7 +872,7 @@ Generated: ${new Date().toLocaleDateString()}
                               variant="tertiary"
                               size="small"
                               onClick={() => setState(prev => ({ ...prev, editingItem: item }))}
-                              disabled={quoteId !== SEED_QUOTE_ID}
+                              disabled={false}
                             >
                               Edit
                             </Button>
@@ -906,7 +880,7 @@ Generated: ${new Date().toLocaleDateString()}
                               variant="tertiary"
                               size="small"
                               onClick={() => handleDeleteQuoteItem(item.id)}
-                              disabled={quoteId !== SEED_QUOTE_ID}
+                              disabled={false}
                             >
                               Delete
                             </Button>
@@ -937,7 +911,7 @@ Generated: ${new Date().toLocaleDateString()}
                     <Button
                       variant="primary"
                       onClick={() => setState(prev => ({ ...prev, showAddPaymentModal: true }))}
-                      disabled={quoteId !== SEED_QUOTE_ID}
+                      disabled={false}
                     >
                       Add Payment Term
                     </Button>
@@ -977,7 +951,7 @@ Generated: ${new Date().toLocaleDateString()}
                                 variant="tertiary"
                                 size="small"
                                 onClick={() => setState(prev => ({ ...prev, editingPayment: term }))}
-                                disabled={quoteId !== SEED_QUOTE_ID}
+                                disabled={false}
                               >
                                 Edit
                               </Button>
@@ -998,7 +972,7 @@ Generated: ${new Date().toLocaleDateString()}
                     <Button
                       variant="primary"
                       onClick={() => setState(prev => ({ ...prev, showAddCommentModal: true }))}
-                      disabled={quoteId !== SEED_QUOTE_ID}
+                      disabled={false}
                     >
                       Add Comment
                     </Button>
@@ -1047,7 +1021,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="text"
                           value={quote.title || ''}
                           onChange={(e) => handleFieldChange('title', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1058,7 +1032,7 @@ Generated: ${new Date().toLocaleDateString()}
                         <select
                           value={quote.status}
                           onChange={(e) => handleFieldChange('status', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         >
                           <option value="Draft">Draft</option>
@@ -1078,7 +1052,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="number"
                           value={quote.quoteNumber || ''}
                           onChange={(e) => handleFieldChange('quoteNumber', parseInt(e.target.value) || 0)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1091,7 +1065,7 @@ Generated: ${new Date().toLocaleDateString()}
                           step="0.01"
                           value={quote.totalAmount || ''}
                           onChange={(e) => handleFieldChange('totalAmount', parseFloat(e.target.value) || 0)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1103,7 +1077,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="date"
                           value={quote.validUntil ? new Date(quote.validUntil).toISOString().split('T')[0] : ''}
                           onChange={(e) => handleFieldChange('validUntil', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1115,7 +1089,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="text"
                           value={quote.product || ''}
                           onChange={(e) => handleFieldChange('product', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1128,7 +1102,7 @@ Generated: ${new Date().toLocaleDateString()}
                         rows={4}
                         value={quote.description || ''}
                         onChange={(e) => handleFieldChange('description', e.target.value)}
-                        disabled={quoteId !== SEED_QUOTE_ID}
+                        disabled={false}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                       />
                     </div>
@@ -1146,7 +1120,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="text"
                           value={quote.clientName || ''}
                           onChange={(e) => handleFieldChange('clientName', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1158,7 +1132,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="email"
                           value={quote.clientEmail || ''}
                           onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1170,7 +1144,7 @@ Generated: ${new Date().toLocaleDateString()}
                           type="tel"
                           value={quote.clientPhone || ''}
                           onChange={(e) => handleFieldChange('clientPhone', e.target.value)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />
                       </div>
@@ -1187,7 +1161,7 @@ Generated: ${new Date().toLocaleDateString()}
                           id="operationManagerApproved"
                           checked={quote.operationManagerApproved || false}
                           onChange={(e) => handleFieldChange('operationManagerApproved', e.target.checked)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
                         <label htmlFor="operationManagerApproved" className="ml-2 block text-sm text-gray-900">
@@ -1200,7 +1174,7 @@ Generated: ${new Date().toLocaleDateString()}
                           id="underwritingApproved"
                           checked={quote.underwritingApproved || false}
                           onChange={(e) => handleFieldChange('underwritingApproved', e.target.checked)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
                         <label htmlFor="underwritingApproved" className="ml-2 block text-sm text-gray-900">
@@ -1213,7 +1187,7 @@ Generated: ${new Date().toLocaleDateString()}
                           id="signed"
                           checked={quote.signed || false}
                           onChange={(e) => handleFieldChange('signed', e.target.checked)}
-                          disabled={quoteId !== SEED_QUOTE_ID}
+                          disabled={false}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         />
                         <label htmlFor="signed" className="ml-2 block text-sm text-gray-900">

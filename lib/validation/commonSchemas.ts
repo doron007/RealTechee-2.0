@@ -141,6 +141,61 @@ export const conditionalDateTimeSchema = (dependentField: string, excludeValue: 
     otherwise: (schema) => schema.optional()
   });
 
+// Past date/time validation helpers
+export const futureDateSchema = yup.string()
+  .test('is-future-date', 'Cannot select a past date', function(value) {
+    if (!value) return true; // Let required validation handle empty values
+    
+    const selectedDate = new Date(value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset to start of day
+    
+    return selectedDate >= today;
+  });
+
+export const futureTimeSchema = yup.string()
+  .test('is-future-time', 'Cannot select a past time', function(value) {
+    if (!value) return true; // Let required validation handle empty values
+    
+    const { parent } = this; // Get the parent object (entire form data)
+    const selectedDate = parent.requestedVisitDateTime;
+    
+    if (!selectedDate) return true; // If no date selected, time validation is not relevant
+    
+    const today = new Date();
+    const selectedDateObj = new Date(selectedDate);
+    
+    // If selected date is in the future, any time is valid
+    if (selectedDateObj.toDateString() !== today.toDateString()) {
+      return true;
+    }
+    
+    // If selected date is today, check if time is in the future
+    const [hours, minutes] = value.split(':').map(Number);
+    const selectedTime = new Date();
+    selectedTime.setHours(hours, minutes, 0, 0);
+    
+    const currentTime = new Date();
+    
+    return selectedTime > currentTime;
+  });
+
+// Combined date/time validation for meeting scheduling
+export const meetingDateTimeSchema = (dependentField: string, excludeValue: string) => {
+  return {
+    date: yup.string().when(dependentField, {
+      is: (val: string) => val !== excludeValue,
+      then: (schema) => schema.required('Meeting date is required').concat(futureDateSchema),
+      otherwise: (schema) => schema.optional()
+    }),
+    time: yup.string().when(dependentField, {
+      is: (val: string) => val !== excludeValue,
+      then: (schema) => schema.required('Meeting time is required').concat(futureTimeSchema),
+      otherwise: (schema) => schema.optional()
+    })
+  };
+};
+
 // License validation with conditional logic
 export const conditionalLicenseSchema = (dependentField: string, triggerValue: any) =>
   yup.string().when(dependentField, {

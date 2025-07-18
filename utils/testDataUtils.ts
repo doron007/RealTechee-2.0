@@ -25,13 +25,13 @@ export const TEST_MARKERS = {
 export const isTestRequest = (request: any): boolean => {
   if (!request) return false;
   
-  // Check leadSource field
+  // Check leadSource field (primary test data identification)
   if (request.leadSource === TEST_MARKERS.LEAD_SOURCE) {
     return true;
   }
   
-  // Check additionalNotes for test session ID
-  if (request.additionalNotes?.includes(TEST_MARKERS.SESSION_PREFIX)) {
+  // Check officeNotes for test session ID
+  if (request.officeNotes?.includes(TEST_MARKERS.SESSION_PREFIX)) {
     return true;
   }
   
@@ -91,7 +91,7 @@ export const getTestRequests = async (limit: number = 100) => {
     });
     
     const testSessionRequests = allRequestsResponse.data.listRequests.items.filter(request => 
-      request.additionalNotes?.includes(TEST_MARKERS.SESSION_PREFIX)
+      request.officeNotes?.includes(TEST_MARKERS.SESSION_PREFIX)
     );
     
     // Combine and deduplicate
@@ -252,9 +252,9 @@ export const createProductionFilter = (existingFilter: any = {}) => {
  * Get test session ID from a test request
  */
 export const getTestSessionId = (request: any): string | null => {
-  if (!request?.additionalNotes) return null;
+  if (!request?.officeNotes) return null;
   
-  const sessionMatch = request.additionalNotes.match(/TEST_SESSION:\s*([^\s]+)/);
+  const sessionMatch = request.officeNotes.match(/TEST_SESSION:\s*([^\s]+)/);
   return sessionMatch ? sessionMatch[1] : null;
 };
 

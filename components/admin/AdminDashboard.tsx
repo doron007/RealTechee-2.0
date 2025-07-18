@@ -63,9 +63,9 @@ const AdminDashboard: React.FC = () => {
     try {
       // Load all data in parallel for better performance
       const [
-        projectsResult, 
-        quotesResult, 
         requestsResult, 
+        quotesResult, 
+        projectsResult, 
         contactsResult, 
         usersResult,
         projectStatusesResult,
@@ -204,36 +204,36 @@ const AdminDashboard: React.FC = () => {
       {/* Dashboard Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        {/* Projects Card */}
-        <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateToSection('projects')}>
+        {/* Requests Card */}
+        <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateToSection('requests')}>
           <div className="flex items-center justify-between mb-4">
-            <H3 className="text-blue-600">Projects</H3>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            <H3 className="text-orange-600">Requests</H3>
+            <div className="bg-orange-100 p-3 rounded-lg">
+              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P2 className="text-gray-600">Total Projects</P2>
-              <P2 className="font-semibold">{stats.projects.total}</P2>
+              <P2 className="text-gray-600">Total Requests</P2>
+              <P2 className="font-semibold">{stats.requests.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-green-600">New</P2>
-              <P2 className="font-semibold">{stats.projects.new}</P2>
+              <P2 className="text-blue-600">Submitted</P2>
+              <P2 className="font-semibold">{stats.requests.submitted}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-blue-600">Active</P2>
-              <P2 className="font-semibold">{stats.projects.active}</P2>
+              <P2 className="text-yellow-600">In Review</P2>
+              <P2 className="font-semibold">{stats.requests.inReview}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-gray-600">Completed</P2>
-              <P2 className="font-semibold">{stats.projects.completed}</P2>
+              <P2 className="text-green-600">Quoted</P2>
+              <P2 className="font-semibold">{stats.requests.quoted}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P2 className="text-blue-600 font-medium">View All Projects →</P2>
+            <P2 className="text-orange-600 font-medium">View All Requests →</P2>
           </div>
         </div>
 
@@ -270,36 +270,36 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Requests Card */}
-        <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateToSection('requests')}>
+        {/* Projects Card */}
+        <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigateToSection('projects')}>
           <div className="flex items-center justify-between mb-4">
-            <H3 className="text-orange-600">Requests</H3>
-            <div className="bg-orange-100 p-3 rounded-lg">
-              <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            <H3 className="text-blue-600">Projects</H3>
+            <div className="bg-blue-100 p-3 rounded-lg">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <P2 className="text-gray-600">Total Requests</P2>
-              <P2 className="font-semibold">{stats.requests.total}</P2>
+              <P2 className="text-gray-600">Total Projects</P2>
+              <P2 className="font-semibold">{stats.projects.total}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-blue-600">Submitted</P2>
-              <P2 className="font-semibold">{stats.requests.submitted}</P2>
+              <P2 className="text-green-600">New</P2>
+              <P2 className="font-semibold">{stats.projects.new}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-yellow-600">In Review</P2>
-              <P2 className="font-semibold">{stats.requests.inReview}</P2>
+              <P2 className="text-blue-600">Active</P2>
+              <P2 className="font-semibold">{stats.projects.active}</P2>
             </div>
             <div className="flex justify-between">
-              <P2 className="text-green-600">Quoted</P2>
-              <P2 className="font-semibold">{stats.requests.quoted}</P2>
+              <P2 className="text-gray-600">Completed</P2>
+              <P2 className="font-semibold">{stats.projects.completed}</P2>
             </div>
           </div>
           <div className="mt-4 pt-4 border-t">
-            <P2 className="text-orange-600 font-medium">View All Requests →</P2>
+            <P2 className="text-blue-600 font-medium">View All Projects →</P2>
           </div>
         </div>
 

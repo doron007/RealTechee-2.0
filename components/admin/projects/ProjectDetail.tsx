@@ -76,8 +76,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
     showRestoreDialog: false
   });
 
-  // Seed project ID for safe testing as per plan
-  const SEED_PROJECT_ID = '490209a8-d20a-bae1-9e01-1da356be8a93';
+  // Development protection removed - all projects can be edited
 
   // Unsaved changes integration
   const unsavedChanges = useUnsavedChanges({
@@ -199,11 +198,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   const handleSave = async () => {
     if (!state.project) return;
 
-    // Safety check - only allow editing seed project for Phase 4 testing
-    if (projectId !== SEED_PROJECT_ID) {
-      showError('Edit Restricted', 'For safety, editing is only allowed on the seed project during testing');
-      return;
-    }
+    // All projects can be edited
 
     setState(prev => ({ ...prev, saving: true }));
 
@@ -516,16 +511,6 @@ Note: Full audit logging would be implemented with proper tracking.
         </div>
       )}
 
-      {/* Warning for non-seed project */}
-      {projectId !== SEED_PROJECT_ID && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <H4 className="text-yellow-800 mb-2">Testing Mode</H4>
-          <P2 className="text-yellow-700">
-            For safety during Phase 4 implementation, editing is only enabled for the seed project ({SEED_PROJECT_ID}). 
-            Other projects are in view-only mode.
-          </P2>
-        </div>
-      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -545,7 +530,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="text"
                   value={project.title}
                   onChange={(e) => handleFieldChange('title', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -556,7 +541,7 @@ Note: Full audit logging would be implemented with proper tracking.
                 <select
                   value={project.status}
                   onChange={(e) => handleFieldChange('status', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 >
                   <option value="New">New</option>
@@ -577,7 +562,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="text"
                   value={project.propertyAddress || ''}
                   onChange={(e) => handleFieldChange('propertyAddress', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -589,7 +574,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="number"
                   value={project.estimatedValue || ''}
                   onChange={(e) => handleFieldChange('estimatedValue', parseFloat(e.target.value) || 0)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -602,7 +587,7 @@ Note: Full audit logging would be implemented with proper tracking.
                 rows={4}
                 value={project.description || ''}
                 onChange={(e) => handleFieldChange('description', e.target.value)}
-                disabled={projectId !== SEED_PROJECT_ID}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
               />
             </div>
@@ -620,7 +605,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="text"
                   value={project.clientName || ''}
                   onChange={(e) => handleFieldChange('clientName', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -632,7 +617,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="email"
                   value={project.clientEmail || ''}
                   onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>
@@ -644,7 +629,7 @@ Note: Full audit logging would be implemented with proper tracking.
                   type="tel"
                   value={project.clientPhone || ''}
                   onChange={(e) => handleFieldChange('clientPhone', e.target.value)}
-                  disabled={projectId !== SEED_PROJECT_ID}
+                  disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
               </div>

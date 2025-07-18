@@ -15,6 +15,7 @@ import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
 import { NotificationService } from '../../utils/notificationService';
+import { assignmentService } from '../../services/assignmentService';
 
 const GetEstimate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.ESTIMATE];
@@ -22,8 +23,10 @@ const GetEstimate: NextPage = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submissionData, setSubmissionData] = useState<{requestId?: string; submittedAt?: string}>({});
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -474,9 +477,31 @@ const GetEstimate: NextPage = () => {
       
       logger.info('Step 5b: ✅ Request record created', { requestData: cleanRequestData });
 
-      // Step 5c: Queue notification for the new estimate request
+      // Step 5c: Auto-assign AE to request
       try {
-        logger.info('Step 5c: Queueing notification for estimate request');
+        logger.info('Step 5c: Attempting auto-assignment of AE');
+        
+        const assignmentResult = await assignmentService.assignDefaultAE(requestData.id);
+        if (assignmentResult.success) {
+          logger.info('Step 5c: ✅ AE auto-assigned successfully', {
+            assignedTo: assignmentResult.assignedTo,
+            reason: assignmentResult.reason
+          });
+        } else {
+          logger.warn('Step 5c: ⚠️ AE auto-assignment failed (continuing)', {
+            error: assignmentResult.error
+          });
+        }
+      } catch (assignmentError) {
+        // Don't fail the form submission if assignment fails
+        logger.error('Step 5c: ⚠️ AE assignment error (continuing)', {
+          error: assignmentError instanceof Error ? assignmentError.message : String(assignmentError)
+        });
+      }
+
+      // Step 5d: Queue notification for the new estimate request
+      try {
+        logger.info('Step 5d: Queueing notification for estimate request');
         
         await NotificationService.queueGetEstimateNotification({
           customerName: agentData?.fullName || formData.agentInfo.fullName,
@@ -491,10 +516,10 @@ const GetEstimate: NextPage = () => {
           requestId: requestData.id // Add request ID for admin link
         });
         
-        logger.info('Step 5c: ✅ Notification queued successfully');
+        logger.info('Step 5d: ✅ Notification queued successfully');
       } catch (notificationError) {
         // Don't fail the entire form submission if notification fails
-        logger.error('Step 5c: ⚠️ Notification failed (form submission continues)', {
+        logger.error('Step 5d: ⚠️ Notification failed (form submission continues)', {
           error: notificationError instanceof Error ? notificationError.message : String(notificationError)
         });
       }

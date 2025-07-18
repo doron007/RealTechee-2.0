@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { requestsAPI, quotesAPI, projectsAPI } from '../../../utils/amplifyAPI';
+import { assignmentService, type AEProfile } from '../../../services/assignmentService';
 
 interface Request {
   id: string;
@@ -103,6 +104,7 @@ interface RequestDetailState {
   comments: RequestComment[];
   relatedQuotes: RelatedEntity[];
   relatedProjects: RelatedEntity[];
+  availableAEs: AEProfile[];
   loading: boolean;
   saving: boolean;
   error: string;
@@ -128,6 +130,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     comments: [],
     relatedQuotes: [],
     relatedProjects: [],
+    availableAEs: [],
     loading: true,
     saving: false,
     error: '',
@@ -140,9 +143,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     editingDocument: null,
   });
 
-  // Safety control: Only allow editing of seed request during testing
-  const SEED_REQUEST_ID = '52cf1fb5-0f62-4dd4-9289-e7ecc4a0faea';
-  const isTestingSafeMode = requestId !== SEED_REQUEST_ID;
+  // Development protection removed - all requests can be edited
 
   const updateState = useCallback((updates: Partial<RequestDetailState>) => {
     setState(prevState => ({ ...prevState, ...updates }));
@@ -215,15 +216,25 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     }
   }, [requestId, updateState]);
 
+  const loadAEs = useCallback(async () => {
+    try {
+      const availableAEs = await assignmentService.getAvailableAEs();
+      updateState({ availableAEs });
+    } catch (error) {
+      console.error('Error loading available AEs:', error);
+    }
+  }, [updateState]);
+
   useEffect(() => {
     if (requestId) {
       loadRequest();
       loadRelatedEntities();
+      loadAEs();
     }
-  }, [requestId, loadRequest, loadRelatedEntities]);
+  }, [requestId, loadRequest, loadRelatedEntities, loadAEs]);
 
   const handleSaveRequest = async () => {
-    if (!state.request || isTestingSafeMode) return;
+    if (!state.request) return;
 
     try {
       updateState({ saving: true, error: '' });
@@ -236,7 +247,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         needFinance: state.request.needFinance,
         budget: state.request.budget,
         leadSource: state.request.leadSource,
-        assignedTo: state.request.assignedTo,
+        assignedTo: state.request.assignedTo || 'Unassigned', // Ensure assignment is never empty
         assignedDate: state.request.assignedDate,
         requestedVisitDateTime: state.request.requestedVisitDateTime,
         visitDate: state.request.visitDate,
@@ -266,10 +277,37 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
   };
 
   const handleRequestChange = (field: keyof Request, value: any) => {
-    if (!state.request || isTestingSafeMode) return;
+    if (!state.request) return;
 
     updateState({
       request: { ...state.request, [field]: value },
+      hasUnsavedChanges: true,
+    });
+  };
+
+  const handleAssignmentChange = async (newAssignee: string) => {
+    if (!state.request) return;
+    
+    // Validate assignment if not "Unassigned"
+    if (newAssignee && newAssignee !== 'Unassigned') {
+      const isValid = await assignmentService.validateAssignment(newAssignee, state.request.id);
+      if (!isValid) {
+        alert('Selected AE is not available or invalid. Please choose another.');
+        return;
+      }
+    }
+    
+    // Update assignment and assignedDate
+    const assignedDate = newAssignee && newAssignee !== 'Unassigned' 
+      ? new Date().toISOString() 
+      : null; // Use null instead of undefined for better database compatibility
+    
+    updateState({
+      request: { 
+        ...state.request, 
+        assignedTo: newAssignee || 'Unassigned', // Ensure we always have a value
+        assignedDate: assignedDate || undefined
+      },
       hasUnsavedChanges: true,
     });
   };
@@ -286,7 +324,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
               <select
                 value={state.request?.status || ''}
                 onChange={(e) => handleRequestChange('status', e.target.value)}
-                disabled={isTestingSafeMode}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="submitted">Submitted</option>
@@ -306,7 +344,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 type="text"
                 value={state.request?.product || ''}
                 onChange={(e) => handleRequestChange('product', e.target.value)}
-                disabled={isTestingSafeMode}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -319,7 +357,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 type="text"
                 value={state.request?.budget || ''}
                 onChange={(e) => handleRequestChange('budget', e.target.value)}
-                disabled={isTestingSafeMode}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -332,7 +370,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 type="text"
                 value={state.request?.leadSource || ''}
                 onChange={(e) => handleRequestChange('leadSource', e.target.value)}
-                disabled={isTestingSafeMode}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -341,13 +379,19 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <div>
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">Assigned To</P3>
-              <input
-                type="text"
+              <select
                 value={state.request?.assignedTo || ''}
-                onChange={(e) => handleRequestChange('assignedTo', e.target.value)}
-                disabled={isTestingSafeMode}
+                onChange={(e) => handleAssignmentChange(e.target.value)}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-              />
+              >
+                <option value="">Select AE...</option>
+                {state.availableAEs.map((ae) => (
+                  <option key={ae.id} value={ae.name}>
+                    {ae.name} {ae.email ? `(${ae.email})` : ''}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
 
@@ -358,7 +402,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 type="text"
                 value={state.request?.relationToProperty || ''}
                 onChange={(e) => handleRequestChange('relationToProperty', e.target.value)}
-                disabled={isTestingSafeMode}
+                disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -371,7 +415,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             <textarea
               value={state.request?.message || ''}
               onChange={(e) => handleRequestChange('message', e.target.value)}
-              disabled={isTestingSafeMode}
+              disabled={false}
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             />
@@ -384,7 +428,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             <textarea
               value={state.request?.officeNotes || ''}
               onChange={(e) => handleRequestChange('officeNotes', e.target.value)}
-              disabled={isTestingSafeMode}
+              disabled={false}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             />
@@ -397,7 +441,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
               type="checkbox"
               checked={state.request?.needFinance || false}
               onChange={(e) => handleRequestChange('needFinance', e.target.checked)}
-              disabled={isTestingSafeMode}
+              disabled={false}
               className="mr-2"
             />
             <P3 className="text-gray-700">Needs Finance</P3>
@@ -486,7 +530,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <H3>Media Files</H3>
           <Button
             onClick={() => updateState({ showAddMediaModal: true })}
-            disabled={isTestingSafeMode}
+            disabled={false}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-gray-400"
           >
             Add Media
@@ -514,7 +558,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <H3>Documents</H3>
           <Button
             onClick={() => updateState({ showAddDocumentModal: true })}
-            disabled={isTestingSafeMode}
+            disabled={false}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-gray-400"
           >
             Add Document
@@ -542,7 +586,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <H3>Comments & Notes</H3>
           <Button
             onClick={() => updateState({ showAddCommentModal: true })}
-            disabled={isTestingSafeMode}
+            disabled={false}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-gray-400"
           >
             Add Comment
@@ -615,7 +659,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             >
               Back to Requests
             </Button>
-            {state.hasUnsavedChanges && !isTestingSafeMode && (
+            {state.hasUnsavedChanges && (
               <Button
                 onClick={handleSaveRequest}
                 disabled={state.saving}
@@ -627,13 +671,6 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           </div>
         </div>
 
-        {isTestingSafeMode && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
-            <P3 className="text-yellow-800">
-              ⚠️ Editing disabled - Only seed request (52cf1fb5-0f62-4dd4-9289-e7ecc4a0faea) can be edited during testing phase
-            </P3>
-          </div>
-        )}
 
         {/* Related Entities Navigation */}
         {(state.relatedQuotes.length > 0 || state.relatedProjects.length > 0) && (

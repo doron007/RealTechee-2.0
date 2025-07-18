@@ -199,9 +199,9 @@ export class NotificationService {
         console.log('📋 No contact ID provided - using default channels only');
       }
 
-      // Default channels (admin will always get EMAIL notifications)
-      let channels = ['EMAIL'];
-      console.log('📧 Admin will always receive EMAIL notifications');
+      // Default channels (admin will always get EMAIL and SMS notifications)
+      let channels = ['EMAIL', 'SMS'];
+      console.log('📧📱 Admin will always receive EMAIL and SMS notifications');
       
       // If we have customer settings, add their preferred channels
       if (settings) {
@@ -212,7 +212,7 @@ export class NotificationService {
           channels = Array.from(new Set([...channels, ...allowedChannels])); // Remove duplicates
           console.log('📬 Final notification channels:', channels);
         } else {
-          console.log('🚫 Customer has disabled all notifications - only admin EMAIL will be sent');
+          console.log('🚫 Customer has disabled all notifications - admin will still receive EMAIL and SMS');
         }
       } else {
         console.log('📬 Using default channels (no customer preferences found):', channels);
