@@ -3,8 +3,14 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
-import { requestsAPI, quotesAPI, projectsAPI } from '../../../utils/amplifyAPI';
+import { requestsAPI, quotesAPI, projectsAPI, backOfficeProductsAPI, contactsAPI, propertiesAPI } from '../../../utils/amplifyAPI';
 import { assignmentService, type AEProfile } from '../../../services/assignmentService';
+import ContactModal from '../../common/modals/ContactModal';
+import PropertyModal from '../../common/modals/PropertyModal';
+import type { Contact as ContactType, Property as PropertyType } from '../../../services/dataValidationService';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 
 interface Request {
   id: string;
@@ -97,6 +103,17 @@ interface RelatedEntity {
   quoteNumber?: number;
 }
 
+interface Product {
+  id: string;
+  title: string;
+  owner?: string;
+  order?: number;
+}
+
+// Use the types from the service to avoid conflicts
+type Contact = ContactType;
+type Property = PropertyType;
+
 interface RequestDetailState {
   request: Request | null;
   media: RequestMedia[];
@@ -105,16 +122,30 @@ interface RequestDetailState {
   relatedQuotes: RelatedEntity[];
   relatedProjects: RelatedEntity[];
   availableAEs: AEProfile[];
+  availableProducts: Product[];
+  // Contact and Property data
+  homeownerContact: Contact | null;
+  agentContact: Contact | null;
+  propertyData: Property | null;
+  // Loading and error states
   loading: boolean;
   saving: boolean;
   error: string;
   hasUnsavedChanges: boolean;
+  // Tab and modal states
   activeTab: 'details' | 'media' | 'documents' | 'comments';
   showAddMediaModal: boolean;
   showAddDocumentModal: boolean;
   showAddCommentModal: boolean;
   editingMedia: RequestMedia | null;
   editingDocument: RequestDocument | null;
+  // Contact and Property modal states
+  showContactModal: boolean;
+  showPropertyModal: boolean;
+  editingContact: Contact | null;
+  editingProperty: Property | null;
+  contactModalMode: 'create' | 'edit' | 'view';
+  propertyModalMode: 'create' | 'edit' | 'view';
 }
 
 interface RequestDetailProps {
@@ -131,16 +162,30 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     relatedQuotes: [],
     relatedProjects: [],
     availableAEs: [],
+    availableProducts: [],
+    // Contact and Property data
+    homeownerContact: null,
+    agentContact: null,
+    propertyData: null,
+    // Loading and error states
     loading: true,
     saving: false,
     error: '',
     hasUnsavedChanges: false,
+    // Tab and modal states
     activeTab: 'details',
     showAddMediaModal: false,
     showAddDocumentModal: false,
     showAddCommentModal: false,
     editingMedia: null,
     editingDocument: null,
+    // Contact and Property modal states
+    showContactModal: false,
+    showPropertyModal: false,
+    editingContact: null,
+    editingProperty: null,
+    contactModalMode: 'create',
+    propertyModalMode: 'create',
   });
 
   // Development protection removed - all requests can be edited
@@ -225,13 +270,73 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     }
   }, [updateState]);
 
+  const loadProducts = useCallback(async () => {
+    try {
+      const result = await backOfficeProductsAPI.list();
+      if (result.success && result.data) {
+        // Sort products by order field, then by title
+        const sortedProducts = result.data.sort((a: Product, b: Product) => {
+          if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+          }
+          if (a.order !== undefined) return -1;
+          if (b.order !== undefined) return 1;
+          return (a.title || '').localeCompare(b.title || '');
+        });
+        updateState({ availableProducts: sortedProducts });
+      }
+    } catch (error) {
+      console.error('Error loading available products:', error);
+    }
+  }, [updateState]);
+
+  const loadContactAndPropertyData = useCallback(async () => {
+    if (!state.request) return;
+
+    try {
+      // Load homeowner contact
+      if (state.request.homeownerContactId) {
+        const homeownerResult = await contactsAPI.get(state.request.homeownerContactId);
+        if (homeownerResult.success && homeownerResult.data) {
+          updateState({ homeownerContact: homeownerResult.data });
+        }
+      }
+
+      // Load agent contact
+      if (state.request.agentContactId) {
+        const agentResult = await contactsAPI.get(state.request.agentContactId);
+        if (agentResult.success && agentResult.data) {
+          updateState({ agentContact: agentResult.data });
+        }
+      }
+
+      // Load property data
+      if (state.request.addressId) {
+        const propertyResult = await propertiesAPI.get(state.request.addressId);
+        if (propertyResult.success && propertyResult.data) {
+          updateState({ propertyData: propertyResult.data });
+        }
+      }
+    } catch (error) {
+      console.error('Error loading contact and property data:', error);
+    }
+  }, [state.request, updateState]);
+
   useEffect(() => {
     if (requestId) {
       loadRequest();
       loadRelatedEntities();
       loadAEs();
+      loadProducts();
     }
-  }, [requestId, loadRequest, loadRelatedEntities, loadAEs]);
+  }, [requestId, loadRequest, loadRelatedEntities, loadAEs, loadProducts]);
+
+  // Load contact and property data when request data is available
+  useEffect(() => {
+    if (state.request) {
+      loadContactAndPropertyData();
+    }
+  }, [state.request, loadContactAndPropertyData]);
 
   const handleSaveRequest = async () => {
     if (!state.request) return;
@@ -251,6 +356,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         assignedDate: state.request.assignedDate,
         requestedVisitDateTime: state.request.requestedVisitDateTime,
         visitDate: state.request.visitDate,
+        virtualWalkthrough: state.request.virtualWalkthrough,
+        rtDigitalSelection: state.request.rtDigitalSelection,
         moveToQuotingDate: state.request.moveToQuotingDate,
         expiredDate: state.request.expiredDate,
         officeNotes: state.request.officeNotes,
@@ -312,6 +419,54 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     });
   };
 
+  // Contact modal handlers
+  const handleOpenContactModal = (contact: Contact | null, mode: 'create' | 'edit' | 'view') => {
+    updateState({
+      showContactModal: true,
+      editingContact: contact,
+      contactModalMode: mode,
+    });
+  };
+
+  const handleCloseContactModal = () => {
+    updateState({
+      showContactModal: false,
+      editingContact: null,
+      contactModalMode: 'create',
+    });
+  };
+
+  const handleSaveContact = async (contact: Contact) => {
+    // Refresh contact data
+    await loadContactAndPropertyData();
+    // Mark as having unsaved changes to update the request relationship
+    updateState({ hasUnsavedChanges: true });
+  };
+
+  // Property modal handlers
+  const handleOpenPropertyModal = (property: Property | null, mode: 'create' | 'edit' | 'view') => {
+    updateState({
+      showPropertyModal: true,
+      editingProperty: property,
+      propertyModalMode: mode,
+    });
+  };
+
+  const handleClosePropertyModal = () => {
+    updateState({
+      showPropertyModal: false,
+      editingProperty: null,
+      propertyModalMode: 'create',
+    });
+  };
+
+  const handleSaveProperty = async (property: Property) => {
+    // Refresh property data
+    await loadContactAndPropertyData();
+    // Mark as having unsaved changes to update the request relationship
+    updateState({ hasUnsavedChanges: true });
+  };
+
   const renderDetailsTab = () => (
     <div className="space-y-6">
       {/* Basic Information */}
@@ -340,13 +495,19 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <div>
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">Product</P3>
-              <input
-                type="text"
+              <select
                 value={state.request?.product || ''}
                 onChange={(e) => handleRequestChange('product', e.target.value)}
                 disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-              />
+              >
+                <option value="">Select Product...</option>
+                {state.availableProducts.map((product) => (
+                  <option key={product.id} value={product.title}>
+                    {product.title}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
 
@@ -366,13 +527,23 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <div>
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">Lead Source</P3>
-              <input
-                type="text"
+              <select
                 value={state.request?.leadSource || ''}
                 onChange={(e) => handleRequestChange('leadSource', e.target.value)}
                 disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-              />
+              >
+                <option value="">Select Lead Source...</option>
+                <option value="Website">Website</option>
+                <option value="Referral">Referral</option>
+                <option value="Real Estate Agent">Real Estate Agent</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Google Search">Google Search</option>
+                <option value="Print Advertisement">Print Advertisement</option>
+                <option value="Trade Show">Trade Show</option>
+                <option value="Direct Mail">Direct Mail</option>
+                <option value="Other">Other</option>
+              </select>
             </label>
           </div>
 
@@ -398,13 +569,20 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <div>
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">Relation to Property</P3>
-              <input
-                type="text"
+              <select
                 value={state.request?.relationToProperty || ''}
                 onChange={(e) => handleRequestChange('relationToProperty', e.target.value)}
                 disabled={false}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-              />
+              >
+                <option value="">Select Relation...</option>
+                <option value="Owner">Owner</option>
+                <option value="Real Estate Agent">Real Estate Agent</option>
+                <option value="Family Member">Family Member</option>
+                <option value="Property Manager">Property Manager</option>
+                <option value="Contractor">Contractor</option>
+                <option value="Other">Other</option>
+              </select>
             </label>
           </div>
         </div>
@@ -449,76 +627,284 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         </div>
       </div>
 
-      {/* Property Information */}
+      {/* Meeting Information */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <H3 className="mb-4">Property Information</H3>
+        <H3 className="mb-4">Meeting Information</H3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <P3 className="font-medium text-gray-700 mb-1">Address</P3>
-            <P2 className="text-gray-600">{state.request?.propertyAddress || 'Not provided'}</P2>
-          </div>
-          
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Property Type</P3>
-            <P2 className="text-gray-600">{state.request?.propertyType || 'Not specified'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Bedrooms</P3>
-            <P2 className="text-gray-600">{state.request?.bedrooms || 'Not specified'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Bathrooms</P3>
-            <P2 className="text-gray-600">{state.request?.bathrooms || 'Not specified'}</P2>
+            <label className="block">
+              <P3 className="font-medium text-gray-700 mb-1">Requested Visit Date/Time</P3>
+              <input
+                type="datetime-local"
+                value={state.request?.requestedVisitDateTime ? 
+                  new Date(state.request.requestedVisitDateTime).toISOString().slice(0, 16) : ''}
+                onChange={(e) => handleRequestChange('requestedVisitDateTime', e.target.value)}
+                disabled={false}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              />
+            </label>
           </div>
 
           <div>
-            <P3 className="font-medium text-gray-700 mb-1">Size (sq ft)</P3>
-            <P2 className="text-gray-600">{state.request?.sizeSqft || 'Not specified'}</P2>
+            <label className="block">
+              <P3 className="font-medium text-gray-700 mb-1">Virtual Walkthrough</P3>
+              <select
+                value={state.request?.virtualWalkthrough || ''}
+                onChange={(e) => handleRequestChange('virtualWalkthrough', e.target.value)}
+                disabled={false}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              >
+                <option value="">Select Option...</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Either">Either</option>
+              </select>
+            </label>
           </div>
 
           <div>
-            <P3 className="font-medium text-gray-700 mb-1">Year Built</P3>
-            <P2 className="text-gray-600">{state.request?.yearBuilt || 'Not specified'}</P2>
+            <label className="block">
+              <P3 className="font-medium text-gray-700 mb-1">Visit Date</P3>
+              <input
+                type="date"
+                value={state.request?.visitDate ? 
+                  new Date(state.request.visitDate).toISOString().split('T')[0] : ''}
+                onChange={(e) => handleRequestChange('visitDate', e.target.value)}
+                disabled={false}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              />
+            </label>
+          </div>
+
+          <div>
+            <label className="block">
+              <P3 className="font-medium text-gray-700 mb-1">RT Digital Selection</P3>
+              <select
+                value={state.request?.rtDigitalSelection || ''}
+                onChange={(e) => handleRequestChange('rtDigitalSelection', e.target.value)}
+                disabled={false}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              >
+                <option value="">Select Option...</option>
+                <option value="upload">Upload</option>
+                <option value="meeting">Meeting</option>
+                <option value="both">Both</option>
+              </select>
+            </label>
           </div>
         </div>
+      </div>
+
+      {/* Property Information */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <H3>Property Information</H3>
+          <div className="flex gap-2">
+            {state.propertyData ? (
+              <IconButton
+                onClick={() => handleOpenPropertyModal(state.propertyData, 'edit')}
+                className="text-blue-600 hover:text-blue-800"
+                size="small"
+              >
+                <EditIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={() => handleOpenPropertyModal(null, 'create')}
+                className="text-green-600 hover:text-green-800"
+                size="small"
+              >
+                <AddIcon />
+              </IconButton>
+            )}
+          </div>
+        </div>
+        
+        {state.propertyData ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Address</P3>
+              <P2 className="text-gray-600">{state.propertyData.propertyFullAddress || 'Not provided'}</P2>
+            </div>
+            
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Property Type</P3>
+              <P2 className="text-gray-600">{state.propertyData.propertyType || 'Not specified'}</P2>
+            </div>
+
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Bedrooms</P3>
+              <P2 className="text-gray-600">{state.propertyData.bedrooms || 'Not specified'}</P2>
+            </div>
+
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Bathrooms</P3>
+              <P2 className="text-gray-600">{state.propertyData.bathrooms || 'Not specified'}</P2>
+            </div>
+
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Size (sq ft)</P3>
+              <P2 className="text-gray-600">{state.propertyData.sizeSqft || 'Not specified'}</P2>
+            </div>
+
+            <div>
+              <P3 className="font-medium text-gray-700 mb-1">Year Built</P3>
+              <P2 className="text-gray-600">{state.propertyData.yearBuilt || 'Not specified'}</P2>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <P2 className="text-gray-500 mb-2">No property information available</P2>
+            <P3 className="text-gray-400">Click the + button to add property details</P3>
+          </div>
+        )}
       </div>
 
       {/* Contact Information */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <H3 className="mb-4">Contact Information</H3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Client Name</P3>
-            <P2 className="text-gray-600">{state.request?.clientName || 'Not provided'}</P2>
+        
+        {/* Homeowner Contact */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <H4>Homeowner Contact</H4>
+            <div className="flex gap-2">
+              {state.homeownerContact ? (
+                <IconButton
+                  onClick={() => handleOpenContactModal(state.homeownerContact, 'edit')}
+                  className="text-blue-600 hover:text-blue-800"
+                  size="small"
+                >
+                  <EditIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  onClick={() => handleOpenContactModal(null, 'create')}
+                  className="text-green-600 hover:text-green-800"
+                  size="small"
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
+            </div>
           </div>
           
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Client Email</P3>
-            <P2 className="text-gray-600">{state.request?.clientEmail || 'Not provided'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Client Phone</P3>
-            <P2 className="text-gray-600">{state.request?.clientPhone || 'Not provided'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Agent Name</P3>
-            <P2 className="text-gray-600">{state.request?.agentName || 'Not provided'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Agent Email</P3>
-            <P2 className="text-gray-600">{state.request?.agentEmail || 'Not provided'}</P2>
-          </div>
-
-          <div>
-            <P3 className="font-medium text-gray-700 mb-1">Brokerage</P3>
-            <P2 className="text-gray-600">{state.request?.brokerage || 'Not provided'}</P2>
-          </div>
+          {state.homeownerContact ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Name</P3>
+                <P2 className="text-gray-600">{state.homeownerContact.fullName || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Email</P3>
+                <P2 className="text-gray-600">{state.homeownerContact.email || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Phone</P3>
+                <P2 className="text-gray-600">{state.homeownerContact.phone || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Mobile</P3>
+                <P2 className="text-gray-600">{state.homeownerContact.mobile || 'Not provided'}</P2>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-4 bg-gray-50 rounded-lg">
+              <P2 className="text-gray-500 mb-2">No homeowner contact information</P2>
+              <P3 className="text-gray-400">Click the + button to add contact details</P3>
+            </div>
+          )}
         </div>
+
+        {/* Agent Contact */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <H4>Agent Contact</H4>
+            <div className="flex gap-2">
+              {state.agentContact ? (
+                <IconButton
+                  onClick={() => handleOpenContactModal(state.agentContact, 'edit')}
+                  className="text-blue-600 hover:text-blue-800"
+                  size="small"
+                >
+                  <EditIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  onClick={() => handleOpenContactModal(null, 'create')}
+                  className="text-green-600 hover:text-green-800"
+                  size="small"
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
+            </div>
+          </div>
+          
+          {state.agentContact ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Name</P3>
+                <P2 className="text-gray-600">{state.agentContact.fullName || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Email</P3>
+                <P2 className="text-gray-600">{state.agentContact.email || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Phone</P3>
+                <P2 className="text-gray-600">{state.agentContact.phone || 'Not provided'}</P2>
+              </div>
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Brokerage</P3>
+                <P2 className="text-gray-600">{state.agentContact.brokerage || 'Not provided'}</P2>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-4 bg-gray-50 rounded-lg">
+              <P2 className="text-gray-500 mb-2">No agent contact information</P2>
+              <P3 className="text-gray-400">Click the + button to add contact details</P3>
+            </div>
+          )}
+        </div>
+
+        {/* Fallback to Request Data */}
+        {(!state.homeownerContact || !state.agentContact) && (
+          <div className="border-t pt-4">
+            <H4 className="mb-4">Request Form Data</H4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Client Name</P3>
+                <P2 className="text-gray-600">{state.request?.clientName || 'Not provided'}</P2>
+              </div>
+              
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Client Email</P3>
+                <P2 className="text-gray-600">{state.request?.clientEmail || 'Not provided'}</P2>
+              </div>
+
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Client Phone</P3>
+                <P2 className="text-gray-600">{state.request?.clientPhone || 'Not provided'}</P2>
+              </div>
+
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Agent Name</P3>
+                <P2 className="text-gray-600">{state.request?.agentName || 'Not provided'}</P2>
+              </div>
+
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Agent Email</P3>
+                <P2 className="text-gray-600">{state.request?.agentEmail || 'Not provided'}</P2>
+              </div>
+
+              <div>
+                <P3 className="font-medium text-gray-700 mb-1">Brokerage</P3>
+                <P2 className="text-gray-600">{state.request?.brokerage || 'Not provided'}</P2>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -768,6 +1154,24 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         {state.activeTab === 'documents' && renderDocumentsTab()}
         {state.activeTab === 'comments' && renderCommentsTab()}
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal
+        open={state.showContactModal}
+        onClose={handleCloseContactModal}
+        contact={state.editingContact}
+        onSave={handleSaveContact}
+        mode={state.contactModalMode}
+      />
+
+      {/* Property Modal */}
+      <PropertyModal
+        open={state.showPropertyModal}
+        onClose={handleClosePropertyModal}
+        property={state.editingProperty}
+        onSave={handleSaveProperty}
+        mode={state.propertyModalMode}
+      />
     </div>
   );
 };
