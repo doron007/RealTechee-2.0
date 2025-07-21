@@ -43,7 +43,7 @@ jobs:
       if: always()
       with:
         name: playwright-report-${{ matrix.test-project }}
-        path: playwright-report/
+        path: e2e/playwright-report/
         retention-days: 7
 
   # Job 2: Authentication Flow Testing
@@ -129,7 +129,7 @@ jobs:
       if: always()
       with:
         name: playwright-report-${{ matrix.test-project }}
-        path: playwright-report/
+        path: e2e/playwright-report/
         retention-days: 7
 
   # Job 4: Member Portal Testing

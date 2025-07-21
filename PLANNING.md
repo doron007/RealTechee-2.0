@@ -7,13 +7,14 @@ RealTechee 2.0 is a comprehensive real estate home preparation platform designed
 ### Vision Statement
 To become the leading platform for real estate home preparation, providing seamless project management, comprehensive customer relationship management, and data-driven insights that maximize property values and streamline the renovation process.
 
-### Current Status: Production-Ready (99% Complete) - Comprehensive Testing Framework Validated
+### Current Status: Production-Ready (99% Complete) - Infrastructure & Deployment Validated
 - ✅ **Core Platform**: Admin system, auth, responsive design, all 9 user stories (100%)
 - ✅ **Testing Framework**: Seamless + comprehensive E2E with 100% pass rates, zero gaps
 - ✅ **Performance**: 77% bundle reduction, image optimization, GraphQL enhancement (100%)
+- ✅ **Infrastructure**: AWS Amplify deployment pipeline stable, scheduled functions operational
 - ✅ **Data Protection**: Complete AWS backup system (5.2MB secured), schema-change ready
-- ✅ **Production Validation**: Zero bugs/gaps detected, deployment-ready confirmation
-- 🔄 **Final Phase**: Security hardening, production deployment infrastructure (1%)
+- ✅ **Production Validation**: CDK assembly errors resolved, deployment infrastructure working
+- 🔄 **Final Phase**: Security hardening, production deployment monitoring (1%)
 
 ---
 
@@ -183,6 +184,34 @@ Lead → Contact → Request → Quote → Project → Completion
   ↓      ↓        ↓       ↓        ↓          ↓
 Auth → Profile → Estimate → Approval → Execution → Payment
 ```
+
+---
+
+## ⚙️ Infrastructure & Deployment Knowledge
+
+### **AWS Amplify Gen 2 Schedule Functions**
+**Critical Learning**: AWS Amplify Gen 2 uses specific scheduling syntax patterns:
+- ❌ **Invalid**: `'cron(0 9 * * ? *)'` - Missing year field, incompatible format
+- ✅ **Valid**: `'every day'` - Natural language scheduling (recommended)
+- ✅ **Valid**: Cron with proper AWS EventBridge format (6 fields)
+
+### **Schedule Expression Formats Supported**
+| Type              | Format                    | Example                          |
+|-------------------|---------------------------|----------------------------------|
+| Natural Language  | `'every [interval]'`      | `'every day'`, `'every 1h'`     |
+| Cron Expressions  | AWS EventBridge format    | `'0 9 * * ? 2025'` (6 fields)   |
+| Rate Expressions  | Not supported in defineFunction | Use natural language instead |
+
+### **CDK Assembly Error Patterns**
+- **Error**: `FunctionScheduleInitializationError`
+- **Cause**: Invalid cron syntax for AWS Amplify Gen 2
+- **Solution**: Use natural language scheduling or proper 6-field cron
+- **Validation**: Test with `npx ampx sandbox --once`
+
+### **Security Authorization Patterns**
+- **ProjectComments Warning**: Owner reassignment capability is acceptable for business apps
+- **Field-Level Auth**: Optional restriction with `.authorization()` on specific fields
+- **Group-Based Access**: Admin/agent groups can manage all records regardless
 
 ---
 

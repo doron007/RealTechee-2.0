@@ -15,7 +15,7 @@ module.exports = defineConfig({
   fullyParallel: process.env.CI ? true : false, // Parallel in CI, sequential locally
   forbidOnly: !!process.env.CI, // Prevent .only() in CI
   retries: process.env.CI ? 2 : 0, // Retry failed tests in CI
-  workers: process.env.CI ? 4 : 1, // Multiple workers in CI for faster feedback
+  workers: process.env.CI ? 2 : 1, // Optimized workers for CI stability
   
   // Reporting configuration
   reporter: [
@@ -39,7 +39,7 @@ module.exports = defineConfig({
     baseURL: 'http://localhost:3000',
     
     // Browser settings
-    headless: false, // Visible browser for development
+    headless: process.env.CI ? true : false, // Headless in CI, visible locally
     viewport: { width: 1280, height: 1080 }, // Increased height for pagination visibility
     
     // Interaction settings
