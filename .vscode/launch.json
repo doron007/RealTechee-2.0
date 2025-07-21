@@ -68,8 +68,20 @@
         "group": "amplify",
         "order": 1
       }
-    }
-  ],
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Playwright Test",
+      "program": "${workspaceFolder}/node_modules/.bin/playwright",
+      "args": [
+        "test",
+        "e2e/tests/admin/user-stories-business-requirements-validation.spec.js",
+        "--headed"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }  ],
   "compounds": [
     {
       "name": "Debug Full Stack (Compound)",

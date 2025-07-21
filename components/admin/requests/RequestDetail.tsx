@@ -1,14 +1,26 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { ErrorMessage } from '@hookform/error-message';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { requestsAPI, quotesAPI, projectsAPI, backOfficeProductsAPI, contactsAPI, propertiesAPI } from '../../../utils/amplifyAPI';
 import { assignmentService, type AEProfile } from '../../../services/assignmentService';
+import { requestStatusService, type RequestStatus } from '../../../services/requestStatusService';
+import { quoteCreationService } from '../../../services/quoteCreationService';
 import ContactModal from '../../common/modals/ContactModal';
 import PropertyModal from '../../common/modals/PropertyModal';
+import { MeetingScheduler } from '../meetings';
+import StatusAuditTrail from './StatusAuditTrail';
+import { FileUploadField } from '../../forms/FileUploadField';
+import LeadArchivalDialog from './LeadArchivalDialog';
+import LeadReactivationWorkflow from '../lifecycle/LeadReactivationWorkflow';
 import type { Contact as ContactType, Property as PropertyType } from '../../../services/dataValidationService';
-import { IconButton } from '@mui/material';
+import type { MeetingDetails } from '../../../services/projectManagerService';
+import { IconButton, Button as MuiButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -114,6 +126,33 @@ interface Product {
 type Contact = ContactType;
 type Property = PropertyType;
 
+// Validation schema for the request detail form
+const requestValidationSchema = yup.object({
+  status: yup.string().required('Status is required'),
+  product: yup.string().required('Product is required'),
+  message: yup.string().required('Message is required'),
+  relationToProperty: yup.string().required('Relation to property is required'),
+  budget: yup.string().required('Budget is required'),
+  leadSource: yup.string().required('Lead source is required'),
+  assignedTo: yup.string().required('Assignment is required'),
+  officeNotes: yup.string().optional(),
+  needFinance: yup.boolean().optional(),
+  requestedVisitDateTime: yup.string().optional(),
+  visitDate: yup.string().optional(),
+  virtualWalkthrough: yup.string().optional(),
+  rtDigitalSelection: yup.string().optional(),
+}).required();
+
+interface UploadedFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  url: string;
+  key: string;
+  category: 'images' | 'videos' | 'docs';
+}
+
 interface RequestDetailState {
   request: Request | null;
   media: RequestMedia[];
@@ -123,6 +162,8 @@ interface RequestDetailState {
   relatedProjects: RelatedEntity[];
   availableAEs: AEProfile[];
   availableProducts: Product[];
+  availableStatuses: RequestStatus[];
+  allowedStatusTransitions: string[];
   // Contact and Property data
   homeownerContact: Contact | null;
   agentContact: Contact | null;
@@ -131,6 +172,7 @@ interface RequestDetailState {
   loading: boolean;
   saving: boolean;
   error: string;
+  creatingQuote: boolean;
   hasUnsavedChanges: boolean;
   // Tab and modal states
   activeTab: 'details' | 'media' | 'documents' | 'comments';
@@ -146,6 +188,12 @@ interface RequestDetailState {
   editingProperty: Property | null;
   contactModalMode: 'create' | 'edit' | 'view';
   propertyModalMode: 'create' | 'edit' | 'view';
+  // Lifecycle management states
+  showArchivalDialog: boolean;
+  showReactivationDialog: boolean;
+  // File upload state
+  uploadedFiles: UploadedFile[];
+  sessionId: string;
 }
 
 interface RequestDetailProps {
@@ -154,6 +202,35 @@ interface RequestDetailProps {
 
 const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
   const router = useRouter();
+  
+  // React Hook Form setup for validation
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isValid, isDirty }
+  } = useForm({
+    resolver: yupResolver(requestValidationSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      status: '',
+      product: '',
+      message: '',
+      relationToProperty: '',
+      budget: '',
+      leadSource: '',
+      assignedTo: '',
+      officeNotes: '',
+      needFinance: false,
+      requestedVisitDateTime: '',
+      visitDate: '',
+      virtualWalkthrough: '',
+      rtDigitalSelection: '',
+    }
+  });
+  
   const [state, setState] = useState<RequestDetailState>({
     request: null,
     media: [],
@@ -163,6 +240,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     relatedProjects: [],
     availableAEs: [],
     availableProducts: [],
+    availableStatuses: [],
+    allowedStatusTransitions: [],
     // Contact and Property data
     homeownerContact: null,
     agentContact: null,
@@ -171,6 +250,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     loading: true,
     saving: false,
     error: '',
+    creatingQuote: false,
     hasUnsavedChanges: false,
     // Tab and modal states
     activeTab: 'details',
@@ -186,6 +266,12 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     editingProperty: null,
     contactModalMode: 'create',
     propertyModalMode: 'create',
+    // Lifecycle management states
+    showArchivalDialog: false,
+    showReactivationDialog: false,
+    // File upload state
+    uploadedFiles: [],
+    sessionId: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
   });
 
   // Development protection removed - all requests can be edited
@@ -200,6 +286,22 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
       const result = await requestsAPI.get(requestId);
       
       if (result.success && result.data) {
+        // Update form values with the loaded request data
+        const request = result.data;
+        setValue('status', request.status || '');
+        setValue('product', request.product || '');
+        setValue('message', request.message || '');
+        setValue('relationToProperty', request.relationToProperty || '');
+        setValue('budget', request.budget || '');
+        setValue('leadSource', request.leadSource || '');
+        setValue('assignedTo', request.assignedTo || '');
+        setValue('officeNotes', request.officeNotes || '');
+        setValue('needFinance', request.needFinance || false);
+        setValue('requestedVisitDateTime', request.requestedVisitDateTime || '');
+        setValue('visitDate', request.visitDate || '');
+        setValue('virtualWalkthrough', request.virtualWalkthrough || '');
+        setValue('rtDigitalSelection', request.rtDigitalSelection || '');
+        
         updateState({
           request: result.data,
           loading: false,
@@ -217,7 +319,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         loading: false,
       });
     }
-  }, [requestId, updateState]);
+  }, [requestId, updateState, setValue]);
 
   const loadRelatedEntities = useCallback(async () => {
     try {
@@ -290,6 +392,30 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     }
   }, [updateState]);
 
+  const loadStatuses = useCallback(async () => {
+    try {
+      const availableStatuses = await requestStatusService.getAvailableStatuses();
+      updateState({ availableStatuses });
+    } catch (error) {
+      console.error('Error loading statuses:', error);
+    }
+  }, [updateState]);
+
+  const loadAllowedTransitions = useCallback(async () => {
+    if (!state.request?.id || !state.request?.status) return;
+    
+    try {
+      const allowedTransitions = await requestStatusService.getAllowedTransitions(
+        state.request.id,
+        state.request.status,
+        'current-user' // TODO: Replace with actual user ID
+      );
+      updateState({ allowedStatusTransitions: allowedTransitions });
+    } catch (error) {
+      console.error('Error loading allowed transitions:', error);
+    }
+  }, [state.request?.id, state.request?.status, updateState]);
+
   const loadContactAndPropertyData = useCallback(async () => {
     if (!state.request) return;
 
@@ -328,39 +454,64 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
       loadRelatedEntities();
       loadAEs();
       loadProducts();
+      loadStatuses();
     }
-  }, [requestId, loadRequest, loadRelatedEntities, loadAEs, loadProducts]);
+  }, [requestId, loadRequest, loadRelatedEntities, loadAEs, loadProducts, loadStatuses]);
 
   // Load contact and property data when request data is available
   useEffect(() => {
     if (state.request) {
       loadContactAndPropertyData();
+      loadAllowedTransitions();
     }
-  }, [state.request, loadContactAndPropertyData]);
+  }, [state.request, loadContactAndPropertyData, loadAllowedTransitions]);
 
-  const handleSaveRequest = async () => {
+  const handleSaveRequest = async (formData: any) => {
     if (!state.request) return;
 
     try {
       updateState({ saving: true, error: '' });
       
+      // Get the original request to compare status changes
+      const originalResult = await requestsAPI.get(state.request.id);
+      const originalStatus = originalResult.success ? originalResult.data?.status : null;
+      const statusChanged = originalStatus && originalStatus !== formData.status;
+      
+      // If status changed, use the status service to handle the change with audit trail
+      if (statusChanged) {
+        const statusResult = await requestStatusService.changeStatus(
+          state.request.id,
+          formData.status,
+          {
+            userId: 'current-user', // TODO: Replace with actual user ID
+            triggeredBy: 'user',
+            reason: `Status changed from '${originalStatus}' to '${formData.status}' by user`,
+          }
+        );
+        
+        if (!statusResult.success) {
+          throw new Error(statusResult.error?.message || 'Status change failed');
+        }
+      }
+      
+      // Update other request fields
       const result = await requestsAPI.update(state.request.id, {
-        status: state.request.status,
-        product: state.request.product,
-        message: state.request.message,
-        relationToProperty: state.request.relationToProperty,
-        needFinance: state.request.needFinance,
-        budget: state.request.budget,
-        leadSource: state.request.leadSource,
-        assignedTo: state.request.assignedTo || 'Unassigned', // Ensure assignment is never empty
+        status: formData.status,
+        product: formData.product,
+        message: formData.message,
+        relationToProperty: formData.relationToProperty,
+        needFinance: formData.needFinance,
+        budget: formData.budget,
+        leadSource: formData.leadSource,
+        assignedTo: formData.assignedTo || 'Unassigned', // Ensure assignment is never empty
         assignedDate: state.request.assignedDate,
-        requestedVisitDateTime: state.request.requestedVisitDateTime,
-        visitDate: state.request.visitDate,
-        virtualWalkthrough: state.request.virtualWalkthrough,
-        rtDigitalSelection: state.request.rtDigitalSelection,
+        requestedVisitDateTime: formData.requestedVisitDateTime,
+        visitDate: formData.visitDate,
+        virtualWalkthrough: formData.virtualWalkthrough,
+        rtDigitalSelection: formData.rtDigitalSelection,
         moveToQuotingDate: state.request.moveToQuotingDate,
         expiredDate: state.request.expiredDate,
-        officeNotes: state.request.officeNotes,
+        officeNotes: formData.officeNotes,
         businessUpdatedDate: new Date().toISOString(),
       });
 
@@ -369,8 +520,9 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           saving: false,
           hasUnsavedChanges: false,
         });
-        // Reload to get fresh data
+        // Reload to get fresh data and update allowed transitions
         await loadRequest();
+        await loadAllowedTransitions();
       } else {
         throw new Error(typeof result.error === 'string' ? result.error : 'Failed to save request');
       }
@@ -383,13 +535,75 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
     }
   };
 
-  const handleRequestChange = (field: keyof Request, value: any) => {
+  // Watch form changes to detect unsaved changes
+  const watchedValues = watch();
+  const hasUnsavedChanges = isDirty && Object.keys(errors).length === 0;
+
+  // Lifecycle management handlers
+  const handleOpenArchivalDialog = () => {
+    updateState({ showArchivalDialog: true });
+  };
+
+  const handleCloseArchivalDialog = () => {
+    updateState({ showArchivalDialog: false });
+  };
+
+  const handleArchivalSuccess = () => {
+    // Reload the request to get updated status
+    loadRequest();
+    updateState({ showArchivalDialog: false });
+  };
+
+  const handleOpenReactivationDialog = () => {
+    updateState({ showReactivationDialog: true });
+  };
+
+  const handleCloseReactivationDialog = () => {
+    updateState({ showReactivationDialog: false });
+  };
+
+  const handleReactivationSuccess = () => {
+    // Reload the request to get updated status
+    loadRequest();
+    updateState({ showReactivationDialog: false });
+  };
+
+  const handleCreateQuote = async () => {
     if (!state.request) return;
 
-    updateState({
-      request: { ...state.request, [field]: value },
-      hasUnsavedChanges: true,
-    });
+    try {
+      updateState({ creatingQuote: true, error: '' });
+
+      const result = await quoteCreationService.createQuoteFromRequest(
+        state.request.id,
+        {
+          userId: 'current-user', // TODO: Replace with actual user ID
+          automaticStatusUpdate: true,
+          additionalData: {
+            title: `Quote for ${state.request.id.slice(0, 8)} - ${state.request.product || 'Services'}`,
+            assignedTo: state.request.assignedTo,
+          }
+        }
+      );
+
+      if (result.success && result.quoteId) {
+        updateState({ creatingQuote: false });
+        
+        // Reload related entities to show the new quote
+        loadRelatedEntities();
+        
+        // Navigate to the new quote
+        router.push(`/admin/quotes/${result.quoteId}`);
+      } else {
+        throw new Error(result.error?.message || 'Quote creation failed');
+      }
+    } catch (error) {
+      console.error('Error creating quote:', error);
+      updateState({
+        creatingQuote: false,
+        error: error instanceof Error ? error.message : 'Error creating quote',
+      });
+    }
   };
 
   const handleAssignmentChange = async (newAssignee: string) => {
@@ -404,18 +618,17 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
       }
     }
     
-    // Update assignment and assignedDate
+    // Update assignment and assignedDate in the local state
     const assignedDate = newAssignee && newAssignee !== 'Unassigned' 
       ? new Date().toISOString() 
-      : null; // Use null instead of undefined for better database compatibility
+      : null;
     
     updateState({
       request: { 
         ...state.request, 
-        assignedTo: newAssignee || 'Unassigned', // Ensure we always have a value
+        assignedTo: newAssignee || 'Unassigned',
         assignedDate: assignedDate || undefined
       },
-      hasUnsavedChanges: true,
     });
   };
 
@@ -437,10 +650,43 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
   };
 
   const handleSaveContact = async (contact: Contact) => {
-    // Refresh contact data
-    await loadContactAndPropertyData();
-    // Mark as having unsaved changes to update the request relationship
-    updateState({ hasUnsavedChanges: true });
+    if (!state.request || !contact.id) return;
+    
+    try {
+      // Determine if this is a homeowner or agent contact based on context
+      // This is a simplified approach - in a real implementation you might want to be more explicit
+      const isAgent = contact.brokerage || state.editingContact === state.agentContact;
+      
+      const updateData: any = {
+        businessUpdatedDate: new Date().toISOString(),
+      };
+      
+      if (isAgent) {
+        updateData.agentContactId = contact.id;
+      } else {
+        updateData.homeownerContactId = contact.id;
+      }
+      
+      // Update the request to link to the contact
+      const result = await requestsAPI.update(state.request.id, updateData);
+      
+      if (!result.success) {
+        console.error('Failed to link contact to request:', result.error);
+        alert('Contact saved but failed to link to request. Please try refreshing the page.');
+        return;
+      }
+      
+      // Update local state
+      updateState({
+        request: { ...state.request, ...updateData }
+      });
+      
+      // Refresh contact data to show the updated information
+      await loadContactAndPropertyData();
+    } catch (error) {
+      console.error('Error linking contact to request:', error);
+      alert('Contact saved but failed to link to request. Please try refreshing the page.');
+    }
   };
 
   // Property modal handlers
@@ -461,10 +707,40 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
   };
 
   const handleSaveProperty = async (property: Property) => {
-    // Refresh property data
-    await loadContactAndPropertyData();
-    // Mark as having unsaved changes to update the request relationship
-    updateState({ hasUnsavedChanges: true });
+    if (!state.request) return;
+    
+    try {
+      // Update the request to link to the property
+      if (property.id && property.id !== state.request.addressId) {
+        const result = await requestsAPI.update(state.request.id, {
+          addressId: property.id,
+          businessUpdatedDate: new Date().toISOString(),
+        });
+        
+        if (!result.success) {
+          console.error('Failed to link property to request:', result.error);
+          alert('Property saved but failed to link to request. Please try refreshing the page.');
+          return;
+        }
+        
+        // Update local state
+        updateState({
+          request: { ...state.request, addressId: property.id }
+        });
+      }
+      
+      // Refresh property data to show the updated information
+      await loadContactAndPropertyData();
+    } catch (error) {
+      console.error('Error linking property to request:', error);
+      alert('Property saved but failed to link to request. Please try refreshing the page.');
+    }
+  };
+
+  // Meeting scheduler handler
+  const handleMeetingScheduled = async (meetingDetails: MeetingDetails) => {
+    // Reload request to get updated meeting data
+    await loadRequest();
   };
 
   const renderDetailsTab = () => (
@@ -475,31 +751,66 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Status</P3>
-              <select
-                value={state.request?.status || ''}
-                onChange={(e) => handleRequestChange('status', e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
-              >
-                <option value="submitted">Submitted</option>
-                <option value="reviewing">Reviewing</option>
-                <option value="quoted">Quoted</option>
-                <option value="approved">Approved</option>
-                <option value="expired">Expired</option>
-                <option value="archived">Archived</option>
-              </select>
+              <P3 className="font-medium text-gray-700 mb-1">Status*</P3>
+              <div className="flex gap-2">
+                <select
+                  {...register('status')}
+                  disabled={state.saving}
+                  className={`flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                    errors.status ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                >
+                  <option value="">Select Status...</option>
+                  {state.allowedStatusTransitions.length > 0 ? (
+                    state.allowedStatusTransitions.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))
+                  ) : (
+                    state.availableStatuses.map((status) => (
+                      <option key={status.id} value={status.title}>
+                        {status.title}
+                      </option>
+                    ))
+                  )}
+                </select>
+                {state.request?.status !== 'New' && state.request?.status && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setValue('status', 'New');
+                      updateState({
+                        hasUnsavedChanges: true,
+                      });
+                    }}
+                    disabled={state.saving}
+                    className="px-3 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 disabled:opacity-50 text-sm whitespace-nowrap"
+                    title="Reset status to 'New' to restart the state machine"
+                  >
+                    Reset to New
+                  </button>
+                )}
+              </div>
+              <ErrorMessage
+                errors={errors}
+                name="status"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
+              />
             </label>
           </div>
           
           <div>
             <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Product</P3>
+              <P3 className="font-medium text-gray-700 mb-1">Product*</P3>
               <select
-                value={state.request?.product || ''}
-                onChange={(e) => handleRequestChange('product', e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                {...register('product')}
+                disabled={state.saving}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                  errors.product ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">Select Product...</option>
                 {state.availableProducts.map((product) => (
@@ -508,30 +819,46 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                   </option>
                 ))}
               </select>
-            </label>
-          </div>
-
-          <div>
-            <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Budget</P3>
-              <input
-                type="text"
-                value={state.request?.budget || ''}
-                onChange={(e) => handleRequestChange('budget', e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              <ErrorMessage
+                errors={errors}
+                name="product"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
               />
             </label>
           </div>
 
           <div>
             <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Lead Source</P3>
+              <P3 className="font-medium text-gray-700 mb-1">Budget*</P3>
+              <input
+                type="text"
+                {...register('budget')}
+                disabled={state.saving}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                  errors.budget ? 'border-red-500' : 'border-gray-300'
+                }`}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="budget"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label className="block">
+              <P3 className="font-medium text-gray-700 mb-1">Lead Source*</P3>
               <select
-                value={state.request?.leadSource || ''}
-                onChange={(e) => handleRequestChange('leadSource', e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                {...register('leadSource')}
+                disabled={state.saving}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                  errors.leadSource ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">Select Lead Source...</option>
                 <option value="Website">Website</option>
@@ -544,17 +871,29 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 <option value="Direct Mail">Direct Mail</option>
                 <option value="Other">Other</option>
               </select>
+              <ErrorMessage
+                errors={errors}
+                name="leadSource"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
+              />
             </label>
           </div>
 
           <div>
             <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Assigned To</P3>
+              <P3 className="font-medium text-gray-700 mb-1">Assigned To*</P3>
               <select
-                value={state.request?.assignedTo || ''}
-                onChange={(e) => handleAssignmentChange(e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                {...register('assignedTo')}
+                onChange={(e) => {
+                  setValue('assignedTo', e.target.value);
+                  handleAssignmentChange(e.target.value);
+                }}
+                disabled={state.saving}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                  errors.assignedTo ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">Select AE...</option>
                 {state.availableAEs.map((ae) => (
@@ -563,17 +902,25 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                   </option>
                 ))}
               </select>
+              <ErrorMessage
+                errors={errors}
+                name="assignedTo"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
+              />
             </label>
           </div>
 
           <div>
             <label className="block">
-              <P3 className="font-medium text-gray-700 mb-1">Relation to Property</P3>
+              <P3 className="font-medium text-gray-700 mb-1">Relation to Property*</P3>
               <select
-                value={state.request?.relationToProperty || ''}
-                onChange={(e) => handleRequestChange('relationToProperty', e.target.value)}
-                disabled={false}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                {...register('relationToProperty')}
+                disabled={state.saving}
+                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                  errors.relationToProperty ? 'border-red-500' : 'border-gray-300'
+                }`}
               >
                 <option value="">Select Relation...</option>
                 <option value="Owner">Owner</option>
@@ -583,19 +930,34 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                 <option value="Contractor">Contractor</option>
                 <option value="Other">Other</option>
               </select>
+              <ErrorMessage
+                errors={errors}
+                name="relationToProperty"
+                render={({ message }) => (
+                  <P3 className="text-red-600 mt-1">{message}</P3>
+                )}
+              />
             </label>
           </div>
         </div>
 
         <div className="mt-4">
           <label className="block">
-            <P3 className="font-medium text-gray-700 mb-1">Message</P3>
+            <P3 className="font-medium text-gray-700 mb-1">Message*</P3>
             <textarea
-              value={state.request?.message || ''}
-              onChange={(e) => handleRequestChange('message', e.target.value)}
-              disabled={false}
+              {...register('message')}
+              disabled={state.saving}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 ${
+                errors.message ? 'border-red-500' : 'border-gray-300'
+              }`}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="message"
+              render={({ message }) => (
+                <P3 className="text-red-600 mt-1">{message}</P3>
+              )}
             />
           </label>
         </div>
@@ -604,9 +966,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <label className="block">
             <P3 className="font-medium text-gray-700 mb-1">Office Notes</P3>
             <textarea
-              value={state.request?.officeNotes || ''}
-              onChange={(e) => handleRequestChange('officeNotes', e.target.value)}
-              disabled={false}
+              {...register('officeNotes')}
+              disabled={state.saving}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             />
@@ -617,9 +978,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           <label className="flex items-center">
             <input
               type="checkbox"
-              checked={state.request?.needFinance || false}
-              onChange={(e) => handleRequestChange('needFinance', e.target.checked)}
-              disabled={false}
+              {...register('needFinance')}
+              disabled={state.saving}
               className="mr-2"
             />
             <P3 className="text-gray-700">Needs Finance</P3>
@@ -636,10 +996,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
               <P3 className="font-medium text-gray-700 mb-1">Requested Visit Date/Time</P3>
               <input
                 type="datetime-local"
-                value={state.request?.requestedVisitDateTime ? 
-                  new Date(state.request.requestedVisitDateTime).toISOString().slice(0, 16) : ''}
-                onChange={(e) => handleRequestChange('requestedVisitDateTime', e.target.value)}
-                disabled={false}
+                {...register('requestedVisitDateTime')}
+                disabled={state.saving}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -649,9 +1007,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">Virtual Walkthrough</P3>
               <select
-                value={state.request?.virtualWalkthrough || ''}
-                onChange={(e) => handleRequestChange('virtualWalkthrough', e.target.value)}
-                disabled={false}
+                {...register('virtualWalkthrough')}
+                disabled={state.saving}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">Select Option...</option>
@@ -667,10 +1024,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
               <P3 className="font-medium text-gray-700 mb-1">Visit Date</P3>
               <input
                 type="date"
-                value={state.request?.visitDate ? 
-                  new Date(state.request.visitDate).toISOString().split('T')[0] : ''}
-                onChange={(e) => handleRequestChange('visitDate', e.target.value)}
-                disabled={false}
+                {...register('visitDate')}
+                disabled={state.saving}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               />
             </label>
@@ -680,9 +1035,8 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             <label className="block">
               <P3 className="font-medium text-gray-700 mb-1">RT Digital Selection</P3>
               <select
-                value={state.request?.rtDigitalSelection || ''}
-                onChange={(e) => handleRequestChange('rtDigitalSelection', e.target.value)}
-                disabled={false}
+                {...register('rtDigitalSelection')}
+                disabled={state.saving}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">Select Option...</option>
@@ -694,6 +1048,23 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           </div>
         </div>
       </div>
+
+      {/* Meeting Scheduling & PM Assignment */}
+      <MeetingScheduler
+        requestId={state.request?.id || ''}
+        currentMeetingData={{
+          requestedVisitDateTime: state.request?.requestedVisitDateTime,
+          visitDate: state.request?.visitDate,
+          virtualWalkthrough: state.request?.virtualWalkthrough,
+        }}
+        contactInfo={{
+          homeownerContactId: state.request?.homeownerContactId,
+          agentContactId: state.request?.agentContactId,
+          propertyAddress: state.propertyData?.propertyFullAddress || state.request?.propertyAddress,
+        }}
+        onMeetingScheduled={handleMeetingScheduled}
+        disabled={state.saving}
+      />
 
       {/* Property Information */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -906,64 +1277,167 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
           </div>
         )}
       </div>
+
+      {/* Status Audit Trail */}
+      <StatusAuditTrail
+        requestId={state.request?.id || ''}
+        officeNotes={state.request?.officeNotes || ''}
+        className="mt-6"
+      />
     </div>
   );
 
-  const renderMediaTab = () => (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <div className="flex justify-between items-center mb-4">
-          <H3>Media Files</H3>
-          <Button
-            onClick={() => updateState({ showAddMediaModal: true })}
-            disabled={false}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-gray-400"
-          >
-            Add Media
-          </Button>
-        </div>
-        
-        {state.request?.uploadedMedia ? (
-          <div className="text-center py-8">
-            <P2 className="text-gray-600">Media URLs: {state.request.uploadedMedia}</P2>
-            <P3 className="text-gray-500 mt-2">Media management interface coming soon</P3>
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <P2 className="text-gray-500">No media files uploaded</P2>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  const renderMediaTab = () => {
+    const addressInfo = state.propertyData ? {
+      streetAddress: state.propertyData.houseAddress || '',
+      city: state.propertyData.city || '',
+      state: state.propertyData.state || '',
+      zip: state.propertyData.zip || ''
+    } : {
+      streetAddress: state.request?.propertyAddress || 'unknown',
+      city: 'unknown',
+      state: 'unknown',
+      zip: 'unknown'
+    };
 
-  const renderDocumentsTab = () => (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <div className="flex justify-between items-center mb-4">
-          <H3>Documents</H3>
-          <Button
-            onClick={() => updateState({ showAddDocumentModal: true })}
-            disabled={false}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-gray-400"
-          >
-            Add Document
-          </Button>
+    return (
+      <div className="space-y-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <H3 className="mb-4">Media Files</H3>
+          <P3 className="text-[#646469] mb-6">
+            Upload images and videos related to this request. Files will be organized by address and session.
+          </P3>
+          
+          <FileUploadField
+            onFilesChange={(files) => {
+              const mediaFiles = files.filter(f => f.category === 'images' || f.category === 'videos');
+              updateState({ uploadedFiles: [...state.uploadedFiles.filter(f => f.category === 'docs'), ...mediaFiles] });
+            }}
+            maxFileSize={25}
+            addressInfo={addressInfo}
+            sessionId={state.sessionId}
+          />
+          
+          {/* Display uploaded media files */}
+          {state.uploadedFiles.filter(f => f.category === 'images' || f.category === 'videos').length > 0 && (
+            <div className="mt-6">
+              <H4 className="mb-4">Uploaded Media</H4>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {state.uploadedFiles
+                  .filter(f => f.category === 'images' || f.category === 'videos')
+                  .map((file) => (
+                    <div key={file.id} className="relative group">
+                      {file.category === 'images' ? (
+                        <Image
+                          src={file.url}
+                          alt={file.name}
+                          width={128}
+                          height={128}
+                          className="w-full h-32 object-cover rounded border border-[#E4E4E4]"
+                        />
+                      ) : (
+                        <video
+                          src={file.url}
+                          className="w-full h-32 object-cover rounded border border-[#E4E4E4]"
+                          controls
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded flex items-center justify-center">
+                        <P3 className="text-white text-center px-2">
+                          {file.name}
+                        </P3>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
-        
-        {state.request?.uplodedDocuments ? (
-          <div className="text-center py-8">
-            <P2 className="text-gray-600">Document URLs: {state.request.uplodedDocuments}</P2>
-            <P3 className="text-gray-500 mt-2">Document management interface coming soon</P3>
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <P2 className="text-gray-500">No documents uploaded</P2>
-          </div>
-        )}
       </div>
-    </div>
-  );
+    );
+  };
+
+  const renderDocumentsTab = () => {
+    const addressInfo = state.propertyData ? {
+      streetAddress: state.propertyData.houseAddress || '',
+      city: state.propertyData.city || '',
+      state: state.propertyData.state || '',
+      zip: state.propertyData.zip || ''
+    } : {
+      streetAddress: state.request?.propertyAddress || 'unknown',
+      city: 'unknown',
+      state: 'unknown',
+      zip: 'unknown'
+    };
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <H3 className="mb-4">Document Files</H3>
+          <P3 className="text-[#646469] mb-6">
+            Upload documents such as PDFs, Word files, or other relevant files for this request.
+          </P3>
+          
+          <FileUploadField
+            onFilesChange={(files) => {
+              const docFiles = files.filter(f => f.category === 'docs');
+              updateState({ uploadedFiles: [...state.uploadedFiles.filter(f => f.category !== 'docs'), ...docFiles] });
+            }}
+            maxFileSize={15}
+            addressInfo={addressInfo}
+            sessionId={state.sessionId}
+          />
+          
+          {/* Display uploaded documents */}
+          {state.uploadedFiles.filter(f => f.category === 'docs').length > 0 && (
+            <div className="mt-6">
+              <H4 className="mb-4">Uploaded Documents</H4>
+              <div className="space-y-3">
+                {state.uploadedFiles
+                  .filter(f => f.category === 'docs')
+                  .map((file) => (
+                    <div key={file.id} className="flex items-center gap-4 p-4 bg-[#F9F4F3] border border-[#E4E4E4] rounded hover:bg-gray-50 transition-colors">
+                      <div className="w-12 h-12 bg-blue-100 rounded flex items-center justify-center">
+                        📄
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <P3 className="font-medium text-[#2A2B2E] truncate">
+                          {file.name}
+                        </P3>
+                        <P3 className="text-[#646469] text-sm">
+                          {(file.size / 1024 / 1024).toFixed(2)} MB • {file.type}
+                        </P3>
+                      </div>
+                      <div className="flex gap-2">
+                        <MuiButton
+                          variant="outlined"
+                          size="small"
+                          onClick={() => window.open(file.url, '_blank')}
+                        >
+                          View
+                        </MuiButton>
+                        <MuiButton
+                          variant="outlined"
+                          size="small"
+                          onClick={() => {
+                            const link = document.createElement('a');
+                            link.href = file.url;
+                            link.download = file.name;
+                            link.click();
+                          }}
+                        >
+                          Download
+                        </MuiButton>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   const renderCommentsTab = () => (
     <div className="space-y-6">
@@ -1045,10 +1519,42 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
             >
               Back to Requests
             </Button>
-            {state.hasUnsavedChanges && (
+            
+            {/* Archive Button - Show for active requests */}
+            {['New', 'Pending walk-thru', 'Move to Quoting'].includes(state.request.status) && (
               <Button
-                onClick={handleSaveRequest}
-                disabled={state.saving}
+                onClick={handleOpenArchivalDialog}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+              >
+                Archive Lead
+              </Button>
+            )}
+
+            {/* Reactivate Button - Show for archived/expired requests */}
+            {(['Archived', 'Expired'].includes(state.request.status)) && (
+              <Button
+                onClick={handleOpenReactivationDialog}
+                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md"
+              >
+                Reactivate Lead
+              </Button>
+            )}
+
+            {/* Create Quote Button - Show when request is ready */}
+            {(state.request.status === 'Move to Quoting' || state.request.status === 'Pending walk-thru') && (
+              <Button
+                onClick={handleCreateQuote}
+                disabled={state.creatingQuote}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md disabled:bg-green-400"
+              >
+                {state.creatingQuote ? 'Creating Quote...' : 'Create Quote'}
+              </Button>
+            )}
+            
+            {hasUnsavedChanges && (
+              <Button
+                onClick={handleSubmit(handleSaveRequest)}
+                disabled={state.saving || !isValid}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:bg-blue-400"
               >
                 {state.saving ? 'Saving...' : 'Save Changes'}
@@ -1171,6 +1677,24 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
         property={state.editingProperty}
         onSave={handleSaveProperty}
         mode={state.propertyModalMode}
+      />
+
+      {/* Lead Archival Dialog */}
+      <LeadArchivalDialog
+        open={state.showArchivalDialog}
+        onClose={handleCloseArchivalDialog}
+        requestId={state.request?.id || ''}
+        requestData={state.request}
+        onSuccess={handleArchivalSuccess}
+      />
+
+      {/* Lead Reactivation Workflow */}
+      <LeadReactivationWorkflow
+        open={state.showReactivationDialog}
+        onClose={handleCloseReactivationDialog}
+        requestId={state.request?.id || ''}
+        requestData={state.request}
+        onSuccess={handleReactivationSuccess}
       />
     </div>
   );

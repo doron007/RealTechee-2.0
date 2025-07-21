@@ -60,6 +60,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       isImplemented: true
     },
     {
+      id: 'lifecycle',
+      name: 'Lifecycle',
+      route: '/admin/lifecycle',
+      icon: '/assets/icons/ic-watch.svg',
+      isImplemented: true
+    },
+    {
       id: 'divider-1',
       name: '',
       route: '',

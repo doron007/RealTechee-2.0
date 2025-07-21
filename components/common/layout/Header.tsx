@@ -9,7 +9,8 @@ import {
 } from '../../../utils/componentUtils';
 import Button from '../buttons/Button';
 import EstimateButton from '../buttons/EstimateButton';
-import { AuthorizationService } from '../../../utils/authorizationHelpers';
+// Dynamic import to avoid loading authorization service in main bundle
+// import { AuthorizationService } from '../../../utils/authorizationHelpers';
 
 // Define HeaderProps interface directly in the file
 interface HeaderProps {
@@ -61,11 +62,13 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
   };
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // Check admin access when user logs in
+  // Check admin access when user logs in with dynamic import
   useEffect(() => {
     const checkAdminAccess = async () => {
       if (userLoggedIn && user) {
         try {
+          // Dynamic import to avoid loading in main bundle
+          const { AuthorizationService } = await import('../../../utils/authorizationHelpers');
           const isAdmin = await AuthorizationService.hasMinimumRole('admin');
           setHasAdminAccess(isAdmin);
         } catch (err) {

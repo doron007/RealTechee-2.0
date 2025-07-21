@@ -100,6 +100,18 @@ module.exports = defineConfig({
       },
     },
     
+    // Lead Lifecycle Management testing (User Story 07)
+    {
+      name: 'lead-lifecycle-management',
+      testMatch: '**/admin/lead-lifecycle-management.spec.js',
+      dependencies: ['auth-setup'],
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: 'e2e/playwright/.auth/user.json'
+      },
+      timeout: 120000, // Extended timeout for lifecycle operations
+    },
+    
     // Isolated admin dashboard testing
     {
       name: 'isolated-admin-dashboard',

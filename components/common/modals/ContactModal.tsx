@@ -3,7 +3,8 @@ import { Button, TextField, Switch, FormControlLabel, Alert, CircularProgress, C
 import BaseModal from './BaseModal';
 import { H4, P3 } from '../../typography';
 import { contactsAPI } from '../../../utils/amplifyAPI';
-import { dataValidationService, type ContactDuplicateMatch } from '../../../services/dataValidationService';
+// Dynamic import to avoid loading in main bundle
+import type { ContactDuplicateMatch } from '../../../services/dataValidationService';
 
 interface Contact {
   id?: string;
@@ -147,6 +148,8 @@ const ContactModal: React.FC<ContactModalProps> = ({
 
     // Advanced validation using validation service
     try {
+      // Dynamic import to avoid loading in main bundle
+      const { dataValidationService } = await import('../../../services/dataValidationService');
       const validationResult = await dataValidationService.validateContact(formData, contact?.id);
       
       if (validationResult.duplicates.length > 0) {
