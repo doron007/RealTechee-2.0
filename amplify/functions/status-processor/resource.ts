@@ -7,5 +7,5 @@ export const statusProcessor = defineFunction({
     AMPLIFY_DATA_GRAPHQL_ENDPOINT: process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT || '',
     AMPLIFY_DATA_GRAPHQL_API_KEY: process.env.AMPLIFY_DATA_GRAPHQL_API_KEY || '',
   },
-  schedule: 'cron(0 9 * * ? *)', // Run daily at 9 AM UTC
+  schedule: 'every day', // Run daily using natural language expression
 });

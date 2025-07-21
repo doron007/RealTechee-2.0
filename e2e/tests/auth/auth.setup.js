@@ -7,7 +7,7 @@
 
 const { test: setup, expect } = require('@playwright/test');
 
-const authFile = 'playwright/.auth/user.json';
+const authFile = 'e2e/playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
   // Navigate to login page

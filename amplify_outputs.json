@@ -6366,6 +6366,7 @@
   "version": "1.4",
   "custom": {
     "notificationProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-notificationprocessorlam-sLgeFvCfN0xX",
-    "userAdminArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-do-useradminlambda0B2D5BDC-PxJhVxRHwhMc"
+    "userAdminArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-do-useradminlambda0B2D5BDC-PxJhVxRHwhMc",
+    "statusProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-statusprocessorlambda74B-jCT993OvoRx9"
   }
 }
