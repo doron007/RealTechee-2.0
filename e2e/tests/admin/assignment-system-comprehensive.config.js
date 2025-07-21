@@ -45,7 +45,7 @@ module.exports = defineConfig({
       use: { 
         ...require('@playwright/test').devices['Desktop Chrome'],
         // Use authenticated user session
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       }
     }
   ],

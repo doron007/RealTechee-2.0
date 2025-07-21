@@ -15,7 +15,7 @@ const { test, expect } = require('@playwright/test');
 test.describe('Advanced Search Functionality', () => {
   
   // Test authentication
-  test.use({ storageState: 'playwright/.auth/user.json' });
+  test.use({ storageState: 'e2e/playwright/.auth/user.json' });
   
   let page;
   

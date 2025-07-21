@@ -10,7 +10,7 @@ const { execSync } = require('child_process');
 const { GetEstimateFormTester } = require('../../utils/GetEstimateFormTester');
 
 // Use authenticated user for admin access
-test.use({ storageState: 'playwright/.auth/user.json' });
+test.use({ storageState: 'e2e/playwright/.auth/user.json' });
 
 test.describe('Assignment System - Robust E2E Tests', () => {
   

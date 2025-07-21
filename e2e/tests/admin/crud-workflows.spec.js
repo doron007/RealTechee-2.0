@@ -14,7 +14,7 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('CRUD Workflows', () => {
   
-  test.use({ storageState: 'playwright/.auth/user.json' });
+  test.use({ storageState: 'e2e/playwright/.auth/user.json' });
   
   let page;
   

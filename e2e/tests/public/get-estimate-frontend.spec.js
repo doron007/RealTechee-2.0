@@ -15,7 +15,7 @@
 const { test, expect } = require('@playwright/test');
 
 // Use authenticated user for form submission
-test.use({ storageState: 'playwright/.auth/user.json' });
+test.use({ storageState: 'e2e/playwright/.auth/user.json' });
 
 test.describe('Get Estimate Form - Golden User Story 01', () => {
   

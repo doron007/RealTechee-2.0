@@ -70,6 +70,17 @@ jobs:
       run: |
         mkdir -p e2e/playwright/.auth
         mkdir -p playwright/.auth
+        
+    - name: Create test environment file
+      run: |
+        echo "NEXT_PUBLIC_TEST_MODE=true" >> .env.local
+        echo "CI=true" >> .env.local
+        echo "NODE_ENV=test" >> .env.local
+        
+    - name: Wait for server readiness
+      run: |
+        # Wait for dev server to be ready before starting authentication tests
+        timeout 120 bash -c 'until curl -f http://localhost:3000/login 2>/dev/null; do echo "Waiting for login page..."; sleep 3; done' || echo "Login page check timeout, proceeding..."
       
     - name: Run authentication tests
       run: npx playwright test --project=auth-flows --reporter=html
@@ -116,6 +127,19 @@ jobs:
       run: |
         echo "NEXT_PUBLIC_TEST_MODE=true" >> .env.local
         echo "CI=true" >> .env.local
+        echo "NODE_ENV=test" >> .env.local
+        
+    - name: Validate environment
+      run: |
+        echo "Node version: $(node --version)"
+        echo "NPM version: $(npm --version)"
+        echo "CI environment: $CI"
+        echo "Test mode: $NEXT_PUBLIC_TEST_MODE"
+        
+    - name: Wait for server readiness
+      run: |
+        # Wait for dev server to be ready before starting tests
+        timeout 120 bash -c 'until curl -f http://localhost:3000 2>/dev/null; do echo "Waiting for server..."; sleep 3; done' || echo "Server check timeout, proceeding..."
       
     - name: Run admin tests
       run: npx playwright test --project=${{ matrix.test-project }} --reporter=html

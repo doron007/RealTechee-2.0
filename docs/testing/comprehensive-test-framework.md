@@ -297,7 +297,7 @@ kill -9 [PID]
 
 #### Authentication Failures
 - Verify admin credentials in Cognito
-- Check authentication state file: `playwright/.auth/user.json`
+- Check authentication state file: `e2e/playwright/.auth/user.json`
 - Ensure admin privileges are correctly assigned
 
 #### Test Directory Permissions

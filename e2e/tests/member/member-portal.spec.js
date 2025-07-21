@@ -45,7 +45,7 @@ test.describe('Member Portal', () => {
     test.beforeAll(async ({ browser }) => {
       // Create authenticated member context
       const context = await browser.newContext({ 
-        storageState: 'playwright/.auth/user.json',
+        storageState: 'e2e/playwright/.auth/user.json',
         viewport: { width: 1280, height: 1080 }
       });
       sharedPage = await context.newPage();
@@ -154,7 +154,7 @@ test.describe('Member Portal', () => {
     
     test('should provide user settings page', async ({ page }) => {
       await page.goto('/settings', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -186,7 +186,7 @@ test.describe('Member Portal', () => {
     
     test('should allow members to view their projects', async ({ page }) => {
       await page.goto('/projects', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -218,7 +218,7 @@ test.describe('Member Portal', () => {
     test('should provide project request functionality', async ({ page }) => {
       // Check if members can request new projects
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -246,7 +246,7 @@ test.describe('Member Portal', () => {
     
     test('should provide appropriate member navigation', async ({ page }) => {
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -289,7 +289,7 @@ test.describe('Member Portal', () => {
     
     test('should display member-appropriate content', async ({ page }) => {
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -312,7 +312,7 @@ test.describe('Member Portal', () => {
       const startTime = Date.now();
       
       await page.goto('/profile', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -326,7 +326,7 @@ test.describe('Member Portal', () => {
     
     test('should be responsive for mobile members', async ({ page }) => {
       await page.goto('/profile', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -373,7 +373,7 @@ test.describe('Member Portal', () => {
     
     test('should provide appropriate member permissions', async ({ page }) => {
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -400,7 +400,7 @@ test.describe('Member Portal', () => {
     
     test('should provide member support options', async ({ page }) => {
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -432,7 +432,7 @@ test.describe('Member Portal', () => {
     
     test('should handle member session gracefully', async ({ page }) => {
       await page.goto('/profile', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       
@@ -459,7 +459,7 @@ test.describe('Member Portal', () => {
     
     test('should maintain member experience consistency', async ({ page }) => {
       await page.goto('/', { 
-        storageState: 'playwright/.auth/user.json' 
+        storageState: 'e2e/playwright/.auth/user.json' 
       });
       await page.waitForLoadState('networkidle');
       

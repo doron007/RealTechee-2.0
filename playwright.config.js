@@ -30,8 +30,8 @@ module.exports = defineConfig({
     ['./e2e/tests/reporters/enhanced-reporter.js'] // Custom reporter for compatibility
   ],
 
-  // Global test timeout
-  timeout: 60000, // 60 seconds per test
+  // Global test timeout - increased for CI stability
+  timeout: process.env.CI ? 120000 : 60000, // 2 minutes in CI, 1 minute locally
   
   // Global test settings
   use: {
@@ -42,9 +42,9 @@ module.exports = defineConfig({
     headless: process.env.CI ? true : false, // Headless in CI, visible locally
     viewport: { width: 1280, height: 1080 }, // Increased height for pagination visibility
     
-    // Interaction settings
-    actionTimeout: 15000, // 15 seconds for actions
-    navigationTimeout: 20000, // 20 seconds for navigation
+    // Interaction settings - increased for CI reliability
+    actionTimeout: process.env.CI ? 30000 : 15000, // 30s in CI, 15s locally
+    navigationTimeout: process.env.CI ? 45000 : 20000, // 45s in CI, 20s locally
     
     // Screenshots and video
     screenshot: 'only-on-failure',
@@ -247,8 +247,8 @@ module.exports = defineConfig({
   webServer: {
     command: 'npm run dev', // Using regular dev for webServer, priming handled separately
     port: 3000,
-    reuseExistingServer: true, // Don't restart if already running
-    timeout: 120000, // 2 minutes to start
+    reuseExistingServer: !process.env.CI, // Fresh server in CI, reuse locally
+    timeout: process.env.CI ? 180000 : 120000, // 3 minutes in CI, 2 minutes locally
   },
 });
 

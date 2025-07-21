@@ -49,7 +49,7 @@ test.describe('Admin Dashboard Page', () => {
   test.beforeAll(async ({ browser }) => {
     // Create a single page context that persists across all tests
     const context = await browser.newContext({ 
-      storageState: 'playwright/.auth/user.json',
+      storageState: 'e2e/playwright/.auth/user.json',
       viewport: { width: 1280, height: 1080 } // Increased height for dashboard visibility
     });
     sharedPage = await context.newPage();

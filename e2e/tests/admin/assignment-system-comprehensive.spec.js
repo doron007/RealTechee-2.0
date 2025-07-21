@@ -16,7 +16,7 @@ const { test, expect } = require('@playwright/test');
 const { execSync } = require('child_process');
 
 // Use authenticated user for admin access
-test.use({ storageState: 'playwright/.auth/user.json' });
+test.use({ storageState: 'e2e/playwright/.auth/user.json' });
 
 test.describe('Assignment System - Comprehensive E2E Tests', () => {
   

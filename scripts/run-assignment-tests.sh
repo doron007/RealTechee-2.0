@@ -21,7 +21,7 @@ fi
 echo "✅ Development server is running"
 
 # Check if authenticated user exists
-if [ ! -f "playwright/.auth/user.json" ]; then
+if [ ! -f "e2e/playwright/.auth/user.json" ]; then
     echo "❌ User authentication file not found"
     echo "Please run authentication setup first"
     exit 1

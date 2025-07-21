@@ -115,7 +115,7 @@ Test data is managed through fixtures in `tests/fixtures/`:
 - Isolated test environments
 
 ### Authentication
-- Shared authentication state in `playwright/.auth/user.json`
+- Shared authentication state in `e2e/playwright/.auth/user.json`
 - Automatic login setup for authenticated tests
 - Clean session state for auth testing
 
@@ -181,7 +181,7 @@ Main configuration in `/playwright.config.js`:
 
 ### Common Issues
 - **Port conflicts**: Ensure dev server is running on port 3000
-- **Authentication**: Check auth state in `playwright/.auth/user.json`
+- **Authentication**: Check auth state in `e2e/playwright/.auth/user.json`
 - **Timeouts**: Increase timeouts for slow operations
 - **Screenshots**: Check `test-results/` for failure artifacts
 

@@ -38,7 +38,7 @@ tests/
 
 ### 1. Authentication Tests (`auth.setup.js`)
 - **Purpose**: Establish authenticated session for all tests
-- **Reusability**: State saved to `playwright/.auth/user.json`
+- **Reusability**: State saved to `e2e/playwright/.auth/user.json`
 - **Dependency**: Required by all admin tests
 
 ### 2. Admin Functionality Tests
@@ -170,7 +170,7 @@ module.exports = defineConfig({
   testMatch: '**/admin/projects.spec.js',
   dependencies: ['auth-setup'],
   use: { 
-    storageState: 'playwright/.auth/user.json',
+    storageState: 'e2e/playwright/.auth/user.json',
     viewport: { width: 1280, height: 720 }
   }
 }
@@ -234,7 +234,7 @@ module.exports = defineConfig({
 ## Troubleshooting
 
 ### Common Issues
-1. **Authentication Failures**: Check `playwright/.auth/user.json` exists
+1. **Authentication Failures**: Check `e2e/playwright/.auth/user.json` exists
 2. **Timeout Errors**: Increase timeouts in `playwright.config.js`
 3. **Flaky Tests**: Use `test.retry()` or improve selectors
 4. **Performance Issues**: Reduce parallel workers or optimize tests

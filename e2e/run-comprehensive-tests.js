@@ -90,7 +90,7 @@ class ComprehensiveTestRunner {
       
       this.context = await this.browser.newContext({
         viewport: this.getViewportSize(),
-        storageState: 'playwright/.auth/user.json'
+        storageState: 'e2e/playwright/.auth/user.json'
       });
       
       console.log('✅ Test environment setup complete');
