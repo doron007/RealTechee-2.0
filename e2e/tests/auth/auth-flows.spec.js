@@ -196,7 +196,9 @@ test.describe('Authentication Flows', () => {
         await page.waitForTimeout(3000);
         
         // Should show error message and stay on login page
-        const errorMessages = await page.locator('.error, .alert-danger, .MuiAlert-error, text=/invalid|incorrect|wrong/i').count();
+        const errorElements = page.locator('.error, .alert-danger, .MuiAlert-error');
+        const textElements = page.locator('text=/invalid|incorrect|wrong/i');
+        const errorMessages = await errorElements.count() + await textElements.count();
         const isStillOnLogin = page.url().includes('/login') || await page.locator('input[type="password"]').count() > 0;
         
         if (errorMessages > 0) {
@@ -215,13 +217,15 @@ test.describe('Authentication Flows', () => {
       await page.waitForLoadState('networkidle');
       
       // Look for "Forgot Password" or similar link
-      const forgotPasswordLink = page.locator('a:has-text("Forgot"), a:has-text("Reset"), button:has-text("Forgot"), text=/forgot.*password|reset.*password/i');
+      const forgotElements = page.locator('a:has-text("Forgot"), a:has-text("Reset"), button:has-text("Forgot")');
+      const forgotTextElements = page.locator('text=/forgot.*password|reset.*password/i');
+      const forgotCount = await forgotElements.count() + await forgotTextElements.count();
       
-      if (await forgotPasswordLink.count() > 0) {
+      if (forgotCount > 0) {
         console.log('ℹ️ Password reset option found');
         
         // Test forgot password interaction
-        const resetLink = forgotPasswordLink.first();
+        const resetLink = await forgotElements.count() > 0 ? forgotElements.first() : forgotTextElements.first();
         if (await resetLink.isVisible()) {
           await resetLink.click();
           await page.waitForTimeout(2000);
@@ -259,12 +263,14 @@ test.describe('Authentication Flows', () => {
       await page.waitForLoadState('networkidle');
       
       // Look for registration/signup options
-      const signupLinks = page.locator('a:has-text("Sign Up"), a:has-text("Register"), a:has-text("Create"), button:has-text("Sign Up"), text=/create.*account|sign.*up|register/i');
+      const signupElements = page.locator('a:has-text("Sign Up"), a:has-text("Register"), a:has-text("Create"), button:has-text("Sign Up")');
+      const signupTextElements = page.locator('text=/create.*account|sign.*up|register/i');
+      const signupCount = await signupElements.count() + await signupTextElements.count();
       
-      if (await signupLinks.count() > 0) {
+      if (signupCount > 0) {
         console.log('ℹ️ Registration option found');
         
-        const signupLink = signupLinks.first();
+        const signupLink = await signupElements.count() > 0 ? signupElements.first() : signupTextElements.first();
         if (await signupLink.isVisible()) {
           await signupLink.click();
           await page.waitForTimeout(2000);
