@@ -100,6 +100,31 @@ case $ENVIRONMENT in
     ;;
 esac
 
+# Validate production secrets are accessible
+validate_secrets() {
+  echo_step "🔑 Validating production secrets"
+  
+  REQUIRED_SECRETS=(
+    "/amplify/TWILIO_ACCOUNT_SID"
+    "/amplify/TWILIO_AUTH_TOKEN"
+    "/amplify/SENDGRID_API_KEY"
+    "/amplify/FROM_EMAIL"
+    "/amplify/DEBUG_EMAIL"
+    "/amplify/TWILIO_FROM_PHONE"
+  )
+  
+  for secret in "${REQUIRED_SECRETS[@]}"; do
+    echo_info "Checking secret: $secret"
+    if aws ssm get-parameter --region us-west-1 --name "$secret" >/dev/null 2>&1; then
+      echo_success "✓ $secret accessible"
+    else
+      echo_error "Required secret missing or inaccessible: $secret"
+    fi
+  done
+  
+  echo_success "All production secrets validated"
+}
+
 # Pre-deployment safety checks
 run_safety_checks() {
   echo_step "🔍 Running pre-deployment safety checks"
@@ -107,6 +132,11 @@ run_safety_checks() {
   if [ "$SKIP_CHECKS" = true ]; then
     echo_warn "Skipping safety checks (--skip-checks specified)"
     return
+  fi
+  
+  # Validate secrets for production deployments
+  if [ "$ENVIRONMENT" = "production" ]; then
+    validate_secrets
   fi
   
   # Run environment validation
