@@ -1,0 +1,137 @@
+{
+    "Items": [
+        {
+            "createdDate": {
+                "S": "2023-11-03T23:47:29Z"
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:17.870Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:17.870Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "4"
+            },
+            "id": {
+                "S": "00e57626-3239-4bd8-9ebb-feab89bef88a"
+            },
+            "updatedDate": {
+                "S": "2023-12-02T19:14:55Z"
+            },
+            "title": {
+                "S": "Expired"
+            }
+        },
+        {
+            "createdDate": {
+                "S": "2023-11-03T23:47:35Z"
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:17.904Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:17.904Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "5"
+            },
+            "id": {
+                "S": "c3f9a1fc-04bf-45c1-a865-306c04752357"
+            },
+            "updatedDate": {
+                "S": "2023-12-02T19:14:56Z"
+            },
+            "title": {
+                "S": "Archived"
+            }
+        },
+        {
+            "createdDate": {
+                "S": "2023-11-03T23:47:24Z"
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:17.940Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:17.940Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "3"
+            },
+            "id": {
+                "S": "b4e03448-f5a5-482c-949c-c393d4944658"
+            },
+            "updatedDate": {
+                "S": "2023-12-02T19:14:54Z"
+            },
+            "title": {
+                "S": "Move to Quoting"
+            }
+        },
+        {
+            "createdDate": {
+                "S": "2023-11-03T23:46:46Z"
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:17.980Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:17.980Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "63a62c54-8a55-4959-831f-d56f19aebacd"
+            },
+            "updatedDate": {
+                "S": "2023-12-02T19:14:52Z"
+            },
+            "title": {
+                "S": "New"
+            }
+        },
+        {
+            "createdDate": {
+                "S": "2023-11-03T23:46:49Z"
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:18.011Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:18.011Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "2"
+            },
+            "id": {
+                "S": "7ec954eb-8984-46bc-bbcc-df49b03c817a"
+            },
+            "updatedDate": {
+                "S": "2023-12-02T19:14:53Z"
+            },
+            "title": {
+                "S": "Pending walk-thru"
+            }
+        }
+    ],
+    "Count": 5,
+    "ScannedCount": 5,
+    "ConsumedCapacity": null
+}

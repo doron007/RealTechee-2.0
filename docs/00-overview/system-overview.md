@@ -20,41 +20,90 @@ RealTechee 2.0 provides a unified platform that orchestrates all stakeholders th
 
 ## High-Level Architecture
 
-### System Context Diagram
+### Enterprise Infrastructure Overview
 
 ```
+Production Environment Architecture (us-west-1)
 ┌─────────────────────────────────────────────────────────────────┐
-│                        RealTechee 2.0 System                   │
-├─────────────────────────────────────────────────────────────────┤
+│                     Internet & CDN Layer                       │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │   Web Frontend  │  │  Mobile Future  │  │   Admin Portal  │ │
-│  │   (Next.js)     │  │   (Planned)     │  │   (React)       │ │
+│  │   CloudFront    │  │  Global Edge    │  │   SSL/TLS       │ │
+│  │   Distribution  │  │   Locations     │  │   Termination   │ │
 │  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-│           │                     │                     │        │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                    API Gateway (GraphQL)                   │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-│           │                     │                     │        │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│                  AWS Amplify Gen 2 Hosting                     │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
-│  │   Core Services │  │ Background Jobs │  │  External APIs  │ │
-│  │   (11 Domains)  │  │   (Lambda)      │  │  (3rd Party)    │ │
+│  │   Production    │  │   Development   │  │   Build System  │ │
+│  │ d200k2wsaf8th3  │  │   Sandbox       │  │   CI/CD         │ │
 │  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
-│           │                     │                     │        │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│                Frontend Applications                           │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │  Next.js 15.3   │  │  Admin Portal   │  │  Mobile Future  │ │
+│  │  React 18.3     │  │  TypeScript     │  │   (Planned)     │ │
+│  │  TypeScript     │  │  MUI Components │  │                 │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│                    API Gateway Layer                           │
 │  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                     Data Layer                             │ │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │ │
-│  │  │  DynamoDB   │  │     S3      │  │   Cognito User Pool │ │ │
-│  │  │(26+ Tables) │  │  (Files)    │  │   (Authentication)  │ │ │
-│  │  └─────────────┘  └─────────────┘  └─────────────────────┘ │ │
+│  │  AWS AppSync (GraphQL API) - Real-time + Subscriptions    │ │
+│  │  Production: 374sdjlh3bdnhp2sz4qttvyhce.appsync-api.*     │ │
+│  │  Development: ik6nvyekjvhvhimgtomqcxvkty.appsync-api.*    │ │
 │  └─────────────────────────────────────────────────────────────┘ │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│                 Business Logic Layer                           │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │  Lambda Functions │  │  Core Services  │  │ Background Jobs │ │
+│  │  notification-     │  │  (11 Domains)  │  │  status-        │ │
+│  │  processor        │  │                 │  │  processor      │ │
+│  │  user-admin       │  │                 │  │  secure-config  │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│                     Data & Storage Layer                       │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │   DynamoDB      │  │   Amazon S3     │  │ Amazon Cognito  │ │
+│  │   26+ Tables    │  │   File Storage  │  │   User Pools    │ │
+│  │   Auto-scaling  │  │   CloudFront    │  │   8 Role Groups │ │
+│  │   Point-in-time │  │   WebP/AVIF     │  │   MFA Ready     │ │
+│  │   Recovery      │  │   Optimization  │  │                 │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────────┐
+│               Monitoring & Observability                       │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │   CloudWatch    │  │      SNS        │  │  Health Checks  │ │
+│  │   Dashboards    │  │   Alerting      │  │   Automated     │ │
+│  │   Custom        │  │   Multi-channel │  │   Recovery      │ │
+│  │   Metrics       │  │   Notifications │  │                 │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
 
 External Integrations:
-├── Real Estate APIs (Redfin, Zillow)
-├── Communication (SendGrid, Twilio, WhatsApp)
+├── Real Estate APIs (Future: Redfin, Zillow)
+├── Communication (Email: SMTP, SMS: Future)
 ├── Payment Processing (Future: Stripe, Square)
-└── Document Management (E-signatures)
+└── Document Management (Future: E-signatures)
 ```
+
+### Production Infrastructure Details
+
+**Production Environment (100% Operational)**:
+- **Application**: `RealTechee-Gen2` (App ID: `d200k2wsaf8th3`)
+- **URL**: `https://d200k2wsaf8th3.amplifyapp.com`
+- **Backend**: `amplify-realtecheeclone-production-sandbox-70796fa803`
+- **Region**: `us-west-1` (N. California)
+- **Status**: Complete environment isolation with 1,449 records migrated
 
 ## Core Business Domains
 
@@ -141,18 +190,88 @@ External Integrations:
 - S3 and CloudFront for content delivery
 - GraphQL for efficient data fetching
 
-## Data Architecture
+## Data Architecture & Infrastructure
 
-### Data Models (26+ Tables)
-- **Core Entities**: Users, Contacts, Projects, Properties, Quotes
-- **Relationships**: Complex many-to-many relationships with proper foreign key constraints
-- **Audit Trail**: Complete change tracking with before/after snapshots
-- **TTL Management**: Automated data retention and cleanup
+### Production Database Schema (26+ Tables)
+**Table Naming Pattern**: `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
+
+```
+Core Business Entities:
+├── Contacts-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (273 records)
+│   ├── Primary Key: id (String)
+│   ├── Business Data: fullName, email, phone, role
+│   └── Relationships: Projects, Properties, Users
+├── Properties-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (234 records)
+│   ├── Primary Key: id (String)
+│   ├── Business Data: address, city, state, propertyType
+│   └── Relationships: Projects, Requests
+├── Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (863 records)
+│   ├── Primary Key: id (String)
+│   ├── Business Data: status, assignedTo, leadSource
+│   ├── Foreign Keys: contactId, propertyId
+│   └── Workflow: 5-status state machine with 14-day expiration
+├── Projects-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (64 records)
+│   ├── Primary Key: id (String)
+│   ├── Business Data: status, assignedPM, budget
+│   └── Relationships: Quotes, Milestones, Comments
+├── Quotes-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (15 records)
+│   ├── Primary Key: id (String)
+│   ├── Business Data: totalAmount, status, approvalDate
+│   └── Relationships: Projects, Items, Terms
+└── Support Tables:
+    ├── BackOfficeRequestStatuses-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (5 records)
+    ├── NotificationQueue-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+    ├── NotificationTemplate-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+    ├── ProjectComments-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+    └── ProjectMilestones-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+```
+
+### Infrastructure Scaling & Performance
+```yaml
+Auto-Scaling Configuration:
+  DynamoDB:
+    read_capacity: 5-4000 units (70% target utilization)
+    write_capacity: 5-4000 units (70% target utilization)
+    scale_out_cooldown: 60 seconds
+    scale_in_cooldown: 300 seconds
+  
+  Lambda Functions:
+    reserved_concurrency: 50 per function
+    timeout: 30-300 seconds (function-specific)
+    memory: 512-1024 MB (optimized per function)
+  
+  CloudFront CDN:
+    edge_locations: 400+ globally
+    cache_behavior: Static assets (24h), Dynamic content (no-cache)
+    compression: Gzip, Brotli enabled
+
+Performance Achievements:
+  bundle_size_reduction: 77% (1,041KB → 239KB)
+  graphql_optimization: 60-80% query performance improvement
+  image_optimization: WebP/AVIF with lazy loading
+  response_time: <3s (95th percentile target)
+```
+
+### Environment Isolation Architecture
+```yaml
+Production Environment:
+  tables: "*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+  api_endpoint: "374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com"
+  app_url: "https://d200k2wsaf8th3.amplifyapp.com"
+  data_records: 1449 (migrated from development)
+
+Development Environment:
+  tables: "*-fvn7t5hbobaxjklhrqzdl4ac34-NONE"  
+  api_endpoint: "ik6nvyekjvhvhimgtomqcxvkty.appsync-api.us-west-1.amazonaws.com"
+  app_url: "sandbox environment"
+  isolation: Complete separation, zero shared resources
+```
 
 ### Data Flow Patterns
-1. **Create Flow**: User → Contact → Project → Quote → Payment
-2. **Update Flow**: Change → Audit Log → Notification → Stakeholder Update
-3. **Integration Flow**: External API → Data Validation → Internal Storage → Business Logic
+1. **User Registration Flow**: Cognito → Lambda Trigger → Contact Creation → Profile Linking
+2. **Request Processing Flow**: Form Submit → Validation → Storage → Assignment → Notification
+3. **Status Transition Flow**: Update → Audit Log → Business Rules → Notification → Stakeholder Update
+4. **File Management Flow**: Upload → S3 Storage → Optimization → CDN Distribution → Access Control
 
 ## Integration Architecture
 
@@ -180,15 +299,102 @@ External Integrations:
 
 ## Operational Excellence
 
-### Monitoring and Observability
-- **Application Monitoring**: CloudWatch for system metrics
-- **Error Tracking**: Comprehensive error logging and alerting
-- **Performance Monitoring**: Response time and throughput tracking
+### Enterprise Monitoring & Observability
+```yaml
+CloudWatch Integration:
+  Dashboards:
+    - Application Performance (response time, error rate, throughput)
+    - Database Performance (latency, capacity utilization)
+    - Lambda Function Health (duration, errors, invocations)
+    - Business Metrics (requests, quotes, user activity)
+  
+  Alarms & Alerts:
+    Critical (P0):
+      - Error rate > 5% (2 consecutive periods)
+      - Application unavailable (3 consecutive health check failures)
+      - Database connectivity failure (immediate alert)
+    Warning (P1):
+      - Response time > 3s (3 consecutive periods)
+      - Database latency > 100ms average
+    
+  SNS Integration:
+    Topic: RealTechee-Production-Alerts
+    Endpoints: info@realtechee.com
+    Escalation: Automatic incident creation for P0 issues
 
-### Security and Compliance
-- **Data Protection**: Encryption and access controls
-- **Audit Compliance**: Complete activity logging
-- **Security Scanning**: Regular vulnerability assessments
+Health Check System:
+  Automated: Every 5 minutes
+  Endpoints: Application, API, Database, Authentication, Storage
+  Recovery: Automatic rollback triggers on critical failures
+  Reporting: Weekly performance analysis and capacity planning
+```
+
+### CI/CD Pipeline & Quality Assurance
+```yaml
+GitHub Actions Enterprise Pipeline:
+  Matrix Testing (8 Parallel Jobs):
+    - auth-flows (authentication workflows)
+    - member-portal (user dashboard functionality)
+    - admin-dashboard (administrative interface)
+    - admin-quotes (quote management system)
+    - admin-requests (request processing workflows)
+    - public-pages (public website functionality)
+    - performance (scheduled weekly optimization)
+    - accessibility (WCAG 2.1 AA compliance)
+  
+  Test Coverage: 560+ E2E tests with 100% CI/CD pass rate
+  Build Optimization: Turbopack enabled (60-80% faster compilation)
+  Deployment Protection: Branch protection + approval workflows
+  Rollback Capability: Automated rollback on health check failures
+```
+
+### Security & Compliance Architecture
+```yaml
+Multi-Layer Security:
+  Network Security:
+    - VPC isolation (AWS managed)
+    - Security groups with restrictive rules
+    - WAF integration (ready for deployment)
+  
+  Application Security:
+    - AWS Cognito authentication with 8 role groups
+    - Role-based + attribute-based authorization
+    - Input validation (client and server-side)
+    - CSRF protection (implementation ready)
+  
+  Data Security:
+    - Encryption at rest (AES-256 with KMS)
+    - Encryption in transit (TLS 1.3)
+    - Complete audit logging via CloudTrail
+    - Automated data retention and lifecycle policies
+  
+  Compliance Readiness:
+    - GDPR: User data export/deletion capabilities
+    - SOC 2: Security controls and audit trails
+    - Data retention: Automated lifecycle policies
+    - Access controls: Principle of least privilege
+```
+
+### Disaster Recovery & Business Continuity
+```yaml
+Backup Strategy:
+  Real-time: DynamoDB point-in-time recovery (35 days)
+  Daily: Automated full backup (all AWS services)
+  Weekly: Cross-region backup replication
+  Monthly: Long-term archival (S3 Glacier)
+
+Recovery Objectives:
+  RTO (Recovery Time): 15 minutes (P0), 1 hour (P1)
+  RPO (Recovery Point): 5 minutes (Database), 1 hour (Files)
+  Cross-Region: us-west-2 backup region configured
+  Testing: Monthly disaster recovery validation
+
+Environment Protection:
+  Complete isolation between dev/prod environments
+  Zero shared resources policy
+  Protected deployment pipelines with validation
+  Emergency rollback procedures documented and tested
+```
 
 ## Future Roadmap
 

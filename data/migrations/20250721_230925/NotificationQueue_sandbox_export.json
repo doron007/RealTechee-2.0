@@ -1,0 +1,3937 @@
+{
+    "Items": [
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:46:19.617Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:47:53.999Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "No additional notes provided"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/ad4d7b39-6446-4b67-9cee-0d900fbb901f"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "ad4d7b39-6446-4b67-9cee-0d900fbb901f"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:46:19 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:46:19.617Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "a834e154-cead-434e-8ae1-080f5f72ae4f"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:51:07.248Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:52:55.129Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752814255843, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/e832a351-245e-4c46-929c-2d0db67cfb1d"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "e832a351-245e-4c46-929c-2d0db67cfb1d"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:51:06 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752814255843"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752814255843@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:51:07.248Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "f099da7f-e98b-477b-a442-e8d7fa319742"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T01:07:00.159Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T01:07:54.389Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753060012508"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/dccd2c50-8843-4012-bdb4-0bbcd1b1f9ec"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "dccd2c50-8843-4012-bdb4-0bbcd1b1f9ec"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 6:06:59 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753060012508"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753060012508@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T01:07:00.159Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "3184bc41-7462-4df9-8832-31b10c7b741d"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-16T05:23:14.416Z"
+            },
+            "sentAt": {
+                "S": "2025-07-16T05:23:15.961Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test User\",\"email\":\"doron@realtechee.com\",\"phone\":\"+16699994563\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Manual Test Notification\",\"message\":\"This is a manual test to verify the notification system is working.\"},\"submission\":{\"id\":\"TEST-1752643394393\",\"timestamp\":\"7/15/2025, 10:23:14 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3001/admin/requests\"}}"
+            },
+            "scheduledAt": {
+                "S": "2025-07-16T05:23:14.416Z"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:23:14.416Z"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "eventType": {
+                "S": "test_manual_notification"
+            },
+            "owner": {
+                "S": "manual-test"
+            },
+            "id": {
+                "S": "test-1752643394393"
+            }
+        },
+        {
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test Customer (Secure Config)\",\"email\":\"test.customer@example.com\",\"phone\":\"(555) 123-4567\",\"company\":\"Secure Config Test Brokerage\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Kitchen Renovation - Secure Config Test\",\"message\":\"This is a test notification using the new secure configuration system with AWS Parameter Store. SendGrid and Twilio credentials are now stored securely!\"},\"submission\":{\"id\":\"SECURE-TEST-1752628467571\",\"timestamp\":\"7/15/2025, 6:14:27 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3000/admin/requests\"}}"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T01:14:27.592Z"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "createdAt": {
+                "S": "2025-07-16T01:14:27.591Z"
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "sentAt": {
+                "S": "2025-07-16T01:14:29.064Z"
+            },
+            "id": {
+                "S": "3a2d11dd-fd62-4e9a-a642-118ac6af0ccf"
+            },
+            "retryCount": {
+                "N": "0"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T06:12:12.054Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T06:12:55.338Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 AE Test Street, AE Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "AE workflow test: ae-workflow-1753078326304 - Testing assignment and notification"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/9bb84bc3-8b61-4f16-bbfd-12ad89ef5dd3"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "9bb84bc3-8b61-4f16-bbfd-12ad89ef5dd3"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 11:12:11 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "AE-Test-Agent-ae-workflow-1753078326304"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "ae-test-ae-workflow-1753078326304@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T06:12:12.054Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "d4dadf4d-8d8c-4234-89b0-945e8c3e14e1"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-22T01:08:32.871Z"
+            },
+            "sentAt": {
+                "S": "2025-07-22T01:12:56.064Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753146500633"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/fda13876-a6de-4efb-8848-763f5f377f8d"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "fda13876-a6de-4efb-8848-763f5f377f8d"
+                            },
+                            "timestamp": {
+                                "S": "7/21/2025, 6:08:32 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753146500633"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753146500633@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-22T01:08:32.871Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "0f2c788c-ef55-4a79-8f25-969527786d3e"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T05:09:18.864Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T05:12:54.613Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752815345718, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/c5b403ea-3cdc-4b63-b2cb-7b9e446b99da"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "c5b403ea-3cdc-4b63-b2cb-7b9e446b99da"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 10:09:18 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752815345718"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752815345718@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T05:09:18.864Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "b72bc8a7-6360-4e95-be39-7ae64e09b69e"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T07:51:02.858Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:44.771Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "02e85aa4-1b51-40b0-99bc-3ca23ae0345d"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 12:51:02 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T07:51:02.858Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "cff77854-ac54-4b93-8be6-d431dbcd4db9"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T15:08:59.705Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:44.836Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "174713ab-2af7-4954-9e0b-200086edeefc"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 8:08:59 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T15:08:59.705Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "354658c6-7ece-499d-9943-e8a077757e62"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T08:03:10.853Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.049Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "e9ec53f2-2cff-46e3-a4a1-2abba63ab1fd"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 1:03:10 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T08:03:10.853Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "d8d6b837-4206-481e-a8b4-1c38afbb530c"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T08:05:04.204Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.090Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "656dadf5-8fab-449f-a4d8-195744f65828"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 1:05:03 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T08:05:04.204Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "e5c0890c-e52a-4fc4-9163-256f62e134ce"
+            }
+        },
+        {
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"John Test Agent\",\"email\":\"test.agent@example.com\",\"phone\":\"555-123-4567\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"in-person\",\"message\":\"Test notification\"},\"submission\":{\"id\":\"TEST-001\",\"timestamp\":\"2025-07-15\"}}"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "updatedAt": {
+                "S": "2025-07-15T19:24:17.000Z"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "channels": {
+                "S": "[\"EMAIL\", \"SMS\"]"
+            },
+            "createdAt": {
+                "S": "2025-07-15T19:24:17.000Z"
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.149Z"
+            },
+            "id": {
+                "S": "test-notification-001"
+            },
+            "retryCount": {
+                "N": "0"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T14:12:42.369Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.208Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "cbc77394-e4f7-4dd0-b22e-8526b0773276"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 7:12:41 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T14:12:42.369Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "2892bc68-523d-4b12-8b36-2fe1ce20eaa3"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T05:07:45.254Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T05:07:54.524Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752815251885, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/823e24bf-ffc0-416d-a0e8-83e21a306bf8"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "823e24bf-ffc0-416d-a0e8-83e21a306bf8"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 10:07:44 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752815251885"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752815251885@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T05:07:45.254Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "0e9c592a-8b12-4ffd-8313-b065193be55f"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T00:54:54.458Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T00:57:55.540Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test St, seamless-1753059283060, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "E2E seamless test for seamless-1753059283060"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/11909db6-ca39-4990-8f2c-18ea9a616d61"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "11909db6-ca39-4990-8f2c-18ea9a616d61"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 5:54:54 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test-Agent-seamless-1753059283060"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "agent-seamless-1753059283060@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T00:54:54.458Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "80eb6885-98b4-4204-805f-ba8cae651757"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T05:05:51.510Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T05:07:54.862Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752815139999, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/533a4548-302f-4039-9783-2622ebe14078"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "533a4548-302f-4039-9783-2622ebe14078"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 10:05:51 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752815139998"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752815139998@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T05:05:51.510Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "2964f2b5-dc9d-4e03-be4d-f30283c490ab"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T06:57:10.657Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T06:57:54.738Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Comprehensive Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Comprehensive testing session: comprehensive-1753081021142. Testing complete form validation, submission, assignment, and notification flow."
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/25879bb9-caf1-49aa-86f6-107b512285c9"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "25879bb9-caf1-49aa-86f6-107b512285c9"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 11:57:10 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Comprehensive-Test-Agent-comprehensive-1753081021142"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "comprehensive-comprehensive-1753081021142@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T06:57:10.657Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "75379b36-4f74-469b-beb3-4f8580fb9050"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:54:26.047Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:57:54.561Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752814455790, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/d05131fc-bcb7-468c-b373-73246c09370b"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "d05131fc-bcb7-468c-b373-73246c09370b"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:54:25 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752814455790"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752814455790@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:54:26.047Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "32ede102-b0b6-45ec-849e-3377b3dc3d3b"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T06:13:31.857Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T06:17:54.617Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753078403831"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/4ea29631-32b4-455e-afb9-7a3700323d42"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "4ea29631-32b4-455e-afb9-7a3700323d42"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 11:13:31 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753078403831"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753078403831@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T06:13:31.857Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "847b85d7-933b-46a8-8c0e-6a7972999b74"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T16:27:19.888Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.292Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "42e03533-a85a-4b5c-ac0d-21649cb71b1e"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 9:27:19 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T16:27:19.888Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "ffcc9b5c-06b6-495b-b540-08c984e4b2ba"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T05:04:59.379Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T05:07:55.168Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752815087560, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/cb616df1-844a-45eb-a477-0c4d00d226bd"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "cb616df1-844a-45eb-a477-0c4d00d226bd"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 10:04:59 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752815087560"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752815087560@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T05:04:59.379Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "39a8ed8f-a486-49a4-8637-5ebc0e64be15"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T06:36:28.881Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T06:37:54.724Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753079780087"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/d2c8a49d-46e1-42dd-8c9d-b278361397ce"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "d2c8a49d-46e1-42dd-8c9d-b278361397ce"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 11:36:28 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753079780087"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753079780087@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T06:36:28.881Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "30e1a2a7-e134-458a-bdcd-96c956dcaa08"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:52:38.761Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:52:55.774Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752814348471, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/1871c52e-e715-4aef-abec-3568b8f83e40"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "1871c52e-e715-4aef-abec-3568b8f83e40"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:52:38 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752814348471"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752814348471@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:52:38.761Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "f88b360b-bf1e-4ffb-9681-61e53dd9968c"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T16:27:32.201Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.350Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "f0a6ce9d-6a6b-421f-9c77-591d4142b38c"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 9:27:31 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T16:27:32.201Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "a753891c-db18-4918-ab48-83974408780c"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T17:04:55.158Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.388Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "No additional notes provided"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "b4160e7a-73ed-4ba1-a1bf-83a8f885628b"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 10:04:54 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T17:04:55.158Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "f80ddef6-8118-478c-baa8-f5d23cca2749"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T07:51:51.014Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.430Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "1aacf365-e57a-4eb7-a4af-f848df7334d9"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 12:51:50 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T07:51:51.014Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "6103187b-c862-4246-a347-5a159aabe05b"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T08:04:34.133Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.470Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "eeac4b7d-5682-415b-8a95-3192d28c1afb"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 1:04:33 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T08:04:34.133Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "0f30f726-a17c-415c-8106-cd8b24223b79"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-16T05:40:16.342Z"
+            },
+            "sentAt": {
+                "S": "2025-07-16T05:40:19.037Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test User\",\"email\":\"doron@realtechee.com\",\"phone\":\"+16699994563\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Manual Test Notification\",\"message\":\"This is a manual test to verify the notification system is working.\"},\"submission\":{\"id\":\"TEST-1752644416321\",\"timestamp\":\"7/15/2025, 10:40:16 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3001/admin/requests\"}}"
+            },
+            "scheduledAt": {
+                "S": "2025-07-16T05:40:16.342Z"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:40:16.342Z"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "eventType": {
+                "S": "test_manual_notification"
+            },
+            "owner": {
+                "S": "manual-test"
+            },
+            "id": {
+                "S": "test-1752644416321"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T17:20:53.620Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.527Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 tes st, Agoura Hills, CA 91301"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Need help with the house"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "c258e2a1-625d-457c-8889-f4f771a71d00"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 10:20:53 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Doron Heyz"
+                            },
+                            "phone": {
+                                "S": "7135919400"
+                            },
+                            "email": {
+                                "S": "doron.hetz@gmail.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T17:20:53.620Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "d0d5269c-add0-4ed1-b7ef-794a9455e23c"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T00:57:42.353Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T00:57:55.949Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753059452709"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/e433fd46-13d4-4ae9-94f1-99684bc3113c"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "e433fd46-13d4-4ae9-94f1-99684bc3113c"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 5:57:42 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753059452709"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753059452709@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T00:57:42.353Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "08d60637-3eaf-4fcd-9e37-482ac5937de9"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-17T15:24:04.725Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T02:41:09.977Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 test street, Agoura Hills, CA 91301"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "test"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/7840dba5-bfe2-4f07-8bb1-dbc8abdd0277"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "7840dba5-bfe2-4f07-8bb1-dbc8abdd0277"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 8:24:04 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Doron Hetz"
+                            },
+                            "phone": {
+                                "S": "7135919400"
+                            },
+                            "email": {
+                                "S": "doron.hetz@gmail.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-17T15:24:04.725Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "6c1beb58-6278-483d-a60d-365719f539fd"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T16:14:56.051Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.552Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "70a5b652-00fa-4581-8639-84aa8d7a5805"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 9:14:55 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T16:14:56.051Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "280b3872-0dcb-444d-9711-34c2bb9361ae"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:53:25.291Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:57:55.066Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street 1752814395121, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Robust assignment system test - automated validation"
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/10997668-9147-40df-b1a7-d46ccbbcea32"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "10997668-9147-40df-b1a7-d46ccbbcea32"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:53:25 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test Agent Robust 1752814395121"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.robust1752814395121@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:53:25.291Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "a11bc936-ca45-46c1-94a8-128c78e51d78"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-16T05:20:19.529Z"
+            },
+            "sentAt": {
+                "S": "2025-07-16T05:20:20.312Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test User\",\"email\":\"doron@realtechee.com\",\"phone\":\"+16699994563\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Manual Test Notification\",\"message\":\"This is a manual test to verify the notification system is working.\"},\"submission\":{\"id\":\"TEST-1752643219506\",\"timestamp\":\"7/15/2025, 10:20:19 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3001/admin/requests\"}}"
+            },
+            "scheduledAt": {
+                "S": "2025-07-16T05:20:19.529Z"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:20:19.529Z"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "eventType": {
+                "S": "test_manual_notification"
+            },
+            "owner": {
+                "S": "manual-test"
+            },
+            "id": {
+                "S": "test-1752643219506"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-18T04:29:03.199Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T04:32:54.705Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "29220 Deep Shadow dr, Agoura Hills, CA 91301"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "test 123123123"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/09207a5c-42ea-450b-9bf2-fe9d11b19961"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "09207a5c-42ea-450b-9bf2-fe9d11b19961"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:29:02 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Doron Hetz"
+                            },
+                            "phone": {
+                                "S": "7135919400"
+                            },
+                            "email": {
+                                "S": "doron.hetz@gmail.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-18T04:29:03.199Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "bc056ff1-7611-4bd7-9e10-b05e0de94bda"
+            }
+        },
+        {
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test Customer (Secure Config)\",\"email\":\"test.customer@example.com\",\"phone\":\"(555) 123-4567\",\"company\":\"Secure Config Test Brokerage\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Kitchen Renovation - Secure Config Test\",\"message\":\"This is a test notification using the new secure configuration system with AWS Parameter Store. SendGrid and Twilio credentials are now stored securely!\"},\"submission\":{\"id\":\"SECURE-TEST-1752628417105\",\"timestamp\":\"7/15/2025, 6:13:37 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3000/admin/requests\"}}"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T01:13:37.123Z"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "createdAt": {
+                "S": "2025-07-16T01:13:37.123Z"
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "sentAt": {
+                "S": "2025-07-16T01:14:29.115Z"
+            },
+            "id": {
+                "S": "b1345b88-acd5-428d-88c3-eb33e4a90da6"
+            },
+            "retryCount": {
+                "N": "0"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T06:54:59.970Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T06:57:55.060Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Seamless St, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "Truly seamless test: truly-seamless-1753080890015"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/621f9afe-589c-4c9f-ac7e-3caefe1e28df"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "621f9afe-589c-4c9f-ac7e-3caefe1e28df"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 11:54:59 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Seamless-Agent-truly-seamless-1753080890015"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "seamless-truly-seamless-1753080890015@test.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T06:54:59.970Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "9b58853f-b5bf-4429-8e25-17cd2947215b"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "S": "[\"admin-team\"]"
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-16T05:31:28.960Z"
+            },
+            "sentAt": {
+                "S": "2025-07-16T05:31:31.543Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "S": "{\"customer\":{\"name\":\"Test User\",\"email\":\"doron@realtechee.com\",\"phone\":\"+16699994563\"},\"property\":{\"address\":\"123 Test Street, Test City, CA 90210\"},\"project\":{\"product\":\"Manual Test Notification\",\"message\":\"This is a manual test to verify the notification system is working.\"},\"submission\":{\"id\":\"TEST-1752643888937\",\"timestamp\":\"7/15/2025, 10:31:28 PM\"},\"admin\":{\"dashboardUrl\":\"http://localhost:3001/admin/requests\"}}"
+            },
+            "scheduledAt": {
+                "S": "2025-07-16T05:31:28.959Z"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:31:28.960Z"
+            },
+            "channels": {
+                "S": "[\"EMAIL\",\"SMS\"]"
+            },
+            "eventType": {
+                "S": "test_manual_notification"
+            },
+            "owner": {
+                "S": "manual-test"
+            },
+            "id": {
+                "S": "test-1752643888937"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-21T00:53:44.994Z"
+            },
+            "sentAt": {
+                "S": "2025-07-21T00:53:56.996Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test St, seamless-1753059217098, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "E2E seamless test for seamless-1753059217098"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/8a0ebfb1-f2d6-4395-b7be-2dcfb2de6ec8"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "8a0ebfb1-f2d6-4395-b7be-2dcfb2de6ec8"
+                            },
+                            "timestamp": {
+                                "S": "7/20/2025, 5:53:44 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Test-Agent-seamless-1753059217098"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "agent-seamless-1753059217098@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-21T00:53:44.994Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    },
+                    {
+                        "S": "SMS"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "323733d0-bf8f-491a-a459-e4940af12430"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T08:04:51.538Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.578Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "7d97adff-0c8b-40ba-99c1-113e84257f6f"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 1:04:51 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T08:04:51.538Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "99445f97-b5ac-4363-88a7-dd9ff7bc8f1c"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-17T16:53:07.385Z"
+            },
+            "sentAt": {
+                "S": "2025-07-18T02:41:10.125Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "29220 Deep Shadow dr, Agoura Hills, CA 91301"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "test"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests/40b7c6c3-17a7-49bf-8f8a-b9529a0fae96"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "40b7c6c3-17a7-49bf-8f8a-b9529a0fae96"
+                            },
+                            "timestamp": {
+                                "S": "7/17/2025, 9:53:06 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "Doron Hetz"
+                            },
+                            "phone": {
+                                "S": "7135919400"
+                            },
+                            "email": {
+                                "S": "doron.hetz@gmail.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-17T16:53:07.385Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "775dc59b-c1e5-4fab-8ad5-d9f403c5fb23"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T19:27:06.883Z"
+            },
+            "sentAt": {
+                "S": "2025-07-16T01:14:29.164Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "This is a test submission for E2E testing. Please do not process."
+                            },
+                            "product": {
+                                "S": "in-person"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "fdc25b5f-614d-423c-b697-0f0cb431db84"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 12:27:06 PM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T19:27:06.883Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "3ee146c7-10d6-4e4e-9462-846d3c59af67"
+            }
+        },
+        {
+            "__typename": {
+                "S": "NotificationQueue"
+            },
+            "recipientIds": {
+                "L": [
+                    {
+                        "S": "admin-team"
+                    }
+                ]
+            },
+            "status": {
+                "S": "SENT"
+            },
+            "templateId": {
+                "S": "get-estimate-template-001"
+            },
+            "createdAt": {
+                "S": "2025-07-15T08:04:41.179Z"
+            },
+            "sentAt": {
+                "S": "2025-07-15T19:25:45.598Z"
+            },
+            "retryCount": {
+                "N": "0"
+            },
+            "payload": {
+                "M": {
+                    "property": {
+                        "M": {
+                            "address": {
+                                "S": "123 Test Street, Test City, CA 90210"
+                            }
+                        }
+                    },
+                    "project": {
+                        "M": {
+                            "message": {
+                                "S": "No additional notes provided"
+                            },
+                            "product": {
+                                "S": "upload"
+                            }
+                        }
+                    },
+                    "admin": {
+                        "M": {
+                            "dashboardUrl": {
+                                "S": "http://localhost:3000/admin/requests"
+                            }
+                        }
+                    },
+                    "submission": {
+                        "M": {
+                            "id": {
+                                "S": "ac50ce45-a393-4528-a669-09f7e170e9e3"
+                            },
+                            "timestamp": {
+                                "S": "7/15/2025, 1:04:40 AM"
+                            }
+                        }
+                    },
+                    "customer": {
+                        "M": {
+                            "name": {
+                                "S": "John Doe Test Agent"
+                            },
+                            "phone": {
+                                "S": "5551234567"
+                            },
+                            "email": {
+                                "S": "test.agent@example.com"
+                            }
+                        }
+                    }
+                }
+            },
+            "updatedAt": {
+                "S": "2025-07-15T08:04:41.179Z"
+            },
+            "channels": {
+                "L": [
+                    {
+                        "S": "EMAIL"
+                    }
+                ]
+            },
+            "eventType": {
+                "S": "get_estimate_request"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "47182c61-16be-4374-9f1c-b3cb73362f24"
+            }
+        }
+    ],
+    "Count": 44,
+    "ScannedCount": 44,
+    "ConsumedCapacity": null
+}

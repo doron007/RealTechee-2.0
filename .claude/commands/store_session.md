@@ -12,6 +12,7 @@ Save current session status and learnings, updating CLAUDE.md, PLANNING.md, and 
 - Add any new discovered issues to the issue tracking section
 - Update session summary with achievements and next priorities
 - Maintain backward compatibility for future AI agents
+- Consolidate and compress "CURRENT SESSION SUMMARY" section CLAUDE.md without losing context or important information from perspective of new session that need to continue from where last session finished. Older or less relevant information for new session, can be consider to be migrated to one of the *.md in the 01-10 folders in /docs
 
 **Files to update:**
 - CLAUDE.md: Current session summary and achievements

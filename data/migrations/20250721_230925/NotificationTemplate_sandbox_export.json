@@ -1,0 +1,62 @@
+{
+    "Items": [
+        {
+            "subject": {
+                "S": "New Estimate Request - {{customer.name}}"
+            },
+            "isActive": {
+                "BOOL": true
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:39:23.043Z"
+            },
+            "contentHtml": {
+                "S": "<html>\n  <body style=\"font-family: Arial, sans-serif; line-height: 1.6;\">\n    <h2 style=\"color: #2c3e50;\">New Get Estimate Request</h2>\n    \n    <div style=\"background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;\">\n      <h3 style=\"color: #34495e; margin-top: 0;\">Property Details</h3>\n      <p><strong>Address:</strong> {{address}}</p>\n      <p><strong>Project Type:</strong> {{digital}}</p>\n      <p><strong>Finance Needed:</strong> {{finance}}</p>\n    </div>\n    \n    <div style=\"background-color: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;\">\n      <h3 style=\"color: #27ae60; margin-top: 0;\">Agent Information</h3>\n      <p><strong>Name:</strong> {{agentName}}</p>\n      <p><strong>Email:</strong> {{agentEmail}}</p>\n      <p><strong>Phone:</strong> {{agentPhone}}</p>\n      <p><strong>Relation:</strong> {{relation}}</p>\n    </div>\n    \n    <div style=\"background-color: #f0f8ff; padding: 20px; border-radius: 8px; margin: 20px 0;\">\n      <h3 style=\"color: #3498db; margin-top: 0;\">Project Details</h3>\n      <p><strong>Requested Date:</strong> {{requestedDate}}</p>\n      <p><strong>Requested Time:</strong> {{requestedTime}}</p>\n      <p><strong>Notes:</strong> {{note}}</p>\n    </div>\n    \n    <div style=\"background-color: #fff5f5; padding: 20px; border-radius: 8px; margin: 20px 0;\">\n      <h3 style=\"color: #e74c3c; margin-top: 0;\">Action Required</h3>\n      <p>Please review this request and respond within 24 hours.</p>\n      <p>\n        <a href=\"{{admin.dashboardUrl}}\" style=\"background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;\">\n          Start Working on This Request\n        </a>\n      </p>\n    </div>\n    \n    <hr style=\"border: 1px solid #eee; margin: 30px 0;\">\n    <p style=\"color: #666; font-size: 12px;\">\n      This is an automated notification from RealTechee. \n      Please do not reply to this email.\n    </p>\n  </body>\n  </html>"
+            },
+            "contentText": {
+                "S": "New Get Estimate Request\n\nProperty Details:\n- Address: {{address}}\n- Project Type: {{digital}}\n- Finance Needed: {{finance}}\n\nAgent Information:\n- Name: {{agentName}}\n- Email: {{agentEmail}}\n- Phone: {{agentPhone}}\n- Relation: {{relation}}\n\nProject Details:\n- Requested Date: {{requestedDate}}\n- Requested Time: {{requestedTime}}\n- Notes: {{note}}\n\nAction Required:\nPlease review this request and respond within 24 hours.\nStart working on this request: {{admin.dashboardUrl}}\n\n---\nThis is an automated notification from RealTechee."
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "get-estimate-template-001"
+            },
+            "name": {
+                "S": "Get Estimate Request"
+            },
+            "channel": {
+                "S": "EMAIL"
+            }
+        },
+        {
+            "subject": {
+                "S": "New estimate request"
+            },
+            "updatedAt": {
+                "S": "2025-07-16T05:39:23.287Z"
+            },
+            "createdAt": {
+                "S": "2025-07-15T19:23:16.3NZ"
+            },
+            "contentText": {
+                "S": "🏠 New estimate request for {{address}}\n\nAgent: {{agentName}} ({{agentPhone}})\nType: {{digital}}\nDate: {{requestedDate}} {{requestedTime}}\n\nStart working: {{admin.dashboardUrl}}"
+            },
+            "owner": {
+                "S": "system"
+            },
+            "id": {
+                "S": "get-estimate-sms-template-001"
+            },
+            "name": {
+                "S": "Get Estimate SMS"
+            },
+            "channel": {
+                "S": "SMS"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}

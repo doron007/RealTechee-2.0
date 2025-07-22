@@ -1,0 +1,269 @@
+{
+  "dashboards": {
+    "production": {
+      "name": "RealTechee-Production-Dashboard",
+      "widgets": [
+        {
+          "type": "metric",
+          "title": "Application Health",
+          "metrics": [
+            {
+              "namespace": "AWS/Amplify",
+              "metricName": "RequestCount",
+              "dimensions": {
+                "AppId": "d200k2wsaf8th3",
+                "BranchName": "prod-v2"
+              }
+            },
+            {
+              "namespace": "AWS/Amplify", 
+              "metricName": "ErrorCount",
+              "dimensions": {
+                "AppId": "d200k2wsaf8th3",
+                "BranchName": "prod-v2"
+              }
+            }
+          ]
+        },
+        {
+          "type": "metric",
+          "title": "Lambda Functions Performance",
+          "metrics": [
+            {
+              "namespace": "AWS/Lambda",
+              "metricName": "Duration",
+              "dimensions": {
+                "FunctionName": "amplify-realtecheeclone-production-sandbox-70796fa803-notificationProcessor"
+              }
+            },
+            {
+              "namespace": "AWS/Lambda",
+              "metricName": "Duration", 
+              "dimensions": {
+                "FunctionName": "amplify-realtecheeclone-production-sandbox-70796fa803-userAdmin"
+              }
+            },
+            {
+              "namespace": "AWS/Lambda",
+              "metricName": "Duration",
+              "dimensions": {
+                "FunctionName": "amplify-realtecheeclone-production-sandbox-70796fa803-statusProcessor"
+              }
+            }
+          ]
+        },
+        {
+          "type": "metric",
+          "title": "DynamoDB Performance",
+          "metrics": [
+            {
+              "namespace": "AWS/DynamoDB",
+              "metricName": "ConsumedReadCapacityUnits",
+              "dimensions": {
+                "TableName": "Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+              }
+            },
+            {
+              "namespace": "AWS/DynamoDB",
+              "metricName": "ConsumedWriteCapacityUnits",
+              "dimensions": {
+                "TableName": "Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE" 
+              }
+            },
+            {
+              "namespace": "AWS/DynamoDB",
+              "metricName": "ThrottleEvents",
+              "dimensions": {
+                "TableName": "Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+              }
+            }
+          ]
+        },
+        {
+          "type": "log",
+          "title": "Recent Application Errors",
+          "query": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 20",
+          "region": "us-west-1",
+          "logGroups": [
+            "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-notificationProcessor",
+            "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-userAdmin",
+            "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-statusProcessor"
+          ]
+        }
+      ]
+    }
+  },
+  "alarms": [
+    {
+      "name": "RealTechee-Production-HighErrorRate",
+      "description": "Alert when error rate exceeds 5% in production",
+      "metricName": "ErrorCount",
+      "namespace": "AWS/Amplify",
+      "dimensions": {
+        "AppId": "d200k2wsaf8th3",
+        "BranchName": "prod-v2"
+      },
+      "threshold": 5,
+      "comparisonOperator": "GreaterThanThreshold",
+      "evaluationPeriods": 2,
+      "period": 300,
+      "statistic": "Sum",
+      "actions": {
+        "alarm": [
+          "arn:aws:sns:us-west-1:403266990862:realtechee-production-alerts"
+        ]
+      }
+    },
+    {
+      "name": "RealTechee-Production-HighLatency",
+      "description": "Alert when response time exceeds 10 seconds",
+      "metricName": "Duration",
+      "namespace": "AWS/Lambda",
+      "dimensions": {
+        "FunctionName": "amplify-realtecheeclone-production-sandbox-70796fa803-notificationProcessor"
+      },
+      "threshold": 10000,
+      "comparisonOperator": "GreaterThanThreshold",
+      "evaluationPeriods": 3,
+      "period": 300,
+      "statistic": "Average",
+      "actions": {
+        "alarm": [
+          "arn:aws:sns:us-west-1:403266990862:realtechee-production-alerts"
+        ]
+      }
+    },
+    {
+      "name": "RealTechee-Production-DynamoDBThrottling",
+      "description": "Alert on DynamoDB throttling events",
+      "metricName": "ThrottleEvents",
+      "namespace": "AWS/DynamoDB",
+      "dimensions": {
+        "TableName": "Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+      },
+      "threshold": 0,
+      "comparisonOperator": "GreaterThanThreshold",
+      "evaluationPeriods": 1,
+      "period": 300,
+      "statistic": "Sum",
+      "actions": {
+        "alarm": [
+          "arn:aws:sns:us-west-1:403266990862:realtechee-production-alerts"
+        ]
+      }
+    },
+    {
+      "name": "RealTechee-Production-LowTraffic",
+      "description": "Alert when traffic drops unexpectedly (possible outage)",
+      "metricName": "RequestCount",
+      "namespace": "AWS/Amplify",
+      "dimensions": {
+        "AppId": "d200k2wsaf8th3",
+        "BranchName": "prod-v2"
+      },
+      "threshold": 10,
+      "comparisonOperator": "LessThanThreshold",
+      "evaluationPeriods": 3,
+      "period": 900,
+      "statistic": "Sum",
+      "treatMissingData": "breaching",
+      "actions": {
+        "alarm": [
+          "arn:aws:sns:us-west-1:403266990862:realtechee-production-alerts"
+        ]
+      }
+    }
+  ],
+  "logGroups": [
+    {
+      "name": "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-notificationProcessor",
+      "retentionDays": 30,
+      "subscriptionFilters": [
+        {
+          "filterName": "ErrorFilter",
+          "filterPattern": "?ERROR ?Error ?error",
+          "destinationArn": "arn:aws:sns:us-west-1:403266990862:realtechee-error-notifications"
+        }
+      ]
+    },
+    {
+      "name": "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-userAdmin",
+      "retentionDays": 30,
+      "subscriptionFilters": [
+        {
+          "filterName": "ErrorFilter", 
+          "filterPattern": "?ERROR ?Error ?error",
+          "destinationArn": "arn:aws:sns:us-west-1:403266990862:realtechee-error-notifications"
+        }
+      ]
+    },
+    {
+      "name": "/aws/lambda/amplify-realtecheeclone-production-sandbox-70796fa803-statusProcessor",
+      "retentionDays": 30,
+      "subscriptionFilters": [
+        {
+          "filterName": "ErrorFilter",
+          "filterPattern": "?ERROR ?Error ?error", 
+          "destinationArn": "arn:aws:sns:us-west-1:403266990862:realtechee-error-notifications"
+        }
+      ]
+    }
+  ],
+  "notifications": {
+    "sns": {
+      "topics": [
+        {
+          "name": "realtechee-production-alerts",
+          "displayName": "RealTechee Production Alerts",
+          "subscriptions": [
+            {
+              "protocol": "email",
+              "endpoint": "info@realtechee.com"
+            }
+          ]
+        },
+        {
+          "name": "realtechee-error-notifications", 
+          "displayName": "RealTechee Error Notifications",
+          "subscriptions": [
+            {
+              "protocol": "email",
+              "endpoint": "info@realtechee.com"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "insights": {
+    "applicationInsights": {
+      "enabled": true,
+      "applicationName": "RealTechee-Production",
+      "components": [
+        {
+          "componentName": "Frontend",
+          "resourceGroup": "AWS/Amplify",
+          "resources": ["d200k2wsaf8th3"]
+        },
+        {
+          "componentName": "Backend-Lambda",
+          "resourceGroup": "AWS/Lambda",
+          "resources": [
+            "amplify-realtecheeclone-production-sandbox-70796fa803-notificationProcessor",
+            "amplify-realtecheeclone-production-sandbox-70796fa803-userAdmin", 
+            "amplify-realtecheeclone-production-sandbox-70796fa803-statusProcessor"
+          ]
+        },
+        {
+          "componentName": "Database",
+          "resourceGroup": "AWS/DynamoDB",
+          "resources": [
+            "Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE",
+            "Contacts-aqnqdrctpzfwfjwyxxsmu6peoq-NONE",
+            "Projects-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+          ]
+        }
+      ]
+    }
+  }
+}
