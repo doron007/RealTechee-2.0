@@ -41,18 +41,58 @@ mkdir -p "$BACKUP_DIR"
 
 echo_step "🚀 Starting production data sync to sandbox..."
 
-# Step 1: Get production table names
-echo_step "📋 Getting production table names..."
+# Step 1: Discover production table names automatically
+echo_step "📋 Discovering production table names..."
 
-# You'll need to replace these with your actual production table names
-# These would be the table names in your production environment
-PROD_TABLES=(
-  "Contact-prod-table-id-NONE"
-  "Property-prod-table-id-NONE" 
-  "Project-prod-table-id-NONE"
-  "Quote-prod-table-id-NONE"
-  "Request-prod-table-id-NONE"
-)
+# Auto-discover production tables with enhanced detection
+if [ -z "$PROD_APP_ID" ]; then
+  echo_warn "PROD_APP_ID not set. Attempting to discover tables..."
+  
+  # List all tables and filter for production patterns
+  ALL_TABLES=$(aws dynamodb list-tables --region "$PROD_REGION" --output text --query 'TableNames[]')
+  
+  # Enhanced table discovery logic
+  PROD_TABLES=()
+  while IFS= read -r table; do
+    # Look for production patterns (adjust based on your naming convention)
+    if [[ $table =~ ^(Contact|Property|Project|Quote|Request|Notification) ]] && [[ $table =~ -[a-z0-9]{26,}-NONE$ ]]; then
+      # Exclude sandbox patterns
+      if [[ ! $table =~ (sandbox|dev|test) ]]; then
+        PROD_TABLES+=("$table")
+      fi
+    fi
+  done <<< "$ALL_TABLES"
+  
+  if [ ${#PROD_TABLES[@]} -eq 0 ]; then
+    echo_warn "No production tables auto-discovered. Using manual configuration..."
+    PROD_TABLES=(
+      "Contact-prod-table-id-NONE"
+      "Property-prod-table-id-NONE" 
+      "Project-prod-table-id-NONE"
+      "Quote-prod-table-id-NONE"
+      "Request-prod-table-id-NONE"
+    )
+  fi
+else
+  echo_info "Using PROD_APP_ID: $PROD_APP_ID"
+  # If production app ID is known, use it to construct table names
+  PROD_TABLES=(
+    "Contact-${PROD_APP_ID}-NONE"
+    "Property-${PROD_APP_ID}-NONE"
+    "Project-${PROD_APP_ID}-NONE"
+    "Quote-${PROD_APP_ID}-NONE"
+    "Request-${PROD_APP_ID}-NONE"
+    "NotificationQueue-${PROD_APP_ID}-NONE"
+    "NotificationTemplate-${PROD_APP_ID}-NONE"
+    "NotificationEvents-${PROD_APP_ID}-NONE"
+    "BackOfficeRequestStatuses-${PROD_APP_ID}-NONE"
+  )
+fi
+
+echo_success "Discovered ${#PROD_TABLES[@]} production tables:"
+for table in "${PROD_TABLES[@]}"; do
+  echo_info "  📋 $table"
+done
 
 # Get sandbox table names (your current sandbox tables)
 echo_step "📋 Getting sandbox table names..."
