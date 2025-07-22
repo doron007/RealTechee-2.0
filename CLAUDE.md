@@ -1,6 +1,6 @@
 # CLAUDE.md - AI Agent Guide for RealTechee 2.0
 
-## 🎯 **PROJECT STATUS: 85% Complete - Production Ready Platform**
+## 🎯 **PROJECT STATUS: 90% Complete - Production Infrastructure Ready**
 
 ### **✅ COMPLETED SYSTEMS (Ready for Production)**
 - **Core Admin System**: Full CRUD operations with 560+ E2E tests
@@ -14,20 +14,20 @@
 - **Database**: AWS Amplify Gen 2 with 26+ DynamoDB models
 - **Testing Framework**: Playwright with 560+ comprehensive tests
 
-### **🚨 CURRENT PRIORITY: Account Executive Workflow Testing**
-**CRITICAL FOCUS**: Seamless testing implementation complete (100% pass rate). Next priority is comprehensive Account Executive request processing workflow validation.
+### **🚨 CURRENT PRIORITY: Production Environment Creation**
+**CRITICAL FOCUS**: v3.0.0 infrastructure complete. Next priority is AWS Amplify production app creation and environment configuration.
 
-**P0 - AE Workflow Testing Priorities**:
-1. **Notification System Testing** - AE receives new request notifications and can access requests
-2. **Custom Validation Assessment** - Current validation system (not DOM required=true) needs testing
-3. **Complete AE Request Flow** - End-to-end workflow from notification to quote creation
-4. **Meeting Scheduling Options** - Virtual, in-person, media upload with PM assignment
-5. **Data Continuity Testing** - Request→Quote data transfer validation
+**P0 - Production Environment Setup**:
+1. **AWS Amplify Production App** - Create separate production app (isolated from sandbox)
+2. **Environment Variables** - Configure production-specific environment variables
+3. **Domain Configuration** - Setup production domain and SSL certificates
+4. **Branch Protection** - Implement GitHub branch protection rules for prod-v2
 
-**P1 - Testing Infrastructure**:
-6. **Required Field Validation** - Custom form validation testing (broken due to required=true search)
-7. **Chronological Test Coverage** - 100% AE workflow testing coverage
-8. **Real-world AE Simulation** - Tests that mirror actual AE daily workflow
+**P1 - Monitoring & Security**:
+5. **CloudWatch Dashboards** - Production monitoring and alerting setup
+6. **Error Tracking** - Production error monitoring and notification system
+7. **Load Testing** - Performance validation under production load
+8. **Security Hardening** - Final security measures and compliance validation
 
 ---
 
@@ -48,6 +48,11 @@
 ### **Data Protection**
 - `./scripts/backup-data.sh` - **MANDATORY** before schema changes
 - AWS will purge data without warning on schema recreation
+
+### **Production Deployment**
+- `./deploy-to-prod.sh` - ⭐ v3.0.0: Full production deployment with backend integration
+- `./scripts/dev-to-prod-migration.sh` - Secure data migration with PII sanitization
+- `./scripts/sync-prod-to-sandbox.sh` - Production→dev data sync with auto discovery
 
 ---
 
@@ -453,28 +458,28 @@ export const modelAPI = createModelAPI('ModelName');
 4. **Security Analysis** - ProjectComments ownership warning assessed and documented
 5. **Knowledge Base** - CDK error resolution patterns for future troubleshooting
 
-### **🎯 CURRENT SESSION: Systematic CI/CD Pipeline Debugging & Enterprise Reliability**
-**🎉 MAJOR ACCOMPLISHMENT: 100% CI/CD Success Through Pattern-Based Debugging**
-- **Challenge**: Multiple GitHub Actions test failures blocking production deployment pipeline
-- **Methodology**: Systematic pattern recognition + root cause analysis (vs trial-and-error)
-- **Outcome**: All 5 test suites now passing ✅ → Production-ready CI/CD pipeline achieved
-- **Impact**: Enterprise-grade reliability for continuous deployment workflows
+### **🎯 CURRENT SESSION: Production Deployment Infrastructure v3.0.0**
+**🎉 MAJOR ACCOMPLISHMENT: Enterprise Production Infrastructure Complete**
+- **Challenge**: Create enterprise-grade dev/prod separation with secure data migration
+- **Methodology**: Enhanced deployment scripts + Amplify Gen 2 integration + PII sanitization
+- **Outcome**: v3.0.0 released with complete production deployment infrastructure ✅
+- **Impact**: Ready for production environment creation with enterprise security standards
 
-### **🔍 SYSTEMATIC DEBUGGING SUCCESS**
-| Test Suite          | Root Cause                    | Pattern Applied               | Result |
-|--------------------|-------------------------------|-------------------------------|--------|
-| auth-flows         | CSS syntax + route errors    | Selector fix + /admin route  | ✅ PASS |
-| member-portal      | Header z-index intercept     | Try-catch hover pattern      | ✅ PASS |
-| admin-dashboard    | Main element intercept       | DOM stability + force hover  | ✅ PASS |
-| admin-quotes       | DOM detach + data expect     | Flexible assertions + logging | ✅ PASS |
-| admin-requests     | Same patterns as quotes      | Solution replication + errors | ✅ PASS |
+### **🔍 PRODUCTION INFRASTRUCTURE COMPONENTS**
+| Component                   | Features                        | Security      | Status      |
+|----------------------------|--------------------------------|---------------|-------------|
+| deploy-to-prod.sh          | Amplify Gen 2 + Lambda deploy | Validated     | ✅ Complete |
+| dev-to-prod-migration.sh   | PII sanitization + rollback   | Enterprise    | ✅ Complete |
+| sync-prod-to-sandbox.sh    | Auto discovery + backup       | Safe          | ✅ Complete |
+| Version v3.0.0            | Git tags + branch workflow    | Audited       | ✅ Released |
+| Lambda validation          | 3 functions auto-checked       | Monitored     | ✅ Complete |
 
-### **📊 DEBUGGING PATTERNS LIBRARY ESTABLISHED**
-- **DOM Stability**: `try { await element.action({ timeout: 5K }); } catch { skip(); }`
-- **Hover Interference**: `element.hover({ force: true, timeout: 5K })` + graceful failure
-- **Flexible Assertions**: `initial === 0 ? expect(≥0) : expect(===initial)` for empty states
-- **Error Precision**: Target `.error, .alert` classes vs broad text pattern matching
-- **Solution Replication**: Apply proven fixes across similar test architectures
+### **📊 PRODUCTION DEPLOYMENT FEATURES**
+- **Backend Integration**: `npx ampx pipeline-deploy --branch prod-v2` with AWS credential validation
+- **Data Sanitization**: PII removal for contacts/requests with `[REDACTED]` placeholders
+- **Table Discovery**: Auto-detection via `^(Contact|Property|Project|Quote|Request).*-[a-z0-9]{26,}-NONE$`
+- **Rollback Safety**: Production backups before migration with audit trail
+- **Enterprise Workflow**: Version tagging → branch merge → deployment → validation
 
 ### **🎯 CI/CD ARCHITECTURE VALIDATION**
 - ✅ **Fast Feedback Loop**: Critical tests run on every push (auth, admin, member, public)
@@ -491,4 +496,4 @@ export const modelAPI = createModelAPI('ModelName');
 
 ---
 
-*Last Updated: July 21, 2025 - Systematic CI/CD Pipeline Debugging Complete, All Tests Passing ✅*
+*Last Updated: July 22, 2025 - Production Deployment Infrastructure v3.0.0 Complete ✅*
