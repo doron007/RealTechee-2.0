@@ -283,8 +283,8 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(({
             height={24}
             className="w-full h-full"
             style={{ filter: getIconColor() === 'white' ? 'brightness(0) invert(1)' : 
-                             getIconColor() === '#8B8B8F' ? 'brightness(0) opacity(60%)' :
-                             getIconColor() === '#BCBCBF' ? 'brightness(0) opacity(70%)' :
+                             getIconColor() === '#8B8B8F' ? 'brightness(0) invert(1) opacity(85%)' :
+                             getIconColor() === '#BCBCBF' ? 'brightness(0) invert(1) opacity(70%)' :
                              getIconColor() === '#4E4E52' ? 'brightness(0) opacity(80%)' :
                              getIconColor() === 'black' ? 'brightness(0)' : 
                              getIconColor() === '#2A2B2E' ? 'brightness(0)' : '' }}

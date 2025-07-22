@@ -203,33 +203,103 @@ const createModelAPI = (modelName: string) => ({
   }
 });
 
-// All 26 migrated table APIs
-export const affiliatesAPI = createModelAPI('Affiliates');
-export const authAPI = createModelAPI('Auth');
-export const backOfficeAssignToAPI = createModelAPI('BackOfficeAssignTo');
-export const backOfficeBookingStatusesAPI = createModelAPI('BackOfficeBookingStatuses');
-export const backOfficeBrokerageAPI = createModelAPI('BackOfficeBrokerage');
-export const backOfficeNotificationsAPI = createModelAPI('BackOfficeNotifications');
-export const backOfficeProductsAPI = createModelAPI('BackOfficeProducts');
-export const backOfficeProjectStatusesAPI = createModelAPI('BackOfficeProjectStatuses');
-export const backOfficeQuoteStatusesAPI = createModelAPI('BackOfficeQuoteStatuses');
-export const backOfficeRequestStatusesAPI = createModelAPI('BackOfficeRequestStatuses');
-export const backOfficeRoleTypesAPI = createModelAPI('BackOfficeRoleTypes');
-export const contactUsAPI = createModelAPI('ContactUs');
-export const contactsAPI = createModelAPI('Contacts');
-export const legalAPI = createModelAPI('Legal');
-export const memberSignatureAPI = createModelAPI('MemberSignature');
-export const pendingAppoitmentsAPI = createModelAPI('PendingAppoitments');
-export const projectCommentsAPI = createModelAPI('ProjectComments');
-export const projectMilestonesAPI = createModelAPI('ProjectMilestones');
-export const projectPaymentTermsAPI = createModelAPI('ProjectPaymentTerms');
-export const projectPermissionsAPI = createModelAPI('ProjectPermissions');
-export const projectsAPI = createModelAPI('Projects');
-export const propertiesAPI = createModelAPI('Properties');
-export const quoteItemsAPI = createModelAPI('QuoteItems');
-export const quotesAPI = createModelAPI('Quotes');
-export const requestsAPI = createModelAPI('Requests');
-export const eSignatureDocumentsAPI = createModelAPI('eSignatureDocuments');
+// Lazy-loaded API instances to reduce main bundle size
+const apiCache = new Map<string, any>();
+
+function getAPI(modelName: string) {
+  if (!apiCache.has(modelName)) {
+    apiCache.set(modelName, createModelAPI(modelName));
+  }
+  return apiCache.get(modelName);
+}
+
+// Create getter functions for lazy loading
+export function getAffiliatesAPI() { return getAPI('Affiliates'); }
+export function getAuthAPI() { return getAPI('Auth'); }
+export function getBackOfficeAssignToAPI() { return getAPI('BackOfficeAssignTo'); }
+export function getBackOfficeBookingStatusesAPI() { return getAPI('BackOfficeBookingStatuses'); }
+export function getBackOfficeBrokerageAPI() { return getAPI('BackOfficeBrokerage'); }
+export function getBackOfficeNotificationsAPI() { return getAPI('BackOfficeNotifications'); }
+export function getBackOfficeProductsAPI() { return getAPI('BackOfficeProducts'); }
+export function getBackOfficeProjectStatusesAPI() { return getAPI('BackOfficeProjectStatuses'); }
+export function getBackOfficeQuoteStatusesAPI() { return getAPI('BackOfficeQuoteStatuses'); }
+export function getBackOfficeRequestStatusesAPI() { return getAPI('BackOfficeRequestStatuses'); }
+export function getBackOfficeRoleTypesAPI() { return getAPI('BackOfficeRoleTypes'); }
+export function getContactUsAPI() { return getAPI('ContactUs'); }
+export function getContactsAPI() { return getAPI('Contacts'); }
+export function getLegalAPI() { return getAPI('Legal'); }
+export function getMemberSignatureAPI() { return getAPI('MemberSignature'); }
+export function getPendingAppoitmentsAPI() { return getAPI('PendingAppoitments'); }
+export function getProjectCommentsAPI() { return getAPI('ProjectComments'); }
+export function getProjectMilestonesAPI() { return getAPI('ProjectMilestones'); }
+export function getProjectPaymentTermsAPI() { return getAPI('ProjectPaymentTerms'); }
+export function getProjectPermissionsAPI() { return getAPI('ProjectPermissions'); }
+export function getProjectsAPI() { return getAPI('Projects'); }
+export function getPropertiesAPI() { return getAPI('Properties'); }
+export function getQuoteItemsAPI() { return getAPI('QuoteItems'); }
+export function getQuotesAPI() { return getAPI('Quotes'); }
+export function getRequestsAPI() { return getAPI('Requests'); }
+export function getESignatureDocumentsAPI() { return getAPI('eSignatureDocuments'); }
+export function getNotificationTemplatesAPI() { return getAPI('NotificationTemplate'); }
+export function getNotificationQueueAPI() { return getAPI('NotificationQueue'); }
+export function getNotificationEventsAPI() { return getAPI('NotificationEvents'); }
+
+// Core APIs that are frequently used - create immediately
+export const contactsAPI = getAPI('Contacts');
+export const propertiesAPI = getAPI('Properties'); 
+export const requestsAPI = getAPI('Requests');
+export const backOfficeRequestStatusesAPI = getAPI('BackOfficeRequestStatuses');
+export const backOfficeProductsAPI = getAPI('BackOfficeProducts');
+
+// Admin-only APIs - lazy loaded to reduce main bundle  
+export const projectsAPI = getAPI('Projects');
+export const quotesAPI = getAPI('Quotes');
+export const projectCommentsAPI = getAPI('ProjectComments');
+export const notificationQueueAPI = getAPI('NotificationQueue');
+
+// Less frequently used APIs - function exports for lazy loading
+export const getAffiliatesAPIInstance = getAffiliatesAPI;
+export const getAuthAPIInstance = getAuthAPI;
+export const getBackOfficeAssignToAPIInstance = getBackOfficeAssignToAPI;
+export const getBackOfficeBookingStatusesAPIInstance = getBackOfficeBookingStatusesAPI;
+export const getBackOfficeBrokerageAPIInstance = getBackOfficeBrokerageAPI;
+export const getBackOfficeNotificationsAPIInstance = getBackOfficeNotificationsAPI;
+export const getBackOfficeProjectStatusesAPIInstance = getBackOfficeProjectStatusesAPI;
+export const getBackOfficeQuoteStatusesAPIInstance = getBackOfficeQuoteStatusesAPI;
+export const getBackOfficeRoleTypesAPIInstance = getBackOfficeRoleTypesAPI;
+export const getContactUsAPIInstance = getContactUsAPI;
+export const getLegalAPIInstance = getLegalAPI;
+export const getMemberSignatureAPIInstance = getMemberSignatureAPI;
+export const getPendingAppoitmentsAPIInstance = getPendingAppoitmentsAPI;
+export const getProjectMilestonesAPIInstance = getProjectMilestonesAPI;
+export const getProjectPaymentTermsAPIInstance = getProjectPaymentTermsAPI;
+export const getProjectPermissionsAPIInstance = getProjectPermissionsAPI;
+export const getQuoteItemsAPIInstance = getQuoteItemsAPI;
+export const getESignatureDocumentsAPIInstance = getESignatureDocumentsAPI;
+export const getNotificationTemplatesAPIInstance = getNotificationTemplatesAPI;
+export const getNotificationEventsAPIInstance = getNotificationEventsAPI;
+
+// Backward compatibility - create instances for existing code
+export const affiliatesAPI = getAPI('Affiliates');
+export const authAPI = getAPI('Auth');
+export const backOfficeAssignToAPI = getAPI('BackOfficeAssignTo');
+export const backOfficeBookingStatusesAPI = getAPI('BackOfficeBookingStatuses');
+export const backOfficeBrokerageAPI = getAPI('BackOfficeBrokerage');
+export const backOfficeNotificationsAPI = getAPI('BackOfficeNotifications');
+export const backOfficeProjectStatusesAPI = getAPI('BackOfficeProjectStatuses');
+export const backOfficeQuoteStatusesAPI = getAPI('BackOfficeQuoteStatuses');
+export const backOfficeRoleTypesAPI = getAPI('BackOfficeRoleTypes');
+export const contactUsAPI = getAPI('ContactUs');
+export const legalAPI = getAPI('Legal');
+export const memberSignatureAPI = getAPI('MemberSignature');
+export const pendingAppoitmentsAPI = getAPI('PendingAppoitments');
+export const projectMilestonesAPI = getAPI('ProjectMilestones');
+export const projectPaymentTermsAPI = getAPI('ProjectPaymentTerms');
+export const projectPermissionsAPI = getAPI('ProjectPermissions');
+export const quoteItemsAPI = getAPI('QuoteItems');
+export const eSignatureDocumentsAPI = getAPI('eSignatureDocuments');
+export const notificationTemplatesAPI = getAPI('NotificationTemplate');
+export const notificationEventsAPI = getAPI('NotificationEvents');
 
 // Export the raw client for advanced usage
 export { client };

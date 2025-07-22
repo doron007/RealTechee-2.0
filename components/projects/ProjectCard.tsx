@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../common/ui';
 import Image from 'next/image';
+import OptimizedImage from '../common/ui/OptimizedImage';
 import { Project } from '../../types/projects';
 import { safeImageUrl } from '../../utils/clientWixMediaUtils';
 import StatusPill from '../common/ui/StatusPill';
@@ -25,6 +26,7 @@ interface ProjectCardProps {
   project: Project;
   className?: string;
   onClick?: (id: string) => void;
+  priority?: boolean;
 }
 
 /**
@@ -33,7 +35,8 @@ interface ProjectCardProps {
 export default function ProjectCard({ 
   project,
   className = '',
-  onClick
+  onClick,
+  priority = false
 }: ProjectCardProps) {
   // State to store the resolved image URL
   const [resolvedImageUrl, setResolvedImageUrl] = useState<string>(FALLBACK_IMAGES[0]);
@@ -148,15 +151,17 @@ export default function ProjectCard({
         {/* 1. Project Image Container */}
         <div className="pt-6 px-6">
           <div className="w-full relative overflow-hidden pb-[62%] rounded-lg">
-            <Image
+            <OptimizedImage
               src={resolvedImageUrl}
               alt={project.title || 'Project Image'}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              style={{ 
-                objectFit: 'cover',
-                objectPosition: 'center', 
-              }}
+              priority={priority}
+              quality={priority ? 85 : 75} // Higher quality for priority images
+              placeholder="blur"
+              className="object-cover object-center"
+              lazyLoad={!priority} // Disable lazy loading for priority images
+              fallbackSrc={FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]}
               onError={(e) => {
                 // Only try to use the placeholder if we haven't already done so
                 if (!usedFallback) {

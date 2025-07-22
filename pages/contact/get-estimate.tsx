@@ -15,14 +15,18 @@ import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
 import { NotificationService } from '../../utils/notificationService';
+import { assignmentService } from '../../services/assignmentService';
 
 const GetEstimate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.ESTIMATE];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submissionData, setSubmissionData] = useState<{requestId?: string; submittedAt?: string}>({});
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -413,15 +417,36 @@ const GetEstimate: NextPage = () => {
         strategy: emailsMatch ? 'agent-only' : 'separate-contacts'
       });
       
+      // Detect test/automation context and mark accordingly
+      const isTestSubmission = typeof window !== 'undefined' && (
+        window.location.search.includes('test=true') ||
+        window.navigator.userAgent.includes('HeadlessChrome') ||
+        window.navigator.userAgent.includes('Playwright') ||
+        formData.agentInfo?.email?.includes('test') ||
+        formData.agentInfo?.fullName?.toLowerCase().includes('test')
+      );
+      
+      const testSessionId = isTestSubmission ? `test_${Date.now()}_${Math.random().toString(36).substr(2, 9)}` : null;
+      
+      logger.info('Step 5a: Test detection result', {
+        isTestSubmission,
+        testSessionId,
+        userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'server',
+        searchParams: typeof window !== 'undefined' ? window.location.search : 'server'
+      });
+      
       const requestInput = {
         message: formData.notes || '',
         relationToProperty: formData.relationToProperty,
         needFinance: formData.needFinance,
         rtDigitalSelection: formData.rtDigitalSelection,
         requestedVisitDateTime: formData.requestedVisitDateTime || null,
-        leadSource: 'Website',
+        leadSource: isTestSubmission ? 'E2E_TEST' : 'Website', // Use existing leadSource field for test marking
         assignedTo: 'Unassigned',
         status: 'New',
+        
+        // Add test session ID to officeNotes if this is a test (using existing field)
+        officeNotes: isTestSubmission ? `TEST_SESSION: ${testSessionId}` : '',
         
         // File URLs as JSON strings (matching schema)
         uploadedMedia: JSON.stringify(mediaFiles.map((f: any) => f.url)),
@@ -452,9 +477,31 @@ const GetEstimate: NextPage = () => {
       
       logger.info('Step 5b: ✅ Request record created', { requestData: cleanRequestData });
 
-      // Step 5c: Queue notification for the new estimate request
+      // Step 5c: Auto-assign AE to request
       try {
-        logger.info('Step 5c: Queueing notification for estimate request');
+        logger.info('Step 5c: Attempting auto-assignment of AE');
+        
+        const assignmentResult = await assignmentService.assignDefaultAE(requestData.id);
+        if (assignmentResult.success) {
+          logger.info('Step 5c: ✅ AE auto-assigned successfully', {
+            assignedTo: assignmentResult.assignedTo,
+            reason: assignmentResult.reason
+          });
+        } else {
+          logger.warn('Step 5c: ⚠️ AE auto-assignment failed (continuing)', {
+            error: assignmentResult.error
+          });
+        }
+      } catch (assignmentError) {
+        // Don't fail the form submission if assignment fails
+        logger.error('Step 5c: ⚠️ AE assignment error (continuing)', {
+          error: assignmentError instanceof Error ? assignmentError.message : String(assignmentError)
+        });
+      }
+
+      // Step 5d: Queue notification for the new estimate request
+      try {
+        logger.info('Step 5d: Queueing notification for estimate request');
         
         await NotificationService.queueGetEstimateNotification({
           customerName: agentData?.fullName || formData.agentInfo.fullName,
@@ -465,13 +512,14 @@ const GetEstimate: NextPage = () => {
           productType: formData.rtDigitalSelection || 'General Renovation',
           message: formData.notes || 'No additional notes provided',
           submissionId: requestData.id,
-          contactId: agentData?.id || undefined // Pass contact ID to respect user preferences
+          contactId: agentData?.id || undefined, // Pass contact ID to respect user preferences
+          requestId: requestData.id // Add request ID for admin link
         });
         
-        logger.info('Step 5c: ✅ Notification queued successfully');
+        logger.info('Step 5d: ✅ Notification queued successfully');
       } catch (notificationError) {
         // Don't fail the entire form submission if notification fails
-        logger.error('Step 5c: ⚠️ Notification failed (form submission continues)', {
+        logger.error('Step 5d: ⚠️ Notification failed (form submission continues)', {
           error: notificationError instanceof Error ? notificationError.message : String(notificationError)
         });
       }
@@ -488,6 +536,12 @@ const GetEstimate: NextPage = () => {
           filesProcessed: formData.uploadedMedia?.length || 0,
           emailStrategy: emailsMatch ? 'merged_as_agent' : 'separate_emails'
         }
+      });
+      
+      // Store submission data for success message
+      setSubmissionData({
+        requestId: requestData.id,
+        submittedAt: new Date().toISOString()
       });
       
       setSubmitStatus('success');
@@ -530,8 +584,30 @@ const GetEstimate: NextPage = () => {
         <div className="space-y-4">
           <H2 className="text-[#22C55E]">Request Submitted Successfully!</H2>
           <P1 className="max-w-lg mx-auto">
-            Thank you for your estimate request. Our team at RealTechee will review your submission and connect back with you shortly to discuss your project and schedule the next steps.
+            Thank you for your estimate request. Our team at RealTechee will review your submission and connect back with you within 24 hours to discuss your project and schedule the next steps.
           </P1>
+          
+          {/* Request Details */}
+          {submissionData.requestId && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 max-w-md mx-auto">
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Request ID:</span>
+                  <span className="font-mono text-gray-800">{submissionData.requestId.slice(-8).toUpperCase()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Submitted:</span>
+                  <span className="text-gray-800">
+                    {submissionData.submittedAt ? new Date(submissionData.submittedAt).toLocaleString() : 'Just now'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-medium text-gray-600">Response Time:</span>
+                  <span className="text-green-600 font-medium">Within 24 hours</span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Next Steps */}
@@ -557,7 +633,10 @@ const GetEstimate: NextPage = () => {
         <div className="flex gap-4">
           <Button 
             variant="secondary" 
-            onClick={() => setSubmitStatus('idle')}
+            onClick={() => {
+              setSubmitStatus('idle');
+              setSubmissionData({});
+            }}
             size="lg"
           >
             Submit Another Request

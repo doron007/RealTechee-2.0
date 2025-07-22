@@ -15,7 +15,8 @@ import { BenefitCard } from './BenefitCard';
 import { OptionCard } from './OptionCard';
 import StatusPill from './StatusPill';
 import CollapsibleSection from './CollapsibleSection';
-import { ImageGallery } from './ImageGallery';
+import OptimizedImage from './OptimizedImage';
+import ImageGallery from './ImageGallery';
 import AuthRequiredDialog from '../AuthRequiredDialog';
 
 export {
@@ -35,6 +36,7 @@ export {
   OptionCard,
   StatusPill,
   CollapsibleSection,
+  OptimizedImage,
   ImageGallery,
   AuthRequiredDialog,
 };
