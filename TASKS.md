@@ -27,7 +27,17 @@
 - ✅ **Data Migration Tools**: Created secure dev-to-prod migration with PII sanitization
 - ✅ **Bidirectional Sync**: Enhanced sync-prod-to-sandbox.sh with automatic table discovery
 
-### 🔄 **Phase 3: In Progress - Production Environment Setup**
+### ⚠️ **CRITICAL INFRASTRUCTURE ISSUE DISCOVERED**
+**Current Status**: Production app is using sandbox DynamoDB tables (`-fvn7t5hbobaxjklhrqzdl4ac34-NONE`)
+**Risk**: No environment isolation - production and development share same backend resources
+
+### 🚨 **Phase 3A: CRITICAL Infrastructure Separation (NEW PRIORITY)**
+- [ ] **Create Separate Amplify Gen 2 Backend**: Deploy dedicated production backend infrastructure
+- [ ] **Environment Separation**: Set up proper isolation with dedicated DynamoDB tables  
+- [ ] **Data Migration**: Migrate data from sandbox to dedicated production backend
+- [ ] **Production Validation**: Verify production app uses dedicated infrastructure
+
+### 🔄 **Phase 3B: Production Environment Setup**
 - [ ] **AWS Amplify Production App**: Create separate production app (isolated from sandbox)
 - [ ] **Environment Variables**: Configure production-specific environment variables
 - [ ] **Domain Configuration**: Setup production domain and SSL certificates
