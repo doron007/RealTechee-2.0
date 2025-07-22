@@ -1,0 +1,5778 @@
+{
+    "Items": [
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:43.864Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Master bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:43.864Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing shower including plumbing fixtures, tile and shower door\nDemo soffit above the shower\nDemo countertop including sink and lavatory faucet\nDemo existing heater\nRemove and haul away all debris\nRepair ceiling drywall after removal of soffit\nSupply fabricate and install new quartz countertop with 4\" backsplash\nSupply and install 2 new under mount sinks\nSupply and install 2 new lavatory faucets (allowance $200.00 for both faucets)\nSupply and Install 3 LED lights above the vanity area\nSupply and install new fan/light/heater combo"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "8447346d-3e34-fab6-37a6-517d663f8817"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T06:19:40Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": true
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:43.901Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:43.901Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "5"
+            },
+            "id": {
+                "S": "388c1d6a-600e-b155-7263-f08d68e509c3"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:15Z"
+            },
+            "name": {
+                "S": "Change orders"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-20T22:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:43.929Z"
+            },
+            "order": {
+                "S": "11"
+            },
+            "name": {
+                "S": "Drywall Repairs"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.091Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "075115e3-42ac-0dc9-a571-a67cecaee669"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:43.959Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Wiring and installation of a newly located wall mounted light."
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.181Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located wall mounted light.\nNotes:\n* Fixture to be provided by customer"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "111de4ba-eedb-dc32-b92a-2c01be78c3bf"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2beb0166-72b0-61ae-b8f8-ba920ee9e355"
+            },
+            "createdDate": {
+                "S": "2023-11-15T04:24:15Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:43.988Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Repairs and declutter listed below"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.272Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Includes replacement of plastic for light at kitchen ceiling\nIncludes door on vanity rehung\nIncludes removal of items left by tenant\n\nDoes not include repairing or replacing anything other than listed above including: flooring, window coverings, appliances, walls, cabinet handles, towel racks, light switches, fans or any other items\nDoes not include repairing scuffs or repainting\nDoes not include staging"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:40:08Z"
+            },
+            "id": {
+                "S": "c5e6bcd0-5e9a-3973-b432-f5f6bcf3dd21"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T04:48:56Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2022-11-27T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.020Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "CO 11-22-2022"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:44.020Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "id": {
+                "S": "a881580d-e6d1-4399-4c39-0f5eb1955201"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2beb0166-72b0-61ae-b8f8-ba920ee9e355"
+            },
+            "createdDate": {
+                "S": "2023-11-15T04:24:15Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.046Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Cleaning"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.352Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Deep cleaning of for sale"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:40:08Z"
+            },
+            "id": {
+                "S": "8d2a58f7-b12e-c7fd-5865-53a262b46c32"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.432Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.075Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "6"
+            },
+            "id": {
+                "S": "90d13e57-f4ee-542a-9277-6ee8736bef16"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Drywall instaltion in main house and ADU"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-25T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.111Z"
+            },
+            "order": {
+                "S": "20"
+            },
+            "name": {
+                "S": "Install new concrete in main entrance"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.520Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "50cc1660-6cc4-6a9b-ea86-e2cbeff27a39"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-05-04T04:28:09Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-05-04T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-05-04T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.140Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Bathroom plumbing"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:44.140Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "id": {
+                "S": "84fbe6d9-6e53-0588-2236-ba28272ba4d0"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7186229f-65a4-bfc7-a97b-aa57486ea1ac"
+            },
+            "createdDate": {
+                "S": "2023-08-02T04:22:18Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.168Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Exterior Work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.577Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Repair bricks in front of the house\nDry Rot wood repair on eaves in from of the house (next to the main entrance) Patio cover repair both framing and dry rot wood repair\nDry Rot wood repair on three corner of the house second story eaves.\nThis is a local repair, excluding painting the entire patio cover, eaves and fascia."
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:31:56Z"
+            },
+            "id": {
+                "S": "27fdad69-aa91-f6cd-1d97-939221b8352e"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.658Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.197Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "13"
+            },
+            "id": {
+                "S": "b6519c60-a409-f429-3534-74bb7b807c52"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Tile installation in the ADU"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:36Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-07T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.223Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Rough electric"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.721Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "879da0ea-098d-be3e-de51-66ce72f3a704"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.252Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Living room 6 LED inset lights"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.801Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Supply and Install 6 LED lights with on/off dimmer switch"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "70cab224-8b9c-4f33-a2e8-299f30c27803"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.888Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.280Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "14"
+            },
+            "id": {
+                "S": "dc553c56-b0cf-0a40-4983-769a344e1cba"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Install new interior doors and new casings"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:33:13Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-28T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-21T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.306Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Paint (interior and exterior)"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:15.986Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "65be3d95-b1b4-62f0-de8b-df1c0ce41221"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-25T07:00:00.000Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.335Z"
+            },
+            "order": {
+                "S": "18"
+            },
+            "name": {
+                "S": "Interior paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.037Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "033fec9c-6fa2-bd66-829f-b297dcf68111"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-15T08:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-15T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.363Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Install closet doors"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.122Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "e4a91312-e0df-e79e-040c-af45fbccc5cb"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-19T22:53:06Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-03-27T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-20T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.391Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Painting"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.175Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "f1cf61df-b5a0-bd60-12fe-8736df8ecad8"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:36Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.267Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.417Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "51993595-08fa-56c0-99be-d6b895f87ea5"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Demolition"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.346Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.447Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "15"
+            },
+            "id": {
+                "S": "f662c531-fc0c-a75c-4258-c0909d7ccd58"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Refinish kitchen cabinets and master bathroom vanity"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-03-22T04:58:06Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.481Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "KITCHEN REMODELING"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.398Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing electric cook top\nSupply and install new gas cooktop\nReglaze counter top \ninstall new kitchen faucet\nPaint kitchen cabinets (whisper white color)\nDemo existing light fixtures and wood framing\nInstall new LED lights with new switch\nRefinish crown molding (to match new kitchen cabinets color)"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "id": {
+                "S": "5421000f-1118-e2c0-20d8-498b6c704123"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-03-22T04:58:06Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.515Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Appliances"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.446Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing dish washer\nRemove and haul away\nSupply new dish washer (allowance $700.00)\nInstall new dish washer\n\nDemo existing double oven\nRemove and haul away\nSupply and install new double oven (allowance $1800.00)\nModify cabinet and add trim as need to accommodate new double oven"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "id": {
+                "S": "ab7bd72e-82d4-4b8d-b22d-1001272779db"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-20T05:54:36Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-04-01T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-28T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.543Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Flooring"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.517Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Supply and install new flooring\nSupply and install new baseboards"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "41bfe296-c47d-3f5b-4021-682440448ce1"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.575Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "4 new LED trims"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.607Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Installation of a 4\" LED recess light trim in an existing location.\nNotes:\n* Includes standard, dimmable trim.\n* Other trims are available upon request for an additional cost.\n* Fire proofing of light is not included - client is responsible. If requested A\nLighting Inc. will quote accordingly."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "77269bec-af22-f198-63ec-1115f766ac3f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "490209a8-d20a-bae1-9e01-1da356be8a93"
+            },
+            "createdDate": {
+                "S": "2023-10-16T01:10:19Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.604Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Popcorn ceiling Removal"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:21:04.323Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Scrape existing popcorn ceiling from 3 bedroom and common area.\nRemove and haul away all debris\nRepair cracks as needed\nSkim coat all the ceiling\nSand down and prepare for paint"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T19:58:42Z"
+            },
+            "id": {
+                "S": "ac7725c8-a1b2-1af1-f684-56bf31d206a1"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-10-21T20:47:07Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.692Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.633Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "7"
+            },
+            "id": {
+                "S": "d41ba043-4fbf-8e8f-d155-8a6e5781624e"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "name": {
+                "S": "DO something for CO"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-10T08:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-09T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.660Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Flooring work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.761Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "13afc18d-6856-21d0-c121-a4a55b278829"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.687Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Kitchen"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.849Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing countertop and backsplash\nDemo sink and faucet\nDemo all appliances\nDemo existing light fixtures\nRemove and haul away all debris\nSupply and Install 4 LED lights with on/off dimmer switch\nSupply and install new plywood on existing counter tops\nInstall new trims around new double oven (as needed)\nSupply and install new quartz countertop with 6' backsplash (1 slab)\nSupply and Install new sink, faucet and garbage disposal ($500 allowance)\n\nNOTE: ALL OTHER APPLIANCES TO BE SUPPLIED BY OTHERS"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "ff9e58ff-48d2-4290-aea1-c76c80ab0e9e"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:19Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.908Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.715Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "3"
+            },
+            "id": {
+                "S": "73a6d55c-dc4f-2d8c-3c01-4997616ee1e7"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Apply Hot mop to shower pans in main house"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-10-29T20:17:59Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:16.968Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.743Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "2c91986c-a6db-a450-faba-77565f4ca058"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "name": {
+                "S": "test"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.040Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.773Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "3"
+            },
+            "id": {
+                "S": "285248b8-89e2-1037-0707-ffce60708e0c"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Dedicated line for over"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-09-05T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-10-05T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.801Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "Complete job"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.100Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "id": {
+                "S": "8af0f09a-6ce1-daa6-d524-26f1031ca956"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:20:27Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.154Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.832Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "15"
+            },
+            "id": {
+                "S": "3d7141dc-2cbf-8da2-5668-8909cc1eed2c"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Install new roof in the main house and ADU"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-20T05:54:36Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-03-20T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-20T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.868Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Demolition"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.221Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "f6dd8fbb-4843-03c8-f418-18e3b1a7c610"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.310Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.895Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "76d67538-bdce-5b45-fa65-5683389f2946"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "LVT Flooring installation"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-10-17T21:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-09-12T21:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.929Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Complete drywall repair and floating of tub walls"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.370Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "id": {
+                "S": "aa0dfdd0-dc69-ef7a-032c-f98d9ce9575f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.959Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Guest Bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.434Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo shower including plumbing fixtures, tile and shower door\nDemo countertop including sink and lavatory faucet\nDemo existing heater\nRemove and haul away all debris\nApply hot mop to shower pan\nSupply and install new plumbing fixtures (shower valve, shower head -allowance $500.00)\nSupply and Install new tile on shower walls and shower pan ($3 per sq ft allowance)\nSupply and install new frameless shower door\nSupply fabricate and install new quartz countertop with 4\" backsplash\nSupply and install 1 new under mount sink\nSupply and install new lavatory faucet\nSupply and Install 3 LED light above the vanity area\nSupply and install new fan/light/heater combo"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "bb4e0a6b-1204-47ca-9576-e2a0e0b137f7"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.513Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:44.986Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "9"
+            },
+            "id": {
+                "S": "861dc06f-a872-cee4-c5c6-7636404420fa"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "RV Plug"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-18T03:38:03Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.564Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.015Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "6"
+            },
+            "id": {
+                "S": "45779ec0-0bd1-9d34-841f-61ea580515b7"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "name": {
+                "S": "Change order 1"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:14:44Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.652Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.044Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "7"
+            },
+            "id": {
+                "S": "0629747d-63c5-4940-b49d-c71879065ade"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "name": {
+                "S": "Remove mirrors in living room and master bedroom"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-19T22:53:06Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-03-20T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-20T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.075Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Popcorn removal"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.705Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "8573ec7a-dad4-8baa-dd90-75aab67e6150"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-11-14T21:05:16Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.104Z"
+            },
+            "order": {
+                "S": "9"
+            },
+            "name": {
+                "S": "Install 8 new water shut off valves"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.763Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo and removal of 8 water shutoff valves per HOA\nSupply and install 8 water shut valves per HOA"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "3644e196-c85f-b4ae-bda2-1f3c3fdf3ffe"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-08T08:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-04T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.135Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Drywall Work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.859Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "c23d4f43-d520-b0d9-fccc-aa19d8c085d9"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-11-01T15:30:28Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:17.957Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.168Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "0534b6f3-e905-4f56-2e5b-dd03882a8408"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "name": {
+                "S": "Change order 2"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-10T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.198Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Stucco work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.033Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "ae77c5ef-552b-066f-f36f-828d3aae52a4"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.227Z"
+            },
+            "order": {
+                "S": "18"
+            },
+            "name": {
+                "S": "LVT Floor instaltion"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.085Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Demo red carpet in the bedroom\nSupply and install approx. 14 sq. ft of New Lvt floor\nSupply and install new baseboards"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "4abfd4ba-ae13-2b44-213f-bef1da91845d"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.150Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.256Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "81d09d3f-6d6f-eda9-817c-59e64e0f5af6"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Loose wires (2)"
+            }
+        },
+        {
+            "projectId": {
+                "S": "e75a971c-17fe-e991-2264-953823f0332a"
+            },
+            "createdDate": {
+                "S": "2023-08-29T21:53:45Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.284Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Interior Paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.200Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Prepare all walls and ceiling\nPrime and Paint all walls, ceiling, doors, trims and baseboards\nPaint kitchen cabinets"
+            },
+            "updatedDate": {
+                "S": "2023-12-14T18:16:36Z"
+            },
+            "id": {
+                "S": "9bc6d84c-e18e-ab3d-5685-9061f9fac346"
+            }
+        },
+        {
+            "projectId": {
+                "S": "a9136685-07f6-7d39-4269-24e40dbed66b"
+            },
+            "createdDate": {
+                "S": "2023-12-19T22:57:04Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.314Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "New Roof on House and Garage"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.284Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo and haul away existing old roof \nSupply and install new 30 years cool roof shingles roof (color to be selected by customer)\n\nNOTE:\n1.  Includes up to 100sq ft of plywood replacement\n2. Solar panels to be removed and reinstall by 3rd party (Realtechee will not be responsible for the removal and the reinstall of the panels)"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:39:12Z"
+            },
+            "id": {
+                "S": "1692b765-40cb-e818-f22d-2e22c80abc5d"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-10-21T20:39:46Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.387Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.353Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "0724512c-48d3-84b9-49cb-b58c761d45d8"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "name": {
+                "S": "DO something for CO"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:20:27Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.447Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.395Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "16"
+            },
+            "id": {
+                "S": "a2648660-0b60-1e12-a40c-4726ad29deb2"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Install new French Doors in the ADU"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-28T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.423Z"
+            },
+            "order": {
+                "S": "13"
+            },
+            "name": {
+                "S": "LVT floor installation"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.501Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "7b03a864-a189-6f7e-7277-0a0c75e80105"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-06T20:24:49Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.456Z"
+            },
+            "order": {
+                "S": "10"
+            },
+            "name": {
+                "S": "City Fees"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.566Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "City Permit Required by HOA Fees"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "49eaf24a-4b2d-4103-08c1-cc5ff3cf167e"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.488Z"
+            },
+            "order": {
+                "S": "13"
+            },
+            "name": {
+                "S": "10 ne dedicated lines"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.621Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "A new dedicated line run of a 120 volt 20 amp circuit from panel, as necessary or\nrequired by code.\nNotes:\n* (1) AC\n* (2) Bath\n* (7) Kitchen items - DEDICATED LINES FOR KITCHEN WILL BE LEFT\nINSIDE THE J-BOX IN CRAWL SPACE / ATTIC. PRICING DOES NOT\nINCLUDE OUTLETS / GFCI'S WIRING : KITCHEN ONLY."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "a7159d91-415a-bbe3-c498-1de1ae905f0f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "81b12548-3429-7222-5885-27feb148ef82"
+            },
+            "createdDate": {
+                "S": "2023-10-07T02:58:01Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.517Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Staging"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.674Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Kitchen Décor as needed\nDining Room Décor, artwork as needed\nLiving Room Décor, artwork and plants as needed\nFamily Room Décor, artwork and plants as needed\nPrimary Bedroom Décor, artwork and plants as needed\nPrimary Bathroom Décor, artwork, plants as needed\nGuest Bedroom Furniture, lighting, rugs, décor, artwork and plants as needed\nGuest Bathroom Décor, artwork as needed\nOutdoor Backyard Patio Furniture, decor, as needed\nSide Patio Furniture, decor, as needed"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:41:47Z"
+            },
+            "id": {
+                "S": "2447bb47-c709-67ba-b59f-02cef6175b20"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:29:30Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-16T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-16T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.545Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Trimming tress and clean out of yard"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.738Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "ffb5ca76-7787-3b32-7c5b-43bfd26afcf5"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.573Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Living room 6 LED inset lights"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:45.573Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Supply and Install 6 LED lights with on/off dimmer switch"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "86998a06-8231-2b05-d4af-fa916418e8ce"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.602Z"
+            },
+            "order": {
+                "S": "19"
+            },
+            "name": {
+                "S": "Replace galvanized pipes"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.803Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Demo existing galvanized plumbing \nRemove and haul away all debris\nInstall new piping under the house \nRun new piping to bathroom area\nRun new piping to kitchen area"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "426cf91e-a9d5-fcde-ee2e-7b4ff7bae5ba"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-18T22:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.632Z"
+            },
+            "order": {
+                "S": "8"
+            },
+            "name": {
+                "S": "Insulation"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.857Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "b997bcba-67b6-d9e0-ca22-695b8c23b30c"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.663Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "Wiring and installation of a newly located exhaust fan with light"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.941Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located exhaust fan with light.\nNotes:\n* Quiet exhaust fan is standard and included in price, others are available by\nrequest for additional charge .\n* There will be additional charges for any extra duct work necessary to complete\ninstallation."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "7221dc1a-d935-21cc-5ac2-8e7abf2a7a2b"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T02:44:01Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-01-09T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.691Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Drywall work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:45.691Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "id": {
+                "S": "c6af9140-3aed-0951-0f2e-3b672c6453fc"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:18.987Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.722Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "7"
+            },
+            "id": {
+                "S": "6ef6092e-ff6d-cb7f-0cc3-91144126969b"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "interior paint"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.753Z"
+            },
+            "order": {
+                "S": "12"
+            },
+            "name": {
+                "S": "Wiring and installation of a newly located GFCI receptacle."
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.070Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located GFCI receptacle."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "1e595733-d7b1-6e25-ddf9-2c996114276a"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:45.790Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.790Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "406d4772-91c4-1f5e-0572-08c94a5ad1d8"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "name": {
+                "S": "Install appliances"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.154Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.818Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "11"
+            },
+            "id": {
+                "S": "84f84333-0bff-2e32-953a-9dab0afe5654"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Shower doors instaltion"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-06T20:24:49Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.224Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.848Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "11"
+            },
+            "id": {
+                "S": "96eda671-a0b4-facf-1fc4-bee153e5de68"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "name": {
+                "S": "Permit fee deposit - paid by Bobbe on 11/22"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.875Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Tub & Tile surround"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:45.875Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Supply and install new plumbing fixtures (shower valve, shower head) -allowance $500.00\nSupply and install new tile on shower walls (allowance $500.00)\nApply grout\nSupply and install new frameless shower door\nReglaze tub"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "734cf265-9b0f-6678-bf45-74e4cdae787c"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.282Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.903Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "6"
+            },
+            "id": {
+                "S": "48890915-d01b-f588-b33a-8bd8c80311fb"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "GFCI installation (2)"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.344Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.932Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "16"
+            },
+            "id": {
+                "S": "1b5782d2-694d-07ea-eb60-b2750c4af786"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Install new stone on fire place and master vanity"
+            }
+        },
+        {
+            "projectId": {
+                "S": "e75a971c-17fe-e991-2264-953823f0332a"
+            },
+            "createdDate": {
+                "S": "2023-08-29T21:53:45Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.960Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Remove items into pods and Haul away"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.413Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Remove and haul away debris and furniture from inside the house as well as the backyard (including 2 shades)\nRemove and haul away all the items.\n***Items from brother in law room - not to be touched\n***Owner will move out before start of work"
+            },
+            "updatedDate": {
+                "S": "2023-12-14T18:16:36Z"
+            },
+            "id": {
+                "S": "46adef5c-48c9-6747-2f26-372e2884c383"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:33:13Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-18T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-16T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:45.989Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Paint preparation"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.481Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Minor repairs of cracks (interior and exterior)"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "572c9a67-7aef-2817-a089-6f7ce8c3308f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-14T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.019Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "Kitchen carpentry"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.529Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "ee0e2257-0b13-39c8-7622-bc902a3ce5b8"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-14T08:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-13T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.047Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.592Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "32bd7df9-8fda-6a85-84f0-a2bb27f70a0b"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.657Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.078Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "9"
+            },
+            "id": {
+                "S": "07899d81-da9f-2bdb-b368-81cfa47db2da"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Cabinets instaltion"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-22T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.108Z"
+            },
+            "order": {
+                "S": "17"
+            },
+            "name": {
+                "S": "Install new front door"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.706Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "f37e7ccf-98f0-1384-ec2c-944641af5abd"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.138Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Guest Bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:46.138Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo shower including plumbing fixtures, tile and shower door\nDemo countertop including sink and lavatory faucet\nDemo existing heater\nRemove and haul away all debris\nApply hot mop to shower pan\nSupply and install new plumbing fixtures (shower valve, shower head -allowance $500.00)\nSupply and Install new tile on shower walls and shower pan ($3 per sq ft allowance)\nSupply and install new frameless shower door\nSupply fabricate and install new quartz countertop with 4\" backsplash\nSupply and install 1 new under mount sink\nSupply and install new lavatory faucet\nSupply and Install 3 LED light above the vanity area\nSupply and install new fan/light/heater combo"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "918bf30f-55f2-c282-de6c-f72b300a3db2"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.166Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Kitchen"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:46.166Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing countertop and backsplash\nDemo sink and faucet\nDemo all appliances\nDemo existing light fixtures\nRemove and haul away all debris\nSupply and Install 4 LED lights with on/off dimmer switch\nSupply and install new plywood on existing counter tops\nInstall new trims around new double oven (as needed)\nSupply and install new quartz countertop with 6' backsplash (1 slab)\nSupply and Install new sink, faucet and garbage disposal ($500 allowance)\n\nNOTE: ALL OTHER APPLIANCES TO BE SUPPLIED BY OTHERS"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "1fc80121-06cc-d01b-52f4-14b7be384815"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-22T05:10:07Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-04-03T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-04-03T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.196Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "Touch ups"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.755Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "dea1f839-086b-cb8e-5ffa-f64a6fcf43b6"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.224Z"
+            },
+            "order": {
+                "S": "10"
+            },
+            "name": {
+                "S": "Upgrading and suppling a dimmer control switch."
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.806Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Upgrading and suppling a dimmer control switch."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "56f6a2aa-56d7-9131-337d-0a81ed6bc590"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-03-22T04:58:06Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.254Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Guest bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.857Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing soffit and light fixture\nDemo wood mirror\nRepair walls and ceiling and paint the bathroom\nInstall new one large mirror\nReglaze the sink\nRefinish cabinet (whisper white)"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "id": {
+                "S": "5600a293-f8d5-e3fe-291e-dbe34dde4487"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.919Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.290Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "9f378437-7199-3f18-4f61-bd8ff27a2bcf"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Install insulation in all walls and ceiling"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.324Z"
+            },
+            "order": {
+                "S": "14"
+            },
+            "name": {
+                "S": "Switch controls (2)"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:19.968Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Installation of GFCI receptacle in an existing location."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "138cc46c-4951-545e-f65c-61aea6ae8a86"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.021Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.356Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "14"
+            },
+            "id": {
+                "S": "50cdf7fb-3a1f-50f2-1acb-ba4d81ce4ac5"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Apply hot mop & Water proof the bathroom in the ADU"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.389Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Flooring"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.077Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing carpet in living room, master bedroom, bathroom and hallway\nSupply and Install 1550 sq ft of LVT \nSupply and install baseboards to be painted by others"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "38426736-677a-4165-8866-8218fedd5fdc"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-12T22:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.418Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Framing"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.134Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "994dface-68c1-b1a6-48bb-42cfec253133"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.196Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.447Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "10"
+            },
+            "id": {
+                "S": "6c4ae078-abac-36c9-6738-14cd3c3c49b3"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Counter top Installation"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.484Z"
+            },
+            "order": {
+                "S": "16"
+            },
+            "name": {
+                "S": "Installation of a switch control in an existing location"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.243Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Installation of a switch control in an existing location.\nNotes:\n* Includes installation of switch at finishing.\n* Does not include dimmer control switch."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "a7f56fc8-9814-7392-8d28-611eda02be5b"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.293Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.512Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "2"
+            },
+            "id": {
+                "S": "1f93bac8-0598-c6d0-8fd0-88dec4cd6b49"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Dedicated line 120 volt 20 AMP (6)"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.542Z"
+            },
+            "order": {
+                "S": "17"
+            },
+            "name": {
+                "S": "Scrape the popcorn ceilingSkim coat the ceilingApply one coat f primerApply 2 coats of paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.444Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Scrape the popcorn ceiling\nSkim coat the ceiling\nApply one coat f primer\nApply 2 coats of paint"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "bdd1b465-6964-5366-36c1-d0521c492b10"
+            }
+        },
+        {
+            "projectId": {
+                "S": "a9136685-07f6-7d39-4269-24e40dbed66b"
+            },
+            "createdDate": {
+                "S": "2023-12-19T22:57:04Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.574Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Repair ceiling in laundry room and crack on living room ceiling"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.519Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Strip ceiling drywall\nMud the surface\nSkim coat the ceiling\nPaint entire living room"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:39:12Z"
+            },
+            "id": {
+                "S": "6d6b84ae-682e-a5ed-01c8-47464c6d5a96"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:33:13Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-31T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-28T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.602Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Refinish existing wood floor"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.583Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "bb583488-4c10-2762-f30e-0226b378c3a7"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-20T05:54:36Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-03-27T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-27T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.630Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Electric"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.634Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "8035b741-5529-cc18-0154-efd22df2cc0f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-13T22:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.661Z"
+            },
+            "order": {
+                "S": "9"
+            },
+            "name": {
+                "S": "Hot mop"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.684Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "99543656-c372-2d32-b6e8-7a9b93f81e53"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-10-24T01:05:36Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.692Z"
+            },
+            "order": {
+                "S": "7"
+            },
+            "name": {
+                "S": "Additional work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.740Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Completion of items"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "8a41686b-9d9e-2a82-a84a-c5042ac7db01"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.720Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "New panel"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.788Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Panel Service upgrade to a 200 amp panel, including the labeling of breakers and proper grounding.\nATTENTION - THIS PRICE ONLY APPLIES TO SAME LOCATION\nAPPROVAL.\nNotes:\n* For same locations installation only."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "7531046b-5923-bfa9-e553-dabff3d37126"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-09-19T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-09-18T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.753Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Complete fire place and living room tile"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.859Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "id": {
+                "S": "ceb7c741-c0e4-087b-edb9-43d2c0b9589c"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T02:40:08Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2022-11-22T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.783Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Start of work"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:46.783Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "id": {
+                "S": "c7eda3de-5fd7-3182-0e6c-f8a8ad0120df"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-09-11T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-30T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.815Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Demolition, rough plumbing,rough electric"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.923Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "id": {
+                "S": "8ba3b920-d633-7adc-ee86-d570f5163701"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:33:13Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-31T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-31T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.843Z"
+            },
+            "order": {
+                "S": "6"
+            },
+            "name": {
+                "S": "Install new shower door"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:20.998Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "8300c38b-f9be-b986-8fcf-fbf1599b2560"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.873Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Replace a fan on an existing ceiling fan box"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.066Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Replace a fan on an existing ceiling fan box. (Supply and install)\nNotes:\n*Includes assembly of fan at finishing."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "f9c13302-c381-d00e-0b5d-99a8f72b05b0"
+            }
+        },
+        {
+            "projectId": {
+                "S": "65"
+            },
+            "createdDate": {
+                "S": "2023-08-29T20:26:37Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.902Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Interior Paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:46.902Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Prepare all walls and ceiling\nPrime and Paint all walls, ceiling, doors, trims and baseboards\nPaint kitchen cabinets"
+            },
+            "updatedDate": {
+                "S": "2023-08-29T21:18:38Z"
+            },
+            "id": {
+                "S": "8a0bd97b-f5d8-1c3b-dc36-3bad11d1437b"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.131Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.933Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "5"
+            },
+            "id": {
+                "S": "19b52315-9a2c-fda2-23d0-e10283f53e60"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Tile installtion in main house bathrooms"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.201Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.967Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "5"
+            },
+            "id": {
+                "S": "08c3dab4-845d-0d88-a9a7-c8e2ef2715b0"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Recappable installation (6)"
+            }
+        },
+        {
+            "projectId": {
+                "S": "490209a8-d20a-bae1-9e01-1da356be8a93"
+            },
+            "createdDate": {
+                "S": "2023-10-16T01:10:19Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:46.995Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Flooring Demolition and preparation"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:21:04.489Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing flooring in common area\nDemo carpet in the bedrooms\nRemove and haul away all debris\nInstall new LVT/ Laminate floor (to be provided by owner)\nInstall new baseboards (to be provide by customer) -paint excluded."
+            },
+            "updatedDate": {
+                "S": "2023-11-20T19:58:42Z"
+            },
+            "id": {
+                "S": "58d0b6fd-d4b7-2fcc-aa3e-33c41c808c61"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-01-04T05:01:06Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.027Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "444"
+            },
+            "isInternal": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": true
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.245Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "dddd"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "id": {
+                "S": "90953643-aa26-e35b-fbf2-ff0f1ad5e6a3"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.065Z"
+            },
+            "order": {
+                "S": "9"
+            },
+            "name": {
+                "S": "Switch controls (x8)"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.304Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located switch control.\nNotes:\n* Includes installation of switch at finishing.\n* Does not include dimmer control switch."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "22e2f78a-82ff-b5d5-87b8-53a4639f1c11"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.360Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.097Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "12"
+            },
+            "id": {
+                "S": "5df2bdf0-f9d7-8669-5013-2c22d60cf918"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Slab installation on shower walls and kitchen"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2024-03-14T16:47:47Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.135Z"
+            },
+            "order": {
+                "S": "13"
+            },
+            "name": {
+                "S": "Final inspection correction notice"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.416Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Inspector asked for some upgrades in the electric in the unit before he can sign off.\n\n1) Upgrade all electric outlets in the house and bring them up to new code\n\n2) split switches in the bathroom to meet new code.\n\nNote: few areas will need to be opened in order wide for new switches and outlets.\nPaint work to be completed by others."
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "70b852be-58db-b309-2a80-351a4cf398b4"
+            }
+        },
+        {
+            "projectId": {
+                "S": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26"
+            },
+            "createdDate": {
+                "S": "2023-08-20T21:29:30Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-15T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-08-14T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.172Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Demo & Haul away"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.478Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Including relocation of boxes from inside house into the garage"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:25:47Z"
+            },
+            "id": {
+                "S": "acffdd8e-993e-6956-a12c-78033a101f5c"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.523Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.212Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "4"
+            },
+            "id": {
+                "S": "0f605900-e50d-5f8b-2c2d-b1a902981fa1"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Water proof the bathroom walls in main house"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:47.250Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.250Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "7"
+            },
+            "id": {
+                "S": "726cbb6e-4b85-0742-54eb-9d19d7bc7fbb"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "name": {
+                "S": "Remove mirrors in living room and master bedroom"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.284Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Rewire"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.610Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located 4\" LED recess light.\nNotes:\n* Includes standard, dimmable trim.\n* Other trims are available upon request for an additional cost.\n* Fire proofing of light is not included - (if needed - we will quote separately"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "88be1c9e-150f-0a35-6f53-b20462b5e40e"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-07T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.317Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Rough plumbing"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.689Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "5da1c8c2-f337-7637-dc08-a178c5a20d52"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.747Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.344Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "8"
+            },
+            "id": {
+                "S": "65d073c2-f3d4-4d60-a78c-0fc45f086c10"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "name": {
+                "S": "Install appliances"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-09-22T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-09-15T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.374Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Complete tile installation in the bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.806Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "id": {
+                "S": "7b9052d7-bd3a-fcd3-9fe3-e72cb1f8ce01"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T06:19:40Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:47.406Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.406Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "6"
+            },
+            "id": {
+                "S": "184fa365-dffb-c572-9534-cc65c2b73bf1"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "name": {
+                "S": "CO 1-13-2023"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-01T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-01T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.434Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Demolition"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.869Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "32918b58-82ab-2929-03aa-a72b30c5335f"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.925Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.461Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "4"
+            },
+            "id": {
+                "S": "f26c5c40-8720-9af1-aba5-c199fc9c913a"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Dedicated line for AC"
+            }
+        },
+        {
+            "projectId": {
+                "S": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30"
+            },
+            "createdDate": {
+                "S": "2023-09-13T16:57:54Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:21.989Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.496Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "ed649c83-27e5-9207-511d-418e13d044e6"
+            },
+            "updatedDate": {
+                "S": "2023-11-23T04:13:48Z"
+            },
+            "name": {
+                "S": "Start of work"
+            }
+        },
+        {
+            "projectId": {
+                "S": "65"
+            },
+            "createdDate": {
+                "S": "2023-08-29T20:26:37Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.526Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Remove items into pods and Haul away"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:47.526Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Remove and haul away debris and furniture from inside the house as well as the backyard (including 2 shades)\nRemove and haul away all the items.\n***Items from brother in law room - not to be touched\n***Owner will move out before start of work"
+            },
+            "updatedDate": {
+                "S": "2023-08-29T21:18:38Z"
+            },
+            "id": {
+                "S": "78a218b1-f8fc-09f1-70b7-f582056dce82"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.558Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Tub & Tile surround"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.048Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Supply and install new plumbing fixtures (shower valve, shower head) -allowance $500.00\nSupply and install new tile on shower walls (allowance $500.00)\nApply grout\nSupply and install new frameless shower door\nReglaze tub"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "0b8c39bf-861f-49f2-95fb-3a45263808f4"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.097Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.607Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "1"
+            },
+            "id": {
+                "S": "08b927e9-94d5-9fd4-c6e2-9a2f4d59a985"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "kitchenette"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.146Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.644Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "2"
+            },
+            "id": {
+                "S": "ec46edc2-e2e9-c21c-6cb4-86d8f6422aa7"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Windows installation"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-08-25T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.674Z"
+            },
+            "order": {
+                "S": "19"
+            },
+            "name": {
+                "S": "Exterior paint"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.201Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "d794aace-770c-2a8c-4487-007605419ad0"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-05T01:15:29Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.706Z"
+            },
+            "order": {
+                "S": "1"
+            },
+            "name": {
+                "S": "Master bathroom"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.250Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing shower including plumbing fixtures, tile and shower door\nDemo soffit above the shower\nDemo countertop including sink and lavatory faucet\nDemo existing heater\nRemove and haul away all debris\nRepair ceiling drywall after removal of soffit\nSupply fabricate and install new quartz countertop with 4\" backsplash\nSupply and install 2 new under mount sinks\nSupply and install 2 new lavatory faucets (allowance $200.00 for both faucets)\nSupply and Install 3 LED lights above the vanity area\nSupply and install new fan/light/heater combo"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "359e11bb-cd20-451c-8af6-6f3cb56d6851"
+            }
+        },
+        {
+            "projectId": {
+                "S": "dd60815f-f6a2-b91d-0639-de843e3b4f1c"
+            },
+            "createdDate": {
+                "S": "2023-03-19T22:53:06Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-03-22T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-03-22T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.740Z"
+            },
+            "order": {
+                "S": "4"
+            },
+            "name": {
+                "S": "Install flashes"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.324Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "updatedDate": {
+                "S": "2023-10-27T15:10:12Z"
+            },
+            "id": {
+                "S": "db3b06d9-e22e-57df-2c3e-7fe0a59975af"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2023-12-06T20:24:49Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.775Z"
+            },
+            "order": {
+                "S": "12"
+            },
+            "name": {
+                "S": "CO #2 - City of Los Angeles Department of Building and Safety - CORRECTION NOTICE"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.376Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "'- Receptacle Countertop Wall Spaces\n- Dishwasher Receptacle in Space Adjacent\n- Maintain Fire Rating\n- Bathroom Receptacle Within 3-ft of Sink"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "id": {
+                "S": "57d4d5dd-be0b-5d3b-cd50-05f05b8b9c09"
+            }
+        },
+        {
+            "projectId": {
+                "S": "91"
+            },
+            "createdDate": {
+                "S": "2023-10-30T03:49:43Z"
+            },
+            "isComplete": {
+                "BOOL": false
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.806Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Flooring"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:47.806Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Demo existing carpet in living room, master bedroom, bathroom and hallway\nSupply and Install 1550 sq ft of LVT \nSupply and install baseboards to be painted by others"
+            },
+            "updatedDate": {
+                "S": "2023-10-30T03:53:43Z"
+            },
+            "id": {
+                "S": "019b24a6-f7dd-72b4-092f-e8d46c694821"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.836Z"
+            },
+            "order": {
+                "S": "15"
+            },
+            "name": {
+                "S": "Installation of a receptacle in an existing location."
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.425Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Installation of a receptacle in an existing location."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "6659e441-3415-7c0f-51f2-3b94769b5c65"
+            }
+        },
+        {
+            "projectId": {
+                "S": "ce1b5212-c72a-2adc-9af3-5158955a182b"
+            },
+            "createdDate": {
+                "S": "2023-11-02T17:42:12Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-11-02T07:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2023-11-01T07:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.867Z"
+            },
+            "order": {
+                "S": "2"
+            },
+            "name": {
+                "S": "Framing"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.494Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T20:04:04Z"
+            },
+            "id": {
+                "S": "aed4766e-fe12-fff3-28dc-932c45c5b575"
+            }
+        },
+        {
+            "projectId": {
+                "S": "2"
+            },
+            "createdDate": {
+                "S": "2023-01-16T02:42:03Z"
+            },
+            "estimatedFinish": {
+                "S": "2022-11-29T08:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "estimatedStart": {
+                "S": "2022-11-22T08:00:00Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.898Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "Demolition"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-17T01:04:47.898Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "updatedDate": {
+                "S": "2023-05-09T05:23:16Z"
+            },
+            "id": {
+                "S": "8f8835be-05b3-ddeb-d9e0-aeeaf72427a9"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.926Z"
+            },
+            "order": {
+                "S": "11"
+            },
+            "name": {
+                "S": "Wiring and installation of a newly located receptacle."
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.559Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located receptacle."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "6104681f-8317-344d-9b20-57d5cbee9dde"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.610Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.957Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "2"
+            },
+            "id": {
+                "S": "fce3d0f7-c78f-e260-a28a-4798f729e464"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Install new drywall on walls and ceiling"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-06-27T20:47:37Z"
+            },
+            "estimatedFinish": {
+                "S": "2023-07-17T22:00:00Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:47.985Z"
+            },
+            "order": {
+                "S": "10"
+            },
+            "name": {
+                "S": "Metal lath on shower walls"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.669Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "id": {
+                "S": "745e8754-aed4-cc9a-1dcf-4acb0469b2ef"
+            }
+        },
+        {
+            "projectId": {
+                "S": "de7a8ae5-1624-8ba6-9e4b-afa140835884"
+            },
+            "createdDate": {
+                "S": "2023-08-23T02:02:53Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.733Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.016Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "7"
+            },
+            "id": {
+                "S": "dd4242de-90fc-a321-1201-fc9a5e14af6f"
+            },
+            "updatedDate": {
+                "S": "2023-11-20T06:24:59Z"
+            },
+            "name": {
+                "S": "Switch control (1)"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.045Z"
+            },
+            "order": {
+                "S": "3"
+            },
+            "name": {
+                "S": "20 New 20LED lights"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.786Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located 4\" LED recess light.\nNotes:\n* Includes standard, dimmable trim.\n* Other trims are available upon request for an additional cost.\n* Fire proofing of light is not included - client is responsible. If requested A\nLighting Inc. will quote accordingly.\n* * LEDs are extremely energy efficient and consume up to 90% less power than\nincandescent bulbs. Since LEDs use only a fraction of the energy of an\nincandescent light bulb there is a dramatic decrease in power costs. Additionally,\nmoney and energy is saved in maintenance and replacement costs due to the long\nLED lifespan. We recommend our clients to research the many more benefits\nupgrading to LED can bring."
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "15488eff-012a-0499-3e33-0e0efa161325"
+            }
+        },
+        {
+            "projectId": {
+                "S": "71dfce89-9fa6-4532-3cb4-5e906f434663"
+            },
+            "createdDate": {
+                "S": "2023-09-01T21:23:02Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.844Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.081Z"
+            },
+            "owner": {
+                "S": "50dc93e3-0c5b-4b4f-8acc-ca2ec2619c82"
+            },
+            "order": {
+                "S": "21"
+            },
+            "id": {
+                "S": "535e2530-f5e5-a1d0-7586-93bd21ac39ef"
+            },
+            "updatedDate": {
+                "S": "2023-12-15T04:54:51Z"
+            },
+            "name": {
+                "S": "Change Order 1"
+            }
+        },
+        {
+            "projectId": {
+                "S": "f16f6209-9810-8648-5c10-121218e6dfdb"
+            },
+            "createdDate": {
+                "S": "2024-03-14T16:47:47Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.908Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.112Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "14"
+            },
+            "id": {
+                "S": "5fd16dea-7b07-7bc9-1fe8-064a5b69de06"
+            },
+            "updatedDate": {
+                "S": "2024-03-25T15:37:18Z"
+            },
+            "name": {
+                "S": "New ventilation system per city request"
+            }
+        },
+        {
+            "projectId": {
+                "S": "97d61000-c5bb-447d-a406-1b82ec1964f5"
+            },
+            "createdDate": {
+                "S": "2023-01-17T15:19:20Z"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:22.958Z"
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.142Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "order": {
+                "S": "12"
+            },
+            "id": {
+                "S": "5042684e-5cb7-ef5f-40ba-0b8115e74cb5"
+            },
+            "updatedDate": {
+                "S": "2024-03-14T16:43:27Z"
+            },
+            "name": {
+                "S": "Electric plumbing and finishes instaltion"
+            }
+        },
+        {
+            "projectId": {
+                "S": "6b52768d-42ad-789c-8b54-40a4ed816255"
+            },
+            "createdDate": {
+                "S": "2023-08-29T06:19:07Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.171Z"
+            },
+            "order": {
+                "S": "8"
+            },
+            "name": {
+                "S": "3 way switch"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:23.030Z"
+            },
+            "owner": {
+                "S": "34ac6ca6-b333-4ba9-a486-33c8fc41ce6f"
+            },
+            "description": {
+                "S": "Wiring and installation of a newly located 3 way switch control.\nNotes:\n* 2 separate on/off switch control location for the same single light or group\nlighting"
+            },
+            "updatedDate": {
+                "S": "2023-12-18T16:01:40Z"
+            },
+            "id": {
+                "S": "a0c144c2-b4a0-e7b4-b9ad-622f981d929a"
+            }
+        },
+        {
+            "projectId": {
+                "S": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0"
+            },
+            "createdDate": {
+                "S": "2023-03-22T04:58:06Z"
+            },
+            "isComplete": {
+                "BOOL": true
+            },
+            "createdAt": {
+                "S": "2025-06-17T01:04:48.200Z"
+            },
+            "order": {
+                "S": "5"
+            },
+            "name": {
+                "S": "Powder room"
+            },
+            "isInternal": {
+                "BOOL": false
+            },
+            "isCategory": {
+                "BOOL": false
+            },
+            "updatedAt": {
+                "S": "2025-06-26T21:47:23.081Z"
+            },
+            "owner": {
+                "S": "03839c70-7508-4e6d-b906-4df699fc5aa1"
+            },
+            "description": {
+                "S": "Reglaze sink to white\nInstall new light fixture"
+            },
+            "updatedDate": {
+                "S": "2023-10-29T20:20:23Z"
+            },
+            "id": {
+                "S": "e21963a5-cdab-53d8-b210-d981328d5f65"
+            }
+        }
+    ],
+    "Count": 142,
+    "ScannedCount": 142,
+    "ConsumedCapacity": null
+}
