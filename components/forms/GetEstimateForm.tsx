@@ -18,6 +18,7 @@ import { scrollToTop } from '../../lib/scrollUtils';
 import logger from '../../lib/logger';
 import { getFieldConfig, getSectionConfig } from '../../lib/constants/fieldConfigs';
 import { generateSessionId, toCamelCase, getTodayDateString, FORM_INPUT_CLASSES } from '../../lib/utils/formUtils';
+import { meetingDateTimeSchema } from '../../lib/validation/commonSchemas';
 import FormFooter from './FormFooter';
 import FormSection from './FormSection';
 import FormDateInput from './FormDateInput';
@@ -106,16 +107,8 @@ const estimateValidationSchema = yup.object({
   
   needFinance: yup.boolean().required('Please select finance option'),
   notes: yup.string().optional(),
-  requestedVisitDateTime: yup.string().when('rtDigitalSelection', {
-    is: (val: string) => val !== 'upload',
-    then: (schema) => schema.required('Meeting date is required'),
-    otherwise: (schema) => schema.optional()
-  }),
-  requestedVisitTime: yup.string().when('rtDigitalSelection', {
-    is: (val: string) => val !== 'upload',
-    then: (schema) => schema.required('Meeting time is required'),
-    otherwise: (schema) => schema.optional()
-  }),
+  requestedVisitDateTime: meetingDateTimeSchema('rtDigitalSelection', 'upload').date,
+  requestedVisitTime: meetingDateTimeSchema('rtDigitalSelection', 'upload').time,
   rtDigitalSelection: yup.string().required('Please select meeting type')
 }).required();
 

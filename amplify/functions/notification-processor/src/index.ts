@@ -5,6 +5,7 @@ import { EmailHandler } from './handlers/emailHandler';
 import { SMSHandler } from './handlers/smsHandler';
 import { TemplateProcessor } from './services/templateProcessor';
 import { NotificationQueue, NotificationTemplate } from './types';
+import { SecureConfigClient } from './utils/secureConfigClient';
 
 // Initialize DynamoDB client
 const dynamoClient = new DynamoDBClient({ region: process.env.AWS_REGION });
@@ -14,24 +15,36 @@ const docClient = DynamoDBDocumentClient.from(dynamoClient);
 const emailHandler = new EmailHandler();
 let smsHandler: SMSHandler | null = null;
 const templateProcessor = new TemplateProcessor();
+const secureConfigClient = SecureConfigClient.getInstance();
 
 // Initialize SMS handler if Twilio credentials are available
-try {
-  smsHandler = new SMSHandler();
-} catch (error) {
-  console.warn('⚠️ SMS handler not initialized - Twilio credentials missing:', error instanceof Error ? error.message : String(error));
+async function initializeSMSHandler(): Promise<void> {
+  try {
+    smsHandler = new SMSHandler();
+  } catch (error) {
+    console.warn('⚠️ SMS handler not initialized - Twilio credentials missing:', error instanceof Error ? error.message : String(error));
+  }
 }
 
 // Environment variables
 const NOTIFICATION_QUEUE_TABLE = process.env.NOTIFICATION_QUEUE_TABLE || '';
 const NOTIFICATION_TEMPLATE_TABLE = process.env.NOTIFICATION_TEMPLATE_TABLE || '';
-const DEBUG_NOTIFICATIONS = process.env.DEBUG_NOTIFICATIONS === 'true';
-const DEBUG_EMAIL = process.env.DEBUG_EMAIL || 'info@realtechee.com';
+
+// Global configuration cache
+let globalConfig: any = null;
 
 export const handler: ScheduledHandler = async (event: ScheduledEvent) => {
+  // Initialize SMS handler
+  await initializeSMSHandler();
+  
+  // Get configuration
+  if (!globalConfig) {
+    globalConfig = await secureConfigClient.getConfig();
+  }
+  
   console.log('🚀 Starting notification processor', { 
     time: event.time, 
-    debug: DEBUG_NOTIFICATIONS 
+    debug: globalConfig.notifications.debugMode 
   });
 
   try {
@@ -178,23 +191,23 @@ async function processNotification(notification: NotificationQueue): Promise<voi
 async function getTemplate(templateId: string, channel?: string): Promise<NotificationTemplate | null> {
   try {
     // If a specific channel is requested, look for channel-specific template first
-    if (channel) {
-      const channelCommand = new ScanCommand({
+    if (channel && channel === 'SMS') {
+      // Look for SMS-specific template by ID
+      const smsTemplateId = 'get-estimate-sms-template-001';
+      const smsCommand = new ScanCommand({
         TableName: NOTIFICATION_TEMPLATE_TABLE,
-        FilterExpression: '#name CONTAINS :baseName AND channel = :channel',
-        ExpressionAttributeNames: {
-          '#name': 'name'
-        },
+        FilterExpression: 'id = :templateId',
         ExpressionAttributeValues: {
-          ':baseName': 'Get Estimate Request',
-          ':channel': channel
+          ':templateId': smsTemplateId
         }
       });
 
-      const channelResult = await docClient.send(channelCommand);
-      if (channelResult.Items && channelResult.Items.length > 0) {
-        console.log(`✅ Found ${channel}-specific template`);
-        return channelResult.Items[0] as NotificationTemplate;
+      const smsResult = await docClient.send(smsCommand);
+      if (smsResult.Items && smsResult.Items.length > 0) {
+        console.log(`✅ Found SMS-specific template: ${smsTemplateId}`);
+        return smsResult.Items[0] as NotificationTemplate;
+      } else {
+        console.log(`⚠️ SMS template ${smsTemplateId} not found, falling back to email template`);
       }
     }
 
@@ -218,13 +231,17 @@ async function getTemplate(templateId: string, channel?: string): Promise<Notifi
 async function resolveRecipients(recipientIds: string[], channels: string[]): Promise<any[]> {
   // TODO: Implement contact resolution from Contact table
   // For now, return mock data for testing
-  if (DEBUG_NOTIFICATIONS) {
+  if (!globalConfig) {
+    globalConfig = await secureConfigClient.getConfig();
+  }
+  
+  if (globalConfig.notifications.debugMode) {
     return [{
       id: 'debug',
-      email: DEBUG_EMAIL,
-      phone: process.env.DEBUG_PHONE || '',
+      email: globalConfig.notifications.debugEmail,
+      phone: globalConfig.notifications.debugPhone,
       name: 'Debug Recipient',
-      whatsappId: process.env.DEBUG_PHONE || '',
+      whatsappId: globalConfig.notifications.debugPhone,
       telegramId: 'debug_telegram_id'
     }];
   }
@@ -249,8 +266,12 @@ async function sendEmailNotification(params: {
   let finalHtmlContent = htmlContent;
 
   // Debug mode: redirect to debug email with envelope info
-  if (DEBUG_NOTIFICATIONS) {
-    finalTo = DEBUG_EMAIL;
+  if (!globalConfig) {
+    globalConfig = await secureConfigClient.getConfig();
+  }
+  
+  if (globalConfig.notifications.debugMode) {
+    finalTo = globalConfig.notifications.debugEmail;
     finalSubject = `[DEBUG] ${subject}`;
     
     // Add envelope information to email
@@ -275,7 +296,7 @@ async function sendEmailNotification(params: {
     textContent: textContent
   });
 
-  console.log(`📧 Email sent to ${finalTo} (debug: ${DEBUG_NOTIFICATIONS})`);
+  console.log(`📧 Email sent to ${finalTo} (debug: ${globalConfig.notifications.debugMode})`);
 }
 
 async function sendSMSNotification(params: {
@@ -288,7 +309,10 @@ async function sendSMSNotification(params: {
     throw new Error('SMS handler not initialized');
   }
   await smsHandler.sendSMS(params);
-  console.log(`📱 SMS sent to ${params.to} (debug: ${DEBUG_NOTIFICATIONS})`);
+  if (!globalConfig) {
+    globalConfig = await secureConfigClient.getConfig();
+  }
+  console.log(`📱 SMS sent to ${params.to} (debug: ${globalConfig.notifications.debugMode})`);
 }
 
 async function updateNotificationStatus(
