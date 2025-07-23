@@ -62,3 +62,4 @@ test-*.js
 *.png
 dev-server.log
 dev-server.pid
+.serena/

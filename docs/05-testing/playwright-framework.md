@@ -2,11 +2,9 @@
 
 ## Overview
 
-The Playwright testing framework provides comprehensive, enterprise-grade automated testing for the RealTechee application. This framework covers functional testing, performance monitoring, accessibility compliance, visual regression detection, and API validation.
+Enterprise-grade testing framework using Playwright Test, following industry standards used by Vercel, GitHub, Shopify, and other leading Next.js companies. This framework provides comprehensive automated testing including functional testing, performance monitoring, accessibility compliance, visual regression detection, and API validation.
 
-## Why Playwright?
-
-### Strategic Decision Rationale
+## Strategic Decision Rationale
 
 **Playwright was chosen for our testing framework because:**
 
@@ -30,14 +28,33 @@ The Playwright testing framework provides comprehensive, enterprise-grade automa
 
 ## Framework Architecture
 
+### Configuration-Driven Execution
+```javascript
+// playwright.config.js defines test combinations
+module.exports = defineConfig({
+  projects: [
+    { name: 'auth-setup', testMatch: '**/auth.setup.js' },
+    { name: 'isolated-admin-projects', dependencies: ['auth-setup'] },
+    { name: 'full-admin-suite', dependencies: ['auth-setup'] },
+    { name: 'responsive-mobile', dependencies: ['auth-setup'] }
+  ]
+});
+```
+
 ### Test Structure
 
 ```
 tests/
+├── auth/                     # Authentication setup and flows
+│   └── auth.setup.js         # Authentication setup (dependency)
 ├── admin/                    # Admin interface tests
+│   ├── projects.spec.js      # Admin Projects page tests
+│   ├── quotes.spec.js        # Admin Quotes page tests
+│   └── requests.spec.js      # Admin Requests page tests
 ├── public/                   # Public pages tests
-├── auth/                     # Authentication flow tests
 ├── member/                   # Member portal tests
+├── responsive/               # Cross-device testing
+│   └── admin-responsive.spec.js
 ├── api/                      # GraphQL API tests
 ├── performance/              # Performance and load tests
 ├── accessibility/            # WCAG compliance tests
@@ -47,388 +64,117 @@ tests/
 ├── utils/                    # Helper functions and utilities
 ├── dashboard/                # Test analytics and reporting
 └── reporters/                # Custom test reporters
+    └── enhanced-reporter.js  # Custom enterprise reporting
 ```
-
-### Configuration-Driven Execution
-
-The framework uses a configuration-driven approach with specialized test projects:
-
-- **isolated-admin-[page]** - Individual admin page testing
-- **full-admin-suite** - Complete admin functionality
-- **public-[page]** - Public page testing
-- **auth-flows** - Authentication scenarios
-- **member-portal** - Member-specific functionality
-- **responsive-[device]** - Cross-device testing
-- **cross-browser-[browser]** - Browser compatibility
 
 ## Test Categories
 
-### 1. Functional Testing
+### 1. Authentication Tests (`auth.setup.js`)
+- **Purpose**: Establish authenticated session for all tests
+- **Reusability**: State saved to `e2e/playwright/.auth/user.json`
+- **Dependency**: Required by all admin tests
 
-**Coverage:**
-- User workflows and business processes
-- Form validation and submission
-- Navigation and routing
-- Data creation, reading, updating, deletion
-- Error handling and edge cases
+### 2. Admin Functionality Tests
+Each admin page includes comprehensive testing:
 
-**Example:**
-```javascript
-test('Create new project workflow', async ({ page }) => {
-  await page.goto('/admin/projects');
-  await page.click('[data-testid="create-project-button"]');
-  await page.fill('input[name="title"]', 'Test Project');
-  await page.fill('textarea[name="description"]', 'Test Description');
-  await page.click('button[type="submit"]');
-  
-  await expect(page.locator('.success-message')).toBeVisible();
-});
-```
+#### Projects Page (`admin/projects.spec.js`)
+- ✅ Data loading and display verification
+- ✅ Search functionality across multiple fields
+- ✅ Filter operations (status, product, etc.)
+- ✅ Pagination and sorting
+- ✅ Modal interactions (project details, editing)
+- ✅ Data persistence validation
 
-### 2. Performance Testing
+#### Requests Page (`admin/requests.spec.js`)
+- ✅ Request lifecycle management
+- ✅ Status transitions and validation
+- ✅ Contact and property associations
+- ✅ File upload and management
+- ✅ Form validation and error handling
 
-**Metrics:**
-- Page load times (target: <3s homepage, <5s admin)
-- Core Web Vitals (LCP, FID, CLS)
-- Memory usage and leak detection
-- Network request optimization
-- Lighthouse scores (Performance, SEO, Accessibility)
+#### Quotes Page (`admin/quotes.spec.js`)
+- ✅ Quote creation and management
+- ✅ Pricing calculations and validation
+- ✅ PDF generation and export
+- ✅ Integration with request management
 
-**Example:**
-```javascript
-test('Homepage performance audit', async ({ page }) => {
-  const monitor = new PerformanceMonitor(page, 'homepage-test');
-  await monitor.startMonitoring();
-  
-  const pageLoadMetric = await monitor.recordPageLoad('/', ['h1', 'nav']);
-  expect(pageLoadMetric.loadTime).toBeLessThan(3000);
-  
-  const report = await monitor.stopMonitoring();
-  expect(report.performance.coreWebVitals.LCP).toBeLessThan(2500);
-});
-```
+### 3. Responsive Testing (`responsive/admin-responsive.spec.js`)
+- ✅ Cross-device compatibility validation
+- ✅ Mobile-first responsive design verification
+- ✅ Touch interaction testing
+- ✅ Performance optimization on mobile devices
 
-### 3. Accessibility Testing
+### 4. Performance Testing
+- Core Web Vitals measurement
+- Page load performance monitoring
+- Bundle size optimization validation
+- API response time tracking
 
-**Standards:**
-- WCAG 2.1 AA compliance
-- Keyboard navigation support
+### 5. Accessibility Testing
+- WCAG 2.1 AA compliance validation
 - Screen reader compatibility
-- Color contrast validation (4.5:1 ratio)
-- Form accessibility and labeling
-
-**Example:**
-```javascript
-test('Contact form accessibility', async ({ page }) => {
-  await page.goto('/contact');
-  
-  const accessibilityResults = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
-    .analyze();
-    
-  expect(accessibilityResults.violations).toEqual([]);
-});
-```
-
-### 4. Visual Regression Testing
-
-**Scope:**
-- Full page screenshots across viewports
-- Component-level visual validation
-- Interactive state comparisons (hover, focus, error)
-- Cross-browser visual consistency
-- Dark mode and theme variations
-
-**Example:**
-```javascript
-test('Homepage visual comparison', async ({ page }) => {
-  await page.goto('/');
-  await page.waitForSelector('h1');
-  
-  await expect(page).toHaveScreenshot('homepage-full.png', {
-    fullPage: true,
-    animations: 'disabled'
-  });
-});
-```
-
-### 5. API Testing
-
-**Coverage:**
-- GraphQL queries and mutations
-- Authentication and authorization
-- Data validation and constraints
-- Error handling and edge cases
-- Performance and timeout handling
-
-**Example:**
-```javascript
-test('Create project via GraphQL', async ({ request }) => {
-  const response = await request.post('/api/graphql', {
-    data: {
-      query: `mutation CreateProject($input: CreateProjectInput!) {
-        createProject(input: $input) { id title status }
-      }`,
-      variables: { input: projectData }
-    }
-  });
-  
-  expect(response.status()).toBe(200);
-  const data = await response.json();
-  expect(data.data.createProject.title).toBe(projectData.title);
-});
-```
-
-## Test Data Management
-
-### Fixtures and Seeding
-
-The framework includes comprehensive test data management:
-
-```javascript
-// Test data fixtures
-import { testUsers, testProjects, TestDataManager } from '../fixtures/test-data.js';
-
-// Create isolated test data
-const project = TestDataManager.createTestProject({
-  title: 'Isolated Test Project',
-  status: 'active'
-});
-
-// Database seeding for consistent environments
-const seeder = new DatabaseSeeder('staging');
-await seeder.seedAll();
-```
-
-### Data Isolation
-
-Tests use isolated data to prevent interference:
-
-```javascript
-const isolation = new TestIsolation();
-const isolatedUser = await isolation.createIsolatedUser(testUsers.admin);
-const isolatedProject = isolation.createIsolatedData(testProjects.kitchen, 'project');
-
-// Automatic cleanup after test completion
-await isolation.executeCleanup();
-```
-
-## CI/CD Integration
-
-### GitHub Actions Workflow
-
-The framework integrates with GitHub Actions through multiple workflows:
-
-**Main Test Suite (`test-suite.yml`):**
-- Runs comprehensive tests on push/PR
-- Matrix strategy for parallel execution
-- Automated artifact collection and reporting
-
-**PR Test Suite (`pr-tests.yml`):**
-- Fast feedback for pull requests
-- Smoke tests and critical path validation
-- Code quality checks (TypeScript, ESLint)
-
-### Execution Strategy
-
-```yaml
-strategy:
-  matrix:
-    test-project: [
-      public-homepage,
-      public-contact,
-      isolated-admin-projects,
-      isolated-admin-quotes
-    ]
-```
-
-## Analytics and Reporting
-
-### Test Analytics Dashboard
-
-The framework generates intelligent analytics:
-
-- **Health Score** - Overall test suite health (A+ to F)
-- **Trend Analysis** - Success rate and performance trends
-- **Insights** - Automated issue detection and recommendations
-- **Resource Monitoring** - Memory usage and performance metrics
-
-### Report Generation
-
-```javascript
-// Generate comprehensive analytics
-const analytics = new TestAnalytics();
-const data = await analytics.collectTestData();
-const dashboard = await analytics.generateDashboard(data);
-```
-
-### Notification System
-
-- **Slack Integration** - Real-time test results and alerts
-- **Email Notifications** - Scheduled reports and critical issues
-- **Dashboard Updates** - Continuous health monitoring
+- Keyboard navigation testing
+- Color contrast verification
 
 ## Best Practices
 
 ### Test Organization
+- **Modular Structure**: Tests organized by functional domain
+- **Dependency Management**: Clear dependencies between test suites
+- **State Isolation**: Each test maintains independent state
+- **Parallel Execution**: Tests designed for concurrent execution
 
-1. **Use Page Object Model** - Encapsulate page interactions
-2. **Test Isolation** - Each test should be independent
-3. **Data Management** - Use fixtures and isolated test data
-4. **Error Handling** - Implement retry logic for flaky tests
-5. **Performance Monitoring** - Track metrics in every test run
+### Data Management
+- **Test Data Isolation**: Use `leadSource: 'E2E_TEST'` for test data identification
+- **Session Management**: Unique test session IDs for data tracking
+- **Cleanup Procedures**: Automated test data cleanup after execution
 
-### Naming Conventions
+### Error Handling
+- **Retry Logic**: Built-in retry mechanisms for flaky tests
+- **Screenshot Capture**: Automatic screenshots on test failures
+- **Trace Collection**: Detailed execution traces for debugging
+- **CI/CD Integration**: Optimized for headless execution in GitHub Actions
 
-```javascript
-// Descriptive test names
-test('Admin can create project with valid data and see success confirmation');
-test('Contact form shows validation errors for invalid email format');
-test('Homepage loads within 3 seconds and passes Core Web Vitals');
+## Commands
+
+### Development Testing
+```bash
+# Run all tests
+npm run test:seamless:truly
+
+# Run specific test suite
+npx playwright test tests/admin/
+
+# Run tests in headed mode (with browser UI)
+npx playwright test --headed
+
+# Debug specific test
+npx playwright test --debug tests/admin/projects.spec.js
 ```
 
-### Assertion Patterns
+### CI/CD Testing
+```bash
+# Headless execution for CI
+npx playwright test --config=playwright.config.ci.js
 
-```javascript
-// Robust assertions
-await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
-await expect(page).toHaveURL(/\/admin\/projects$/);
-await expect(response.status()).toBe(200);
+# Generate test reports
+npx playwright show-report
+
+# Update visual baselines
+npx playwright test --update-snapshots
 ```
 
-## Advanced Features
+## Reporting and Analytics
 
-### Load Testing
+### Enterprise Reporting
+- **Custom Reporter**: Enhanced reporting with business metrics
+- **Test Coverage**: Comprehensive coverage tracking and reporting
+- **Performance Metrics**: Integrated performance monitoring
+- **Trend Analysis**: Historical test performance tracking
 
-```javascript
-const loadRunner = new LoadTestRunner({
-  concurrency: 10,
-  duration: 60000,
-  rampUp: 10000
-});
+### Integration
+- **CI/CD Pipelines**: Seamless integration with GitHub Actions
+- **Monitoring**: Integration with production monitoring systems
+- **Documentation**: Automated test documentation generation
 
-const results = await loadRunner.runLoadTest(scenario, context);
-expect(results.successRate).toBeGreaterThan(95);
-```
-
-### Test Orchestration
-
-```javascript
-const orchestrator = new TestOrchestrator();
-orchestrator.addScenario('setup-data', setupScenario);
-orchestrator.addScenario('run-tests', testScenario, ['setup-data']);
-orchestrator.addScenario('cleanup', cleanupScenario, ['run-tests']);
-
-const results = await orchestrator.executeScenarios(context);
-```
-
-### Memory Leak Detection
-
-```javascript
-const resourceMonitor = new ResourceMonitor();
-resourceMonitor.startMonitoring();
-
-// Run memory-intensive operations
-await runTestScenario();
-
-const report = resourceMonitor.generateResourceReport();
-expect(report.memory.growth).toBeLessThan(100); // MB
-```
-
-## Maintenance and Scaling
-
-### Regular Maintenance Tasks
-
-1. **Update Baselines** - Refresh visual regression baselines monthly
-2. **Review Test Data** - Clean up and refresh test fixtures
-3. **Performance Baselines** - Update performance benchmarks quarterly
-4. **Accessibility Standards** - Review WCAG compliance requirements
-5. **Dependencies** - Keep Playwright and related packages updated
-
-### Scaling Considerations
-
-- **Parallel Execution** - Configure worker count based on CI resources
-- **Test Sharding** - Split large test suites across multiple machines
-- **Data Management** - Implement test data lifecycle management
-- **Resource Monitoring** - Track test execution resource usage
-- **Result Storage** - Archive old test results and artifacts
-
-## Troubleshooting
-
-### Common Issues
-
-**Flaky Tests:**
-```javascript
-// Use retry logic
-const retryHandler = new TestRetryHandler({ maxRetries: 3 });
-await retryHandler.withRetry(async () => {
-  await page.click('button');
-  await expect(page.locator('.result')).toBeVisible();
-});
-```
-
-**Timeout Issues:**
-```javascript
-// Increase timeouts for slow operations
-await page.waitForSelector('.slow-loading-element', { timeout: 30000 });
-await expect(page.locator('.async-content')).toBeVisible({ timeout: 15000 });
-```
-
-**Memory Issues:**
-```javascript
-// Monitor and cleanup resources
-const monitor = new ResourceMonitor();
-monitor.startMonitoring();
-// ... run tests
-const report = monitor.generateResourceReport();
-if (report.memory.growth > 200) {
-  console.warn('Potential memory leak detected');
-}
-```
-
-### Debug Tools
-
-- **Trace Viewer** - `npx playwright show-trace trace.zip`
-- **Inspector** - `npx playwright test --debug`
-- **Screenshots** - Automatic on failure, manual with `await page.screenshot()`
-- **Video Recording** - `video: 'retain-on-failure'`
-
-## Metrics and KPIs
-
-### Success Metrics
-
-- **Test Coverage** - >90% of critical user journeys
-- **Success Rate** - >95% test pass rate
-- **Performance** - <3s homepage load, <5s admin pages
-- **Accessibility** - 100% WCAG 2.1 AA compliance
-- **Reliability** - <5% flaky test rate
-
-### Performance Benchmarks
-
-| Page Type | Load Time Target | Core Web Vitals |
-|-----------|------------------|-----------------|
-| Homepage | <3s | LCP <2.5s, FID <100ms, CLS <0.1 |
-| Contact | <2.5s | LCP <2.5s, FID <100ms, CLS <0.1 |
-| Admin | <5s | LCP <4s, FID <100ms, CLS <0.1 |
-| Products | <3.5s | LCP <3s, FID <100ms, CLS <0.1 |
-
-## Future Enhancements
-
-### Planned Improvements
-
-1. **AI-Powered Test Generation** - Automatic test case generation from user behavior
-2. **Smart Test Selection** - Run only tests affected by code changes
-3. **Advanced Analytics** - Machine learning for flaky test prediction
-4. **Multi-Environment Testing** - Automatic testing across staging and production
-5. **Real User Monitoring** - Integration with production monitoring tools
-
-### Experimental Features
-
-- **Visual AI Testing** - AI-powered visual regression detection
-- **Chaos Engineering** - Fault injection testing
-- **Security Testing** - Automated security vulnerability scanning
-- **Mobile App Testing** - Native mobile app testing capabilities
-
----
-
-*This documentation is maintained by the RealTechee development team. For questions or contributions, please refer to the project guidelines.*
+This consolidated framework provides enterprise-grade testing capabilities while maintaining developer productivity and CI/CD reliability.

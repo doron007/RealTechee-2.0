@@ -5,6 +5,12 @@ description: "Create or update project documentation following enterprise standa
 
 Update or create project documentation files following the established documentation structure and formatting standards observed in /docs/* architecture.
 
+**CRITICAL: Documentation Location Requirements:**
+- **NEVER create .md files in project root directory** - All documentation must be placed within /docs/ folder structure
+- **ALWAYS place documentation in appropriate /docs/XX-folder/** based on content type
+- **NEVER create random .md files with session names, implementation notes, or summary files in root**
+- **NEVER break existing folder organization** - Follow established 00-10 structure strictly
+
 **Documentation Standards:**
 - Follow structured 00-10 folder organization (/docs/00-overview/ through /docs/10-appendices/)
 - Use enterprise-grade formatting with comprehensive sections and subsections
@@ -42,18 +48,34 @@ Common issues and solutions
 **Status**: Status Description ✅
 ```
 
-**File Organization:**
-- **00-overview/**: System architecture, environment setup, high-level overviews
-- **01-requirements/**: User stories, specifications, business requirements
-- **02-design/**: UI/UX design, component patterns, styling guides
-- **03-domains/**: Business domain documentation (11 core domains)
-- **04-implementation/**: Code patterns, technical implementation guides
-- **05-testing/**: Testing strategies, framework documentation, coverage
-- **06-deployment/**: Deployment procedures, CI/CD, release management
-- **07-operations/**: Monitoring, logging, maintenance, incident response
-- **08-security/**: Security procedures, compliance, audit requirements
-- **09-migration/**: Data migration, upgrade procedures, compatibility
-- **10-appendices/**: Additional resources, references, glossaries
+**File Organization & Content Placement Rules:**
+
+**MANDATORY FILE PLACEMENT:**
+- **00-overview/**: System architecture, environment setup, high-level overviews, executive summaries
+- **01-requirements/**: User stories, specifications, business requirements, implementation plans
+- **02-design/**: UI/UX design, component patterns, styling guides, architecture decision records (ADRs)
+- **03-domains/**: Business domain documentation (authentication, CRM, project-management, etc.)
+- **04-implementation/**: Code patterns, technical implementation guides, API documentation
+- **05-testing/**: Testing strategies, framework documentation, coverage reports, test results
+- **06-deployment/**: Deployment procedures, CI/CD, release management, environment setup
+- **07-operations/**: Monitoring, logging, maintenance, incident response, runbooks
+- **08-security/**: Security procedures, compliance, audit requirements (if needed)
+- **09-migration/**: Data migration, upgrade procedures, compatibility guides
+- **10-appendices/**: Session summaries, additional resources, references, glossaries, archives
+
+**Content Type → Location Mapping:**
+- Session summaries/completion notes → **10-appendices/**
+- Implementation guides → **04-implementation/**
+- Architecture diagrams → **00-overview/** or **02-design/**
+- Testing documentation → **05-testing/**
+- Operational procedures → **07-operations/**
+- User stories/requirements → **01-requirements/**
+
+**PROHIBITED ACTIONS:**
+- ❌ Creating .md files in project root (/, /src/, /components/, etc.)
+- ❌ Random file names like "session-notes.md", "implementation-summary.md" in root
+- ❌ Breaking existing folder hierarchy or creating new top-level folders
+- ❌ Duplicating content across multiple locations
 
 **Implementation Requirements:**
 - Create comprehensive content with practical examples
