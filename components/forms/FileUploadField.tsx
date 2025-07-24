@@ -3,13 +3,14 @@ import { uploadData } from 'aws-amplify/storage';
 import { Close, Photo, VideoFile, Description } from '@mui/icons-material';
 import { P3 } from '../typography/P3' 
 import amplifyConfig from '../../amplify_outputs.json';
+import { getRelativePathForUpload } from '../../utils/s3Utils';
 
 interface UploadedFile {
   id: string;
   name: string;
   size: number;
   type: string;
-  url: string;
+  url: string; // This will now be a relative path starting with /assets/
   key: string;
   category: 'images' | 'videos' | 'docs';
 }
@@ -149,13 +150,6 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
       await uploadTask.result;
 
-      // Generate direct S3 public URL (not presigned) for inline viewing
-      // This matches the AddComment system approach for proper inline display
-      const config = amplifyConfig as any;
-      const bucketName = config.storage?.bucket_name || 'default-bucket';
-      const region = config.storage?.aws_region || 'us-west-1';
-      const directUrl = `https://${bucketName}.s3.${region}.amazonaws.com/public/${fileKey}`;
-
       // Remove from uploading state
       setUploading(prev => {
         const newUploading = { ...prev };
@@ -163,12 +157,16 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
         return newUploading;
       });
 
+      // Return relative path that will be stored in database
+      // The path follows the new architecture: /assets/[category]/[file]
+      const relativePath = getRelativePathForUpload(category, timestamp, file.name);
+
       return {
         id: fileId,
         name: file.name,
         size: file.size,
         type: file.type,
-        url: directUrl, // Direct S3 URL for inline viewing
+        url: relativePath, // Store relative path instead of full URL
         key: fileKey,
         category
       };

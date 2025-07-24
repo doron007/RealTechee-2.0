@@ -1,0 +1,849 @@
+{
+  "completedAt": "2025-07-24T21:10:37.964Z",
+  "dryRun": false,
+  "summary": {
+    "totalTasks": 49,
+    "successful": 49,
+    "failed": 0,
+    "byFieldType": {
+      "image": 49
+    }
+  },
+  "tasks": [
+    {
+      "projectId": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/27543-berkshire-hills-pl-valencia-ca-91354-usa/documents/doc-011.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/27543-berkshire-hills-pl-valencia-ca-91354-usa/documents/doc-011.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "8ae80590-5160-4a19-a006-902ef275e1ee",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1023-via-colinas-westlake-village-ca-91362/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1023-via-colinas-westlake-village-ca-91362/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "dd60815f-f6a2-b91d-0639-de843e3b4f1c",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22367-algunas-rd-woodland-hills-ca-91364-usa/documents/doc-009.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22367-algunas-rd-woodland-hills-ca-91364-usa/documents/doc-009.png",
+      "type": "single"
+    },
+    {
+      "projectId": "ad171f72-be14-4cb0-a95c-53c95d0e9fc8",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/10794-wilkins-ave-suite-404-los-angeles-ca-90024/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/10794-wilkins-ave-suite-404-los-angeles-ca-90024/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/29220-deep-shadow-drive-agoura-hills-ca-91301/documents/doc-005.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/29220-deep-shadow-drive-agoura-hills-ca-91301/documents/doc-005.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "e85320e5-62e8-40cb-9452-5ad5c98f6183",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1518-grove-place-fullerton-ca-usa/documents/doc-003.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1518-grove-place-fullerton-ca-usa/documents/doc-003.png",
+      "type": "single"
+    },
+    {
+      "projectId": "c02983bf-39e6-431e-8ad5-5ff431bdb05c",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6401-nohl-ranch-rd-suite-78-anaheim-ca-92807/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6401-nohl-ranch-rd-suite-78-anaheim-ca-92807/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "a9136685-07f6-7d39-4269-24e40dbed66b",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/13722-wyandote-st-van-nuys-ca-91405-us/documents/doc-003.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/13722-wyandote-st-van-nuys-ca-91405-us/documents/doc-003.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "0c736788-7758-4254-bafd-c181b91a8a75",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22621-berdon-st-woodland-hills-ca-91367-usa/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22621-berdon-st-woodland-hills-ca-91367-usa/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "e0e8bebe-40a3-4a17-ab0e-5ed6f8c615ea",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4960-wiota-st-los-angeles-ca-90041/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4960-wiota-st-los-angeles-ca-90041/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "3f8c8200-0816-4de5-aa91-2c3ac08fa4b5",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3711-calle-jazmin-calabasas-ca-91302/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3711-calle-jazmin-calabasas-ca-91302/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "eb7d61f0-85c5-418e-ba1a-def922b2198c",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18100-guildford-ln-northridge-ca-91326-usa/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18100-guildford-ln-northridge-ca-91326-usa/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "0d0d3158-293a-2954-9ca5-717d09afa5fc",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6761-kings-harbor-dr-rancho-palos-verdes-ca-90275-usa/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6761-kings-harbor-dr-rancho-palos-verdes-ca-90275-usa/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "2d53ff9f-c569-d523-7b8c-07427ac40400",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17524-napa-st-northridge-ca-91325-usa/documents/doc-007.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17524-napa-st-northridge-ca-91325-usa/documents/doc-007.png",
+      "type": "single"
+    },
+    {
+      "projectId": "c6acd803-074c-6b41-54be-52cb8662a743",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8275-fernadel-avenue-pico-rivera-ca-usa/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8275-fernadel-avenue-pico-rivera-ca-usa/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "de7a8ae5-1624-8ba6-9e4b-afa140835884",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8550-mipolomol-road-malibu-ca-90265-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8550-mipolomol-road-malibu-ca-90265-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "cd925535-e2bc-4de9-8156-e45c6c343a9c",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17900-tuscan-ct-granada-hills-ca-91344/documents/doc-003.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17900-tuscan-ct-granada-hills-ca-91344/documents/doc-003.png",
+      "type": "single"
+    },
+    {
+      "projectId": "9003f648-10ac-8bd9-3b50-36c6517792a1",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/7539-bobbyboyar-ave-west-hills-ca-91304-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/7539-bobbyboyar-ave-west-hills-ca-91304-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "ce1b5212-c72a-2adc-9af3-5158955a182b",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17717-miranda-st-encino-ca-91316-usa/documents/doc-003.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17717-miranda-st-encino-ca-91316-usa/documents/doc-003.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "35182081-b9dd-4fd3-9372-ef2508294028",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/28121-robin-ave-santa-clarita-ca-91350/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/28121-robin-ave-santa-clarita-ca-91350/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "7268d214-f5c3-b060-95ac-07db6cdef6bf",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12451-daryl-ave-granada-hills-ca-91344-usa/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12451-daryl-ave-granada-hills-ca-91344-usa/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "2dca29f7-188a-4cf7-8119-0b59ecab4573",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2409-century-hill-los-angeles-ca-90067-usa/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2409-century-hill-los-angeles-ca-90067-usa/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "ffb887a0-5b1c-7e97-275b-b5006db67f1b",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3562-alana-dr-sherman-oaks-ca-91403-usa/documents/doc-005.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3562-alana-dr-sherman-oaks-ca-91403-usa/documents/doc-005.png",
+      "type": "single"
+    },
+    {
+      "projectId": "aeb239fc-e681-4687-9287-11d047bdec87",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4900-la-crescenta-blvd-la-crescenta-ca-91214/documents/doc-003.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4900-la-crescenta-blvd-la-crescenta-ca-91214/documents/doc-003.png",
+      "type": "single"
+    },
+    {
+      "projectId": "14a35065-456a-10b8-9e8d-30bee3824720",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6920-shoshone-ave-van-nuys-ca-91406-usa/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6920-shoshone-ave-van-nuys-ca-91406-usa/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "e75a971c-17fe-e991-2264-953823f0332a",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4168-ish-dr-simi-valley-ca-93063-usa/documents/doc-007.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4168-ish-dr-simi-valley-ca-93063-usa/documents/doc-007.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "2beb0166-72b0-61ae-b8f8-ba920ee9e355",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1050-e-ramon-rd-unit-116-palm-springs-ca-92262-usa/documents/doc-007.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1050-e-ramon-rd-unit-116-palm-springs-ca-92262-usa/documents/doc-007.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "0ff4b2d7-434f-48e4-a9c9-14c96516ff28",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2100-spaulding-ave-los-angeles-ca-90016/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2100-spaulding-ave-los-angeles-ca-90016/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "7186229f-65a4-bfc7-a97b-aa57486ea1ac",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/20431-lisa-gail-drive-saugus-ca-91350-usa/documents/doc-003.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/20431-lisa-gail-drive-saugus-ca-91350-usa/documents/doc-003.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "541280cb-46cd-430b-ac79-a96248820b86",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2003-velez-dr-rancho-palos-verdes-ca-90275/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2003-velez-dr-rancho-palos-verdes-ca-90275/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "07e4b0c0-baf3-7655-d438-368dbbcb5edf",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6160-whitsett-avenue-north-hollywood-ca-91606/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6160-whitsett-avenue-north-hollywood-ca-91606/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "6b52768d-42ad-789c-8b54-40a4ed816255",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/519-stepney-st-inglewood-ca-90302-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/519-stepney-st-inglewood-ca-90302-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "25b1f614-8f20-ea52-39bc-2020b10e3aa4",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5510-owensmouth-ave-suite-312-woodland-hills-ca-91364-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5510-owensmouth-ave-suite-312-woodland-hills-ca-91364-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "f84421ae-0b00-4252-8abb-e3ff38d2d6ea",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14159-weddington-st-van-nuys-ca-91401/documents/doc-003.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14159-weddington-st-van-nuys-ca-91401/documents/doc-003.png",
+      "type": "single"
+    },
+    {
+      "projectId": "6a64ae69-5bbb-4d69-923a-57ffb442f67d",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22000-collins-st-suite-4-woodland-hills-ca-91364/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22000-collins-st-suite-4-woodland-hills-ca-91364/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "71dfce89-9fa6-4532-3cb4-5e906f434663",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22328-de-grasse-drive-calabasas-ca-91302/documents/doc-007.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22328-de-grasse-drive-calabasas-ca-91302/documents/doc-007.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "490209a8-d20a-bae1-9e01-1da356be8a93",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6673-lederer-ave-west-hills-ca-91307-usa/documents/doc-005.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6673-lederer-ave-west-hills-ca-91307-usa/documents/doc-005.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "81b12548-3429-7222-5885-27feb148ef82",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/54-barolo-rancho-mirage-ca-92270-usa/documents/doc-011.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/54-barolo-rancho-mirage-ca-92270-usa/documents/doc-011.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "ce91e980-bad8-444e-9e30-5be2e3891c52",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18110-killion-st-tarzana-ca-91356/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18110-killion-st-tarzana-ca-91356/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12629-wixom-st-north-hollywood-ca-91605-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12629-wixom-st-north-hollywood-ca-91605-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "97d61000-c5bb-447d-a406-1b82ec1964f5",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2412-beverwil-dr-los-angeles-ca-90034/documents/doc-015.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2412-beverwil-dr-los-angeles-ca-90034/documents/doc-015.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "1fcb4f47-5014-45cd-9b9f-196c46a6fb61",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1630-bentley-ave-unit-103-los-angeles-ca-90025/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1630-bentley-ave-unit-103-los-angeles-ca-90025/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "0661eca7-c368-49ab-8240-0a36296a782a",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/40963-177th-street-lancaster-ca-93535/documents/doc-003.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/40963-177th-street-lancaster-ca-93535/documents/doc-003.jpg",
+      "type": "single"
+    },
+    {
+      "projectId": "37970d47-67bc-985e-8dff-11404c713862",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1902-n-screenland-dr-burbank-ca-91505-usa/documents/doc-005.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1902-n-screenland-dr-burbank-ca-91505-usa/documents/doc-005.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "07aefb28-61a7-4563-860f-1aeee098a747",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/559-houston-drive-thousand-oaks-ca-usa/documents/doc-003.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/559-houston-drive-thousand-oaks-ca-usa/documents/doc-003.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "ece8b41d-50f8-4b08-b001-1daeef3001aa",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14853-jupiter-st-whittier-ca-90603-usa/documents/doc-003.png",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14853-jupiter-st-whittier-ca-90603-usa/documents/doc-003.png",
+      "type": "single"
+    },
+    {
+      "projectId": "f16f6209-9810-8648-5c10-121218e6dfdb",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5301-balboa-blvd-unit-l7-encino-ca-91316-usa/documents/doc-011.webp",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5301-balboa-blvd-unit-l7-encino-ca-91316-usa/documents/doc-011.webp",
+      "type": "single"
+    },
+    {
+      "projectId": "db1302c4-9818-452e-bb47-c9a71f19e044",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3761-calle-joaquin-calabasas-ca-91302/documents/doc-003.jpeg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3761-calle-joaquin-calabasas-ca-91302/documents/doc-003.jpeg",
+      "type": "single"
+    },
+    {
+      "projectId": "a894a53f-0938-4e31-b53f-8326471bcb9e",
+      "fieldName": "image",
+      "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/11945-vara-pl-granada-hills-ca-91344/documents/doc-009.jpg",
+      "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/11945-vara-pl-granada-hills-ca-91344/documents/doc-009.jpg",
+      "type": "single"
+    }
+  ],
+  "results": [
+    {
+      "task": {
+        "projectId": "bb20fd61-6f5c-c4d9-2af4-a7ae75afdd30",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/27543-berkshire-hills-pl-valencia-ca-91354-usa/documents/doc-011.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/27543-berkshire-hills-pl-valencia-ca-91354-usa/documents/doc-011.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "8ae80590-5160-4a19-a006-902ef275e1ee",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1023-via-colinas-westlake-village-ca-91362/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1023-via-colinas-westlake-village-ca-91362/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "dd60815f-f6a2-b91d-0639-de843e3b4f1c",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22367-algunas-rd-woodland-hills-ca-91364-usa/documents/doc-009.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22367-algunas-rd-woodland-hills-ca-91364-usa/documents/doc-009.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "ad171f72-be14-4cb0-a95c-53c95d0e9fc8",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/10794-wilkins-ave-suite-404-los-angeles-ca-90024/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/10794-wilkins-ave-suite-404-los-angeles-ca-90024/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "7c0a1e7d-dbae-4dce-8e6d-d48b322037a0",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/29220-deep-shadow-drive-agoura-hills-ca-91301/documents/doc-005.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/29220-deep-shadow-drive-agoura-hills-ca-91301/documents/doc-005.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "e85320e5-62e8-40cb-9452-5ad5c98f6183",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1518-grove-place-fullerton-ca-usa/documents/doc-003.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1518-grove-place-fullerton-ca-usa/documents/doc-003.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "c02983bf-39e6-431e-8ad5-5ff431bdb05c",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6401-nohl-ranch-rd-suite-78-anaheim-ca-92807/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6401-nohl-ranch-rd-suite-78-anaheim-ca-92807/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "a9136685-07f6-7d39-4269-24e40dbed66b",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/13722-wyandote-st-van-nuys-ca-91405-us/documents/doc-003.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/13722-wyandote-st-van-nuys-ca-91405-us/documents/doc-003.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "0c736788-7758-4254-bafd-c181b91a8a75",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22621-berdon-st-woodland-hills-ca-91367-usa/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22621-berdon-st-woodland-hills-ca-91367-usa/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "e0e8bebe-40a3-4a17-ab0e-5ed6f8c615ea",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4960-wiota-st-los-angeles-ca-90041/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4960-wiota-st-los-angeles-ca-90041/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "3f8c8200-0816-4de5-aa91-2c3ac08fa4b5",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3711-calle-jazmin-calabasas-ca-91302/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3711-calle-jazmin-calabasas-ca-91302/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "eb7d61f0-85c5-418e-ba1a-def922b2198c",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18100-guildford-ln-northridge-ca-91326-usa/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18100-guildford-ln-northridge-ca-91326-usa/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "0d0d3158-293a-2954-9ca5-717d09afa5fc",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6761-kings-harbor-dr-rancho-palos-verdes-ca-90275-usa/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6761-kings-harbor-dr-rancho-palos-verdes-ca-90275-usa/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "2d53ff9f-c569-d523-7b8c-07427ac40400",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17524-napa-st-northridge-ca-91325-usa/documents/doc-007.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17524-napa-st-northridge-ca-91325-usa/documents/doc-007.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "c6acd803-074c-6b41-54be-52cb8662a743",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8275-fernadel-avenue-pico-rivera-ca-usa/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8275-fernadel-avenue-pico-rivera-ca-usa/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "de7a8ae5-1624-8ba6-9e4b-afa140835884",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8550-mipolomol-road-malibu-ca-90265-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/8550-mipolomol-road-malibu-ca-90265-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "cd925535-e2bc-4de9-8156-e45c6c343a9c",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17900-tuscan-ct-granada-hills-ca-91344/documents/doc-003.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17900-tuscan-ct-granada-hills-ca-91344/documents/doc-003.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "9003f648-10ac-8bd9-3b50-36c6517792a1",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/7539-bobbyboyar-ave-west-hills-ca-91304-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/7539-bobbyboyar-ave-west-hills-ca-91304-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "ce1b5212-c72a-2adc-9af3-5158955a182b",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17717-miranda-st-encino-ca-91316-usa/documents/doc-003.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/17717-miranda-st-encino-ca-91316-usa/documents/doc-003.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "35182081-b9dd-4fd3-9372-ef2508294028",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/28121-robin-ave-santa-clarita-ca-91350/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/28121-robin-ave-santa-clarita-ca-91350/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "7268d214-f5c3-b060-95ac-07db6cdef6bf",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12451-daryl-ave-granada-hills-ca-91344-usa/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12451-daryl-ave-granada-hills-ca-91344-usa/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "2dca29f7-188a-4cf7-8119-0b59ecab4573",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2409-century-hill-los-angeles-ca-90067-usa/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2409-century-hill-los-angeles-ca-90067-usa/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "ffb887a0-5b1c-7e97-275b-b5006db67f1b",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3562-alana-dr-sherman-oaks-ca-91403-usa/documents/doc-005.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3562-alana-dr-sherman-oaks-ca-91403-usa/documents/doc-005.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "aeb239fc-e681-4687-9287-11d047bdec87",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4900-la-crescenta-blvd-la-crescenta-ca-91214/documents/doc-003.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4900-la-crescenta-blvd-la-crescenta-ca-91214/documents/doc-003.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "14a35065-456a-10b8-9e8d-30bee3824720",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6920-shoshone-ave-van-nuys-ca-91406-usa/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6920-shoshone-ave-van-nuys-ca-91406-usa/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "e75a971c-17fe-e991-2264-953823f0332a",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4168-ish-dr-simi-valley-ca-93063-usa/documents/doc-007.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/4168-ish-dr-simi-valley-ca-93063-usa/documents/doc-007.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "2beb0166-72b0-61ae-b8f8-ba920ee9e355",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1050-e-ramon-rd-unit-116-palm-springs-ca-92262-usa/documents/doc-007.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1050-e-ramon-rd-unit-116-palm-springs-ca-92262-usa/documents/doc-007.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "0ff4b2d7-434f-48e4-a9c9-14c96516ff28",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2100-spaulding-ave-los-angeles-ca-90016/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2100-spaulding-ave-los-angeles-ca-90016/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "7186229f-65a4-bfc7-a97b-aa57486ea1ac",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/20431-lisa-gail-drive-saugus-ca-91350-usa/documents/doc-003.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/20431-lisa-gail-drive-saugus-ca-91350-usa/documents/doc-003.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "541280cb-46cd-430b-ac79-a96248820b86",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2003-velez-dr-rancho-palos-verdes-ca-90275/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2003-velez-dr-rancho-palos-verdes-ca-90275/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "07e4b0c0-baf3-7655-d438-368dbbcb5edf",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6160-whitsett-avenue-north-hollywood-ca-91606/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6160-whitsett-avenue-north-hollywood-ca-91606/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "6b52768d-42ad-789c-8b54-40a4ed816255",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/519-stepney-st-inglewood-ca-90302-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/519-stepney-st-inglewood-ca-90302-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "25b1f614-8f20-ea52-39bc-2020b10e3aa4",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5510-owensmouth-ave-suite-312-woodland-hills-ca-91364-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5510-owensmouth-ave-suite-312-woodland-hills-ca-91364-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "f84421ae-0b00-4252-8abb-e3ff38d2d6ea",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14159-weddington-st-van-nuys-ca-91401/documents/doc-003.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14159-weddington-st-van-nuys-ca-91401/documents/doc-003.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "6a64ae69-5bbb-4d69-923a-57ffb442f67d",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22000-collins-st-suite-4-woodland-hills-ca-91364/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22000-collins-st-suite-4-woodland-hills-ca-91364/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "71dfce89-9fa6-4532-3cb4-5e906f434663",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22328-de-grasse-drive-calabasas-ca-91302/documents/doc-007.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/22328-de-grasse-drive-calabasas-ca-91302/documents/doc-007.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "490209a8-d20a-bae1-9e01-1da356be8a93",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6673-lederer-ave-west-hills-ca-91307-usa/documents/doc-005.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/6673-lederer-ave-west-hills-ca-91307-usa/documents/doc-005.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "81b12548-3429-7222-5885-27feb148ef82",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/54-barolo-rancho-mirage-ca-92270-usa/documents/doc-011.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/54-barolo-rancho-mirage-ca-92270-usa/documents/doc-011.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "ce91e980-bad8-444e-9e30-5be2e3891c52",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18110-killion-st-tarzana-ca-91356/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/18110-killion-st-tarzana-ca-91356/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "faa28aa6-ea08-6973-1d73-7fb4a34e0e26",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12629-wixom-st-north-hollywood-ca-91605-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/12629-wixom-st-north-hollywood-ca-91605-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "97d61000-c5bb-447d-a406-1b82ec1964f5",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2412-beverwil-dr-los-angeles-ca-90034/documents/doc-015.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/2412-beverwil-dr-los-angeles-ca-90034/documents/doc-015.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "1fcb4f47-5014-45cd-9b9f-196c46a6fb61",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1630-bentley-ave-unit-103-los-angeles-ca-90025/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1630-bentley-ave-unit-103-los-angeles-ca-90025/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "0661eca7-c368-49ab-8240-0a36296a782a",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/40963-177th-street-lancaster-ca-93535/documents/doc-003.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/40963-177th-street-lancaster-ca-93535/documents/doc-003.jpg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "37970d47-67bc-985e-8dff-11404c713862",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1902-n-screenland-dr-burbank-ca-91505-usa/documents/doc-005.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/1902-n-screenland-dr-burbank-ca-91505-usa/documents/doc-005.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "07aefb28-61a7-4563-860f-1aeee098a747",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/559-houston-drive-thousand-oaks-ca-usa/documents/doc-003.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/559-houston-drive-thousand-oaks-ca-usa/documents/doc-003.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "ece8b41d-50f8-4b08-b001-1daeef3001aa",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14853-jupiter-st-whittier-ca-90603-usa/documents/doc-003.png",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/14853-jupiter-st-whittier-ca-90603-usa/documents/doc-003.png",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "f16f6209-9810-8648-5c10-121218e6dfdb",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5301-balboa-blvd-unit-l7-encino-ca-91316-usa/documents/doc-011.webp",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/5301-balboa-blvd-unit-l7-encino-ca-91316-usa/documents/doc-011.webp",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "db1302c4-9818-452e-bb47-c9a71f19e044",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3761-calle-joaquin-calabasas-ca-91302/documents/doc-003.jpeg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/3761-calle-joaquin-calabasas-ca-91302/documents/doc-003.jpeg",
+        "type": "single"
+      },
+      "success": true
+    },
+    {
+      "task": {
+        "projectId": "a894a53f-0938-4e31-b53f-8326471bcb9e",
+        "fieldName": "image",
+        "originalValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/11945-vara-pl-granada-hills-ca-91344/documents/doc-009.jpg",
+        "fixedValue": "https://amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu.s3.us-west-1.amazonaws.com/assets/properties/11945-vara-pl-granada-hills-ca-91344/documents/doc-009.jpg",
+        "type": "single"
+      },
+      "success": true
+    }
+  ]
+}

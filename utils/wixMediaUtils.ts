@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getFullUrlFromPath } from './s3Utils';
 
 const loggedUrls = new Set<string>(); // Ensure loggedUrls is defined
 
@@ -535,6 +536,13 @@ export async function safeImageUrl(imageUrl: string): Promise<string> {
   }
 
   try {
+    // Check if this is a relative path from our new architecture
+    if (imageUrl.startsWith('/assets/')) {
+      const fullUrl = getFullUrlFromPath(imageUrl);
+      urlCache.set(imageUrl, fullUrl);
+      return fullUrl;
+    }
+    
     // If it's already a valid HTTP URL, check if it's a Wix URL that needs tilde and extension
     if (imageUrl.startsWith('http')) {
       // For Wix URLs, always add cache busting to bypass 403 errors

@@ -19,14 +19,37 @@ To become the leading platform for real estate home preparation, providing seaml
 - ✅ **Production URL**: `https://d200k2wsaf8th3.amplifyapp.com` (live & operational)
 - ✅ **Documentation**: Enterprise documentation architecture complete with 00-10 structured organization
 - ✅ **Document Migration**: 914 documents (402MB) migrated from Wix to S3 + repository cleanup complete
-- 🎯 **Next Phase**: Optional enhancements (MFA, GDPR, load testing, custom domain)
+- ✅ **Deployment Infrastructure**: 3-tier environment system + automated deployment commands
+- 🎯 **Next Phase**: Optional enhancements (business data migration, MFA, GDPR, load testing, custom domain)
 
 ---
 
 ## 🏗️ System Architecture
 
-### Cloud-Native Serverless Architecture
+### Cloud-Native Serverless Architecture with 3-Tier Deployment
 ```
+Development Environment (Local + Shared Backend)
+┌─────────────────┐    ┌─────────────────────────────────────┐
+│   Frontend      │    │   Backend: RealTechee-2.0          │
+│   localhost:3000│◄──►│   App ID: d3atadjk90y9q5            │
+│   npm run dev   │    │   Tables: *-fvn7t5hbobaxjklhrqzdl4ac34-* │
+└─────────────────┘    └─────────────────────────────────────┘
+
+Staging Environment (Shared Backend)
+┌─────────────────┐    ┌─────────────────────────────────────┐
+│   Frontend      │    │   Backend: RealTechee-2.0 (same)   │
+│ prod.d3atadjk90y│◄──►│   App ID: d3atadjk90y9q5 (shared)   │
+│   git: prod     │    │   Tables: *-fvn7t5hbobaxjklhrqzdl4ac34-* │
+└─────────────────┘    └─────────────────────────────────────┘
+
+Production Environment (Isolated)
+┌─────────────────┐    ┌─────────────────────────────────────┐
+│   Frontend      │    │   Backend: RealTechee-Gen2          │
+│ d200k2wsaf8th3  │◄──►│   App ID: d200k2wsaf8th3            │
+│   git: prod-v2  │    │   Tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-* │
+└─────────────────┘    └─────────────────────────────────────┘
+
+Core Architecture Components:
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Frontend      │    │   Backend       │    │   Database      │
 │   (Next.js)     │◄──►│   (Amplify)     │◄──►│   (DynamoDB)    │
@@ -39,6 +62,16 @@ To become the leading platform for real estate home preparation, providing seaml
 │   (Cognito)     │    │  (Multi-channel)│    │  (S3/CloudFront)│
 │   RBAC System   │    │   Email/SMS     │    │   Media/Docs    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+### Deployment Pipeline
+```
+Development → Staging → Production
+     │           │          │
+   main       prod      prod-v2
+     │           │          │
+  Fast Dev   Shared Test  Isolated
+             Backend     Production
 ```
 
 ### 11 Core Business Domains

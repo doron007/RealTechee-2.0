@@ -23,6 +23,7 @@ import type { MeetingDetails } from '../../../services/projectManagerService';
 import { IconButton, Button as MuiButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import { getFullUrlFromPath } from '../../../utils/s3Utils';
 
 interface Request {
   id: string;
@@ -1329,7 +1330,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                     <div key={file.id} className="relative group">
                       {file.category === 'images' ? (
                         <Image
-                          src={file.url}
+                          src={getFullUrlFromPath(file.url)}
                           alt={file.name}
                           width={128}
                           height={128}
@@ -1337,7 +1338,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                         />
                       ) : (
                         <video
-                          src={file.url}
+                          src={getFullUrlFromPath(file.url)}
                           className="w-full h-32 object-cover rounded border border-[#E4E4E4]"
                           controls
                         />
@@ -1412,7 +1413,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                         <MuiButton
                           variant="outlined"
                           size="small"
-                          onClick={() => window.open(file.url, '_blank')}
+                          onClick={() => window.open(getFullUrlFromPath(file.url), '_blank')}
                         >
                           View
                         </MuiButton>
@@ -1421,7 +1422,7 @@ const RequestDetail: React.FC<RequestDetailProps> = ({ requestId }) => {
                           size="small"
                           onClick={() => {
                             const link = document.createElement('a');
-                            link.href = file.url;
+                            link.href = getFullUrlFromPath(file.url);
                             link.download = file.name;
                             link.click();
                           }}

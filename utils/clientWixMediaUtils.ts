@@ -3,6 +3,7 @@
  * This slimmed-down version delegates the complex URL conversion to the server
  */
 import axios from 'axios';
+import { getFullUrlFromPath } from './s3Utils';
 
 // Enhanced cache with localStorage persistence and TTL
 interface CacheEntry {
@@ -202,6 +203,11 @@ export async function safeImageUrl(imageUrl: string): Promise<string> {
   }
   
   try {
+    // Check if this is a relative path from our new architecture
+    if (imageUrl.startsWith('/assets/')) {
+      return getFullUrlFromPath(imageUrl);
+    }
+    
     // Check if this is a Wix URL that needs conversion
     if (isWixMediaUrl(imageUrl)) {
       return await convertWixMediaUrl(imageUrl);

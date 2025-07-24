@@ -485,46 +485,76 @@ export const modelAPI = createModelAPI('ModelName');
 
 ## 📋 **SESSION CONTEXT PRESERVATION**
 
-### **🎯 CURRENT SESSION: Document Migration & Repository Cleanup COMPLETE**
-**Status: COMPLETED** | **Priority: HIGH** | **Achievement: 100% Wix Migration + Cleanup ✅**
+### **🎯 CURRENT SESSION: Environment Configuration & Deployment Infrastructure COMPLETE**
+**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Production-Ready Deployment System ✅**
 
-**✅ MAJOR ACCOMPLISHMENT: Complete Wix Document Migration**
-- **Challenge**: Complete document migration from Wix URLs + repository cleanup
-- **Methodology**: Download-based migration + database cleanup + verification + script archival
-- **Outcome**: 914 documents (402MB) migrated + 0 Wix references + clean repository ✅
-- **Impact**: Production-ready document system + streamlined codebase maintenance
+**✅ MAJOR ACCOMPLISHMENT: Complete Environment Configuration & Deployment System**
+- **Challenge**: Clarify confusing environment setup + implement proper deployment workflow
+- **Methodology**: Environment analysis + configuration management + deployment automation
+- **Outcome**: Clear 3-tier environment system + automated deployment commands ✅
+- **Impact**: Production-safe deployment process with comprehensive safety checks
 
-### **🔧 MIGRATION TECHNICAL ACHIEVEMENTS**
-| Component                         | Issue Fixed                   | Solution Applied              | Result                    |
+### **🔧 ENVIRONMENT SYSTEM ACHIEVEMENTS**
+| Component                         | Implementation                | Solution Applied              | Result                    |
 |-----------------------------------|-------------------------------|-------------------------------|---------------------------|
-| **download-documents-to-s3.ts**  | Documents not downloaded      | Fetch from usrfiles.com URLs | 914 successful downloads  |
-| **fix-double-s3-urls.ts**        | Database URL concatenation    | Clean malformed S3 URLs      | 122/122 fixes applied    |
-| **final-migration-verification** | Wix reference validation      | Comprehensive URL scanning    | 0 Wix URLs remaining     |
-| **Repository Cleanup**           | 70+ transient scripts        | Archive to cleanup-archive/   | Clean operational state  |
-| **Playwright Reports**           | Generated test artifacts      | .gitignore + cleanup         | No test files in repo     |
+| **Environment Analysis**         | Confusing env setup          | Complete documentation + mapping | Clear 3-tier system     |
+| **Config Management**            | Single amplify_outputs.json  | Separate dev/prod configs + switching | Environment isolation  |
+| **Deployment Commands**          | Manual deployment process    | `/deploy-staging` + `/deploy-production` | Automated workflows    |
+| **Safety Infrastructure**        | Risky production deployments | Comprehensive validation + rollback | Production-safe process |
+| **Environment Files**            | Inconsistent configurations  | `.env.{development,staging,production}` | Clear environment separation |
 
-### **📊 MIGRATION & CLEANUP RESULTS**
+### **📊 DEPLOYMENT INFRASTRUCTURE RESULTS**
 ```
-🎯 Migration Completion:
-   • Documents Downloaded: 914 PDFs (402MB total) ✅
-   • Database URLs Fixed: 122 double concatenation issues ✅
-   • Wix References: 0 remaining (100% removal verified) ✅
-   • Scripts Archived: 70+ transient → cleanup-archive/ ✅
-   • Repository: Clean operational state with 16 essential scripts ✅
+🎯 Environment Configuration:
+   • Development: localhost:3000 → RealTechee-2.0 (d3atadjk90y9q5) ✅
+   • Staging: prod.d3atadjk90y9q5.amplifyapp.com (shared backend) ✅
+   • Production: d200k2wsaf8th3.amplifyapp.com (isolated) ✅
+   • Config Files: amplify_outputs.{dev,prod}.json + switching script ✅
+   • Deployment: Claude commands + shell scripts with safety checks ✅
 ```
 
-### **🗂️ REPOSITORY OPTIMIZATION**
-**Scripts Directory Cleanup:**
-- **Essential Operations**: 16 scripts preserved (backup, deploy, validate, monitor)
-- **Archived Scripts**: 70+ migration/test/debug scripts → cleanup-archive/
-- **Git Hygiene**: Playwright reports excluded, cleanup-archive ignored
+### **🚀 DEPLOYMENT SYSTEM FEATURES**
+**Claude Code Commands:**
+- **`/deploy-staging`**: Fast agile deployment (main→prod branch, shared backend)
+- **`/deploy-production`**: Comprehensive deployment (main→prod-v2, isolated backend, safety checks)
 
-**Performance Enhancements Maintained:**
-- **OptimizedImage**: Intersection observer + lazy loading active
-- **Multi-layer Caching**: Memory + localStorage + Next.js optimization
-- **Image Performance**: Priority loading + WebP/AVIF support
-- **Bundle Optimization**: 77% reduction maintained
+**Safety & Automation:**
+- **Environment Switching**: Automatic config management with rollback capability
+- **Validation Pipeline**: TypeScript check + build test + git status verification
+- **Interactive Confirmations**: User prompts for destructive operations
+- **Comprehensive Backups**: Data protection before production deployments
 
 ---
 
-*Last Updated: July 24, 2025 - 🎉 DOCUMENT MIGRATION COMPLETE: 914 documents migrated + repository cleanup ✅*
+### **📈 Previous Sessions Summary (Compressed)**
+**Major Milestones Achieved (100% Production Ready)**:
+- ✅ **Document Migration**: 914 documents (402MB) migrated from Wix→S3 + repository cleanup
+- ✅ **Production Environment**: Complete deployment (`d200k2wsaf8th3`) + monitoring + isolation  
+- ✅ **Data Migration**: 1,449 records + CloudWatch dashboards + SNS alerts operational
+- ✅ **User Stories 01-09**: All complete + 560+ E2E tests + CI/CD pipeline
+- ✅ **Performance**: 77% bundle reduction + GraphQL enhancements + image optimization
+- ✅ **Infrastructure**: Complete dev/prod separation + deployment protection
+- ✅ **Documentation**: Enterprise 00-10 architecture + operational procedures
+
+### **🎯 Production Context (Essential for New Sessions)**
+**Environment Details**:
+- **Development**: `npm run dev:primed` → localhost:3000 → RealTechee-2.0 (`d3atadjk90y9q5`)
+- **Staging**: `prod.d3atadjk90y9q5.amplifyapp.com` (shared backend with dev)
+- **Production**: `https://d200k2wsaf8th3.amplifyapp.com` (isolated backend)
+- **Tables**: `*-fvn7t5hbobaxjklhrqzdl4ac34-NONE` (dev/staging) / `*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE` (prod)
+- **Test Credentials**: `info@realtechee.com` / `Sababa123!`
+
+**Deployment System**:
+- **Staging**: `/deploy-staging` → main→prod branch (fast, agile)
+- **Production**: `/deploy-production` → main→prod-v2 branch (safe, comprehensive)
+- **Config Management**: `./scripts/switch-environment.sh {dev|prod|status}`
+- **Environment Files**: `.env.{development,staging,production}` configured
+
+**Next Phase Options (All Optional)**:
+1. **Data Migration Enhancement**: Business data sync dev→prod for BackOfficeRequestStatuses, staff, roles
+2. **Advanced Features**: Custom domain, load testing, mobile app, advanced analytics
+3. **Security Enhancement**: MFA, CSRF protection, GDPR compliance, security audit
+
+---
+
+*Last Updated: July 24, 2025 - 🎉 ENVIRONMENT INFRASTRUCTURE COMPLETE: 3-tier deployment system + automated workflows ✅*

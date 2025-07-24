@@ -44,10 +44,15 @@ export const getRelativePathFromUrl = (fullUrl: string): string => {
 
 /**
  * Convert a relative path to a full S3 URL
- * @param relativePath - Relative path starting with /
+ * @param relativePath - Relative path starting with / or full URL
  * @returns Full S3 public URL
  */
 export const getFullUrlFromPath = (relativePath: string): string => {
+  // If it's already a full URL, return as-is (prevents double concatenation)
+  if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+    return relativePath;
+  }
+  
   const baseUrl = getS3BaseUrl();
   
   // Ensure path starts with /
@@ -70,13 +75,14 @@ export const generateS3Key = (projectId: string, fileName: string): string => {
 
 /**
  * Get the relative path for a newly uploaded file
- * @param projectId - Project ID
+ * @param category - File category (images, videos, docs)
+ * @param timestamp - Timestamp for file uniqueness
  * @param fileName - Original file name
  * @returns Relative path that will be stored in database
  */
-export const getRelativePathForUpload = (projectId: string, fileName: string): string => {
-  const key = generateS3Key(projectId, fileName);
-  return `/${key}`;
+export const getRelativePathForUpload = (category: string, timestamp: number, fileName: string): string => {
+  const sanitizedFileName = fileName.replace(/\s+/g, '_');
+  return `/assets/${category}/${timestamp}-${sanitizedFileName}`;
 };
 
 /**
