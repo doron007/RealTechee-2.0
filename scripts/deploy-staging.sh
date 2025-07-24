@@ -5,6 +5,12 @@
 
 set -e
 
+# Check for dry-run flag
+DRY_RUN=false
+if [[ "$1" == "--dry-run" ]]; then
+    DRY_RUN=true
+fi
+
 # Colors for output  
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -69,7 +75,11 @@ echo -e "${GREEN}✅ SUCCESS:${NC} Prod branch updated"
 
 # Push to remote
 echo -e "${BLUE}==>${NC} 🚀 Pushing to remote (triggers Amplify deployment)"
-git push origin prod
+if [[ "$DRY_RUN" == "true" ]]; then
+    echo -e "${YELLOW}⚠️  DRY RUN:${NC} Would push to remote: git push origin prod"
+else
+    git push origin prod
+fi
 
 echo -e "${GREEN}✅ SUCCESS:${NC} Staging deployment initiated"
 
