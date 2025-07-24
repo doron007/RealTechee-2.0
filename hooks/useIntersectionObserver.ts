@@ -25,12 +25,37 @@ export function useIntersectionObserver(
     
     // Early return if element doesn't exist or IntersectionObserver is not supported
     if (!element || typeof IntersectionObserver === 'undefined') {
+      // If IntersectionObserver is not supported, assume element is visible
+      setIsIntersecting(true);
       return;
     }
 
     // If freezeOnceVisible is true and element is already visible, don't observe
     if (freezeOnceVisible && isIntersecting) {
       return;
+    }
+
+    // Check if element is already in view before setting up observer
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    // Use rootMargin in the initial check too
+    const marginPx = parseInt(rootMargin) || 0;
+    const isCurrentlyVisible = rect.top < (windowHeight + marginPx) && rect.bottom > -marginPx;
+    
+    console.log('IntersectionObserver initial check:', {
+      elementTop: rect.top,
+      elementBottom: rect.bottom,
+      windowHeight: windowHeight,
+      rootMargin: rootMargin,
+      isCurrentlyVisible: isCurrentlyVisible
+    });
+    
+    if (isCurrentlyVisible) {
+      console.log('Setting isIntersecting to true immediately');
+      setIsIntersecting(true);
+      if (freezeOnceVisible) {
+        return; // Don't set up observer if already visible and frozen
+      }
     }
 
     const observer = new IntersectionObserver(
@@ -51,7 +76,7 @@ export function useIntersectionObserver(
     return () => {
       observer.unobserve(element);
     };
-  }, [elementRef, threshold, root, rootMargin, freezeOnceVisible, isIntersecting]);
+  }, [elementRef, threshold, root, rootMargin, freezeOnceVisible]);
 
   return isIntersecting;
 }

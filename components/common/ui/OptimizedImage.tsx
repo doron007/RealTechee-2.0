@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
 
@@ -23,9 +23,11 @@ interface OptimizedImageProps {
 }
 
 const FALLBACK_IMAGES = [
-  '/assets/images/hero-bg.png',
-  '/assets/images/properties/property-1.jpg',
-  '/assets/images/properties/property-2.jpg'
+  '/assets/images/shared_projects_project-image1.png',
+  '/assets/images/shared_projects_project-image2.png',
+  '/assets/images/shared_projects_project-image3.png',
+  '/assets/images/shared_projects_project-image4.png',
+  '/assets/images/shared_projects_project-image5.png'
 ];
 
 export default function OptimizedImage({
@@ -50,21 +52,26 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState(src);
   const [imageError, setImageError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Use intersection observer for advanced lazy loading
+  // Use intersection observer for lazy loading, but with fallback for elements already in view
   const isInView = useIntersectionObserver(imageRef, {
     threshold: 0.1,
-    rootMargin: '50px',
+    rootMargin: '50px', // Optimized margin for better performance
     freezeOnceVisible: true
   });
 
-  // Determine if image should load
-  const shouldLoad = !lazyLoad || priority || isInView;
+  // Update src when prop changes
+  useEffect(() => {
+    setImageSrc(src);
+    setImageError(false);
+  }, [src]);
+
+  // Fixed logic: Load if priority, no lazy loading, OR in view
+  // For lazy loading, we need to load if either the observer says it's in view OR if lazy loading is disabled
+  const shouldLoad = priority || !lazyLoad || isInView;
 
   const handleLoad = () => {
-    setIsLoaded(true);
     onLoad?.();
   };
 
@@ -107,6 +114,41 @@ export default function OptimizedImage({
 
   const optimizedBlurDataURL = blurDataURL || generateBlurPlaceholder();
 
+  // For fill images, don't add wrapper div - return the image directly
+  if (fill) {
+    return (
+      <div ref={imageRef} className="contents">
+        {shouldLoad ? (
+          <Image
+            src={imageSrc}
+            alt={alt}
+            fill={fill}
+            sizes={sizes}
+            priority={priority}
+            quality={quality}
+            placeholder={placeholder}
+            blurDataURL={placeholder === 'blur' ? optimizedBlurDataURL : undefined}
+            loading={priority ? 'eager' : loading}
+            onLoad={handleLoad}
+            onError={handleError}
+            className={`object-cover object-center ${className}`}
+            {...props}
+          />
+        ) : (
+          // Placeholder for lazy loading
+          <div className={`absolute inset-0 bg-gray-200 flex items-center justify-center ${className}`}>
+            <div className="w-8 h-8 text-gray-400">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // For non-fill images, use the wrapper
   return (
     <div ref={imageRef} className={`relative overflow-hidden ${className}`} style={style}>
       {shouldLoad ? (
@@ -115,7 +157,6 @@ export default function OptimizedImage({
           alt={alt}
           width={width}
           height={height}
-          fill={fill}
           sizes={sizes}
           priority={priority}
           quality={quality}
@@ -124,21 +165,14 @@ export default function OptimizedImage({
           loading={priority ? 'eager' : loading}
           onLoad={handleLoad}
           onError={handleError}
-          className={`transition-opacity duration-300 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={className}
           {...props}
         />
       ) : (
         // Placeholder while not in view
         <div 
-          className={`w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center ${
-            fill ? 'absolute inset-0' : ''
-          }`}
-          style={{ 
-            width: fill ? '100%' : width, 
-            height: fill ? '100%' : height 
-          }}
+          className="w-full h-full bg-gray-200 flex items-center justify-center"
+          style={{ width: width, height: height }}
         >
           <div className="w-8 h-8 text-gray-400">
             <svg viewBox="0 0 24 24" fill="currentColor">

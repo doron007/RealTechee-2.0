@@ -112,7 +112,7 @@ export default function IndustryExpertiseSection({
                       className="mt-0.5 flex-shrink-0"
                       style={{ filter: 'brightness(0) invert(1)' }}
                     />
-                    <P3 className="text-white/90">{feature}</P3>
+                    <P2 className="text-white/90">{feature}</P2>
                   </li>
                 ))}
               </ul>

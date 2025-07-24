@@ -72,6 +72,10 @@ export default function Layout({ children, title, description }: LayoutProps) {
         <meta property="twitter:description" content={pageDescription} />
         <meta property="twitter:image" content="/assets/images/shared_realtechee-social-share.jpg" />
         
+        {/* Performance optimizations */}
+        <link rel="preconnect" href="https://static.wixstatic.com" />
+        <link rel="dns-prefetch" href="https://static.wixstatic.com" />
+        
         {/* Favicon */}
         <link rel="icon" href="/favicon_white.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

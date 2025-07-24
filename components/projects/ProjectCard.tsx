@@ -15,9 +15,11 @@ import { formatCurrency } from '../../utils/formatUtils';
 
 // Define reliable fallback images that exist in the project
 const FALLBACK_IMAGES = [
-  '/assets/images/hero-bg.png',
-  '/assets/images/properties/property-1.jpg',
-  '/assets/images/properties/property-2.jpg'
+  '/assets/images/shared_projects_project-image1.png',
+  '/assets/images/shared_projects_project-image2.png',
+  '/assets/images/shared_projects_project-image3.png',
+  '/assets/images/shared_projects_project-image4.png',
+  '/assets/images/shared_projects_project-image5.png'
 ];
 
 // Removed inline definition of formatCurrency
@@ -46,15 +48,29 @@ export default function ProjectCard({
   useEffect(() => {
     let isMounted = true;
     const resolveImageUrl = async () => {
-      if (project.imageUrl) {
+
+      if ((project.imageUrl || project.image) && (project.imageUrl || project.image)?.trim() !== '') {
         try {
-          const url = await safeImageUrl(project.imageUrl);
+          const url = await safeImageUrl(project.imageUrl || project.image || '');
           if (isMounted) {
             setResolvedImageUrl(url);
             setUsedFallback(false); // Reset fallback status when we successfully load a new URL
           }
         } catch (error) {
           console.error('Failed to resolve image URL:', error);
+          // If resolution fails, use a fallback image
+          if (isMounted) {
+            const fallbackIndex = Math.floor(Math.random() * FALLBACK_IMAGES.length);
+            setResolvedImageUrl(FALLBACK_IMAGES[fallbackIndex]);
+            setUsedFallback(true);
+          }
+        }
+      } else {
+        // If no image URL is provided, immediately use a fallback
+        if (isMounted) {
+          const fallbackIndex = Math.floor(Math.random() * FALLBACK_IMAGES.length);
+          setResolvedImageUrl(FALLBACK_IMAGES[fallbackIndex]);
+          setUsedFallback(true);
         }
       }
     };
@@ -62,7 +78,7 @@ export default function ProjectCard({
     return () => {
       isMounted = false;
     };
-  }, [project.imageUrl]);
+  }, [project.imageUrl, project.image]);
 
   // Get project properties safely
   const { 
@@ -153,30 +169,26 @@ export default function ProjectCard({
           <div className="w-full relative overflow-hidden pb-[62%] rounded-lg">
             <OptimizedImage
               src={resolvedImageUrl}
-              alt={project.title || 'Project Image'}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={priority}
-              quality={priority ? 85 : 75} // Higher quality for priority images
-              placeholder="blur"
-              className="object-cover object-center"
-              lazyLoad={!priority} // Disable lazy loading for priority images
-              fallbackSrc={FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]}
               onError={(e) => {
                 // Only try to use the placeholder if we haven't already done so
                 if (!usedFallback) {
-                  console.warn('Image failed to load, using fallback.');
                   setUsedFallback(true);
                   // Rotate through fallback images to distribute load
                   const fallbackIndex = Math.floor(Math.random() * FALLBACK_IMAGES.length);
                   setResolvedImageUrl(FALLBACK_IMAGES[fallbackIndex]);
                 } else {
-                  // If we're already using the fallback, just log the error
-                  console.error('Fallback image also failed to load.');
                   // Prevent further attempts by stopping propagation
                   e.stopPropagation();
                 }
               }}
+              alt={project.title || 'Project Image'}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={priority}
+              quality={priority ? 85 : 75}
+              className="object-cover object-center"
+              lazyLoad={!priority} // Disable lazy loading for priority images
+              fallbackSrc={FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)]}
             />
           </div>
         </div>

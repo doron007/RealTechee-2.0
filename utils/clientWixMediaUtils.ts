@@ -4,8 +4,91 @@
  */
 import axios from 'axios';
 
-// Cache for converted URLs to reduce redundant API calls
-const urlCache = new Map<string, string>();
+// Enhanced cache with localStorage persistence and TTL
+interface CacheEntry {
+  url: string;
+  timestamp: number;
+  ttl: number;
+}
+
+class EnhancedUrlCache {
+  private memoryCache = new Map<string, CacheEntry>();
+  private readonly CACHE_KEY = 'wix-url-cache';
+  private readonly DEFAULT_TTL = 24 * 60 * 60 * 1000; // 24 hours
+  
+  constructor() {
+    this.loadFromLocalStorage();
+  }
+  
+  private loadFromLocalStorage() {
+    try {
+      // Only run on client-side
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return;
+      }
+      
+      const cached = localStorage.getItem(this.CACHE_KEY);
+      if (cached) {
+        const entries = JSON.parse(cached);
+        Object.entries(entries).forEach(([key, value]) => {
+          const entry = value as CacheEntry;
+          if (entry.timestamp + entry.ttl > Date.now()) {
+            this.memoryCache.set(key, entry);
+          }
+        });
+      }
+    } catch (error) {
+      console.warn('Failed to load cache from localStorage:', error);
+    }
+  }
+  
+  private saveToLocalStorage() {
+    try {
+      // Only run on client-side
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return;
+      }
+      
+      const entries: Record<string, CacheEntry> = {};
+      this.memoryCache.forEach((value, key) => {
+        if (value.timestamp + value.ttl > Date.now()) {
+          entries[key] = value;
+        }
+      });
+      localStorage.setItem(this.CACHE_KEY, JSON.stringify(entries));
+    } catch (error) {
+      console.warn('Failed to save cache to localStorage:', error);
+    }
+  }
+  
+  get(key: string): string | null {
+    const entry = this.memoryCache.get(key);
+    if (entry && entry.timestamp + entry.ttl > Date.now()) {
+      return entry.url;
+    }
+    if (entry) {
+      this.memoryCache.delete(key);
+    }
+    return null;
+  }
+  
+  set(key: string, url: string, ttl = this.DEFAULT_TTL) {
+    const entry: CacheEntry = {
+      url,
+      timestamp: Date.now(),
+      ttl
+    };
+    this.memoryCache.set(key, entry);
+    
+    // Periodically save to localStorage (debounced)
+    clearTimeout(this.saveTimeout);
+    this.saveTimeout = setTimeout(() => this.saveToLocalStorage(), 1000);
+  }
+  
+  private saveTimeout: NodeJS.Timeout | undefined;
+}
+
+const urlCache = new EnhancedUrlCache();
 
 /**
  * Checks if a URL is likely a Wix media URL that needs conversion
@@ -46,19 +129,17 @@ export async function convertWixMediaUrl(wixUrl: string): Promise<string> {
   }
   
   // Check cache first
-  if (urlCache.has(wixUrl)) {
-    return urlCache.get(wixUrl)!;
+  const cached = urlCache.get(wixUrl);
+  if (cached) {
+    return cached;
   }
   
   // If it's already a standard URL, return as is
   if (wixUrl.startsWith('http://') || wixUrl.startsWith('https://')) {
-    // For Wix URLs, always add cache busting to bypass 403 errors
+    // For Wix URLs, return as-is for better caching (CORS fix applied)
     if (wixUrl.includes('wixstatic.com')) {
-      const cacheBustedUrl = wixUrl.includes('?') 
-        ? `${wixUrl}&cb=${Date.now()}` 
-        : `${wixUrl}?cb=${Date.now()}`;
-      urlCache.set(wixUrl, cacheBustedUrl);
-      return cacheBustedUrl;
+      urlCache.set(wixUrl, wixUrl);
+      return wixUrl;
     }
     
     urlCache.set(wixUrl, wixUrl);
@@ -78,7 +159,7 @@ export async function convertWixMediaUrl(wixUrl: string): Promise<string> {
   } catch (error) {
     console.error('Error calling media conversion API:', error);
     const fallback = '/assets/images/placeholder.jpg';
-    urlCache.set(wixUrl, fallback);
+    urlCache.set(wixUrl, fallback, 5 * 60 * 1000); // Shorter TTL for fallback images
     return fallback;
   }
 }
@@ -128,11 +209,10 @@ export async function safeImageUrl(imageUrl: string): Promise<string> {
     
     // If it's already a standard URL
     if (imageUrl.startsWith('http')) {
-      // For Wix CDN URLs, add cache busting
+      // For Wix CDN URLs, DO NOT add cache busting to avoid CORS issues
       if (imageUrl.includes('wixstatic.com')) {
-        return imageUrl.includes('?') 
-          ? `${imageUrl}&cb=${Date.now()}` 
-          : `${imageUrl}?cb=${Date.now()}`;
+        // Return the URL as-is for better browser caching and CORS compatibility
+        return imageUrl;
       }
       return imageUrl;
     }

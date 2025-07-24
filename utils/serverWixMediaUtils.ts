@@ -300,8 +300,8 @@ export async function convertWixMediaUrl(wixUrl: string): Promise<string> {
     // Construct the final URL
     const constructedUrl = `https://static.wixstatic.com/media/${mediaId}${fileExtension}`;
 
-    // Add cache busting to prevent 403 errors
-    const finalUrl = `${constructedUrl}?cb=${Date.now()}`;
+    // Return URL as-is to avoid CORS issues with cache busting
+    const finalUrl = constructedUrl;
 
     // Store in cache
     urlCache.set(wixUrl, finalUrl);

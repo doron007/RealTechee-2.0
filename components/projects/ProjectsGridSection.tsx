@@ -6,6 +6,7 @@ import ProjectCard from './ProjectCard';
 import { optimizedProjectsAPI } from '../../utils/amplifyAPI';
 import { Project, ProjectFilter } from '../../types/projects';
 import { createLogger } from '../../utils/logger';
+import { useProjectImagePreload } from '../../hooks/useImagePreload';
 
 // No need for fallback data - we'll use the CSV data from projectsService
 
@@ -126,6 +127,9 @@ export default function ProjectsGridSection({
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+
+  // Preload critical images for better perceived performance
+  useProjectImagePreload(currentProjects, 3);
 
   // Pagination handlers
   const handlePreviousPage = () => {
