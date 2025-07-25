@@ -104,12 +104,11 @@ export default function ImageGallery({
           onClick={() => handleImageClick(selectedImage, selectedImageIndex)}
         >
           <Image
-            key={`main-image-${selectedImageIndex}`}
             src={selectedImageSrc}
             alt={selectedImage.alt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 600px, 800px"
-            priority={selectedImageIndex === 0}
+            priority={false}
             quality={quality}
             placeholder="empty"
             className="object-cover"
