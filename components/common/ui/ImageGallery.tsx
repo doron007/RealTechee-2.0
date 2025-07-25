@@ -109,6 +109,7 @@ export default function ImageGallery({
             quality={quality}
             placeholder="empty"
             className="object-cover"
+            style={{ color: 'initial' }}
             onError={() => handleImageError(selectedImageIndex)}
           />
           {/* Image Counter */}
@@ -178,6 +179,7 @@ export default function ImageGallery({
                 sizes="(max-width: 768px) 25vw, (max-width: 1200px) 15vw, 10vw"
                 quality={50}
                 className="object-cover"
+                style={{ color: 'initial' }}
                 onError={() => handleImageError(index)}
               />
             </button>
