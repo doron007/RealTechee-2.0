@@ -93,7 +93,7 @@ echo -e "${GREEN}✅ SUCCESS:${NC} TypeScript compilation passed"
 
 # Build check
 echo -e "${BLUE}ℹ️  INFO:${NC} Running production build test..."
-if ! npm run build; then
+if ! NODE_OPTIONS="--max-old-space-size=4096" npm run build; then
     echo -e "${RED}❌ ERROR:${NC} Production build failed"
     exit 1
 fi
