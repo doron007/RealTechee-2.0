@@ -89,6 +89,7 @@ export default function ImageGallery({
           onClick={() => handleImageClick(selectedImage, selectedImageIndex)}
         >
           <OptimizedImage
+            key={`main-image-${selectedImageIndex}`}
             src={selectedImageSrc || ''}
             alt={selectedImage.alt}
             fill

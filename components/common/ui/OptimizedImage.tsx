@@ -53,6 +53,7 @@ export default function OptimizedImage({
   const [imageSrc, setImageSrc] = useState(src);
   const [hasErrored, setHasErrored] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
+  const prevSrcRef = useRef<string>(src);
 
   // Use intersection observer for lazy loading only when needed
   const isInView = useIntersectionObserver(imageRef, {
@@ -80,13 +81,14 @@ export default function OptimizedImage({
     onError?.(event);
   };
 
-  // Update src when prop changes (simplified effect)
+  // Update src when prop changes - fixed dependency cycle
   useEffect(() => {
-    if (src !== imageSrc && !hasErrored) {
+    if (src !== prevSrcRef.current) {
+      prevSrcRef.current = src;
       setImageSrc(src);
       setHasErrored(false);
     }
-  }, [src, imageSrc, hasErrored]);
+  }, [src]);
 
   // For fill images, don't add wrapper div - return the image directly
   if (fill) {
