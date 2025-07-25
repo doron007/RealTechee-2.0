@@ -544,11 +544,12 @@ export const modelAPI = createModelAPI('ModelName');
 - **Tables**: `*-fvn7t5hbobaxjklhrqzdl4ac34-NONE` (dev/staging) / `*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE` (prod)
 - **Test Credentials**: `info@realtechee.com` / `Sababa123!`
 
-**Deployment System**:
-- **Staging**: `/deploy-staging` → main→prod branch (fast, agile)
-- **Production**: `/deploy-production` → main→prod-v2 branch (safe, comprehensive)
-- **Config Management**: `./scripts/switch-environment.sh {dev|prod|status}`
-- **Environment Files**: `.env.{development,staging,production}` configured
+**SDLC Deployment System (With Versioning)**:
+- **Staging**: `/deploy-staging` → Creates RC (3.1.3→3.1.4-rc.1) + main→prod branch + git tag
+- **Production**: `/deploy-production` → Promotes RC→stable (3.1.4-rc.1→3.1.4) + main→prod-v2 + validation
+- **Versioning**: `./scripts/version-manager.sh {dev|rc|release|hotfix}` + semantic versioning + git tags
+- **Config Management**: `./scripts/switch-environment.sh {dev|prod|status}` + env-specific configs
+- **Version Display**: Footer shows package.json version across all environments for correlation
 
 **Next Phase Options (All Optional)**:
 1. **Data Migration Enhancement**: Business data sync dev→prod for BackOfficeRequestStatuses, staff, roles
@@ -557,32 +558,41 @@ export const modelAPI = createModelAPI('ModelName');
 
 ---
 
-### **🎯 CURRENT SESSION: S3 Image Performance Fix & Placeholder Error Resolution COMPLETE**
-**Status: COMPLETED** | **Priority: HIGH** | **Achievement: ImageGallery Runtime Error Fix ✅**
+### **🎯 CURRENT SESSION: SDLC Versioning & ImageGallery Fix COMPLETE**
+**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Enterprise Deployment + Gallery Fix ✅**
 
-**✅ MAJOR ACCOMPLISHMENT: Resolved Next.js Image Placeholder Runtime Error**
-- **Challenge**: Runtime error on `/project/[id]` → `placeholder='blur'` without `blurDataURL` in ImageGallery
-- **Root Cause**: ImageGallery.tsx:100 passing `placeholder="blur"` to OptimizedImage without required blurDataURL
-- **Solution**: Changed to `placeholder="empty"` for consistent performance across components
-- **Impact**: Project detail pages now load without runtime errors + optimized image performance
+**✅ MAJOR ACCOMPLISHMENTS**:
+1. **ImageGallery Thumbnail Fix**: Resolved staging thumbnail click issue via `handleThumbnailClick` dependency removal
+2. **SDLC Versioning Implementation**: Complete industry-standard workflow (GitFlow + Semantic Versioning)
+3. **Version Display Enhancement**: Added version correlation across dev/staging/prod environments
+4. **Deployment Command Upgrade**: Enhanced `/deploy-staging` + `/deploy-production` with versioning workflow
 
-### **🔧 PERFORMANCE OPTIMIZATION VALIDATION**
-| Component               | Issue Fixed                | Solution Applied         | Performance Result     |
-|-------------------------|----------------------------|--------------------------|------------------------|
-| **ImageGallery.tsx**    | `placeholder="blur"` error | → `placeholder="empty"`  | Runtime error resolved|
-| **OptimizedImage.tsx**  | Already optimized          | Conditional blur logic   | ✅ Working correctly   |
-| **ImageModal.tsx**      | Analysis completed         | Keep native Next.js      | ✅ Optimal for modals  |
-| **Performance System**  | Lazy loading validated     | No changes needed        | ✅ 77% bundle reduction|
+### **🔧 TECHNICAL IMPLEMENTATIONS**
+| Component                    | Issue/Enhancement           | Solution Applied                  | Result                        |
+|------------------------------|----------------------------|-----------------------------------|-------------------------------|
+| **ImageGallery.tsx**         | Thumbnail selection bug    | Remove `loadedImages` dependency  | ✅ Consistent click behavior  |
+| **Version Display**          | Missing dev version        | Package.json fallback system     | ✅ All envs show same version |  
+| **Deployment Commands**      | Manual versioning         | Automated RC→stable workflow     | ✅ SDLC compliance achieved   |
+| **Version Management**       | No git tags/rollback       | `version-manager.sh` + git tags  | ✅ Full audit trail          |
 
-### **📊 SESSION TECHNICAL ANALYSIS**
-**Image Component Architecture (Performance-Optimized)**:
-- **OptimizedImage**: ✅ Intersection observer + lazy loading + conditional blur logic
-- **ImageGallery**: ✅ Fixed placeholder error, performance optimized  
-- **ImageModal**: ✅ Analysis confirmed native Next.js optimal (no lazy loading needed)
-- **S3 Integration**: ✅ Relative paths + environment-configurable base URLs working
+### **📊 SDLC WORKFLOW ACHIEVED**
+**Development → Staging → Production Flow**:
+```
+Dev Work      → /deploy-staging    → /deploy-production
+(3.1.3)        (3.1.4-rc.1)         (3.1.4)
+```
 
-**Key Learning**: Modal components should use native Next.js Image (immediate load) vs OptimizedImage (lazy load)
+**Hotfix Support**: `./scripts/version-manager.sh hotfix 3.1.5` → creates branch from production tag
+**Audit Trail**: Git tags (`v3.1.4-rc.1`, `v3.1.4`) enable instant rollback + version correlation
+**Environment Safety**: RC validation prevents accidental prod deploys + comprehensive backups
+
+### **🎯 DEPLOYMENT SYSTEM SUMMARY**
+- **Version Correlation**: ✅ Dev/staging/prod show identical versions for debugging
+- **Git Tags**: ✅ Every release tagged for rollback (`git checkout v3.1.4`)  
+- **SDLC Compliance**: ✅ RC testing required before production deployment
+- **Hotfix Workflow**: ✅ Emergency patches from any production version
+- **Audit Trail**: ✅ Complete deployment history with version traceability
 
 ---
 
-*Last Updated: July 25, 2025 - 🎉 IMAGE PERFORMANCE FIX COMPLETE: Runtime errors resolved + component architecture optimized ✅*
+*Last Updated: July 25, 2025 - 🎉 SDLC VERSIONING + GALLERY FIX COMPLETE: Enterprise deployment workflow + thumbnail issue resolved ✅*

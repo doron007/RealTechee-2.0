@@ -20,6 +20,8 @@ To become the leading platform for real estate home preparation, providing seaml
 - ✅ **Documentation**: Enterprise documentation architecture complete with 00-10 structured organization
 - ✅ **Document Migration**: 914 documents (402MB) migrated from Wix to S3 + repository cleanup complete
 - ✅ **Deployment Infrastructure**: 3-tier environment system + automated deployment commands
+- ✅ **SDLC Versioning**: Industry-standard GitFlow + Semantic Versioning + automated RC→stable workflow
+- ✅ **Production Bug Fixes**: ImageGallery thumbnail issue resolved + version correlation across environments
 - 🎯 **Next Phase**: Optional enhancements (business data migration, MFA, GDPR, load testing, custom domain)
 
 ---
@@ -245,6 +247,47 @@ Auth → Profile → Estimate → Approval → Execution → Payment
 - **Cause**: Invalid cron syntax for AWS Amplify Gen 2
 - **Solution**: Use natural language scheduling or proper 6-field cron
 - **Validation**: Test with `npx ampx sandbox --once`
+
+### **SDLC Deployment Architecture (Production-Ready)**
+**Implementation**: GitFlow + Semantic Versioning + Automated Promotion
+
+| Environment   | URL/App ID            | Backend Tables         | Version Format    | Deployment Method    |
+|---------------|----------------------|------------------------|-------------------|---------------------|
+| Development   | localhost:3000       | `*-fvn7t5h...-NONE`   | 3.1.3             | `npm run dev:primed` |
+| Staging       | prod.d3atadjk90y5.amp| `*-fvn7t5h...-NONE`   | 3.1.4-rc.1        | `/deploy-staging`    |
+| Production    | d200k2wsaf8th3.amp   | `*-aqnqdr...-NONE`    | 3.1.4             | `/deploy-production` |
+
+**Versioning Workflow**:
+```
+Development Work → Release Candidate → Production Release
+     (3.1.3)            (3.1.4-rc.1)         (3.1.4)
+        ↓                      ↓                  ↓
+   Feature dev         Staging testing      Stable release
+        ↓                      ↓                  ↓
+    Git commit           Git tag RC         Git tag stable
+```
+
+**Emergency Hotfix Flow**:
+```
+Production Issue → Hotfix Branch → RC Testing → Hotfix Release
+   (v3.1.4)          (hotfix/3.1.5)    (3.1.5-rc.1)    (3.1.5)
+      ↓                     ↓               ↓              ↓
+  Identify bug      Create from tag   Test in staging   Deploy fix
+      ↓                     ↓               ↓              ↓
+  Git checkout      Fix + version     Validate works    Merge back
+```
+
+**Deployment Commands**:
+- **`/deploy-staging`**: Creates RC + deploys to staging + git tags
+- **`/deploy-production`**: Validates RC + promotes to stable + comprehensive checks
+- **`./scripts/version-manager.sh`**: Manages all versioning (dev/rc/release/hotfix)
+- **Environment switching**: Automatic via deployment scripts + config management
+
+**Audit & Rollback Capability**:
+- Every release tagged with `v3.1.4`, `v3.1.4-rc.1` format
+- Instant rollback via `git checkout v3.1.3` + redeploy
+- Complete deployment history with version correlation across environments
+- Production validation prevents accidental non-RC deployments
 
 ### **Security Authorization Patterns**
 - **ProjectComments Warning**: Owner reassignment capability is acceptable for business apps
