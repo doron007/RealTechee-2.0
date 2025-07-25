@@ -44,6 +44,9 @@ const nextConfig = {
     minimumCacheTTL: 3600, // Increased to 1 hour for better caching
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Fix 504 Gateway Timeout issues on Amplify
+    imgOptTimeoutInSeconds: 30, // Increased from 7s default to handle large S3 images
+    concurrency: 2, // Limit concurrent optimizations to prevent memory pressure
   },
   // Turbopack handles Fast Refresh and development optimizations automatically
   // Removed webpack polling configuration as it conflicts with Turbopack
