@@ -58,11 +58,9 @@ export default function ImageGallery({
 
   const handleThumbnailClick = useCallback((index: number) => {
     setSelectedImageIndex(index);
-    // Preload the clicked image if not already loaded
-    if (!loadedImages.has(index)) {
-      setLoadedImages(prev => new Set(Array.from(prev).concat(index)));
-    }
-  }, [loadedImages]);
+    // Always preload the clicked image to ensure it renders
+    setLoadedImages(prev => new Set(Array.from(prev).concat(index)));
+  }, []);
 
   if (!images.length) {
     return (

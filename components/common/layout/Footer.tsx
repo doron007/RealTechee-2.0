@@ -12,7 +12,7 @@ interface FooterProps {
 export default function Footer(props: FooterProps) {
   const currentYear = new Date().getFullYear();
   // Get version from environment variable or package.json
-  const version = process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0';
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || require('../../../package.json').version;
   
   return (
     <footer className="bg-white border-t border-gray-200">

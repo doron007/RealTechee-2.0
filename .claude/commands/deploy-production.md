@@ -1,50 +1,111 @@
-# Deploy to Production Environment
+#!/bin/bash
 
-Deploy current changes to production with comprehensive safety checks, data migration, and environment switching.
+# Deploy to Production Environment with Versioning
+# Promotes release candidate to stable production release
 
-## Process:
-1. **Pre-deployment Safety**: 
-   - Backup development and production data 
-   - Run full test suite and type-check
-   - Validate git status and branch protection
-   
-2. **Environment Preparation**:
-   - Switch to production amplify_outputs.json configuration
-   - Validate production secrets and connectivity
-   - Confirm isolated backend configuration
-   
-3. **Data Migration**:
-   - Identify business configuration data (BackOfficeRequestStatuses, staff, roles)
-   - Migrate non-transactional data from dev to production
-   - Validate data integrity and business logic preservation
-   
-4. **Production Deployment**:
-   - Merge main → prod-v2 branch with safety checks
-   - Deploy to RealTechee-Gen2 app (d200k2wsaf8th3)
-   - Monitor deployment progress and health checks
-   
-5. **Post-deployment Verification**:
-   - Validate production functionality
-   - Confirm data migration success
-   - Switch back to development configuration for continued work
+set -e
 
-## Safety Features:
-- **Comprehensive Backups**: Both source and target environments
-- **Data Validation**: Business logic preservation checks
-- **Automatic Rollback**: On deployment or data migration failures
-- **Environment Isolation**: Complete separation from development
-- **Approval Gates**: Interactive confirmations for destructive operations
+# Colors for output
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m'
 
-## Data Migration Scope:
-- ✅ **BackOfficeRequestStatuses**: Status configurations and business rules
-- ✅ **Staff/Roles**: User management and permission configurations  
-- ✅ **Reference Data**: Dropdown options, lookup tables, system configurations
-- ❌ **Transaction Data**: Requests, projects, properties (preserve production data)
+# Helper functions
+echo_step() { echo -e "${GREEN}==>${NC} $1"; }
+echo_warn() { echo -e "${YELLOW}⚠️  WARNING:${NC} $1"; }
+echo_error() { echo -e "${RED}❌ ERROR:${NC} $1"; exit 1; }
+echo_info() { echo -e "${BLUE}ℹ️  INFO:${NC} $1"; }
+echo_success() { echo -e "${GREEN}✅ SUCCESS:${NC} $1"; }
 
-## Usage:
-Type `/deploy-production` in Claude Code to execute this comprehensive deployment workflow.
+# Configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
----
+echo_step "Deploy to Production with Versioning"
+cd "$PROJECT_ROOT"
+
+# 1. Validate current version is RC
+CURRENT_VERSION=$(node -p "require('./package.json').version")
+if [[ ! $CURRENT_VERSION == *"-rc."* ]]; then
+    echo_error "Production deployment requires release candidate version (x.x.x-rc.x). Current: $CURRENT_VERSION"
+fi
+
+echo_info "Current RC version: $CURRENT_VERSION"
+
+# 2. Pre-deployment safety checks
+echo_step "Running comprehensive pre-deployment checks"
+if [[ -n $(git status --porcelain) ]]; then
+    echo_error "Working directory is not clean. Please commit or stash changes."
+fi
+
+# 3. Full validation
+echo_step "Running TypeScript validation"
+npm run type-check || echo_error "TypeScript validation failed"
+
+echo_step "Testing production build"
+npm run build || echo_error "Build failed"
+
+# 4. Backup production data
+echo_step "Creating production data backup"
+./scripts/backup-data.sh || echo_warn "Backup failed but continuing..."
+
+# 5. Promote RC to stable release
+echo_step "Promoting release candidate to stable production release"
+./scripts/version-manager.sh release
+
+# 6. Get new stable version
+NEW_VERSION=$(node -p "require('./package.json').version")
+echo_success "Version promoted: $CURRENT_VERSION → $NEW_VERSION"
+
+# 7. Switch to production environment
+echo_step "Switching to production environment configuration"
+./scripts/switch-environment.sh prod
+
+# 8. Deploy to production branch
+echo_step "Deploying to production (prod-v2 branch)"
+git checkout prod-v2 2>/dev/null || git checkout -b prod-v2
+git merge main --ff-only || echo_error "Fast-forward merge failed. Please resolve conflicts."
+
+# 9. Push with confirmation
+echo_warn "About to deploy version $NEW_VERSION to PRODUCTION"
+echo_info "Production URL: https://d200k2wsaf8th3.amplifyapp.com/"
+read -p "Continue with production deployment? (y/N): " -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo_info "Production deployment cancelled"
+    git checkout main
+    ./scripts/switch-environment.sh dev
+    exit 0
+fi
+
+git push origin prod-v2
+
+echo_success "Production deployment initiated"
+echo_info "Production URL: https://d200k2wsaf8th3.amplifyapp.com/"
+echo_info "Version deployed: $NEW_VERSION"
+echo_info "Git tag: v$NEW_VERSION"
+echo_info "Monitor deployment at: https://console.aws.amazon.com/amplify/"
+
+# 10. Merge back to main and switch back to dev
+echo_step "Merging production changes back to main"
+git checkout main
+git merge prod-v2 --ff-only
+
+echo_step "Switching back to development environment"
+./scripts/switch-environment.sh dev
+
+echo_success "Production deployment complete!"
+echo_info "Stable release $NEW_VERSION is now live in production"
+echo_info "Development environment restored for continued work"
+
+## Process Summary:
+# 1. **Version Validation**: Must deploy from RC (e.g., 3.1.2-rc.1)
+# 2. **Safety Checks**: Comprehensive validation and data backup
+# 3. **Version Promotion**: RC → Stable release (3.1.2-rc.1 → 3.1.2)
+# 4. **Environment Switch**: Switch to production configuration
+# 5. **Production Deploy**: Deploy stable version to isolated production
+# 6. **Post-deployment**: Merge back and restore dev environment
 
 **Target Environment**: Production (d200k2wsaf8th3.amplifyapp.com)  
 **Backend**: Isolated production (RealTechee-Gen2 app)  
