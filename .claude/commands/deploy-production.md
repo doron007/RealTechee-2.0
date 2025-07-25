@@ -66,7 +66,20 @@ echo_step "Switching to production environment configuration"
 # 8. Deploy to production branch
 echo_step "Deploying to production (prod-v2 branch)"
 git checkout prod-v2 2>/dev/null || git checkout -b prod-v2
-git merge main --ff-only || echo_error "Fast-forward merge failed. Please resolve conflicts."
+
+echo_info "Merging latest changes from main to prod-v2"
+if ! git merge main --ff-only; then
+    echo_warn "Fast-forward merge not possible, using regular merge"
+    git merge main -m "Production deployment: merge main to prod-v2" || echo_error "Merge failed. Please resolve conflicts manually."
+fi
+echo_success "Prod-v2 branch updated with latest changes"
+
+# Validate the merge was successful
+MERGED_VERSION=$(node -p "require('./package.json').version")
+if [[ "$MERGED_VERSION" != "$NEW_VERSION" ]]; then
+    echo_error "Version mismatch after merge. Expected: $NEW_VERSION, Got: $MERGED_VERSION"
+fi
+echo_info "Confirmed version after merge: $MERGED_VERSION"
 
 # 9. Push with confirmation
 echo_warn "About to deploy version $NEW_VERSION to PRODUCTION"
