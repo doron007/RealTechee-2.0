@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CardWrapper from '../common/CardWrapper';
 import Button from '../../common/buttons/Button';
 import { H2, H3 } from '../../typography';
@@ -85,11 +85,7 @@ export default function SkillManagementPanel({ onSkillUpdate }: SkillManagementP
   });
   const [skillTestOpen, setSkillTestOpen] = useState(false);
 
-  useEffect(() => {
-    loadSkillData();
-  }, []);
-
-  const loadSkillData = async () => {
+  const loadSkillData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -112,7 +108,11 @@ export default function SkillManagementPanel({ onSkillUpdate }: SkillManagementP
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadSkillData();
+  }, [loadSkillData]);
 
   const loadSampleAssigneeProfiles = async (): Promise<AssigneeSkillProfile[]> => {
     // For demo purposes, create sample profiles

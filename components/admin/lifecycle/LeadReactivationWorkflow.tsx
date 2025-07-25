@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -104,13 +104,7 @@ const LeadReactivationWorkflow: React.FC<LeadReactivationWorkflowProps> = ({
     }
   ];
 
-  useEffect(() => {
-    if (open && requestId) {
-      initializeWorkflow();
-    }
-  }, [open, requestId]);
-
-  const initializeWorkflow = async () => {
+  const initializeWorkflow = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -138,7 +132,13 @@ const LeadReactivationWorkflow: React.FC<LeadReactivationWorkflowProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [requestId]);
+
+  useEffect(() => {
+    if (open && requestId) {
+      initializeWorkflow();
+    }
+  }, [open, requestId, initializeWorkflow]);
 
   const loadReactivationHistory = async () => {
     try {

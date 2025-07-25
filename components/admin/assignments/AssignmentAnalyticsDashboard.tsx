@@ -109,7 +109,7 @@ export default function AssignmentAnalyticsDashboard({
     return () => {
       if (refreshInterval) clearInterval(refreshInterval);
     };
-  }, [autoRefresh]);
+  }, [autoRefresh, refreshInterval]);
 
   const loadAnalyticsData = async () => {
     try {
