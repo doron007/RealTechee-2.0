@@ -56,6 +56,14 @@ if ! npm run type-check; then
 fi
 echo -e "${GREEN}✅ SUCCESS:${NC} TypeScript compilation passed"
 
+# Create release candidate version
+echo -e "${BLUE}==>${NC} 📦 Creating release candidate version"
+./scripts/version-manager.sh rc
+
+# Get current version for confirmation
+CURRENT_VERSION=$(node -p "require('./package.json').version")
+echo -e "${BLUE}ℹ️  INFO:${NC} Deploying version: $CURRENT_VERSION"
+
 # Check if prod branch exists
 if ! git show-ref --verify --quiet refs/heads/prod; then
     echo -e "${BLUE}ℹ️  INFO:${NC} Creating prod branch from current branch"

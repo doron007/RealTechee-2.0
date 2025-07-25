@@ -1,7 +1,16 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
+import Image from 'next/image';
 import ImageModal from './ImageModal';
-import OptimizedImage from './OptimizedImage';
 import { H4, P3 } from '../../typography';
+
+// Fallback images for error cases
+const FALLBACK_IMAGES = [
+  '/assets/images/shared_projects_project-image1.png',
+  '/assets/images/shared_projects_project-image2.png',
+  '/assets/images/shared_projects_project-image3.png',
+  '/assets/images/shared_projects_project-image4.png',
+  '/assets/images/shared_projects_project-image5.png'
+];
 
 interface GalleryImage {
   src?: string;
@@ -36,19 +45,11 @@ export default function ImageGallery({
   onImageClick
 }: ImageGalleryProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0])); // Load first image immediately
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Memoize visible images to prevent unnecessary re-renders
-  // For horizontal scrolling, show all images
-  const visibleImages = images;
+  const [imageSources, setImageSources] = useState<{[key: number]: string}>({});
 
   // Helper: is single image gallery
   const isSingleImage = images.length === 1;
-
-  const handleImageLoad = useCallback((index: number) => {
-    setLoadedImages(prev => new Set(Array.from(prev).concat(index)));
-  }, []);
 
   const handleImageClick = useCallback((image: GalleryImage, index: number) => {
     setSelectedImageIndex(index);
@@ -58,9 +59,19 @@ export default function ImageGallery({
 
   const handleThumbnailClick = useCallback((index: number) => {
     setSelectedImageIndex(index);
-    // Always preload the clicked image to ensure it renders
-    setLoadedImages(prev => new Set(Array.from(prev).concat(index)));
   }, []);
+
+  const handleImageError = useCallback((index: number) => {
+    const fallbackSrc = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+    setImageSources(prev => ({
+      ...prev,
+      [index]: fallbackSrc
+    }));
+  }, []);
+
+  const getImageSrc = useCallback((image: GalleryImage, index: number) => {
+    return imageSources[index] || image.src || image.url || '';
+  }, [imageSources]);
 
   if (!images.length) {
     return (
@@ -78,7 +89,7 @@ export default function ImageGallery({
   }
 
   const selectedImage = images[selectedImageIndex];
-  const selectedImageSrc = selectedImage.src || selectedImage.url;
+  const selectedImageSrc = getImageSrc(selectedImage, selectedImageIndex);
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -88,9 +99,9 @@ export default function ImageGallery({
           className="aspect-[16/10] relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer transition-transform duration-300"
           onClick={() => handleImageClick(selectedImage, selectedImageIndex)}
         >
-          <OptimizedImage
+          <Image
             key={`main-image-${selectedImageIndex}`}
-            src={selectedImageSrc || ''}
+            src={selectedImageSrc}
             alt={selectedImage.alt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
@@ -98,8 +109,7 @@ export default function ImageGallery({
             quality={quality}
             placeholder="empty"
             className="object-cover"
-            lazyLoad={lazyLoad && selectedImageIndex !== 0}
-            onLoad={() => handleImageLoad(selectedImageIndex)}
+            onError={() => handleImageError(selectedImageIndex)}
           />
           {/* Image Counter */}
           <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
@@ -150,7 +160,7 @@ export default function ImageGallery({
       {/* Thumbnail Scrollable Row */}
       {showThumbnails && !isSingleImage && (
         <div className="flex overflow-x-auto gap-2 py-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-          {visibleImages.map((image, index) => (
+          {images.map((image, index) => (
             <button
               key={index}
               onClick={() => handleThumbnailClick(index)}
@@ -161,15 +171,14 @@ export default function ImageGallery({
               }`}
               style={{ minWidth: 64, minHeight: 64 }}
             >
-              <OptimizedImage
-                src={image.thumbnail || image.src || image.url || ''}
+              <Image
+                src={getImageSrc(image, index)}
                 alt={image.alt}
                 fill
                 sizes="(max-width: 768px) 25vw, (max-width: 1200px) 15vw, 10vw"
                 quality={50}
                 className="object-cover"
-                lazyLoad={lazyLoad}
-                onLoad={() => handleImageLoad(index)}
+                onError={() => handleImageError(index)}
               />
             </button>
           ))}
@@ -179,7 +188,7 @@ export default function ImageGallery({
       <ImageModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        imageSrc={selectedImageSrc || ''}
+        imageSrc={selectedImageSrc}
         imageAlt={selectedImage.alt}
         imageDescription={selectedImage.description}
       />
