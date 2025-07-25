@@ -73,6 +73,10 @@ export default function ImageGallery({
     return imageSources[index] || image.src || image.url || '';
   }, [imageSources]);
 
+  const isS3Image = useCallback((src: string) => {
+    return src.includes('amplify-realtecheeclone-d-') && src.includes('.s3.us-west-1.amazonaws.com');
+  }, []);
+
   if (!images.length) {
     return (
       <div className={`flex items-center justify-center bg-gray-100 rounded-lg min-h-[200px] ${className}`}>
@@ -104,12 +108,13 @@ export default function ImageGallery({
             src={selectedImageSrc}
             alt={selectedImage.alt}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 600px, 800px"
             priority={selectedImageIndex === 0}
             quality={quality}
             placeholder="empty"
             className="object-cover"
             style={{ color: 'initial' }}
+            unoptimized={isS3Image(selectedImageSrc)}
             onError={() => handleImageError(selectedImageIndex)}
           />
           {/* Image Counter */}
@@ -176,10 +181,11 @@ export default function ImageGallery({
                 src={getImageSrc(image, index)}
                 alt={image.alt}
                 fill
-                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 15vw, 10vw"
+                sizes="64px"
                 quality={50}
                 className="object-cover"
                 style={{ color: 'initial' }}
+                unoptimized={isS3Image(getImageSrc(image, index))}
                 onError={() => handleImageError(index)}
               />
             </button>
