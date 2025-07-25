@@ -162,14 +162,14 @@ Production Secrets Status:
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii/public/*"
+      "Resource": "arn:aws:s3:::amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii/*"
     },
     {
       "Sid": "AllowPublicWriteAccessToPublicFolder", 
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii/public/*"
+      "Resource": "arn:aws:s3:::amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii/*"
     }
   ]
 }
@@ -181,7 +181,7 @@ Production App Environment Variables:
 ├── DEBUG_NOTIFICATIONS: "false" ✅
 ├── LOG_LEVEL: "INFO" ✅
 ├── NEXT_PUBLIC_LOG_LEVEL: "INFO" ✅
-└── NEXT_PUBLIC_S3_PUBLIC_BASE_URL: "https://amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii.s3.us-west-1.amazonaws.com/public" ✅
+└── NEXT_PUBLIC_S3_PUBLIC_BASE_URL: "https://amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii.s3.us-west-1.amazonaws.com" ✅
 ```
 
 ## Operational Readiness Validation

@@ -51,24 +51,17 @@ export default function OptimizedImage({
   ...props
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState(src);
-  const [imageError, setImageError] = useState(false);
+  const [hasErrored, setHasErrored] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Use intersection observer for lazy loading, but with fallback for elements already in view
+  // Use intersection observer for lazy loading only when needed
   const isInView = useIntersectionObserver(imageRef, {
     threshold: 0.1,
-    rootMargin: '50px', // Optimized margin for better performance
+    rootMargin: '50px',
     freezeOnceVisible: true
   });
 
-  // Update src when prop changes
-  useEffect(() => {
-    setImageSrc(src);
-    setImageError(false);
-  }, [src]);
-
-  // Fixed logic: Load if priority, no lazy loading, OR in view
-  // For lazy loading, we need to load if either the observer says it's in view OR if lazy loading is disabled
+  // Simplified: Load if priority, no lazy loading, OR in view
   const shouldLoad = priority || !lazyLoad || isInView;
 
   const handleLoad = () => {
@@ -76,43 +69,24 @@ export default function OptimizedImage({
   };
 
   const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    if (!imageError) {
-      setImageError(true);
+    if (!hasErrored) {
+      setHasErrored(true);
       
-      // Try fallback image if provided
-      if (fallbackSrc) {
-        setImageSrc(fallbackSrc);
-      } else {
-        // Use random fallback from predefined list
-        const randomFallback = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
-        setImageSrc(randomFallback);
-      }
+      // Try fallback image if provided, otherwise use random fallback
+      const fallback = fallbackSrc || FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+      setImageSrc(fallback);
     }
     
     onError?.(event);
   };
 
-  // Generate blur placeholder for better UX
-  const generateBlurPlaceholder = (w: number = 10, h: number = 10) => {
-    const canvas = typeof window !== 'undefined' ? document.createElement('canvas') : null;
-    if (!canvas) return '';
-    
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return '';
-    
-    // Create a simple gradient blur effect
-    const gradient = ctx.createLinearGradient(0, 0, w, h);
-    gradient.addColorStop(0, '#f3f4f6');
-    gradient.addColorStop(1, '#e5e7eb');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, w, h);
-    
-    return canvas.toDataURL();
-  };
-
-  const optimizedBlurDataURL = blurDataURL || generateBlurPlaceholder();
+  // Update src when prop changes (simplified effect)
+  useEffect(() => {
+    if (src !== imageSrc && !hasErrored) {
+      setImageSrc(src);
+      setHasErrored(false);
+    }
+  }, [src, imageSrc, hasErrored]);
 
   // For fill images, don't add wrapper div - return the image directly
   if (fill) {
@@ -126,8 +100,8 @@ export default function OptimizedImage({
             sizes={sizes}
             priority={priority}
             quality={quality}
-            placeholder={placeholder}
-            blurDataURL={placeholder === 'blur' ? optimizedBlurDataURL : undefined}
+            placeholder={placeholder === 'blur' && blurDataURL ? 'blur' : 'empty'}
+            blurDataURL={blurDataURL}
             loading={priority ? 'eager' : loading}
             onLoad={handleLoad}
             onError={handleError}
@@ -135,14 +109,8 @@ export default function OptimizedImage({
             {...props}
           />
         ) : (
-          // Placeholder for lazy loading
-          <div className={`absolute inset-0 bg-gray-200 flex items-center justify-center ${className}`}>
-            <div className="w-8 h-8 text-gray-400">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-              </svg>
-            </div>
-          </div>
+          // Simple CSS placeholder for better performance
+          <div className={`absolute inset-0 bg-gray-200 animate-pulse ${className}`} />
         )}
       </div>
     );
@@ -160,8 +128,8 @@ export default function OptimizedImage({
           sizes={sizes}
           priority={priority}
           quality={quality}
-          placeholder={placeholder}
-          blurDataURL={placeholder === 'blur' ? optimizedBlurDataURL : undefined}
+          placeholder={placeholder === 'blur' && blurDataURL ? 'blur' : 'empty'}
+          blurDataURL={blurDataURL}
           loading={priority ? 'eager' : loading}
           onLoad={handleLoad}
           onError={handleError}
@@ -169,17 +137,11 @@ export default function OptimizedImage({
           {...props}
         />
       ) : (
-        // Placeholder while not in view
+        // Simple CSS placeholder for better performance
         <div 
-          className="w-full h-full bg-gray-200 flex items-center justify-center"
+          className="w-full h-full bg-gray-200 animate-pulse"
           style={{ width: width, height: height }}
-        >
-          <div className="w-8 h-8 text-gray-400">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-            </svg>
-          </div>
-        </div>
+        />
       )}
     </div>
   );

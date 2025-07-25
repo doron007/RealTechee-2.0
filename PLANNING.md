@@ -528,7 +528,36 @@ try {
 
 ---
 
-*Last Updated: July 21, 2025 - Systematic CI/CD Pipeline Debugging Complete, Production Ready ✅*
+## 🎯 **Image Component Architecture Guidelines**
+
+### **Component Usage Strategy (Performance-Optimized)**
+```typescript
+// ✅ For grids, cards, lists (lazy loading beneficial)
+<OptimizedImage 
+  src={imageSrc} 
+  alt={alt}
+  lazyLoad={true}
+  placeholder="empty" // Only use "blur" if blurDataURL provided
+/>
+
+// ✅ For modals, above-fold content (immediate load expected)  
+<Image
+  src={imageSrc}
+  alt={alt}
+  unoptimized // For external S3 images
+  priority // Load immediately
+/>
+```
+
+### **Performance Architecture Rules**
+1. **Modal Components**: Use native Next.js Image (no lazy loading, immediate display expected)
+2. **Grid Components**: Use OptimizedImage (intersection observer, lazy loading beneficial)
+3. **Placeholder Logic**: Always `placeholder="empty"` unless `blurDataURL` explicitly provided
+4. **S3 Integration**: Relative paths `/assets/*` + environment-configurable base URLs
+
+---
+
+*Last Updated: July 25, 2025 - 🎉 IMAGE ARCHITECTURE GUIDELINES: Component strategy + runtime error prevention ✅*
 
 ### Code Quality Standards
 - **TypeScript Strict Mode**: Enhanced type checking

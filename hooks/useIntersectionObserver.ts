@@ -42,16 +42,7 @@ export function useIntersectionObserver(
     const marginPx = parseInt(rootMargin) || 0;
     const isCurrentlyVisible = rect.top < (windowHeight + marginPx) && rect.bottom > -marginPx;
     
-    console.log('IntersectionObserver initial check:', {
-      elementTop: rect.top,
-      elementBottom: rect.bottom,
-      windowHeight: windowHeight,
-      rootMargin: rootMargin,
-      isCurrentlyVisible: isCurrentlyVisible
-    });
-    
     if (isCurrentlyVisible) {
-      console.log('Setting isIntersecting to true immediately');
       setIsIntersecting(true);
       if (freezeOnceVisible) {
         return; // Don't set up observer if already visible and frozen

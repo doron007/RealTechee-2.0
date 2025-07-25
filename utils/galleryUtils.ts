@@ -1,5 +1,5 @@
-
 import { createLogger } from './logger';
+import { getFullUrlFromPath } from './s3Utils';
 
 const logger = createLogger('GalleryUtils');
 
@@ -21,22 +21,22 @@ export const parseGalleryString = (
   if (!galleryString) {
     return fallbackImage ? [fallbackImage] : [];
   }
-  
+
   try {
     let urls: string[] = [];
-    
+
     // Try to parse as JSON first
-    if ((galleryString.startsWith('[') && galleryString.endsWith(']')) || 
+    if ((galleryString.startsWith('[') && galleryString.endsWith(']')) ||
         (galleryString.startsWith('{') && galleryString.endsWith('}'))) {
       try {
         const parsed = JSON.parse(galleryString);
         if (Array.isArray(parsed)) {
-          // Handle array of gallery objects (like your migrated data)
+          // Handle array of gallery objects or array of strings
           urls = parsed.map(item => {
             if (typeof item === 'string') {
-              return item; // Simple string URL
+              return item.trim(); // Handles ["/assets/..."]
             } else if (typeof item === 'object' && item.src) {
-              return item.src; // Extract src from gallery object
+              return item.src;
             }
             return null;
           }).filter(url => url && typeof url === 'string');
@@ -45,20 +45,28 @@ export const parseGalleryString = (
         logger.warn('Failed to parse gallery JSON', e);
       }
     }
-    
+
     // If JSON parsing didn't yield results, try comma-separated
     if (urls.length === 0) {
-      urls = galleryString.split(',').map(url => url.trim()).filter(url => url.length > 0);
+      // Remove brackets if present, then split
+      let cleaned = galleryString.trim();
+      if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
+        cleaned = cleaned.slice(1, -1);
+      }
+      urls = cleaned.split(',').map(url => url.trim()).filter(url => url.length > 0);
     }
-    
+
     // Filter out any invalid URLs
-    const validUrls = urls.filter(url => url.startsWith('http') || url.startsWith('/'));
-    
+    let validUrls = urls.filter(url => url.startsWith('http') || url.startsWith('/'));
+
+    // Append base URL to relative paths
+    validUrls = validUrls.map(url => url.startsWith('/') ? getFullUrlFromPath(url) : url);
+
     // Use fallback if we have no valid URLs
     if (validUrls.length === 0 && fallbackImage) {
       return [fallbackImage];
     }
-    
+
     // Limit image count to prevent performance issues
     return validUrls.length > maxImages ? validUrls.slice(0, maxImages) : validUrls;
   } catch (error) {
