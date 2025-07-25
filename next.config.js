@@ -5,6 +5,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Fix 504 Gateway Timeout issues on Amplify
+    imgOptTimeoutInSeconds: 30, // Increased from 7s default to handle large S3 images
+    imgOptConcurrency: 1, // Reduce concurrent optimizations to prevent memory pressure
+    imgOptMaxInputPixels: 50000000, // Limit max input pixels to reduce memory usage
+  },
   images: {
     remotePatterns: [
       {
@@ -41,12 +47,9 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: [],
-    minimumCacheTTL: 3600, // Increased to 1 hour for better caching
+    minimumCacheTTL: 86400, // 24 hours to reduce repeated processing and prevent 504 timeouts
     dangerouslyAllowSVG: false,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // Fix 504 Gateway Timeout issues on Amplify
-    imgOptTimeoutInSeconds: 30, // Increased from 7s default to handle large S3 images
-    concurrency: 2, // Limit concurrent optimizations to prevent memory pressure
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
   // Turbopack handles Fast Refresh and development optimizations automatically
   // Removed webpack polling configuration as it conflicts with Turbopack
