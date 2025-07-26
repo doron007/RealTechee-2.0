@@ -74,7 +74,7 @@ export default function ImageGallery({
   }, [imageSources]);
 
   const isS3Image = useCallback((src: string) => {
-    return src.includes('amplify-realtecheeclone-d-') && src.includes('.s3.us-west-1.amazonaws.com');
+    return (src.includes('amplify-realtecheeclone-d-') || src.includes('amplify-realtecheeclone-p-')) && src.includes('.s3.us-west-1.amazonaws.com');
   }, []);
 
   if (!images.length) {
