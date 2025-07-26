@@ -55,7 +55,12 @@ export const getFullUrlFromPath = (relativePath: string): string => {
   const baseUrl = getS3BaseUrl();
   
   // Ensure path starts with /
-  const normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+  let normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+  
+  // Remove /public/ prefix if it exists (legacy format)
+  if (normalizedPath.startsWith('/public/')) {
+    normalizedPath = normalizedPath.substring('/public'.length);
+  }
   
   return `${baseUrl}${normalizedPath}`;
 };
