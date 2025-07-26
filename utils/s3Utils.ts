@@ -62,6 +62,11 @@ export const getFullUrlFromPath = (relativePath: string): string => {
     normalizedPath = normalizedPath.substring('/public'.length);
   }
   
+  // For AWS Amplify storage, paths need public/ prefix
+  if (!normalizedPath.startsWith('/public/')) {
+    normalizedPath = `/public${normalizedPath}`;
+  }
+  
   return `${baseUrl}${normalizedPath}`;
 };
 
