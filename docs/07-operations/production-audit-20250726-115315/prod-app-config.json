@@ -1,0 +1,32 @@
+{
+    "app": {
+        "appId": "d200k2wsaf8th3",
+        "appArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3",
+        "name": "RealTechee-Gen2",
+        "tags": {},
+        "repository": "https://github.com/doron007/RealTechee-2.0",
+        "platform": "WEB_COMPUTE",
+        "createTime": "2025-06-18T10:37:22.851000-07:00",
+        "updateTime": "2025-06-18T10:37:22.851000-07:00",
+        "iamServiceRoleArn": "arn:aws:iam::403266990862:role/service-role/AmplifySSRLoggingRole-f52d829a-70f0-4564-a094-adb3bd2b3afe",
+        "defaultDomain": "d200k2wsaf8th3.amplifyapp.com",
+        "enableBranchAutoBuild": false,
+        "enableBranchAutoDeletion": false,
+        "enableBasicAuth": false,
+        "customRules": [
+            {
+                "source": "/<*>",
+                "target": "/index.html",
+                "status": "404-200"
+            }
+        ],
+        "productionBranch": {
+            "lastDeployTime": "2025-07-25T22:43:10.893000-07:00",
+            "status": "SUCCEED",
+            "branchName": "prod-v2"
+        },
+        "buildSpec": "version: 1\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - npm ci\n    build:\n      commands:\n        - if [ ! -d \"./public/meta\" ]; then mkdir -p public/meta; fi\n        - echo \"Building RealTechee version $(node -p\n          \"require('./package.json').version\")\"\n        - echo \"NEXT_PUBLIC_APP_VERSION=$(node -p\n          \"require('./package.json').version\")\" >> .env.local\n        - echo \"{\\\"version\\\":\\\"$(node\n          -p   \"require('./package.json').version\")\\\",\\\"buildTime\\\":\\\"$(date -u\n          +\"%Y-%m-%dT%H:%M:%SZ\")\\\",\\\"gitCommit\\\":\\\"$(git rev-parse --short\n          HEAD)\\\"}\" >  ./public/meta/build-info.json\n        - npm run build\n  artifacts:\n    baseDirectory: .next\n    files:\n      - \"**/*\"\n    discard-paths: false\n  cache:\n    paths:\n      - node_modules/**/*\n",
+        "customHeaders": "",
+        "enableAutoBranchCreation": false
+    }
+}

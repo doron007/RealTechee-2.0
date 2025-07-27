@@ -1,0 +1,29 @@
+
+> realtechee-clone@3.1.9-rc.1 dev
+> next dev --turbo
+
+   ▲ Next.js 15.3.3 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.4.23:3000
+   - Environments: .env.local, .env.development
+   - Experiments (use with caution):
+     · imgOptConcurrency: 1
+     · imgOptMaxInputPixels: 50000000
+     · imgOptTimeoutInSeconds: 30
+
+ ✓ Starting...
+ ✓ Ready in 2s
+ ○ Compiling / ...
+ ✓ Compiled / in 9.2s
+ GET / 200 in 12759ms
+ GET / 200 in 147ms
+ ○ Compiling /projects ...
+ ✓ Compiled /projects in 3s
+ ○ Compiling /project ...
+ ✓ Compiled /project in 6.6s
+ GET /project?projectId=ce1b5212-c72a-2adc-9af3-5158955a182b 200 in 7620ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3s
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3093ms
+ GET / 200 in 259ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 205ms

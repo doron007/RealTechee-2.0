@@ -19,7 +19,8 @@ import {
   CommentsList,
   ProjectDescriptionSection,
 } from '../components/projects';
-import { ImageGallery } from 'components/common/ui';
+// import { ImageGallery } from 'components/common/ui';
+import ProjectImageGalleryMUI from '../components/projects/ProjectImageGalleryMUI';
 
 const ProjectDetails: NextPage = () => {
   const router = useRouter();
@@ -168,7 +169,7 @@ const ProjectDetails: NextPage = () => {
               {/* Left Column (60%) */}
               <div className="lg:col-span-3">
                 {/* Image Slideshow */}
-                <ImageGallery images={galleryImages} />
+                <ProjectImageGalleryMUI images={galleryImages} />
 
                 {/* Project Description */}
                 <ProjectDescriptionSection description={project.description || generatePropertyDescription(project)} />

@@ -26,12 +26,11 @@ export const getRelativePathFromUrl = (fullUrl: string): string => {
     
     // Handle legacy URLs or other S3 URL formats
     const url = new URL(fullUrl);
-    const pathname = url.pathname;
+    let pathname = url.pathname;
     
-    // Extract path after /public/
-    const publicIndex = pathname.indexOf('/public/');
-    if (publicIndex !== -1) {
-      return pathname.substring(publicIndex + '/public'.length);
+    // Remove /public/ prefix if it exists (legacy format)
+    if (pathname.startsWith('/public/')) {
+      pathname = pathname.substring('/public'.length);
     }
     
     // Fallback: return the pathname as-is
@@ -56,7 +55,12 @@ export const getFullUrlFromPath = (relativePath: string): string => {
   const baseUrl = getS3BaseUrl();
   
   // Ensure path starts with /
-  const normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+  let normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+  
+  // Remove /public/ prefix if it exists (legacy format)
+  if (normalizedPath.startsWith('/public/')) {
+    normalizedPath = normalizedPath.substring('/public'.length);
+  }
   
   return `${baseUrl}${normalizedPath}`;
 };

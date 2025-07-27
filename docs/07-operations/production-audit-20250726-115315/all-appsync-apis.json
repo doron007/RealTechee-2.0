@@ -1,0 +1,62 @@
+{
+    "graphqlApis": [
+        {
+            "name": "amplifyData",
+            "apiId": "aqnqdrctpzfwfjwyxxsmu6peoq",
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+                "userPoolId": "us-west-1_1eQCIgm5h",
+                "awsRegion": "us-west-1",
+                "defaultAction": "ALLOW"
+            },
+            "arn": "arn:aws:appsync:us-west-1:403266990862:apis/aqnqdrctpzfwfjwyxxsmu6peoq",
+            "uris": {
+                "REALTIME": "wss://374sdjlh3bdnhp2sz4qttvyhce.appsync-realtime-api.us-west-1.amazonaws.com/graphql",
+                "GRAPHQL": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql"
+            },
+            "tags": {
+                "amplify:deployment-type": "sandbox",
+                "created-by": "amplify",
+                "amplify:friendly-name": "amplifyData"
+            },
+            "additionalAuthenticationProviders": [
+                {
+                    "authenticationType": "API_KEY"
+                },
+                {
+                    "authenticationType": "AWS_IAM"
+                }
+            ],
+            "xrayEnabled": false
+        },
+        {
+            "name": "amplifyData",
+            "apiId": "fvn7t5hbobaxjklhrqzdl4ac34",
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+                "userPoolId": "us-west-1_5pFbWcwtU",
+                "awsRegion": "us-west-1",
+                "defaultAction": "ALLOW"
+            },
+            "arn": "arn:aws:appsync:us-west-1:403266990862:apis/fvn7t5hbobaxjklhrqzdl4ac34",
+            "uris": {
+                "REALTIME": "wss://yq2katnwbbeqjecywrptfgecwa.appsync-realtime-api.us-west-1.amazonaws.com/graphql",
+                "GRAPHQL": "https://yq2katnwbbeqjecywrptfgecwa.appsync-api.us-west-1.amazonaws.com/graphql"
+            },
+            "tags": {
+                "amplify:deployment-type": "sandbox",
+                "created-by": "amplify",
+                "amplify:friendly-name": "amplifyData"
+            },
+            "additionalAuthenticationProviders": [
+                {
+                    "authenticationType": "API_KEY"
+                },
+                {
+                    "authenticationType": "AWS_IAM"
+                }
+            ],
+            "xrayEnabled": false
+        }
+    ]
+}

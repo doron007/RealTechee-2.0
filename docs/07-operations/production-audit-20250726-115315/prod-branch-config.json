@@ -1,0 +1,26 @@
+{
+    "branch": {
+        "branchArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2",
+        "branchName": "prod-v2",
+        "tags": {},
+        "stage": "PRODUCTION",
+        "displayName": "prod-v2",
+        "enableNotification": false,
+        "createTime": "2025-06-18T10:37:23.218000-07:00",
+        "updateTime": "2025-07-25T22:43:10.963000-07:00",
+        "environmentVariables": {
+            "DEBUG_NOTIFICATIONS": "false",
+            "LOG_LEVEL": "INFO",
+            "NEXT_PUBLIC_LOG_LEVEL": "INFO",
+            "NEXT_PUBLIC_S3_PUBLIC_BASE_URL": "https://amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii.s3.us-west-1.amazonaws.com/public"
+        },
+        "enableAutoBuild": true,
+        "framework": "Next.js - SSR",
+        "activeJobId": "0000000030",
+        "totalNumberOfJobs": "0",
+        "enableBasicAuth": false,
+        "enablePerformanceMode": false,
+        "ttl": "5",
+        "enablePullRequestPreview": false
+    }
+}

@@ -1,6 +1,6 @@
 {
   "name": "realtechee-clone",
-  "version": "3.1.5-rc.5",
+  "version": "3.1.9-rc.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
@@ -68,7 +68,12 @@
     "download:documents:dry-run": "npx tsx scripts/download-documents-to-s3.ts --dry-run",
     "fix:urls": "npx tsx scripts/fix-double-s3-urls.ts",
     "fix:urls:dry-run": "npx tsx scripts/fix-double-s3-urls.ts --dry-run",
-    "verify:migration": "npx tsx scripts/final-migration-verification.ts"
+    "verify:migration": "npx tsx scripts/final-migration-verification.ts",
+    "test:prod:local": "./scripts/test-production-local.sh",
+    "validate:prod:env": "node scripts/validate-production-env.js",
+    "audit:prod:aws": "./scripts/audit-production-aws.sh",
+    "analyze:prod:audit": "node scripts/analyze-production-audit.js",
+    "validate:prod:deployment": "./scripts/validate-production-deployment.sh"
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.16.1",
