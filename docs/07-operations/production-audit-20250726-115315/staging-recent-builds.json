@@ -1,0 +1,55 @@
+{
+    "jobSummaries": [
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod/jobs/0000000031",
+            "jobId": "31",
+            "commitId": "b8467504596ef805b3d49dd8a0afee7dddd921a7",
+            "commitMessage": "chore: bump version to 3.1.5-rc.5",
+            "commitTime": "2025-07-25T14:25:14-07:00",
+            "startTime": "2025-07-25T14:25:18-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T14:35:45.097000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod/jobs/0000000030",
+            "jobId": "30",
+            "commitId": "cf85d20286ab0a4010826bdd9704d7832c77244a",
+            "commitMessage": "chore: bump version to 3.1.5-rc.4",
+            "commitTime": "2025-07-25T14:06:54-07:00",
+            "startTime": "2025-07-25T14:06:58.191000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T14:18:23.289000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod/jobs/0000000029",
+            "jobId": "29",
+            "commitId": "a6b9be11a1418b9af90ac469868ed3e2b0666175",
+            "commitMessage": "chore: bump version to 3.1.5-rc.3",
+            "commitTime": "2025-07-25T13:46:18-07:00",
+            "startTime": "2025-07-25T13:46:21.917000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T13:56:38.778000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod/jobs/0000000028",
+            "jobId": "28",
+            "commitId": "795762339eef2ac86b78b09f8c9e05cb56affd66",
+            "commitMessage": "chore: bump version to 3.1.5-rc.2",
+            "commitTime": "2025-07-25T13:31:02-07:00",
+            "startTime": "2025-07-25T13:31:05.357000-07:00",
+            "status": "FAILED",
+            "endTime": "2025-07-25T13:37:17.777000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod/jobs/0000000027",
+            "jobId": "27",
+            "commitId": "27596cd12fbd1cf5c09c2bddd526c17e22f0c333",
+            "commitMessage": "chore: bump version to 3.1.5-rc.1",
+            "commitTime": "2025-07-25T13:01:46-07:00",
+            "startTime": "2025-07-25T13:01:49.909000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T13:12:21.985000-07:00"
+        }
+    ],
+    "NextToken": "eyJuZXh0VG9rZW4iOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiA1fQ=="
+}

@@ -1,0 +1,21 @@
+{
+    "branch": {
+        "branchArn": "arn:aws:amplify:us-west-1:403266990862:apps/d3atadjk90y9q5/branches/prod",
+        "branchName": "prod",
+        "tags": {},
+        "stage": "PRODUCTION",
+        "displayName": "prod",
+        "enableNotification": false,
+        "createTime": "2025-05-03T17:35:53.992000-07:00",
+        "updateTime": "2025-07-25T14:35:45.179000-07:00",
+        "environmentVariables": {},
+        "enableAutoBuild": true,
+        "framework": "Next.js - SSR",
+        "activeJobId": "0000000031",
+        "totalNumberOfJobs": "0",
+        "enableBasicAuth": false,
+        "enablePerformanceMode": false,
+        "ttl": "5",
+        "enablePullRequestPreview": false
+    }
+}
