@@ -1,0 +1,55 @@
+{
+    "jobSummaries": [
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2/jobs/0000000030",
+            "jobId": "30",
+            "commitId": "75d475eb6b3588cdbcf54637e1c48507854706cf",
+            "commitMessage": "fix: remove public/ prefix addition from s3Utils - AWS Amplify S3 URLs should be direct",
+            "commitTime": "2025-07-25T22:24:31-07:00",
+            "startTime": "2025-07-25T22:32:39.252000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T22:43:10.893000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2/jobs/0000000029",
+            "jobId": "29",
+            "commitId": "e765b7525d516f4c44bdaa8f2a3bb36a7c135196",
+            "commitMessage": "fix: correct S3 URL construction for AWS Amplify storage - remove base URL /public prefix, add public/ prefix in utils",
+            "commitTime": "2025-07-25T22:21:52-07:00",
+            "startTime": "2025-07-25T22:22:02.341000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T22:32:39.020000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2/jobs/0000000028",
+            "jobId": "28",
+            "commitId": "358273ace5656176d4d5b4842c3562888a3f3ad4",
+            "commitMessage": "fix: correct S3 public base URL for production environment\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+            "commitTime": "2025-07-25T21:50:18-07:00",
+            "startTime": "2025-07-25T21:56:00.737000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T22:06:05.698000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2/jobs/0000000027",
+            "jobId": "27",
+            "commitId": "10f19d2b51acadfb4346a487207fa80c932546e0",
+            "commitMessage": "chore: bump version to 3.1.9-rc.1",
+            "commitTime": "2025-07-25T21:39:27-07:00",
+            "startTime": "2025-07-25T21:39:35.658000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T21:49:45.027000-07:00"
+        },
+        {
+            "jobArn": "arn:aws:amplify:us-west-1:403266990862:apps/d200k2wsaf8th3/branches/prod-v2/jobs/0000000026",
+            "jobId": "26",
+            "commitId": "38da9ad690812e63b229b6e9f711ef972e76aa57",
+            "commitMessage": "chore: bump version to 3.1.9-rc.0",
+            "commitTime": "2025-07-25T19:44:02-07:00",
+            "startTime": "2025-07-25T19:47:25.593000-07:00",
+            "status": "SUCCEED",
+            "endTime": "2025-07-25T19:57:45.113000-07:00"
+        }
+    ],
+    "NextToken": "eyJuZXh0VG9rZW4iOiBudWxsLCAiYm90b190cnVuY2F0ZV9hbW91bnQiOiA1fQ=="
+}

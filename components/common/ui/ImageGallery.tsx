@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import ImageModal from './ImageModal';
 import { H4, P3 } from '../../typography';
@@ -34,7 +34,7 @@ interface ImageGalleryProps {
   onImageClick?: (image: GalleryImage, index: number) => void;
 }
 
-export default function ImageGallery({
+const ImageGallery = React.memo(function ImageGallery({
   images,
   className = '',
   lazyLoad = true,
@@ -57,9 +57,6 @@ export default function ImageGallery({
     setIsModalOpen(true);
   }, [onImageClick]);
 
-  const handleThumbnailClick = useCallback((index: number) => {
-    setSelectedImageIndex(index);
-  }, []);
 
   const handleImageError = useCallback((index: number) => {
     const fallbackSrc = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
@@ -76,6 +73,81 @@ export default function ImageGallery({
   const isS3Image = useCallback((src: string) => {
     return (src.includes('amplify-realtecheeclone-d-') || src.includes('amplify-realtecheeclone-p-')) && src.includes('.s3.us-west-1.amazonaws.com');
   }, []);
+
+  // Stable click handler that updates selection and applies CSS class
+  const handleThumbnailClick = useCallback((index: number) => {
+    setSelectedImageIndex(index);
+    
+    // Update CSS classes for visual selection (CSS-only approach)
+    const thumbnailButtons = document.querySelectorAll('[data-thumbnail-index]');
+    thumbnailButtons.forEach((button, i) => {
+      if (i === index) {
+        button.classList.add('ring-2', 'ring-blue-500', 'ring-offset-1');
+        button.classList.remove('hover:ring-1', 'hover:ring-gray-300');
+      } else {
+        button.classList.remove('ring-2', 'ring-blue-500', 'ring-offset-1');
+        button.classList.add('hover:ring-1', 'hover:ring-gray-300');
+      }
+    });
+  }, []);
+
+  // Create stable click handlers to prevent re-renders
+  const stableClickHandlers = useMemo(() => {
+    return images.map((_, index) => () => handleThumbnailClick(index));
+  }, [images, handleThumbnailClick]);
+
+  // Set initial selection state when component mounts
+  useEffect(() => {
+    if (images.length > 0) {
+      // Apply initial selection styling to first thumbnail
+      const thumbnailButtons = document.querySelectorAll('[data-thumbnail-index]');
+      if (thumbnailButtons[0]) {
+        thumbnailButtons[0].classList.add('ring-2', 'ring-blue-500', 'ring-offset-1');
+        thumbnailButtons[0].classList.remove('hover:ring-1', 'hover:ring-gray-300');
+      }
+    }
+  }, [images.length]);
+
+  // Completely isolated thumbnail component - zero prop dependencies that change
+  const ThumbnailImage = React.memo(function ThumbnailImage({ 
+    src,
+    alt,
+    index,
+    onClick
+  }: {
+    src: string;
+    alt: string;
+    index: number;
+    onClick: () => void;
+  }) {  
+    const [imageSrc, setImageSrc] = useState(src);
+    
+    const handleError = useCallback(() => {
+      const fallbackSrc = FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+      setImageSrc(fallbackSrc);
+    }, []);
+    
+    return (
+      <button
+        data-thumbnail-index={index}
+        onClick={onClick}
+        className="relative aspect-square overflow-hidden rounded-md bg-gray-100 transition-all duration-200 hover:ring-1 hover:ring-gray-300"
+        style={{ minWidth: 64, minHeight: 64 }}
+      >
+        <Image
+          src={imageSrc}
+          alt={alt}
+          fill
+          sizes="64px"
+          quality={50}
+          className="object-cover"
+          style={{ color: 'initial' }}
+          unoptimized={isS3Image(imageSrc)}
+          onError={handleError}
+        />
+      </button>
+    );
+  });
 
   if (!images.length) {
     return (
@@ -96,7 +168,7 @@ export default function ImageGallery({
   const selectedImageSrc = getImageSrc(selectedImage, selectedImageIndex);
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-4 ${className}`} data-testid="image-gallery">
       {/* Main Image Display */}
       <div className="relative">
         <div 
@@ -166,28 +238,13 @@ export default function ImageGallery({
       {showThumbnails && !isSingleImage && (
         <div className="flex overflow-x-auto gap-2 py-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => handleThumbnailClick(index)}
-              className={`relative aspect-square overflow-hidden rounded-md bg-gray-100 transition-all duration-200 ${
-                selectedImageIndex === index 
-                  ? 'ring-2 ring-blue-500 ring-offset-1' 
-                  : 'hover:ring-1 hover:ring-gray-300'
-              }`}
-              style={{ minWidth: 64, minHeight: 64 }}
-            >
-              <Image
-                src={getImageSrc(image, index)}
-                alt={image.alt}
-                fill
-                sizes="64px"
-                quality={50}
-                className="object-cover"
-                style={{ color: 'initial' }}
-                unoptimized={isS3Image(getImageSrc(image, index))}
-                onError={() => handleImageError(index)}
-              />
-            </button>
+            <ThumbnailImage
+              key={`thumbnail-${image.src || image.url}-${index}`}
+              src={image.src || image.url || ''}
+              alt={image.alt}
+              index={index}
+              onClick={stableClickHandlers[index]}
+            />
           ))}
         </div>
       )}
@@ -201,4 +258,11 @@ export default function ImageGallery({
       />
     </div>
   );
-}
+}, (prevProps, nextProps) => {
+  // Only re-render if images array reference changes
+  return prevProps.images === nextProps.images && 
+         prevProps.className === nextProps.className &&
+         prevProps.onImageClick === nextProps.onImageClick;
+});
+
+export default ImageGallery;

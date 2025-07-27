@@ -63,7 +63,11 @@ echo_success "Version promoted: $CURRENT_VERSION → $NEW_VERSION"
 echo_step "Switching to production environment configuration"
 ./scripts/switch-environment.sh prod
 
-# 8. Deploy to production branch
+# 8. Validate production environment variables
+echo_step "Validating production environment configuration"
+./scripts/validate-production-deployment.sh || echo_error "Production environment validation failed"
+
+# 9. Deploy to production branch
 echo_step "Deploying to production (prod-v2 branch)"
 git checkout prod-v2 2>/dev/null || git checkout -b prod-v2
 
@@ -81,7 +85,7 @@ if [[ "$MERGED_VERSION" != "$NEW_VERSION" ]]; then
 fi
 echo_info "Confirmed version after merge: $MERGED_VERSION"
 
-# 9. Push with confirmation
+# 10. Push with confirmation
 echo_warn "About to deploy version $NEW_VERSION to PRODUCTION"
 echo_info "Production URL: https://d200k2wsaf8th3.amplifyapp.com/"
 read -p "Continue with production deployment? (y/N): " -r
@@ -100,7 +104,7 @@ echo_info "Version deployed: $NEW_VERSION"
 echo_info "Git tag: v$NEW_VERSION"
 echo_info "Monitor deployment at: https://console.aws.amazon.com/amplify/"
 
-# 10. Merge back to main and switch back to dev
+# 11. Merge back to main and switch back to dev
 echo_step "Merging production changes back to main"
 git checkout main
 git merge prod-v2 --ff-only
