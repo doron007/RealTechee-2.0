@@ -68,6 +68,43 @@ const NotificationManagement: React.FC = () => {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState<NodeJS.Timeout | null>(null);
 
+  // Helper functions for safe data parsing
+  const parseChannels = (channels: string | string[]) => {
+    try {
+      if (typeof channels !== 'string') {
+        return Array.isArray(channels) ? channels : [];
+      }
+      
+      // Handle double-escaped JSON strings
+      let parsed = JSON.parse(channels);
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
+      
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const parseRecipients = (recipients: string | string[]) => {
+    try {
+      if (typeof recipients !== 'string') {
+        return Array.isArray(recipients) ? recipients : [];
+      }
+      
+      // Handle double-escaped JSON strings
+      let parsed = JSON.parse(recipients);
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
+      
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+
   useEffect(() => {
     loadData();
     
@@ -87,63 +124,170 @@ const NotificationManagement: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      console.log('🔍 Loading notification data...');
-      
       // Load notification queue
       const queueResult = await client.graphql({
         query: listNotificationQueues,
         variables: { limit: 100 }
       });
 
-      console.log('📥 Queue result:', queueResult);
-
       // Load notification templates
-      const templateResult = await client.graphql({
-        query: listNotificationTemplates,
-        variables: { limit: 50 }
-      });
-
-      console.log('📝 Template result:', templateResult);
+      let templateResult;
+      try {
+        templateResult = await client.graphql({
+          query: listNotificationTemplates,
+          variables: { limit: 50 }
+        });
+      } catch (templateError: any) {
+        // AWS Amplify GraphQL client throws exceptions for GraphQL errors
+        // even when data is present. Check if the exception contains usable data.
+        if (templateError && typeof templateError === 'object' && templateError.data) {
+          console.warn('⚠️ GraphQL client threw exception but data is available - treating as success with warnings');
+          if (templateError.errors) {
+            console.warn('⚠️ GraphQL validation errors:', templateError.errors.length, 'errors found');
+          }
+          
+          // Use the exception as the result since it contains valid data
+          templateResult = templateError;
+        } else {
+          console.error('❌ Template query failed completely - no data available');
+          throw templateError;
+        }
+      }
 
       // Check for GraphQL errors but don't fail if data exists
-      if (queueResult.errors) {
-        console.error('⚠️ Queue GraphQL errors:', queueResult.errors);
-        queueResult.errors.forEach((error, index) => {
-          console.error(`Queue Error ${index + 1}:`, error.message, error);
-        });
-      }
-      if (templateResult.errors) {
-        console.error('⚠️ Template GraphQL errors:', templateResult.errors);
-        templateResult.errors.forEach((error, index) => {
-          console.error(`Template Error ${index + 1}:`, error.message, error);
-        });
-      }
-
-      // Handle data even if there are some errors
-      const notificationsData = (queueResult.data?.listNotificationQueues?.items || []).map((item: any): NotificationItem => ({
-        ...item,
-        status: item.status as NotificationQueueStatus || NotificationQueueStatus.PENDING,
-        channels: item.channels || '[]',
-        recipientIds: item.recipientIds || '[]'
-      }));
+      let hasGraphQLErrors = false;
       
-      const templatesData = (templateResult.data?.listNotificationTemplates?.items || []).map((item: any): TemplateItem => ({
-        ...item,
-        channel: item.channel || 'EMAIL',
-        name: item.name || 'Unnamed Template'
-      }));
+      try {
+        if (queueResult && queueResult.errors && Array.isArray(queueResult.errors)) {
+          hasGraphQLErrors = true;
+          console.error('⚠️ Queue GraphQL errors:', queueResult.errors.length);
+          queueResult.errors.forEach((error: any, index: number) => {
+            console.error(`Queue Error ${index + 1}:`, error?.message || 'Unknown error');
+          });
+        }
+        
+        if (templateResult && templateResult.errors && Array.isArray(templateResult.errors)) {
+          hasGraphQLErrors = true;
+          console.error('⚠️ Template GraphQL errors:', templateResult.errors.length);
+          templateResult.errors.forEach((error: any, index: number) => {
+            console.error(`Template Error ${index + 1}:`, error?.message || 'Unknown error');
+          });
+        }
 
-      console.log('✅ Processed notifications:', notificationsData);
-      console.log('✅ Processed templates:', templatesData);
+        if (hasGraphQLErrors) {
+          console.warn('🔍 GraphQL errors detected, but continuing with available data...');
+        }
+      } catch (errorProcessingError) {
+        console.error('❌ Error while processing GraphQL errors:', errorProcessingError);
+        // Continue processing even if error logging fails
+      }
 
-      setNotifications(notificationsData);
-      setTemplates(templatesData);
+      // Handle notification data processing
+      let notificationsData: NotificationItem[] = [];
+      try {
+        const rawItems = queueResult?.data?.listNotificationQueues?.items || [];
+        
+        notificationsData = rawItems
+          .filter((item: any) => {
+            // Basic validation - skip records missing critical fields
+            if (!item || !item.id) {
+              console.warn('⚠️ Skipping notification record without ID:', item);
+              return false;
+            }
+            return true;
+          })
+          .map((item: any): NotificationItem => {
+            try {
+              // Safely normalize channels and recipientIds to JSON string format
+              const normalizeArrayField = (field: any): string => {
+                if (!field) return '[]';
+                if (typeof field === 'string') return field;
+                if (Array.isArray(field)) return JSON.stringify(field);
+                return '[]';
+              };
+
+              return {
+                ...item,
+                status: item.status as NotificationQueueStatus || NotificationQueueStatus.PENDING,
+                channels: normalizeArrayField(item.channels),
+                recipientIds: normalizeArrayField(item.recipientIds),
+                eventType: item.eventType || 'unknown',
+                templateId: item.templateId || '',
+                payload: item.payload || '{}',
+                createdAt: item.createdAt || new Date().toISOString()
+              };
+            } catch (processingError) {
+              console.warn('⚠️ Error processing notification record, using defaults:', item.id, processingError);
+              // Return a minimal valid record if processing fails
+              return {
+                id: item.id,
+                eventType: 'unknown',
+                status: NotificationQueueStatus.PENDING,
+                recipientIds: '[]',
+                channels: '[]',
+                templateId: '',
+                payload: '{}',
+                createdAt: new Date().toISOString()
+              };
+            }
+          });
+      } catch (notificationProcessingError) {
+        console.error('❌ Error processing notification data:', notificationProcessingError);
+        notificationsData = []; // Use empty array as fallback
+      }
       
-      // Only show error if both queries failed completely
-      if ((!queueResult.data || !templateResult.data) && (queueResult.errors || templateResult.errors)) {
-        setError(`GraphQL errors: ${[...(queueResult.errors || []), ...(templateResult.errors || [])].map(e => e.message).join(', ')}`);
-      } else {
-        setError('');
+      // Handle template data processing
+      let templatesData: TemplateItem[] = [];
+      try {
+        const rawTemplates = templateResult?.data?.listNotificationTemplates?.items || [];
+        
+        templatesData = rawTemplates
+          .filter((item: any) => {
+            if (!item || !item.id) {
+              console.warn('⚠️ Skipping template record without ID:', item);
+              return false;
+            }
+            return true;
+          })
+          .map((item: any): TemplateItem => ({
+            ...item,
+            channel: item.channel || 'EMAIL',
+            name: item.name || 'Unnamed Template',
+            createdAt: item.createdAt || new Date().toISOString()
+          }));
+      } catch (templateProcessingError) {
+        console.error('❌ Error processing template data:', templateProcessingError);
+        templatesData = []; // Use empty array as fallback
+      }
+
+      // Set state with processed data
+      try {
+        setNotifications(notificationsData);
+        setTemplates(templatesData);
+      } catch (stateError) {
+        console.error('❌ Error setting state:', stateError);
+        throw stateError;
+      }
+      
+      // Handle error display logic
+      try {
+        if (!queueResult?.data?.listNotificationQueues && !templateResult?.data?.listNotificationTemplates) {
+          // Both queries failed completely - this is a real error
+          const errorMessages = [
+            ...(queueResult?.errors || []).map((e: any) => e?.message || 'Unknown queue error'),
+            ...(templateResult?.errors || []).map((e: any) => e?.message || 'Unknown template error')
+          ];
+          setError(`Failed to load data: ${errorMessages.join(', ')}`);
+        } else if (hasGraphQLErrors) {
+          // We have data but some GraphQL errors - show warning but don't fail
+          console.warn('⚠️ Some records had GraphQL validation errors but data was loaded successfully');
+          setError(''); // Clear any previous errors
+        } else {
+          setError('');
+        }
+      } catch (errorStateError) {
+        console.error('❌ Error setting error state:', errorStateError);
+        setError('An unexpected error occurred while processing notification data');
       }
     } catch (err) {
       console.error('❌ Failed to load data:', err);
@@ -164,8 +308,8 @@ const NotificationManagement: React.FC = () => {
     // Channel filter
     if (channelFilter !== 'all') {
       filtered = filtered.filter(n => {
-        const channels = typeof n.channels === 'string' ? JSON.parse(n.channels) : n.channels;
-        return Array.isArray(channels) && channels.includes(channelFilter);
+        const channels = parseChannels(n.channels);
+        return channels.includes(channelFilter);
       });
     }
 
@@ -280,22 +424,45 @@ const NotificationManagement: React.FC = () => {
   const sendTestNotification = async () => {
     try {
       setLoading(true);
-      console.log('📧 Sending test notification...');
+      console.log('📧 Sending test "Get an Estimate" notification...');
       
-      // Create a test notification directly in the queue
+      // Create a realistic Get Estimate notification payload
+      const getEstimatePayload = {
+        customer: {
+          name: 'John Smith (Test)',
+          email: 'info@realtechee.com',
+          phone: '(555) 123-4567',
+          company: 'Test Real Estate Group'
+        },
+        property: {
+          address: '123 Test Property Street, Beverly Hills, CA 90210'
+        },
+        project: {
+          product: 'Kitchen & Bathroom Renovation',
+          message: 'Looking for a complete renovation estimate for a luxury property. This is a test submission to validate the notification system end-to-end.',
+          relationToProperty: 'Real Estate Agent',
+          needFinance: true,
+          consultationType: 'in-person'
+        },
+        submission: {
+          id: `TEST-EST-${Date.now()}`,
+          timestamp: new Date().toLocaleString(),
+          leadSource: 'ADMIN_TEST'
+        },
+        admin: {
+          dashboardUrl: typeof window !== 'undefined' 
+            ? `${window.location.origin}/admin/requests`
+            : 'https://localhost:3000/admin/requests'
+        }
+      };
+
+      // Create test notification with proper Get Estimate structure
       const testNotification = {
-        eventType: 'admin_test',
-        payload: JSON.stringify({
-          customer: {
-            name: 'Test Admin User',
-            email: 'info@realtechee.com'
-          },
-          message: 'This is a test notification from the admin panel',
-          timestamp: new Date().toISOString()
-        }),
+        eventType: 'get_estimate_request',
+        payload: JSON.stringify(getEstimatePayload),
         recipientIds: JSON.stringify(['admin-team']),
-        channels: JSON.stringify(['EMAIL']),
-        templateId: 'admin-test-template',
+        channels: JSON.stringify(['EMAIL', 'SMS']),
+        templateId: 'get-estimate-template-001',
         status: NotificationQueueStatus.PENDING,
         retryCount: 0,
         owner: 'admin'
@@ -308,13 +475,70 @@ const NotificationManagement: React.FC = () => {
         }
       });
 
-      console.log('✅ Test notification created:', result);
+      console.log('✅ Test Get Estimate notification created:', result);
       
       // Refresh data to show the new notification
       await loadData();
     } catch (err) {
       console.error('❌ Failed to send test notification:', err);
       setError(`Failed to send test notification: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const runDiagnostics = async () => {
+    try {
+      setLoading(true);
+      console.log('🔍 Running notification system diagnostics...');
+      
+      let diagnosticResults = [];
+      
+      // 1. Check if templates exist
+      console.log('🔍 Checking notification templates...');
+      try {
+        const templateResult = await client.graphql({
+          query: listNotificationTemplates,
+          variables: { limit: 10 }
+        });
+        
+        const templateCount = templateResult.data?.listNotificationTemplates?.items?.length || 0;
+        diagnosticResults.push(`✅ Templates found: ${templateCount}`);
+        
+        const hasGetEstimateTemplate = templateResult.data?.listNotificationTemplates?.items?.some(
+          (t: any) => t.id === 'get-estimate-template-001'
+        );
+        
+        if (hasGetEstimateTemplate) {
+          diagnosticResults.push(`✅ Get Estimate template exists`);
+        } else {
+          diagnosticResults.push(`❌ Get Estimate template missing (ID: get-estimate-template-001)`);
+        }
+      } catch (err) {
+        diagnosticResults.push(`❌ Template check failed: ${err instanceof Error ? err.message : String(err)}`);
+      }
+      
+      // 2. Check current failed notifications
+      const failedNotifications = notifications.filter(n => n.status === NotificationQueueStatus.FAILED);
+      diagnosticResults.push(`⚠️ Currently failed notifications: ${failedNotifications.length}`);
+      
+      if (failedNotifications.length > 0) {
+        const latestFailed = failedNotifications[0];
+        if (latestFailed.errorMessage) {
+          diagnosticResults.push(`❌ Latest error: ${latestFailed.errorMessage.substring(0, 100)}...`);
+        }
+      }
+      
+      // 3. Display diagnostic results
+      const diagnosticSummary = diagnosticResults.join('\n');
+      console.log('🔍 Diagnostic Results:\n', diagnosticSummary);
+      
+      // Show diagnostic results in error state for user visibility
+      setError(`🔍 Diagnostic Results:\n${diagnosticSummary}\n\n💡 Common Issues:\n- AWS Parameter Store missing SendGrid/Twilio API keys\n- Templates not created in database\n- Lambda function permissions\n- CloudWatch logs: check /aws/lambda/notification-processor`);
+      
+    } catch (err) {
+      console.error('❌ Diagnostics failed:', err);
+      setError(`Diagnostics failed: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setLoading(false);
     }
@@ -355,6 +579,172 @@ const NotificationManagement: React.FC = () => {
     }
   };
 
+  const createGetEstimateTemplate = async () => {
+    try {
+      setLoading(true);
+      console.log('📝 Creating Get Estimate email template...');
+      
+      // Create the main Get Estimate email template
+      const getEstimateTemplate = {
+        id: 'get-estimate-template-001',
+        name: 'Get Estimate Request - Email',
+        channel: NotificationTemplateChannel.EMAIL,
+        subject: 'New Estimate Request - {{customer.name}} ({{property.address}})',
+        contentHtml: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #2563eb;">New Estimate Request Received</h2>
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="margin-top: 0; color: #1e40af;">Customer Information</h3>
+              <p><strong>Name:</strong> {{customer.name}}</p>
+              <p><strong>Email:</strong> {{customer.email}}</p>
+              <p><strong>Phone:</strong> {{customer.phone}}</p>
+              {{#if customer.company}}<p><strong>Company:</strong> {{customer.company}}</p>{{/if}}
+            </div>
+            
+            <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="margin-top: 0; color: #0c4a6e;">Property Details</h3>
+              <p><strong>Address:</strong> {{property.address}}</p>
+            </div>
+            
+            <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="margin-top: 0; color: #166534;">Project Information</h3>
+              <p><strong>Service:</strong> {{project.product}}</p>
+              {{#if project.relationToProperty}}<p><strong>Relation to Property:</strong> {{project.relationToProperty}}</p>{{/if}}
+              {{#if project.needFinance}}<p><strong>Financing Needed:</strong> Yes</p>{{/if}}
+              {{#if project.consultationType}}<p><strong>Consultation Type:</strong> {{project.consultationType}}</p>{{/if}}
+              {{#if project.message}}<p><strong>Message:</strong> {{project.message}}</p>{{/if}}
+            </div>
+            
+            <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="margin-top: 0; color: #92400e;">Submission Details</h3>
+              <p><strong>Submission ID:</strong> {{submission.id}}</p>
+              <p><strong>Submitted:</strong> {{submission.timestamp}}</p>
+              <p><strong>Lead Source:</strong> {{submission.leadSource}}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="{{admin.dashboardUrl}}" style="background: #2563eb; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block;">
+                View in Admin Dashboard
+              </a>
+            </div>
+            
+            <p style="color: #6b7280; font-size: 14px; text-align: center;">
+              This notification was sent automatically by RealTechee. Please respond to the customer within 24 hours.
+            </p>
+          </div>
+        `,
+        contentText: `
+New Estimate Request Received
+
+CUSTOMER INFORMATION:
+Name: {{customer.name}}
+Email: {{customer.email}}
+Phone: {{customer.phone}}
+{{#if customer.company}}Company: {{customer.company}}{{/if}}
+
+PROPERTY DETAILS:
+Address: {{property.address}}
+
+PROJECT INFORMATION:
+Service: {{project.product}}
+{{#if project.relationToProperty}}Relation to Property: {{project.relationToProperty}}{{/if}}
+{{#if project.needFinance}}Financing Needed: Yes{{/if}}
+{{#if project.consultationType}}Consultation Type: {{project.consultationType}}{{/if}}
+{{#if project.message}}Message: {{project.message}}{{/if}}
+
+SUBMISSION DETAILS:
+Submission ID: {{submission.id}}
+Submitted: {{submission.timestamp}}
+Lead Source: {{submission.leadSource}}
+
+Admin Dashboard: {{admin.dashboardUrl}}
+
+Please respond to the customer within 24 hours.
+        `,
+        isActive: true,
+        variables: JSON.stringify([
+          'customer.name', 'customer.email', 'customer.phone', 'customer.company',
+          'property.address',
+          'project.product', 'project.relationToProperty', 'project.needFinance', 'project.consultationType', 'project.message',
+          'submission.id', 'submission.timestamp', 'submission.leadSource',
+          'admin.dashboardUrl'
+        ]),
+        owner: 'system'
+      };
+
+      const result = await client.graphql({
+        query: createNotificationTemplate,
+        variables: {
+          input: getEstimateTemplate
+        }
+      });
+
+      console.log('✅ Get Estimate template created:', result);
+      
+      // Also create SMS template
+      await createGetEstimateSmsTemplate();
+      
+      // Refresh data to show the new templates
+      await loadData();
+    } catch (err) {
+      console.error('❌ Failed to create Get Estimate template:', err);
+      setError(`Failed to create Get Estimate template: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createGetEstimateSmsTemplate = async () => {
+    try {
+      console.log('📱 Creating Get Estimate SMS template...');
+      
+      const smsTemplate = {
+        id: 'get-estimate-sms-template-001',
+        name: 'Get Estimate Request - SMS',
+        channel: NotificationTemplateChannel.SMS,
+        subject: 'New Estimate Request',
+        contentText: `🏠 NEW ESTIMATE REQUEST
+
+Customer: {{customer.name}}
+Phone: {{customer.phone}}
+Property: {{property.address}}
+Service: {{project.product}}
+
+{{#if project.message}}Message: {{project.message}}{{/if}}
+
+Submission ID: {{submission.id}}
+Time: {{submission.timestamp}}
+
+Dashboard: {{admin.dashboardUrl}}
+
+⏰ Respond within 24 hours`,
+        isActive: true,
+        variables: JSON.stringify([
+          'customer.name', 'customer.phone',
+          'property.address',
+          'project.product', 'project.message',
+          'submission.id', 'submission.timestamp',
+          'admin.dashboardUrl'
+        ]),
+        owner: 'system'
+      };
+
+      const result = await client.graphql({
+        query: createNotificationTemplate,
+        variables: {
+          input: smsTemplate
+        }
+      });
+
+      console.log('✅ Get Estimate SMS template created:', result);
+      
+    } catch (err) {
+      console.error('❌ Failed to create Get Estimate SMS template:', err);
+      throw err;
+    }
+  };
+
   const getStatusBadgeClass = (status: NotificationQueueStatus) => {
     const classes = {
       [NotificationQueueStatus.SENT]: 'bg-green-100 text-green-800',
@@ -363,42 +753,6 @@ const NotificationManagement: React.FC = () => {
       [NotificationQueueStatus.RETRYING]: 'bg-orange-100 text-orange-800'
     };
     return classes[status] || 'bg-gray-100 text-gray-800';
-  };
-
-  const parseChannels = (channels: string | string[]) => {
-    try {
-      if (typeof channels !== 'string') {
-        return Array.isArray(channels) ? channels : [];
-      }
-      
-      // Handle double-escaped JSON strings
-      let parsed = JSON.parse(channels);
-      if (typeof parsed === 'string') {
-        parsed = JSON.parse(parsed);
-      }
-      
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const parseRecipients = (recipients: string | string[]) => {
-    try {
-      if (typeof recipients !== 'string') {
-        return Array.isArray(recipients) ? recipients : [];
-      }
-      
-      // Handle double-escaped JSON strings
-      let parsed = JSON.parse(recipients);
-      if (typeof parsed === 'string') {
-        parsed = JSON.parse(parsed);
-      }
-      
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
   };
 
   return (
@@ -426,7 +780,14 @@ const NotificationManagement: React.FC = () => {
             disabled={loading}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
           >
-            Send Test
+            {loading ? 'Sending...' : 'Test Get Estimate'}
+          </button>
+          <button
+            onClick={runDiagnostics}
+            disabled={loading}
+            className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 disabled:opacity-50"
+          >
+            {loading ? 'Checking...' : 'Run Diagnostics'}
           </button>
           <button
             onClick={loadData}
@@ -778,13 +1139,22 @@ const NotificationManagement: React.FC = () => {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <H3>Notification Templates</H3>
-                <button
-                  onClick={createTestTemplate}
-                  disabled={loading}
-                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
-                >
-                  {loading ? 'Creating...' : 'Create Test Template'}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={createGetEstimateTemplate}
+                    disabled={loading}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {loading ? 'Creating...' : 'Create Get Estimate Templates'}
+                  </button>
+                  <button
+                    onClick={createTestTemplate}
+                    disabled={loading}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+                  >
+                    {loading ? 'Creating...' : 'Create Test Template'}
+                  </button>
+                </div>
               </div>
 
               <div className="bg-white border rounded-lg overflow-hidden">
