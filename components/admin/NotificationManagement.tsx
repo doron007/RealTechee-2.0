@@ -189,7 +189,6 @@ const NotificationManagement: React.FC = () => {
     }
 
     // Sorting
-    console.log(`🔄 Sorting by ${sortField} (${sortDirection}) - ${filtered.length} items`);
     filtered.sort((a, b) => {
       let aValue: any = a[sortField as keyof NotificationItem];
       let bValue: any = b[sortField as keyof NotificationItem];
@@ -223,13 +222,9 @@ const NotificationManagement: React.FC = () => {
 
   // Sorting function
   const handleSort = (field: string) => {
-    console.log(`👆 Clicked sort on ${field}, current: ${sortField} ${sortDirection}`);
     if (sortField === field) {
-      const newDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-      console.log(`🔄 Toggling direction to ${newDirection}`);
-      setSortDirection(newDirection);
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      console.log(`🆕 New field ${field}, setting to asc`);
       setSortField(field);
       setSortDirection('asc');
     }
