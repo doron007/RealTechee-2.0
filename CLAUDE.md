@@ -49,17 +49,18 @@
 - `npx ampx sandbox` - Deploy backend
 
 ### **Testing**  
-- `npm run test:seamless:truly` - ⭐ RECOMMENDED: Seamless QA testing (100% pass rate)
-- `npm run test:e2e` - All E2E tests (legacy approach)
-- `npm run test:e2e:admin` - Admin interface tests
+- **⭐ RECOMMENDED: Manual QA Testing** - E2E tests currently unreliable
 - **Test Credentials**: `info@realtechee.com` / `Sababa123!`
+- `npm run test:e2e` - E2E tests (currently unreliable)
+- `npm run test:e2e:admin` - Admin interface tests (currently unreliable)
 
 ### **Data Protection**
 - `./scripts/backup-data.sh` - **MANDATORY** before schema changes
 - AWS will purge data without warning on schema recreation
 
-### **Production Management**
-- `/deploy-production` - ⭐ Protected deployment (w/ env validation)
+### **Deployment Workflow**
+- `/deploy-staging` - ⭐ FIRST: Staging deployment with versioning (RC creation)
+- `/deploy-production` - SECOND: Production deployment (RC→stable promotion)
 - `npm run validate:prod:deployment` - Pre-deployment validation
 - `npm run test:prod:local` - Local production testing (fast)
 - `npm run audit:prod:aws` - AWS infrastructure audit
@@ -227,9 +228,9 @@ export const modelAPI = createModelAPI('ModelName');
 - **`/store_session`** - Save current session progress to CLAUDE.md, PLANNING.md, and TASKS.md
 
 **Development Shortcuts**:
-- **`/test_seamless`** - Run `npm run test:seamless:truly` for QA-style testing (100% pass rate)
 - **`/build_check`** - Run `npm run build && npm run type-check` for production readiness
 - **`/backup_data`** - Execute `./scripts/backup-data.sh` before schema changes
+- **Note**: Manual QA testing recommended due to unreliable E2E automation
 
 **Usage**: Type the command (e.g., `/new_session`) in Claude Code to execute the predefined workflow.
 
@@ -302,7 +303,10 @@ prod.d3atadjk90y9q5.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
 prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
 ```
 
-**SDLC System**: `/deploy-staging` → RC creation, `/deploy-production` → RC→stable promotion  
+**SDLC Workflow**: 
+1. `/deploy-staging` → Creates Release Candidate (RC) with semantic versioning (e.g., 3.1.5-rc.1)
+2. Manual QA testing on staging environment (E2E automation unreliable)
+3. `/deploy-production` → Promotes RC to stable production release (e.g., 3.1.5)  
 **Test Credentials**: `info@realtechee.com` / `Sababa123!`
 **Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing), Business (data sync)
 
@@ -439,7 +443,10 @@ prod.d3atadjk90y9q5.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
 prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
 ```
 
-**SDLC System**: `/deploy-staging` → RC creation, `/deploy-production` → RC→stable promotion  
+**SDLC Workflow**: 
+1. `/deploy-staging` → Creates Release Candidate (RC) with semantic versioning (e.g., 3.1.5-rc.1)
+2. Manual QA testing on staging environment (E2E automation unreliable)
+3. `/deploy-production` → Promotes RC to stable production release (e.g., 3.1.5)  
 **Test Credentials**: `info@realtechee.com` / `Sababa123!`
 **Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing), Business (data sync)
 

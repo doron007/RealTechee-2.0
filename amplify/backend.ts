@@ -75,6 +75,21 @@ backend.notificationProcessor.resources.lambda.addToRolePolicy(
   })
 );
 
+// Grant AWS SES permissions for email sending
+backend.notificationProcessor.resources.lambda.addToRolePolicy(
+  new PolicyStatement({
+    effect: Effect.ALLOW,
+    actions: [
+      'ses:SendEmail',
+      'ses:SendRawEmail',
+      'ses:GetSendQuota',
+      'ses:GetSendStatistics',
+      'ses:GetIdentityVerificationAttributes'
+    ],
+    resources: ['*'] // SES permissions are typically granted to all resources
+  })
+);
+
 // TODO: Add EventBridge scheduling for notification processor
 // For now, the notification processor can be invoked manually or via API
 // Consider using AWS EventBridge directly in the AWS console or via separate CDK stack

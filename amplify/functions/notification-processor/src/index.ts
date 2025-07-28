@@ -1,7 +1,7 @@
 import { ScheduledEvent, ScheduledHandler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
-import { EmailHandler } from './handlers/emailHandler';
+import { SESEmailHandler } from './handlers/sesEmailHandler';
 import { SMSHandler } from './handlers/smsHandler';
 import { TemplateProcessor } from './services/templateProcessor';
 import { NotificationQueue, NotificationTemplate } from './types';
@@ -12,7 +12,7 @@ const dynamoClient = new DynamoDBClient({ region: process.env.AWS_REGION });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
 
 // Initialize services
-const emailHandler = new EmailHandler();
+const emailHandler = new SESEmailHandler();
 let smsHandler: SMSHandler | null = null;
 const templateProcessor = new TemplateProcessor();
 const secureConfigClient = SecureConfigClient.getInstance();

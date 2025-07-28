@@ -4,6 +4,7 @@ import { H2, H3, P2 } from '../typography';
 import { listNotificationQueues, listNotificationTemplates } from '../../queries';
 import { updateNotificationQueue, createNotificationTemplate, updateNotificationTemplate, createNotificationQueue } from '../../mutations';
 import { NotificationQueueStatus, NotificationTemplateChannel } from '../../API';
+import { DateTimeUtils } from '../../utils/dateTimeUtils';
 
 const client = generateClient();
 
@@ -18,6 +19,7 @@ interface NotificationItem {
   templateId: string;
   payload: string | any;
   createdAt: string;
+  updatedAt: string;
   scheduledAt?: string | null;
   sentAt?: string | null;
   retryCount?: number | null;
@@ -34,6 +36,7 @@ interface TemplateItem {
   contentText?: string | null;
   isActive?: boolean | null;
   createdAt: string;
+  updatedAt: string;
   variables?: string | null;
   __typename?: string;
 }
@@ -206,6 +209,20 @@ const NotificationManagement: React.FC = () => {
                 return '[]';
               };
 
+              // Safely normalize datetime fields
+              const normalizeDateTime = (dateField: any): string => {
+                if (!dateField) return DateTimeUtils.now();
+                if (typeof dateField === 'string') {
+                  try {
+                    return DateTimeUtils.normalizeDateTime(dateField);
+                  } catch (error) {
+                    console.warn(`⚠️ Invalid datetime format "${dateField}", using current time:`, error);
+                    return DateTimeUtils.now();
+                  }
+                }
+                return DateTimeUtils.now();
+              };
+
               return {
                 ...item,
                 status: item.status as NotificationQueueStatus || NotificationQueueStatus.PENDING,
@@ -214,7 +231,10 @@ const NotificationManagement: React.FC = () => {
                 eventType: item.eventType || 'unknown',
                 templateId: item.templateId || '',
                 payload: item.payload || '{}',
-                createdAt: item.createdAt || new Date().toISOString()
+                createdAt: normalizeDateTime(item.createdAt),
+                updatedAt: normalizeDateTime(item.updatedAt),
+                sentAt: item.sentAt ? normalizeDateTime(item.sentAt) : undefined,
+                scheduledAt: item.scheduledAt ? normalizeDateTime(item.scheduledAt) : undefined
               };
             } catch (processingError) {
               console.warn('⚠️ Error processing notification record, using defaults:', item.id, processingError);
@@ -227,7 +247,8 @@ const NotificationManagement: React.FC = () => {
                 channels: '[]',
                 templateId: '',
                 payload: '{}',
-                createdAt: new Date().toISOString()
+                createdAt: DateTimeUtils.now(),
+                updatedAt: DateTimeUtils.now()
               };
             }
           });
@@ -253,7 +274,8 @@ const NotificationManagement: React.FC = () => {
             ...item,
             channel: item.channel || 'EMAIL',
             name: item.name || 'Unnamed Template',
-            createdAt: item.createdAt || new Date().toISOString()
+            createdAt: item.createdAt ? DateTimeUtils.normalizeDateTime(item.createdAt) : DateTimeUtils.now(),
+            updatedAt: item.updatedAt ? DateTimeUtils.normalizeDateTime(item.updatedAt) : DateTimeUtils.now()
           }));
       } catch (templateProcessingError) {
         console.error('❌ Error processing template data:', templateProcessingError);

@@ -1,10 +1,12 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { fetchUserAttributes } from 'aws-amplify/auth';
+import { fetchUserAttributes, signOut } from 'aws-amplify/auth';
 import Head from 'next/head';
 import { H2, P2 } from '../typography';
 import { AuthorizationService } from '../../utils/authorizationHelpers';
+import { TokenManager } from '../../utils/tokenManager';
+import { AuthStateManager } from '../../utils/authStateManager';
 import AdminSidebar from './AdminSidebar';
 import { useAdminSidebar } from '../../hooks/useAdminSidebar';
 
@@ -26,6 +28,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const [userEmail, setUserEmail] = useState('');
   const [userRole, setUserRole] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [tokenError, setTokenError] = useState<boolean>(false);
   const { isCollapsed, isMobile } = useAdminSidebar();
   
   // Debug information for troubleshooting
@@ -39,6 +42,18 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
       };
     }
   }, [isCollapsed, isMobile]);
+
+  // Start token monitoring when component mounts
+  useEffect(() => {
+    if (user && isAuthorized) {
+      console.log('🔄 Starting token monitoring for admin session');
+      const stopMonitoring = TokenManager.startTokenMonitoring();
+      
+      return () => {
+        stopMonitoring();
+      };
+    }
+  }, [user, isAuthorized]);
 
   // Check authorization on mount
   useEffect(() => {
@@ -65,7 +80,29 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
         }
       } catch (err) {
         console.error('Authorization check failed:', err);
-        setError('Failed to verify admin access');
+        
+        // Check if this is a token-related error
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        if (errorMessage.includes('Invalid login token') || 
+            errorMessage.includes('NotAuthorizedException') ||
+            errorMessage.includes('Couldn\'t verify signed token')) {
+          console.log('🔧 Detected token authentication error - checking auth state corruption');
+          
+          // Check if auth state is corrupted
+          const authReport = AuthStateManager.getAuthStateReport();
+          console.log('📊 Auth state report:', authReport);
+          
+          if (authReport.isCorrupted || authReport.possibleIssues.length > 0) {
+            console.log('💥 Corrupted authentication state detected - performing complete reset');
+            await AuthStateManager.performCompleteReset(router.asPath);
+            return; // This will trigger a page reload
+          }
+          
+          setTokenError(true);
+          setError('Authentication token has expired or is invalid. Please reset your session.');
+        } else {
+          setError('Failed to verify admin access');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -96,29 +133,86 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
         
         <div className="min-h-screen bg-gray-50 py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-              <H2 className="text-red-900 mb-2">Access Denied</H2>
-              <P2 className="text-red-700 mb-4">
-                You don't have permission to access the admin panel.
+            <div className={`border rounded-lg p-6 text-center ${tokenError ? 'bg-orange-50 border-orange-200' : 'bg-red-50 border-red-200'}`}>
+              <H2 className={`mb-2 ${tokenError ? 'text-orange-900' : 'text-red-900'}`}>
+                {tokenError ? '🔧 Authentication Issue' : 'Access Denied'}
+              </H2>
+              <P2 className={`mb-4 ${tokenError ? 'text-orange-700' : 'text-red-700'}`}>
+                {tokenError 
+                  ? 'Your authentication token has expired or is invalid.' 
+                  : "You don't have permission to access the admin panel."
+                }
               </P2>
-              <P2 className="text-red-600">
-                If you need admin access, please contact{' '}
-                <a 
-                  href="mailto:info@realtechee.com?subject=Admin Access Request" 
-                  className="font-medium underline hover:no-underline"
-                >
-                  info@realtechee.com
-                </a>{' '}
-                requesting admin privileges.
-              </P2>
-              <div className="mt-4">
-                <button
-                  onClick={() => router.push('/')}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                  Return to Home
-                </button>
-              </div>
+              
+              {tokenError ? (
+                <div className="space-y-4">
+                  <P2 className="text-orange-600">
+                    This usually happens when your session has expired. Here are your options:
+                  </P2>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                    <button
+                      onClick={async () => {
+                        console.log('🔄 User clicked complete authentication reset');
+                        await AuthStateManager.performCompleteReset(router.asPath);
+                      }}
+                      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+                    >
+                      🔄 Complete Authentication Reset
+                    </button>
+                    
+                    <button
+                      onClick={async () => {
+                        try {
+                          await signOut();
+                          router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+                        } catch (error) {
+                          console.error('Sign out error:', error);
+                          // Force navigation even if signOut fails
+                          router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+                        }
+                      }}
+                      className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition-colors"
+                    >
+                      🚪 Sign Out & Login
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        window.open('/tmp/clear-auth-state.html', '_blank', 'width=800,height=600');
+                      }}
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                    >
+                      🔧 Manual State Cleaner
+                    </button>
+                  </div>
+                  
+                  <P2 className="text-orange-600 text-sm">
+                    If problems persist, try the "Clear Authentication State" tool to reset your session completely.
+                  </P2>
+                </div>
+              ) : (
+                <div>
+                  <P2 className="text-red-600">
+                    If you need admin access, please contact{' '}
+                    <a 
+                      href="mailto:info@realtechee.com?subject=Admin Access Request" 
+                      className="font-medium underline hover:no-underline"
+                    >
+                      info@realtechee.com
+                    </a>{' '}
+                    requesting admin privileges.
+                  </P2>
+                  <div className="mt-4">
+                    <button
+                      onClick={() => router.push('/')}
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                      Return to Home
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

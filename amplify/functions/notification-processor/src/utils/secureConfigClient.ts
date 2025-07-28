@@ -1,6 +1,9 @@
 import { SSMClient, GetParametersCommand } from '@aws-sdk/client-ssm';
 
 export interface SecureConfig {
+  ses: {
+    fromEmail: string;
+  };
   sendgrid: {
     apiKey: string;
     fromEmail: string;
@@ -46,6 +49,7 @@ export class SecureConfigClient {
 
     try {
       const parameterNames = [
+        '/realtechee/ses/from_email',
         '/realtechee/sendgrid/api_key',
         '/realtechee/sendgrid/from_email',
         '/realtechee/twilio/account_sid',
@@ -70,6 +74,9 @@ export class SecureConfigClient {
       };
 
       const config: SecureConfig = {
+        ses: {
+          fromEmail: getParam('/realtechee/ses/from_email') || 'info@realtechee.com'
+        },
         sendgrid: {
           apiKey: getParam('/realtechee/sendgrid/api_key'),
           fromEmail: getParam('/realtechee/sendgrid/from_email') || 'notifications@realtechee.com'
@@ -98,6 +105,9 @@ export class SecureConfigClient {
       // Fallback to environment variables for backward compatibility
       console.warn('⚠️  Falling back to environment variables');
       const fallbackConfig: SecureConfig = {
+        ses: {
+          fromEmail: process.env.FROM_EMAIL || 'info@realtechee.com'
+        },
         sendgrid: {
           apiKey: process.env.SENDGRID_API_KEY || '',
           fromEmail: process.env.FROM_EMAIL || 'notifications@realtechee.com'

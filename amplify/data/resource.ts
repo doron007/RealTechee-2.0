@@ -689,8 +689,7 @@ const NotificationTemplate = a.model({
   notifications: a.hasMany('NotificationQueue', 'templateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
-  allow.authenticated(),
-  allow.groups(['admin'])
+  allow.authenticated()
 ]);
 
 const NotificationQueue = a.model({
@@ -706,12 +705,15 @@ const NotificationQueue = a.model({
   sentAt: a.datetime(),
   owner: a.string(),
   
+  // Audit timestamps
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
   // Relationships
   template: a.belongsTo('NotificationTemplate', 'templateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
-  allow.authenticated(),
-  allow.groups(['admin'])
+  allow.authenticated()
 ]);
 
 // App Preferences and Settings
