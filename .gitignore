@@ -66,6 +66,10 @@ next-env.d.ts
 #amplify_outputs*
 amplifyconfiguration*
 
+# deployment backup files - temporary files created during deployment
+amplify_outputs.backup.json
+*.backup.json
+
 # claude code local settings
 .claude/settings.local.json
 
