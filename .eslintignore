@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.amplify/
+amplify/functions/
+dist/
+build/
+coverage/
