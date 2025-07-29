@@ -45,10 +45,10 @@ echo "$USERS" | while IFS=$'\t' read -r username email status enabled; do
     if [ -n "$username" ] && [ -n "$email" ]; then
         echo -e "${BLUE}ℹ️  INFO:${NC} Creating user: ${email}"
         
-        # Create user in production pool
+        # Create user in production pool (use email as username)
         aws cognito-idp admin-create-user \
             --user-pool-id ${PRODUCTION_POOL} \
-            --username "${username}" \
+            --username "${email}" \
             --user-attributes Name=email,Value="${email}" Name=email_verified,Value=true \
             --message-action SUPPRESS \
             --temporary-password "TempPass123!" || {
@@ -59,7 +59,7 @@ echo "$USERS" | while IFS=$'\t' read -r username email status enabled; do
         # Set permanent password (users will still need to change it)
         aws cognito-idp admin-set-user-password \
             --user-pool-id ${PRODUCTION_POOL} \
-            --username "${username}" \
+            --username "${email}" \
             --password "TempPass123!" \
             --permanent || {
             echo -e "${YELLOW}⚠️  WARNING:${NC} Could not set permanent password for ${email}"
