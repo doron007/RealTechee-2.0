@@ -50,6 +50,32 @@ export const getAffiliates = /* GraphQL */ `query GetAffiliates($id: ID!) {
   APITypes.GetAffiliatesQueryVariables,
   APITypes.GetAffiliatesQuery
 >;
+export const getAppPreferences = /* GraphQL */ `query GetAppPreferences($id: ID!) {
+  getAppPreferences(id: $id) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetAppPreferencesQueryVariables,
+  APITypes.GetAppPreferencesQuery
+>;
 export const getAuditLog = /* GraphQL */ `query GetAuditLog($id: ID!) {
   getAuditLog(id: $id) {
     action
@@ -292,7 +318,9 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -316,10 +344,12 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -392,6 +422,33 @@ export const getMemberSignature = /* GraphQL */ `query GetMemberSignature($id: I
 ` as GeneratedQuery<
   APITypes.GetMemberSignatureQueryVariables,
   APITypes.GetMemberSignatureQuery
+>;
+export const getNotificationEvents = /* GraphQL */ `query GetNotificationEvents($id: ID!) {
+  getNotificationEvents(id: $id) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetNotificationEventsQueryVariables,
+  APITypes.GetNotificationEventsQuery
 >;
 export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($id: ID!) {
   getNotificationQueue(id: $id) {
@@ -886,7 +943,9 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -894,10 +953,12 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -945,7 +1006,9 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -953,16 +1016,20 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -970,17 +1037,21 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -988,10 +1059,12 @@ export const getProjects = /* GraphQL */ `query GetProjects($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1231,7 +1304,9 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1239,10 +1314,12 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1270,7 +1347,9 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1278,10 +1357,12 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1474,6 +1555,27 @@ export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
   APITypes.GetRequestsQueryVariables,
   APITypes.GetRequestsQuery
 >;
+export const getSecureConfig = /* GraphQL */ `query GetSecureConfig($id: ID!) {
+  getSecureConfig(id: $id) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetSecureConfigQueryVariables,
+  APITypes.GetSecureConfigQuery
+>;
 export const listAffiliates = /* GraphQL */ `query ListAffiliates(
   $filter: ModelAffiliatesFilterInput
   $limit: Int
@@ -1523,6 +1625,48 @@ export const listAffiliates = /* GraphQL */ `query ListAffiliates(
 ` as GeneratedQuery<
   APITypes.ListAffiliatesQueryVariables,
   APITypes.ListAffiliatesQuery
+>;
+export const listAppPreferences = /* GraphQL */ `query ListAppPreferences(
+  $filter: ModelAppPreferencesFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listAppPreferences(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      category
+      categoryKey
+      createdAt
+      createdBy
+      dataType
+      defaultValue
+      description
+      environment
+      id
+      isEncrypted
+      isSystemSetting
+      key
+      owner
+      updatedAt
+      updatedBy
+      validationRules
+      value
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListAppPreferencesQueryVariables,
+  APITypes.ListAppPreferencesQuery
 >;
 export const listAuditLogs = /* GraphQL */ `query ListAuditLogs(
   $filter: ModelAuditLogFilterInput
@@ -1876,7 +2020,9 @@ export const listContacts = /* GraphQL */ `query ListContacts(
 ) {
   listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1884,10 +2030,12 @@ export const listContacts = /* GraphQL */ `query ListContacts(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2021,6 +2169,45 @@ export const listMemberSignatures = /* GraphQL */ `query ListMemberSignatures(
 ` as GeneratedQuery<
   APITypes.ListMemberSignaturesQueryVariables,
   APITypes.ListMemberSignaturesQuery
+>;
+export const listNotificationEvents = /* GraphQL */ `query ListNotificationEvents(
+  $filter: ModelNotificationEventsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotificationEvents(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      channel
+      createdAt
+      errorCode
+      errorMessage
+      eventId
+      eventType
+      id
+      metadata
+      notificationId
+      owner
+      processingTimeMs
+      provider
+      providerId
+      providerStatus
+      recipient
+      timestamp
+      ttl
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListNotificationEventsQueryVariables,
+  APITypes.ListNotificationEventsQuery
 >;
 export const listNotificationQueues = /* GraphQL */ `query ListNotificationQueues(
   $filter: ModelNotificationQueueFilterInput
@@ -2577,4 +2764,41 @@ export const listRequests = /* GraphQL */ `query ListRequests(
 ` as GeneratedQuery<
   APITypes.ListRequestsQueryVariables,
   APITypes.ListRequestsQuery
+>;
+export const listSecureConfigs = /* GraphQL */ `query ListSecureConfigs(
+  $filter: ModelSecureConfigFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listSecureConfigs(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      createdAt
+      createdBy
+      description
+      environment
+      id
+      isActive
+      key
+      owner
+      parameterPath
+      service
+      updatedAt
+      updatedBy
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListSecureConfigsQueryVariables,
+  APITypes.ListSecureConfigsQuery
 >;

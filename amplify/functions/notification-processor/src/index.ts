@@ -1,7 +1,7 @@
 import { ScheduledEvent, ScheduledHandler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, ScanCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
-import { EmailHandler } from './handlers/emailHandler';
+import { SESEmailHandler } from './handlers/sesEmailHandler';
 import { SMSHandler } from './handlers/smsHandler';
 import { TemplateProcessor } from './services/templateProcessor';
 import { NotificationQueue, NotificationTemplate } from './types';
@@ -12,7 +12,7 @@ const dynamoClient = new DynamoDBClient({ region: process.env.AWS_REGION });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
 
 // Initialize services
-const emailHandler = new EmailHandler();
+const emailHandler = new SESEmailHandler();
 let smsHandler: SMSHandler | null = null;
 const templateProcessor = new TemplateProcessor();
 const secureConfigClient = SecureConfigClient.getInstance();
@@ -102,7 +102,10 @@ async function processNotification(notification: NotificationQueue): Promise<voi
     }
 
     // Parse payload from DynamoDB if it's a string
-    const payload = typeof notification.payload === 'string' ? JSON.parse(notification.payload) : notification.payload;
+    let payload = typeof notification.payload === 'string' ? JSON.parse(notification.payload) : notification.payload;
+
+    // Enhance payload with admin URLs for request navigation
+    payload = enhancePayloadWithAdminUrls(payload, notification);
 
     // Process the template with data
     const { subject, htmlContent, textContent } = await templateProcessor.processTemplate(
@@ -229,8 +232,6 @@ async function getTemplate(templateId: string, channel?: string): Promise<Notifi
 }
 
 async function resolveRecipients(recipientIds: string[], channels: string[]): Promise<any[]> {
-  // TODO: Implement contact resolution from Contact table
-  // For now, return mock data for testing
   if (!globalConfig) {
     globalConfig = await secureConfigClient.getConfig();
   }
@@ -245,9 +246,63 @@ async function resolveRecipients(recipientIds: string[], channels: string[]): Pr
       telegramId: 'debug_telegram_id'
     }];
   }
+  
+  // Production recipient resolution
+  const recipients = [];
+  
+  for (const recipientId of recipientIds) {
+    if (recipientId === 'admin-team' || recipientId === 'ae') {
+      // For production, assign to the single AE: info@realtechee.com
+      recipients.push({
+        id: 'ae-primary',
+        email: 'info@realtechee.com',
+        phone: '+17135919400', // Primary business phone
+        name: 'RealTechee AE Team',
+        role: 'Account Executive'
+      });
+    }
+    // TODO: In future, query Contacts table with roleType='AE' for dynamic assignment
+    // when role management system is implemented
+  }
+  
+  if (recipients.length === 0) {
+    // Fallback to primary AE if no specific recipients found
+    console.warn('⚠️ No recipients resolved, using fallback AE');
+    recipients.push({
+      id: 'ae-fallback',
+      email: 'info@realtechee.com',
+      phone: '+17135919400',
+      name: 'RealTechee AE Team',
+      role: 'Account Executive'
+    });
+  }
+  
+  return recipients;
+}
 
-  // This would normally query the Contacts table
-  return [];
+function enhancePayloadWithAdminUrls(payload: any, notification: NotificationQueue): any {
+  // Create enhanced payload with admin URLs
+  const enhanced = { ...payload };
+  
+  // Extract request ID from payload if available
+  const requestId = payload.submission?.id || notification.id;
+  
+  // Determine base URL based on environment
+  // In production, this should be the actual domain
+  const baseUrl = process.env.ADMIN_BASE_URL || 'https://d200k2wsaf8th3.amplifyapp.com';
+  
+  // Create admin URLs
+  enhanced.admin = enhanced.admin || {};
+  enhanced.admin.requestUrl = `${baseUrl}/admin/requests/${requestId}`;
+  enhanced.admin.dashboardUrl = `${baseUrl}/admin/requests`;
+  
+  console.log(`🔗 Enhanced payload with admin URLs:`, {
+    requestId,
+    requestUrl: enhanced.admin.requestUrl,
+    dashboardUrl: enhanced.admin.dashboardUrl
+  });
+  
+  return enhanced;
 }
 
 async function sendEmailNotification(params: {

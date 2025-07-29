@@ -52,6 +52,34 @@ export const onCreateAffiliates = /* GraphQL */ `subscription OnCreateAffiliates
   APITypes.OnCreateAffiliatesSubscriptionVariables,
   APITypes.OnCreateAffiliatesSubscription
 >;
+export const onCreateAppPreferences = /* GraphQL */ `subscription OnCreateAppPreferences(
+  $filter: ModelSubscriptionAppPreferencesFilterInput
+) {
+  onCreateAppPreferences(filter: $filter) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateAppPreferencesSubscriptionVariables,
+  APITypes.OnCreateAppPreferencesSubscription
+>;
 export const onCreateAuditLog = /* GraphQL */ `subscription OnCreateAuditLog($filter: ModelSubscriptionAuditLogFilterInput) {
   onCreateAuditLog(filter: $filter) {
     action
@@ -317,7 +345,9 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -341,10 +371,12 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -424,6 +456,35 @@ export const onCreateMemberSignature = /* GraphQL */ `subscription OnCreateMembe
 ` as GeneratedSubscription<
   APITypes.OnCreateMemberSignatureSubscriptionVariables,
   APITypes.OnCreateMemberSignatureSubscription
+>;
+export const onCreateNotificationEvents = /* GraphQL */ `subscription OnCreateNotificationEvents(
+  $filter: ModelSubscriptionNotificationEventsFilterInput
+) {
+  onCreateNotificationEvents(filter: $filter) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateNotificationEventsSubscriptionVariables,
+  APITypes.OnCreateNotificationEventsSubscription
 >;
 export const onCreateNotificationQueue = /* GraphQL */ `subscription OnCreateNotificationQueue(
   $filter: ModelSubscriptionNotificationQueueFilterInput
@@ -933,7 +994,9 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -941,10 +1004,12 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -992,7 +1057,9 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1000,16 +1067,20 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1017,17 +1088,21 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1035,10 +1110,12 @@ export const onCreateProjects = /* GraphQL */ `subscription OnCreateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1282,7 +1359,9 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1290,10 +1369,12 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1321,7 +1402,9 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1329,10 +1412,12 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1528,6 +1613,29 @@ export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($fi
   APITypes.OnCreateRequestsSubscriptionVariables,
   APITypes.OnCreateRequestsSubscription
 >;
+export const onCreateSecureConfig = /* GraphQL */ `subscription OnCreateSecureConfig(
+  $filter: ModelSubscriptionSecureConfigFilterInput
+) {
+  onCreateSecureConfig(filter: $filter) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateSecureConfigSubscriptionVariables,
+  APITypes.OnCreateSecureConfigSubscription
+>;
 export const onDeleteAffiliates = /* GraphQL */ `subscription OnDeleteAffiliates(
   $filter: ModelSubscriptionAffiliatesFilterInput
 ) {
@@ -1571,6 +1679,34 @@ export const onDeleteAffiliates = /* GraphQL */ `subscription OnDeleteAffiliates
 ` as GeneratedSubscription<
   APITypes.OnDeleteAffiliatesSubscriptionVariables,
   APITypes.OnDeleteAffiliatesSubscription
+>;
+export const onDeleteAppPreferences = /* GraphQL */ `subscription OnDeleteAppPreferences(
+  $filter: ModelSubscriptionAppPreferencesFilterInput
+) {
+  onDeleteAppPreferences(filter: $filter) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteAppPreferencesSubscriptionVariables,
+  APITypes.OnDeleteAppPreferencesSubscription
 >;
 export const onDeleteAuditLog = /* GraphQL */ `subscription OnDeleteAuditLog($filter: ModelSubscriptionAuditLogFilterInput) {
   onDeleteAuditLog(filter: $filter) {
@@ -1837,7 +1973,9 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -1861,10 +1999,12 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -1944,6 +2084,35 @@ export const onDeleteMemberSignature = /* GraphQL */ `subscription OnDeleteMembe
 ` as GeneratedSubscription<
   APITypes.OnDeleteMemberSignatureSubscriptionVariables,
   APITypes.OnDeleteMemberSignatureSubscription
+>;
+export const onDeleteNotificationEvents = /* GraphQL */ `subscription OnDeleteNotificationEvents(
+  $filter: ModelSubscriptionNotificationEventsFilterInput
+) {
+  onDeleteNotificationEvents(filter: $filter) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteNotificationEventsSubscriptionVariables,
+  APITypes.OnDeleteNotificationEventsSubscription
 >;
 export const onDeleteNotificationQueue = /* GraphQL */ `subscription OnDeleteNotificationQueue(
   $filter: ModelSubscriptionNotificationQueueFilterInput
@@ -2453,7 +2622,9 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2461,10 +2632,12 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2512,7 +2685,9 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2520,16 +2695,20 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2537,17 +2716,21 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2555,10 +2738,12 @@ export const onDeleteProjects = /* GraphQL */ `subscription OnDeleteProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2802,7 +2987,9 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2810,10 +2997,12 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2841,7 +3030,9 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2849,10 +3040,12 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -3048,6 +3241,29 @@ export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($fi
   APITypes.OnDeleteRequestsSubscriptionVariables,
   APITypes.OnDeleteRequestsSubscription
 >;
+export const onDeleteSecureConfig = /* GraphQL */ `subscription OnDeleteSecureConfig(
+  $filter: ModelSubscriptionSecureConfigFilterInput
+) {
+  onDeleteSecureConfig(filter: $filter) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteSecureConfigSubscriptionVariables,
+  APITypes.OnDeleteSecureConfigSubscription
+>;
 export const onUpdateAffiliates = /* GraphQL */ `subscription OnUpdateAffiliates(
   $filter: ModelSubscriptionAffiliatesFilterInput
 ) {
@@ -3091,6 +3307,34 @@ export const onUpdateAffiliates = /* GraphQL */ `subscription OnUpdateAffiliates
 ` as GeneratedSubscription<
   APITypes.OnUpdateAffiliatesSubscriptionVariables,
   APITypes.OnUpdateAffiliatesSubscription
+>;
+export const onUpdateAppPreferences = /* GraphQL */ `subscription OnUpdateAppPreferences(
+  $filter: ModelSubscriptionAppPreferencesFilterInput
+) {
+  onUpdateAppPreferences(filter: $filter) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateAppPreferencesSubscriptionVariables,
+  APITypes.OnUpdateAppPreferencesSubscription
 >;
 export const onUpdateAuditLog = /* GraphQL */ `subscription OnUpdateAuditLog($filter: ModelSubscriptionAuditLogFilterInput) {
   onUpdateAuditLog(filter: $filter) {
@@ -3357,7 +3601,9 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -3381,10 +3627,12 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -3464,6 +3712,35 @@ export const onUpdateMemberSignature = /* GraphQL */ `subscription OnUpdateMembe
 ` as GeneratedSubscription<
   APITypes.OnUpdateMemberSignatureSubscriptionVariables,
   APITypes.OnUpdateMemberSignatureSubscription
+>;
+export const onUpdateNotificationEvents = /* GraphQL */ `subscription OnUpdateNotificationEvents(
+  $filter: ModelSubscriptionNotificationEventsFilterInput
+) {
+  onUpdateNotificationEvents(filter: $filter) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateNotificationEventsSubscriptionVariables,
+  APITypes.OnUpdateNotificationEventsSubscription
 >;
 export const onUpdateNotificationQueue = /* GraphQL */ `subscription OnUpdateNotificationQueue(
   $filter: ModelSubscriptionNotificationQueueFilterInput
@@ -3973,7 +4250,9 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -3981,10 +4260,12 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4032,7 +4313,9 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4040,16 +4323,20 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4057,17 +4344,21 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4075,10 +4366,12 @@ export const onUpdateProjects = /* GraphQL */ `subscription OnUpdateProjects($fi
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4322,7 +4615,9 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4330,10 +4625,12 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4361,7 +4658,9 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4369,10 +4668,12 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4567,4 +4868,27 @@ export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($fi
 ` as GeneratedSubscription<
   APITypes.OnUpdateRequestsSubscriptionVariables,
   APITypes.OnUpdateRequestsSubscription
+>;
+export const onUpdateSecureConfig = /* GraphQL */ `subscription OnUpdateSecureConfig(
+  $filter: ModelSubscriptionSecureConfigFilterInput
+) {
+  onUpdateSecureConfig(filter: $filter) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateSecureConfigSubscriptionVariables,
+  APITypes.OnUpdateSecureConfigSubscription
 >;

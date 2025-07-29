@@ -171,6 +171,12 @@ const Contacts = a.model({
   emailNotifications: a.boolean().default(true), // Email notifications enabled
   smsNotifications: a.boolean().default(false),  // SMS notifications enabled
   
+  // Role Management System
+  roleType: a.string(), // 'AE', 'PM', 'Admin', 'Customer', etc.
+  isActive: a.boolean().default(true), // Whether contact is active for assignments
+  assignmentPriority: a.integer().default(1), // Priority for automatic assignment (1=highest)
+  canReceiveNotifications: a.boolean().default(true), // Master notification toggle
+  
   // Reverse relationships - see all projects for this contact
   agentProjects: a.hasMany('Projects', 'agentContactId'),
   homeownerProjects: a.hasMany('Projects', 'homeownerContactId'),
@@ -689,8 +695,7 @@ const NotificationTemplate = a.model({
   notifications: a.hasMany('NotificationQueue', 'templateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
-  allow.authenticated(),
-  allow.groups(['admin'])
+  allow.authenticated()
 ]);
 
 const NotificationQueue = a.model({
@@ -706,12 +711,15 @@ const NotificationQueue = a.model({
   sentAt: a.datetime(),
   owner: a.string(),
   
+  // Audit timestamps
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
   // Relationships
   template: a.belongsTo('NotificationTemplate', 'templateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
-  allow.authenticated(),
-  allow.groups(['admin'])
+  allow.authenticated()
 ]);
 
 // App Preferences and Settings

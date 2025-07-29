@@ -3,6 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 import { listContacts, getContacts } from '../queries';
 import { createContacts, updateContacts } from '../mutations';
 import { RoleAssignmentService, type ContactInfo } from './roleAssignmentService';
+import { TokenManager } from './tokenManager';
 
 export type UserRole = 'super_admin' | 'admin' | 'accounting' | 'srm' | 'agent' | 'homeowner' | 'provider' | 'guest';
 
@@ -69,7 +70,9 @@ export class UserService {
    */
   static async getUserProfile(): Promise<UserProfile | null> {
     try {
-      const attributes = await fetchUserAttributes();
+      const attributes = await TokenManager.withValidTokens(async () => {
+        return await fetchUserAttributes();
+      });
       
       return {
         email: attributes.email || '',
