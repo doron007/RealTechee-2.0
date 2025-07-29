@@ -67,6 +67,30 @@ trap rollback ERR
 
 echo -e "${BLUE}==>${NC} 🔍 Pre-deployment safety checks"
 
+# Validate staging deployment exists and is recent
+echo -e "${BLUE}ℹ️  INFO:${NC} Validating staging deployment..."
+if ! git show-ref --verify --quiet refs/remotes/origin/prod; then
+    echo -e "${RED}❌ ERROR:${NC} Staging branch not found on remote"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Please deploy to staging first: ./scripts/deploy-staging.sh"
+    exit 1
+fi
+
+# Check for recent staging activity (within last 24 hours)
+last_staging_commit=$(git log -1 --format=%ct origin/prod 2>/dev/null || echo "0")
+current_time=$(date +%s)
+time_diff=$((current_time - last_staging_commit))
+hours_since_staging=$((time_diff / 3600))
+
+if [[ $hours_since_staging -gt 24 ]]; then
+    echo -e "${YELLOW}⚠️  WARNING:${NC} Staging deployment is ${hours_since_staging} hours old"
+    if ! confirm "Deploy potentially stale staging version to production?"; then
+        echo -e "${BLUE}ℹ️  INFO:${NC} Consider running fresh staging deployment first"
+        exit 0
+    fi
+fi
+
+echo -e "${GREEN}✅ SUCCESS:${NC} Staging validation passed"
+
 # Check git status
 if ! git diff-index --quiet HEAD --; then
     echo -e "${RED}❌ ERROR:${NC} Working directory not clean. Please commit or stash changes."
@@ -167,24 +191,42 @@ fi
 # Git operations
 echo -e "${BLUE}==>${NC} 🔀 Git branch operations"
 
-# Ensure we're on main for the merge
-if [[ "$current_branch" != "main" ]]; then
-    echo -e "${BLUE}ℹ️  INFO:${NC} Switching to main branch for production deployment"
-    git checkout main
+# Validate staging branch exists and is up to date
+if ! git show-ref --verify --quiet refs/heads/prod; then
+    echo -e "${RED}❌ ERROR:${NC} Staging branch 'prod' not found"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Please run './scripts/deploy-staging.sh' first"
+    exit 1
 fi
+
+# Fetch latest changes to ensure we have up-to-date branches
+echo -e "${BLUE}ℹ️  INFO:${NC} Fetching latest changes from remote..."
+git fetch origin
+
+# Check if staging is ahead of production (has new changes to deploy)
+if git merge-base --is-ancestor origin/prod origin/prod-v2 2>/dev/null; then
+    echo -e "${YELLOW}⚠️  WARNING:${NC} No new changes in staging since last production deployment"
+    if ! confirm "Continue deployment anyway?"; then
+        echo -e "${BLUE}ℹ️  INFO:${NC} Production deployment cancelled"
+        exit 0
+    fi
+fi
+
+# Switch to staging branch for deployment
+echo -e "${BLUE}ℹ️  INFO:${NC} Switching to staging branch (prod) for production deployment"
+git checkout prod
 
 # Check if prod-v2 branch exists
 if ! git show-ref --verify --quiet refs/heads/prod-v2; then
-    echo -e "${BLUE}ℹ️  INFO:${NC} Creating prod-v2 branch from main"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Creating prod-v2 branch from staging (prod)"
     git checkout -b prod-v2
 else
     echo -e "${BLUE}ℹ️  INFO:${NC} Switching to prod-v2 branch"
     git checkout prod-v2
     
-    echo -e "${BLUE}ℹ️  INFO:${NC} Merging main into prod-v2"
-    if ! git merge main --ff-only; then
+    echo -e "${BLUE}ℹ️  INFO:${NC} Merging staging (prod) into production (prod-v2)"
+    if ! git merge prod --ff-only; then
         echo -e "${YELLOW}⚠️  WARNING:${NC} Fast-forward merge not possible, using regular merge"
-        git merge main -m "Production deployment: merge main to prod-v2"
+        git merge prod -m "Production deployment: merge staging (prod) to production (prod-v2)"
     fi
 fi
 
@@ -208,9 +250,35 @@ fi
 
 # Push to production
 echo -e "${BLUE}==>${NC} 🚀 Pushing to production"
-git push origin prod-v2
+if ! git push origin prod-v2; then
+    echo -e "${RED}❌ ERROR:${NC} Failed to push to production branch"
+    echo -e "${BLUE}ℹ️  INFO:${NC} This could be due to:"
+    echo "  • Network connectivity issues"
+    echo "  • Branch protection rules"
+    echo "  • Authentication problems"
+    rollback
+    exit 1
+fi
 
 echo -e "${GREEN}✅ SUCCESS:${NC} Production deployment initiated"
+
+# Monitor deployment status
+echo -e "${BLUE}==>${NC} 📊 Deployment monitoring"
+echo -e "${BLUE}ℹ️  INFO:${NC} Production deployment has been triggered"
+echo -e "${YELLOW}⚠️  IMPORTANT:${NC} Monitor the deployment status at:"
+echo "  • Amplify Console: https://console.aws.amazon.com/amplify/d200k2wsaf8th3"
+echo "  • Production URL: https://d200k2wsaf8th3.amplifyapp.com"
+echo ""
+echo -e "${BLUE}ℹ️  INFO:${NC} If deployment fails, common issues:"
+echo "  • Environment variables not configured in Amplify"
+echo "  • Build process timeout (check amplify.yml)"
+echo "  • Dependency conflicts (check package.json)"
+echo "  • TypeScript compilation errors"
+echo ""
+echo -e "${BLUE}ℹ️  INFO:${NC} For Amplify sandbox regeneration (if needed):"
+echo "  • Run: npx ampx sandbox --profile production"
+echo "  • This will NOT recreate resources or cause data loss"
+echo "  • Only regenerates environment configuration"
 
 # Switch back to development environment
 echo -e "${BLUE}==>${NC} 🔄 Restoring development environment"
