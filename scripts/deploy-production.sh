@@ -160,33 +160,10 @@ if [[ ! -f "$PROJECT_ROOT/amplify_outputs.prod.json" ]]; then
     exit 1
 fi
 
-# Switch to production environment
-if [[ -f "$PROJECT_ROOT/scripts/switch-environment.sh" ]]; then
-    "$PROJECT_ROOT/scripts/switch-environment.sh" prod
-    echo -e "${GREEN}✅ SUCCESS:${NC} Switched to production environment"
-else
-    # Fallback: manual copy
-    cp "$PROJECT_ROOT/amplify_outputs.prod.json" "$PROJECT_ROOT/amplify_outputs.json"
-    echo -e "${GREEN}✅ SUCCESS:${NC} Production configuration activated"
-fi
-
-# Data migration (placeholder - will be enhanced based on schema analysis)
-echo -e "${BLUE}==>${NC} 📊 Business data migration"
-echo -e "${BLUE}ℹ️  INFO:${NC} Migrating business configuration data..."
-
-# This is where we would run data migration scripts
-# For now, we'll create a placeholder
-echo -e "${YELLOW}⚠️  WARNING:${NC} Data migration not yet implemented"
-echo -e "${BLUE}ℹ️  INFO:${NC} Future implementation will migrate:"
-echo "  • BackOfficeRequestStatuses"
-echo "  • Staff and role configurations"
-echo "  • Business reference data"
-
-if ! confirm "Continue without data migration?" "y"; then
-    echo -e "${BLUE}ℹ️  INFO:${NC} Deployment cancelled - data migration required"
-    rollback
-    exit 1
-fi
+# Skip environment switching and data migration for production deployment
+# Production environment will be handled by Amplify automatically
+echo -e "${BLUE}ℹ️  INFO:${NC} Production environment will be configured automatically by Amplify"
+echo -e "${BLUE}ℹ️  INFO:${NC} No data migration needed - production data will be preserved"
 
 # Git operations
 echo -e "${BLUE}==>${NC} 🔀 Git branch operations"
@@ -280,18 +257,19 @@ echo "  • Run: npx ampx sandbox --profile production"
 echo "  • This will NOT recreate resources or cause data loss"
 echo "  • Only regenerates environment configuration"
 
-# Switch back to development environment
-echo -e "${BLUE}==>${NC} 🔄 Restoring development environment"
-if [[ -f "$PROJECT_ROOT/scripts/switch-environment.sh" ]]; then
-    "$PROJECT_ROOT/scripts/switch-environment.sh" dev
-else
-    cp "$PROJECT_ROOT/amplify_outputs.dev.json" "$PROJECT_ROOT/amplify_outputs.json"
-fi
-
-# Switch back to original branch
+# Switch back to original branch (main)
+echo -e "${BLUE}==>${NC} 🔄 Restoring original branch"
 if [[ "$current_branch" != "prod-v2" ]]; then
     echo -e "${BLUE}ℹ️  INFO:${NC} Switching back to $current_branch"
     git checkout "$current_branch"
+fi
+
+# Restore development environment only if we switched it
+if [[ -f "$PROJECT_ROOT/amplify_outputs.backup.json" ]]; then
+    echo -e "${BLUE}ℹ️  INFO:${NC} Restoring development environment configuration"
+    cp "$PROJECT_ROOT/amplify_outputs.backup.json" "$PROJECT_ROOT/amplify_outputs.json"
+    rm "$PROJECT_ROOT/amplify_outputs.backup.json"
+    echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
 fi
 
 echo ""
