@@ -64,7 +64,7 @@
   "data": {
     "url": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
     "aws_region": "us-west-1",
-    "api_key": "da2-fakekey1234567890123456",
+    "api_key": "da2-PRODUCTION_API_KEY",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
       "API_KEY",
