@@ -4,10 +4,10 @@
   "_app_id": "d200k2wsaf8th3",
   "_sandbox": "amplify-realtecheeclone-production-sandbox-70796fa803",
   "auth": {
-    "user_pool_id": "us-west-1_PROD_POOL_ID",
+    "user_pool_id": "us-west-1_1eQCIgm5h",
     "aws_region": "us-west-1",
-    "user_pool_client_id": "PROD_CLIENT_ID",
-    "identity_pool_id": "us-west-1:PROD_IDENTITY_POOL_ID",
+    "user_pool_client_id": "5qcjd3l5i733b2tn99qf2g6675",
+    "identity_pool_id": "us-west-1:11d5c002-cbe3-4414-bd8f-4f046d2ab457",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -64,7 +64,7 @@
   "data": {
     "url": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
     "aws_region": "us-west-1",
-    "api_key": "da2-PRODUCTION_API_KEY",
+    "api_key": "da2-fakekey1234567890123456",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
       "API_KEY",
