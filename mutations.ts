@@ -53,6 +53,35 @@ export const createAffiliates = /* GraphQL */ `mutation CreateAffiliates(
   APITypes.CreateAffiliatesMutationVariables,
   APITypes.CreateAffiliatesMutation
 >;
+export const createAppPreferences = /* GraphQL */ `mutation CreateAppPreferences(
+  $condition: ModelAppPreferencesConditionInput
+  $input: CreateAppPreferencesInput!
+) {
+  createAppPreferences(condition: $condition, input: $input) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateAppPreferencesMutationVariables,
+  APITypes.CreateAppPreferencesMutation
+>;
 export const createAuditLog = /* GraphQL */ `mutation CreateAuditLog(
   $condition: ModelAuditLogConditionInput
   $input: CreateAuditLogInput!
@@ -340,7 +369,9 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -364,10 +395,12 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -452,6 +485,36 @@ export const createMemberSignature = /* GraphQL */ `mutation CreateMemberSignatu
 ` as GeneratedMutation<
   APITypes.CreateMemberSignatureMutationVariables,
   APITypes.CreateMemberSignatureMutation
+>;
+export const createNotificationEvents = /* GraphQL */ `mutation CreateNotificationEvents(
+  $condition: ModelNotificationEventsConditionInput
+  $input: CreateNotificationEventsInput!
+) {
+  createNotificationEvents(condition: $condition, input: $input) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateNotificationEventsMutationVariables,
+  APITypes.CreateNotificationEventsMutation
 >;
 export const createNotificationQueue = /* GraphQL */ `mutation CreateNotificationQueue(
   $condition: ModelNotificationQueueConditionInput
@@ -970,7 +1033,9 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -978,10 +1043,12 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1029,7 +1096,9 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1037,16 +1106,20 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1054,17 +1127,21 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1072,10 +1149,12 @@ export const createProjects = /* GraphQL */ `mutation CreateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1324,7 +1403,9 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1332,10 +1413,12 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1363,7 +1446,9 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -1371,10 +1456,12 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -1573,6 +1660,30 @@ export const createRequests = /* GraphQL */ `mutation CreateRequests(
   APITypes.CreateRequestsMutationVariables,
   APITypes.CreateRequestsMutation
 >;
+export const createSecureConfig = /* GraphQL */ `mutation CreateSecureConfig(
+  $condition: ModelSecureConfigConditionInput
+  $input: CreateSecureConfigInput!
+) {
+  createSecureConfig(condition: $condition, input: $input) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateSecureConfigMutationVariables,
+  APITypes.CreateSecureConfigMutation
+>;
 export const deleteAffiliates = /* GraphQL */ `mutation DeleteAffiliates(
   $condition: ModelAffiliatesConditionInput
   $input: DeleteAffiliatesInput!
@@ -1617,6 +1728,35 @@ export const deleteAffiliates = /* GraphQL */ `mutation DeleteAffiliates(
 ` as GeneratedMutation<
   APITypes.DeleteAffiliatesMutationVariables,
   APITypes.DeleteAffiliatesMutation
+>;
+export const deleteAppPreferences = /* GraphQL */ `mutation DeleteAppPreferences(
+  $condition: ModelAppPreferencesConditionInput
+  $input: DeleteAppPreferencesInput!
+) {
+  deleteAppPreferences(condition: $condition, input: $input) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteAppPreferencesMutationVariables,
+  APITypes.DeleteAppPreferencesMutation
 >;
 export const deleteAuditLog = /* GraphQL */ `mutation DeleteAuditLog(
   $condition: ModelAuditLogConditionInput
@@ -1905,7 +2045,9 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -1929,10 +2071,12 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -2017,6 +2161,36 @@ export const deleteMemberSignature = /* GraphQL */ `mutation DeleteMemberSignatu
 ` as GeneratedMutation<
   APITypes.DeleteMemberSignatureMutationVariables,
   APITypes.DeleteMemberSignatureMutation
+>;
+export const deleteNotificationEvents = /* GraphQL */ `mutation DeleteNotificationEvents(
+  $condition: ModelNotificationEventsConditionInput
+  $input: DeleteNotificationEventsInput!
+) {
+  deleteNotificationEvents(condition: $condition, input: $input) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteNotificationEventsMutationVariables,
+  APITypes.DeleteNotificationEventsMutation
 >;
 export const deleteNotificationQueue = /* GraphQL */ `mutation DeleteNotificationQueue(
   $condition: ModelNotificationQueueConditionInput
@@ -2535,7 +2709,9 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2543,10 +2719,12 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2594,7 +2772,9 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2602,16 +2782,20 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2619,17 +2803,21 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2637,10 +2825,12 @@ export const deleteProjects = /* GraphQL */ `mutation DeleteProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2889,7 +3079,9 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2897,10 +3089,12 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -2928,7 +3122,9 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -2936,10 +3132,12 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -3138,6 +3336,30 @@ export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
   APITypes.DeleteRequestsMutationVariables,
   APITypes.DeleteRequestsMutation
 >;
+export const deleteSecureConfig = /* GraphQL */ `mutation DeleteSecureConfig(
+  $condition: ModelSecureConfigConditionInput
+  $input: DeleteSecureConfigInput!
+) {
+  deleteSecureConfig(condition: $condition, input: $input) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteSecureConfigMutationVariables,
+  APITypes.DeleteSecureConfigMutation
+>;
 export const updateAffiliates = /* GraphQL */ `mutation UpdateAffiliates(
   $condition: ModelAffiliatesConditionInput
   $input: UpdateAffiliatesInput!
@@ -3182,6 +3404,35 @@ export const updateAffiliates = /* GraphQL */ `mutation UpdateAffiliates(
 ` as GeneratedMutation<
   APITypes.UpdateAffiliatesMutationVariables,
   APITypes.UpdateAffiliatesMutation
+>;
+export const updateAppPreferences = /* GraphQL */ `mutation UpdateAppPreferences(
+  $condition: ModelAppPreferencesConditionInput
+  $input: UpdateAppPreferencesInput!
+) {
+  updateAppPreferences(condition: $condition, input: $input) {
+    category
+    categoryKey
+    createdAt
+    createdBy
+    dataType
+    defaultValue
+    description
+    environment
+    id
+    isEncrypted
+    isSystemSetting
+    key
+    owner
+    updatedAt
+    updatedBy
+    validationRules
+    value
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateAppPreferencesMutationVariables,
+  APITypes.UpdateAppPreferencesMutation
 >;
 export const updateAuditLog = /* GraphQL */ `mutation UpdateAuditLog(
   $condition: ModelAuditLogConditionInput
@@ -3470,7 +3721,9 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
       nextToken
       __typename
     }
+    assignmentPriority
     brokerage
+    canReceiveNotifications
     company
     createdAt
     email
@@ -3494,10 +3747,12 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
       __typename
     }
     id
+    isActive
     lastName
     mobile
     owner
     phone
+    roleType
     smsNotifications
     updatedAt
     __typename
@@ -3582,6 +3837,36 @@ export const updateMemberSignature = /* GraphQL */ `mutation UpdateMemberSignatu
 ` as GeneratedMutation<
   APITypes.UpdateMemberSignatureMutationVariables,
   APITypes.UpdateMemberSignatureMutation
+>;
+export const updateNotificationEvents = /* GraphQL */ `mutation UpdateNotificationEvents(
+  $condition: ModelNotificationEventsConditionInput
+  $input: UpdateNotificationEventsInput!
+) {
+  updateNotificationEvents(condition: $condition, input: $input) {
+    channel
+    createdAt
+    errorCode
+    errorMessage
+    eventId
+    eventType
+    id
+    metadata
+    notificationId
+    owner
+    processingTimeMs
+    provider
+    providerId
+    providerStatus
+    recipient
+    timestamp
+    ttl
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateNotificationEventsMutationVariables,
+  APITypes.UpdateNotificationEventsMutation
 >;
 export const updateNotificationQueue = /* GraphQL */ `mutation UpdateNotificationQueue(
   $condition: ModelNotificationQueueConditionInput
@@ -4100,7 +4385,9 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     }
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4108,10 +4395,12 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4159,7 +4448,9 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
     gallery
     grossProfit
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4167,16 +4458,20 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4184,17 +4479,21 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
     }
     homeowner2ContactId
     homeowner3 {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4202,10 +4501,12 @@ export const updateProjects = /* GraphQL */ `mutation UpdateProjects(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4454,7 +4755,9 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
     accountExecutive
     addressId
     agent {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4462,10 +4765,12 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4493,7 +4798,9 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
     expiredDate
     floors
     homeowner {
+      assignmentPriority
       brokerage
+      canReceiveNotifications
       company
       createdAt
       email
@@ -4501,10 +4808,12 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
       firstName
       fullName
       id
+      isActive
       lastName
       mobile
       owner
       phone
+      roleType
       smsNotifications
       updatedAt
       __typename
@@ -4702,4 +5011,28 @@ export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
 ` as GeneratedMutation<
   APITypes.UpdateRequestsMutationVariables,
   APITypes.UpdateRequestsMutation
+>;
+export const updateSecureConfig = /* GraphQL */ `mutation UpdateSecureConfig(
+  $condition: ModelSecureConfigConditionInput
+  $input: UpdateSecureConfigInput!
+) {
+  updateSecureConfig(condition: $condition, input: $input) {
+    createdAt
+    createdBy
+    description
+    environment
+    id
+    isActive
+    key
+    owner
+    parameterPath
+    service
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateSecureConfigMutationVariables,
+  APITypes.UpdateSecureConfigMutation
 >;
