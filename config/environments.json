@@ -1,0 +1,142 @@
+{
+  "_metadata": {
+    "description": "Centralized environment configuration for RealTechee 2.0",
+    "version": "1.0.0",
+    "last_updated": "2025-01-29",
+    "author": "Claude Code Assistant"
+  },
+  "environments": {
+    "development": {
+      "name": "Development",
+      "description": "Local development environment",
+      "git_branch": "main",
+      "amplify": {
+        "app_id": "d3atadjk90y9q5",
+        "app_name": "RealTechee-2.0",
+        "url": "http://localhost:3000",
+        "backend_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+        "sandbox": "amplify-realtecheeclone-main-sandbox-c5b8c7e0d9"
+      },
+      "cognito": {
+        "user_pool_id": "us-west-1_5pFbWcwtU",
+        "user_pool_client_id": "4pdj4qp05o47a0g42cqlt99ccs",
+        "identity_pool_id": "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
+      },
+      "storage": {
+        "bucket_name": "amplify-realtecheeclone-main-bucket",
+        "region": "us-west-1"
+      },
+      "api": {
+        "graphql_url": "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
+        "api_key": "da2-qe4fczl75zhgjb4rz3dh5r7xky",
+        "region": "us-west-1"
+      },
+      "tables_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+      "when_to_run_ampx": "On initial setup, schema changes, or function updates",
+      "ampx_commands": [
+        "npx ampx sandbox --profile development"
+      ]
+    },
+    "staging": {
+      "name": "Staging",
+      "description": "Staging environment (shares backend with development)",
+      "git_branch": "prod",
+      "amplify": {
+        "app_id": "d3atadjk90y9q5",
+        "app_name": "RealTechee-2.0",
+        "url": "https://prod.d3atadjk90y9q5.amplifyapp.com",
+        "backend_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+        "sandbox": "amplify-realtecheeclone-main-sandbox-c5b8c7e0d9"
+      },
+      "cognito": {
+        "user_pool_id": "us-west-1_5pFbWcwtU",
+        "user_pool_client_id": "4pdj4qp05o47a0g42cqlt99ccs",
+        "identity_pool_id": "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
+      },
+      "storage": {
+        "bucket_name": "amplify-realtecheeclone-main-bucket",
+        "region": "us-west-1"
+      },
+      "api": {
+        "graphql_url": "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
+        "api_key": "da2-qe4fczl75zhgjb4rz3dh5r7xky",
+        "region": "us-west-1"
+      },
+      "tables_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+      "when_to_run_ampx": "Only when backend changes need testing in staging",
+      "ampx_commands": [
+        "npx ampx sandbox --profile development"
+      ]
+    },
+    "production": {
+      "name": "Production",
+      "description": "Production environment (isolated backend)",
+      "git_branch": "prod-v2",
+      "amplify": {
+        "app_id": "d200k2wsaf8th3",
+        "app_name": "RealTechee-Gen2",
+        "url": "https://prod-v2.d200k2wsaf8th3.amplifyapp.com",
+        "backend_suffix": "aqnqdrctpzfwfjwyxxsmu6peoq",
+        "sandbox": "amplify-realtecheeclone-production-sandbox-70796fa803"
+      },
+      "cognito": {
+        "user_pool_id": "us-west-1_1eQCIgm5h",
+        "user_pool_client_id": "5qcjd3l5i733b2tn99qf2g6675",
+        "identity_pool_id": "us-west-1:11d5c002-cbe3-4414-bd8f-4f046d2ab457"
+      },
+      "storage": {
+        "bucket_name": "amplify-realtecheeclone-production-bucket-PROD",
+        "region": "us-west-1"
+      },
+      "api": {
+        "graphql_url": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
+        "api_key": "da2-PRODUCTION_API_KEY",
+        "region": "us-west-1"
+      },
+      "tables_suffix": "aqnqdrctpzfwfjwyxxsmu6peoq",
+      "when_to_run_ampx": "Before production deployment to update GraphQL queries/types",
+      "ampx_commands": [
+        "npx ampx sandbox --profile production --yes"
+      ]
+    }
+  },
+  "shared_services": {
+    "ses": {
+      "description": "Email service (shared across all environments)",
+      "region": "us-west-1",
+      "verified_domains": ["realtechee.com"],
+      "when_to_configure": "Once per AWS account"
+    },
+    "twilio": {
+      "description": "SMS service (shared across all environments)",
+      "account_sid": "SHARED_TWILIO_SID",
+      "auth_token": "SHARED_TWILIO_TOKEN",
+      "phone_number": "SHARED_TWILIO_PHONE",
+      "when_to_configure": "Once per Twilio account"
+    },
+    "parameter_store": {
+      "description": "AWS Systems Manager Parameter Store (environment-specific paths)",
+      "development_path": "/realtechee/dev/",
+      "staging_path": "/realtechee/staging/",
+      "production_path": "/realtechee/prod/"
+    }
+  },
+  "deployment_rules": {
+    "staging": {
+      "description": "Deploy main branch to staging (shares dev backend)",
+      "source_branch": "main",
+      "target_branch": "prod",
+      "environment_config": "development",
+      "run_ampx": false,
+      "notes": "Uses same backend as development for cost efficiency"
+    },
+    "production": {
+      "description": "Deploy staging to production (isolated backend)",
+      "source_branch": "prod",
+      "target_branch": "prod-v2",
+      "environment_config": "production",
+      "run_ampx": true,
+      "notes": "Must run ampx to update GraphQL queries for production backend"
+    }
+  }
+}
