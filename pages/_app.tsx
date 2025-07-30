@@ -31,11 +31,6 @@ type AppPropsWithLayout = AppProps & {
 // Configure Amplify
 Amplify.configure(outputs);
 
-// Set global config for debugging (browser console access)
-if (typeof window !== 'undefined') {
-  (window as any).__AMPLIFY_CONFIG__ = outputs;
-}
-
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Get layout from page or use default Layout
   const getLayout = Component.getLayout || ((page) => 
