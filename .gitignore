@@ -70,6 +70,9 @@ amplifyconfiguration*
 amplify_outputs.backup.json
 *.backup.json
 
+# environment switching backup files
+amplify_outputs.backup.json
+
 # claude code local settings
 .claude/settings.local.json
 
