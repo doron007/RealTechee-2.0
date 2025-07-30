@@ -124,9 +124,10 @@ echo -e "${BLUE}==>${NC} 🔧 Updating auto-generated files for production"
 # Backup current development environment
 cp "$PROJECT_ROOT/amplify_outputs.json" "$PROJECT_ROOT/amplify_outputs.backup.json"
 
-# Switch to production environment temporarily for sandbox generation
-./scripts/switch-environment.sh production >/dev/null 2>&1
-echo -e "${BLUE}ℹ️  INFO:${NC} Switched to production environment for sandbox generation"
+# IMPORTANT: Environment switching disabled to prevent incomplete config deployment
+# Using complete amplify_outputs.json from git instead of generated configs
+echo -e "${BLUE}ℹ️  INFO:${NC} Using complete amplify_outputs.json (centralized config disabled)"
+echo -e "${YELLOW}⚠️  NOTE:${NC} Environment switching disabled until config generator is fixed"
 
 # Run ampx sandbox to update auto-generated files for production
 echo -e "${BLUE}ℹ️  INFO:${NC} Running ampx sandbox to update GraphQL queries and types..."
@@ -193,8 +194,8 @@ echo -e "${BLUE}==>${NC} 🔄 Restoring development environment"
 git checkout "$original_branch"
 echo -e "${GREEN}✅ SUCCESS:${NC} Returned to $original_branch branch"
 
-# Restore development environment
-./scripts/switch-environment.sh development >/dev/null 2>&1 || true
+# NOTE: Environment restoration disabled to prevent overwriting complete config
+echo -e "${BLUE}ℹ️  INFO:${NC} Keeping current amplify_outputs.json (environment switching disabled)"
 rm -f "$PROJECT_ROOT/amplify_outputs.backup.json"
 echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
 

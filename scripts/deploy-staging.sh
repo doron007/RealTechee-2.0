@@ -85,12 +85,12 @@ echo -e "${BLUE}==>${NC} 📦 Creating release candidate version"
 CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo -e "${BLUE}ℹ️  INFO:${NC} Deploying version: $CURRENT_VERSION"
 
-# Ensure staging environment configuration is active
+# IMPORTANT: Environment switching disabled to prevent incomplete config deployment
+# The centralized config system generates incomplete amplify_outputs.json files
+# that break authentication. Using complete configuration from git instead.
 echo -e "${BLUE}==>${NC} 🔧 Environment configuration"
-if ! ./scripts/switch-environment.sh staging >/dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  WARNING:${NC} Could not switch to staging environment config"
-    echo -e "${BLUE}ℹ️  INFO:${NC} Continuing with current configuration"
-fi
+echo -e "${BLUE}ℹ️  INFO:${NC} Using complete amplify_outputs.json from git (centralized config disabled)"
+echo -e "${YELLOW}⚠️  NOTE:${NC} Environment switching disabled until config generator is fixed"
 
 # Check if staging branch exists
 if ! git show-ref --verify --quiet refs/heads/$STAGING_BRANCH; then
@@ -125,9 +125,9 @@ if [[ "$current_branch" != "$STAGING_BRANCH" ]]; then
     git checkout "$current_branch"
 fi
 
-# Restore development environment configuration
-echo -e "${BLUE}ℹ️  INFO:${NC} Restoring development environment configuration"
-./scripts/switch-environment.sh development >/dev/null 2>&1 || true
+# NOTE: Environment restoration disabled to prevent overwriting complete config
+# The complete amplify_outputs.json should remain active for local development
+echo -e "${BLUE}ℹ️  INFO:${NC} Keeping current amplify_outputs.json (environment switching disabled)"
 
 echo ""
 echo -e "${GREEN}🎉 DEPLOYMENT COMPLETE${NC}"
