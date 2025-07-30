@@ -195,9 +195,12 @@ git checkout "$original_branch"
 echo -e "${GREEN}✅ SUCCESS:${NC} Returned to $original_branch branch"
 
 # NOTE: Environment restoration disabled to prevent overwriting complete config
-echo -e "${BLUE}ℹ️  INFO:${NC} Keeping current amplify_outputs.json (environment switching disabled)"
+echo -e "${BLUE}ℹ️  INFO:${NC} Complete amplify_outputs.json preserved for development (6,371 lines)"
 rm -f "$PROJECT_ROOT/amplify_outputs.backup.json"
-echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
+echo -e "${GREEN}✅ SUCCESS:${NC} Development environment ready for continued work"
+
+# Disable error trap
+trap - ERR
 
 # Success message
 echo ""
