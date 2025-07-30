@@ -1,13 +1,13 @@
 {
-  "_note": "Production configuration for RealTechee-Gen2 app",
-  "_backend_suffix": "aqnqdrctpzfwfjwyxxsmu6peoq",
-  "_app_id": "d200k2wsaf8th3",
-  "_sandbox": "amplify-realtecheeclone-production-sandbox-70796fa803",
+  "_note": "Staging environment (shares backend with development) for RealTechee-2.0 app",
+  "_backend_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+  "_app_id": "d3atadjk90y9q5",
+  "_sandbox": "amplify-realtecheeclone-main-sandbox-c5b8c7e0d9",
   "auth": {
-    "user_pool_id": "us-west-1_1eQCIgm5h",
+    "user_pool_id": "us-west-1_5pFbWcwtU",
     "aws_region": "us-west-1",
-    "user_pool_client_id": "5qcjd3l5i733b2tn99qf2g6675",
-    "identity_pool_id": "us-west-1:11d5c002-cbe3-4414-bd8f-4f046d2ab457",
+    "user_pool_client_id": "4pdj4qp05o47a0g42cqlt99ccs",
+    "identity_pool_id": "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -62,9 +62,9 @@
     ]
   },
   "data": {
-    "url": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
+    "url": "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
     "aws_region": "us-west-1",
-    "api_key": "da2-PRODUCTION_API_KEY",
+    "api_key": "da2-qe4fczl75zhgjb4rz3dh5r7xky",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
       "API_KEY",
@@ -162,6 +162,6 @@
   },
   "storage": {
     "aws_region": "us-west-1",
-    "bucket_name": "amplify-realtecheeclone-production-bucket-PROD"
+    "bucket_name": "amplify-realtecheeclone-main-bucket"
   }
 }

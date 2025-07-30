@@ -1,5 +1,5 @@
 {
-  "_note": "Staging environment (shares backend with development) for RealTechee-2.0 app",
+  "_note": "Local development environment for RealTechee-2.0 app",
   "_backend_suffix": "fvn7t5hbobaxjklhrqzdl4ac34",
   "_app_id": "d3atadjk90y9q5",
   "_sandbox": "amplify-realtecheeclone-main-sandbox-c5b8c7e0d9",

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Environment Switching Script for RealTechee 2.0
-# Switches amplify_outputs.json between dev and production configurations
+# Uses centralized configuration to switch between environments
 
 set -e
 
@@ -14,9 +14,10 @@ NC='\033[0m' # No Color
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CONFIG_FILE="$PROJECT_ROOT/config/environments.json"
 
 echo -e "${BLUE}==>${NC} Environment Switching Script - RealTechee 2.0"
-echo -e "${BLUE}ℹ️  INFO:${NC} Project Root: $PROJECT_ROOT"
+echo -e "${BLUE}ℹ️  INFO:${NC} Using centralized configuration: config/environments.json"
 
 # Function to show usage
 show_usage() {
@@ -24,13 +25,19 @@ show_usage() {
     echo "Usage: $0 <environment>"
     echo ""
     echo "Environments:"
-    echo "  dev      Switch to development environment (RealTechee-2.0 app)"
-    echo "  prod     Switch to production environment (RealTechee-Gen2 app)"
-    echo "  status   Show current environment configuration"
+    echo "  development  Switch to development environment"
+    echo "  staging      Switch to staging environment (shares backend with dev)"
+    echo "  production   Switch to production environment (isolated backend)"
+    echo "  status       Show current environment configuration"
+    echo ""
+    echo "Aliases:"
+    echo "  dev          Alias for development"
+    echo "  prod         Alias for production"
     echo ""
     echo "Examples:"
-    echo "  $0 dev"
-    echo "  $0 prod" 
+    echo "  $0 development"
+    echo "  $0 staging"
+    echo "  $0 production"
     echo "  $0 status"
     echo ""
 }
@@ -42,18 +49,13 @@ detect_current_env() {
         return
     fi
     
-    # Check for dev environment indicators
+    # Check for environment indicators using backend suffixes from centralized config
     if grep -q "fvn7t5hbobaxjklhrqzdl4ac34" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
-        echo "dev"
+        echo "development"
     elif grep -q "aqnqdrctpzfwfjwyxxsmu6peoq" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
-        echo "prod"
+        echo "production"
     else
-        # Check GraphQL API URL patterns or other identifiers
-        if grep -q "yq2katnwbbeqjecywrptfgecwa" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
-            echo "dev"
-        else
-            echo "unknown"
-        fi
+        echo "unknown"
     fi
 }
 
@@ -65,10 +67,11 @@ show_status() {
     echo -e "${BLUE}ℹ️  INFO:${NC} Detected Environment: $current_env"
     
     if [[ -f "$PROJECT_ROOT/amplify_outputs.json" ]]; then
-        echo -e "${BLUE}ℹ️  INFO:${NC} Configuration Files:"
+        echo -e "${BLUE}ℹ️  INFO:${NC} Available Configuration Files:"
         echo "  ✓ amplify_outputs.json (active)"
-        [[ -f "$PROJECT_ROOT/amplify_outputs.dev.json" ]] && echo "  ✓ amplify_outputs.dev.json (available)"
-        [[ -f "$PROJECT_ROOT/amplify_outputs.prod.json" ]] && echo "  ✓ amplify_outputs.prod.json (available)"
+        [[ -f "$PROJECT_ROOT/config/amplify_outputs.development.json" ]] && echo "  ✓ config/amplify_outputs.development.json"
+        [[ -f "$PROJECT_ROOT/config/amplify_outputs.staging.json" ]] && echo "  ✓ config/amplify_outputs.staging.json"
+        [[ -f "$PROJECT_ROOT/config/amplify_outputs.production.json" ]] && echo "  ✓ config/amplify_outputs.production.json"
         
         # Show key configuration details
         echo ""
@@ -77,8 +80,24 @@ show_status() {
             echo "  API URL: $(jq -r '.data.url // "not found"' "$PROJECT_ROOT/amplify_outputs.json")"
             echo "  User Pool: $(jq -r '.auth.user_pool_id // "not found"' "$PROJECT_ROOT/amplify_outputs.json")"
             echo "  Region: $(jq -r '.auth.aws_region // "not found"' "$PROJECT_ROOT/amplify_outputs.json")"
+            echo "  Backend Suffix: $(jq -r '._backend_suffix // "not found"' "$PROJECT_ROOT/amplify_outputs.json")"
         else
             echo "  (Install jq for detailed configuration display)"
+        fi
+        
+        # Show environment details from centralized config
+        if [[ "$current_env" != "unknown" && -f "$CONFIG_FILE" ]]; then
+            echo ""
+            echo -e "${BLUE}ℹ️  INFO:${NC} Environment Details:"
+            if command -v jq >/dev/null 2>&1; then
+                ENV_INFO=$(cat "$CONFIG_FILE" | jq -r ".environments.$current_env")
+                if [[ "$ENV_INFO" != "null" ]]; then
+                    echo "  App Name: $(echo "$ENV_INFO" | jq -r '.amplify.app_name')"
+                    echo "  App URL: $(echo "$ENV_INFO" | jq -r '.amplify.url')"
+                    echo "  Git Branch: $(echo "$ENV_INFO" | jq -r '.git_branch')"
+                    echo "  Backend Suffix: $(echo "$ENV_INFO" | jq -r '.amplify.backend_suffix')"
+                fi
+            fi
         fi
     else
         echo -e "${RED}❌ ERROR:${NC} No amplify_outputs.json found"
@@ -88,14 +107,21 @@ show_status() {
 # Function to switch environment
 switch_environment() {
     local target_env="$1"
-    local config_file="$PROJECT_ROOT/amplify_outputs.$target_env.json"
+    local config_file="$PROJECT_ROOT/config/amplify_outputs.$target_env.json"
     
     echo -e "${BLUE}==>${NC} Switching to $target_env environment"
+    
+    # Check if centralized config exists
+    if [[ ! -f "$CONFIG_FILE" ]]; then
+        echo -e "${RED}❌ ERROR:${NC} Centralized configuration not found: $CONFIG_FILE"
+        echo -e "${BLUE}ℹ️  INFO:${NC} Run ./scripts/generate-env-config.sh first"
+        return 1
+    fi
     
     # Check if target config exists
     if [[ ! -f "$config_file" ]]; then
         echo -e "${RED}❌ ERROR:${NC} Configuration file not found: $config_file"
-        echo -e "${YELLOW}⚠️  WARNING:${NC} You may need to create this configuration file first"
+        echo -e "${BLUE}ℹ️  INFO:${NC} Run ./scripts/generate-env-config.sh to create environment configs"
         return 1
     fi
     
@@ -111,30 +137,70 @@ switch_environment() {
     
     # Verify the switch
     new_env=$(detect_current_env)
-    if [[ "$new_env" == "$target_env" ]] || [[ "$target_env" == "dev" && "$new_env" == "dev" ]]; then
+    if [[ "$new_env" == "$target_env" ]]; then
         echo -e "${GREEN}✅ SUCCESS:${NC} Environment switch verified"
     else
-        echo -e "${YELLOW}⚠️  WARNING:${NC} Environment detection unclear, but config file copied successfully"
+        echo -e "${YELLOW}⚠️  WARNING:${NC} Environment detection shows '$new_env' but config file copied successfully"
+    fi
+    
+    # Show environment details from centralized config
+    if [[ -f "$CONFIG_FILE" ]] && command -v jq >/dev/null 2>&1; then
+        echo ""
+        echo -e "${BLUE}ℹ️  INFO:${NC} Active Environment Details:"
+        ENV_INFO=$(cat "$CONFIG_FILE" | jq -r ".environments.$target_env")
+        if [[ "$ENV_INFO" != "null" ]]; then
+            echo "  Environment: $target_env"
+            echo "  App Name: $(echo "$ENV_INFO" | jq -r '.amplify.app_name')"
+            echo "  App URL: $(echo "$ENV_INFO" | jq -r '.amplify.url')"
+            echo "  Git Branch: $(echo "$ENV_INFO" | jq -r '.git_branch')"
+            echo "  User Pool: $(echo "$ENV_INFO" | jq -r '.cognito.user_pool_id')"
+            
+            # Show warnings for specific environments
+            case "$target_env" in
+                production)
+                    echo ""
+                    echo -e "${YELLOW}⚠️  WARNING:${NC} You are now using PRODUCTION configuration"
+                    echo "  • All data operations will affect production database"
+                    echo "  • Use extreme caution when running commands"
+                    ;;
+                staging)
+                    echo ""
+                    echo -e "${BLUE}ℹ️  INFO:${NC} Staging shares backend with development"
+                    echo "  • Changes may affect development environment"
+                    ;;
+            esac
+        fi
     fi
     
     echo ""
     echo -e "${BLUE}ℹ️  INFO:${NC} Next steps:"
-    if [[ "$target_env" == "dev" ]]; then
-        echo "  - Run 'npm run dev:primed' for local development"
-        echo "  - Use 'npx ampx sandbox' for backend changes"
-    else
-        echo "  - Configuration ready for production deployment"
-        echo "  - Ensure you're on the correct git branch for deployment"
-    fi
+    case "$target_env" in
+        development)
+            echo "  - Run 'npm run dev:primed' for local development"
+            echo "  - Use 'npx ampx sandbox' for backend changes"
+            ;;
+        staging)
+            echo "  - Configuration ready for staging deployment"
+            echo "  - Run './scripts/deploy-staging.sh' to deploy"
+            ;;
+        production)
+            echo "  - Configuration ready for production deployment"
+            echo "  - Ensure you're on the correct git branch"
+            echo "  - Run './scripts/deploy-production.sh' to deploy"
+            ;;
+    esac
 }
 
 # Main script logic
 case "${1:-}" in
     "dev"|"development")
-        switch_environment "dev"
+        switch_environment "development"
+        ;;
+    "staging")
+        switch_environment "staging"
         ;;
     "prod"|"production")
-        switch_environment "prod"
+        switch_environment "production"
         ;;
     "status"|"info")
         show_status
