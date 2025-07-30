@@ -70,6 +70,9 @@ amplifyconfiguration*
 amplify_outputs.backup.json
 *.backup.json
 
+# environment switching backup files
+amplify_outputs.backup.json
+
 # claude code local settings
 .claude/settings.local.json
 
@@ -80,3 +83,4 @@ test-*.js
 dev-server.log
 dev-server.pid
 .serena/
+# Force rebuild Wed Jul 30 09:53:35 PDT 2025

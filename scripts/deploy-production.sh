@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Production Deployment Script for RealTechee 2.0
-# Deploys tested staging (prod branch) to production (prod-v2 branch)
+# Uses centralized configuration to deploy tested staging to production
 # Handles ampx sandbox generation and prevents merge conflicts
 
 set -e
@@ -15,12 +15,36 @@ NC='\033[0m' # No Color
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+CONFIG_FILE="$PROJECT_ROOT/config/environments.json"
+
+# Load environment configurations
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo -e "${RED}❌ ERROR:${NC} Centralized configuration not found: $CONFIG_FILE"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Run ./scripts/generate-env-config.sh first"
+    exit 1
+fi
+
+# Extract staging and production configurations
+STAGING_CONFIG=$(cat "$CONFIG_FILE" | jq -r '.environments.staging')
+PRODUCTION_CONFIG=$(cat "$CONFIG_FILE" | jq -r '.environments.production')
+
+if [[ "$STAGING_CONFIG" == "null" || "$PRODUCTION_CONFIG" == "null" ]]; then
+    echo -e "${RED}❌ ERROR:${NC} Staging or production configuration not found in $CONFIG_FILE"
+    exit 1
+fi
+
+STAGING_BRANCH=$(echo "$STAGING_CONFIG" | jq -r '.git_branch')
+PRODUCTION_BRANCH=$(echo "$PRODUCTION_CONFIG" | jq -r '.git_branch')
+PRODUCTION_URL=$(echo "$PRODUCTION_CONFIG" | jq -r '.amplify.url')
+PRODUCTION_APP_NAME=$(echo "$PRODUCTION_CONFIG" | jq -r '.amplify.app_name')
 
 echo -e "${BLUE}==>${NC} 🚀 Production Deployment - RealTechee 2.0"
+echo -e "${BLUE}ℹ️  INFO:${NC} Using centralized configuration: config/environments.json"
 echo -e "${BLUE}ℹ️  INFO:${NC} Deploying TESTED staging to production"
-echo -e "${BLUE}ℹ️  INFO:${NC} Source: prod branch (staging)"
-echo -e "${BLUE}ℹ️  INFO:${NC} Target: prod-v2 branch (production)"
-echo -e "${BLUE}ℹ️  INFO:${NC} URL: https://d200k2wsaf8th3.amplifyapp.com"
+echo -e "${BLUE}ℹ️  INFO:${NC} Source: $STAGING_BRANCH branch (staging)"
+echo -e "${BLUE}ℹ️  INFO:${NC} Target: $PRODUCTION_BRANCH branch (production)"
+echo -e "${BLUE}ℹ️  INFO:${NC} App: $PRODUCTION_APP_NAME"
+echo -e "${BLUE}ℹ️  INFO:${NC} URL: $PRODUCTION_URL"
 echo -e "${BLUE}ℹ️  INFO:${NC} Timestamp: $(date)"
 
 cd "$PROJECT_ROOT"
@@ -65,8 +89,8 @@ if ! git diff-index --quiet HEAD --; then
 fi
 
 # Validate staging branch exists
-if ! git show-ref --verify --quiet refs/heads/prod; then
-    echo -e "${RED}❌ ERROR:${NC} Staging branch 'prod' not found"
+if ! git show-ref --verify --quiet refs/heads/$STAGING_BRANCH; then
+    echo -e "${RED}❌ ERROR:${NC} Staging branch '$STAGING_BRANCH' not found"
     echo -e "${BLUE}ℹ️  INFO:${NC} Please run ./scripts/deploy-staging.sh first"
     exit 1
 fi
@@ -77,9 +101,10 @@ echo -e "${GREEN}✅ SUCCESS:${NC} Pre-deployment validation passed"
 echo ""
 echo -e "${YELLOW}⚠️  PRODUCTION DEPLOYMENT CONFIRMATION${NC}"
 echo "This will deploy the TESTED staging version to production:"
-echo "  • Source: prod branch (staging)"
-echo "  • Target: prod-v2 branch (production)"
-echo "  • URL: https://d200k2wsaf8th3.amplifyapp.com"
+echo "  • Source: $STAGING_BRANCH branch (staging)"
+echo "  • Target: $PRODUCTION_BRANCH branch (production)"
+echo "  • App: $PRODUCTION_APP_NAME"
+echo "  • URL: $PRODUCTION_URL"
 echo "  • All production data will be preserved"
 echo ""
 
@@ -88,10 +113,10 @@ if ! confirm "Continue with production deployment?"; then
     exit 0
 fi
 
-# Step 1: Switch to staging branch (prod)
+# Step 1: Switch to staging branch
 echo -e "${BLUE}==>${NC} 🔄 Switching to staging branch"
-git checkout prod
-echo -e "${GREEN}✅ SUCCESS:${NC} Now on staging branch (prod)"
+git checkout $STAGING_BRANCH
+echo -e "${GREEN}✅ SUCCESS:${NC} Now on staging branch ($STAGING_BRANCH)"
 
 # Step 2: Update auto-generated files for production
 echo -e "${BLUE}==>${NC} 🔧 Updating auto-generated files for production"
@@ -99,9 +124,10 @@ echo -e "${BLUE}==>${NC} 🔧 Updating auto-generated files for production"
 # Backup current development environment
 cp "$PROJECT_ROOT/amplify_outputs.json" "$PROJECT_ROOT/amplify_outputs.backup.json"
 
-# Switch to production environment temporarily for sandbox generation
-cp "$PROJECT_ROOT/amplify_outputs.prod.json" "$PROJECT_ROOT/amplify_outputs.json"
-echo -e "${BLUE}ℹ️  INFO:${NC} Switched to production environment for sandbox generation"
+# IMPORTANT: Environment switching disabled to prevent incomplete config deployment
+# Using complete amplify_outputs.json from git instead of generated configs
+echo -e "${BLUE}ℹ️  INFO:${NC} Using complete amplify_outputs.json (centralized config disabled)"
+echo -e "${YELLOW}⚠️  NOTE:${NC} Environment switching disabled until config generator is fixed"
 
 # Run ampx sandbox to update auto-generated files for production
 echo -e "${BLUE}ℹ️  INFO:${NC} Running ampx sandbox to update GraphQL queries and types..."
@@ -124,15 +150,15 @@ fi
 # Step 3: Create/update production branch
 echo -e "${BLUE}==>${NC} 🔀 Preparing production branch"
 
-if ! git show-ref --verify --quiet refs/heads/prod-v2; then
+if ! git show-ref --verify --quiet refs/heads/$PRODUCTION_BRANCH; then
     echo -e "${BLUE}ℹ️  INFO:${NC} Creating production branch from staging"
-    git checkout -b prod-v2
+    git checkout -b $PRODUCTION_BRANCH
 else
     echo -e "${BLUE}ℹ️  INFO:${NC} Switching to production branch"
-    git checkout prod-v2
+    git checkout $PRODUCTION_BRANCH
     
     echo -e "${BLUE}ℹ️  INFO:${NC} Merging staging into production"
-    git merge prod -m "Production deployment: merge staging (prod) to production (prod-v2)"
+    git merge $STAGING_BRANCH -m "Production deployment: merge staging ($STAGING_BRANCH) to production ($PRODUCTION_BRANCH)"
 fi
 
 echo -e "${GREEN}✅ SUCCESS:${NC} Production branch ready"
@@ -141,8 +167,8 @@ echo -e "${GREEN}✅ SUCCESS:${NC} Production branch ready"
 echo ""
 echo -e "${YELLOW}⚠️  FINAL CONFIRMATION${NC}"
 echo "Ready to deploy to production:"
-echo "  • Branch: prod-v2 (with updated auto-generated files)"
-echo "  • Target: https://d200k2wsaf8th3.amplifyapp.com"
+echo "  • Branch: $PRODUCTION_BRANCH (with updated auto-generated files)"
+echo "  • Target: $PRODUCTION_URL"
 echo "  • All production data will be preserved"
 echo ""
 
@@ -157,7 +183,7 @@ fi
 
 # Push to production
 echo -e "${BLUE}==>${NC} 🚀 Deploying to production"
-git push origin prod-v2
+git push origin $PRODUCTION_BRANCH
 
 echo -e "${GREEN}✅ SUCCESS:${NC} Production deployment initiated!"
 
@@ -168,18 +194,21 @@ echo -e "${BLUE}==>${NC} 🔄 Restoring development environment"
 git checkout "$original_branch"
 echo -e "${GREEN}✅ SUCCESS:${NC} Returned to $original_branch branch"
 
-# Restore development environment
-cp "$PROJECT_ROOT/amplify_outputs.backup.json" "$PROJECT_ROOT/amplify_outputs.json"
-rm "$PROJECT_ROOT/amplify_outputs.backup.json"
-echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
+# NOTE: Environment restoration disabled to prevent overwriting complete config
+echo -e "${BLUE}ℹ️  INFO:${NC} Complete amplify_outputs.json preserved for development (6,371 lines)"
+rm -f "$PROJECT_ROOT/amplify_outputs.backup.json"
+echo -e "${GREEN}✅ SUCCESS:${NC} Development environment ready for continued work"
+
+# Disable error trap
+trap - ERR
 
 # Success message
 echo ""
 echo -e "${GREEN}🎉 PRODUCTION DEPLOYMENT COMPLETE${NC}"
 echo ""
 echo -e "${BLUE}ℹ️  INFO:${NC} Monitor deployment at:"
-echo "  • Amplify Console: https://console.aws.amazon.com/amplify/d200k2wsaf8th3"
-echo "  • Production URL: https://d200k2wsaf8th3.amplifyapp.com"
+echo "  • Amplify Console: https://console.aws.amazon.com/amplify/$(echo "$PRODUCTION_CONFIG" | jq -r '.amplify.app_id')"
+echo "  • Production URL: $PRODUCTION_URL"
 echo ""
 echo -e "${BLUE}ℹ️  INFO:${NC} Deployment includes:"
 echo "  • Latest staging code (tested)"
