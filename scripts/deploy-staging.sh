@@ -85,13 +85,6 @@ echo -e "${BLUE}==>${NC} 📦 Creating release candidate version"
 CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo -e "${BLUE}ℹ️  INFO:${NC} Deploying version: $CURRENT_VERSION"
 
-# Ensure staging environment configuration is active
-echo -e "${BLUE}==>${NC} 🔧 Environment configuration"
-if ! ./scripts/switch-environment.sh staging >/dev/null 2>&1; then
-    echo -e "${YELLOW}⚠️  WARNING:${NC} Could not switch to staging environment config"
-    echo -e "${BLUE}ℹ️  INFO:${NC} Continuing with current configuration"
-fi
-
 # Check if staging branch exists
 if ! git show-ref --verify --quiet refs/heads/$STAGING_BRANCH; then
     echo -e "${BLUE}ℹ️  INFO:${NC} Creating $STAGING_BRANCH branch from current branch"
@@ -108,6 +101,24 @@ else
 fi
 
 echo -e "${GREEN}✅ SUCCESS:${NC} $STAGING_BRANCH branch updated"
+
+# Apply staging environment configuration AFTER git operations
+echo -e "${BLUE}==>${NC} 🔧 Applying staging environment configuration"
+if ! ./scripts/switch-environment.sh staging >/dev/null 2>&1; then
+    echo -e "${YELLOW}⚠️  WARNING:${NC} Could not switch to staging environment config"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Manually copying staging config..."
+    cp config/amplify_outputs.staging.json amplify_outputs.json
+fi
+
+# Commit the staging configuration
+if ! git diff-index --quiet HEAD --; then
+    echo -e "${BLUE}ℹ️  INFO:${NC} Committing staging configuration..."
+    git add amplify_outputs.json
+    git commit -m "chore: apply staging environment configuration for deployment"
+    echo -e "${GREEN}✅ SUCCESS:${NC} Staging configuration committed"
+else
+    echo -e "${BLUE}ℹ️  INFO:${NC} Staging configuration already up to date"
+fi
 
 # Push to remote
 echo -e "${BLUE}==>${NC} 🚀 Pushing to remote (triggers Amplify deployment)"
