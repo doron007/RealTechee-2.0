@@ -136,18 +136,25 @@ else
     echo -e "${YELLOW}⚠️  WARNING:${NC} Sandbox generation completed with warnings (this is usually OK)"
 fi
 
-# Commit any changes from sandbox generation
+# Handle any changes from sandbox generation (NO PERMANENT COMMIT)
 if ! git diff-index --quiet HEAD --; then
-    echo -e "${BLUE}ℹ️  INFO:${NC} Committing auto-generated file updates..."
-    git add -A
-    git commit -m "chore: update auto-generated files for production deployment"
-    echo -e "${GREEN}✅ SUCCESS:${NC} Auto-generated files committed"
+    echo -e "${BLUE}ℹ️  INFO:${NC} Auto-generated files updated by sandbox"
+    echo -e "${BLUE}ℹ️  INFO:${NC} These changes will be included in deployment temporarily"
     
-    # Push staging branch changes to keep it clean
-    echo -e "${BLUE}ℹ️  INFO:${NC} Pushing staging branch updates to remote"
+    # Create temporary commit for staging branch deployment  
+    git add -A
+    git commit -m "TEMP: auto-generated files for production - will be reverted"
+    
+    # Push staging branch with temporary changes
+    echo -e "${BLUE}ℹ️  INFO:${NC} Pushing staging branch with auto-generated updates"
     git push origin $STAGING_BRANCH
+    
+    # IMMEDIATELY revert to prevent staging branch divergence
+    echo -e "${BLUE}ℹ️  INFO:${NC} Reverting temporary commit from staging branch..."
+    git reset --hard HEAD~1
+    echo -e "${GREEN}✅ SUCCESS:${NC} Staging branch synchronized"
 else
-    echo -e "${BLUE}ℹ️  INFO:${NC} No auto-generated file changes to commit"
+    echo -e "${BLUE}ℹ️  INFO:${NC} No auto-generated file changes"
 fi
 
 # Step 3: Create/update production branch

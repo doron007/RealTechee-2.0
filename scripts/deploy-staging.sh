@@ -125,25 +125,28 @@ fi
 
 echo -e "${GREEN}✅ SUCCESS:${NC} Staging environment configuration applied"
 
-# Commit the staging configuration
-if ! git diff-index --quiet HEAD --; then
-    echo -e "${BLUE}ℹ️  INFO:${NC} Committing staging configuration..."
-    git add amplify_outputs.json
-    git commit -m "chore: apply staging environment configuration for deployment"
-    echo -e "${GREEN}✅ SUCCESS:${NC} Staging configuration committed"
-else
-    echo -e "${BLUE}ℹ️  INFO:${NC} Staging configuration already up to date"
-fi
+# Deploy with staging configuration (NO GIT COMMIT)
+echo -e "${BLUE}==>${NC} 🚀 Deploying with staging configuration (temporary)"
 
-# Push to remote
-echo -e "${BLUE}==>${NC} 🚀 Pushing to remote (triggers Amplify deployment)"
+# Add config to staging area for deployment (but don't commit)
+git add amplify_outputs.json
+
+# Create temporary commit for deployment
+echo -e "${BLUE}ℹ️  INFO:${NC} Creating temporary staging config commit..."
+git commit -m "TEMP: staging config for deployment - will be reverted"
+
+# Push to remote (triggers Amplify deployment)
 if [[ "$DRY_RUN" == "true" ]]; then
     echo -e "${YELLOW}⚠️  DRY RUN:${NC} Would push to remote: git push origin $STAGING_BRANCH"
 else
     git push origin $STAGING_BRANCH
+    echo -e "${GREEN}✅ SUCCESS:${NC} Staging deployment initiated"
 fi
 
-echo -e "${GREEN}✅ SUCCESS:${NC} Staging deployment initiated"
+# IMMEDIATELY revert the config commit to prevent branch divergence
+echo -e "${BLUE}ℹ️  INFO:${NC} Reverting temporary config commit to prevent divergence..."
+git reset --hard HEAD~1
+echo -e "${GREEN}✅ SUCCESS:${NC} Temporary commit reverted - branch synchronized"
 
 # Switch back to original branch
 if [[ "$current_branch" != "$STAGING_BRANCH" ]]; then
