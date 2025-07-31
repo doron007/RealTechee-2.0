@@ -85,6 +85,11 @@ echo -e "${BLUE}==>${NC} 📦 Creating release candidate version"
 CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo -e "${BLUE}ℹ️  INFO:${NC} Deploying version: $CURRENT_VERSION"
 
+# Push main branch changes (version bump + tag) to keep it clean
+echo -e "${BLUE}ℹ️  INFO:${NC} Pushing main branch version bump to remote"
+git push origin main
+git push origin "v$CURRENT_VERSION"
+
 # Check if staging branch exists
 if ! git show-ref --verify --quiet refs/heads/$STAGING_BRANCH; then
     echo -e "${BLUE}ℹ️  INFO:${NC} Creating $STAGING_BRANCH branch from current branch"
@@ -139,6 +144,21 @@ fi
 # Restore development environment configuration
 echo -e "${BLUE}ℹ️  INFO:${NC} Restoring development environment configuration"
 ./scripts/switch-environment.sh development >/dev/null 2>&1 || true
+
+# Final cleanup: ensure main branch is clean after environment restoration
+echo -e "${BLUE}ℹ️  INFO:${NC} Final cleanup: ensuring clean git state"
+if ! git diff-index --quiet HEAD --; then
+    echo -e "${BLUE}ℹ️  INFO:${NC} Committing environment restoration changes"
+    git add -A
+    git commit -m "chore: restore development environment after staging deployment
+
+• Restore development amplify_outputs.json configuration  
+• Clean up backup files from environment switching
+• Ensure main branch is clean for next deployment cycle"
+    
+    echo -e "${BLUE}ℹ️  INFO:${NC} Pushing cleanup changes to remote"
+    git push origin main
+fi
 
 echo ""
 echo -e "${GREEN}🎉 DEPLOYMENT COMPLETE${NC}"
