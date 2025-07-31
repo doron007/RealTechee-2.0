@@ -63,7 +63,9 @@ next-env.d.ts
 
 # amplify
 .amplify
-#amplify_outputs*
+# AWS Amplify Gen 2: configs generated during build, never commit
+amplify_outputs.json
+amplify_outputs*.json
 amplifyconfiguration*
 
 # deployment backup files - temporary files created during deployment

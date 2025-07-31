@@ -1,9 +1,38 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        # AWS Amplify Gen 2 Official Pattern: Generate amplify_outputs.json during build
+        - echo "🔧 Generating environment-specific amplify_outputs.json"
+        - |
+          if [ "$AWS_BRANCH" = "main" ]; then
+            echo "📍 Development environment (main branch)"
+            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
+          elif [ "$AWS_BRANCH" = "prod" ]; then
+            echo "📍 Staging environment (prod branch - shares dev backend)"
+            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
+          elif [ "$AWS_BRANCH" = "prod-v2" ]; then
+            echo "📍 Production environment (prod-v2 branch - isolated backend)"
+            npx ampx generate outputs --app-id d200k2wsaf8th3 --branch prod-v2
+          else
+            echo "⚠️  Unknown branch: $AWS_BRANCH, using development config"
+            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
+          fi
+        - echo "✅ Environment-specific amplify_outputs.json generated"
 frontend:
   phases:
     preBuild:
       commands:
+        - echo "📦 Installing dependencies"
         - npm ci
+        - echo "🔍 Verifying amplify_outputs.json exists"
+        - |
+          if [ ! -f "amplify_outputs.json" ]; then
+            echo "❌ ERROR: amplify_outputs.json not found after backend phase"
+            exit 1
+          fi
+        - echo "✅ Configuration verified - branch: $AWS_BRANCH"
     build:
       commands:
         - if [ ! -d "./public/meta" ]; then mkdir -p public/meta; fi
