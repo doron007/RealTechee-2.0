@@ -9,12 +9,15 @@ backend:
           if [ "$AWS_BRANCH" = "main" ]; then
             echo "📍 Development environment (main branch)"
             npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          elif [ "$AWS_BRANCH" = "prod" ]; then
-            echo "📍 Staging environment (prod branch - shares dev backend)"
+          elif [ "$AWS_BRANCH" = "staging" ]; then
+            echo "📍 Staging environment (staging branch - shares dev backend)"
             npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          elif [ "$AWS_BRANCH" = "prod-v2" ]; then
-            echo "📍 Production environment (prod-v2 branch - isolated backend)"
-            npx ampx generate outputs --app-id d200k2wsaf8th3 --branch prod-v2
+          elif [ "$AWS_BRANCH" = "prod" ]; then
+            echo "📍 Legacy staging environment (prod branch - shares dev backend)"
+            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
+          elif [ "$AWS_BRANCH" = "production" ]; then
+            echo "📍 Production environment (production branch - isolated backend)"
+            npx ampx pipeline-deploy --branch production --app-id d200k2wsaf8th3
           else
             echo "⚠️  Unknown branch: $AWS_BRANCH, using development config"
             npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
