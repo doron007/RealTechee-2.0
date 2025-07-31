@@ -1,49 +1,40 @@
 version: 1
 backend:
-  phases:
-    build:
-      commands:
-        # AWS Amplify Gen 2 Official Pattern: Generate amplify_outputs.json during build
-        - echo "🔧 Generating environment-specific amplify_outputs.json"
-        - |
-          if [ "$AWS_BRANCH" = "main" ]; then
-            echo "📍 Development environment (main branch)"
-            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          elif [ "$AWS_BRANCH" = "staging" ]; then
-            echo "📍 Staging environment (staging branch - shares dev backend)"
-            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          elif [ "$AWS_BRANCH" = "prod" ]; then
-            echo "📍 Legacy staging environment (prod branch - shares dev backend)"
-            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          elif [ "$AWS_BRANCH" = "production" ]; then
-            echo "📍 Production environment (production branch - isolated backend)"
-            npx ampx pipeline-deploy --branch production --app-id d200k2wsaf8th3
-          else
-            echo "⚠️  Unknown branch: $AWS_BRANCH, using development config"
-            npx ampx generate outputs --app-id d3atadjk90y9q5 --branch main
-          fi
-        - echo "✅ Environment-specific amplify_outputs.json generated"
+    phases:
+        build:
+            commands:
+                - 'npm ci --cache .npm --prefer-offline'
+                - 'echo $AWS_BRANCH'
+                - |
+                  case "${AWS_BRANCH}" in
+                      main)
+                          echo "Deploying main branch..."
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          ;;
+                      staging)
+                          echo "Deploying staging branch..."
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          ;;
+                      production)
+                          echo "Deploying production branch..."
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          ;;
+                      *)
+                          echo "Deploying unknown branch..."
+                          npx ampx generate outputs --branch main --app-id $AWS_APP_ID
+                          ;;
+                  esac
 frontend:
-  phases:
-    preBuild:
-      commands:
-        - echo "📦 Installing dependencies"
-        - npm ci
-        - echo "🔍 Verifying amplify_outputs.json exists"
-        - |
-          if [ ! -f "amplify_outputs.json" ]; then
-            echo "❌ ERROR: amplify_outputs.json not found after backend phase"
-            exit 1
-          fi
-        - echo "✅ Configuration verified - branch: $AWS_BRANCH"
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: .next
-    files:
-      - '**/*'
-    discard-paths: false
-  cache:
-    paths:
-      - node_modules/**/*
+    phases:
+        build:
+            commands:
+                - 'npm run build'
+    artifacts:
+        baseDirectory: .next
+        files:
+            - '**/*'
+    cache:
+        paths:
+            - .next/cache/**/*
+            - .npm/**/*
+            - node_modules/**/*
