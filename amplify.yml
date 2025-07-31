@@ -9,19 +9,19 @@ backend:
                   case "${AWS_BRANCH}" in
                       main)
                           echo "Deploying main branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
                           ;;
                       staging)
                           echo "Deploying staging branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
                           ;;
                       production)
                           echo "Deploying production branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
                           ;;
                       *)
                           echo "Deploying unknown branch..."
-                          npx ampx generate outputs --branch main --app-id $AWS_APP_ID
+                          npx ampx generate outputs --branch main --app-id $AMPLIFY_APP_ID
                           ;;
                   esac
 frontend:
