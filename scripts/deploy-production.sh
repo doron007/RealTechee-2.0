@@ -142,6 +142,10 @@ if ! git diff-index --quiet HEAD --; then
     git add -A
     git commit -m "chore: update auto-generated files for production deployment"
     echo -e "${GREEN}✅ SUCCESS:${NC} Auto-generated files committed"
+    
+    # Push staging branch changes to keep it clean
+    echo -e "${BLUE}ℹ️  INFO:${NC} Pushing staging branch updates to remote"
+    git push origin $STAGING_BRANCH
 else
     echo -e "${BLUE}ℹ️  INFO:${NC} No auto-generated file changes to commit"
 fi
@@ -197,6 +201,21 @@ echo -e "${GREEN}✅ SUCCESS:${NC} Returned to $original_branch branch"
 ./scripts/switch-environment.sh development >/dev/null 2>&1 || true
 rm -f "$PROJECT_ROOT/amplify_outputs.backup.json"
 echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
+
+# Final cleanup: ensure original branch is clean after environment restoration
+echo -e "${BLUE}ℹ️  INFO:${NC} Final cleanup: ensuring clean git state"
+if ! git diff-index --quiet HEAD --; then
+    echo -e "${BLUE}ℹ️  INFO:${NC} Committing environment restoration changes"
+    git add -A
+    git commit -m "chore: restore development environment after production deployment
+
+• Restore development amplify_outputs.json configuration  
+• Clean up backup files from environment switching
+• Ensure branch is clean after production deployment cycle"
+    
+    echo -e "${BLUE}ℹ️  INFO:${NC} Pushing cleanup changes to remote"
+    git push origin "$original_branch"
+fi
 
 # Success message
 echo ""
