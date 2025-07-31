@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write", 
+      "Edit",
+      "MultiEdit",
+      "Glob",
+      "Grep",
+      "LS",
+      "TodoWrite",
+      "Bash(npm:*)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(rmdir:*)", 
+      "Bash(mv:* /dev/null)",
+      "Bash(dd:*)",
+      "Bash(sudo:*)",
+      "Bash(chmod 777:*)"
+    ]
+  }
+}
