@@ -109,11 +109,21 @@ echo -e "${GREEN}✅ SUCCESS:${NC} $STAGING_BRANCH branch updated"
 
 # Apply staging environment configuration AFTER git operations
 echo -e "${BLUE}==>${NC} 🔧 Applying staging environment configuration"
+
+# Backup current config before switching
+if [[ -f "$PROJECT_ROOT/amplify_outputs.json" ]]; then
+    cp "$PROJECT_ROOT/amplify_outputs.json" "$PROJECT_ROOT/amplify_outputs.backup.json"
+    echo -e "${GREEN}✅ SUCCESS:${NC} Current config backed up to amplify_outputs.backup.json"
+fi
+
+# Switch to staging environment configuration
 if ! ./scripts/switch-environment.sh staging >/dev/null 2>&1; then
     echo -e "${YELLOW}⚠️  WARNING:${NC} Could not switch to staging environment config"
     echo -e "${BLUE}ℹ️  INFO:${NC} Manually copying staging config..."
     cp config/amplify_outputs.staging.json amplify_outputs.json
 fi
+
+echo -e "${GREEN}✅ SUCCESS:${NC} Staging environment configuration applied"
 
 # Commit the staging configuration
 if ! git diff-index --quiet HEAD --; then
@@ -143,7 +153,14 @@ fi
 
 # Restore development environment configuration
 echo -e "${BLUE}ℹ️  INFO:${NC} Restoring development environment configuration"
-./scripts/switch-environment.sh development >/dev/null 2>&1 || true
+if [[ -f "$PROJECT_ROOT/amplify_outputs.backup.json" ]]; then
+    cp "$PROJECT_ROOT/amplify_outputs.backup.json" "$PROJECT_ROOT/amplify_outputs.json"
+    rm "$PROJECT_ROOT/amplify_outputs.backup.json"
+    echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored from backup"
+else
+    ./scripts/switch-environment.sh development >/dev/null 2>&1 || true
+    echo -e "${GREEN}✅ SUCCESS:${NC} Development environment restored"
+fi
 
 # Final cleanup: ensure main branch is clean after environment restoration
 echo -e "${BLUE}ℹ️  INFO:${NC} Final cleanup: ensuring clean git state"
