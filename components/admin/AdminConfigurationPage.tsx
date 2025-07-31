@@ -4,7 +4,6 @@ import {
   Typography, 
   Card, 
   CardContent, 
-  Grid, 
   Alert, 
   AlertTitle,
   Chip,
@@ -292,8 +291,8 @@ const AdminConfigurationPage: React.FC = () => {
             <Typography variant="h6" gutterBottom>
               Current Environment
             </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
+            <Box display="flex" flexWrap="wrap" gap={3}>
+              <Box minWidth="200px" flex="1">
                 <Typography variant="body2" color="text.secondary">
                   Environment
                 </Typography>
@@ -302,32 +301,32 @@ const AdminConfigurationPage: React.FC = () => {
                   color={currentEnv.environment === 'production' ? 'error' : currentEnv.environment === 'staging' ? 'warning' : 'info'}
                   size="small"
                 />
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </Box>
+              <Box minWidth="200px" flex="1">
                 <Typography variant="body2" color="text.secondary">
                   App ID
                 </Typography>
                 <Typography variant="body1" fontFamily="monospace">
                   {currentEnv.config.amplify.app_id}
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </Box>
+              <Box minWidth="200px" flex="1">
                 <Typography variant="body2" color="text.secondary">
                   App Name
                 </Typography>
                 <Typography variant="body1">
                   {currentEnv.config.amplify.app_name}
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </Box>
+              <Box minWidth="200px" flex="1">
                 <Typography variant="body2" color="text.secondary">
                   Git Branch
                 </Typography>
                 <Typography variant="body1">
                   {currentEnv.config.git_branch}
                 </Typography>
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           </CardContent>
         </Card>
       )}
@@ -389,111 +388,109 @@ const AdminConfigurationPage: React.FC = () => {
             <Typography variant="h6">Detailed Configuration</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Grid container spacing={3}>
-              {/* AWS Cognito */}
-              <Grid item xs={12} md={6}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      AWS Cognito
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      User Pool ID
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                      {currentEnv.config.cognito.user_pool_id}
-                    </Typography>
-                    
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      User Pool Client ID
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                      {currentEnv.config.cognito.user_pool_client_id}
-                    </Typography>
-                    
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Identity Pool ID
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace">
-                      {currentEnv.config.cognito.identity_pool_id}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+            <Box display="flex" flexDirection="column" gap={3}>
+              <Box display="flex" flexWrap="wrap" gap={3}>
+                {/* AWS Cognito */}
+                <Box flex="1" minWidth="300px">
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography variant="h6" gutterBottom>
+                        AWS Cognito
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        User Pool ID
+                      </Typography>
+                      <Typography variant="body2" fontFamily="monospace" gutterBottom>
+                        {currentEnv.config.cognito.user_pool_id}
+                      </Typography>
+                      
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        User Pool Client ID
+                      </Typography>
+                      <Typography variant="body2" fontFamily="monospace" gutterBottom>
+                        {currentEnv.config.cognito.user_pool_client_id}
+                      </Typography>
+                      
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Identity Pool ID
+                      </Typography>
+                      <Typography variant="body2" fontFamily="monospace">
+                        {currentEnv.config.cognito.identity_pool_id}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
 
-              {/* AWS S3 Storage */}
-              <Grid item xs={12} md={6}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      AWS S3 Storage
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Bucket Name
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                      {currentEnv.config.storage.bucket_name}
-                    </Typography>
-                    
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Region
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace">
-                      {currentEnv.config.storage.region}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+                {/* AWS S3 Storage */}
+                <Box flex="1" minWidth="300px">
+                  <Card variant="outlined">
+                    <CardContent>
+                      <Typography variant="h6" gutterBottom>
+                        AWS S3 Storage
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Bucket Name
+                      </Typography>
+                      <Typography variant="body2" fontFamily="monospace" gutterBottom>
+                        {currentEnv.config.storage.bucket_name}
+                      </Typography>
+                      
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        Region
+                      </Typography>
+                      <Typography variant="body2" fontFamily="monospace">
+                        {currentEnv.config.storage.region}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </Box>
 
               {/* GraphQL API */}
-              <Grid item xs={12}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      GraphQL API
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      GraphQL URL
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace" sx={{ wordBreak: 'break-all' }} gutterBottom>
-                      {currentEnv.config.api.graphql_url}
-                    </Typography>
-                    
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      API Key (masked)
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace">
-                      {currentEnv.config.api.api_key.substring(0, 8)}***
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    GraphQL API
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    GraphQL URL
+                  </Typography>
+                  <Typography variant="body2" fontFamily="monospace" sx={{ wordBreak: 'break-all' }} gutterBottom>
+                    {currentEnv.config.api.graphql_url}
+                  </Typography>
+                  
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    API Key (masked)
+                  </Typography>
+                  <Typography variant="body2" fontFamily="monospace">
+                    {currentEnv.config.api.api_key.substring(0, 8)}***
+                  </Typography>
+                </CardContent>
+              </Card>
 
               {/* DynamoDB Tables */}
-              <Grid item xs={12}>
-                <Card variant="outlined">
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      DynamoDB Tables
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      Table Suffix
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                      {currentEnv.config.tables_suffix}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Example table names:
-                    </Typography>
-                    <Typography variant="body2" fontFamily="monospace">
-                      • Requests-{currentEnv.config.tables_suffix}-NONE<br/>
-                      • Contacts-{currentEnv.config.tables_suffix}-NONE<br/>
-                      • Projects-{currentEnv.config.tables_suffix}-NONE
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
+              <Card variant="outlined">
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    DynamoDB Tables
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Table Suffix
+                  </Typography>
+                  <Typography variant="body2" fontFamily="monospace" gutterBottom>
+                    {currentEnv.config.tables_suffix}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Example table names:
+                  </Typography>
+                  <Typography variant="body2" fontFamily="monospace">
+                    • Requests-{currentEnv.config.tables_suffix}-NONE<br/>
+                    • Contacts-{currentEnv.config.tables_suffix}-NONE<br/>
+                    • Projects-{currentEnv.config.tables_suffix}-NONE
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Box>
           </AccordionDetails>
         </Accordion>
       )}
