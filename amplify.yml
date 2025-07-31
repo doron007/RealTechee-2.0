@@ -39,9 +39,8 @@ frontend:
     build:
       commands:
         - if [ ! -d "./public/meta" ]; then mkdir -p public/meta; fi
-        - echo "Building RealTechee version $(node -p "require('./package.json').version")"
-        - echo "NEXT_PUBLIC_APP_VERSION=$(node -p "require('./package.json').version")" >> .env.local
-        - echo "{\"version\":\"$(node -p "require('./package.json').version")\",\"buildTime\":\"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\"gitCommit\":\"$(git rev-parse --short HEAD)\"}" > ./public/meta/build-info.json
+        - echo "Building RealTechee version $(node -p \"require('./package.json').version\")"
+        - echo "NEXT_PUBLIC_APP_VERSION=$(node -p \"require('./package.json').version\")" >> .env.local
         - npm run build
   artifacts:
     baseDirectory: .next
