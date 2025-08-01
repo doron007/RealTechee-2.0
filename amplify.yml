@@ -3,7 +3,8 @@ backend:
     phases:
         build:
             commands:
-                - 'npm ci --cache .npm --prefer-offline'
+                - 'export CI=1'
+                - 'npm ci'
                 - 'echo "Installing Lambda function dependencies..."'
                 - 'npm ci --prefix amplify/functions/notification-processor'
                 - 'npm ci --prefix amplify/functions/post-confirmation'
