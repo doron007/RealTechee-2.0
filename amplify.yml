@@ -3,27 +3,12 @@ backend:
     phases:
         build:
             commands:
-                - 'npm ci --cache .npm --prefer-offline'
-                - 'echo $AWS_BRANCH'
-                - |
-                  case "${AWS_BRANCH}" in
-                      main)
-                          echo "Deploying main branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
-                          ;;
-                      staging)
-                          echo "Deploying staging branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
-                          ;;
-                      production)
-                          echo "Deploying production branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
-                          ;;
-                      *)
-                          echo "Deploying unknown branch..."
-                          npx ampx generate outputs --branch main --app-id $AMPLIFY_APP_ID
-                          ;;
-                  esac
+                - 'npm ci'
+                - 'echo "Installing Lambda function dependencies..."'
+                - 'npm ci --prefix amplify/functions/notification-processor'
+                - 'npm ci --prefix amplify/functions/post-confirmation'
+                - 'npm ci --prefix amplify/functions/status-processor'
+                - 'echo "AWS Amplify Console will handle backend deployment natively"'
 frontend:
     phases:
         build:
@@ -38,3 +23,4 @@ frontend:
             - .next/cache/**/*
             - .npm/**/*
             - node_modules/**/*
+            - amplify/functions/*/node_modules/**/*
