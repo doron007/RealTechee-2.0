@@ -3,39 +3,12 @@ backend:
     phases:
         build:
             commands:
-                - 'export CI=1'
                 - 'npm ci'
                 - 'echo "Installing Lambda function dependencies..."'
                 - 'npm ci --prefix amplify/functions/notification-processor'
                 - 'npm ci --prefix amplify/functions/post-confirmation'
                 - 'npm ci --prefix amplify/functions/status-processor'
-                - 'echo "Skipping secure-config and user-admin (no package.json)"'
-                - 'echo "=== ENVIRONMENT DEBUG ==="'
-                - 'echo "AWS_BRANCH: $AWS_BRANCH"'
-                - 'echo "AMPLIFY_APP_ID: $AMPLIFY_APP_ID"'
-                - 'echo "NODE_ENV: $NODE_ENV"'
-                - 'pwd && ls -la'
-                - 'ls -la amplify/functions/'
-                - 'echo "=== END DEBUG ==="'
-                - |
-                  case "${AWS_BRANCH}" in
-                      main)
-                          echo "Deploying main branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
-                          ;;
-                      staging)
-                          echo "Deploying staging branch..."
-                          npx ampx generate outputs --branch main --app-id $AMPLIFY_APP_ID
-                          ;;
-                      production)
-                          echo "Deploying production branch..."
-                          npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AMPLIFY_APP_ID
-                          ;;
-                      *)
-                          echo "Deploying unknown branch..."
-                          npx ampx generate outputs --branch main --app-id $AMPLIFY_APP_ID
-                          ;;
-                  esac
+                - 'echo "AWS Amplify Console will handle backend deployment natively"'
 frontend:
     phases:
         build:
