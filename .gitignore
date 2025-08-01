@@ -54,6 +54,9 @@ test-migration-*.json
 # archived scripts - cleanup archive directory
 /scripts/cleanup-archive/
 
+# legacy deployment files - removed during AWS Amplify Gen 2 migration
+**/legacy-removed/
+
 # vercel
 .vercel
 

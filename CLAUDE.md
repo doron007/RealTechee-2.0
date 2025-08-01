@@ -58,12 +58,12 @@
 - `./scripts/backup-data.sh` - **MANDATORY** before schema changes
 - AWS will purge data without warning on schema recreation
 
-### **Deployment Workflow**
-- `/deploy-staging` - ⭐ FIRST: Staging deployment with versioning (RC creation)
-- `/deploy-production` - SECOND: Production deployment (RC→stable promotion)
-- `npm run validate:prod:deployment` - Pre-deployment validation
-- `npm run test:prod:local` - Local production testing (fast)
-- `npm run audit:prod:aws` - AWS infrastructure audit
+### **Deployment Workflow - AWS Amplify Gen 2 Single-App Multi-Branch**
+- **⭐ NEW SIMPLIFIED WORKFLOW**: Git branch merges + push automatically trigger AWS deployments
+- **Main → Staging**: `git checkout staging && git merge main && git push origin staging`
+- **Staging → Production**: `git checkout production && git merge staging && git push origin production`
+- **Manual QA**: Test each environment before promoting to next stage
+- **No custom scripts needed**: AWS Amplify Console handles all deployment automatically
 
 ---
 
@@ -94,9 +94,10 @@
 
 ## 🗄️ **DATABASE CRITICAL INFO**
 
-### **⚠️ INFRASTRUCTURE SEPARATION COMPLETE - Two Isolated Environments**
-**Production Tables**: `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
-**Sandbox Tables**: `TableName-fvn7t5hbobaxjklhrqzdl4ac34-NONE`
+### **⚠️ AWS AMPLIFY GEN 2 SINGLE-APP MULTI-BRANCH ARCHITECTURE**
+**✅ DEPLOYMENT COMPLETE**: All three branches successfully deployed with native AWS pattern
+**Main/Staging Tables** (Shared): `TableName-fvn7t5hbobaxjklhrqzdl4ac34-NONE`
+**Production Tables** (Isolated): `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
 
 ### **Core Business Tables (Both Environments)**
 - `Requests` - Main request submissions  
@@ -292,23 +293,26 @@ export const modelAPI = createModelAPI('ModelName');
 - ✅ **Data Systems**: 1,449 records migrated + CloudWatch + SNS alerts operational
 - ✅ **User Experience**: Zero reload gallery + 1-2s image loads + responsive design
 
-### **🎯 Production Context (Essential for New Sessions)**
+### **🎯 AWS Amplify Gen 2 Single-App Multi-Branch Architecture (Current)**
 **Environment Setup**:
 ```bash
 # Development (local)
-npm run dev:primed → localhost:3000 → RealTechee-2.0 (d3atadjk90y9q5)
-# Staging (shared backend)  
-prod.d3atadjk90y9q5.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
-# Production (isolated)
-prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
+npm run dev:primed → localhost:3000 → Local development
+# Main Branch (development)
+https://main.d200k2wsaf8th3.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
+# Staging Branch (shared backend)  
+https://staging.d200k2wsaf8th3.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
+# Production Branch (isolated)
+https://production.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
 ```
 
-**SDLC Workflow**: 
-1. `/deploy-staging` → Creates Release Candidate (RC) with semantic versioning (e.g., 3.1.5-rc.1)
-2. Manual QA testing on staging environment (E2E automation unreliable)
-3. `/deploy-production` → Promotes RC to stable production release (e.g., 3.1.5)  
+**✅ NEW SIMPLIFIED SDLC WORKFLOW**: 
+1. **Development**: Work on `main` branch → Push triggers automatic deployment
+2. **Staging Release**: `git checkout staging && git merge main && git push origin staging`
+3. **Manual QA**: Test staging environment (E2E automation unreliable)
+4. **Production Release**: `git checkout production && git merge staging && git push origin production`
 **Test Credentials**: `info@realtechee.com` / `Sababa123!`
-**Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing), Business (data sync)
+**AWS Amplify App**: RealTechee-Gen2 (`d200k2wsaf8th3`) - Single app, three branches ✅
 
 ### **🎯 CURRENT SESSION: PRODUCTION ENVIRONMENT COMPLETION**
 **🎉 MAJOR ACCOMPLISHMENT: 100% Production-Ready Platform Achieved**

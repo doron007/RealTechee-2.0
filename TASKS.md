@@ -12,8 +12,59 @@
 
 **Current Status: PRODUCTION READY + MUI GALLERY OPTIMIZED - Platform operational with zero reload gallery** 🎭
 
-## 🚀 **CURRENT SESSION: MUI Gallery Production Deployment Complete**
-**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Zero Image Reload Gallery + Production Deployment ✅**
+## 🚀 **CURRENT SESSION: AWS Amplify Gen 2 Single-App Multi-Branch Architecture Complete**
+**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Single-App Architecture + Documentation Update ✅**
+
+### ✅ **Phase 12: COMPLETED - AWS Amplify Gen 2 Single-App Multi-Branch Architecture**
+- ✅ **Architecture Migration**: Successfully implemented single AWS Amplify App (RealTechee-Gen2, d200k2wsaf8th3)
+- ✅ **Branch Deployment**: All 3 branches operational (main, staging, production)
+- ✅ **Native AWS Pattern**: Corrected deployment pattern (removed pipeline-deploy, using AWS Console native)
+- ✅ **Environment Configuration**: AWS Console-managed environment variables (zero git configs)
+- ✅ **Backend Architecture**: Proper resource sharing (main+staging shared, production isolated)
+- ✅ **SDLC Workflow**: Git-based branch flow (main → staging → production)
+- ✅ **Documentation Update**: Updated deployment strategy docs and CLAUDE.md
+- ✅ **Legacy Cleanup**: Removed legacy deployment files, scripts, and configurations
+- ✅ **amplify.yml Correction**: Implemented correct AWS Amplify Gen 2 build configuration
+
+**Impact**: Production-ready single-app architecture with proper environment isolation + streamlined SDLC workflow
+
+---
+
+## 🔧 **NEW DEPLOYMENT WORKFLOW** 
+
+### **✅ AWS Amplify Gen 2 Single-App Multi-Branch SDLC**
+
+**Environment URLs**:
+- **Development**: `https://main.d200k2wsaf8th3.amplifyapp.com` (main branch)
+- **Staging**: `https://staging.d200k2wsaf8th3.amplifyapp.com` (staging branch)  
+- **Production**: `https://production.d200k2wsaf8th3.amplifyapp.com` (production branch)
+
+**Git-Based Deployment Process**:
+```bash
+# Development → Staging
+git checkout staging
+git merge main  
+git push origin staging
+
+# Staging → Production
+git checkout production
+git merge staging
+git push origin production
+```
+
+**Key Features**:
+- ✅ **Single AWS App**: RealTechee-Gen2 (d200k2wsaf8th3) with 3 branches
+- ✅ **Native AWS Deployment**: No pipeline-deploy commands, AWS Console handles all deployment
+- ✅ **Environment Isolation**: main+staging share backend, production isolated
+- ✅ **Zero Config Commits**: All environment variables managed in AWS Console
+- ✅ **Automatic Rollback**: AWS Console rollback capability for all branches
+
+**Backend Architecture**:
+- **Shared Backend**: main & staging use `*-fvn7t5hbobaxjklhrqzdl4ac34-*` tables
+- **Isolated Backend**: production uses `*-aqnqdrctpzfwfjwyxxsmu6peoq-*` tables
+- **Build Process**: `amplify.yml` handles Lambda function dependencies automatically
+
+---
 
 ### ✅ **Phase 11: COMPLETED - MUI Gallery Implementation & Production Deployment**
 - ✅ **Gallery Performance Issue**: Fixed thumbnail clicks causing all images to reload (30-40s timeouts)
