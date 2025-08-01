@@ -1,6 +1,6 @@
 import { defineFunction } from '@aws-amplify/backend';
 
-const postConfirmationHandler = defineFunction({
+export const postConfirmationHandler = defineFunction({
   name: 'post-confirmation-handler',
   entry: './src/index.ts',
   runtime: 20,
@@ -10,5 +10,3 @@ const postConfirmationHandler = defineFunction({
   },
   resourceGroupName: 'auth' // Assign to auth stack since it's an auth trigger
 });
-
-export { postConfirmationHandler };

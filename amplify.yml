@@ -7,7 +7,13 @@ backend:
                 - 'npm ci --prefix amplify/functions/notification-processor'
                 - 'npm ci --prefix amplify/functions/post-confirmation'
                 - 'npm ci --prefix amplify/functions/status-processor'
-                - 'echo $AWS_BRANCH'
+                - 'echo "=== ENVIRONMENT DEBUG ==="'
+                - 'echo "AWS_BRANCH: $AWS_BRANCH"'
+                - 'echo "AMPLIFY_APP_ID: $AMPLIFY_APP_ID"'
+                - 'echo "NODE_ENV: $NODE_ENV"'
+                - 'pwd && ls -la'
+                - 'ls -la amplify/functions/'
+                - 'echo "=== END DEBUG ==="'
                 - |
                   case "${AWS_BRANCH}" in
                       main)
