@@ -4,6 +4,7 @@ backend:
         build:
             commands:
                 - 'npm ci --cache .npm --prefer-offline'
+                - 'cd amplify/functions/notification-processor && npm ci'
                 - 'echo $AWS_BRANCH'
                 - |
                   case "${AWS_BRANCH}" in
