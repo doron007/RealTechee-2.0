@@ -1,8 +1,8 @@
 # AWS Amplify Gen 2 Multi-Environment Deployment Strategy
 
-**Document Version**: 1.0  
-**Date**: January 31, 2025  
-**Status**: Draft - Pending User Review & Approval  
+**Document Version**: 2.0  
+**Date**: February 3, 2025  
+**Status**: Production Complete - Custom Domain Operational  
 
 ## 🎯 **Mission Statement**
 
@@ -416,11 +416,13 @@ CURRENT STATUS: Phase 1 - Task 1.1 (Stop Failed Deployment)
 - [ ] All environments functional
 
 ### **Overall Mission Success**:
-- [ ] Single AWS Amplify App with three environments
-- [ ] Zero environment configs in git repository
-- [ ] Safe multi-stage deployment pipeline
-- [ ] Official AWS Amplify Gen 2 patterns implemented
-- [ ] Comprehensive documentation and procedures
+- [x] Single AWS Amplify App with three environments
+- [x] Zero environment configs in git repository
+- [x] Safe multi-stage deployment pipeline
+- [x] Official AWS Amplify Gen 2 patterns implemented
+- [x] Comprehensive documentation and procedures
+- [x] **✅ Custom domain with SSL certificate operational**
+- [x] **✅ Email systems preserved during domain migration**
 
 ---
 
@@ -445,6 +447,8 @@ git push origin production
 - **Development**: `https://main.d200k2wsaf8th3.amplifyapp.com`
 - **Staging**: `https://staging.d200k2wsaf8th3.amplifyapp.com`  
 - **Production**: `https://production.d200k2wsaf8th3.amplifyapp.com`
+- **✅ Custom Domain**: `https://realtechee.com` → Production
+- **✅ Custom Domain**: `https://www.realtechee.com` → Production
 
 **Deployment Safety**:
 - AWS Console handles all backend deployment automatically
@@ -453,6 +457,98 @@ git push origin production
 - Automatic rollback available via AWS Console
 
 ---
+
+## 🌐 **CUSTOM DOMAIN CONFIGURATION** ✅ **COMPLETED FEBRUARY 2025**
+
+### **✅ DOMAIN MIGRATION SUCCESS**
+Successfully migrated `realtechee.com` from Wix hosting to AWS Amplify with SSL certificate.
+
+**Migration Details:**
+- **Source**: Squarespace DNS → Wix hosting (IP: 23.236.62.147)
+- **Target**: AWS Amplify Production (d2nw47m4livry7.cloudfront.net)
+- **SSL**: AWS Certificate Manager (ACM) managed certificate
+- **Status**: Fully operational with HTTPS
+
+### **🔧 DNS CONFIGURATION PATTERN**
+**Critical Learning**: DNS record format matters for third-party providers.
+
+### **✅ WORKING DNS CONFIGURATION**
+
+**AWS Amplify Required Records:**
+```
+VERIFICATION RECORD:
+  AWS Format: _c0c678f288466500f9f2914129e80f70.realtechee.com
+  Squarespace Format: _c0c678f288466500f9f2914129e80f70  [HOST only, no domain suffix]
+  Type: CNAME
+  Data: _084631206b71350231beacab9442eae4.xlfgrmvvlj.acm-validations.aws
+
+ROOT DOMAIN:
+  Host: @
+  Type: ALIAS
+  Data: d2nw47m4livry7.cloudfront.net
+
+WWW SUBDOMAIN:
+  Host: www
+  Type: CNAME  
+  Data: d2nw47m4livry7.cloudfront.net
+```
+
+**Preserved Email & Security Records:**
+- ✅ Google Workspace MX records (all 5 records)
+- ✅ DMARC record for email security
+- ✅ DKIM records for Amazon SES (3 records)
+- ✅ SPF record for email authentication
+- ✅ Google verification records (3 records)
+
+### **🔍 CRITICAL TROUBLESHOOTING LESSONS**
+
+#### **Issue 1: Hostname Format Requirements**
+**Problem**: AWS domain verification failing for 4+ hours
+**Root Cause**: Incorrect DNS record format in third-party provider
+**Solution**: 
+- ❌ Wrong: `_verification123.realtechee.com` (full FQDN in HOST field)
+- ✅ Correct: `_verification123` (subdomain only in HOST field)
+
+#### **Issue 2: CloudFront Domain Changes**
+**Problem**: DNS records pointing to wrong CloudFront distribution
+**Root Cause**: AWS generates new CloudFront domain on each setup attempt
+**Solution**: Always get current DNS records from AWS Console "View DNS records"
+**Pattern**: `d1srs9f1yjow7e.cloudfront.net` → `d2nw47m4livry7.cloudfront.net`
+
+#### **Issue 3: SSL Certificate Browser Cache**
+**Problem**: "Not Secure" warning despite valid certificate  
+**Root Cause**: Browser caching previous non-SSL state
+**Solution**: 
+- Certificate is valid (confirmed in incognito mode)
+- Clear browser cache or wait 24 hours for automatic resolution
+- New visitors see secure connection immediately
+
+### **📋 CUSTOM DOMAIN SETUP PROCESS**
+
+**Phase 1: AWS Amplify Console Setup**
+1. Navigate to AWS Amplify Console → RealTechee-Gen2 → Hosting → Custom domains
+2. Click "Add domain" → Enter root domain (e.g., `realtechee.com`)
+3. Choose "Manual configuration" (not Route 53 hosted zone)
+4. Select "Amplify managed certificate"
+5. AWS generates DNS records for verification
+
+**Phase 2: Third-Party DNS Configuration**
+1. **Critical**: Use correct hostname format (subdomain only, no FQDN)
+2. Add verification CNAME record first
+3. Add root domain ALIAS record  
+4. Add www subdomain CNAME record
+5. Preserve all existing email and security records
+
+**Phase 3: Validation & Activation**
+1. DNS propagation: 15 minutes - 2 hours
+2. AWS SSL validation: 15-60 minutes after DNS propagation
+3. Domain activation: 5-15 minutes after SSL validation
+4. Total timeline: 1-4 hours end-to-end
+
+**Phase 4: Troubleshooting**
+1. Test DNS propagation with whatsmydns.net
+2. Always get fresh DNS records from AWS Console
+3. SSL warnings may persist due to browser cache (use incognito to verify)
 
 ---
 
