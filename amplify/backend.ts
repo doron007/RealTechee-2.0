@@ -5,6 +5,8 @@ import { storage } from './storage/resource';
 import { notificationProcessor } from './functions/notification-processor/resource';
 import { userAdmin } from './functions/user-admin/resource';
 import { statusProcessor } from './functions/status-processor/resource';
+import { sesBounceHandler } from './functions/ses-bounce-handler/resource';
+import { reputationMonitor } from './functions/reputation-monitor/resource';
 import { PolicyStatement, Effect } from 'aws-cdk-lib/aws-iam';
 
 export const backend = defineBackend({
@@ -13,7 +15,9 @@ export const backend = defineBackend({
   storage,
   notificationProcessor,
   userAdmin,
-  statusProcessor
+  statusProcessor,
+  sesBounceHandler,
+  reputationMonitor
 });
 
 // Add scheduled trigger for notification processor
@@ -21,7 +25,9 @@ backend.addOutput({
   custom: {
     notificationProcessorArn: backend.notificationProcessor.resources.lambda.functionArn,
     userAdminArn: backend.userAdmin.resources.lambda.functionArn,
-    statusProcessorArn: backend.statusProcessor.resources.lambda.functionArn
+    statusProcessorArn: backend.statusProcessor.resources.lambda.functionArn,
+    sesBounceHandlerArn: backend.sesBounceHandler.resources.lambda.functionArn,
+    reputationMonitorArn: backend.reputationMonitor.resources.lambda.functionArn
   }
 });
 
@@ -46,19 +52,39 @@ backend.auth.resources.userPool.grant(
 backend.notificationProcessor.addEnvironment('NOTIFICATION_QUEUE_TABLE', backend.data.resources.tables['NotificationQueue'].tableName);
 backend.notificationProcessor.addEnvironment('NOTIFICATION_TEMPLATE_TABLE', backend.data.resources.tables['NotificationTemplate'].tableName);
 backend.notificationProcessor.addEnvironment('NOTIFICATION_EVENTS_TABLE', backend.data.resources.tables['NotificationEvents'].tableName);
+backend.notificationProcessor.addEnvironment('EMAIL_SUPPRESSION_LIST_TABLE', backend.data.resources.tables['EmailSuppressionList'].tableName);
 backend.notificationProcessor.addEnvironment('CONTACTS_TABLE', backend.data.resources.tables['Contacts'].tableName);
 
 // Configure status processor function environment
 backend.statusProcessor.addEnvironment('REQUESTS_TABLE', backend.data.resources.tables['Requests'].tableName);
 
+// Configure SES bounce handler function environment
+backend.sesBounceHandler.addEnvironment('EMAIL_SUPPRESSION_LIST_TABLE', backend.data.resources.tables['EmailSuppressionList'].tableName);
+backend.sesBounceHandler.addEnvironment('NOTIFICATION_EVENTS_TABLE', backend.data.resources.tables['NotificationEvents'].tableName);
+backend.sesBounceHandler.addEnvironment('SES_REPUTATION_METRICS_TABLE', backend.data.resources.tables['SESReputationMetrics'].tableName);
+
+// Configure reputation monitor function environment
+backend.reputationMonitor.addEnvironment('SES_REPUTATION_METRICS_TABLE', backend.data.resources.tables['SESReputationMetrics'].tableName);
+backend.reputationMonitor.addEnvironment('NOTIFICATION_EVENTS_TABLE', backend.data.resources.tables['NotificationEvents'].tableName);
+
 // Grant permissions to read/write DynamoDB tables
 backend.data.resources.tables['NotificationQueue'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['NotificationTemplate'].grantReadData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['NotificationEvents'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
+backend.data.resources.tables['EmailSuppressionList'].grantReadData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['Contacts'].grantReadData(backend.notificationProcessor.resources.lambda);
 
 // Grant status processor permissions to read/write Requests table
 backend.data.resources.tables['Requests'].grantReadWriteData(backend.statusProcessor.resources.lambda);
+
+// Grant SES bounce handler permissions to read/write suppression and metrics tables
+backend.data.resources.tables['EmailSuppressionList'].grantReadWriteData(backend.sesBounceHandler.resources.lambda);
+backend.data.resources.tables['NotificationEvents'].grantReadWriteData(backend.sesBounceHandler.resources.lambda);
+backend.data.resources.tables['SESReputationMetrics'].grantReadWriteData(backend.sesBounceHandler.resources.lambda);
+
+// Grant reputation monitor permissions to read/write metrics tables
+backend.data.resources.tables['SESReputationMetrics'].grantReadWriteData(backend.reputationMonitor.resources.lambda);
+backend.data.resources.tables['NotificationEvents'].grantReadData(backend.reputationMonitor.resources.lambda);
 
 // Grant SSM Parameter Store permissions for secure configuration
 backend.notificationProcessor.resources.lambda.addToRolePolicy(
@@ -84,6 +110,37 @@ backend.notificationProcessor.resources.lambda.addToRolePolicy(
       'ses:SendRawEmail',
       'ses:GetSendQuota',
       'ses:GetSendStatistics',
+      'ses:GetIdentityVerificationAttributes'
+    ],
+    resources: ['*'] // SES permissions are typically granted to all resources
+  })
+);
+
+// Grant AWS SES permissions for bounce handler suppression management
+backend.sesBounceHandler.resources.lambda.addToRolePolicy(
+  new PolicyStatement({
+    effect: Effect.ALLOW,
+    actions: [
+      'ses:PutSuppressedDestination',
+      'ses:GetSuppressedDestination',
+      'ses:DeleteSuppressedDestination',
+      'ses:ListSuppressedDestinations',
+      'ses:GetSendQuota',
+      'ses:GetSendStatistics',
+      'ses:GetReputationInfo'
+    ],
+    resources: ['*'] // SES permissions are typically granted to all resources
+  })
+);
+
+// Grant AWS SES permissions for reputation monitoring
+backend.reputationMonitor.resources.lambda.addToRolePolicy(
+  new PolicyStatement({
+    effect: Effect.ALLOW,
+    actions: [
+      'ses:GetSendQuota',
+      'ses:GetSendStatistics',
+      'ses:GetReputationInfo',
       'ses:GetIdentityVerificationAttributes'
     ],
     resources: ['*'] // SES permissions are typically granted to all resources

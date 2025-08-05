@@ -104,6 +104,25 @@ const LeadReactivationWorkflow: React.FC<LeadReactivationWorkflowProps> = ({
     }
   ];
 
+  const loadReactivationHistory = useCallback(async () => {
+    try {
+      // Parse office notes for previous reactivations
+      const officeNotes = requestData?.officeNotes || '';
+      const reactivationEntries = officeNotes
+        .split('\n')
+        .filter((line: string) => line.includes('Reactivated:'))
+        .map((line: string, index: number) => ({
+          id: index,
+          timestamp: 'Previous', // Would parse from actual timestamps
+          reason: line.replace('Reactivated:', '').trim()
+        }));
+
+      setReactivationHistory(reactivationEntries);
+    } catch (err) {
+      logger.warn('Error loading reactivation history', { requestId, error: err });
+    }
+  }, [requestData?.officeNotes, requestId]);
+
   const initializeWorkflow = useCallback(async () => {
     try {
       setLoading(true);
@@ -132,7 +151,7 @@ const LeadReactivationWorkflow: React.FC<LeadReactivationWorkflowProps> = ({
     } finally {
       setLoading(false);
     }
-  }, [requestId]);
+  }, [requestId, requestData?.status, loadReactivationHistory]);
 
   useEffect(() => {
     if (open && requestId) {
@@ -140,24 +159,6 @@ const LeadReactivationWorkflow: React.FC<LeadReactivationWorkflowProps> = ({
     }
   }, [open, requestId, initializeWorkflow]);
 
-  const loadReactivationHistory = async () => {
-    try {
-      // Parse office notes for previous reactivations
-      const officeNotes = requestData?.officeNotes || '';
-      const reactivationEntries = officeNotes
-        .split('\n')
-        .filter((line: string) => line.includes('Reactivated:'))
-        .map((line: string, index: number) => ({
-          id: index,
-          timestamp: 'Previous', // Would parse from actual timestamps
-          reason: line.replace('Reactivated:', '').trim()
-        }));
-
-      setReactivationHistory(reactivationEntries);
-    } catch (err) {
-      logger.warn('Error loading reactivation history', { requestId, error: err });
-    }
-  };
 
   const validateCurrentStep = (): boolean => {
     const errors: Record<string, string> = {};

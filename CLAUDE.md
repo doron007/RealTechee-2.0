@@ -58,12 +58,12 @@
 - `./scripts/backup-data.sh` - **MANDATORY** before schema changes
 - AWS will purge data without warning on schema recreation
 
-### **Deployment Workflow**
-- `/deploy-staging` - ⭐ FIRST: Staging deployment with versioning (RC creation)
-- `/deploy-production` - SECOND: Production deployment (RC→stable promotion)
-- `npm run validate:prod:deployment` - Pre-deployment validation
-- `npm run test:prod:local` - Local production testing (fast)
-- `npm run audit:prod:aws` - AWS infrastructure audit
+### **Deployment Workflow - AWS Amplify Gen 2 Single-App Multi-Branch**
+- **⭐ NEW SIMPLIFIED WORKFLOW**: Git branch merges + push automatically trigger AWS deployments
+- **Main → Staging**: `git checkout staging && git merge main && git push origin staging`
+- **Staging → Production**: `git checkout production && git merge staging && git push origin production`
+- **Manual QA**: Test each environment before promoting to next stage
+- **No custom scripts needed**: AWS Amplify Console handles all deployment automatically
 
 ---
 
@@ -94,9 +94,10 @@
 
 ## 🗄️ **DATABASE CRITICAL INFO**
 
-### **⚠️ INFRASTRUCTURE SEPARATION COMPLETE - Two Isolated Environments**
-**Production Tables**: `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
-**Sandbox Tables**: `TableName-fvn7t5hbobaxjklhrqzdl4ac34-NONE`
+### **⚠️ AWS AMPLIFY GEN 2 SINGLE-APP MULTI-BRANCH ARCHITECTURE**
+**✅ DEPLOYMENT COMPLETE**: All three branches successfully deployed with native AWS pattern
+**Main/Staging Tables** (Shared): `TableName-fvn7t5hbobaxjklhrqzdl4ac34-NONE`
+**Production Tables** (Isolated): `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
 
 ### **Core Business Tables (Both Environments)**
 - `Requests` - Main request submissions  
@@ -292,23 +293,26 @@ export const modelAPI = createModelAPI('ModelName');
 - ✅ **Data Systems**: 1,449 records migrated + CloudWatch + SNS alerts operational
 - ✅ **User Experience**: Zero reload gallery + 1-2s image loads + responsive design
 
-### **🎯 Production Context (Essential for New Sessions)**
+### **🎯 AWS Amplify Gen 2 Single-App Multi-Branch Architecture (Current)**
 **Environment Setup**:
 ```bash
 # Development (local)
-npm run dev:primed → localhost:3000 → RealTechee-2.0 (d3atadjk90y9q5)
-# Staging (shared backend)  
-prod.d3atadjk90y9q5.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
-# Production (isolated)
-prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
+npm run dev:primed → localhost:3000 → Local development
+# Main Branch (development)
+https://main.d200k2wsaf8th3.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
+# Staging Branch (shared backend)  
+https://staging.d200k2wsaf8th3.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
+# Production Branch (isolated)
+https://production.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
 ```
 
-**SDLC Workflow**: 
-1. `/deploy-staging` → Creates Release Candidate (RC) with semantic versioning (e.g., 3.1.5-rc.1)
-2. Manual QA testing on staging environment (E2E automation unreliable)
-3. `/deploy-production` → Promotes RC to stable production release (e.g., 3.1.5)  
+**✅ NEW SIMPLIFIED SDLC WORKFLOW**: 
+1. **Development**: Work on `main` branch → Push triggers automatic deployment
+2. **Staging Release**: `git checkout staging && git merge main && git push origin staging`
+3. **Manual QA**: Test staging environment (E2E automation unreliable)
+4. **Production Release**: `git checkout production && git merge staging && git push origin production`
 **Test Credentials**: `info@realtechee.com` / `Sababa123!`
-**Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing), Business (data sync)
+**AWS Amplify App**: RealTechee-Gen2 (`d200k2wsaf8th3`) - Single app, three branches ✅
 
 ### **🎯 CURRENT SESSION: PRODUCTION ENVIRONMENT COMPLETION**
 **🎉 MAJOR ACCOMPLISHMENT: 100% Production-Ready Platform Achieved**
@@ -346,151 +350,76 @@ prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
 
 ## 📋 **SESSION CONTEXT PRESERVATION**
 
-### **🎯 CURRENT SESSION: Environment Configuration & Deployment Infrastructure COMPLETE**
-**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Production-Ready Deployment System ✅**
+### **🎯 CURRENT SESSION: Documentation Consolidation & Architecture Update COMPLETE**
+**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Deployment Documentation + Single-App Architecture ✅**
 
-**✅ MAJOR ACCOMPLISHMENT: Complete Environment Configuration & Deployment System**
-- **Challenge**: Clarify confusing environment setup + implement proper deployment workflow
-- **Methodology**: Environment analysis + configuration management + deployment automation
-- **Outcome**: Clear 3-tier environment system + automated deployment commands ✅
-- **Impact**: Production-safe deployment process with comprehensive safety checks
+**✅ MAJOR ACCOMPLISHMENTS**:
+1. **📋 Mobile Admin UX Enhancement**: Fixed mobile responsiveness issues (sidebar overlap, collapsible filters)
+2. **📚 Documentation Consolidation**: Created comprehensive deployment guide from 3 overlapping docs 
+3. **🏗️ Architecture Update**: Updated all docs for single Amplify app multi-branch pattern
+4. **🗂️ Legacy Archive**: Safely preserved historical deployment documentation with context
+5. **🔄 Workflow Simplification**: Eliminated complex deployment scripts for simple git push workflow
 
-### **🔧 ENVIRONMENT SYSTEM ACHIEVEMENTS**
-| Component                         | Implementation                | Solution Applied              | Result                    |
-|-----------------------------------|-------------------------------|-------------------------------|---------------------------|
-| **Environment Analysis**         | Confusing env setup          | Complete documentation + mapping | Clear 3-tier system     |
-| **Config Management**            | Single amplify_outputs.json  | Separate dev/prod configs + switching | Environment isolation  |
-| **Deployment Commands**          | Manual deployment process    | `/deploy-staging` + `/deploy-production` | Automated workflows    |
-| **Safety Infrastructure**        | Risky production deployments | Comprehensive validation + rollback | Production-safe process |
-| **Environment Files**            | Inconsistent configurations  | `.env.{development,staging,production}` | Clear environment separation |
+### **🔧 TECHNICAL IMPLEMENTATIONS**
+| Component                       | Issue/Enhancement              | Solution Applied                   | Result                          |
+|---------------------------------|--------------------------------|------------------------------------|---------------------------------|
+| **Admin Mobile UX**            | Logo overlap + filter space   | Custom getLayout + collapsible UI | ✅ Mobile-optimized admin pages |
+| **Deployment Documentation**   | 3 overlapping files (1039 lines) | Consolidated comprehensive guide | ✅ Single source of truth      |
+| **Architecture Documentation** | Old multi-app pattern         | Updated to single-app 3-branch    | ✅ Accurate current state      |
+| **Legacy Preservation**        | Risk of information loss       | Archived with historical context  | ✅ Zero information loss       |
+| **Deployment Workflow**        | Complex scripts + commands     | Simple git merge + push pattern   | ✅ Standard GitFlow workflow   |
 
-### **📊 DEPLOYMENT INFRASTRUCTURE RESULTS**
+### **📊 DOCUMENTATION RESULTS**
+**Consolidated Guide**: `/docs/06-deployment/aws-amplify-gen2-complete-guide.md`
+- ✅ **Comprehensive**: Development workflow + deployment + migration + troubleshooting
+- ✅ **Current Architecture**: Single Amplify app (d200k2wsaf8th3) with 3 branches
+- ✅ **Simplified Workflow**: `git checkout staging && git merge main && git push origin staging`
+- ✅ **Zero Scripts**: No deployment scripts needed - AWS handles all automation
+- ✅ **Historical Context**: Archived legacy docs with evolution explanation
+
+**Architecture Pattern**:
 ```
-🎯 Environment Configuration:
-   • Development: localhost:3000 → RealTechee-2.0 (d3atadjk90y9q5) ✅
-   • Staging: prod.d3atadjk90y9q5.amplifyapp.com (shared backend) ✅
-   • Production: d200k2wsaf8th3.amplifyapp.com (isolated) ✅
-   • Config Files: amplify_outputs.{dev,prod}.json + switching script ✅
-   • Deployment: Claude commands + shell scripts with safety checks ✅
+Development  → main branch       → Single Amplify App (d200k2wsaf8th3)
+Staging      → staging branch    → Single Amplify App (d200k2wsaf8th3)  
+Production   → production branch → Single Amplify App (d200k2wsaf8th3)
 ```
 
-### **🚀 DEPLOYMENT SYSTEM FEATURES**
-**Claude Code Commands:**
-- **`/deploy-staging`**: Fast agile deployment (main→prod branch, shared backend)
-- **`/deploy-production`**: Comprehensive deployment (main→prod-v2, isolated backend, safety checks)
-
-**Safety & Automation:**
-- **Environment Switching**: Automatic config management with rollback capability
-- **Validation Pipeline**: TypeScript check + build test + git status verification
-- **Interactive Confirmations**: User prompts for destructive operations
-- **Comprehensive Backups**: Data protection before production deployments
+### **🗂️ LEGACY ARCHIVE SYSTEM**
+**Location**: `/docs/10-appendices/legacy/deployment-history/`
+- ✅ **Complete Preservation**: All 3 deployment docs archived with README
+- ✅ **Historical Context**: Evolution from complex to simple deployment documented
+- ✅ **Troubleshooting Reference**: Merge conflict solutions preserved for future reference
+- ✅ **Lessons Learned**: Architectural decision rationale documented
 
 ---
 
 ### **📈 Historical Achievements Summary (Enterprise-Grade Platform)**
-**🎉 PRODUCTION STATUS: 100% Complete + Deployment Protected** | **Ver: 3.1.9-rc.1** | **Deploy: ✅ Protected**
+**🎉 PRODUCTION STATUS: 100% Complete + Documentation Optimized** | **Ver: 3.1.9-rc.1** | **Deploy: ✅ Simplified**
 - ✅ **Core Platform**: US01-09 complete + 560+ E2E tests + production infrastructure
-- ✅ **Performance**: 77% bundle reduction + S3 optimization + multi-layer caching
-- ✅ **Infrastructure**: Complete isolation + monitoring + deployment protection system
-- ✅ **Deployment Security**: Environment validation + auto-fix + comprehensive auditing
-- ✅ **Enterprise Features**: SDLC versioning + audit logging + security compliance
+- ✅ **Performance**: 77% bundle reduction + MUI gallery + multi-layer optimization  
+- ✅ **Infrastructure**: Single-app architecture + monitoring + deployment protection
+- ✅ **Mobile UX**: Admin panel mobile-responsive + collapsible filters + logo positioning
+- ✅ **Documentation**: Consolidated deployment guide + legacy preservation + current architecture
 
-### **🎯 CURRENT SESSION: Production Environment Protection System COMPLETE**
-**Status: COMPLETED** | **Priority: CRITICAL** | **Achievement: AWS Infrastructure Fix + Future Protection ✅**
-
-**✅ MAJOR ACCOMPLISHMENTS**:
-1. **🔍 Root Cause Discovery**: AWS Amplify production env had wrong S3 URL with `/public` suffix
-2. **🛠️ Systematic AWS Audit**: Created comprehensive infrastructure analysis tools
-3. **🔧 Direct Infrastructure Fix**: AWS CLI corrected environment variable + clean rebuild
-4. **🛡️ Deployment Protection System**: Prevents future reintroduction of config issues
-5. **📚 Enterprise Documentation**: Complete troubleshooting and protection guides
-
-### **🔧 TECHNICAL IMPLEMENTATION SUMMARY**
-| Component                    | Issue Identified           | Solution Applied              | Protection Added           |
-|------------------------------|----------------------------|-------------------------------|----------------------------|
-| **AWS Environment Variable** | `/public` suffix in S3 URL | Direct AWS CLI fix + rebuild | Pre-deployment validation  |
-| **Deployment Scripts**       | No env validation          | Enhanced deploy-production.md | Auto env-var validation    |
-| **Local Testing**            | No prod config testing     | test:prod:local framework    | Fast local verification    |
-| **AWS Auditing**             | No infrastructure tools    | Comprehensive audit suite    | Deep config analysis       |
-| **Documentation**            | Missing troubleshooting    | 3 enterprise guides created  | Knowledge preservation     |
-
-### **🛡️ DEPLOYMENT PROTECTION ACHIEVED**
-```bash
-# New Protected Commands
-npm run validate:prod:deployment  # Pre-deployment validation
-npm run test:prod:local           # Local production testing  
-npm run audit:prod:aws           # Infrastructure audit
-/deploy-production               # Protected deployment (includes validation)
-```
-
-**Critical Safeguards Implemented**:
-- ✅ **Environment Variable Validation** - Detects `/public` suffix issues
-- ✅ **Auto-Fix Capability** - Corrects AWS config with user confirmation
-- ✅ **Local Production Testing** - Fast iteration without AWS delays
-- ✅ **Comprehensive AWS Auditing** - Deep infrastructure analysis
-- ✅ **Enhanced Deployment Flow** - Blocks deployment if issues detected
-
-**Future Deployment Security**: All production deployments now validate environment variables before proceeding
-
-### **🎯 Production Context (Essential for New Sessions)**
+### **🎯 Current Architecture Context (Essential for New Sessions)**
 **Environment Setup**:
 ```bash
 # Development (local)
-npm run dev:primed → localhost:3000 → RealTechee-2.0 (d3atadjk90y9q5)
-# Staging (shared backend)  
-prod.d3atadjk90y9q5.amplifyapp.com → tables: *-fvn7t5hbobaxjklhrqzdl4ac34-*
-# Production (isolated)
-prod-v2.d200k2wsaf8th3.amplifyapp.com → tables: *-aqnqdrctpzfwfjwyxxsmu6peoq-*
+npm run dev:primed → localhost:3000 → Single Amplify App (d200k2wsaf8th3)
+# Staging
+staging.d200k2wsaf8th3.amplifyapp.com → Single Amplify App (d200k2wsaf8th3)
+# Production  
+production.d200k2wsaf8th3.amplifyapp.com → Single Amplify App (d200k2wsaf8th3)
 ```
 
-**SDLC Workflow**: 
-1. `/deploy-staging` → Creates Release Candidate (RC) with semantic versioning (e.g., 3.1.5-rc.1)
+**SDLC Workflow (Simplified)**:
+1. `git checkout staging && git merge main && git push origin staging` → Auto-deploy staging
 2. Manual QA testing on staging environment (E2E automation unreliable)
-3. `/deploy-production` → Promotes RC to stable production release (e.g., 3.1.5)  
+3. `git checkout production && git merge staging && git push origin production` → Auto-deploy production
+
 **Test Credentials**: `info@realtechee.com` / `Sababa123!`
-**Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing), Business (data sync)
+**Next Phase (Optional)**: Security (MFA, GDPR), Advanced (custom domain, load testing)
 
 ---
 
-### **🎯 CURRENT SESSION: SDLC Versioning & ImageGallery Fix COMPLETE**
-**Status: COMPLETED** | **Priority: HIGH** | **Achievement: Enterprise Deployment + Gallery Fix ✅**
-
-**✅ MAJOR ACCOMPLISHMENTS**:
-1. **ImageGallery Thumbnail Fix**: Resolved staging thumbnail click issue via `handleThumbnailClick` dependency removal
-2. **SDLC Versioning Implementation**: Complete industry-standard workflow (GitFlow + Semantic Versioning)
-3. **Version Display Enhancement**: Added version correlation across dev/staging/prod environments
-4. **Deployment Command Upgrade**: Enhanced `/deploy-staging` + `/deploy-production` with versioning workflow
-
-### **🔧 TECHNICAL IMPLEMENTATIONS**
-| Component                    | Issue/Enhancement           | Solution Applied                  | Result                        |
-|------------------------------|----------------------------|-----------------------------------|-------------------------------|
-| **ImageGallery.tsx**         | Thumbnail selection bug    | Remove `loadedImages` dependency  | ✅ Consistent click behavior  |
-| **Version Display**          | Missing dev version        | Package.json fallback system     | ✅ All envs show same version |  
-| **Deployment Commands**      | Manual versioning         | Automated RC→stable workflow     | ✅ SDLC compliance achieved   |
-| **Version Management**       | No git tags/rollback       | `version-manager.sh` + git tags  | ✅ Full audit trail          |
-
-### **📊 SDLC WORKFLOW ACHIEVED**
-**Development → Staging → Production Flow**:
-```
-Dev Work      → /deploy-staging    → /deploy-production
-(3.1.3)        (3.1.4-rc.1)         (3.1.4)
-```
-
-**Hotfix Support**: `./scripts/version-manager.sh hotfix 3.1.5` → creates branch from production tag
-**Audit Trail**: Git tags (`v3.1.4-rc.1`, `v3.1.4`) enable instant rollback + version correlation
-**Environment Safety**: RC validation prevents accidental prod deploys + comprehensive backups
-
-### **🎯 DEPLOYMENT SYSTEM SUMMARY**
-- **Version Correlation**: ✅ Dev/staging/prod show identical versions for debugging
-- **Git Tags**: ✅ Every release tagged for rollback (`git checkout v3.1.4`)  
-- **SDLC Compliance**: ✅ RC testing required before production deployment
-- **Hotfix Workflow**: ✅ Emergency patches from any production version
-- **Audit Trail**: ✅ Complete deployment history with version traceability
-
----
-
----
-
----
-
-*Last Updated: July 27, 2025 - 🎉 MUI GALLERY PRODUCTION DEPLOYMENT COMPLETE: Zero image reload gallery live in production ✅*
+*Last Updated: August 5, 2025 - 📚 Documentation Consolidation + Single-App Architecture Update Complete ✅*

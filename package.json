@@ -1,6 +1,6 @@
 {
   "name": "realtechee-clone",
-  "version": "3.1.9-rc.18",
+  "version": "3.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
@@ -16,7 +16,6 @@
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
     "version:major": "npm version major",
-    "deploy:prod": "git push origin prod",
     "test:e2e": "npx playwright test",
     "test:e2e:admin": "npx playwright test --project=full-admin-suite",
     "test:e2e:admin:projects": "npx playwright test --project=isolated-admin-projects",

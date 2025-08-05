@@ -2798,6 +2798,366 @@
             "sortKeyFieldNames": []
           }
         },
+        "EmailSuppressionList": {
+          "name": "EmailSuppressionList",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "emailAddress": {
+              "name": "emailAddress",
+              "isArray": false,
+              "type": "AWSEmail",
+              "isRequired": true,
+              "attributes": []
+            },
+            "suppressionType": {
+              "name": "suppressionType",
+              "isArray": false,
+              "type": {
+                "enum": "EmailSuppressionListSuppressionType"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "reason": {
+              "name": "reason",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "bounceType": {
+              "name": "bounceType",
+              "isArray": false,
+              "type": {
+                "enum": "EmailSuppressionListBounceType"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "bounceSubType": {
+              "name": "bounceSubType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "complaintType": {
+              "name": "complaintType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "originalMessageId": {
+              "name": "originalMessageId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "suppressedAt": {
+              "name": "suppressedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": true,
+              "attributes": []
+            },
+            "source": {
+              "name": "source",
+              "isArray": false,
+              "type": {
+                "enum": "EmailSuppressionListSource"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "metadata": {
+              "name": "metadata",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isActive": {
+              "name": "isActive",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdBy": {
+              "name": "createdBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedBy": {
+              "name": "updatedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            }
+          },
+          "syncable": true,
+          "pluralName": "EmailSuppressionLists",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "SESReputationMetrics": {
+          "name": "SESReputationMetrics",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "metricDate": {
+              "name": "metricDate",
+              "isArray": false,
+              "type": "AWSDate",
+              "isRequired": true,
+              "attributes": []
+            },
+            "totalEmailsSent": {
+              "name": "totalEmailsSent",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "totalBounces": {
+              "name": "totalBounces",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "totalComplaints": {
+              "name": "totalComplaints",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "bounceRate": {
+              "name": "bounceRate",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "complaintRate": {
+              "name": "complaintRate",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "deliveryRate": {
+              "name": "deliveryRate",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "reputationScore": {
+              "name": "reputationScore",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "sendingQuotaUsed": {
+              "name": "sendingQuotaUsed",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "sendingQuotaMax": {
+              "name": "sendingQuotaMax",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "sendRateMax": {
+              "name": "sendRateMax",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "bounceRateAlert": {
+              "name": "bounceRateAlert",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "complaintRateAlert": {
+              "name": "complaintRateAlert",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            }
+          },
+          "syncable": true,
+          "pluralName": "SESReputationMetrics",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
         "PendingAppoitments": {
           "name": "PendingAppoitments",
           "fields": {
@@ -6277,7 +6637,9 @@
             "EMAIL_FAILED",
             "SMS_FAILED",
             "NOTIFICATION_COMPLETED",
-            "NOTIFICATION_FAILED"
+            "NOTIFICATION_FAILED",
+            "EMAIL_BOUNCE",
+            "EMAIL_COMPLAINT"
           ]
         },
         "NotificationEventsChannel": {
@@ -6292,9 +6654,33 @@
         "NotificationEventsProvider": {
           "name": "NotificationEventsProvider",
           "values": [
+            "SES",
             "SENDGRID",
             "TWILIO",
             "DEBUG"
+          ]
+        },
+        "EmailSuppressionListSuppressionType": {
+          "name": "EmailSuppressionListSuppressionType",
+          "values": [
+            "BOUNCE",
+            "COMPLAINT",
+            "MANUAL"
+          ]
+        },
+        "EmailSuppressionListBounceType": {
+          "name": "EmailSuppressionListBounceType",
+          "values": [
+            "PERMANENT",
+            "TRANSIENT"
+          ]
+        },
+        "EmailSuppressionListSource": {
+          "name": "EmailSuppressionListSource",
+          "values": [
+            "SES_NOTIFICATION",
+            "MANUAL_ADMIN",
+            "USER_REQUEST"
           ]
         },
         "AppPreferencesDataType": {
@@ -6365,6 +6751,8 @@
   "custom": {
     "notificationProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-notificationprocessorlam-sLgeFvCfN0xX",
     "userAdminArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-do-useradminlambda0B2D5BDC-PxJhVxRHwhMc",
-    "statusProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-statusprocessorlambda74B-EStB9mbWvKcp"
+    "statusProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-statusprocessorlambda74B-EStB9mbWvKcp",
+    "sesBounceHandlerArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-sesbouncehandlerlambda83-hlq20dpVIObe",
+    "reputationMonitorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-reputationmonitorlambda4-phYADQv2RGqF"
   }
 }
