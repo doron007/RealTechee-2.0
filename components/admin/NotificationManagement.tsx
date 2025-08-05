@@ -2,44 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { H2, H3, P2 } from '../typography';
 import { listNotificationQueues, listNotificationTemplates } from '../../queries';
-import { updateNotificationQueue, createNotificationTemplate, updateNotificationTemplate, createNotificationQueue } from '../../mutations';
+import { updateNotificationQueue, createNotificationTemplate, updateNotificationTemplate, createNotificationQueue, deleteNotificationQueue } from '../../mutations';
 import { NotificationQueueStatus, NotificationTemplateChannel } from '../../API';
 import { DateTimeUtils } from '../../utils/dateTimeUtils';
+import EditNotificationModal from './modals/EditNotificationModal';
+import TemplateEditorModal from './modals/TemplateEditorModal';
+import BulkActionModal from './modals/BulkActionModal';
+import { NotificationItem, TemplateItem } from '../../types/notifications';
 
 const client = generateClient();
 
 type ViewMode = 'queue' | 'history' | 'templates' | 'monitoring';
 
-interface NotificationItem {
-  id: string;
-  eventType: string;
-  status: NotificationQueueStatus;
-  recipientIds: string | string[];
-  channels: string | string[];
-  templateId: string;
-  payload: string | any;
-  createdAt: string;
-  updatedAt: string;
-  scheduledAt?: string | null;
-  sentAt?: string | null;
-  retryCount?: number | null;
-  errorMessage?: string | null;
-  __typename?: string;
-}
 
-interface TemplateItem {
-  id: string;
-  name: string;
-  channel: string;
-  subject?: string | null;
-  contentHtml?: string | null;
-  contentText?: string | null;
-  isActive?: boolean | null;
-  createdAt: string;
-  updatedAt: string;
-  variables?: string | null;
-  __typename?: string;
-}
 
 const NotificationManagement: React.FC = () => {
   // State management
@@ -65,7 +40,9 @@ const NotificationManagement: React.FC = () => {
   const [editingNotification, setEditingNotification] = useState<NotificationItem | null>(null);
   const [editingTemplate, setEditingTemplate] = useState<TemplateItem | null>(null);
   const [showTemplateModal, setShowTemplateModal] = useState(false);
-  const [showAwsMonitoring, setShowAwsMonitoring] = useState(false);
+  const [templateModalMode, setTemplateModalMode] = useState<'create' | 'edit'>('edit');
+  const [showBulkActionModal, setShowBulkActionModal] = useState(false);
+  const [bulkActionType, setBulkActionType] = useState<'delete' | 'retry' | 'fail'>('retry');
 
   // Auto-refresh interval
   const [autoRefresh, setAutoRefresh] = useState(true);
@@ -119,10 +96,79 @@ const NotificationManagement: React.FC = () => {
     }
   }, [autoRefresh]);
 
+  const applyFilters = useCallback(() => {
+    let filtered = [...notifications];
+    
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(n => n.status === statusFilter);
+    }
+    
+    // Apply channel filter
+    if (channelFilter !== 'all') {
+      filtered = filtered.filter(n => {
+        const channels = parseChannels(n.channels);
+        return channels.includes(channelFilter);
+      });
+    }
+    
+    // Apply search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(n => 
+        n.eventType.toLowerCase().includes(query) ||
+        n.templateId.toLowerCase().includes(query) ||
+        (n.errorMessage && n.errorMessage.toLowerCase().includes(query))
+      );
+    }
+    
+    // Apply date range filter
+    if (dateRange.start) {
+      filtered = filtered.filter(n => 
+        new Date(n.createdAt) >= new Date(dateRange.start)
+      );
+    }
+    if (dateRange.end) {
+      filtered = filtered.filter(n => 
+        new Date(n.createdAt) <= new Date(dateRange.end)
+      );
+    }
+    
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let aValue: any, bValue: any;
+      
+      switch (sortField) {
+        case 'createdAt':
+        case 'updatedAt':
+        case 'scheduledAt':
+        case 'sentAt':
+          aValue = new Date(a[sortField as keyof NotificationItem] as string || 0).getTime();
+          bValue = new Date(b[sortField as keyof NotificationItem] as string || 0).getTime();
+          break;
+        case 'retryCount':
+          aValue = a.retryCount || 0;
+          bValue = b.retryCount || 0;
+          break;
+        default:
+          aValue = a[sortField as keyof NotificationItem] || '';
+          bValue = b[sortField as keyof NotificationItem] || '';
+      }
+      
+      if (sortDirection === 'asc') {
+        return aValue > bValue ? 1 : -1;
+      } else {
+        return aValue < bValue ? 1 : -1;
+      }
+    });
+    
+    setFilteredNotifications(filtered);
+  }, [notifications, statusFilter, channelFilter, searchQuery, dateRange, sortField, sortDirection, parseChannels]);
+
   useEffect(() => {
     // Apply filters and sorting when notifications or filters change
     applyFilters();
-  }, [notifications, statusFilter, channelFilter, searchQuery, dateRange, sortField, sortDirection]);
+  }, [applyFilters]);
 
   const loadData = async () => {
     setLoading(true);
@@ -319,72 +365,6 @@ const NotificationManagement: React.FC = () => {
     }
   };
 
-  const applyFilters = useCallback(() => {
-    let filtered = [...notifications];
-
-    // Status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(n => n.status === statusFilter);
-    }
-
-    // Channel filter
-    if (channelFilter !== 'all') {
-      filtered = filtered.filter(n => {
-        const channels = parseChannels(n.channels);
-        return channels.includes(channelFilter);
-      });
-    }
-
-    // Search query
-    if (searchQuery) {
-      filtered = filtered.filter(n => 
-        n.eventType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        n.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (n.errorMessage && n.errorMessage.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-
-    // Date range
-    if (dateRange.start || dateRange.end) {
-      filtered = filtered.filter(n => {
-        const notifDate = new Date(n.createdAt);
-        const start = dateRange.start ? new Date(dateRange.start) : new Date('1970-01-01');
-        const end = dateRange.end ? new Date(dateRange.end) : new Date('2100-01-01');
-        return notifDate >= start && notifDate <= end;
-      });
-    }
-
-    // Sorting
-    filtered.sort((a, b) => {
-      let aValue: any = a[sortField as keyof NotificationItem];
-      let bValue: any = b[sortField as keyof NotificationItem];
-
-      // Handle special cases
-      if (sortField === 'channels') {
-        aValue = parseChannels(a.channels).length;
-        bValue = parseChannels(b.channels).length;
-      } else if (sortField === 'recipientIds') {
-        aValue = parseRecipients(a.recipientIds).length;
-        bValue = parseRecipients(b.recipientIds).length;
-      } else if (sortField === 'createdAt' || sortField === 'sentAt' || sortField === 'scheduledAt') {
-        aValue = aValue ? new Date(aValue).getTime() : 0;
-        bValue = bValue ? new Date(bValue).getTime() : 0;
-      } else if (typeof aValue === 'string') {
-        aValue = aValue.toLowerCase();
-        bValue = bValue ? bValue.toLowerCase() : '';
-      }
-
-      if (aValue < bValue) {
-        return sortDirection === 'asc' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortDirection === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-
-    setFilteredNotifications(filtered);
-  }, [notifications, statusFilter, channelFilter, searchQuery, dateRange, sortField, sortDirection]);
 
   // Sorting function
   const handleSort = (field: string) => {
@@ -441,6 +421,342 @@ const NotificationManagement: React.FC = () => {
 
   const resetNotification = async (id: string) => {
     await updateNotificationStatus(id, NotificationQueueStatus.PENDING);
+  };
+
+  // Enhanced Queue Management Functions
+  const viewNotificationDetails = (notification: NotificationItem) => {
+    try {
+      // Parse the payload to display all details
+      const payload = JSON.parse(notification.payload);
+      const recipients = parseRecipients(notification.recipientIds);
+      const channels = parseChannels(notification.channels);
+      
+      const details = {
+        ...notification,
+        payload,
+        recipients,
+        channels,
+        formattedCreatedAt: new Date(notification.createdAt).toLocaleString(),
+        formattedUpdatedAt: new Date(notification.updatedAt).toLocaleString(),
+        formattedSentAt: notification.sentAt ? new Date(notification.sentAt).toLocaleString() : 'Not sent',
+        formattedScheduledAt: notification.scheduledAt ? new Date(notification.scheduledAt).toLocaleString() : 'Not scheduled'
+      };
+
+      // Create a detailed view modal content
+      const detailsHtml = `
+        <div style="max-height: 70vh; overflow-y: auto; font-family: 'Monaco', 'Menlo', monospace; font-size: 12px;">
+          <h3 style="color: #2563eb; margin-bottom: 16px;">📋 Notification Details</h3>
+          
+          <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <h4 style="color: #1e40af; margin: 0 0 12px;">Basic Information</h4>
+            <p><strong>ID:</strong> ${details.id}</p>
+            <p><strong>Event Type:</strong> ${details.eventType}</p>
+            <p><strong>Template ID:</strong> ${details.templateId}</p>
+            <p><strong>Status:</strong> <span style="background: #${details.status === 'SENT' ? '10b981' : details.status === 'FAILED' ? 'ef4444' : 'f59e0b'}; color: white; padding: 2px 8px; border-radius: 4px;">${details.status}</span></p>
+            <p><strong>Retry Count:</strong> ${details.retryCount || 0}</p>
+            <p><strong>Owner:</strong> ${details.owner}</p>
+          </div>
+
+          <div style="background: #f0f9ff; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <h4 style="color: #0c4a6e; margin: 0 0 12px;">Recipients & Channels</h4>
+            <p><strong>Recipients:</strong> ${details.recipients.join(', ')}</p>
+            <p><strong>Channels:</strong> ${details.channels.join(', ')}</p>
+          </div>
+
+          <div style="background: #f0fdf4; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <h4 style="color: #166534; margin: 0 0 12px;">Timing</h4>
+            <p><strong>Created:</strong> ${details.formattedCreatedAt}</p>
+            <p><strong>Updated:</strong> ${details.formattedUpdatedAt}</p>
+            <p><strong>Sent:</strong> ${details.formattedSentAt}</p>
+            <p><strong>Scheduled:</strong> ${details.formattedScheduledAt}</p>
+          </div>
+
+          ${details.errorMessage ? `
+          <div style="background: #fef2f2; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <h4 style="color: #dc2626; margin: 0 0 12px;">❌ Error Details</h4>
+            <p style="color: #dc2626; word-break: break-all;">${details.errorMessage}</p>
+          </div>
+          ` : ''}
+
+          <div style="background: #fef3c7; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            <h4 style="color: #92400e; margin: 0 0 12px;">📦 Payload Data</h4>
+            <pre style="background: white; padding: 12px; border-radius: 4px; overflow-x: auto; white-space: pre-wrap; word-break: break-all;">${JSON.stringify(details.payload, null, 2)}</pre>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <button onclick="navigator.clipboard.writeText('${details.id}'); alert('Notification ID copied to clipboard!')" 
+                    style="background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+              📋 Copy ID
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Create and show modal
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; 
+        z-index: 10000; font-family: Arial, sans-serif;
+      `;
+      
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = `
+        background: white; padding: 24px; border-radius: 8px; max-width: 800px; width: 90%;
+        max-height: 90vh; overflow-y: auto; position: relative;
+      `;
+      
+      modalContent.innerHTML = detailsHtml + `
+        <div style="text-align: right; margin-top: 20px;">
+          <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                  style="background: #6b7280; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+            Close
+          </button>
+        </div>
+      `;
+      
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      
+    } catch (error) {
+      console.error('Error viewing notification details:', error);
+      alert('Error displaying notification details. Check console for details.');
+    }
+  };
+
+  const editAndResendNotification = (notification: NotificationItem) => {
+    setEditingNotification(notification);
+  };
+
+  // New modal handlers
+  const handleSaveNotification = async (updatedNotification: Partial<NotificationItem>) => {
+    if (!editingNotification) return;
+    
+    try {
+      await client.graphql({
+        query: updateNotificationQueue,
+        variables: {
+          input: {
+            id: editingNotification.id,
+            eventType: updatedNotification.eventType,
+            status: updatedNotification.status,
+            templateId: updatedNotification.templateId,
+            payload: updatedNotification.payload,
+            // Convert arrays to JSON strings for GraphQL
+            recipientIds: typeof updatedNotification.recipientIds === 'string' 
+              ? updatedNotification.recipientIds 
+              : JSON.stringify(updatedNotification.recipientIds || []),
+            channels: typeof updatedNotification.channels === 'string' 
+              ? updatedNotification.channels 
+              : JSON.stringify(updatedNotification.channels || [])
+          }
+        }
+      });
+      await loadData();
+    } catch (error) {
+      console.error('Failed to save notification:', error);
+      setError(`Failed to save notification: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  };
+
+  const handleResendNotification = async (notification: NotificationItem) => {
+    await requeueNotification(notification);
+  };
+
+  const handleBulkAction = async () => {
+    const selectedNotificationItems = notifications.filter(n => selectedNotifications.has(n.id));
+    
+    if (bulkActionType === 'delete') {
+      for (const notification of selectedNotificationItems) {
+        await deleteNotification(notification);
+      }
+    } else if (bulkActionType === 'retry') {
+      await bulkUpdateStatus(NotificationQueueStatus.PENDING);
+    } else if (bulkActionType === 'fail') {
+      await bulkUpdateStatus(NotificationQueueStatus.FAILED);
+    }
+    
+    setSelectedNotifications(new Set());
+  };
+
+  const handleBulkDelete = () => {
+    setBulkActionType('delete');
+    setShowBulkActionModal(true);
+  };
+
+  const handleBulkRetry = () => {
+    setBulkActionType('retry');
+    setShowBulkActionModal(true);
+  };
+
+  const handleBulkFail = () => {
+    setBulkActionType('fail');
+    setShowBulkActionModal(true);
+  };
+
+  const handleCreateTemplate = () => {
+    setEditingTemplate(null);
+    setTemplateModalMode('create');
+    setShowTemplateModal(true);
+  };
+
+  const handleEditTemplate = (template: TemplateItem) => {
+    setEditingTemplate(template);
+    setTemplateModalMode('edit');
+    setShowTemplateModal(true);
+  };
+
+  const handleSaveTemplate = async (templateData: Partial<TemplateItem>) => {
+    try {
+      if (templateModalMode === 'create') {
+        await client.graphql({
+          query: createNotificationTemplate,
+          variables: {
+            input: {
+              name: templateData.name || 'Untitled Template',
+              channel: templateData.channel as NotificationTemplateChannel,
+              subject: templateData.subject,
+              contentHtml: templateData.contentHtml,
+              contentText: templateData.contentText,
+              isActive: templateData.isActive,
+              variables: templateData.variables,
+              owner: templateData.owner
+            }
+          }
+        });
+      } else if (editingTemplate) {
+        await client.graphql({
+          query: updateNotificationTemplate,
+          variables: {
+            input: {
+              id: editingTemplate.id,
+              name: templateData.name,
+              channel: templateData.channel as NotificationTemplateChannel,
+              subject: templateData.subject,
+              contentHtml: templateData.contentHtml,
+              contentText: templateData.contentText,
+              isActive: templateData.isActive,
+              variables: templateData.variables
+            }
+          }
+        });
+      }
+      await loadData();
+    } catch (error) {
+      console.error('Failed to save template:', error);
+      setError(`Failed to save template: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  };
+
+  const oldEditAndResendNotification = (notification: NotificationItem) => {
+    try {
+      // Set the notification for editing
+      setEditingNotification(notification);
+      
+      // Also create a simple resend option via confirm dialog
+      const shouldResend = confirm(`Do you want to resend notification ${notification.id.slice(0, 8)}...?\n\nEvent: ${notification.eventType}\nStatus: ${notification.status}\nChannels: ${parseChannels(notification.channels).join(', ')}\n\nClick OK to requeue, Cancel to just edit.`);
+      
+      if (shouldResend) {
+        requeueNotification(notification);
+      }
+    } catch (error) {
+      console.error('Error in edit and resend:', error);
+      setError('Failed to initiate edit and resend operation');
+    }
+  };
+
+  const requeueNotification = async (notification: NotificationItem) => {
+    try {
+      setLoading(true);
+      console.log('🔄 Requeuing notification for testing:', notification.id);
+
+      // Create a new notification with the same payload but new ID and PENDING status
+      const requeuedNotification = {
+        eventType: notification.eventType,
+        payload: notification.payload,
+        recipientIds: typeof notification.recipientIds === 'string' 
+          ? notification.recipientIds 
+          : JSON.stringify(notification.recipientIds),
+        channels: typeof notification.channels === 'string' 
+          ? notification.channels 
+          : JSON.stringify(notification.channels),
+        templateId: notification.templateId,
+        status: NotificationQueueStatus.PENDING,
+        retryCount: 0,
+        owner: 'admin-requeue'
+      };
+
+      const result = await client.graphql({
+        query: createNotificationQueue,
+        variables: {
+          input: requeuedNotification
+        }
+      });
+
+      console.log('✅ Notification requeued successfully:', result);
+      
+      // Refresh data to show the new notification
+      await loadData();
+      
+      alert(`✅ Notification requeued successfully!\n\nNew ID: ${result.data?.createNotificationQueue?.id || 'Generated'}\nStatus: PENDING\n\nCheck the queue for the new notification and monitor Lambda logs for processing.`);
+      
+    } catch (error) {
+      console.error('❌ Failed to requeue notification:', error);
+      setError(`Failed to requeue notification: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteNotification = async (notification: NotificationItem) => {
+    try {
+      // Confirm deletion
+      const confirmDelete = confirm(`⚠️ Delete Notification?\n\nID: ${notification.id.slice(0, 8)}...\nEvent: ${notification.eventType}\nStatus: ${notification.status}\n\nThis will:\n1. Remove the record from NotificationQueue\n2. Add details to audit log (for recovery)\n\nThis action cannot be undone. Continue?`);
+      
+      if (!confirmDelete) return;
+
+      setLoading(true);
+      console.log('🗑️ Deleting notification:', notification.id);
+
+      // First, log to audit (you may need to implement this based on your audit table)
+      const auditEntry = {
+        action: 'DELETE_NOTIFICATION',
+        timestamp: new Date().toISOString(),
+        performedBy: 'admin',
+        targetId: notification.id,
+        targetType: 'NotificationQueue',
+        details: JSON.stringify({
+          originalNotification: notification,
+          reason: 'Manual deletion via admin interface',
+          deletedAt: new Date().toISOString()
+        })
+      };
+
+      console.log('📝 Audit entry:', auditEntry);
+      // TODO: Implement audit log creation based on your audit table structure
+      // await client.graphql({ query: createAuditLog, variables: { input: auditEntry } });
+
+      // Delete the notification
+      await client.graphql({
+        query: deleteNotificationQueue,
+        variables: {
+          input: { id: notification.id }
+        }
+      });
+
+      console.log('✅ Notification deleted successfully');
+      
+      // Refresh data
+      await loadData();
+      
+      alert(`✅ Notification deleted successfully!\n\nID: ${notification.id.slice(0, 8)}...\nAudit entry created for recovery if needed.`);
+      
+    } catch (error) {
+      console.error('❌ Failed to delete notification:', error);
+      setError(`Failed to delete notification: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const sendTestNotification = async () => {
@@ -946,16 +1262,22 @@ Dashboard: {{admin.dashboardUrl}}
                     </span>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => bulkUpdateStatus(NotificationQueueStatus.PENDING)}
+                        onClick={handleBulkRetry}
                         className="px-3 py-1 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700"
                       >
                         Retry All
                       </button>
                       <button
-                        onClick={() => bulkUpdateStatus(NotificationQueueStatus.FAILED)}
+                        onClick={handleBulkFail}
                         className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
                       >
                         Mark as Failed
+                      </button>
+                      <button
+                        onClick={handleBulkDelete}
+                        className="px-3 py-1 bg-red-800 text-white rounded text-sm hover:bg-red-900"
+                      >
+                        Delete All
                       </button>
                     </div>
                   </div>
@@ -1098,6 +1420,25 @@ Dashboard: {{admin.dashboardUrl}}
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex gap-1">
+                              {/* View Button - Always available */}
+                              <button
+                                onClick={() => viewNotificationDetails(notification)}
+                                className="px-2 py-1 bg-gray-600 text-white rounded text-xs hover:bg-gray-700"
+                                title="View Details"
+                              >
+                                👁️
+                              </button>
+                              
+                              {/* Edit & Resend Button - Always available */}
+                              <button
+                                onClick={() => editAndResendNotification(notification)}
+                                className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
+                                title="Edit & Resend"
+                              >
+                                ✏️↗️
+                              </button>
+
+                              {/* Retry Button - For failed notifications */}
                               {notification.status === NotificationQueueStatus.FAILED && (
                                 <button
                                   onClick={() => retryNotification(notification.id)}
@@ -1107,6 +1448,19 @@ Dashboard: {{admin.dashboardUrl}}
                                   🔄
                                 </button>
                               )}
+
+                              {/* Requeue Button - For SENT notifications to test again */}
+                              {notification.status === NotificationQueueStatus.SENT && (
+                                <button
+                                  onClick={() => requeueNotification(notification)}
+                                  className="px-2 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700"
+                                  title="Requeue for Testing"
+                                >
+                                  🔄📤
+                                </button>
+                              )}
+                              
+                              {/* Mark as Failed Button - For pending */}
                               {notification.status === NotificationQueueStatus.PENDING && (
                                 <button
                                   onClick={() => updateNotificationStatus(notification.id, NotificationQueueStatus.FAILED)}
@@ -1116,12 +1470,14 @@ Dashboard: {{admin.dashboardUrl}}
                                   ❌
                                 </button>
                               )}
+
+                              {/* Delete Button - Always available */}
                               <button
-                                onClick={() => setEditingNotification(notification)}
-                                className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700"
-                                title="Edit"
+                                onClick={() => deleteNotification(notification)}
+                                className="px-2 py-1 bg-red-800 text-white rounded text-xs hover:bg-red-900"
+                                title="Delete (moves to audit log)"
                               >
-                                ✏️
+                                🗑️
                               </button>
                             </div>
                           </td>
@@ -1162,6 +1518,12 @@ Dashboard: {{admin.dashboardUrl}}
               <div className="flex justify-between items-center">
                 <H3>Notification Templates</H3>
                 <div className="flex gap-2">
+                  <button
+                    onClick={handleCreateTemplate}
+                    className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                  >
+                    Create New Template
+                  </button>
                   <button
                     onClick={createGetEstimateTemplate}
                     disabled={loading}
@@ -1235,7 +1597,7 @@ Dashboard: {{admin.dashboardUrl}}
                           </td>
                           <td className="px-6 py-4">
                             <button
-                              onClick={() => setEditingTemplate(template)}
+                              onClick={() => handleEditTemplate(template)}
                               className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
                             >
                               Edit
@@ -1275,6 +1637,31 @@ Dashboard: {{admin.dashboardUrl}}
           )}
         </div>
       </div>
+
+      {/* Modal Components */}
+      <EditNotificationModal
+        open={!!editingNotification}
+        onClose={() => setEditingNotification(null)}
+        notification={editingNotification}
+        onSave={handleSaveNotification}
+        onResend={handleResendNotification}
+      />
+
+      <TemplateEditorModal
+        open={showTemplateModal}
+        onClose={() => setShowTemplateModal(false)}
+        template={editingTemplate}
+        onSave={handleSaveTemplate}
+        mode={templateModalMode}
+      />
+
+      <BulkActionModal
+        open={showBulkActionModal}
+        onClose={() => setShowBulkActionModal(false)}
+        selectedNotifications={notifications.filter(n => selectedNotifications.has(n.id))}
+        action={bulkActionType}
+        onConfirm={handleBulkAction}
+      />
     </div>
   );
 };

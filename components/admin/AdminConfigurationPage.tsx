@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Box, 
   Typography, 
@@ -31,8 +31,83 @@ import {
 import { AuthorizationService } from '../../utils/authorizationHelpers';
 import { UserService } from '../../utils/userService';
 
-// Import the centralized environment configuration
-import environmentsConfig from '../../config/environments.json';
+// Environment configuration - inline definition to avoid build issues
+const environmentsConfig = {
+  environments: {
+    development: {
+      name: "Development",
+      description: "Local development environment",
+      git_branch: "main",
+      amplify: {
+        app_id: "d3atadjk90y9q5",
+        app_name: "RealTechee-2.0",
+        url: "http://localhost:3000"
+      },
+      cognito: {
+        user_pool_id: "us-west-1_5pFbWcwtU",
+        user_pool_client_id: "4pdj4qp05o47a0g42cqlt99ccs",
+        identity_pool_id: "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
+      },
+      storage: {
+        bucket_name: "amplify-realtecheeclone-main-bucket",
+        region: "us-west-1"
+      },
+      api: {
+        graphql_url: "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
+        api_key: "da2-qe4fczl75zhgjb4rz3dh5r7xky"
+      },
+      tables_suffix: "fvn7t5hbobaxjklhrqzdl4ac34"
+    },
+    staging: {
+      name: "Staging",
+      description: "Staging environment",
+      git_branch: "prod",
+      amplify: {
+        app_id: "d3atadjk90y9q5", 
+        app_name: "RealTechee-2.0",
+        url: "https://prod.d3atadjk90y9q5.amplifyapp.com"
+      },
+      cognito: {
+        user_pool_id: "us-west-1_5pFbWcwtU",
+        user_pool_client_id: "4pdj4qp05o47a0g42cqlt99ccs",
+        identity_pool_id: "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
+      },
+      storage: {
+        bucket_name: "amplify-realtecheeclone-main-bucket",
+        region: "us-west-1"
+      },
+      api: {
+        graphql_url: "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
+        api_key: "da2-qe4fczl75zhgjb4rz3dh5r7xky"
+      },
+      tables_suffix: "fvn7t5hbobaxjklhrqzdl4ac34"
+    },
+    production: {
+      name: "Production",
+      description: "Production environment",
+      git_branch: "prod-v2",
+      amplify: {
+        app_id: "d200k2wsaf8th3",
+        app_name: "RealTechee-Gen2", 
+        url: "https://prod-v2.d200k2wsaf8th3.amplifyapp.com"
+      },
+      cognito: {
+        user_pool_id: "us-west-1_1eQCIgm5h",
+        user_pool_client_id: "5qcjd3l5i733b2tn99qf2g6675",
+        identity_pool_id: "us-west-1:11d5c002-cbe3-4414-bd8f-4f046d2ab457"
+      },
+      storage: {
+        bucket_name: "amplify-realtecheeclone-production-bucket-PROD",
+        region: "us-west-1"
+      },
+      api: {
+        graphql_url: "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
+        api_key: "da2-PRODUCTION_API_KEY"
+      },
+      tables_suffix: "aqnqdrctpzfwfjwyxxsmu6peoq"
+    }
+  }
+};
 
 interface CurrentEnvironment {
   name: string;
@@ -55,11 +130,7 @@ const AdminConfigurationPage: React.FC = () => {
   const [serviceStatuses, setServiceStatuses] = useState<ServiceStatus[]>([]);
   const [userProfile, setUserProfile] = useState<any>(null);
 
-  useEffect(() => {
-    checkAuthorization();
-  }, []);
-
-  const checkAuthorization = async () => {
+  const checkAuthorization = useCallback(async () => {
     try {
       setLoading(true);
       const profile = await UserService.getUserProfile();
@@ -77,7 +148,11 @@ const AdminConfigurationPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkAuthorization();
+  }, [checkAuthorization]);
 
   const loadConfiguration = async () => {
     try {

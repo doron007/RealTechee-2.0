@@ -1,6 +1,7 @@
 import { SESClient, SendEmailCommand, GetSendQuotaCommand } from '@aws-sdk/client-ses';
 import { SecureConfigClient } from '../utils/secureConfigClient';
 import { EventLogger } from '../utils/eventLogger';
+import { SuppressionListService } from '../services/suppressionListService';
 
 export interface EmailParams {
   to: string;
@@ -14,9 +15,11 @@ export interface EmailParams {
 export class SESEmailHandler {
   private sesClient: SESClient;
   private secureConfigClient: SecureConfigClient;
+  private suppressionListService: SuppressionListService;
 
   constructor() {
     this.secureConfigClient = SecureConfigClient.getInstance();
+    this.suppressionListService = new SuppressionListService();
     // Initialize SES client - it will use IAM role credentials automatically
     this.sesClient = new SESClient({
       region: process.env.AWS_REGION || 'us-west-1',
@@ -27,6 +30,26 @@ export class SESEmailHandler {
   async sendEmail(params: EmailParams): Promise<void> {
     const startTime = Date.now();
     const { to, subject, htmlContent, textContent, from, notificationId } = params;
+
+    // Check suppression list first
+    const suppressionCheck = await this.suppressionListService.isEmailSuppressed(to);
+    if (suppressionCheck.suppressed) {
+      const errorMessage = `Email suppressed: ${suppressionCheck.reason} (${suppressionCheck.suppressionType})`;
+      console.warn(`🚫 Skipping email to ${to}: ${errorMessage}`);
+      
+      // Log suppression event
+      if (notificationId) {
+        await EventLogger.logEmailFailed(
+          notificationId,
+          to,
+          'EMAIL_SUPPRESSED',
+          errorMessage,
+          Date.now() - startTime
+        );
+      }
+      
+      throw new Error(errorMessage);
+    }
 
     // Log email attempt
     if (notificationId) {

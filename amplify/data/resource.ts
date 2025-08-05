@@ -784,11 +784,11 @@ const SecureConfig = a.model({
 const NotificationEvents = a.model({
   eventId: a.string().required(),
   notificationId: a.string().required(),
-  eventType: a.enum(['NOTIFICATION_QUEUED', 'NOTIFICATION_PROCESSING', 'EMAIL_ATTEMPT', 'SMS_ATTEMPT', 'EMAIL_SUCCESS', 'SMS_SUCCESS', 'EMAIL_FAILED', 'SMS_FAILED', 'NOTIFICATION_COMPLETED', 'NOTIFICATION_FAILED']),
+  eventType: a.enum(['NOTIFICATION_QUEUED', 'NOTIFICATION_PROCESSING', 'EMAIL_ATTEMPT', 'SMS_ATTEMPT', 'EMAIL_SUCCESS', 'SMS_SUCCESS', 'EMAIL_FAILED', 'SMS_FAILED', 'NOTIFICATION_COMPLETED', 'NOTIFICATION_FAILED', 'EMAIL_BOUNCE', 'EMAIL_COMPLAINT']),
   channel: a.enum(['EMAIL', 'SMS', 'WHATSAPP', 'TELEGRAM']),
   recipient: a.string(),
-  provider: a.enum(['SENDGRID', 'TWILIO', 'DEBUG']),
-  providerId: a.string(), // SendGrid message ID or Twilio SID
+  provider: a.enum(['SES', 'SENDGRID', 'TWILIO', 'DEBUG']),
+  providerId: a.string(), // SES message ID, SendGrid message ID or Twilio SID
   providerStatus: a.string(), // Provider-specific status
   errorCode: a.string(),
   errorMessage: a.string(),
@@ -803,6 +803,60 @@ const NotificationEvents = a.model({
   allow.publicApiKey(),
   allow.authenticated(),
   allow.groups(['admin', 'agent'])
+]);
+
+// Email Suppression List for AWS SES compliance
+const EmailSuppressionList = a.model({
+  emailAddress: a.email().required(),
+  suppressionType: a.enum(['BOUNCE', 'COMPLAINT', 'MANUAL']),
+  reason: a.string(),
+  bounceType: a.enum(['PERMANENT', 'TRANSIENT']), // For bounces
+  bounceSubType: a.string(), // Detailed bounce reason
+  complaintType: a.string(), // For complaints
+  originalMessageId: a.string(), // SES message ID
+  suppressedAt: a.datetime().required(),
+  source: a.enum(['SES_NOTIFICATION', 'MANUAL_ADMIN', 'USER_REQUEST']),
+  metadata: a.json(), // Additional data from SES notifications
+  isActive: a.boolean().default(true),
+  owner: a.string(),
+  
+  // Audit fields
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  createdBy: a.string(),
+  updatedBy: a.string()
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin'])
+]);
+
+// SES Reputation Monitoring
+const SESReputationMetrics = a.model({
+  metricDate: a.date().required(),
+  totalEmailsSent: a.integer().default(0),
+  totalBounces: a.integer().default(0),
+  totalComplaints: a.integer().default(0),
+  bounceRate: a.float().default(0), // Percentage
+  complaintRate: a.float().default(0), // Percentage
+  deliveryRate: a.float().default(0), // Percentage
+  reputationScore: a.float(), // Custom reputation score
+  sendingQuotaUsed: a.integer().default(0),
+  sendingQuotaMax: a.integer().default(0),
+  sendRateMax: a.float().default(0), // Messages per second
+  
+  // Alert thresholds
+  bounceRateAlert: a.boolean().default(false), // Triggered if > 5%
+  complaintRateAlert: a.boolean().default(false), // Triggered if > 0.1%
+  
+  // Metadata
+  owner: a.string(),
+  createdAt: a.datetime(),
+  updatedAt: a.datetime()
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin'])
 ]);
 
 const schema = a.schema({
@@ -826,6 +880,8 @@ const schema = a.schema({
   NotificationTemplate,
   NotificationQueue,
   NotificationEvents,
+  EmailSuppressionList,
+  SESReputationMetrics,
   PendingAppoitments,
   ProjectComments,
   ProjectMilestones,

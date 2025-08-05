@@ -85,36 +85,7 @@ export default function SkillManagementPanel({ onSkillUpdate }: SkillManagementP
   });
   const [skillTestOpen, setSkillTestOpen] = useState(false);
 
-  const loadSkillData = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const [skillsData, categoriesData] = await Promise.all([
-        skillManagementService.getAvailableSkills(),
-        skillManagementService.getSkillCategories()
-      ]);
-      
-      setSkills(skillsData);
-      setCategories(categoriesData);
-      
-      // Load sample assignee profiles
-      const sampleProfiles = await loadSampleAssigneeProfiles();
-      setAssigneeProfiles(sampleProfiles);
-      
-    } catch (err) {
-      setError('Failed to load skill management data');
-      console.error('Skill data load error:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadSkillData();
-  }, [loadSkillData]);
-
-  const loadSampleAssigneeProfiles = async (): Promise<AssigneeSkillProfile[]> => {
+  const loadSampleAssigneeProfiles = useCallback(async (): Promise<AssigneeSkillProfile[]> => {
     // For demo purposes, create sample profiles
     // In real implementation, this would load from the skill management service
     return [
@@ -147,7 +118,37 @@ export default function SkillManagementPanel({ onSkillUpdate }: SkillManagementP
         lastUpdated: new Date().toISOString()
       }
     ];
-  };
+  }, [categories]);
+
+  const loadSkillData = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const [skillsData, categoriesData] = await Promise.all([
+        skillManagementService.getAvailableSkills(),
+        skillManagementService.getSkillCategories()
+      ]);
+      
+      setSkills(skillsData);
+      setCategories(categoriesData);
+      
+      // Load sample assignee profiles
+      const sampleProfiles = await loadSampleAssigneeProfiles();
+      setAssigneeProfiles(sampleProfiles);
+      
+    } catch (err) {
+      setError('Failed to load skill management data');
+      console.error('Skill data load error:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [loadSampleAssigneeProfiles]);
+
+  useEffect(() => {
+    loadSkillData();
+  }, [loadSkillData]);
+
 
   const runSkillTest = async () => {
     try {

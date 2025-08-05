@@ -76,22 +76,29 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
     {
       id: 'users',
       name: 'Users',
-      route: '/admin-legacy?tab=users',
+      route: '/admin/users',
       icon: '/assets/icons/ic-users.svg',
       isImplemented: true
     },
     {
       id: 'contacts',
       name: 'Contacts',
-      route: '/admin-legacy?tab=contacts',
+      route: '/admin/contacts',
       icon: '/assets/icons/ic-contacts.svg',
       isImplemented: true
     },
     {
       id: 'notifications',
       name: 'Notifications',
-      route: '/admin-legacy?tab=notifications',
+      route: '/admin/notifications',
       icon: '/assets/icons/ic-notifications.svg',
+      isImplemented: true
+    },
+    {
+      id: 'system',
+      name: 'System Config',
+      route: '/admin/system',
+      icon: '/assets/icons/settings.svg',
       isImplemented: true
     },
     {
