@@ -10,20 +10,22 @@ import { createProperties, createContacts, createAffiliates, updateContacts } fr
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
+import { notifyAffiliate, AffiliateSubmissionData } from '../../services/formNotificationIntegration';
 
 const Affiliate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.AFFILIATE];
   
-  // Use reusable form submission hook
+  // Use reusable form submission hook with persistent error messages
   const { 
     status, 
     isSubmitting, 
+    errorDetails,
     handleSubmission, 
     reset 
   } = useFormSubmission({
     formName: 'Affiliate Inquiry',
     scrollToTopOnSuccess: true,
-    errorResetDelay: 5000
+    errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
   // Initialize Amplify GraphQL client
@@ -268,7 +270,55 @@ const Affiliate: NextPage = () => {
       
       logger.info('Step 4a: ✅ Affiliates record created', { affiliateData: cleanAffiliateData });
 
-      // Step 5: Success
+      // Step 5: Send internal partnerships team notification
+      logger.info('Step 5: Sending partnerships team notification for affiliate inquiry');
+      
+      try {
+        const notificationData: AffiliateSubmissionData = {
+          formType: 'affiliate',
+          submissionId: affiliateData.id,
+          submittedAt: affiliateData.date || new Date().toISOString(),
+          companyName: formData.companyName,
+          contactName: formData.contactInfo.fullName,
+          email: formData.contactInfo.email,
+          phone: formData.contactInfo.phone,
+          serviceType: formData.serviceType,
+          businessLicense: formData.businessLicense || 'Not provided',
+          insurance: formData.hasInsurance || false,
+          bonded: formData.isBonded || false,
+          yearsInBusiness: formData.yearsInBusiness,
+          serviceAreas: formData.serviceAreas || [],
+          certifications: formData.certifications || [],
+          portfolio: formData.portfolioUrl,
+          testData: false,
+          leadSource: 'affiliate_form'
+        };
+        
+        const notificationResult = await notifyAffiliate(notificationData, {
+          priority: 'low',    // Affiliate forms are low priority
+          channels: 'email',  // Email only for partnerships team
+          testMode: false
+        });
+        
+        if (notificationResult.success) {
+          logger.info('Step 5a: ✅ Partnerships team notification sent', {
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5a: ⚠️ Partnerships team notification failed', {
+            errors: notificationResult.errors
+          });
+        }
+      } catch (notificationError) {
+        // Don't fail the form submission if notification fails
+        logger.error('Step 5a: ❌ Partnerships team notification error', {
+          error: notificationError
+        });
+      }
+
+      // Step 6: Success
       logger.info('=== AFFILIATE INQUIRY SUBMISSION COMPLETED SUCCESSFULLY ===', {
         timestamp: new Date().toISOString(),
         summary: {
@@ -290,10 +340,22 @@ const Affiliate: NextPage = () => {
     });
   };
 
-  // Form component with status handling using reusable components
+  // Enhanced form component with better error handling
   const formComponent = (() => {
     if (status === 'success') return <InquirySuccessMessage onReset={reset} />;
-    if (status === 'error') return <FormErrorMessage onRetry={reset} />;
+    
+    if (status === 'error') {
+      return (
+        <FormErrorMessage 
+          error={errorDetails}
+          onRetry={reset}
+          onContactSupport={() => {
+            // Custom contact support action for Affiliate form
+            window.open('mailto:partnerships@realtechee.com?subject=Affiliate Form Issue&body=I encountered an issue submitting the affiliate inquiry form. Please assist.', '_blank');
+          }}
+        />
+      );
+    }
     
     return (
       <AffiliateInquiryForm 

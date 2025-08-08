@@ -21,7 +21,7 @@ export interface NotificationItem {
 export interface TemplateItem {
   id: string;
   name: string;
-  channel: string;
+  channel: NotificationTemplateChannel;
   subject?: string | null;
   contentHtml?: string | null;
   contentText?: string | null;

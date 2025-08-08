@@ -10,24 +10,28 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
+import { notifyContactUs, ContactUsSubmissionData } from '../../services/formNotificationIntegration';
 
 const ContactUs: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.INQUIRY];
   
-  // Use reusable form submission hook
+  // Use reusable form submission hook with persistent error messages
   const { 
     status, 
     isSubmitting, 
+    errorDetails,
     handleSubmission, 
     reset 
   } = useFormSubmission({
     formName: 'General Inquiry',
     scrollToTopOnSuccess: true,
-    errorResetDelay: 5000
+    errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for anonymous access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -249,7 +253,52 @@ const ContactUs: NextPage = () => {
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Success
+      // Step 5: Send internal staff notification
+      logger.info('Step 5: Sending internal staff notification');
+      
+      try {
+        const notificationData: ContactUsSubmissionData = {
+          formType: 'contactUs',
+          submissionId: contactUsData.id,
+          submittedAt: contactUsData.submissionTime || new Date().toISOString(),
+          name: formData.contactInfo.fullName,
+          email: formData.contactInfo.email,
+          phone: formData.contactInfo.phone,
+          subject: formData.subject,
+          message: formData.message,
+          urgency: 'medium', // Default to medium for general inquiries
+          preferredContact: formData.contactInfo.phone ? 'phone' : 'email',
+          product: formData.product,
+          address: formData.address,
+          testData: false,
+          leadSource: 'contact_us_form'
+        };
+        
+        const notificationResult = await notifyContactUs(notificationData, {
+          priority: 'high', // Contact Us forms are high priority
+          channels: 'both',  // Send both email and SMS
+          testMode: false
+        });
+        
+        if (notificationResult.success) {
+          logger.info('Step 5a: ✅ Internal staff notification sent', {
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5a: ⚠️ Internal staff notification failed', {
+            errors: notificationResult.errors
+          });
+        }
+      } catch (notificationError) {
+        // Don't fail the form submission if notification fails
+        logger.error('Step 5a: ❌ Internal staff notification error', {
+          error: notificationError
+        });
+      }
+
+      // Step 6: Success
       logger.info('=== GENERAL INQUIRY SUBMISSION COMPLETED SUCCESSFULLY ===', {
         timestamp: new Date().toISOString(),
         summary: {
@@ -271,10 +320,22 @@ const ContactUs: NextPage = () => {
   };
 
 
-  // Form component with status handling using reusable components
+  // Enhanced form component with better error handling
   const formComponent = (() => {
     if (status === 'success') return <InquirySuccessMessage onReset={reset} />;
-    if (status === 'error') return <FormErrorMessage onRetry={reset} />;
+    
+    if (status === 'error') {
+      return (
+        <FormErrorMessage 
+          error={errorDetails}
+          onRetry={reset}
+          onContactSupport={() => {
+            // Custom contact support action for Contact Us form
+            window.open('mailto:info@realtechee.com?subject=Contact Form Issue&body=I encountered an issue submitting the contact form. Please assist.', '_blank');
+          }}
+        />
+      );
+    }
     
     return (
       <GeneralInquiryForm 

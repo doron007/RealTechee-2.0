@@ -50,6 +50,7 @@ export function FormTextarea<T extends Record<string, any>>({
             placeholder={placeholder}
             rows={rows}
             maxLength={maxLength}
+            required={required}
           />
         </FormFieldContainer>
       )}

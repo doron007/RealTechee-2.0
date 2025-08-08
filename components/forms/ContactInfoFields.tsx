@@ -16,6 +16,7 @@ interface ContactInfoFieldsProps<T extends Record<string, any>> {
   nameLabel?: string;
   emailLabel?: string;
   phoneLabel?: string;
+  optional?: boolean; // When true, fields are not required
 }
 
 export function ContactInfoFields<T extends Record<string, any>>({
@@ -24,8 +25,13 @@ export function ContactInfoFields<T extends Record<string, any>>({
   prefix,
   nameLabel = "Full name*",
   emailLabel = "Email Address*",
-  phoneLabel = "Phone Number*"
+  phoneLabel = "Phone Number*",
+  optional = false
 }: ContactInfoFieldsProps<T>) {
+  // Update default labels to remove asterisks when optional
+  const finalNameLabel = optional && nameLabel === "Full name*" ? "Full name" : nameLabel;
+  const finalEmailLabel = optional && emailLabel === "Email Address*" ? "Email Address" : emailLabel;
+  const finalPhoneLabel = optional && phoneLabel === "Phone Number*" ? "Phone Number" : phoneLabel;
   const getFieldError = (field: string): string | undefined => {
     const prefixParts = prefix.split('.');
     let errorObj: any = errors;
@@ -43,13 +49,14 @@ export function ContactInfoFields<T extends Record<string, any>>({
       <div className="w-full">
         <div className="flex flex-col gap-1">
           <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
-            {nameLabel}
+            {finalNameLabel}
           </label>
           <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('fullName') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
             <input
               {...register(`${prefix}.fullName` as Path<T>)}
               className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
               placeholder=""
+              required={!optional}
             />
           </div>
           <ErrorMessage
@@ -70,7 +77,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
         <div className="flex-1">
           <div className="flex flex-col gap-1">
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
-              {emailLabel}
+              {finalEmailLabel}
             </label>
             <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('email') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
@@ -78,6 +85,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
                 type="email"
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
+                required={!optional}
               />
             </div>
             <ErrorMessage
@@ -96,7 +104,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
         <div className="flex-1">
           <div className="flex flex-col gap-1">
             <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
-              {phoneLabel}
+              {finalPhoneLabel}
             </label>
             <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('phone') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
@@ -104,6 +112,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
                 type="tel"
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder="Add 10 digits (numbers only) ..."
+                required={!optional}
               />
             </div>
             <ErrorMessage

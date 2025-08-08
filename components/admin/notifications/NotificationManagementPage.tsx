@@ -85,11 +85,29 @@ const NotificationManagementPage: React.FC = () => {
   };
 
   useEffect(() => {
-    loadData();
+    // Add a delay to ensure authentication has completed
+    const initializeData = async () => {
+      try {
+        console.log('⏳ Waiting for authentication to complete...');
+        // Wait a bit for authentication to settle
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        await loadData();
+      } catch (error) {
+        console.error('Failed to initialize data:', error);
+        setError('Failed to initialize data. Authentication might not be complete.');
+        setLoading(false);
+      }
+    };
+
+    initializeData();
     
     // Set up auto-refresh for real-time updates
     if (autoRefresh) {
-      const interval = setInterval(loadData, 30000); // Refresh every 30 seconds
+      const interval = setInterval(() => {
+        loadData().catch(error => {
+          console.error('Auto-refresh failed:', error);
+        });
+      }, 30000); // Refresh every 30 seconds
       setRefreshInterval(interval);
       return () => clearInterval(interval);
     }
@@ -98,17 +116,23 @@ const NotificationManagementPage: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
+      console.log('🔍 Starting to load notification data...');
       
-      const [notificationsResponse, templatesResponse] = await Promise.all([
-        client.graphql({
-          query: listNotificationQueues,
-          variables: { limit: 100 }
-        }),
-        client.graphql({
-          query: listNotificationTemplates,
-          variables: { limit: 50 }
-        })
-      ]);
+      // Try loading notifications first
+      console.log('📬 Loading notifications...');
+      const notificationsResponse = await client.graphql({
+        query: listNotificationQueues,
+        variables: { limit: 100 }
+      });
+      console.log('📬 Notifications response:', notificationsResponse);
+
+      // Then load templates
+      console.log('📝 Loading templates...');
+      const templatesResponse = await client.graphql({
+        query: listNotificationTemplates,
+        variables: { limit: 50 }
+      });
+      console.log('📝 Templates response:', templatesResponse);
 
       // Map GraphQL responses to expected interfaces
       const mappedNotifications = notificationsResponse.data.listNotificationQueues.items?.map(item => ({
@@ -124,24 +148,46 @@ const NotificationManagementPage: React.FC = () => {
         errorMessage: item.errorMessage || undefined
       })) || [];
 
-      const mappedTemplates = templatesResponse.data.listNotificationTemplates.items?.map(item => ({
-        id: item.id,
-        name: item.name,
-        channel: item.channel as NotificationTemplateChannel,
-        subject: item.subject || '',
-        contentText: item.contentText || '',
-        contentHtml: item.contentHtml || undefined,
-        variables: item.variables ? JSON.parse(item.variables) : [],
-        isActive: item.isActive || false,
-        createdAt: item.createdAt || '',
-        updatedAt: item.updatedAt || ''
-      })) || [];
+      const mappedTemplates = templatesResponse.data.listNotificationTemplates.items?.map(item => {
+        let parsedVariables = [];
+        try {
+          if (item.variables) {
+            parsedVariables = typeof item.variables === 'string' ? JSON.parse(item.variables) : item.variables;
+          }
+        } catch (error) {
+          console.warn(`Failed to parse variables for template ${item.id}:`, error);
+          parsedVariables = [];
+        }
+
+        return {
+          id: item.id,
+          name: item.name || '',
+          channel: item.channel as NotificationTemplateChannel,
+          subject: item.subject || '',
+          contentText: item.contentText || '',
+          contentHtml: item.contentHtml || undefined,
+          variables: parsedVariables,
+          isActive: item.isActive || false,
+          createdAt: item.createdAt || '',
+          updatedAt: item.updatedAt || ''
+        };
+      }) || [];
 
       setNotifications(mappedNotifications);
       setTemplates(mappedTemplates);
-    } catch (err) {
-      setError('Failed to load notification data');
+    } catch (err: any) {
       console.error('Error loading data:', err);
+      
+      // Extract specific GraphQL errors
+      let errorMessage = 'Failed to load notification data';
+      if (err.errors && Array.isArray(err.errors)) {
+        const graphqlErrors = err.errors.map((error: any) => error.message).join(', ');
+        errorMessage = `GraphQL Error: ${graphqlErrors}`;
+      } else if (err.message) {
+        errorMessage = `Error: ${err.message}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -149,6 +195,13 @@ const NotificationManagementPage: React.FC = () => {
 
   const applyFilters = useCallback(() => {
     let filtered = [...notifications];
+
+    // Apply view mode filter first
+    if (viewMode === 'queue') {
+      filtered = filtered.filter(n => n.status === NotificationQueueStatus.PENDING);
+    } else if (viewMode === 'history') {
+      filtered = filtered.filter(n => n.status !== NotificationQueueStatus.PENDING);
+    }
 
     // Apply status filter
     if (statusFilter !== 'all') {
@@ -197,7 +250,7 @@ const NotificationManagementPage: React.FC = () => {
     });
 
     setFilteredNotifications(filtered);
-  }, [notifications, statusFilter, channelFilter, searchQuery, dateRange, sortField, sortDirection]);
+  }, [notifications, viewMode, statusFilter, channelFilter, searchQuery, dateRange, sortField, sortDirection]);
 
   useEffect(() => {
     applyFilters();
@@ -377,7 +430,7 @@ const NotificationManagementPage: React.FC = () => {
 
   const viewModes = [
     { id: 'queue', name: 'Queue', count: notifications.filter(n => n.status === NotificationQueueStatus.PENDING).length },
-    { id: 'history', name: 'History', count: notifications.filter(n => n.status === NotificationQueueStatus.SENT).length },
+    { id: 'history', name: 'History', count: notifications.filter(n => n.status !== NotificationQueueStatus.PENDING).length },
     { id: 'templates', name: 'Templates', count: templates.length },
     { id: 'monitoring', name: 'Monitor', count: notifications.filter(n => n.status === NotificationQueueStatus.FAILED).length }
   ];
@@ -718,14 +771,242 @@ const NotificationManagementPage: React.FC = () => {
           </>
         )}
 
-        {/* Other view modes can be implemented similarly */}
         {viewMode === 'history' && (
-          <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
-            <div className="p-8 text-center text-gray-500">
-              History view implementation in progress...
+          <>
+            {/* History Filters */}
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm mb-6">
+              <div className="p-4">
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Search History
+                    </label>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by event type, ID, or recipient..."
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                  
+                  <div className="lg:w-48">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Status
+                    </label>
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    >
+                      <option value="all">All Status</option>
+                      <option value={NotificationQueueStatus.SENT}>Sent</option>
+                      <option value={NotificationQueueStatus.FAILED}>Failed</option>
+                      <option value={NotificationQueueStatus.RETRYING}>Retrying</option>
+                    </select>
+                  </div>
+
+                  <div className="lg:w-48">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Channel
+                    </label>
+                    <select
+                      value={channelFilter}
+                      onChange={(e) => setChannelFilter(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    >
+                      <option value="all">All Channels</option>
+                      <option value="EMAIL">Email</option>
+                      <option value="SMS">SMS</option>
+                      <option value="WHATSAPP">WhatsApp</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Bulk Actions for History */}
+                {selectedNotifications.size > 0 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+                      <span className="text-sm text-gray-600">
+                        {selectedNotifications.size} notifications selected
+                      </span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            const selectedItems = notifications.filter(n => selectedNotifications.has(n.id));
+                            selectedItems.forEach(notification => handleResendNotification(notification));
+                            setSelectedNotifications(new Set());
+                          }}
+                          className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                        >
+                          Resend All
+                        </button>
+                        <button
+                          onClick={() => {
+                            setBulkActionType('delete');
+                            setShowBulkActionModal(true);
+                          }}
+                          className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200"
+                        >
+                          Delete All
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+
+            {/* History List */}
+            <div className="space-y-4">
+              {filteredNotifications.length === 0 ? (
+                <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
+                  <div className="p-8 text-center text-gray-500">
+                    No history found matching your criteria.
+                  </div>
+                </div>
+              ) : (
+                filteredNotifications.map((notification) => (
+                  <div key={notification.id} className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="p-4 lg:p-6">
+                      {/* Mobile Layout */}
+                      <div className="lg:hidden space-y-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-3">
+                            <input
+                              type="checkbox"
+                              checked={selectedNotifications.has(notification.id)}
+                              onChange={(e) => {
+                                const newSelected = new Set(selectedNotifications);
+                                if (e.target.checked) {
+                                  newSelected.add(notification.id);
+                                } else {
+                                  newSelected.delete(notification.id);
+                                }
+                                setSelectedNotifications(newSelected);
+                              }}
+                              className="mt-1"
+                            />
+                            <div>
+                              <H4 className="text-gray-900">{notification.eventType}</H4>
+                              <P2 className="text-gray-600 text-sm">ID: {notification.id.slice(0, 12)}...</P2>
+                            </div>
+                          </div>
+                          <StatusPill status={notification.status} />
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-3 text-sm">
+                          <div>
+                            <span className="text-gray-500">Created:</span>
+                            <br />
+                            <span className="text-gray-900">
+                              {DateTimeUtils.forDisplay(notification.createdAt)}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Updated:</span>
+                            <br />
+                            <span className="text-gray-900">
+                              {DateTimeUtils.forDisplay(notification.updatedAt)}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="text-sm">
+                          <span className="text-gray-500">Template:</span>
+                          <br />
+                          <span className="text-gray-900">{notification.templateId}</span>
+                        </div>
+
+                        {notification.errorMessage && (
+                          <div className="text-sm">
+                            <span className="text-gray-500">Error:</span>
+                            <br />
+                            <span className="text-red-600 text-xs">{notification.errorMessage}</span>
+                          </div>
+                        )}
+                        
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => handleResendNotification(notification)}
+                            className="px-3 py-1 text-sm bg-green-100 text-green-700 rounded hover:bg-green-200"
+                          >
+                            Resend
+                          </button>
+                          <button
+                            onClick={() => handleEditNotification(notification)}
+                            className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Desktop Layout */}
+                      <div className="hidden lg:block">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            <input
+                              type="checkbox"
+                              checked={selectedNotifications.has(notification.id)}
+                              onChange={(e) => {
+                                const newSelected = new Set(selectedNotifications);
+                                if (e.target.checked) {
+                                  newSelected.add(notification.id);
+                                } else {
+                                  newSelected.delete(notification.id);
+                                }
+                                setSelectedNotifications(newSelected);
+                              }}
+                            />
+                            <div>
+                              <H4 className="text-gray-900">{notification.eventType}</H4>
+                              <P2 className="text-gray-600">ID: {notification.id.slice(0, 12)}...</P2>
+                            </div>
+                            <StatusPill status={notification.status} />
+                            {notification.errorMessage && (
+                              <div className="text-red-600 text-xs max-w-xs truncate" title={notification.errorMessage}>
+                                Error: {notification.errorMessage}
+                              </div>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center space-x-6 text-sm text-gray-600">
+                            <div>
+                              <span className="text-gray-500">Created:</span> {DateTimeUtils.forDisplay(notification.createdAt)}
+                            </div>
+                            <div>
+                              <span className="text-gray-500">Updated:</span> {DateTimeUtils.forDisplay(notification.updatedAt)}
+                            </div>
+                            <div>
+                              <span className="text-gray-500">Template:</span> {notification.templateId}
+                            </div>
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => handleResendNotification(notification)}
+                                className="px-3 py-1 text-sm bg-green-100 text-green-700 rounded hover:bg-green-200"
+                              >
+                                Resend
+                              </button>
+                              <button
+                                onClick={() => handleEditNotification(notification)}
+                                className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                              >
+                                View Details
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </>
         )}
+
+        {/* Other view modes can be implemented similarly */}
 
         {viewMode === 'monitoring' && (
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm">

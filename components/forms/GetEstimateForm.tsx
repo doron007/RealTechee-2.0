@@ -380,9 +380,7 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
             register={register}
             errors={errors}
             prefix="homeownerInfo"
-            nameLabel="Full name"
-            emailLabel="Email Address"
-            phoneLabel="Phone Number"
+            optional={true}
           />
         </FormSection>
 

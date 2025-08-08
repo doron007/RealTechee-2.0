@@ -48,6 +48,14 @@ backups/
 /archive/
 archive/
 
+# E2E Testing - Archived Infrastructure (moved to /archive/e2e-legacy/)
+/e2e/
+e2e/
+playwright.config.js
+playwright.*.config.js
+/playwright/
+playwright/
+
 # migration logs and temporary files
 /logs/
 logs/
@@ -89,3 +97,9 @@ test-*.js
 dev-server.log
 dev-server.pid
 .serena/
+
+# Playwright E2E Testing
+/tests/e2e/screenshots/
+/tests/e2e/archive/
+/playwright-report/
+/test-results/

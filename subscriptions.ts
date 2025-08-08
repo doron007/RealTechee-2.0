@@ -416,6 +416,34 @@ export const onCreateESignatureDocuments = /* GraphQL */ `subscription OnCreateE
   APITypes.OnCreateESignatureDocumentsSubscriptionVariables,
   APITypes.OnCreateESignatureDocumentsSubscription
 >;
+export const onCreateEmailSuppressionList = /* GraphQL */ `subscription OnCreateEmailSuppressionList(
+  $filter: ModelSubscriptionEmailSuppressionListFilterInput
+) {
+  onCreateEmailSuppressionList(filter: $filter) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateEmailSuppressionListSubscriptionVariables,
+  APITypes.OnCreateEmailSuppressionListSubscription
+>;
 export const onCreateLegal = /* GraphQL */ `subscription OnCreateLegal($filter: ModelSubscriptionLegalFilterInput) {
   onCreateLegal(filter: $filter) {
     content
@@ -1613,6 +1641,34 @@ export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($fi
   APITypes.OnCreateRequestsSubscriptionVariables,
   APITypes.OnCreateRequestsSubscription
 >;
+export const onCreateSESReputationMetrics = /* GraphQL */ `subscription OnCreateSESReputationMetrics(
+  $filter: ModelSubscriptionSESReputationMetricsFilterInput
+) {
+  onCreateSESReputationMetrics(filter: $filter) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateSESReputationMetricsSubscriptionVariables,
+  APITypes.OnCreateSESReputationMetricsSubscription
+>;
 export const onCreateSecureConfig = /* GraphQL */ `subscription OnCreateSecureConfig(
   $filter: ModelSubscriptionSecureConfigFilterInput
 ) {
@@ -2043,6 +2099,34 @@ export const onDeleteESignatureDocuments = /* GraphQL */ `subscription OnDeleteE
 ` as GeneratedSubscription<
   APITypes.OnDeleteESignatureDocumentsSubscriptionVariables,
   APITypes.OnDeleteESignatureDocumentsSubscription
+>;
+export const onDeleteEmailSuppressionList = /* GraphQL */ `subscription OnDeleteEmailSuppressionList(
+  $filter: ModelSubscriptionEmailSuppressionListFilterInput
+) {
+  onDeleteEmailSuppressionList(filter: $filter) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteEmailSuppressionListSubscriptionVariables,
+  APITypes.OnDeleteEmailSuppressionListSubscription
 >;
 export const onDeleteLegal = /* GraphQL */ `subscription OnDeleteLegal($filter: ModelSubscriptionLegalFilterInput) {
   onDeleteLegal(filter: $filter) {
@@ -3241,6 +3325,34 @@ export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($fi
   APITypes.OnDeleteRequestsSubscriptionVariables,
   APITypes.OnDeleteRequestsSubscription
 >;
+export const onDeleteSESReputationMetrics = /* GraphQL */ `subscription OnDeleteSESReputationMetrics(
+  $filter: ModelSubscriptionSESReputationMetricsFilterInput
+) {
+  onDeleteSESReputationMetrics(filter: $filter) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteSESReputationMetricsSubscriptionVariables,
+  APITypes.OnDeleteSESReputationMetricsSubscription
+>;
 export const onDeleteSecureConfig = /* GraphQL */ `subscription OnDeleteSecureConfig(
   $filter: ModelSubscriptionSecureConfigFilterInput
 ) {
@@ -3671,6 +3783,34 @@ export const onUpdateESignatureDocuments = /* GraphQL */ `subscription OnUpdateE
 ` as GeneratedSubscription<
   APITypes.OnUpdateESignatureDocumentsSubscriptionVariables,
   APITypes.OnUpdateESignatureDocumentsSubscription
+>;
+export const onUpdateEmailSuppressionList = /* GraphQL */ `subscription OnUpdateEmailSuppressionList(
+  $filter: ModelSubscriptionEmailSuppressionListFilterInput
+) {
+  onUpdateEmailSuppressionList(filter: $filter) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateEmailSuppressionListSubscriptionVariables,
+  APITypes.OnUpdateEmailSuppressionListSubscription
 >;
 export const onUpdateLegal = /* GraphQL */ `subscription OnUpdateLegal($filter: ModelSubscriptionLegalFilterInput) {
   onUpdateLegal(filter: $filter) {
@@ -4868,6 +5008,34 @@ export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($fi
 ` as GeneratedSubscription<
   APITypes.OnUpdateRequestsSubscriptionVariables,
   APITypes.OnUpdateRequestsSubscription
+>;
+export const onUpdateSESReputationMetrics = /* GraphQL */ `subscription OnUpdateSESReputationMetrics(
+  $filter: ModelSubscriptionSESReputationMetricsFilterInput
+) {
+  onUpdateSESReputationMetrics(filter: $filter) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateSESReputationMetricsSubscriptionVariables,
+  APITypes.OnUpdateSESReputationMetricsSubscription
 >;
 export const onUpdateSecureConfig = /* GraphQL */ `subscription OnUpdateSecureConfig(
   $filter: ModelSubscriptionSecureConfigFilterInput

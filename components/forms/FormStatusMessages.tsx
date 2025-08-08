@@ -100,36 +100,160 @@ export const FormSuccessMessage: React.FC<FormSuccessMessageProps> = ({
 interface FormErrorMessageProps {
   title?: string;
   message?: string;
+  error?: Error | null;
   onRetry?: () => void;
+  onContactSupport?: () => void;
   maxWidth?: string;
 }
 
+const parseErrorMessage = (error?: Error | null): {
+  type: 'auth' | 'network' | 'validation' | 'server' | 'general';
+  userMessage: string;
+  actions: string[];
+} => {
+  if (!error) {
+    return {
+      type: 'general',
+      userMessage: 'An unexpected error occurred. Please try again or contact support.',
+      actions: ['retry', 'contact']
+    };
+  }
+
+  const errorMessage = error.message.toLowerCase();
+  
+  // Authentication errors
+  if (errorMessage.includes('federated jwt') || errorMessage.includes('authentication') || errorMessage.includes('unauthorized')) {
+    return {
+      type: 'auth',
+      userMessage: 'Authentication required. Please log in to submit forms or contact us directly.',
+      actions: ['login', 'contact']
+    };
+  }
+  
+  // Network errors
+  if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('timeout') || errorMessage.includes('connection')) {
+    return {
+      type: 'network',
+      userMessage: 'Network connection issue. Please check your internet connection and try again.',
+      actions: ['retry', 'contact']
+    };
+  }
+  
+  // Validation errors
+  if (errorMessage.includes('validation') || errorMessage.includes('required') || errorMessage.includes('invalid')) {
+    return {
+      type: 'validation',
+      userMessage: 'Please check your form fields and ensure all required information is provided correctly.',
+      actions: ['retry']
+    };
+  }
+  
+  // Server errors
+  if (errorMessage.includes('server') || errorMessage.includes('500') || errorMessage.includes('internal')) {
+    return {
+      type: 'server',
+      userMessage: 'Our servers are experiencing issues. Please try again in a few minutes or contact us directly.',
+      actions: ['retry', 'contact']
+    };
+  }
+  
+  // General fallback
+  return {
+    type: 'general',
+    userMessage: 'Something went wrong with your submission. Please try again or contact us for assistance.',
+    actions: ['retry', 'contact']
+  };
+};
+
 export const FormErrorMessage: React.FC<FormErrorMessageProps> = ({
-  title = 'Submission Failed',
-  message = 'There was an issue submitting your request. Please try again or contact us directly.',
+  title,
+  message,
+  error,
   onRetry,
+  onContactSupport,
   maxWidth = 'w-[692px]'
 }) => {
+  const errorInfo = parseErrorMessage(error);
+  const finalTitle = title || (errorInfo.type === 'auth' ? 'Authentication Required' : 'Submission Failed');
+  const finalMessage = message || errorInfo.userMessage;
+  
+  const handleContactSupport = () => {
+    if (onContactSupport) {
+      onContactSupport();
+    } else {
+      // Default contact action - scroll to contact info or open phone dialer
+      window.open('tel:+15551234567', '_self');
+    }
+  };
+  
+  const handleLogin = () => {
+    // Redirect to login or trigger auth flow
+    window.location.href = '/login';
+  };
+
   return (
     <div className={`${maxWidth} flex flex-col gap-6`}>
-      <div className="p-6 bg-red-50 border border-red-200 rounded-lg text-center">
-        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
+        {/* Error Icon and Header */}
+        <div className="text-center mb-6">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <H3 className="text-red-800 mb-2">{finalTitle}</H3>
+          <P1 className="text-red-700 mb-4">
+            {finalMessage}
+          </P1>
         </div>
-        <H3 className="text-red-800 mb-2">{title}</H3>
-        <P1 className="text-red-700 mb-4">
-          {message}
-        </P1>
-        {onRetry && (
-          <Button 
-            variant="primary" 
-            onClick={onRetry}
-            size="lg"
-          >
-            Try Again
-          </Button>
+        
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          {errorInfo.actions.includes('retry') && onRetry && (
+            <Button 
+              variant="primary" 
+              onClick={onRetry}
+              size="lg"
+            >
+              Try Again
+            </Button>
+          )}
+          
+          {errorInfo.actions.includes('login') && (
+            <Button 
+              variant="secondary" 
+              onClick={handleLogin}
+              size="lg"
+            >
+              Log In
+            </Button>
+          )}
+          
+          {errorInfo.actions.includes('contact') && (
+            <Button 
+              variant="secondary" 
+              onClick={handleContactSupport}
+              size="lg"
+            >
+              Contact Support
+            </Button>
+          )}
+        </div>
+        
+        {/* Support Information */}
+        {errorInfo.actions.includes('contact') && (
+          <div className="mt-6 pt-4 border-t border-red-200 text-center">
+            <P1 className="text-red-600 text-sm mb-2">Need immediate assistance?</P1>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
+              <a href="tel:+15551234567" className="text-red-700 hover:text-red-800 font-medium">
+                📞 Call (555) 123-4567
+              </a>
+              <span className="hidden sm:inline text-red-400">•</span>
+              <a href="mailto:support@realtechee.com" className="text-red-700 hover:text-red-800 font-medium">
+                ✉️ support@realtechee.com
+              </a>
+            </div>
+          </div>
         )}
       </div>
     </div>

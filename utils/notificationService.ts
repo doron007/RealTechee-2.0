@@ -4,7 +4,10 @@ import { GetEstimatePayload } from '../amplify/functions/notification-processor/
 import { type Schema } from '../amplify/data/resource';
 import { UserService, type UserProfile } from './userService';
 
-const client = generateClient<any>();
+// Initialize Amplify GraphQL client with API key for anonymous access
+const client = generateClient<any>({
+  authMode: 'apiKey'
+});
 
 interface ContactNotificationSettings {
   emailNotifications: boolean;
@@ -227,7 +230,7 @@ export class NotificationService {
         templateId: 'get-estimate-template-001', // Use actual template ID
         status: 'PENDING' as any,
         retryCount: 0,
-        owner: 'system'
+        owner: 'anonymous'
       };
 
       const result = await client.graphql({
@@ -275,7 +278,7 @@ export class NotificationService {
             scheduledAt: params.scheduledAt?.toISOString(),
             status: 'PENDING' as any,
             retryCount: 0,
-            owner: 'system'
+            owner: 'anonymous'
           }
         }
       });

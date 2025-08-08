@@ -64,6 +64,7 @@ export function FormDropdown<T extends Record<string, any>>({
             id={fieldId}
             className="w-full bg-transparent border-0 outline-0 text-sm font-normal leading-[1.4] appearance-none pr-8 text-[#2A2B2E]"
             defaultValue={defaultValue}
+            required={required}
           >
             {placeholder && <option value="">{placeholder}</option>}
             {options.map(option => (

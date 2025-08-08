@@ -16,7 +16,7 @@ export interface UseFormSubmissionOptions {
   
   /**
    * How long to wait before auto-resetting error status (in ms)
-   * Set to 0 to disable auto-reset
+   * Set to 0 to disable auto-reset (recommended for better UX)
    */
   errorResetDelay?: number;
   
@@ -29,12 +29,13 @@ export interface UseFormSubmissionOptions {
 export const useFormSubmission = (options: UseFormSubmissionOptions = {}) => {
   const {
     scrollToTopOnSuccess = true,
-    errorResetDelay = 5000,
+    errorResetDelay = 0, // Default to persistent errors for better UX
     formName = 'Unknown Form'
   } = options;
 
   const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
   /**
    * Starts the submission process
@@ -65,23 +66,27 @@ export const useFormSubmission = (options: UseFormSubmissionOptions = {}) => {
   }, [formName, scrollToTopOnSuccess]);
 
   /**
-   * Marks submission as failed
+   * Marks submission as failed with detailed error information
    */
   const markError = useCallback((error?: Error | string) => {
-    const errorMessage = error instanceof Error ? error.message : (error || 'Unknown error');
+    const errorObj = error instanceof Error ? error : new Error(error || 'Unknown error');
+    const errorMessage = errorObj.message;
     
     logger.error(`=== ${formName.toUpperCase()} SUBMISSION FAILED ===`, {
       timestamp: new Date().toISOString(),
       error: errorMessage,
-      stack: error instanceof Error ? error.stack : undefined
+      stack: errorObj.stack
     });
     
     setStatus('error');
     setIsSubmitting(false);
+    setErrorDetails(errorObj);
     
+    // Only auto-reset if explicitly configured
     if (errorResetDelay > 0) {
       setTimeout(() => {
         setStatus('idle');
+        setErrorDetails(null);
       }, errorResetDelay);
     }
   }, [formName, errorResetDelay]);
@@ -93,6 +98,7 @@ export const useFormSubmission = (options: UseFormSubmissionOptions = {}) => {
     logger.info(`=== ${formName.toUpperCase()} SUBMISSION RESET ===`);
     setStatus('idle');
     setIsSubmitting(false);
+    setErrorDetails(null);
   }, [formName]);
 
   /**
@@ -118,6 +124,7 @@ export const useFormSubmission = (options: UseFormSubmissionOptions = {}) => {
     isIdle: status === 'idle',
     isSuccess: status === 'success',
     isError: status === 'error',
+    errorDetails,
     startSubmission,
     markSuccess,
     markError,
