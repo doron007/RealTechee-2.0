@@ -28,8 +28,10 @@ const Affiliate: NextPage = () => {
     errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -283,13 +285,14 @@ const Affiliate: NextPage = () => {
           email: formData.contactInfo.email,
           phone: formData.contactInfo.phone,
           serviceType: formData.serviceType,
-          businessLicense: formData.businessLicense || 'Not provided',
-          insurance: formData.hasInsurance || false,
-          bonded: formData.isBonded || false,
-          yearsInBusiness: formData.yearsInBusiness,
-          serviceAreas: formData.serviceAreas || [],
-          certifications: formData.certifications || [],
-          portfolio: formData.portfolioUrl,
+          // Map General Contractor specific fields or provide defaults
+          businessLicense: formData.generalContractorInfo?.license || 'Not provided',
+          insurance: formData.generalContractorInfo?.workersCompensation || false,
+          bonded: false, // Not collected in current form
+          yearsInBusiness: 'Not provided', // Not collected in current form
+          serviceAreas: [], // Not collected in current form
+          certifications: [], // Not collected in current form
+          portfolio: 'Not provided', // Not collected in current form
           testData: false,
           leadSource: 'affiliate_form'
         };

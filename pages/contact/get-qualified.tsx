@@ -28,8 +28,10 @@ const GetQualified: NextPage = () => {
     errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {

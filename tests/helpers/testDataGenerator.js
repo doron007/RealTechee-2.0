@@ -185,9 +185,18 @@ const generateGetQualifiedData = (overrides = {}) => {
 const generateAffiliateData = (overrides = {}) => {
   const contactInfo = generateContactInfo({ firstName: 'TestAffiliate' });
   const companyInfo = generateCompanyInfo();
+  const address = generateAddress();
   
   return {
-    ...contactInfo,
+    // Contact info - match form field structure
+    fullName: contactInfo.fullName,
+    email: contactInfo.email,
+    phone: contactInfo.phone,
+    
+    // Address info - match form field structure  
+    address: address,
+    
+    // Company info
     company: overrides.company || companyInfo.customBrokerage,
     serviceType: overrides.serviceType || randomChoice([
       'General Contractor',
@@ -200,37 +209,7 @@ const generateAffiliateData = (overrides = {}) => {
     ]),
     title: overrides.title || 'Test Professional Title',
     
-    // License and compliance info
-    license: overrides.license || `LIC-${randomNumber(10000000, 99999999)}`,
-    workersCompensationInsurance: overrides.workersCompensationInsurance || 'Yes',
-    oshaCompliance: overrides.oshaCompliance || 'Yes',
-    signedNda: overrides.signedNda || 'Yes',
-    
-    // Business details
-    numEmployees: overrides.numEmployees || randomNumber(1, 50),
-    warrantyPeriod: overrides.warrantyPeriod || '2 years',
-    
-    // Additional fields
-    environmentalFactor: overrides.environmentalFactor || 'Standard compliance',
-    safetyPlan: overrides.safetyPlan || 'OSHA compliant safety protocols',
-    waterSystem: overrides.waterSystem || 'Municipal water connection',
-    generalGuidelines: overrides.generalGuidelines || 'Standard industry practices',
-    communication: overrides.communication || 'Email and phone preferred',
-    materialUtilization: overrides.materialUtilization || 'Efficient material usage',
-    qualityAssurance: overrides.qualityAssurance || 'Quality control protocols',
-    projectRemnantList: overrides.projectRemnantList || false,
-    accounting: overrides.accounting || randomNumber(1000, 50000),
-    
-    // Qualifier information
-    qualifierName: overrides.qualifierName || contactInfo.fullName,
-    qualifierSignature: overrides.qualifierSignature || `${contactInfo.fullName} - Digital Signature`,
-    date: overrides.date || new Date().toISOString(),
-    
-    // SLA information
-    slaAll: overrides.slaAll || 'Accepted',
-    slaCompanyEmail: overrides.slaCompanyEmail || contactInfo.email,
-    linkSla2Name: overrides.linkSla2Name || 'https://example.com/sla',
-    
+    // Apply any overrides
     ...overrides
   };
 };
@@ -241,6 +220,11 @@ const generateAffiliateData = (overrides = {}) => {
 const createTestScenarios = {
   // Get Estimate scenarios
   getEstimate: {
+    // Basic submission (default scenario)
+    basic: () => generateGetEstimateData({
+      relationToProperty: 'Real Estate Agent'
+    }),
+    
     // Basic agent-only submission
     agentOnly: () => generateGetEstimateData({ 
       homeownerInfo: null,
