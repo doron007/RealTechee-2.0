@@ -480,11 +480,13 @@ export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($i
   getNotificationQueue(id: $id) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -2312,11 +2314,13 @@ export const listNotificationQueues = /* GraphQL */ `query ListNotificationQueue
     items {
       channels
       createdAt
+      directContent
       errorMessage
       eventType
       id
       owner
       payload
+      priority
       recipientIds
       retryCount
       scheduledAt

@@ -3,6 +3,7 @@ import { createNotificationQueue } from '../mutations';
 import { GetEstimatePayload } from '../amplify/functions/notification-processor/src/types';
 import { type Schema } from '../amplify/data/resource';
 import { UserService, type UserProfile } from './userService';
+import { FormNotificationIntegration } from '../services/formNotificationIntegration';
 
 // Initialize Amplify GraphQL client with API key for anonymous access
 const client = generateClient<any>({
@@ -141,7 +142,7 @@ export class NotificationService {
   }
 
   /**
-   * Queue a "Get Estimate" notification
+   * Queue a "Get Estimate" notification using new decoupled architecture
    */
   static async queueGetEstimateNotification(data: {
     customerName: string;
@@ -156,37 +157,43 @@ export class NotificationService {
     requestId?: string; // Add request ID for admin link
   }): Promise<string> {
     
-    const payload: GetEstimatePayload = {
-      customer: {
-        name: data.customerName,
-        email: data.customerEmail,
-        phone: data.customerPhone,
-        company: data.customerCompany
-      },
-      property: {
-        address: data.propertyAddress || 'Not specified'
-      },
-      project: {
-        product: data.productType,
-        message: data.message
-      },
-      submission: {
-        id: data.submissionId || `EST-${Date.now()}`,
-        timestamp: new Date().toLocaleString()
-      },
-      admin: {
-        dashboardUrl: data.requestId 
-          ? (typeof window !== 'undefined' 
-            ? `${window.location.origin}/admin/requests/${data.requestId}`
-            : `https://localhost:3000/admin/requests/${data.requestId}`)
-          : (typeof window !== 'undefined' 
-            ? `${window.location.origin}/admin/requests`
-            : 'https://localhost:3000/admin/requests') // Fallback for server-side
-      }
-    };
-
     try {
-      console.log('📬 Queueing Get Estimate notification:', payload);
+      console.log('📬 Queueing Get Estimate notification (new decoupled architecture):', {
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        productType: data.productType,
+        requestId: data.requestId
+      });
+
+      // Get notification integration service instance
+      const notificationIntegration = FormNotificationIntegration.getInstance();
+      
+      // Generate final email/SMS content in backend (no template dependency)
+      const emailContent = (notificationIntegration as any).generateGetEstimateEmailContent({
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerPhone: data.customerPhone,
+        customerCompany: data.customerCompany,
+        propertyAddress: data.propertyAddress,
+        productType: data.productType,
+        message: data.message,
+        submissionId: data.submissionId,
+        requestId: data.requestId,
+        testData: false
+      });
+      
+      const smsContent = (notificationIntegration as any).generateGetEstimateSmsContent({
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerPhone: data.customerPhone,
+        customerCompany: data.customerCompany,
+        propertyAddress: data.propertyAddress,
+        productType: data.productType,
+        message: data.message,
+        submissionId: data.submissionId,
+        requestId: data.requestId,
+        testData: false
+      });
 
       // Get user settings if contact ID is provided
       let settings: ContactNotificationSettings | null = null;
@@ -221,32 +228,30 @@ export class NotificationService {
         console.log('📬 Using default channels (no customer preferences found):', channels);
       }
 
-      // Send immediately (no scheduling complexity)
-      const inputData: any = {
+      // Queue pre-generated content (Lambda just sends, no processing)
+      const notificationId = await this.queueDirectNotification({
         eventType: 'get_estimate_request',
-        payload: JSON.stringify(payload),
-        recipientIds: JSON.stringify(['admin-team']), // Will be resolved to actual admin emails
-        channels: JSON.stringify(channels),
-        templateId: 'get-estimate-template-001', // Use actual template ID
-        status: 'PENDING' as any,
-        retryCount: 0,
-        owner: 'anonymous'
-      };
-
-      const result = await client.graphql({
-        query: createNotificationQueue,
-        variables: {
-          input: inputData
+        recipientIds: ['admin-team'],
+        channels: channels,
+        content: {
+          email: {
+            subject: emailContent.subject,
+            html: emailContent.html,
+            text: emailContent.text,
+            to: 'info@realtechee.com'
+          },
+          sms: {
+            message: smsContent,
+            to: process.env.DEBUG_PHONE || ''
+          }
         }
-      }) as any;
-
-      const notificationId = result.data?.createNotificationQueue?.id;
-      console.log('✅ Notification queued successfully:', notificationId);
+      });
       
+      console.log('✅ Get Estimate notification queued successfully:', notificationId);
       return notificationId;
 
     } catch (error) {
-      console.error('❌ Failed to queue notification:', error);
+      console.error('❌ Failed to queue Get Estimate notification:', error);
       throw new Error(`Failed to queue Get Estimate notification: ${(error as any).message}`);
     }
   }
@@ -291,6 +296,58 @@ export class NotificationService {
     } catch (error) {
       console.error('❌ Failed to queue notification:', error);
       throw new Error(`Failed to queue notification: ${(error as any).message}`);
+    }
+  }
+
+  /**
+   * Queue a notification with pre-generated content (no template processing needed)
+   */
+  static async queueDirectNotification(params: {
+    eventType: string;
+    recipientIds: string[];
+    channels: string[];
+    content: {
+      email?: {
+        subject: string;
+        html: string;
+        text: string;
+        to: string;
+      };
+      sms?: {
+        message: string;
+        to: string;
+      };
+    };
+    scheduledAt?: Date;
+  }): Promise<string> {
+    
+    try {
+      console.log(`📬 Queueing ${params.eventType} direct notification (pre-generated content)`);
+
+      const result = await client.graphql({
+        query: createNotificationQueue,
+        variables: {
+          input: {
+            eventType: params.eventType,
+            recipientIds: JSON.stringify(params.recipientIds),
+            channels: JSON.stringify(params.channels),
+            directContent: JSON.stringify(params.content), // Store as directContent instead of payload
+            status: 'PENDING' as any,
+            priority: 'MEDIUM' as any,
+            scheduledAt: params.scheduledAt?.toISOString(),
+            retryCount: 0,
+            owner: 'anonymous'
+          }
+        }
+      });
+
+      const notificationId = result.data.createNotificationQueue.id;
+      console.log(`✅ Notification queued successfully: ${notificationId}`);
+      
+      return notificationId;
+    } catch (error) {
+      console.error('❌ Failed to queue direct notification:', error);
+      throw new Error(`Failed to queue ${params.eventType} notification: ${(error as any).message}`);
     }
   }
 

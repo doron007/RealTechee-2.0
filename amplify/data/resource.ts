@@ -700,12 +700,19 @@ const NotificationTemplate = a.model({
 
 const NotificationQueue = a.model({
   eventType: a.string().required(),
-  payload: a.json().required(), // Dynamic data for template injection
+  
+  // Legacy template-based approach (for backward compatibility)
+  payload: a.json(), // Dynamic data for template injection
+  templateId: a.id(),
+  
+  // New direct content approach (decoupled from templates)
+  directContent: a.json(), // Pre-generated email/SMS content
+  
   recipientIds: a.json().required(), // Array of Contact IDs
   channels: a.json().required(), // Array of channel types
-  templateId: a.id().required(),
   scheduledAt: a.datetime(),
   status: a.enum(['PENDING', 'SENT', 'FAILED', 'RETRYING']),
+  priority: a.enum(['LOW', 'MEDIUM', 'HIGH']),
   retryCount: a.integer(),
   errorMessage: a.string(),
   sentAt: a.datetime(),
@@ -715,7 +722,7 @@ const NotificationQueue = a.model({
   createdAt: a.datetime(),
   updatedAt: a.datetime(),
   
-  // Relationships
+  // Relationships (optional for backward compatibility)
   template: a.belongsTo('NotificationTemplate', 'templateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),

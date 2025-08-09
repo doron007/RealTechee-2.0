@@ -552,11 +552,13 @@ export const createNotificationQueue = /* GraphQL */ `mutation CreateNotificatio
   createNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -2286,11 +2288,13 @@ export const deleteNotificationQueue = /* GraphQL */ `mutation DeleteNotificatio
   deleteNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -4020,11 +4024,13 @@ export const updateNotificationQueue = /* GraphQL */ `mutation UpdateNotificatio
   updateNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt

@@ -225,8 +225,8 @@ class NotificationQueueValidator {
                payload.property?.address?.includes(submittedData.propertyAddress?.streetAddress);
       
       case 'affiliate':
-        return payload.company?.name === submittedData.companyName &&
-               payload.contact?.email === submittedData.contactInfo?.email;
+        return payload.businessInformation?.companyName === submittedData.companyName &&
+               payload.contactInformation?.email === submittedData.contactInfo?.email;
       
       default:
         return false;

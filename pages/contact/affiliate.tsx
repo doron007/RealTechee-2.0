@@ -243,13 +243,13 @@ const Affiliate: NextPage = () => {
         
         // General Contractor specific fields (if applicable)
         ...(formData.serviceType === 'General Contractor' && formData.generalContractorInfo ? {
-          workersCompensationInsurance: formData.generalContractorInfo.workersCompensation,
-          license: formData.generalContractorInfo.license,
-          environmentalFactor: formData.generalContractorInfo.environmentalFactor,
-          oshaCompliance: formData.generalContractorInfo.oshaCompliance,
-          signedNda: formData.generalContractorInfo.signedNDA,
-          safetyPlan: formData.generalContractorInfo.safetyPlan,
-          numEmployees: formData.generalContractorInfo.numberOfEmployees || ''
+          workersCompensationInsurance: formData.generalContractorInfo.workersCompensation ? 'Yes' : 'No',
+          license: formData.generalContractorInfo.license || '',
+          environmentalFactor: formData.generalContractorInfo.environmentalFactor ? 'Yes' : 'No',
+          oshaCompliance: formData.generalContractorInfo.oshaCompliance ? 'Yes' : 'No',
+          signedNda: formData.generalContractorInfo.signedNDA ? 'Yes' : 'No',
+          safetyPlan: formData.generalContractorInfo.safetyPlan ? 'Yes' : 'No',
+          numEmployees: parseInt(formData.generalContractorInfo.numberOfEmployees) || 0
         } : {}),
         
         // System fields with proper user attribution
@@ -285,9 +285,22 @@ const Affiliate: NextPage = () => {
           email: formData.contactInfo.email,
           phone: formData.contactInfo.phone,
           serviceType: formData.serviceType,
+          // Address information
+          address: {
+            streetAddress: formData.address.streetAddress,
+            city: formData.address.city,
+            state: formData.address.state,
+            zip: formData.address.zip
+          },
           // Map General Contractor specific fields or provide defaults
-          businessLicense: formData.generalContractorInfo?.license || 'Not provided',
+          businessLicense: formData.generalContractorInfo?.license || '',
           insurance: formData.generalContractorInfo?.workersCompensation || false,
+          workersCompensation: formData.generalContractorInfo?.workersCompensation || false,
+          environmentalFactor: formData.generalContractorInfo?.environmentalFactor || false,
+          oshaCompliance: formData.generalContractorInfo?.oshaCompliance || false,
+          signedNDA: formData.generalContractorInfo?.signedNDA || false,
+          safetyPlan: formData.generalContractorInfo?.safetyPlan || false,
+          numberOfEmployees: formData.generalContractorInfo?.numberOfEmployees || '',
           bonded: false, // Not collected in current form
           yearsInBusiness: 'Not provided', // Not collected in current form
           serviceAreas: [], // Not collected in current form

@@ -520,11 +520,13 @@ export const onCreateNotificationQueue = /* GraphQL */ `subscription OnCreateNot
   onCreateNotificationQueue(filter: $filter) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -2204,11 +2206,13 @@ export const onDeleteNotificationQueue = /* GraphQL */ `subscription OnDeleteNot
   onDeleteNotificationQueue(filter: $filter) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -3888,11 +3892,13 @@ export const onUpdateNotificationQueue = /* GraphQL */ `subscription OnUpdateNot
   onUpdateNotificationQueue(filter: $filter) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
