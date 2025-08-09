@@ -85,10 +85,30 @@ export interface AffiliateSubmissionData extends FormSubmissionData {
   numberOfEmployees?: string;
 }
 
+export interface GetEstimateSubmissionData extends FormSubmissionData {
+  formType: 'getEstimate';
+  name: string;
+  email: string;
+  phone?: string;
+  address: {
+    streetAddress: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  serviceType: string;
+  urgency?: 'low' | 'medium' | 'high';
+  budget?: string;
+  projectDescription: string;
+  timeline?: string;
+  workingOnsite?: boolean;
+}
+
 export type FormNotificationData = 
   | ContactUsSubmissionData 
   | GetQualifiedSubmissionData 
-  | AffiliateSubmissionData;
+  | AffiliateSubmissionData
+  | GetEstimateSubmissionData;
 
 export interface NotificationResult {
   success: boolean;
@@ -309,6 +329,76 @@ export class FormNotificationIntegration {
 
     } catch (error) {
       logger.error('Failed to send Affiliate notification', { error, data });
+      return {
+        success: false,
+        recipientsNotified: 0,
+        environment: this.getEnvironment(),
+        debugMode: process.env.DEBUG_NOTIFICATIONS === 'true',
+        errors: [error]
+      };
+    }
+  }
+
+  /**
+   * Send notification for Get Estimate form submission
+   */
+  public async notifyGetEstimateSubmission(
+    data: GetEstimateSubmissionData,
+    options: {
+      priority?: 'low' | 'medium' | 'high';
+      channels?: 'email' | 'sms' | 'both';
+      testMode?: boolean;
+    } = {}
+  ): Promise<NotificationResult> {
+    const { channels = 'both', testMode = false } = options;
+
+    try {
+      logger.info('Sending Get Estimate form notification', {
+        submissionId: data.submissionId,
+        email: data.email,
+        name: data.name,
+        serviceType: data.serviceType,
+        testMode
+      });
+
+      // Generate final email/SMS content in backend (no template dependency)
+      const emailContent = this.generateGetEstimateEmailContent(data);
+      const smsContent = this.generateGetEstimateSmsContent(data);
+
+      const channelArray = channels === 'both' ? ['EMAIL', 'SMS'] : 
+                          channels === 'email' ? ['EMAIL'] : ['SMS'];
+
+      // Queue pre-generated content (Lambda just sends, no processing)
+      const notificationId = await NotificationService.queueDirectNotification({
+        eventType: 'get_estimate_submission',
+        recipientIds: ['admin-team'],
+        channels: channelArray,
+        content: {
+          email: {
+            subject: emailContent.subject,
+            html: emailContent.html,
+            text: emailContent.text,
+            to: 'info@realtechee.com'
+          },
+          sms: {
+            message: smsContent,
+            to: process.env.DEBUG_PHONE || ''
+          }
+        }
+      });
+
+      const result = {
+        success: true,
+        notificationId,
+        recipientsNotified: 1,
+        environment: 'development',
+        debugMode: true
+      };
+
+      return this.transformNotificationResult(result, 'getEstimate');
+
+    } catch (error) {
+      logger.error('Failed to send Get Estimate notification', { error, data });
       return {
         success: false,
         recipientsNotified: 0,
@@ -727,8 +817,8 @@ Review and schedule qualification within 48 hours.
     return `${testIndicator}🎯 RealTechee: Agent qualification request from ${data.name}${brokerage}${experienceLevel}. License: ${data.licenseNumber || 'Pending'}. Call: ${data.phone}. Admin: https://d200k2wsaf8th3.amplifyapp.com/admin`;
   }
 
-  public generateGetEstimateEmailContent(data: any): { subject: string; html: string; text: string } {
-    const subject = `${data.testData ? '[TEST] ' : ''}New Estimate Request - ${data.customerName}`;
+  public generateGetEstimateEmailContent(data: GetEstimateSubmissionData): { subject: string; html: string; text: string } {
+    const subject = `${data.testData ? '[TEST] ' : ''}New Estimate Request - ${data.name}`;
     
     const html = `
 <!DOCTYPE html>
@@ -764,10 +854,9 @@ Review and schedule qualification within 48 hours.
                     <tr>
                         <td style="padding: 0 40px 32px;">
                             <h3 style="margin: 0 0 16px; font-size: 18px; font-weight: 600; color: #151515; border-bottom: 2px solid #E4E4E4; padding-bottom: 8px;">Customer Information</h3>
-                            <p><strong>Name:</strong> ${data.customerName}</p>
-                            <p><strong>Email:</strong> <a href="mailto:${data.customerEmail}" style="color: #17619C;">${data.customerEmail}</a></p>
-                            ${data.customerPhone ? `<p><strong>Phone:</strong> <a href="tel:${data.customerPhone}" style="color: #17619C;">${data.customerPhone}</a></p>` : ''}
-                            ${data.customerCompany ? `<p><strong>Company:</strong> ${data.customerCompany}</p>` : ''}
+                            <p><strong>Name:</strong> ${data.name}</p>
+                            <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #17619C;">${data.email}</a></p>
+                            ${data.phone ? `<p><strong>Phone:</strong> <a href="tel:${data.phone}" style="color: #17619C;">${data.phone}</a></p>` : ''}
                         </td>
                     </tr>
                     
@@ -775,12 +864,15 @@ Review and schedule qualification within 48 hours.
                     <tr>
                         <td style="padding: 0 40px 32px;">
                             <h3 style="margin: 0 0 16px; font-size: 18px; font-weight: 600; color: #151515; border-bottom: 2px solid #E4E4E4; padding-bottom: 8px;">Project Information</h3>
-                            <p><strong>Property Address:</strong> ${data.propertyAddress || 'Not provided'}</p>
-                            <p><strong>Project Type:</strong> ${data.productType || 'General Renovation'}</p>
-                            ${data.message ? `
+                            <p><strong>Property Address:</strong> ${data.address ? `${data.address.streetAddress}, ${data.address.city}, ${data.address.state} ${data.address.zip}` : 'Not provided'}</p>
+                            <p><strong>Project Type:</strong> ${data.serviceType || 'General Renovation'}</p>
+                            <p><strong>Budget:</strong> ${data.budget || 'Not specified'}</p>
+                            <p><strong>Timeline:</strong> ${data.timeline || 'Not specified'}</p>
+                            <p><strong>Working Onsite:</strong> <span style="color: ${data.workingOnsite ? '#2D5016' : '#D63384'};">${data.workingOnsite ? '✅ YES' : '❌ NO'}</span></p>
+                            ${data.projectDescription ? `
                             <p><strong>Project Description:</strong></p>
                             <div style="background-color: #F8F9FA; padding: 16px; border-radius: 8px; border-left: 4px solid #17619C;">
-                                <p style="margin: 0; white-space: pre-wrap;">${data.message}</p>
+                                <p style="margin: 0; white-space: pre-wrap;">${data.projectDescription}</p>
                             </div>
                             ` : ''}
                         </td>
@@ -789,9 +881,9 @@ Review and schedule qualification within 48 hours.
                     <!-- Actions -->
                     <tr>
                         <td style="padding: 0 40px 40px; text-align: center;">
-                            <a href="mailto:${data.customerEmail}" style="background-color: #3BE8B0; color: #151515; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-right: 10px;">📧 Contact Customer</a>
-                            ${data.customerPhone ? `<a href="tel:${data.customerPhone}" style="background-color: #17619C; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-right: 10px;">📞 Call Customer</a>` : ''}
-                            ${data.requestId ? `<a href="https://d200k2wsaf8th3.amplifyapp.com/admin/requests/${data.requestId}" style="background-color: #2A2B2E; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600;">📋 View Request</a>` : ''}
+                            <a href="mailto:${data.email}" style="background-color: #3BE8B0; color: #151515; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-right: 10px;">📧 Contact Customer</a>
+                            ${data.phone ? `<a href="tel:${data.phone}" style="background-color: #17619C; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; margin-right: 10px;">📞 Call Customer</a>` : ''}
+                            <a href="https://d200k2wsaf8th3.amplifyapp.com/admin/requests/${data.submissionId}" style="background-color: #2A2B2E; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; font-weight: 600;">📋 View Request</a>
                         </td>
                     </tr>
                     
@@ -816,25 +908,27 @@ NEW ESTIMATE REQUEST - REALTECHEE
 💰 ESTIMATE REQUEST
 
 CUSTOMER INFORMATION:
-Name: ${data.customerName}
-Email: ${data.customerEmail}
-${data.customerPhone ? `Phone: ${data.customerPhone}` : ''}
-${data.customerCompany ? `Company: ${data.customerCompany}` : ''}
+Name: ${data.name}
+Email: ${data.email}
+${data.phone ? `Phone: ${data.phone}` : ''}
 
 PROJECT INFORMATION:
-Property: ${data.propertyAddress || 'Not provided'}
-Type: ${data.productType || 'General Renovation'}
+Property: ${data.address ? `${data.address.streetAddress}, ${data.address.city}, ${data.address.state} ${data.address.zip}` : 'Not provided'}
+Type: ${data.serviceType || 'General Renovation'}
+Budget: ${data.budget || 'Not specified'}
+Timeline: ${data.timeline || 'Not specified'}
+Onsite Work: ${data.workingOnsite ? 'Yes' : 'No'}
 
-${data.message ? `DESCRIPTION:
-${data.message}
+${data.projectDescription ? `DESCRIPTION:
+${data.projectDescription}
 ` : ''}
 Submitted: ${new Date().toLocaleString()}
 ID: ${data.submissionId}
 
 ACTIONS:
-- Email: ${data.customerEmail}
-${data.customerPhone ? `- Call: ${data.customerPhone}` : ''}
-${data.requestId ? `- View: https://d200k2wsaf8th3.amplifyapp.com/admin/requests/${data.requestId}` : ''}
+- Email: ${data.email}
+${data.phone ? `- Call: ${data.phone}` : ''}
+- View: https://d200k2wsaf8th3.amplifyapp.com/admin/requests/${data.submissionId}
 
 RealTechee Estimate Team
 Respond within 24 hours.
@@ -843,12 +937,13 @@ Respond within 24 hours.
     return { subject, html, text };
   }
 
-  public generateGetEstimateSmsContent(data: any): string {
+  public generateGetEstimateSmsContent(data: GetEstimateSubmissionData): string {
     const testIndicator = data.testData ? '[TEST] ' : '';
-    const projectType = data.productType ? ` (${data.productType})` : '';
-    const contactInfo = data.customerPhone ? `📞 ${data.customerPhone}` : `📧 ${data.customerEmail}`;
+    const projectType = data.serviceType ? ` (${data.serviceType})` : '';
+    const contactInfo = data.phone ? `📞 ${data.phone}` : `📧 ${data.email}`;
+    const propertyAddress = data.address ? `${data.address.streetAddress}, ${data.address.city}, ${data.address.state}` : 'TBD';
     
-    return `${testIndicator}💰 RealTechee: New estimate request from ${data.customerName}${projectType}. Property: ${data.propertyAddress || 'TBD'}. ${contactInfo}. Admin: https://d200k2wsaf8th3.amplifyapp.com/admin`;
+    return `${testIndicator}💰 RealTechee: New estimate request from ${data.name}${projectType}. Property: ${propertyAddress}. ${contactInfo}. Admin: https://d200k2wsaf8th3.amplifyapp.com/admin`;
   }
 
   /**
@@ -871,6 +966,9 @@ Respond within 24 hours.
       
       case 'affiliate':
         return this.notifyAffiliateSubmission(data as AffiliateSubmissionData, options);
+      
+      case 'getEstimate':
+        return this.notifyGetEstimateSubmission(data as GetEstimateSubmissionData, options);
       
       default:
         throw new Error(`Unsupported form type: ${(data as any).formType}`);

@@ -10,7 +10,7 @@ import { createProperties, createContacts, createAffiliates, updateContacts } fr
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { notifyAffiliate, AffiliateSubmissionData } from '../../services/formNotificationIntegration';
+import { FormNotificationIntegration, AffiliateSubmissionData } from '../../services/formNotificationIntegration';
 
 const Affiliate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.AFFILIATE];
@@ -272,10 +272,13 @@ const Affiliate: NextPage = () => {
       
       logger.info('Step 4a: ✅ Affiliates record created', { affiliateData: cleanAffiliateData });
 
-      // Step 5: Send internal partnerships team notification
-      logger.info('Step 5: Sending partnerships team notification for affiliate inquiry');
+      // Step 5: Send internal partnerships team notification using NEW decoupled architecture
+      logger.info('Step 5: Sending partnerships team notification for affiliate inquiry (NEW decoupled architecture)');
       
       try {
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
         const notificationData: AffiliateSubmissionData = {
           formType: 'affiliate',
           submissionId: affiliateData.id,
@@ -310,26 +313,28 @@ const Affiliate: NextPage = () => {
           leadSource: 'affiliate_form'
         };
         
-        const notificationResult = await notifyAffiliate(notificationData, {
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyAffiliateSubmission(notificationData, {
           priority: 'low',    // Affiliate forms are low priority
           channels: 'email',  // Email only for partnerships team
           testMode: false
         });
         
         if (notificationResult.success) {
-          logger.info('Step 5a: ✅ Partnerships team notification sent', {
+          logger.info('Step 5a: ✅ Partnerships team notification sent (NEW decoupled architecture)', {
+            notificationId: notificationResult.notificationId,
             recipientsNotified: notificationResult.recipientsNotified,
             environment: notificationResult.environment,
             debugMode: notificationResult.debugMode
           });
         } else {
-          logger.warn('Step 5a: ⚠️ Partnerships team notification failed', {
+          logger.warn('Step 5a: ⚠️ Partnerships team notification failed (NEW decoupled architecture)', {
             errors: notificationResult.errors
           });
         }
       } catch (notificationError) {
         // Don't fail the form submission if notification fails
-        logger.error('Step 5a: ❌ Partnerships team notification error', {
+        logger.error('Step 5a: ❌ Partnerships team notification error (NEW decoupled architecture)', {
           error: notificationError
         });
       }

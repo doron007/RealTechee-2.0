@@ -14,7 +14,7 @@ import { createProperties, createContacts, createRequests, updateContacts } from
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { NotificationService } from '../../utils/notificationService';
+import { FormNotificationIntegration, GetEstimateSubmissionData } from '../../services/formNotificationIntegration';
 import { assignmentService } from '../../services/assignmentService';
 
 const GetEstimate: NextPage = () => {
@@ -500,27 +500,58 @@ const GetEstimate: NextPage = () => {
         });
       }
 
-      // Step 5d: Queue notification for the new estimate request
+      // Step 5d: Send internal staff notification using NEW decoupled architecture
       try {
-        logger.info('Step 5d: Queueing notification for estimate request');
+        logger.info('Step 5d: Sending internal staff notification for estimate request (NEW decoupled architecture)');
         
-        await NotificationService.queueGetEstimateNotification({
-          customerName: agentData?.fullName || formData.agentInfo.fullName,
-          customerEmail: agentData?.email || formData.agentInfo.email,
-          customerPhone: agentData?.phone || formData.agentInfo.phone,
-          customerCompany: agentData?.company || formData.agentInfo.company,
-          propertyAddress: propertyData.propertyFullAddress || undefined,
-          productType: formData.rtDigitalSelection || 'General Renovation',
-          message: formData.notes || 'No additional notes provided',
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
+        const notificationData: GetEstimateSubmissionData = {
+          formType: 'getEstimate',
           submissionId: requestData.id,
-          contactId: agentData?.id || undefined, // Pass contact ID to respect user preferences
-          requestId: requestData.id // Add request ID for admin link
+          submittedAt: new Date().toISOString(),
+          name: agentData?.fullName || formData.agentInfo.fullName,
+          email: agentData?.email || formData.agentInfo.email,
+          phone: agentData?.phone || formData.agentInfo.phone,
+          address: {
+            streetAddress: formData.propertyAddress.streetAddress,
+            city: formData.propertyAddress.city,
+            state: formData.propertyAddress.state,
+            zip: formData.propertyAddress.zip
+          },
+          serviceType: formData.rtDigitalSelection || 'General Renovation',
+          urgency: 'high', // Get Estimate requests are typically urgent
+          budget: formData.budget || 'Not specified',
+          projectDescription: formData.notes || 'No additional notes provided',
+          timeline: formData.requestedVisitDateTime || 'Not specified',
+          workingOnsite: formData.relationToProperty !== 'Remote Planning',
+          testData: isTestSubmission,
+          leadSource: isTestSubmission ? 'E2E_TEST' : 'get_estimate_form'
+        };
+        
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyGetEstimateSubmission(notificationData, {
+          priority: 'high',  // Get Estimate forms are high priority
+          channels: 'both',  // Send both email and SMS to sales team
+          testMode: false
         });
         
-        logger.info('Step 5d: ✅ Notification queued successfully');
+        if (notificationResult.success) {
+          logger.info('Step 5d: ✅ Internal staff notification sent (NEW decoupled architecture)', {
+            notificationId: notificationResult.notificationId,
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5d: ⚠️ Internal staff notification failed (NEW decoupled architecture)', {
+            errors: notificationResult.errors
+          });
+        }
       } catch (notificationError) {
         // Don't fail the entire form submission if notification fails
-        logger.error('Step 5d: ⚠️ Notification failed (form submission continues)', {
+        logger.error('Step 5d: ❌ Internal staff notification error (NEW decoupled architecture)', {
           error: notificationError instanceof Error ? notificationError.message : String(notificationError)
         });
       }

@@ -30,15 +30,15 @@ const ddbClient = new DynamoDBClient({
 
 const docClient = DynamoDBDocumentClient.from(ddbClient);
 
-// Get table names from amplify configuration
+// Get table names from current environment (development environment pattern)
 const getTableName = (modelName) => {
-  const tableConfig = amplifyOutputs.data.tables?.find(t => 
-    t.name.startsWith(modelName + '-') && t.name.endsWith('-NONE')
-  );
-  if (!tableConfig) {
-    throw new Error(`Table configuration not found for model: ${modelName}`);
-  }
-  return tableConfig.name;
+  // Development environment uses fvn7t5hbobaxjklhrqzdl4ac34 pattern
+  // Production environment uses aqnqdrctpzfwfjwyxxsmu6peoq pattern
+  const envId = 'fvn7t5hbobaxjklhrqzdl4ac34'; // Development environment
+  const tableName = `${modelName}-${envId}-NONE`;
+  
+  console.log(`Using table name: ${tableName} for model: ${modelName}`);
+  return tableName;
 };
 
 /**

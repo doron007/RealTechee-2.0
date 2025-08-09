@@ -4,7 +4,17 @@ This project enhances an existing Amplify Gen 2 + GraphQL + Next.js + Tailwind a
 
 ---
 
-## 🎯 CURRENT STATUS (Updated: 2025-01-27)
+## 🎯 CURRENT STATUS (Updated: 2025-01-17)
+
+### **✅ COMPLETED: DECOUPLED NOTIFICATION ARCHITECTURE (NEW)**
+- **Architecture Upgrade**: Implemented decoupled backend content generation system
+- **FormNotificationIntegration Service**: All 4 forms now use backend-generated content
+- **Enhanced Lambda Processing**: Supports both `directContent` (new) and template-based (legacy)
+- **Schema Enhancement**: Added `directContent` and `priority` fields to NotificationQueue
+- **Production Ready**: Clean TypeScript compilation and successful build
+- **✅ NEW: All Forms Updated**: Contact Us, Get Qualified, Get Estimate, and Affiliate forms using new architecture
+- **✅ NEW: Playwright Testing**: All forms tested and verified working with new notification system
+- **✅ NEW: Full Backend Content Generation**: Rich HTML emails and SMS content generated in TypeScript backend
 
 ### **✅ COMPLETED PHASES (1-6):**
 - **Phase 1-6**: Core notification system fully implemented with simplified approach
@@ -40,10 +50,14 @@ This project enhances an existing Amplify Gen 2 + GraphQL + Next.js + Tailwind a
 
 ### **📋 PRODUCTION READINESS STATUS:**
 - ✅ **Core System**: Multi-channel notifications working (Email + SMS)
+- ✅ **New Architecture**: Decoupled backend content generation operational
+- ✅ **All Forms**: Get Estimate, Get Qualified, Contact Us, Affiliate integrated and tested
 - ✅ **User Preferences**: Settings UI with simplified toggles
 - ✅ **Error Handling**: Retry logic and graceful failure handling
-- ✅ **Template System**: Branded templates with Handlebars processing
-- ✅ **Type Safety**: All TypeScript build errors resolved
+- ✅ **Template System**: Rich HTML email + SMS content generated in backend
+- ✅ **Type Safety**: Clean TypeScript compilation and successful builds
+- ✅ **E2E Testing**: All forms tested with Playwright and verified working
+- ✅ **Email Delivery**: Confirmed working for all form types (Affiliate confirmed by user)
 - ⚠️ **Security**: Basic sanitization implemented (consider DOMPurify for production)
 - ✅ **Monitoring**: CloudWatch logging and error tracking
 
@@ -125,13 +139,21 @@ enum ChannelType {
 type NotificationQueue @model {
   id: ID!
   eventType: String!
-  payload: AWSJSON!              # Dynamic data for template injection
+  payload: AWSJSON!              # Legacy: Dynamic data for template injection
+  directContent: AWSJSON         # NEW: Pre-generated email/SMS content
+  priority: NotificationPriority # NEW: Message priority level
   recipientIds: [ID!]!          # Contact IDs
   channels: [ChannelType!]!     # Multi-channel support
-  templateId: ID!
+  templateId: ID                # Optional: For legacy template-based processing
   scheduledAt: AWSDateTime
   status: NotificationStatus
   retryCount: Int
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
 }
 
 enum NotificationStatus {
@@ -146,14 +168,26 @@ enum NotificationStatus {
 
 ## 🧠 BACKEND PROCESSOR (AMPLIFY FUNCTION / LAMBDA)
 
-Create a scheduled processor that:
+### **NEW DECOUPLED ARCHITECTURE:**
 
+The processor now supports two approaches:
+
+**1. NEW: Direct Content Processing (Preferred)**
+- Pulls `PENDING` notifications with `directContent` field
+- Pre-generated email/SMS content from FormNotificationIntegration service
+- Simply sends the ready-to-use content via SendGrid/Twilio
+- No template processing needed in Lambda
+
+**2. LEGACY: Template-based Processing (Backward Compatible)**
 - Pulls `PENDING` notifications from `NotificationQueue`
 - Resolves recipients from `recipientIds`, respecting `notificationPrefs`
 - Injects payload into `NotificationTemplate` using `Handlebars`
 - Sends via appropriate channel handler (`email`, `sms`, `telegram`, `whatsapp`)
+
+**Common Processing:**
 - Logs result and updates queue status + `retryCount`
 - Retries with backoff if needed
+- Handles both architectures seamlessly
 
 ---
 

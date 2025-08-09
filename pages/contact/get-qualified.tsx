@@ -10,7 +10,7 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { notifyGetQualified, GetQualifiedSubmissionData } from '../../services/formNotificationIntegration';
+import { FormNotificationIntegration, GetQualifiedSubmissionData } from '../../services/formNotificationIntegration';
 
 const GetQualified: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.QUALIFIED];
@@ -305,10 +305,13 @@ ${JSON.stringify({
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Send internal staff notification for agent qualification
-      logger.info('Step 5: Sending internal AE team notification for agent qualification');
+      // Step 5: Send internal staff notification for agent qualification using NEW decoupled architecture
+      logger.info('Step 5: Sending internal AE team notification for agent qualification (NEW decoupled architecture)');
       
       try {
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
         const notificationData: GetQualifiedSubmissionData = {
           formType: 'getQualified',
           submissionId: contactUsData.id,
@@ -327,7 +330,8 @@ ${JSON.stringify({
           leadSource: 'get_qualified_form'
         };
         
-        const notificationResult = await notifyGetQualified(notificationData, {
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyGetQualifiedSubmission(notificationData, {
           priority: 'medium', // Get Qualified forms are medium priority
           channels: 'both',   // Send both email and SMS to AE team
           testMode: false

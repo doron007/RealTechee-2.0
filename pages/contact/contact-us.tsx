@@ -10,7 +10,7 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { notifyContactUs, ContactUsSubmissionData } from '../../services/formNotificationIntegration';
+import { FormNotificationIntegration, ContactUsSubmissionData } from '../../services/formNotificationIntegration';
 
 const ContactUs: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.INQUIRY];
@@ -253,10 +253,13 @@ const ContactUs: NextPage = () => {
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Send internal staff notification
-      logger.info('Step 5: Sending internal staff notification');
+      // Step 5: Send internal staff notification using NEW decoupled architecture
+      logger.info('Step 5: Sending internal staff notification (NEW decoupled architecture)');
       
       try {
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
         const notificationData: ContactUsSubmissionData = {
           formType: 'contactUs',
           submissionId: contactUsData.id,
@@ -274,7 +277,8 @@ const ContactUs: NextPage = () => {
           leadSource: 'contact_us_form'
         };
         
-        const notificationResult = await notifyContactUs(notificationData, {
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyContactUsSubmission(notificationData, {
           priority: 'high', // Contact Us forms are high priority
           channels: 'both',  // Send both email and SMS
           testMode: false
