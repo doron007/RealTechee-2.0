@@ -2467,7 +2467,21 @@
               "name": "payload",
               "isArray": false,
               "type": "AWSJSON",
-              "isRequired": true,
+              "isRequired": false,
+              "attributes": []
+            },
+            "templateId": {
+              "name": "templateId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "directContent": {
+              "name": "directContent",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
               "attributes": []
             },
             "recipientIds": {
@@ -2484,13 +2498,6 @@
               "isRequired": true,
               "attributes": []
             },
-            "templateId": {
-              "name": "templateId",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": true,
-              "attributes": []
-            },
             "scheduledAt": {
               "name": "scheduledAt",
               "isArray": false,
@@ -2503,6 +2510,15 @@
               "isArray": false,
               "type": {
                 "enum": "NotificationQueueStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "priority": {
+              "name": "priority",
+              "isArray": false,
+              "type": {
+                "enum": "NotificationQueuePriority"
               },
               "isRequired": false,
               "attributes": []
@@ -6623,6 +6639,14 @@
             "SENT",
             "FAILED",
             "RETRYING"
+          ]
+        },
+        "NotificationQueuePriority": {
+          "name": "NotificationQueuePriority",
+          "values": [
+            "LOW",
+            "MEDIUM",
+            "HIGH"
           ]
         },
         "NotificationEventsEventType": {

@@ -3,12 +3,30 @@
 export interface NotificationQueue {
   id: string;
   eventType: string;
-  payload: any; // JSON payload with template variables
+  
+  // Legacy template-based approach (for backward compatibility)
+  payload?: any; // JSON payload with template variables
+  templateId?: string;
+  
+  // New direct content approach (decoupled from templates)
+  directContent?: {
+    email?: {
+      subject: string;
+      html: string;
+      text: string;
+      to: string;
+    };
+    sms?: {
+      message: string;
+      to: string;
+    };
+  };
+  
   recipientIds: string[]; // Array of Contact IDs
   channels: string[]; // Array of channel types
-  templateId: string;
   scheduledAt?: string;
   status: 'PENDING' | 'SENT' | 'FAILED' | 'RETRYING';
+  priority?: 'LOW' | 'MEDIUM' | 'HIGH';
   retryCount?: number;
   errorMessage?: string;
   sentAt?: string;

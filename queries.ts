@@ -387,6 +387,32 @@ export const getESignatureDocuments = /* GraphQL */ `query GetESignatureDocument
   APITypes.GetESignatureDocumentsQueryVariables,
   APITypes.GetESignatureDocumentsQuery
 >;
+export const getEmailSuppressionList = /* GraphQL */ `query GetEmailSuppressionList($id: ID!) {
+  getEmailSuppressionList(id: $id) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetEmailSuppressionListQueryVariables,
+  APITypes.GetEmailSuppressionListQuery
+>;
 export const getLegal = /* GraphQL */ `query GetLegal($id: ID!) {
   getLegal(id: $id) {
     content
@@ -454,11 +480,13 @@ export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($i
   getNotificationQueue(id: $id) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -1555,6 +1583,32 @@ export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
   APITypes.GetRequestsQueryVariables,
   APITypes.GetRequestsQuery
 >;
+export const getSESReputationMetrics = /* GraphQL */ `query GetSESReputationMetrics($id: ID!) {
+  getSESReputationMetrics(id: $id) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetSESReputationMetricsQueryVariables,
+  APITypes.GetSESReputationMetricsQuery
+>;
 export const getSecureConfig = /* GraphQL */ `query GetSecureConfig($id: ID!) {
   getSecureConfig(id: $id) {
     createdAt
@@ -2115,6 +2169,44 @@ export const listESignatureDocuments = /* GraphQL */ `query ListESignatureDocume
   APITypes.ListESignatureDocumentsQueryVariables,
   APITypes.ListESignatureDocumentsQuery
 >;
+export const listEmailSuppressionLists = /* GraphQL */ `query ListEmailSuppressionLists(
+  $filter: ModelEmailSuppressionListFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEmailSuppressionLists(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      bounceSubType
+      bounceType
+      complaintType
+      createdAt
+      createdBy
+      emailAddress
+      id
+      isActive
+      metadata
+      originalMessageId
+      owner
+      reason
+      source
+      suppressedAt
+      suppressionType
+      updatedAt
+      updatedBy
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListEmailSuppressionListsQueryVariables,
+  APITypes.ListEmailSuppressionListsQuery
+>;
 export const listLegals = /* GraphQL */ `query ListLegals(
   $filter: ModelLegalFilterInput
   $limit: Int
@@ -2222,11 +2314,13 @@ export const listNotificationQueues = /* GraphQL */ `query ListNotificationQueue
     items {
       channels
       createdAt
+      directContent
       errorMessage
       eventType
       id
       owner
       payload
+      priority
       recipientIds
       retryCount
       scheduledAt
@@ -2764,6 +2858,44 @@ export const listRequests = /* GraphQL */ `query ListRequests(
 ` as GeneratedQuery<
   APITypes.ListRequestsQueryVariables,
   APITypes.ListRequestsQuery
+>;
+export const listSESReputationMetrics = /* GraphQL */ `query ListSESReputationMetrics(
+  $filter: ModelSESReputationMetricsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSESReputationMetrics(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      bounceRate
+      bounceRateAlert
+      complaintRate
+      complaintRateAlert
+      createdAt
+      deliveryRate
+      id
+      metricDate
+      owner
+      reputationScore
+      sendRateMax
+      sendingQuotaMax
+      sendingQuotaUsed
+      totalBounces
+      totalComplaints
+      totalEmailsSent
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListSESReputationMetricsQueryVariables,
+  APITypes.ListSESReputationMetricsQuery
 >;
 export const listSecureConfigs = /* GraphQL */ `query ListSecureConfigs(
   $filter: ModelSecureConfigFilterInput

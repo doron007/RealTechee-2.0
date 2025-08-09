@@ -95,35 +95,68 @@ async function processNotification(notification: NotificationQueue): Promise<voi
   console.log(`📧 Processing notification ${notification.id} of type ${notification.eventType}`);
 
   try {
-    // Get the template
-    const template = await getTemplate(notification.templateId);
-    if (!template) {
-      throw new Error(`Template ${notification.templateId} not found`);
-    }
-
-    // Parse payload from DynamoDB if it's a string
-    let payload = typeof notification.payload === 'string' ? JSON.parse(notification.payload) : notification.payload;
-
-    // Enhance payload with admin URLs for request navigation
-    payload = enhancePayloadWithAdminUrls(payload, notification);
-
-    // Process the template with data
-    const { subject, htmlContent, textContent } = await templateProcessor.processTemplate(
-      template,
-      payload
-    );
-
     // Parse JSON strings from DynamoDB
     const channels = typeof notification.channels === 'string' ? JSON.parse(notification.channels) : notification.channels;
     const recipientIds = typeof notification.recipientIds === 'string' ? JSON.parse(notification.recipientIds) : notification.recipientIds;
 
+    let subject: string, htmlContent: string, textContent: string, smsContent: string;
+
+    // Check if this uses the new directContent approach (decoupled architecture)
+    if (notification.directContent) {
+      console.log('🆕 Using directContent (decoupled architecture)');
+      
+      const directContent = typeof notification.directContent === 'string' 
+        ? JSON.parse(notification.directContent) 
+        : notification.directContent;
+
+      // Extract pre-generated content
+      subject = directContent.email?.subject || 'Notification';
+      htmlContent = directContent.email?.html || directContent.email?.text || 'No content';
+      textContent = directContent.email?.text || directContent.email?.html || 'No content';
+      smsContent = directContent.sms?.message || textContent.substring(0, 160); // SMS fallback
+
+    } else {
+      // Legacy template-based approach
+      console.log('🔄 Using template-based processing (legacy)');
+      
+      // Get the template
+      if (!notification.templateId) {
+        throw new Error('Template ID is required for legacy template-based processing');
+      }
+      
+      const template = await getTemplate(notification.templateId);
+      if (!template) {
+        throw new Error(`Template ${notification.templateId} not found`);
+      }
+
+      // Parse payload from DynamoDB if it's a string
+      let payload = typeof notification.payload === 'string' ? JSON.parse(notification.payload) : notification.payload;
+
+      // Enhance payload with admin URLs for request navigation
+      payload = enhancePayloadWithAdminUrls(payload, notification);
+
+      // Process the template with data
+      const processed = await templateProcessor.processTemplate(template, payload);
+      subject = processed.subject;
+      htmlContent = processed.htmlContent;
+      textContent = processed.textContent;
+
+      // Get SMS-specific content if available
+      const smsTemplate = await getTemplate(notification.templateId, 'SMS');
+      if (smsTemplate) {
+        const smsProcessed = await templateProcessor.processTemplate(smsTemplate, payload);
+        smsContent = smsProcessed.textContent;
+      } else {
+        smsContent = textContent;
+      }
+    }
+
     // Determine recipients
     const recipients = await resolveRecipients(recipientIds, channels);
     
-    // Send notifications with channel-specific templates
+    // Send notifications with pre-generated or processed content
     for (const recipient of recipients) {
       if (channels.includes('EMAIL') && recipient.email) {
-        // Use original template for email (it's designed for email)
         await sendEmailNotification({
           to: recipient.email,
           subject,
@@ -137,18 +170,6 @@ async function processNotification(notification: NotificationQueue): Promise<voi
       
       if (channels.includes('SMS') && recipient.phone) {
         if (smsHandler) {
-          // Get SMS-specific template for better formatting
-          const smsTemplate = await getTemplate(notification.templateId, 'SMS');
-          
-          let smsContent = textContent;
-          if (smsTemplate) {
-            console.log('📱 Using SMS-specific template');
-            const smsProcessed = await templateProcessor.processTemplate(smsTemplate, payload);
-            smsContent = smsProcessed.textContent;
-          } else {
-            console.log('📱 Using fallback email template for SMS');
-          }
-          
           await sendSMSNotification({
             to: recipient.phone,
             body: smsContent,

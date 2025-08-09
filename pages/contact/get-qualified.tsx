@@ -10,24 +10,28 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
+import { FormNotificationIntegration, GetQualifiedSubmissionData } from '../../services/formNotificationIntegration';
 
 const GetQualified: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.QUALIFIED];
   
-  // Use reusable form submission hook
+  // Use reusable form submission hook with persistent error messages
   const { 
     status, 
     isSubmitting, 
+    errorDetails,
     handleSubmission, 
     reset 
   } = useFormSubmission({
     formName: 'Get Qualified',
     scrollToTopOnSuccess: true,
-    errorResetDelay: 5000
+    errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -301,7 +305,57 @@ ${JSON.stringify({
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Success
+      // Step 5: Send internal staff notification for agent qualification using NEW decoupled architecture
+      logger.info('Step 5: Sending internal AE team notification for agent qualification (NEW decoupled architecture)');
+      
+      try {
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
+        const notificationData: GetQualifiedSubmissionData = {
+          formType: 'getQualified',
+          submissionId: contactUsData.id,
+          submittedAt: contactUsData.submissionTime || new Date().toISOString(),
+          name: formData.contactInfo.fullName,
+          email: formData.contactInfo.email,
+          phone: formData.contactInfo.phone,
+          licenseNumber: formData.licenseNumber,
+          brokerage: brokerageName,
+          yearsExperience: formData.experienceYears,
+          specialties: formData.specialties,
+          marketAreas: formData.primaryMarkets ? [formData.primaryMarkets] : [],
+          currentVolume: formData.recentTransactions || 'Not specified',
+          goals: formData.qualificationMessage,
+          testData: false,
+          leadSource: 'get_qualified_form'
+        };
+        
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyGetQualifiedSubmission(notificationData, {
+          priority: 'medium', // Get Qualified forms are medium priority
+          channels: 'both',   // Send both email and SMS to AE team
+          testMode: false
+        });
+        
+        if (notificationResult.success) {
+          logger.info('Step 5a: ✅ AE team notification sent', {
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5a: ⚠️ AE team notification failed', {
+            errors: notificationResult.errors
+          });
+        }
+      } catch (notificationError) {
+        // Don't fail the form submission if notification fails
+        logger.error('Step 5a: ❌ AE team notification error', {
+          error: notificationError
+        });
+      }
+
+      // Step 6: Success
       logger.info('=== GET QUALIFIED SUBMISSION COMPLETED SUCCESSFULLY ===', {
         timestamp: new Date().toISOString(),
         summary: {
@@ -325,10 +379,22 @@ ${JSON.stringify({
     });
   };
 
-  // Form component with status handling using reusable components
+  // Enhanced form component with better error handling
   const formComponent = (() => {
     if (status === 'success') return <InquirySuccessMessage onReset={reset} />;
-    if (status === 'error') return <FormErrorMessage onRetry={reset} />;
+    
+    if (status === 'error') {
+      return (
+        <FormErrorMessage 
+          error={errorDetails}
+          onRetry={reset}
+          onContactSupport={() => {
+            // Custom contact support action for Get Qualified form
+            window.open('mailto:agents@realtechee.com?subject=Get Qualified Form Issue&body=I encountered an issue submitting the get qualified form. Please assist.', '_blank');
+          }}
+        />
+      );
+    }
     
     return (
       <GetQualifiedForm 

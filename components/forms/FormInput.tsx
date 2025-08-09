@@ -55,6 +55,7 @@ export function FormInput<T extends Record<string, any>>({
               className="w-full bg-transparent border-0 outline-0 text-sm font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469]"
               placeholder={placeholder}
               maxLength={maxLength}
+              required={required}
               onBlur={(e) => {
                 // Call React Hook Form's onBlur first
                 registerProps.onBlur(e);

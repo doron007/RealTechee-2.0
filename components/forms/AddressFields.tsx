@@ -40,6 +40,7 @@ export function AddressFields<T extends Record<string, any>>({
               {...register(`${prefix}.streetAddress` as Path<T>)}
               className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
               placeholder=""
+              required
             />
           </div>
           <ErrorMessage
@@ -67,6 +68,7 @@ export function AddressFields<T extends Record<string, any>>({
                 {...register(`${prefix}.state` as Path<T>)}
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
                 defaultValue="CA"
+                required
               >
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -155,6 +157,7 @@ export function AddressFields<T extends Record<string, any>>({
                 {...register(`${prefix}.city` as Path<T>)}
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
+                required
               />
             </div>
             <ErrorMessage
@@ -181,6 +184,7 @@ export function AddressFields<T extends Record<string, any>>({
                 className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
                 maxLength={10}
+                required
               />
             </div>
             <ErrorMessage

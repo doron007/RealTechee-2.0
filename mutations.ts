@@ -441,6 +441,35 @@ export const createESignatureDocuments = /* GraphQL */ `mutation CreateESignatur
   APITypes.CreateESignatureDocumentsMutationVariables,
   APITypes.CreateESignatureDocumentsMutation
 >;
+export const createEmailSuppressionList = /* GraphQL */ `mutation CreateEmailSuppressionList(
+  $condition: ModelEmailSuppressionListConditionInput
+  $input: CreateEmailSuppressionListInput!
+) {
+  createEmailSuppressionList(condition: $condition, input: $input) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateEmailSuppressionListMutationVariables,
+  APITypes.CreateEmailSuppressionListMutation
+>;
 export const createLegal = /* GraphQL */ `mutation CreateLegal(
   $condition: ModelLegalConditionInput
   $input: CreateLegalInput!
@@ -523,11 +552,13 @@ export const createNotificationQueue = /* GraphQL */ `mutation CreateNotificatio
   createNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -1660,6 +1691,35 @@ export const createRequests = /* GraphQL */ `mutation CreateRequests(
   APITypes.CreateRequestsMutationVariables,
   APITypes.CreateRequestsMutation
 >;
+export const createSESReputationMetrics = /* GraphQL */ `mutation CreateSESReputationMetrics(
+  $condition: ModelSESReputationMetricsConditionInput
+  $input: CreateSESReputationMetricsInput!
+) {
+  createSESReputationMetrics(condition: $condition, input: $input) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateSESReputationMetricsMutationVariables,
+  APITypes.CreateSESReputationMetricsMutation
+>;
 export const createSecureConfig = /* GraphQL */ `mutation CreateSecureConfig(
   $condition: ModelSecureConfigConditionInput
   $input: CreateSecureConfigInput!
@@ -2117,6 +2177,35 @@ export const deleteESignatureDocuments = /* GraphQL */ `mutation DeleteESignatur
   APITypes.DeleteESignatureDocumentsMutationVariables,
   APITypes.DeleteESignatureDocumentsMutation
 >;
+export const deleteEmailSuppressionList = /* GraphQL */ `mutation DeleteEmailSuppressionList(
+  $condition: ModelEmailSuppressionListConditionInput
+  $input: DeleteEmailSuppressionListInput!
+) {
+  deleteEmailSuppressionList(condition: $condition, input: $input) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteEmailSuppressionListMutationVariables,
+  APITypes.DeleteEmailSuppressionListMutation
+>;
 export const deleteLegal = /* GraphQL */ `mutation DeleteLegal(
   $condition: ModelLegalConditionInput
   $input: DeleteLegalInput!
@@ -2199,11 +2288,13 @@ export const deleteNotificationQueue = /* GraphQL */ `mutation DeleteNotificatio
   deleteNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -3336,6 +3427,35 @@ export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
   APITypes.DeleteRequestsMutationVariables,
   APITypes.DeleteRequestsMutation
 >;
+export const deleteSESReputationMetrics = /* GraphQL */ `mutation DeleteSESReputationMetrics(
+  $condition: ModelSESReputationMetricsConditionInput
+  $input: DeleteSESReputationMetricsInput!
+) {
+  deleteSESReputationMetrics(condition: $condition, input: $input) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteSESReputationMetricsMutationVariables,
+  APITypes.DeleteSESReputationMetricsMutation
+>;
 export const deleteSecureConfig = /* GraphQL */ `mutation DeleteSecureConfig(
   $condition: ModelSecureConfigConditionInput
   $input: DeleteSecureConfigInput!
@@ -3793,6 +3913,35 @@ export const updateESignatureDocuments = /* GraphQL */ `mutation UpdateESignatur
   APITypes.UpdateESignatureDocumentsMutationVariables,
   APITypes.UpdateESignatureDocumentsMutation
 >;
+export const updateEmailSuppressionList = /* GraphQL */ `mutation UpdateEmailSuppressionList(
+  $condition: ModelEmailSuppressionListConditionInput
+  $input: UpdateEmailSuppressionListInput!
+) {
+  updateEmailSuppressionList(condition: $condition, input: $input) {
+    bounceSubType
+    bounceType
+    complaintType
+    createdAt
+    createdBy
+    emailAddress
+    id
+    isActive
+    metadata
+    originalMessageId
+    owner
+    reason
+    source
+    suppressedAt
+    suppressionType
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateEmailSuppressionListMutationVariables,
+  APITypes.UpdateEmailSuppressionListMutation
+>;
 export const updateLegal = /* GraphQL */ `mutation UpdateLegal(
   $condition: ModelLegalConditionInput
   $input: UpdateLegalInput!
@@ -3875,11 +4024,13 @@ export const updateNotificationQueue = /* GraphQL */ `mutation UpdateNotificatio
   updateNotificationQueue(condition: $condition, input: $input) {
     channels
     createdAt
+    directContent
     errorMessage
     eventType
     id
     owner
     payload
+    priority
     recipientIds
     retryCount
     scheduledAt
@@ -5011,6 +5162,35 @@ export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
 ` as GeneratedMutation<
   APITypes.UpdateRequestsMutationVariables,
   APITypes.UpdateRequestsMutation
+>;
+export const updateSESReputationMetrics = /* GraphQL */ `mutation UpdateSESReputationMetrics(
+  $condition: ModelSESReputationMetricsConditionInput
+  $input: UpdateSESReputationMetricsInput!
+) {
+  updateSESReputationMetrics(condition: $condition, input: $input) {
+    bounceRate
+    bounceRateAlert
+    complaintRate
+    complaintRateAlert
+    createdAt
+    deliveryRate
+    id
+    metricDate
+    owner
+    reputationScore
+    sendRateMax
+    sendingQuotaMax
+    sendingQuotaUsed
+    totalBounces
+    totalComplaints
+    totalEmailsSent
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateSESReputationMetricsMutationVariables,
+  APITypes.UpdateSESReputationMetricsMutation
 >;
 export const updateSecureConfig = /* GraphQL */ `mutation UpdateSecureConfig(
   $condition: ModelSecureConfigConditionInput

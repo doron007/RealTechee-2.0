@@ -10,24 +10,28 @@ import { createProperties, createContacts, createAffiliates, updateContacts } fr
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
+import { FormNotificationIntegration, AffiliateSubmissionData } from '../../services/formNotificationIntegration';
 
 const Affiliate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.AFFILIATE];
   
-  // Use reusable form submission hook
+  // Use reusable form submission hook with persistent error messages
   const { 
     status, 
     isSubmitting, 
+    errorDetails,
     handleSubmission, 
     reset 
   } = useFormSubmission({
     formName: 'Affiliate Inquiry',
     scrollToTopOnSuccess: true,
-    errorResetDelay: 5000
+    errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client
-  const client = generateClient();
+  // Initialize Amplify GraphQL client with API key for public access
+  const client = generateClient({
+    authMode: 'apiKey'
+  });
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
@@ -239,13 +243,13 @@ const Affiliate: NextPage = () => {
         
         // General Contractor specific fields (if applicable)
         ...(formData.serviceType === 'General Contractor' && formData.generalContractorInfo ? {
-          workersCompensationInsurance: formData.generalContractorInfo.workersCompensation,
-          license: formData.generalContractorInfo.license,
-          environmentalFactor: formData.generalContractorInfo.environmentalFactor,
-          oshaCompliance: formData.generalContractorInfo.oshaCompliance,
-          signedNda: formData.generalContractorInfo.signedNDA,
-          safetyPlan: formData.generalContractorInfo.safetyPlan,
-          numEmployees: formData.generalContractorInfo.numberOfEmployees || ''
+          workersCompensationInsurance: formData.generalContractorInfo.workersCompensation ? 'Yes' : 'No',
+          license: formData.generalContractorInfo.license || '',
+          environmentalFactor: formData.generalContractorInfo.environmentalFactor ? 'Yes' : 'No',
+          oshaCompliance: formData.generalContractorInfo.oshaCompliance ? 'Yes' : 'No',
+          signedNda: formData.generalContractorInfo.signedNDA ? 'Yes' : 'No',
+          safetyPlan: formData.generalContractorInfo.safetyPlan ? 'Yes' : 'No',
+          numEmployees: parseInt(formData.generalContractorInfo.numberOfEmployees) || 0
         } : {}),
         
         // System fields with proper user attribution
@@ -268,7 +272,74 @@ const Affiliate: NextPage = () => {
       
       logger.info('Step 4a: ✅ Affiliates record created', { affiliateData: cleanAffiliateData });
 
-      // Step 5: Success
+      // Step 5: Send internal partnerships team notification using NEW decoupled architecture
+      logger.info('Step 5: Sending partnerships team notification for affiliate inquiry (NEW decoupled architecture)');
+      
+      try {
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
+        const notificationData: AffiliateSubmissionData = {
+          formType: 'affiliate',
+          submissionId: affiliateData.id,
+          submittedAt: affiliateData.date || new Date().toISOString(),
+          companyName: formData.companyName,
+          contactName: formData.contactInfo.fullName,
+          email: formData.contactInfo.email,
+          phone: formData.contactInfo.phone,
+          serviceType: formData.serviceType,
+          // Address information
+          address: {
+            streetAddress: formData.address.streetAddress,
+            city: formData.address.city,
+            state: formData.address.state,
+            zip: formData.address.zip
+          },
+          // Map General Contractor specific fields or provide defaults
+          businessLicense: formData.generalContractorInfo?.license || '',
+          insurance: formData.generalContractorInfo?.workersCompensation || false,
+          workersCompensation: formData.generalContractorInfo?.workersCompensation || false,
+          environmentalFactor: formData.generalContractorInfo?.environmentalFactor || false,
+          oshaCompliance: formData.generalContractorInfo?.oshaCompliance || false,
+          signedNDA: formData.generalContractorInfo?.signedNDA || false,
+          safetyPlan: formData.generalContractorInfo?.safetyPlan || false,
+          numberOfEmployees: formData.generalContractorInfo?.numberOfEmployees || '',
+          bonded: false, // Not collected in current form
+          yearsInBusiness: 'Not provided', // Not collected in current form
+          serviceAreas: [], // Not collected in current form
+          certifications: [], // Not collected in current form
+          portfolio: 'Not provided', // Not collected in current form
+          testData: false,
+          leadSource: 'affiliate_form'
+        };
+        
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyAffiliateSubmission(notificationData, {
+          priority: 'low',    // Affiliate forms are low priority
+          channels: 'email',  // Email only for partnerships team
+          testMode: false
+        });
+        
+        if (notificationResult.success) {
+          logger.info('Step 5a: ✅ Partnerships team notification sent (NEW decoupled architecture)', {
+            notificationId: notificationResult.notificationId,
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5a: ⚠️ Partnerships team notification failed (NEW decoupled architecture)', {
+            errors: notificationResult.errors
+          });
+        }
+      } catch (notificationError) {
+        // Don't fail the form submission if notification fails
+        logger.error('Step 5a: ❌ Partnerships team notification error (NEW decoupled architecture)', {
+          error: notificationError
+        });
+      }
+
+      // Step 6: Success
       logger.info('=== AFFILIATE INQUIRY SUBMISSION COMPLETED SUCCESSFULLY ===', {
         timestamp: new Date().toISOString(),
         summary: {
@@ -290,10 +361,22 @@ const Affiliate: NextPage = () => {
     });
   };
 
-  // Form component with status handling using reusable components
+  // Enhanced form component with better error handling
   const formComponent = (() => {
     if (status === 'success') return <InquirySuccessMessage onReset={reset} />;
-    if (status === 'error') return <FormErrorMessage onRetry={reset} />;
+    
+    if (status === 'error') {
+      return (
+        <FormErrorMessage 
+          error={errorDetails}
+          onRetry={reset}
+          onContactSupport={() => {
+            // Custom contact support action for Affiliate form
+            window.open('mailto:partnerships@realtechee.com?subject=Affiliate Form Issue&body=I encountered an issue submitting the affiliate inquiry form. Please assist.', '_blank');
+          }}
+        />
+      );
+    }
     
     return (
       <AffiliateInquiryForm 

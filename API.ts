@@ -637,6 +637,47 @@ export type eSignatureDocuments = {
   updatedAt: string,
 };
 
+export type EmailSuppressionList = {
+  __typename: "EmailSuppressionList",
+  bounceSubType?: string | null,
+  bounceType?: EmailSuppressionListBounceType | null,
+  complaintType?: string | null,
+  createdAt?: string | null,
+  createdBy?: string | null,
+  emailAddress: string,
+  id: string,
+  isActive?: boolean | null,
+  metadata?: string | null,
+  originalMessageId?: string | null,
+  owner?: string | null,
+  reason?: string | null,
+  source?: EmailSuppressionListSource | null,
+  suppressedAt: string,
+  suppressionType?: EmailSuppressionListSuppressionType | null,
+  updatedAt?: string | null,
+  updatedBy?: string | null,
+};
+
+export enum EmailSuppressionListBounceType {
+  PERMANENT = "PERMANENT",
+  TRANSIENT = "TRANSIENT",
+}
+
+
+export enum EmailSuppressionListSource {
+  MANUAL_ADMIN = "MANUAL_ADMIN",
+  SES_NOTIFICATION = "SES_NOTIFICATION",
+  USER_REQUEST = "USER_REQUEST",
+}
+
+
+export enum EmailSuppressionListSuppressionType {
+  BOUNCE = "BOUNCE",
+  COMPLAINT = "COMPLAINT",
+  MANUAL = "MANUAL",
+}
+
+
 export type Legal = {
   __typename: "Legal",
   content?: string | null,
@@ -698,6 +739,8 @@ export enum NotificationEventsChannel {
 
 export enum NotificationEventsEventType {
   EMAIL_ATTEMPT = "EMAIL_ATTEMPT",
+  EMAIL_BOUNCE = "EMAIL_BOUNCE",
+  EMAIL_COMPLAINT = "EMAIL_COMPLAINT",
   EMAIL_FAILED = "EMAIL_FAILED",
   EMAIL_SUCCESS = "EMAIL_SUCCESS",
   NOTIFICATION_COMPLETED = "NOTIFICATION_COMPLETED",
@@ -713,6 +756,7 @@ export enum NotificationEventsEventType {
 export enum NotificationEventsProvider {
   DEBUG = "DEBUG",
   SENDGRID = "SENDGRID",
+  SES = "SES",
   TWILIO = "TWILIO",
 }
 
@@ -721,20 +765,29 @@ export type NotificationQueue = {
   __typename: "NotificationQueue",
   channels: string,
   createdAt?: string | null,
+  directContent?: string | null,
   errorMessage?: string | null,
   eventType: string,
   id: string,
   owner?: string | null,
-  payload: string,
+  payload?: string | null,
+  priority?: NotificationQueuePriority | null,
   recipientIds: string,
   retryCount?: number | null,
   scheduledAt?: string | null,
   sentAt?: string | null,
   status?: NotificationQueueStatus | null,
   template?: NotificationTemplate | null,
-  templateId: string,
+  templateId?: string | null,
   updatedAt?: string | null,
 };
+
+export enum NotificationQueuePriority {
+  HIGH = "HIGH",
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+}
+
 
 export enum NotificationQueueStatus {
   FAILED = "FAILED",
@@ -847,6 +900,27 @@ export type Requests = {
   virtualWalkthrough?: string | null,
   visitDate?: string | null,
   visitorId?: string | null,
+};
+
+export type SESReputationMetrics = {
+  __typename: "SESReputationMetrics",
+  bounceRate?: number | null,
+  bounceRateAlert?: boolean | null,
+  complaintRate?: number | null,
+  complaintRateAlert?: boolean | null,
+  createdAt?: string | null,
+  deliveryRate?: number | null,
+  id: string,
+  metricDate: string,
+  owner?: string | null,
+  reputationScore?: number | null,
+  sendRateMax?: number | null,
+  sendingQuotaMax?: number | null,
+  sendingQuotaUsed?: number | null,
+  totalBounces?: number | null,
+  totalComplaints?: number | null,
+  totalEmailsSent?: number | null,
+  updatedAt?: string | null,
 };
 
 export type SecureConfig = {
@@ -1394,6 +1468,50 @@ export type ModelESignatureDocumentsConnection = {
   nextToken?: string | null,
 };
 
+export type ModelEmailSuppressionListFilterInput = {
+  and?: Array< ModelEmailSuppressionListFilterInput | null > | null,
+  bounceSubType?: ModelStringInput | null,
+  bounceType?: ModelEmailSuppressionListBounceTypeInput | null,
+  complaintType?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  createdBy?: ModelStringInput | null,
+  emailAddress?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  isActive?: ModelBooleanInput | null,
+  metadata?: ModelStringInput | null,
+  not?: ModelEmailSuppressionListFilterInput | null,
+  or?: Array< ModelEmailSuppressionListFilterInput | null > | null,
+  originalMessageId?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  reason?: ModelStringInput | null,
+  source?: ModelEmailSuppressionListSourceInput | null,
+  suppressedAt?: ModelStringInput | null,
+  suppressionType?: ModelEmailSuppressionListSuppressionTypeInput | null,
+  updatedAt?: ModelStringInput | null,
+  updatedBy?: ModelStringInput | null,
+};
+
+export type ModelEmailSuppressionListBounceTypeInput = {
+  eq?: EmailSuppressionListBounceType | null,
+  ne?: EmailSuppressionListBounceType | null,
+};
+
+export type ModelEmailSuppressionListSourceInput = {
+  eq?: EmailSuppressionListSource | null,
+  ne?: EmailSuppressionListSource | null,
+};
+
+export type ModelEmailSuppressionListSuppressionTypeInput = {
+  eq?: EmailSuppressionListSuppressionType | null,
+  ne?: EmailSuppressionListSuppressionType | null,
+};
+
+export type ModelEmailSuppressionListConnection = {
+  __typename: "ModelEmailSuppressionListConnection",
+  items:  Array<EmailSuppressionList | null >,
+  nextToken?: string | null,
+};
+
 export type ModelLegalFilterInput = {
   and?: Array< ModelLegalFilterInput | null > | null,
   content?: ModelStringInput | null,
@@ -1488,6 +1606,7 @@ export type ModelNotificationQueueFilterInput = {
   and?: Array< ModelNotificationQueueFilterInput | null > | null,
   channels?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  directContent?: ModelStringInput | null,
   errorMessage?: ModelStringInput | null,
   eventType?: ModelStringInput | null,
   id?: ModelIDInput | null,
@@ -1495,6 +1614,7 @@ export type ModelNotificationQueueFilterInput = {
   or?: Array< ModelNotificationQueueFilterInput | null > | null,
   owner?: ModelStringInput | null,
   payload?: ModelStringInput | null,
+  priority?: ModelNotificationQueuePriorityInput | null,
   recipientIds?: ModelStringInput | null,
   retryCount?: ModelIntInput | null,
   scheduledAt?: ModelStringInput | null,
@@ -1502,6 +1622,11 @@ export type ModelNotificationQueueFilterInput = {
   status?: ModelNotificationQueueStatusInput | null,
   templateId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
+};
+
+export type ModelNotificationQueuePriorityInput = {
+  eq?: NotificationQueuePriority | null,
+  ne?: NotificationQueuePriority | null,
 };
 
 export type ModelNotificationQueueStatusInput = {
@@ -1925,6 +2050,35 @@ export type ModelRequestsFilterInput = {
 export type ModelRequestsConnection = {
   __typename: "ModelRequestsConnection",
   items:  Array<Requests | null >,
+  nextToken?: string | null,
+};
+
+export type ModelSESReputationMetricsFilterInput = {
+  and?: Array< ModelSESReputationMetricsFilterInput | null > | null,
+  bounceRate?: ModelFloatInput | null,
+  bounceRateAlert?: ModelBooleanInput | null,
+  complaintRate?: ModelFloatInput | null,
+  complaintRateAlert?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  deliveryRate?: ModelFloatInput | null,
+  id?: ModelIDInput | null,
+  metricDate?: ModelStringInput | null,
+  not?: ModelSESReputationMetricsFilterInput | null,
+  or?: Array< ModelSESReputationMetricsFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+  reputationScore?: ModelFloatInput | null,
+  sendRateMax?: ModelFloatInput | null,
+  sendingQuotaMax?: ModelIntInput | null,
+  sendingQuotaUsed?: ModelIntInput | null,
+  totalBounces?: ModelIntInput | null,
+  totalComplaints?: ModelIntInput | null,
+  totalEmailsSent?: ModelIntInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelSESReputationMetricsConnection = {
+  __typename: "ModelSESReputationMetricsConnection",
+  items:  Array<SESReputationMetrics | null >,
   nextToken?: string | null,
 };
 
@@ -2471,6 +2625,48 @@ export type CreateESignatureDocumentsInput = {
   templateId?: string | null,
 };
 
+export type ModelEmailSuppressionListConditionInput = {
+  and?: Array< ModelEmailSuppressionListConditionInput | null > | null,
+  bounceSubType?: ModelStringInput | null,
+  bounceType?: ModelEmailSuppressionListBounceTypeInput | null,
+  complaintType?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  createdBy?: ModelStringInput | null,
+  emailAddress?: ModelStringInput | null,
+  isActive?: ModelBooleanInput | null,
+  metadata?: ModelStringInput | null,
+  not?: ModelEmailSuppressionListConditionInput | null,
+  or?: Array< ModelEmailSuppressionListConditionInput | null > | null,
+  originalMessageId?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  reason?: ModelStringInput | null,
+  source?: ModelEmailSuppressionListSourceInput | null,
+  suppressedAt?: ModelStringInput | null,
+  suppressionType?: ModelEmailSuppressionListSuppressionTypeInput | null,
+  updatedAt?: ModelStringInput | null,
+  updatedBy?: ModelStringInput | null,
+};
+
+export type CreateEmailSuppressionListInput = {
+  bounceSubType?: string | null,
+  bounceType?: EmailSuppressionListBounceType | null,
+  complaintType?: string | null,
+  createdAt?: string | null,
+  createdBy?: string | null,
+  emailAddress: string,
+  id?: string | null,
+  isActive?: boolean | null,
+  metadata?: string | null,
+  originalMessageId?: string | null,
+  owner?: string | null,
+  reason?: string | null,
+  source?: EmailSuppressionListSource | null,
+  suppressedAt: string,
+  suppressionType?: EmailSuppressionListSuppressionType | null,
+  updatedAt?: string | null,
+  updatedBy?: string | null,
+};
+
 export type ModelLegalConditionInput = {
   and?: Array< ModelLegalConditionInput | null > | null,
   content?: ModelStringInput | null,
@@ -2571,12 +2767,14 @@ export type ModelNotificationQueueConditionInput = {
   and?: Array< ModelNotificationQueueConditionInput | null > | null,
   channels?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  directContent?: ModelStringInput | null,
   errorMessage?: ModelStringInput | null,
   eventType?: ModelStringInput | null,
   not?: ModelNotificationQueueConditionInput | null,
   or?: Array< ModelNotificationQueueConditionInput | null > | null,
   owner?: ModelStringInput | null,
   payload?: ModelStringInput | null,
+  priority?: ModelNotificationQueuePriorityInput | null,
   recipientIds?: ModelStringInput | null,
   retryCount?: ModelIntInput | null,
   scheduledAt?: ModelStringInput | null,
@@ -2589,17 +2787,19 @@ export type ModelNotificationQueueConditionInput = {
 export type CreateNotificationQueueInput = {
   channels: string,
   createdAt?: string | null,
+  directContent?: string | null,
   errorMessage?: string | null,
   eventType: string,
   id?: string | null,
   owner?: string | null,
-  payload: string,
+  payload?: string | null,
+  priority?: NotificationQueuePriority | null,
   recipientIds: string,
   retryCount?: number | null,
   scheduledAt?: string | null,
   sentAt?: string | null,
   status?: NotificationQueueStatus | null,
-  templateId: string,
+  templateId?: string | null,
   updatedAt?: string | null,
 };
 
@@ -3305,6 +3505,48 @@ export type CreateRequestsInput = {
   visitorId?: string | null,
 };
 
+export type ModelSESReputationMetricsConditionInput = {
+  and?: Array< ModelSESReputationMetricsConditionInput | null > | null,
+  bounceRate?: ModelFloatInput | null,
+  bounceRateAlert?: ModelBooleanInput | null,
+  complaintRate?: ModelFloatInput | null,
+  complaintRateAlert?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  deliveryRate?: ModelFloatInput | null,
+  metricDate?: ModelStringInput | null,
+  not?: ModelSESReputationMetricsConditionInput | null,
+  or?: Array< ModelSESReputationMetricsConditionInput | null > | null,
+  owner?: ModelStringInput | null,
+  reputationScore?: ModelFloatInput | null,
+  sendRateMax?: ModelFloatInput | null,
+  sendingQuotaMax?: ModelIntInput | null,
+  sendingQuotaUsed?: ModelIntInput | null,
+  totalBounces?: ModelIntInput | null,
+  totalComplaints?: ModelIntInput | null,
+  totalEmailsSent?: ModelIntInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateSESReputationMetricsInput = {
+  bounceRate?: number | null,
+  bounceRateAlert?: boolean | null,
+  complaintRate?: number | null,
+  complaintRateAlert?: boolean | null,
+  createdAt?: string | null,
+  deliveryRate?: number | null,
+  id?: string | null,
+  metricDate: string,
+  owner?: string | null,
+  reputationScore?: number | null,
+  sendRateMax?: number | null,
+  sendingQuotaMax?: number | null,
+  sendingQuotaUsed?: number | null,
+  totalBounces?: number | null,
+  totalComplaints?: number | null,
+  totalEmailsSent?: number | null,
+  updatedAt?: string | null,
+};
+
 export type ModelSecureConfigConditionInput = {
   and?: Array< ModelSecureConfigConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
@@ -3405,6 +3647,10 @@ export type DeleteESignatureDocumentsInput = {
   id: string,
 };
 
+export type DeleteEmailSuppressionListInput = {
+  id: string,
+};
+
 export type DeleteLegalInput = {
   id: string,
 };
@@ -3462,6 +3708,10 @@ export type DeleteQuotesInput = {
 };
 
 export type DeleteRequestsInput = {
+  id: string,
+};
+
+export type DeleteSESReputationMetricsInput = {
   id: string,
 };
 
@@ -3693,6 +3943,26 @@ export type UpdateESignatureDocumentsInput = {
   templateId?: string | null,
 };
 
+export type UpdateEmailSuppressionListInput = {
+  bounceSubType?: string | null,
+  bounceType?: EmailSuppressionListBounceType | null,
+  complaintType?: string | null,
+  createdAt?: string | null,
+  createdBy?: string | null,
+  emailAddress?: string | null,
+  id: string,
+  isActive?: boolean | null,
+  metadata?: string | null,
+  originalMessageId?: string | null,
+  owner?: string | null,
+  reason?: string | null,
+  source?: EmailSuppressionListSource | null,
+  suppressedAt?: string | null,
+  suppressionType?: EmailSuppressionListSuppressionType | null,
+  updatedAt?: string | null,
+  updatedBy?: string | null,
+};
+
 export type UpdateLegalInput = {
   content?: string | null,
   documentId?: string | null,
@@ -3738,11 +4008,13 @@ export type UpdateNotificationEventsInput = {
 export type UpdateNotificationQueueInput = {
   channels?: string | null,
   createdAt?: string | null,
+  directContent?: string | null,
   errorMessage?: string | null,
   eventType?: string | null,
   id: string,
   owner?: string | null,
   payload?: string | null,
+  priority?: NotificationQueuePriority | null,
   recipientIds?: string | null,
   retryCount?: number | null,
   scheduledAt?: string | null,
@@ -4079,6 +4351,26 @@ export type UpdateRequestsInput = {
   virtualWalkthrough?: string | null,
   visitDate?: string | null,
   visitorId?: string | null,
+};
+
+export type UpdateSESReputationMetricsInput = {
+  bounceRate?: number | null,
+  bounceRateAlert?: boolean | null,
+  complaintRate?: number | null,
+  complaintRateAlert?: boolean | null,
+  createdAt?: string | null,
+  deliveryRate?: number | null,
+  id: string,
+  metricDate?: string | null,
+  owner?: string | null,
+  reputationScore?: number | null,
+  sendRateMax?: number | null,
+  sendingQuotaMax?: number | null,
+  sendingQuotaUsed?: number | null,
+  totalBounces?: number | null,
+  totalComplaints?: number | null,
+  totalEmailsSent?: number | null,
+  updatedAt?: string | null,
 };
 
 export type UpdateSecureConfigInput = {
@@ -4445,6 +4737,28 @@ export type ModelSubscriptionESignatureDocumentsFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
+export type ModelSubscriptionEmailSuppressionListFilterInput = {
+  and?: Array< ModelSubscriptionEmailSuppressionListFilterInput | null > | null,
+  bounceSubType?: ModelSubscriptionStringInput | null,
+  bounceType?: ModelSubscriptionStringInput | null,
+  complaintType?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  createdBy?: ModelSubscriptionStringInput | null,
+  emailAddress?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  isActive?: ModelSubscriptionBooleanInput | null,
+  metadata?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionEmailSuppressionListFilterInput | null > | null,
+  originalMessageId?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
+  reason?: ModelSubscriptionStringInput | null,
+  source?: ModelSubscriptionStringInput | null,
+  suppressedAt?: ModelSubscriptionStringInput | null,
+  suppressionType?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  updatedBy?: ModelSubscriptionStringInput | null,
+};
+
 export type ModelSubscriptionLegalFilterInput = {
   and?: Array< ModelSubscriptionLegalFilterInput | null > | null,
   content?: ModelSubscriptionStringInput | null,
@@ -4503,12 +4817,14 @@ export type ModelSubscriptionNotificationQueueFilterInput = {
   and?: Array< ModelSubscriptionNotificationQueueFilterInput | null > | null,
   channels?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  directContent?: ModelSubscriptionStringInput | null,
   errorMessage?: ModelSubscriptionStringInput | null,
   eventType?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   or?: Array< ModelSubscriptionNotificationQueueFilterInput | null > | null,
   owner?: ModelSubscriptionStringInput | null,
   payload?: ModelSubscriptionStringInput | null,
+  priority?: ModelSubscriptionStringInput | null,
   recipientIds?: ModelSubscriptionStringInput | null,
   retryCount?: ModelSubscriptionIntInput | null,
   scheduledAt?: ModelSubscriptionStringInput | null,
@@ -4889,6 +5205,28 @@ export type ModelSubscriptionRequestsFilterInput = {
   virtualWalkthrough?: ModelSubscriptionStringInput | null,
   visitDate?: ModelSubscriptionStringInput | null,
   visitorId?: ModelSubscriptionIDInput | null,
+};
+
+export type ModelSubscriptionSESReputationMetricsFilterInput = {
+  and?: Array< ModelSubscriptionSESReputationMetricsFilterInput | null > | null,
+  bounceRate?: ModelSubscriptionFloatInput | null,
+  bounceRateAlert?: ModelSubscriptionBooleanInput | null,
+  complaintRate?: ModelSubscriptionFloatInput | null,
+  complaintRateAlert?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  deliveryRate?: ModelSubscriptionFloatInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  metricDate?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionSESReputationMetricsFilterInput | null > | null,
+  owner?: ModelSubscriptionStringInput | null,
+  reputationScore?: ModelSubscriptionFloatInput | null,
+  sendRateMax?: ModelSubscriptionFloatInput | null,
+  sendingQuotaMax?: ModelSubscriptionIntInput | null,
+  sendingQuotaUsed?: ModelSubscriptionIntInput | null,
+  totalBounces?: ModelSubscriptionIntInput | null,
+  totalComplaints?: ModelSubscriptionIntInput | null,
+  totalEmailsSent?: ModelSubscriptionIntInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
 };
 
 export type ModelSubscriptionSecureConfigFilterInput = {
@@ -5307,6 +5645,33 @@ export type GetESignatureDocumentsQuery = {
   } | null,
 };
 
+export type GetEmailSuppressionListQueryVariables = {
+  id: string,
+};
+
+export type GetEmailSuppressionListQuery = {
+  getEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type GetLegalQueryVariables = {
   id: string,
 };
@@ -5385,11 +5750,13 @@ export type GetNotificationQueueQuery = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -5409,7 +5776,7 @@ export type GetNotificationQueueQuery = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -6496,6 +6863,33 @@ export type GetRequestsQuery = {
   } | null,
 };
 
+export type GetSESReputationMetricsQueryVariables = {
+  id: string,
+};
+
+export type GetSESReputationMetricsQuery = {
+  getSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type GetSecureConfigQueryVariables = {
   id: string,
 };
@@ -6997,6 +7391,39 @@ export type ListESignatureDocumentsQuery = {
   } | null,
 };
 
+export type ListEmailSuppressionListsQueryVariables = {
+  filter?: ModelEmailSuppressionListFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListEmailSuppressionListsQuery = {
+  listEmailSuppressionLists?:  {
+    __typename: "ModelEmailSuppressionListConnection",
+    items:  Array< {
+      __typename: "EmailSuppressionList",
+      bounceSubType?: string | null,
+      bounceType?: EmailSuppressionListBounceType | null,
+      complaintType?: string | null,
+      createdAt?: string | null,
+      createdBy?: string | null,
+      emailAddress: string,
+      id: string,
+      isActive?: boolean | null,
+      metadata?: string | null,
+      originalMessageId?: string | null,
+      owner?: string | null,
+      reason?: string | null,
+      source?: EmailSuppressionListSource | null,
+      suppressedAt: string,
+      suppressionType?: EmailSuppressionListSuppressionType | null,
+      updatedAt?: string | null,
+      updatedBy?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type ListLegalsQueryVariables = {
   filter?: ModelLegalFilterInput | null,
   limit?: number | null,
@@ -7097,17 +7524,19 @@ export type ListNotificationQueuesQuery = {
       __typename: "NotificationQueue",
       channels: string,
       createdAt?: string | null,
+      directContent?: string | null,
       errorMessage?: string | null,
       eventType: string,
       id: string,
       owner?: string | null,
-      payload: string,
+      payload?: string | null,
+      priority?: NotificationQueuePriority | null,
       recipientIds: string,
       retryCount?: number | null,
       scheduledAt?: string | null,
       sentAt?: string | null,
       status?: NotificationQueueStatus | null,
-      templateId: string,
+      templateId?: string | null,
       updatedAt?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -7608,6 +8037,39 @@ export type ListRequestsQuery = {
   } | null,
 };
 
+export type ListSESReputationMetricsQueryVariables = {
+  filter?: ModelSESReputationMetricsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSESReputationMetricsQuery = {
+  listSESReputationMetrics?:  {
+    __typename: "ModelSESReputationMetricsConnection",
+    items:  Array< {
+      __typename: "SESReputationMetrics",
+      bounceRate?: number | null,
+      bounceRateAlert?: boolean | null,
+      complaintRate?: number | null,
+      complaintRateAlert?: boolean | null,
+      createdAt?: string | null,
+      deliveryRate?: number | null,
+      id: string,
+      metricDate: string,
+      owner?: string | null,
+      reputationScore?: number | null,
+      sendRateMax?: number | null,
+      sendingQuotaMax?: number | null,
+      sendingQuotaUsed?: number | null,
+      totalBounces?: number | null,
+      totalComplaints?: number | null,
+      totalEmailsSent?: number | null,
+      updatedAt?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type ListSecureConfigsQueryVariables = {
   filter?: ModelSecureConfigFilterInput | null,
   id?: string | null,
@@ -8054,6 +8516,34 @@ export type CreateESignatureDocumentsMutation = {
   } | null,
 };
 
+export type CreateEmailSuppressionListMutationVariables = {
+  condition?: ModelEmailSuppressionListConditionInput | null,
+  input: CreateEmailSuppressionListInput,
+};
+
+export type CreateEmailSuppressionListMutation = {
+  createEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type CreateLegalMutationVariables = {
   condition?: ModelLegalConditionInput | null,
   input: CreateLegalInput,
@@ -8136,11 +8626,13 @@ export type CreateNotificationQueueMutation = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -8160,7 +8652,7 @@ export type CreateNotificationQueueMutation = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -9258,6 +9750,34 @@ export type CreateRequestsMutation = {
   } | null,
 };
 
+export type CreateSESReputationMetricsMutationVariables = {
+  condition?: ModelSESReputationMetricsConditionInput | null,
+  input: CreateSESReputationMetricsInput,
+};
+
+export type CreateSESReputationMetricsMutation = {
+  createSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type CreateSecureConfigMutationVariables = {
   condition?: ModelSecureConfigConditionInput | null,
   input: CreateSecureConfigInput,
@@ -9697,6 +10217,34 @@ export type DeleteESignatureDocumentsMutation = {
   } | null,
 };
 
+export type DeleteEmailSuppressionListMutationVariables = {
+  condition?: ModelEmailSuppressionListConditionInput | null,
+  input: DeleteEmailSuppressionListInput,
+};
+
+export type DeleteEmailSuppressionListMutation = {
+  deleteEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type DeleteLegalMutationVariables = {
   condition?: ModelLegalConditionInput | null,
   input: DeleteLegalInput,
@@ -9779,11 +10327,13 @@ export type DeleteNotificationQueueMutation = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -9803,7 +10353,7 @@ export type DeleteNotificationQueueMutation = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -10901,6 +11451,34 @@ export type DeleteRequestsMutation = {
   } | null,
 };
 
+export type DeleteSESReputationMetricsMutationVariables = {
+  condition?: ModelSESReputationMetricsConditionInput | null,
+  input: DeleteSESReputationMetricsInput,
+};
+
+export type DeleteSESReputationMetricsMutation = {
+  deleteSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type DeleteSecureConfigMutationVariables = {
   condition?: ModelSecureConfigConditionInput | null,
   input: DeleteSecureConfigInput,
@@ -11340,6 +11918,34 @@ export type UpdateESignatureDocumentsMutation = {
   } | null,
 };
 
+export type UpdateEmailSuppressionListMutationVariables = {
+  condition?: ModelEmailSuppressionListConditionInput | null,
+  input: UpdateEmailSuppressionListInput,
+};
+
+export type UpdateEmailSuppressionListMutation = {
+  updateEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type UpdateLegalMutationVariables = {
   condition?: ModelLegalConditionInput | null,
   input: UpdateLegalInput,
@@ -11422,11 +12028,13 @@ export type UpdateNotificationQueueMutation = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -11446,7 +12054,7 @@ export type UpdateNotificationQueueMutation = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -12544,6 +13152,34 @@ export type UpdateRequestsMutation = {
   } | null,
 };
 
+export type UpdateSESReputationMetricsMutationVariables = {
+  condition?: ModelSESReputationMetricsConditionInput | null,
+  input: UpdateSESReputationMetricsInput,
+};
+
+export type UpdateSESReputationMetricsMutation = {
+  updateSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type UpdateSecureConfigMutationVariables = {
   condition?: ModelSecureConfigConditionInput | null,
   input: UpdateSecureConfigInput,
@@ -12966,6 +13602,33 @@ export type OnCreateESignatureDocumentsSubscription = {
   } | null,
 };
 
+export type OnCreateEmailSuppressionListSubscriptionVariables = {
+  filter?: ModelSubscriptionEmailSuppressionListFilterInput | null,
+};
+
+export type OnCreateEmailSuppressionListSubscription = {
+  onCreateEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type OnCreateLegalSubscriptionVariables = {
   filter?: ModelSubscriptionLegalFilterInput | null,
 };
@@ -13044,11 +13707,13 @@ export type OnCreateNotificationQueueSubscription = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -13068,7 +13733,7 @@ export type OnCreateNotificationQueueSubscription = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -14156,6 +14821,33 @@ export type OnCreateRequestsSubscription = {
   } | null,
 };
 
+export type OnCreateSESReputationMetricsSubscriptionVariables = {
+  filter?: ModelSubscriptionSESReputationMetricsFilterInput | null,
+};
+
+export type OnCreateSESReputationMetricsSubscription = {
+  onCreateSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type OnCreateSecureConfigSubscriptionVariables = {
   filter?: ModelSubscriptionSecureConfigFilterInput | null,
 };
@@ -14577,6 +15269,33 @@ export type OnDeleteESignatureDocumentsSubscription = {
   } | null,
 };
 
+export type OnDeleteEmailSuppressionListSubscriptionVariables = {
+  filter?: ModelSubscriptionEmailSuppressionListFilterInput | null,
+};
+
+export type OnDeleteEmailSuppressionListSubscription = {
+  onDeleteEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type OnDeleteLegalSubscriptionVariables = {
   filter?: ModelSubscriptionLegalFilterInput | null,
 };
@@ -14655,11 +15374,13 @@ export type OnDeleteNotificationQueueSubscription = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -14679,7 +15400,7 @@ export type OnDeleteNotificationQueueSubscription = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -15767,6 +16488,33 @@ export type OnDeleteRequestsSubscription = {
   } | null,
 };
 
+export type OnDeleteSESReputationMetricsSubscriptionVariables = {
+  filter?: ModelSubscriptionSESReputationMetricsFilterInput | null,
+};
+
+export type OnDeleteSESReputationMetricsSubscription = {
+  onDeleteSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
+  } | null,
+};
+
 export type OnDeleteSecureConfigSubscriptionVariables = {
   filter?: ModelSubscriptionSecureConfigFilterInput | null,
 };
@@ -16188,6 +16936,33 @@ export type OnUpdateESignatureDocumentsSubscription = {
   } | null,
 };
 
+export type OnUpdateEmailSuppressionListSubscriptionVariables = {
+  filter?: ModelSubscriptionEmailSuppressionListFilterInput | null,
+};
+
+export type OnUpdateEmailSuppressionListSubscription = {
+  onUpdateEmailSuppressionList?:  {
+    __typename: "EmailSuppressionList",
+    bounceSubType?: string | null,
+    bounceType?: EmailSuppressionListBounceType | null,
+    complaintType?: string | null,
+    createdAt?: string | null,
+    createdBy?: string | null,
+    emailAddress: string,
+    id: string,
+    isActive?: boolean | null,
+    metadata?: string | null,
+    originalMessageId?: string | null,
+    owner?: string | null,
+    reason?: string | null,
+    source?: EmailSuppressionListSource | null,
+    suppressedAt: string,
+    suppressionType?: EmailSuppressionListSuppressionType | null,
+    updatedAt?: string | null,
+    updatedBy?: string | null,
+  } | null,
+};
+
 export type OnUpdateLegalSubscriptionVariables = {
   filter?: ModelSubscriptionLegalFilterInput | null,
 };
@@ -16266,11 +17041,13 @@ export type OnUpdateNotificationQueueSubscription = {
     __typename: "NotificationQueue",
     channels: string,
     createdAt?: string | null,
+    directContent?: string | null,
     errorMessage?: string | null,
     eventType: string,
     id: string,
     owner?: string | null,
-    payload: string,
+    payload?: string | null,
+    priority?: NotificationQueuePriority | null,
     recipientIds: string,
     retryCount?: number | null,
     scheduledAt?: string | null,
@@ -16290,7 +17067,7 @@ export type OnUpdateNotificationQueueSubscription = {
       updatedAt: string,
       variables?: string | null,
     } | null,
-    templateId: string,
+    templateId?: string | null,
     updatedAt?: string | null,
   } | null,
 };
@@ -17375,6 +18152,33 @@ export type OnUpdateRequestsSubscription = {
     virtualWalkthrough?: string | null,
     visitDate?: string | null,
     visitorId?: string | null,
+  } | null,
+};
+
+export type OnUpdateSESReputationMetricsSubscriptionVariables = {
+  filter?: ModelSubscriptionSESReputationMetricsFilterInput | null,
+};
+
+export type OnUpdateSESReputationMetricsSubscription = {
+  onUpdateSESReputationMetrics?:  {
+    __typename: "SESReputationMetrics",
+    bounceRate?: number | null,
+    bounceRateAlert?: boolean | null,
+    complaintRate?: number | null,
+    complaintRateAlert?: boolean | null,
+    createdAt?: string | null,
+    deliveryRate?: number | null,
+    id: string,
+    metricDate: string,
+    owner?: string | null,
+    reputationScore?: number | null,
+    sendRateMax?: number | null,
+    sendingQuotaMax?: number | null,
+    sendingQuotaUsed?: number | null,
+    totalBounces?: number | null,
+    totalComplaints?: number | null,
+    totalEmailsSent?: number | null,
+    updatedAt?: string | null,
   } | null,
 };
 

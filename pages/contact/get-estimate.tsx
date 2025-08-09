@@ -14,7 +14,7 @@ import { createProperties, createContacts, createRequests, updateContacts } from
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { NotificationService } from '../../utils/notificationService';
+import { FormNotificationIntegration, GetEstimateSubmissionData } from '../../services/formNotificationIntegration';
 import { assignmentService } from '../../services/assignmentService';
 
 const GetEstimate: NextPage = () => {
@@ -22,6 +22,7 @@ const GetEstimate: NextPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submissionData, setSubmissionData] = useState<{requestId?: string; submittedAt?: string}>({});
+  const [errorDetails, setErrorDetails] = useState<Error | null>(null);
   
   // Initialize Amplify GraphQL client with API key for public access
   const client = generateClient({
@@ -499,27 +500,58 @@ const GetEstimate: NextPage = () => {
         });
       }
 
-      // Step 5d: Queue notification for the new estimate request
+      // Step 5d: Send internal staff notification using NEW decoupled architecture
       try {
-        logger.info('Step 5d: Queueing notification for estimate request');
+        logger.info('Step 5d: Sending internal staff notification for estimate request (NEW decoupled architecture)');
         
-        await NotificationService.queueGetEstimateNotification({
-          customerName: agentData?.fullName || formData.agentInfo.fullName,
-          customerEmail: agentData?.email || formData.agentInfo.email,
-          customerPhone: agentData?.phone || formData.agentInfo.phone,
-          customerCompany: agentData?.company || formData.agentInfo.company,
-          propertyAddress: propertyData.propertyFullAddress || undefined,
-          productType: formData.rtDigitalSelection || 'General Renovation',
-          message: formData.notes || 'No additional notes provided',
+        // Get FormNotificationIntegration service instance
+        const formNotifications = FormNotificationIntegration.getInstance();
+        
+        const notificationData: GetEstimateSubmissionData = {
+          formType: 'getEstimate',
           submissionId: requestData.id,
-          contactId: agentData?.id || undefined, // Pass contact ID to respect user preferences
-          requestId: requestData.id // Add request ID for admin link
+          submittedAt: new Date().toISOString(),
+          name: agentData?.fullName || formData.agentInfo.fullName,
+          email: agentData?.email || formData.agentInfo.email,
+          phone: agentData?.phone || formData.agentInfo.phone,
+          address: {
+            streetAddress: formData.propertyAddress.streetAddress,
+            city: formData.propertyAddress.city,
+            state: formData.propertyAddress.state,
+            zip: formData.propertyAddress.zip
+          },
+          serviceType: formData.rtDigitalSelection || 'General Renovation',
+          urgency: 'high', // Get Estimate requests are typically urgent
+          budget: formData.budget || 'Not specified',
+          projectDescription: formData.notes || 'No additional notes provided',
+          timeline: formData.requestedVisitDateTime || 'Not specified',
+          workingOnsite: formData.relationToProperty !== 'Remote Planning',
+          testData: isTestSubmission,
+          leadSource: isTestSubmission ? 'E2E_TEST' : 'get_estimate_form'
+        };
+        
+        // Use NEW decoupled architecture - content generated in backend
+        const notificationResult = await formNotifications.notifyGetEstimateSubmission(notificationData, {
+          priority: 'high',  // Get Estimate forms are high priority
+          channels: 'both',  // Send both email and SMS to sales team
+          testMode: false
         });
         
-        logger.info('Step 5d: ✅ Notification queued successfully');
+        if (notificationResult.success) {
+          logger.info('Step 5d: ✅ Internal staff notification sent (NEW decoupled architecture)', {
+            notificationId: notificationResult.notificationId,
+            recipientsNotified: notificationResult.recipientsNotified,
+            environment: notificationResult.environment,
+            debugMode: notificationResult.debugMode
+          });
+        } else {
+          logger.warn('Step 5d: ⚠️ Internal staff notification failed (NEW decoupled architecture)', {
+            errors: notificationResult.errors
+          });
+        }
       } catch (notificationError) {
         // Don't fail the entire form submission if notification fails
-        logger.error('Step 5d: ⚠️ Notification failed (form submission continues)', {
+        logger.error('Step 5d: ❌ Internal staff notification error (NEW decoupled architecture)', {
           error: notificationError instanceof Error ? notificationError.message : String(notificationError)
         });
       }
@@ -553,17 +585,18 @@ const GetEstimate: NextPage = () => {
       });
       
     } catch (error) {
+      const errorObj = error instanceof Error ? error : new Error(String(error) || 'Unknown error');
+      
       logger.error('=== FORM SUBMISSION FAILED ===', { 
         timestamp: new Date().toISOString(),
-        error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
+        error: errorObj.message,
+        stack: errorObj.stack
       });
-      setSubmitStatus('error');
       
-      // Reset error status after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
+      setSubmitStatus('error');
+      setErrorDetails(errorObj);
+      
+      // Don't auto-reset errors - keep them persistent for better UX
     } finally {
       setIsSubmitting(false);
     }
@@ -653,29 +686,113 @@ const GetEstimate: NextPage = () => {
     </div>
   );
 
-  // Error message component
-  const ErrorMessage = () => (
-    <div className="w-[692px] flex flex-col gap-6">
-      <div className="p-6 bg-red-50 border border-red-200 rounded-lg text-center">
-        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+  // Enhanced error message component with better UX
+  const ErrorMessage = () => {
+    const resetForm = () => {
+      setSubmitStatus('idle');
+      setErrorDetails(null);
+    };
+    
+    const handleContactSupport = () => {
+      window.open('mailto:support@realtechee.com?subject=Get Estimate Form Issue&body=I encountered an issue submitting the get estimate form. Please assist.', '_blank');
+    };
+    
+    // Parse error for better messaging
+    const getErrorInfo = (error: Error | null) => {
+      if (!error) return { type: 'general', message: 'An unexpected error occurred. Please try again or contact support.' };
+      
+      const errorMessage = error.message.toLowerCase();
+      
+      if (errorMessage.includes('federated jwt') || errorMessage.includes('authentication') || errorMessage.includes('unauthorized')) {
+        return {
+          type: 'auth',
+          message: 'Authentication required. Please log in to submit forms or contact us directly.'
+        };
+      }
+      
+      if (errorMessage.includes('network') || errorMessage.includes('fetch') || errorMessage.includes('timeout') || errorMessage.includes('connection')) {
+        return {
+          type: 'network',
+          message: 'Network connection issue. Please check your internet connection and try again.'
+        };
+      }
+      
+      if (errorMessage.includes('validation') || errorMessage.includes('required') || errorMessage.includes('invalid')) {
+        return {
+          type: 'validation',
+          message: 'Please check your form fields and ensure all required information is provided correctly.'
+        };
+      }
+      
+      if (errorMessage.includes('server') || errorMessage.includes('500') || errorMessage.includes('internal')) {
+        return {
+          type: 'server',
+          message: 'Our servers are experiencing issues. Please try again in a few minutes or contact us directly.'
+        };
+      }
+      
+      return {
+        type: 'general',
+        message: 'Something went wrong with your estimate request. Please try again or contact us for assistance.'
+      };
+    };
+    
+    const errorInfo = getErrorInfo(errorDetails);
+    
+    return (
+      <div className="w-[692px] flex flex-col gap-6">
+        <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
+          {/* Error Icon and Header */}
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <H3 className="text-red-800 mb-2">
+              {errorInfo.type === 'auth' ? 'Authentication Required' : 'Estimate Request Failed'}
+            </H3>
+            <P1 className="text-red-700 mb-4">
+              {errorInfo.message}
+            </P1>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button 
+              variant="primary" 
+              onClick={resetForm}
+              size="lg"
+            >
+              Try Again
+            </Button>
+            
+            <Button 
+              variant="secondary" 
+              onClick={handleContactSupport}
+              size="lg"
+            >
+              Contact Support
+            </Button>
+          </div>
+          
+          {/* Support Information */}
+          <div className="mt-6 pt-4 border-t border-red-200 text-center">
+            <P1 className="text-red-600 text-sm mb-2">Need immediate assistance?</P1>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
+              <a href="tel:+15551234567" className="text-red-700 hover:text-red-800 font-medium">
+                📞 Call (555) 123-4567
+              </a>
+              <span className="hidden sm:inline text-red-400">•</span>
+              <a href="mailto:support@realtechee.com" className="text-red-700 hover:text-red-800 font-medium">
+                ✉️ support@realtechee.com
+              </a>
+            </div>
+          </div>
         </div>
-        <H3 className="text-red-800 mb-2">Submission Failed</H3>
-        <P1 className="text-red-700 mb-4">
-          There was an issue submitting your request. Please try again or contact us directly.
-        </P1>
-        <Button 
-          variant="primary" 
-          onClick={() => setSubmitStatus('idle')}
-          size="lg"
-        >
-          Try Again
-        </Button>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Form component with status handling
   const formComponent = (() => {
