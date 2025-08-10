@@ -12,19 +12,28 @@ backend:
         - npm ci --prefix amplify/functions/status-processor
         - npm ci --prefix amplify/functions/reputation-monitor
         - npm ci --prefix amplify/functions/ses-bounce-handler
-        - echo "✅ Backend dependencies installed"
+        - echo "🔎 Env snapshot (selected)"
+        - 'env | grep -E "AWS_|AMPLIFY|GRAPHQL|BACKEND|USER_POOL" | sort || true'
+        - echo "📝 Generating amplify_outputs.json (backend) for $AWS_BRANCH"
+        - |
+          if ! npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"; then
+            echo "⚠️ Explicit generate failed, retrying auto-detect..."
+            npx ampx generate outputs
+          fi
+        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing after generation"; exit 1; }'
+        - head -n 20 amplify_outputs.json || true
+        - echo "✅ Backend phase complete"
 frontend:
   phases:
     preBuild:
       commands:
         - set -e
-        - echo "🔧 Frontend using cached node_modules from backend"
+        - echo "🔧 Frontend using node_modules from backend"
     build:
       commands:
         - echo "🔍 Build Info: $AWS_APP_ID | $AWS_BRANCH"
-        - echo "📝 Generating amplify_outputs.json for $AWS_BRANCH"
-        - npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
-        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing"; exit 1; }'
+        - echo "ℹ️ amplify_outputs.json already generated in backend"
+        - '[ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json in frontend phase"; exit 1; }'
         - |
           {
             echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
@@ -33,9 +42,7 @@ frontend:
             echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
             echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
           } > .env.production
-        - echo "🔎 amplify_outputs.json (first 10 lines)"
-        - head -n 10 amplify_outputs.json || true
-        - echo "🔎 .env.production contents"
+        - echo "🔎 .env.production"
         - cat .env.production
         - echo "🏗️ Building Next.js app"
         - npm run build
