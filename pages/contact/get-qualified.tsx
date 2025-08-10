@@ -5,12 +5,12 @@ import { GetQualifiedForm, InquirySuccessMessage, FormErrorMessage } from '../..
 import { useFormSubmission } from '../../hooks';
 import logger from '../../lib/logger';
 import SEOHead from '../../components/seo/SEOHead';
-import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createContactUs, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
 import { FormNotificationIntegration, GetQualifiedSubmissionData } from '../../services/formNotificationIntegration';
+import { client } from '../../utils/amplifyAPI';
 
 const GetQualified: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.QUALIFIED];
@@ -28,10 +28,7 @@ const GetQualified: NextPage = () => {
     errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client with API key for public access
-  const client = generateClient({
-    authMode: 'apiKey'
-  });
+  // Use centralized Amplify client with environment-aware configuration
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {

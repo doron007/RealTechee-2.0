@@ -9,13 +9,13 @@ import H3 from '../../components/typography/H3';
 import P1 from '../../components/typography/P1';
 import logger from '../../lib/logger';
 import SEOHead from '../../components/seo/SEOHead';
-import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createRequests, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
 import { FormNotificationIntegration, GetEstimateSubmissionData } from '../../services/formNotificationIntegration';
 import { assignmentService } from '../../services/assignmentService';
+import { client } from '../../utils/amplifyAPI';
 
 const GetEstimate: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.ESTIMATE];
@@ -24,10 +24,7 @@ const GetEstimate: NextPage = () => {
   const [submissionData, setSubmissionData] = useState<{requestId?: string; submittedAt?: string}>({});
   const [errorDetails, setErrorDetails] = useState<Error | null>(null);
   
-  // Initialize Amplify GraphQL client with API key for public access
-  const client = generateClient({
-    authMode: 'apiKey'
-  });
+  // Use centralized Amplify client with environment-aware configuration
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
