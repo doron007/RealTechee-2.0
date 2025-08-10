@@ -12,18 +12,19 @@ backend:
         - npm ci --prefix amplify/functions/status-processor
         - npm ci --prefix amplify/functions/reputation-monitor
         - npm ci --prefix amplify/functions/ses-bounce-handler
-        - echo "📝 Generating amplify_outputs.json for $AWS_BRANCH"
-        - npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
-        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing"; exit 1; }'
+        - echo "✅ Backend dependencies installed"
 frontend:
   phases:
     preBuild:
       commands:
         - set -e
-        - echo "🔧 Frontend using cached node_modules (from backend phase)"
+        - echo "🔧 Frontend using cached node_modules from backend"
     build:
       commands:
         - echo "🔍 Build Info: $AWS_APP_ID | $AWS_BRANCH"
+        - echo "📝 Generating amplify_outputs.json for $AWS_BRANCH"
+        - npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
+        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing"; exit 1; }'
         - |
           {
             echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
@@ -32,8 +33,10 @@ frontend:
             echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
             echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
           } > .env.production
-        - echo "🔎 amplify_outputs.json (head)"
-        - head -n 20 amplify_outputs.json || true
+        - echo "🔎 amplify_outputs.json (first 10 lines)"
+        - head -n 10 amplify_outputs.json || true
+        - echo "🔎 .env.production contents"
+        - cat .env.production
         - echo "🏗️ Building Next.js app"
         - npm run build
   artifacts:
