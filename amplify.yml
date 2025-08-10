@@ -3,42 +3,28 @@ backend:
   phases:
     build:
       commands:
-        - set -euo pipefail
-        - set -x
-        - node -v
-        - npm -v
-        - echo "AWS_APP_ID=$AWS_APP_ID AWS_BRANCH=$AWS_BRANCH PWD=$(pwd)"
-        - echo "🔧 Install root deps"
+        - set -e
+        - echo "Backend build phase"
         - npm ci
-        - echo "🔧 Install Lambda deps"
-        - for f in notification-processor post-confirmation status-processor reputation-monitor ses-bounce-handler; do
-            echo "Lambda $f";
-            if [ -f amplify/functions/$f/package.json ]; then npm ci --prefix amplify/functions/$f; else echo "SKIP $f (no package.json)"; fi;
-          done
-        - echo "🔎 ampx version"
-        - npx ampx --version || true
-        - echo "📝 Generate outputs (explicit)"
-        - npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" --debug || { echo "FIRST GENERATE FAIL"; exit 1; }
-        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing"; ls -al; exit 1; }'
-        - head -n 25 amplify_outputs.json || true
-        - echo "✅ Backend done"
+        - npm ci --prefix amplify/functions/notification-processor
+        - npm ci --prefix amplify/functions/post-confirmation
+        - npm ci --prefix amplify/functions/status-processor
+        - npm ci --prefix amplify/functions/reputation-monitor
+        - npm ci --prefix amplify/functions/ses-bounce-handler
+        - echo "Generating outputs"
+        - npx ampx generate outputs
+        - ls -la amplify_outputs.json
+        - head -n 20 amplify_outputs.json
 frontend:
   phases:
-    preBuild:
-      commands:
-        - set -e
     build:
       commands:
-        - echo "🔍 Build: $AWS_APP_ID | $AWS_BRANCH"
-        - '[ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json in frontend"; exit 1; }'
-        - |
-          {
-            echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
-            echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL"
-            echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID"
-            echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
-            echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
-          } > .env.production
+        - echo "Frontend build phase"
+        - echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" > .env.production
+        - echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production
+        - echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production
+        - echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production
+        - echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production
         - cat .env.production
         - npm run build
   artifacts:
