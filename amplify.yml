@@ -50,13 +50,12 @@ frontend:
         - 'head -n 20 amplify_outputs.json || true'
         - 'echo "🏗️ Building application..."'
         - 'npm run build'
-    artifacts:
-        baseDirectory: .next
-        files:
-            - '**/*'
-    cache:
-        paths:
-            - .next/cache/**/*
-            - .npm/**/*
-            - node_modules/**/*
-            - amplify/functions/*/node_modules/**/*
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
+      - amplify/functions/*/node_modules/**/*
