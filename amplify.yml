@@ -3,37 +3,34 @@ backend:
   phases:
     build:
       commands:
-        - set -e
-        - echo "🔧 Backend: install root deps"
+        - set -euo pipefail
+        - set -x
+        - node -v
+        - npm -v
+        - echo "AWS_APP_ID=$AWS_APP_ID AWS_BRANCH=$AWS_BRANCH PWD=$(pwd)"
+        - echo "🔧 Install root deps"
         - npm ci
-        - echo "🔧 Backend: install Lambda deps"
-        - npm ci --prefix amplify/functions/notification-processor
-        - npm ci --prefix amplify/functions/post-confirmation
-        - npm ci --prefix amplify/functions/status-processor
-        - npm ci --prefix amplify/functions/reputation-monitor
-        - npm ci --prefix amplify/functions/ses-bounce-handler
-        - echo "🔎 Env snapshot (selected)"
-        - 'env | grep -E "AWS_|AMPLIFY|GRAPHQL|BACKEND|USER_POOL" | sort || true'
-        - echo "📝 Generating amplify_outputs.json (backend) for $AWS_BRANCH"
-        - |
-          if ! npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"; then
-            echo "⚠️ Explicit generate failed, retrying auto-detect..."
-            npx ampx generate outputs
-          fi
-        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing after generation"; exit 1; }'
-        - head -n 20 amplify_outputs.json || true
-        - echo "✅ Backend phase complete"
+        - echo "🔧 Install Lambda deps"
+        - for f in notification-processor post-confirmation status-processor reputation-monitor ses-bounce-handler; do
+            echo "Lambda $f";
+            if [ -f amplify/functions/$f/package.json ]; then npm ci --prefix amplify/functions/$f; else echo "SKIP $f (no package.json)"; fi;
+          done
+        - echo "🔎 ampx version"
+        - npx ampx --version || true
+        - echo "📝 Generate outputs (explicit)"
+        - npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" --debug || { echo "FIRST GENERATE FAIL"; exit 1; }
+        - '[ -f amplify_outputs.json ] || { echo "❌ amplify_outputs.json missing"; ls -al; exit 1; }'
+        - head -n 25 amplify_outputs.json || true
+        - echo "✅ Backend done"
 frontend:
   phases:
     preBuild:
       commands:
         - set -e
-        - echo "🔧 Frontend using node_modules from backend"
     build:
       commands:
-        - echo "🔍 Build Info: $AWS_APP_ID | $AWS_BRANCH"
-        - echo "ℹ️ amplify_outputs.json already generated in backend"
-        - '[ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json in frontend phase"; exit 1; }'
+        - echo "🔍 Build: $AWS_APP_ID | $AWS_BRANCH"
+        - '[ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json in frontend"; exit 1; }'
         - |
           {
             echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
@@ -42,9 +39,7 @@ frontend:
             echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
             echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
           } > .env.production
-        - echo "🔎 .env.production"
         - cat .env.production
-        - echo "🏗️ Building Next.js app"
         - npm run build
   artifacts:
     baseDirectory: .next
