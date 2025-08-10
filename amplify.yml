@@ -13,6 +13,13 @@ frontend:
     phases:
         build:
             commands:
+                - 'echo "Writing Amplify environment variables to .env.production"'
+                - 'echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" >> .env.production'
+                - 'echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production'
+                - 'echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production'
+                - 'echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production'
+                - 'echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production'
+                - 'cat .env.production'
                 - 'npm run build'
     artifacts:
         baseDirectory: .next

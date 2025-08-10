@@ -5,12 +5,12 @@ import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { GeneralInquiryForm, InquirySuccessMessage, FormErrorMessage } from '../../components/forms';
 import { useFormSubmission } from '../../hooks';
 import logger from '../../lib/logger';
-import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createContactUs, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
 import { FormNotificationIntegration, ContactUsSubmissionData } from '../../services/formNotificationIntegration';
+import { client } from '../../utils/amplifyAPI';
 
 const ContactUs: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.INQUIRY];
@@ -28,10 +28,7 @@ const ContactUs: NextPage = () => {
     errorResetDelay: 0 // Keep errors persistent until user takes action
   });
   
-  // Initialize Amplify GraphQL client with API key for anonymous access
-  const client = generateClient({
-    authMode: 'apiKey'
-  });
+  // Use centralized Amplify client with environment-aware configuration
 
   // Helper function to normalize addresses for comparison
   const normalizeAddress = (streetAddress: string, city: string, state: string, zip: string) => {
