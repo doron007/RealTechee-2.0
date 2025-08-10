@@ -13,6 +13,7 @@ frontend:
     phases:
         preBuild:
             commands:
+                - set -e
                 - npm ci
         build:
             commands:
@@ -25,23 +26,20 @@ frontend:
                   if [ "$AWS_BRANCH" = "production" ]; then
                     echo "📝 Generating production-specific amplify_outputs.json..."
                     npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
-                    if [ ! -f "amplify_outputs.json" ]; then
-                      echo "❌ ERROR: amplify_outputs.json was not generated"
-                      exit 1
-                    fi
-                    echo "✅ Production amplify_outputs.json generated successfully"
+                    [ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json"; exit 1; }
+                    echo "✅ Production amplify_outputs.json generated"
                   else
-                    echo "📝 Using default amplify_outputs.json for branch: $AWS_BRANCH"
-                    if [ ! -f "amplify_outputs.json" ]; then
-                      echo "⚠️ WARNING: No amplify_outputs.json found for $AWS_BRANCH"
-                    fi
+                    echo "📝 (Non-production) Generating amplify_outputs.json to avoid stale cache..."
+                    npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" || echo "⚠️ Generation failed (will continue)"
                   fi
-                - 'echo "📋 Writing Amplify environment variables to .env.production"'
-                - 'echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" >> .env.production'
-                - 'echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production'
-                - 'echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production'
-                - 'echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production'
-                - 'echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production'
+                - |
+                  {
+                    echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
+                    echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL"
+                    echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID"
+                    echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
+                    echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
+                  } > .env.production
                 - 'cat .env.production'
                 - 'echo "🏗️ Building application..."'
                 - 'npm run build'
