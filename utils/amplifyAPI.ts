@@ -1,13 +1,56 @@
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../amplify/data/resource';
-import outputs from '../amplify_outputs.json';
 import { Amplify } from 'aws-amplify';
 import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
 import { listProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms } from '../queries';
 import { createLogger } from './logger';
+import { logEnvironmentInfo } from './environmentTest';
 
-// Configure Amplify with your sandbox outputs
-Amplify.configure(outputs);
+// Fallback to hardcoded values for development when env vars not available
+import outputs from '../amplify_outputs.json';
+
+// Dynamic Amplify configuration based on environment variables
+const amplifyConfig = {
+  Auth: outputs.auth ? {
+    Cognito: {
+      userPoolId: process.env.NEXT_PUBLIC_USER_POOL_ID || outputs.auth.user_pool_id,
+      userPoolClientId: process.env.NEXT_PUBLIC_USER_POOL_CLIENT_ID || outputs.auth.user_pool_client_id,
+      identityPoolId: outputs.auth.identity_pool_id,
+      region: process.env.NEXT_PUBLIC_AWS_REGION || outputs.auth.aws_region,
+      mfaMethods: outputs.auth.mfa_methods,
+      standardRequiredAttributes: outputs.auth.standard_required_attributes,
+      usernameAttributes: outputs.auth.username_attributes,
+      userVerificationTypes: outputs.auth.user_verification_types,
+      groups: outputs.auth.groups
+    }
+  } : {},
+  API: outputs.data ? {
+    GraphQL: {
+      endpoint: process.env.NEXT_PUBLIC_GRAPHQL_URL || outputs.data.url,
+      region: process.env.NEXT_PUBLIC_AWS_REGION || outputs.data.aws_region,
+      defaultAuthMode: outputs.data.default_authorization_type === 'API_KEY' ? 'apiKey' : 'userPool',
+      apiKey: outputs.data.api_key
+    }
+  } : {},
+  Storage: outputs.storage || {},
+  // Include the full data config for Amplify Gen 2 Data client
+  data: outputs.data ? {
+    url: process.env.NEXT_PUBLIC_GRAPHQL_URL || outputs.data.url,
+    aws_region: process.env.NEXT_PUBLIC_AWS_REGION || outputs.data.aws_region,
+    api_key: outputs.data.api_key,
+    default_authorization_type: outputs.data.default_authorization_type,
+    authorization_types: outputs.data.authorization_types,
+    model_introspection: outputs.data.model_introspection
+  } : {}
+};
+
+// Configure Amplify with environment-based configuration
+Amplify.configure(amplifyConfig);
+
+// Debug: Log environment configuration on initialization
+if (typeof window !== 'undefined') {
+  logEnvironmentInfo();
+}
 
 // Generate a typed client for your schema with API key auth for anonymous access
 const client = generateClient<Schema>({

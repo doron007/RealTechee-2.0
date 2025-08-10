@@ -3,6 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 import { H2, H4, P2 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import { DateTimeUtils } from '../../../utils/dateTimeUtils';
+import { getEnvironmentInfo } from '../../../utils/environmentTest';
 
 const client = generateClient();
 
@@ -25,6 +26,14 @@ interface EnvironmentInfo {
   logLevel: string;
   deploymentBranch: string;
   lastDeployment?: string;
+  // Enhanced fields from environment test
+  usingEnvironmentVariables: boolean;
+  graphqlUrl: string;
+  userPoolId: string;
+  userPoolClientId: string;
+  detectedEnvironment: string;
+  buildTime: string;
+  nodeEnv: string;
 }
 
 const SystemConfigPage: React.FC = () => {
@@ -42,15 +51,26 @@ const SystemConfigPage: React.FC = () => {
     try {
       setLoading(true);
       
-      // Load environment information from Next.js environment variables
+      // Load comprehensive environment information using the environment test utility
+      const envTestInfo = getEnvironmentInfo();
+      console.log('SystemConfigPage: Environment test info:', envTestInfo);
+      
       const envInfo: EnvironmentInfo = {
         environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'development',
-        backendSuffix: process.env.NEXT_PUBLIC_BACKEND_SUFFIX || 'unknown',
+        backendSuffix: envTestInfo.effectiveConfig.backendSuffix || 'unknown',
         s3Bucket: process.env.NEXT_PUBLIC_S3_PUBLIC_BASE_URL || 'not-configured',
-        region: 'us-west-1', // Fixed region for this deployment
+        region: envTestInfo.effectiveConfig.region || 'us-west-1',
         logLevel: process.env.NEXT_PUBLIC_LOG_LEVEL || 'INFO',
         deploymentBranch: getCurrentBranch(),
-        lastDeployment: new Date().toISOString() // This would come from build info in real implementation
+        lastDeployment: envTestInfo.buildTime,
+        // Enhanced fields from environment test
+        usingEnvironmentVariables: envTestInfo.usingEnvironmentVariables,
+        graphqlUrl: envTestInfo.effectiveConfig.graphqlUrl || 'not-configured',
+        userPoolId: envTestInfo.effectiveConfig.userPoolId || 'not-configured',
+        userPoolClientId: envTestInfo.effectiveConfig.userPoolClientId || 'not-configured',
+        detectedEnvironment: envTestInfo.environment,
+        buildTime: envTestInfo.buildTime,
+        nodeEnv: envTestInfo.nodeEnv || 'unknown'
       };
       
       setEnvironmentInfo(envInfo);
@@ -133,8 +153,15 @@ const SystemConfigPage: React.FC = () => {
     
     // Check if essential configuration is present
     if (environmentInfo.s3Bucket === 'not-configured' || 
-        environmentInfo.backendSuffix === 'unknown') {
+        environmentInfo.backendSuffix === 'unknown' ||
+        environmentInfo.graphqlUrl === 'not-configured' ||
+        environmentInfo.userPoolId === 'not-configured') {
       return 'error';
+    }
+    
+    // Warning if not using environment variables (means using fallback values)
+    if (!environmentInfo.usingEnvironmentVariables) {
+      return 'warning';
     }
     
     return 'healthy';
@@ -229,14 +256,38 @@ const SystemConfigPage: React.FC = () => {
                   <StatusPill status={getEnvironmentStatus()} />
                 </div>
                 
+                {/* Environment Variables Status Banner */}
+                <div className={`mb-4 p-3 rounded-lg border ${
+                  environmentInfo.usingEnvironmentVariables 
+                    ? 'bg-green-50 border-green-200 text-green-800'
+                    : 'bg-yellow-50 border-yellow-200 text-yellow-800'
+                }`}>
+                  <div className="flex items-center space-x-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      environmentInfo.usingEnvironmentVariables ? 'bg-green-500' : 'bg-yellow-500'
+                    }`}></div>
+                    <span className="text-sm font-medium">
+                      {environmentInfo.usingEnvironmentVariables 
+                        ? '✅ Using AWS Amplify Environment Variables'
+                        : '⚠️ Using Fallback Configuration (amplify_outputs.json)'}
+                    </span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Environment
+                        Detected Environment
                       </label>
-                      <div className="text-lg font-mono bg-gray-50 p-2 rounded">
-                        {environmentInfo.environment}
+                      <div className={`text-lg font-mono p-2 rounded ${
+                        environmentInfo.detectedEnvironment === 'production' 
+                          ? 'bg-green-50 text-green-800 border border-green-200'
+                          : environmentInfo.detectedEnvironment === 'development/staging'
+                          ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                          : 'bg-red-50 text-red-800 border border-red-200'
+                      }`}>
+                        {environmentInfo.detectedEnvironment}
                       </div>
                     </div>
                     
@@ -246,6 +297,15 @@ const SystemConfigPage: React.FC = () => {
                       </label>
                       <div className="text-sm font-mono bg-gray-50 p-2 rounded break-all">
                         {environmentInfo.backendSuffix}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        GraphQL Endpoint
+                      </label>
+                      <div className="text-xs font-mono bg-gray-50 p-2 rounded break-all">
+                        {environmentInfo.graphqlUrl}
                       </div>
                     </div>
                     
@@ -262,10 +322,28 @@ const SystemConfigPage: React.FC = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Deployment Branch
+                        User Pool ID
+                      </label>
+                      <div className="text-sm font-mono bg-gray-50 p-2 rounded break-all">
+                        {environmentInfo.userPoolId}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        User Pool Client ID
+                      </label>
+                      <div className="text-sm font-mono bg-gray-50 p-2 rounded break-all">
+                        {environmentInfo.userPoolClientId}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Node Environment
                       </label>
                       <div className="text-lg font-mono bg-gray-50 p-2 rounded">
-                        {environmentInfo.deploymentBranch}
+                        {environmentInfo.nodeEnv}
                       </div>
                     </div>
                     
@@ -275,17 +353,6 @@ const SystemConfigPage: React.FC = () => {
                       </label>
                       <div className="text-lg font-mono bg-gray-50 p-2 rounded">
                         {environmentInfo.logLevel}
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Last Deployment
-                      </label>
-                      <div className="text-sm text-gray-600">
-                        {environmentInfo.lastDeployment 
-                          ? DateTimeUtils.timeAgo(environmentInfo.lastDeployment)
-                          : 'Unknown'}
                       </div>
                     </div>
                   </div>
