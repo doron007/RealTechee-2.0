@@ -11,15 +11,31 @@ backend:
                 - 'echo "AWS Amplify Console will handle backend deployment natively"'
 frontend:
     phases:
+        preBuild:
+            commands:
+                - npm ci
         build:
             commands:
-                - 'echo "Writing Amplify environment variables to .env.production"'
+                - 'echo "🔍 Build Info:"'
+                - 'echo "AWS_APP_ID=$AWS_APP_ID"'
+                - 'echo "AWS_BRANCH=$AWS_BRANCH"'
+                - 'echo "BACKEND_SUFFIX=$BACKEND_SUFFIX"'
+                - 'echo "GRAPHQL_URL=$GRAPHQL_URL"'
+                - |
+                  if [ "$AWS_BRANCH" = "production" ]; then
+                    echo "📝 Generating production-specific amplify_outputs.json..."
+                    npx ampx generate outputs --app-id $AWS_APP_ID --branch $AWS_BRANCH --format json
+                  else
+                    echo "📝 Using default amplify_outputs.json for branch: $AWS_BRANCH"
+                  fi
+                - 'echo "📋 Writing Amplify environment variables to .env.production"'
                 - 'echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" >> .env.production'
                 - 'echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production'
                 - 'echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production'
                 - 'echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production'
                 - 'echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production'
                 - 'cat .env.production'
+                - 'echo "🏗️ Building application..."'
                 - 'npm run build'
     artifacts:
         baseDirectory: .next
