@@ -1,0 +1,71 @@
+# robots.txt for RealTechee
+# Real Estate Technology Platform - Property Valuation & Preparation Services
+
+User-agent: *
+
+# Allow crawling of main content pages
+Allow: /
+Allow: /contact/
+Allow: /contact/get-estimate
+Allow: /contact/get-qualified
+Allow: /contact/affiliate
+Allow: /products/
+Allow: /products/sellers
+Allow: /products/buyers
+Allow: /products/architects-and-designers
+Allow: /products/kitchen-and-bath
+Allow: /products/commercial
+Allow: /about
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /login
+Disallow: /profile
+Disallow: /settings
+Disallow: /debug
+Disallow: /test-*
+Disallow: /_next/
+Disallow: /amplify-test
+
+# Block sensitive files
+Disallow: *.json$
+Disallow: /public/meta/
+
+# Allow specific assets
+Allow: /assets/
+Allow: /favicon*
+Allow: /site.webmanifest
+
+# Sitemap location
+Sitemap: https://realtechee.com/sitemap.xml
+
+# Crawl delay to be respectful to server resources
+Crawl-delay: 1
+
+# Additional directives for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block AI training bots if desired (uncomment if needed)
+# User-agent: GPTBot
+# Disallow: /
+# 
+# User-agent: ChatGPT-User
+# Disallow: /
+# 
+# User-agent: CCBot
+# Disallow: /
+# 
+# User-agent: anthropic-ai
+# Disallow: /

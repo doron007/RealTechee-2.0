@@ -1,0 +1,1256 @@
+{
+  "images": [
+    {
+      "file": "pages/login.tsx",
+      "line": 57,
+      "src": "/assets/logos/web_realtechee_horizontal_no_border.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image\n                    src=\"/assets/logos/web_realtechee_horizontal_no_border.png\"\n             ...",
+      "type": "Image"
+    },
+    {
+      "file": "pages/login.tsx",
+      "line": 111,
+      "src": "/assets/logos/web_realtechee_horizontal_no_border.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image\n                  src=\"/assets/logos/web_realtechee_horizontal_no_border.png\"\n               ...",
+      "type": "Image"
+    },
+    {
+      "file": "pages/login.tsx",
+      "line": 183,
+      "src": "/assets/icons/info.svg",
+      "alt": "Info",
+      "tag": "<Image\n                  src=\"/assets/icons/info.svg\"\n                  alt=\"Info\"\n                 ...",
+      "type": "Image"
+    },
+    {
+      "file": "pages/login.tsx",
+      "line": 210,
+      "src": "/assets/icons/warning.svg",
+      "alt": "Returning User",
+      "tag": "<Image\n                  src=\"/assets/icons/warning.svg\"\n                  alt=\"Returning User\"\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/about/IndustryExpertiseSection.tsx",
+      "line": 107,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Check",
+      "tag": "<Image \n                      src=\"/assets/icons/ic-tick-circle.svg\"\n                      alt=\"Chec...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/AdminSidebar.tsx",
+      "line": 170,
+      "src": "/assets/logos/realtechee-horizontal.png",
+      "alt": "RealTechee",
+      "tag": "<Image\r\n                    src=\"/assets/logos/realtechee-horizontal.png\"\r\n                    alt=\"...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/AdminSidebar.tsx",
+      "line": 204,
+      "src": "/assets/logos/app_realtechee for AppIcon.png",
+      "alt": "RealTechee",
+      "tag": "<Image\r\n                  src=\"/assets/logos/app_realtechee for AppIcon.png\"\r\n                  alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/common/AdminCard.tsx",
+      "line": 276,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Expand",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Expand\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/common/AdminCard.tsx",
+      "line": 301,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/common/AdminCard.tsx",
+      "line": 400,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/common/AdminCard.tsx",
+      "line": 425,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                  src=\"/assets/icons/ic-arrow-down.svg\" \n                  alt=\"Toggle\" \n   ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 231,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Expand",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Expand\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 258,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 376,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 394,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 433,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 458,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 484,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 516,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 564,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                  src=\"/assets/icons/ic-arrow-down.svg\" \n                  alt=\"Toggle\" \n   ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProgressiveProjectCard.tsx",
+      "line": 608,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "View larger",
+      "tag": "<Image \n                                  src=\"/assets/icons/ic-newpage.svg\" \n                      ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectCard.tsx",
+      "line": 244,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "Open",
+      "tag": "<Image\r\n            src=\"/assets/icons/ic-newpage.svg\"\r\n            alt=\"Open\"\r\n            width={1...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectCard.tsx",
+      "line": 259,
+      "src": "/assets/icons/ic-edit.svg",
+      "alt": "Edit",
+      "tag": "<Image\r\n            src=\"/assets/icons/ic-edit.svg\"\r\n            alt=\"Edit\"\r\n            width={18}\r...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectCard.tsx",
+      "line": 274,
+      "src": "/assets/icons/ic-delete.svg",
+      "alt": "Delete",
+      "tag": "<Image\r\n            src=\"/assets/icons/ic-delete.svg\"\r\n            alt=\"Delete\"\r\n            width={...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectTableHeader.tsx",
+      "line": 41,
+      "src": "/assets/icons/ic-sort-up.svg",
+      "alt": "Sort ascending",
+      "tag": "<Image\r\n          src=\"/assets/icons/ic-sort-up.svg\"\r\n          alt=\"Sort ascending\"\r\n          widt...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectTableHeader.tsx",
+      "line": 49,
+      "src": "/assets/icons/ic-sort-up.svg",
+      "alt": "Sort descending",
+      "tag": "<Image\r\n          src=\"/assets/icons/ic-sort-up.svg\"\r\n          alt=\"Sort descending\"\r\n          wid...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectTableHeader.tsx",
+      "line": 246,
+      "src": "/assets/icons/ic-undo.svg",
+      "alt": "Undo",
+      "tag": "<Image\r\n            src=\"/assets/icons/ic-undo.svg\"\r\n            alt=\"Undo\"\r\n            width={20}\r...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectTableHeader.tsx",
+      "line": 261,
+      "src": "/assets/icons/ic-refresh.svg",
+      "alt": "Refresh",
+      "tag": "<Image\r\n            src=\"/assets/icons/ic-refresh.svg\"\r\n            alt=\"Refresh\"\r\n            width...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 209,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "Open",
+      "tag": "<Image src=\"/assets/icons/ic-newpage.svg\" alt=\"Open\" width={density === 'compact' ? 12 : 14} height=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 217,
+      "src": "/assets/icons/ic-edit.svg",
+      "alt": "Edit",
+      "tag": "<Image src=\"/assets/icons/ic-edit.svg\" alt=\"Edit\" width={density === 'compact' ? 12 : 14} height={de...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 225,
+      "src": "/assets/icons/ic-delete.svg",
+      "alt": "Delete",
+      "tag": "<Image src=\"/assets/icons/ic-delete.svg\" alt=\"Delete\" width={density === 'compact' ? 12 : 14} height...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 231,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Expand",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Expand\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 256,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Collapse\" \r\n  ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 327,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "Open",
+      "tag": "<Image src=\"/assets/icons/ic-newpage.svg\" alt=\"Open\" width={16} height={16} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 335,
+      "src": "/assets/icons/ic-edit.svg",
+      "alt": "Edit",
+      "tag": "<Image src=\"/assets/icons/ic-edit.svg\" alt=\"Edit\" width={16} height={16} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 343,
+      "src": "/assets/icons/ic-delete.svg",
+      "alt": "Delete",
+      "tag": "<Image src=\"/assets/icons/ic-delete.svg\" alt=\"Delete\" width={16} height={16} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 373,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Collapse\" \r\n  ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 391,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 419,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 444,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 470,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 502,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 535,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                  src=\"/assets/icons/ic-arrow-down.svg\" \r\n                  alt=\"Toggle\" \r\n...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 575,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "View larger",
+      "tag": "<Image \r\n                                  src=\"/assets/icons/ic-newpage.svg\" \r\n                    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 617,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \r\n                src=\"/assets/icons/ic-arrow-down.svg\" \r\n                alt=\"Toggle\" \r\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 653,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "Open",
+      "tag": "<Image src=\"/assets/icons/ic-newpage.svg\" alt=\"Open\" width={18} height={18} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 661,
+      "src": "/assets/icons/ic-edit.svg",
+      "alt": "Edit",
+      "tag": "<Image src=\"/assets/icons/ic-edit.svg\" alt=\"Edit\" width={18} height={18} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 669,
+      "src": "/assets/icons/ic-delete.svg",
+      "alt": "Delete",
+      "tag": "<Image src=\"/assets/icons/ic-delete.svg\" alt=\"Delete\" width={18} height={18} className=\"invert\" />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 1132,
+      "src": "/assets/icons/ic-newpage.svg",
+      "alt": "Open",
+      "tag": "<Image\r\n                  src=\"/assets/icons/ic-newpage.svg\"\r\n                  alt=\"Open\"\r\n        ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 1146,
+      "src": "/assets/icons/ic-edit.svg",
+      "alt": "Edit",
+      "tag": "<Image\r\n                  src=\"/assets/icons/ic-edit.svg\"\r\n                  alt=\"Edit\"\r\n           ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/projects/ProjectsTable.tsx",
+      "line": 1160,
+      "src": "/assets/icons/ic-delete.svg",
+      "alt": "Delete",
+      "tag": "<Image\r\n                  src=\"/assets/icons/ic-delete.svg\"\r\n                  alt=\"Delete\"\r\n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/quotes/ProgressiveQuoteCard.tsx",
+      "line": 193,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Expand",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Expand\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/quotes/ProgressiveQuoteCard.tsx",
+      "line": 220,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/quotes/ProgressiveQuoteCard.tsx",
+      "line": 341,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/quotes/ProgressiveQuoteCard.tsx",
+      "line": 359,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/quotes/ProgressiveQuoteCard.tsx",
+      "line": 387,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 192,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Expand",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Expand\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 219,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 340,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Collapse",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Collapse\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 358,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 386,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/admin/requests/ProgressiveRequestCard.tsx",
+      "line": 410,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Toggle",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Toggle\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Footer.tsx",
+      "line": 26,
+      "src": "/assets/logos/web_realtechee_horizontal_no_border.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image\n                  src=\"/assets/logos/web_realtechee_horizontal_no_border.png\"\n               ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Footer.tsx",
+      "line": 202,
+      "src": "/assets/logos/web_realtechee_horizontal_no_border.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image\n                    src=\"/assets/logos/web_realtechee_horizontal_no_border.png\"\n             ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 150,
+      "src": "/assets/logos/web_realtechee_horizontal_no_border.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image\n                src=\"/assets/logos/web_realtechee_horizontal_no_border.png\"\n                a...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 176,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Dropdown",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Dropdown\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 231,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Dropdown",
+      "tag": "<Image \n                src=\"/assets/icons/ic-arrow-down.svg\" \n                alt=\"Dropdown\" \n     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 276,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Dropdown",
+      "tag": "<Image \n                  src=\"/assets/icons/ic-arrow-down.svg\" \n                  alt=\"Dropdown\" \n ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 355,
+      "src": "/assets/icons/ic-cancel.svg",
+      "alt": "Close Menu",
+      "tag": "<Image src=\"/assets/icons/ic-cancel.svg\" alt=\"Close Menu\" width={24} height={24} />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 357,
+      "src": "/assets/icons/menu.svg",
+      "alt": "Open Menu",
+      "tag": "<Image src=\"/assets/icons/menu.svg\" alt=\"Open Menu\" width={24} height={24} />...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 422,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Dropdown",
+      "tag": "<Image \n                    src=\"/assets/icons/ic-arrow-down.svg\" \n                    alt=\"Dropdown...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 485,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": "Dropdown",
+      "tag": "<Image \n                    src=\"/assets/icons/ic-arrow-down.svg\" \n                    alt=\"Dropdown...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 531,
+      "src": "/assets/icons/user.svg",
+      "alt": "User profile icon",
+      "tag": "<Image \n                      src=\"/assets/icons/user.svg\" \n                      alt=\"User profile ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 546,
+      "src": "/assets/icons/folder.svg",
+      "alt": "Projects folder icon",
+      "tag": "<Image \n                      src=\"/assets/icons/folder.svg\" \n                      alt=\"Projects fo...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 561,
+      "src": "/assets/icons/settings.svg",
+      "alt": "Account settings icon",
+      "tag": "<Image \n                      src=\"/assets/icons/settings.svg\" \n                      alt=\"Account s...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/layout/Header.tsx",
+      "line": 586,
+      "src": "/assets/icons/log-out.svg",
+      "alt": "Sign out icon",
+      "tag": "<Image \n                      src=\"/assets/icons/log-out.svg\" \n                      alt=\"Sign out i...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/ui/CollapsibleSection.tsx",
+      "line": 26,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": null,
+      "tag": "<Image \n            src=\"/assets/icons/ic-arrow-down.svg\"\n            alt={isExpanded ? \"Collapse\" :...",
+      "type": "Image"
+    },
+    {
+      "file": "components/common/ui/OptionCard.tsx",
+      "line": 54,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Feature included checkmark",
+      "tag": "<Image \n                src=\"/assets/icons/ic-tick-circle.svg\"\n                alt=\"Feature included...",
+      "type": "Image"
+    },
+    {
+      "file": "components/contact/Contact.tsx",
+      "line": 85,
+      "src": "/assets/images/pages_contact_Frame 427321849.png",
+      "alt": "RealTechee Property Transformation",
+      "tag": "<Image \n                src=\"/assets/images/pages_contact_Frame 427321849.png\" \n                alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/contact/ContactMapSection.tsx",
+      "line": 48,
+      "src": "/assets/images/contact-map.png",
+      "alt": "RealTechee Los Angeles Office Location Map",
+      "tag": "<Image \n            src=\"/assets/images/contact-map.png\" \n            alt=\"RealTechee Los Angeles Of...",
+      "type": "Image"
+    },
+    {
+      "file": "components/home/ClientSection.tsx",
+      "line": 75,
+      "src": "/assets/images/pages_sellers_seller-home.jpg",
+      "alt": "For Sellers",
+      "tag": "<Image \n                  src=\"/assets/images/pages_sellers_seller-home.jpg\" \n                  alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/home/ClientSection.tsx",
+      "line": 90,
+      "src": "/assets/images/pages_buyers_buyer-home.jpg",
+      "alt": "For Buyers",
+      "tag": "<Image \n                  src=\"/assets/images/pages_buyers_buyer-home.jpg\" \n                  alt=\"F...",
+      "type": "Image"
+    },
+    {
+      "file": "components/home/Features.tsx",
+      "line": 17,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Completed milestone",
+      "tag": "<Image\n            src=\"/assets/icons/ic-tick-circle.svg\"\n            alt=\"Completed milestone\"\n    ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/home/Features.tsx",
+      "line": 30,
+      "src": "/assets/icons/ic-circle.svg",
+      "alt": "Pending milestone",
+      "tag": "<Image\n            src=\"/assets/icons/ic-circle.svg\"\n            alt=\"Pending milestone\"\n           ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/home/Features.tsx",
+      "line": 197,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Milestone status",
+      "tag": "<Image\n                      src=\"/assets/icons/ic-tick-circle.svg\"\n                      alt=\"Miles...",
+      "type": "Image"
+    },
+    {
+      "file": "components/products/BenefitsSection.tsx",
+      "line": 284,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Check",
+      "tag": "<Image \n                      src=\"/assets/icons/ic-tick-circle.svg\"\n                      alt=\"Chec...",
+      "type": "Image"
+    },
+    {
+      "file": "components/products/BenefitsSection.tsx",
+      "line": 312,
+      "src": "/assets/icons/ic-tick-circle.svg",
+      "alt": "Check",
+      "tag": "<Image \n                        src=\"/assets/icons/ic-tick-circle.svg\"\n                        alt=\"...",
+      "type": "Image"
+    },
+    {
+      "file": "components/projects/ProjectCard.tsx",
+      "line": 224,
+      "src": "/assets/icons/arrow-right.svg",
+      "alt": "arrow",
+      "tag": "<Image \n                      src=\"/assets/icons/arrow-right.svg\" \n                      alt=\"arrow\"...",
+      "type": "Image"
+    },
+    {
+      "file": "components/projects/PropertyDetailsCard.tsx",
+      "line": 46,
+      "src": "/assets/icons/ic-location.svg",
+      "alt": "location",
+      "tag": "<Image\n                src=\"/assets/icons/ic-location.svg\"\n                alt=\"location\"\n          ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 100,
+      "src": "/assets/images/brand_patterns_sunflower_pattern_left.png",
+      "alt": "Left sunflower pattern",
+      "tag": "<Image \n                    src=\"/assets/images/brand_patterns_sunflower_pattern_left.png\" \n        ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 110,
+      "src": "/assets/images/brand_patterns_sunflower_pattern_right.png",
+      "alt": "Right sunflower pattern",
+      "tag": "<Image \n                    src=\"/assets/images/brand_patterns_sunflower_pattern_right.png\" \n       ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 138,
+      "src": "/assets/logos/web_Small logo 118x16.png",
+      "alt": "RealTechee Small Logo",
+      "tag": "<Image \n                        src=\"/assets/logos/web_Small logo 118x16.png\" \n                     ...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 360,
+      "src": "/assets/images/brand_moodboard_moodboard 206x252.png",
+      "alt": "Moodboard Image 1",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 206x252.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 369,
+      "src": "/assets/images/brand_moodboard_moodboard 178x252.png",
+      "alt": "Moodboard Image 2",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 178x252.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 378,
+      "src": "/assets/images/brand_moodboard_moodboard 166x294.png",
+      "alt": "Moodboard Image 3",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 166x294.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 387,
+      "src": "/assets/images/brand_moodboard_moodboard 174x261.png",
+      "alt": "Moodboard Image 4",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 174x261.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 396,
+      "src": "/assets/images/brand_moodboard_moodboard 348x261.png",
+      "alt": "Moodboard Image 5",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 348x261.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandGuidelines.tsx",
+      "line": 405,
+      "src": "/assets/images/brand_moodboard_moodboard 338x252.png",
+      "alt": "Moodboard Image 6",
+      "tag": "<Image \n              src=\"/assets/images/brand_moodboard_moodboard 338x252.png\" \n              alt=...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandIdentitySection.tsx",
+      "line": 18,
+      "src": "/assets/images/brand_logos_realtechee-horizontal.png",
+      "alt": "RealTechee Logo",
+      "tag": "<Image \n            src=\"/assets/images/brand_logos_realtechee-horizontal.png\" \n            alt=\"Rea...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/BrandIdentitySection.tsx",
+      "line": 32,
+      "src": "/assets/images/brand_logos_web_Logo alternative 39x48.png",
+      "alt": "RealTechee Logo Alternative",
+      "tag": "<Image \n            src=\"/assets/images/brand_logos_web_Logo alternative 39x48.png\" \n            alt...",
+      "type": "Image"
+    },
+    {
+      "file": "components/style-guide/GetAnEstimateShowcase.tsx",
+      "line": 230,
+      "src": "/assets/icons/arrow-right.svg",
+      "alt": "Button icon",
+      "tag": "<img src=\"/assets/icons/arrow-right.svg\" alt=\"Button icon\" ... />...",
+      "type": "img"
+    }
+  ],
+  "missingAlt": [
+    {
+      "file": "components/common/ui/CollapsibleSection.tsx",
+      "line": 26,
+      "src": "/assets/icons/ic-arrow-down.svg",
+      "alt": null,
+      "tag": "<Image \n            src=\"/assets/icons/ic-arrow-down.svg\"\n            alt={isExpanded ? \"Collapse\" :...",
+      "type": "Image"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "critical",
+      "title": "Missing Alt Text",
+      "description": "1 images are missing alt text, which is crucial for SEO and accessibility.",
+      "action": "Add descriptive alt text to all images"
+    },
+    {
+      "type": "performance",
+      "title": "Large Image Files",
+      "description": "3 images are larger than 500KB, which may impact page load speed.",
+      "action": "Optimize images using Next.js Image component or compress files"
+    },
+    {
+      "type": "optimization",
+      "title": "Image Format Optimization",
+      "description": "56 images use older formats (JPG/PNG). Consider WebP or AVIF for better compression.",
+      "action": "Convert images to modern formats like WebP or AVIF"
+    },
+    {
+      "type": "seo",
+      "title": "Generic Alt Text",
+      "description": "6 images have generic alt text that could be more descriptive.",
+      "action": "Replace generic alt text with specific, keyword-rich descriptions"
+    }
+  ],
+  "publicImages": [
+    {
+      "path": "/assets/images/brand_logos_app_realtechee for AppIcon no text.png",
+      "name": "brand_logos_app_realtechee for AppIcon no text.png",
+      "size": "35.57 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_app_realtechee for AppIcon.png",
+      "name": "brand_logos_app_realtechee for AppIcon.png",
+      "size": "47.01 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_realtechee-horizontal.png",
+      "name": "brand_logos_realtechee-horizontal.png",
+      "size": "8.93 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_social_logo for signature (200px).png",
+      "name": "brand_logos_social_logo for signature (200px).png",
+      "size": "5.89 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_social_logo for signature.png",
+      "name": "brand_logos_social_logo for signature.png",
+      "size": "7.84 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_social_realtechee - profile - 180.jpg",
+      "name": "brand_logos_social_realtechee - profile - 180.jpg",
+      "size": "12.26 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_social_realtechee - profile - 765.jpg",
+      "name": "brand_logos_social_realtechee - profile - 765.jpg",
+      "size": "67.21 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_social_realtechee - profile.jpg",
+      "name": "brand_logos_social_realtechee - profile.jpg",
+      "size": "12.26 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_Logo alternative 39x48.png",
+      "name": "brand_logos_web_Logo alternative 39x48.png",
+      "size": "1.73 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_Small logo 118x16.png",
+      "name": "brand_logos_web_Small logo 118x16.png",
+      "size": "2.48 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_realtechee-horizontal.png",
+      "name": "brand_logos_web_realtechee-horizontal.png",
+      "size": "8.93 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_realtechee_horizontal 3_4in.png",
+      "name": "brand_logos_web_realtechee_horizontal 3_4in.png",
+      "size": "9.79 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_realtechee_horizontal.png",
+      "name": "brand_logos_web_realtechee_horizontal.png",
+      "size": "8.93 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_realtechee_horizontal_no_border.png",
+      "name": "brand_logos_web_realtechee_horizontal_no_border.png",
+      "size": "33.00 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_logos_web_realtechee_horizontal_white.png",
+      "name": "brand_logos_web_realtechee_horizontal_white.png",
+      "size": "31.15 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 166x294.png",
+      "name": "brand_moodboard_moodboard 166x294.png",
+      "size": "42.93 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 166x294"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 174x261.png",
+      "name": "brand_moodboard_moodboard 174x261.png",
+      "size": "88.54 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 174x261"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 178x252.png",
+      "name": "brand_moodboard_moodboard 178x252.png",
+      "size": "62.36 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 178x252"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 206x252.png",
+      "name": "brand_moodboard_moodboard 206x252.png",
+      "size": "94.13 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 206x252"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 338x252.png",
+      "name": "brand_moodboard_moodboard 338x252.png",
+      "size": "95.28 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 338x252"
+    },
+    {
+      "path": "/assets/images/brand_moodboard_moodboard 348x261.png",
+      "name": "brand_moodboard_moodboard 348x261.png",
+      "size": "79.45 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand moodboard moodboard 348x261"
+    },
+    {
+      "path": "/assets/images/brand_patterns_Tri-outline.png",
+      "name": "brand_patterns_Tri-outline.png",
+      "size": "25.24 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand patterns Tri outline"
+    },
+    {
+      "path": "/assets/images/brand_patterns_Tri-outline_thin.png",
+      "name": "brand_patterns_Tri-outline_thin.png",
+      "size": "20.71 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand patterns Tri outline thin"
+    },
+    {
+      "path": "/assets/images/brand_patterns_Tri-outline_white.jpeg",
+      "name": "brand_patterns_Tri-outline_white.jpeg",
+      "size": "14.60 KB",
+      "extension": ".jpeg",
+      "suggestion": "RealTechee real estate image - brand patterns Tri outline white"
+    },
+    {
+      "path": "/assets/images/brand_patterns_sunflower_pattern_left.png",
+      "name": "brand_patterns_sunflower_pattern_left.png",
+      "size": "5.00 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand patterns sunflower pattern left"
+    },
+    {
+      "path": "/assets/images/brand_patterns_sunflower_pattern_right.png",
+      "name": "brand_patterns_sunflower_pattern_right.png",
+      "size": "25.66 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - brand patterns sunflower pattern right"
+    },
+    {
+      "path": "/assets/images/contact-hero-bg.png",
+      "name": "contact-hero-bg.png",
+      "size": "212.31 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/contact-map.png",
+      "name": "contact-map.png",
+      "size": "1733.06 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - contact map"
+    },
+    {
+      "path": "/assets/images/hero-bg.png",
+      "name": "hero-bg.png",
+      "size": "648.62 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_about_history_bg.png",
+      "name": "pages_about_history_bg.png",
+      "size": "348.79 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - pages about history bg"
+    },
+    {
+      "path": "/assets/images/pages_buyers_buyer-home.jpg",
+      "name": "pages_buyers_buyer-home.jpg",
+      "size": "196.01 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee services for property buyers - informed investment decisions"
+    },
+    {
+      "path": "/assets/images/pages_contact_Frame 427321849.png",
+      "name": "pages_contact_Frame 427321849.png",
+      "size": "33.04 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - pages contact Frame 427321849"
+    },
+    {
+      "path": "/assets/images/pages_home_hero-bg.png",
+      "name": "pages_home_hero-bg.png",
+      "size": "180.57 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_howItWorks.png",
+      "name": "pages_home_howItWorks.png",
+      "size": "156.65 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_milestones_Real-time project updates.png",
+      "name": "pages_home_milestones_Real-time project updates.png",
+      "size": "418.58 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_milestones_arrow-right.svg",
+      "name": "pages_home_milestones_arrow-right.svg",
+      "size": "0.52 KB",
+      "extension": ".svg",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_milestones_features-2.png",
+      "name": "pages_home_milestones_features-2.png",
+      "size": "345.91 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_milestones_features.png",
+      "name": "pages_home_milestones_features.png",
+      "size": "490.22 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_partners_partner-logo-1.png",
+      "name": "pages_home_partners_partner-logo-1.png",
+      "size": "23.63 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_partners_partner-logo-2.png",
+      "name": "pages_home_partners_partner-logo-2.png",
+      "size": "37.74 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_partners_partner-logo-3.png",
+      "name": "pages_home_partners_partner-logo-3.png",
+      "size": "27.53 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_partners_partner-logo-4.png",
+      "name": "pages_home_partners_partner-logo-4.png",
+      "size": "28.29 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate technology platform - property valuation and renovation services"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_after-1.webp",
+      "name": "pages_home_portfolio_after-1.webp",
+      "size": "56.70 KB",
+      "extension": ".webp",
+      "suggestion": "Property after renovation - RealTechee completed project"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_after-2.jpg",
+      "name": "pages_home_portfolio_after-2.jpg",
+      "size": "293.83 KB",
+      "extension": ".jpg",
+      "suggestion": "Property after renovation - RealTechee completed project"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_after-3.jpg",
+      "name": "pages_home_portfolio_after-3.jpg",
+      "size": "96.54 KB",
+      "extension": ".jpg",
+      "suggestion": "Property after renovation - RealTechee completed project"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_before-1.jpg",
+      "name": "pages_home_portfolio_before-1.jpg",
+      "size": "276.97 KB",
+      "extension": ".jpg",
+      "suggestion": "Property before renovation - RealTechee transformation project"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_before-2.jpg",
+      "name": "pages_home_portfolio_before-2.jpg",
+      "size": "80.51 KB",
+      "extension": ".jpg",
+      "suggestion": "Property before renovation - RealTechee transformation project"
+    },
+    {
+      "path": "/assets/images/pages_home_portfolio_before-3.jpg",
+      "name": "pages_home_portfolio_before-3.jpg",
+      "size": "137.19 KB",
+      "extension": ".jpg",
+      "suggestion": "Property before renovation - RealTechee transformation project"
+    },
+    {
+      "path": "/assets/images/pages_sellers_seller-home.jpg",
+      "name": "pages_sellers_seller-home.jpg",
+      "size": "113.88 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee services for property sellers - maximize home value and appeal"
+    },
+    {
+      "path": "/assets/images/placeholder.jpg",
+      "name": "placeholder.jpg",
+      "size": "648.62 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee real estate image - placeholder"
+    },
+    {
+      "path": "/assets/images/products_seller-benefits.jpg",
+      "name": "products_seller-benefits.jpg",
+      "size": "0.08 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee services for property sellers - maximize home value and appeal"
+    },
+    {
+      "path": "/assets/images/realtechee-for-intro-vid.png",
+      "name": "realtechee-for-intro-vid.png",
+      "size": "1.73 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee logo - real estate technology platform"
+    },
+    {
+      "path": "/assets/images/shared_cta-background.jpg",
+      "name": "shared_cta-background.jpg",
+      "size": "212.31 KB",
+      "extension": ".jpg",
+      "suggestion": "RealTechee real estate image - shared cta background"
+    },
+    {
+      "path": "/assets/images/shared_projects_project-image1.png",
+      "name": "shared_projects_project-image1.png",
+      "size": "13.27 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - shared projects project image1"
+    },
+    {
+      "path": "/assets/images/shared_projects_project-image2.png",
+      "name": "shared_projects_project-image2.png",
+      "size": "13.87 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - shared projects project image2"
+    },
+    {
+      "path": "/assets/images/shared_projects_project-image3.png",
+      "name": "shared_projects_project-image3.png",
+      "size": "14.42 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - shared projects project image3"
+    },
+    {
+      "path": "/assets/images/shared_projects_project-image4.png",
+      "name": "shared_projects_project-image4.png",
+      "size": "13.48 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - shared projects project image4"
+    },
+    {
+      "path": "/assets/images/shared_projects_project-image5.png",
+      "name": "shared_projects_project-image5.png",
+      "size": "488.03 KB",
+      "extension": ".png",
+      "suggestion": "RealTechee real estate image - shared projects project image5"
+    }
+  ]
+}

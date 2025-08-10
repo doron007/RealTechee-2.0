@@ -25,7 +25,7 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
         <div className={`transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
           <Image 
             src="/assets/icons/ic-arrow-down.svg"
-            alt={isExpanded ? "Collapse" : "Expand"}
+            alt={isExpanded ? "Collapse section" : "Expand section"}
             width={20}
             height={20}
           />

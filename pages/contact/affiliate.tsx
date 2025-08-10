@@ -1,10 +1,10 @@
-import Head from 'next/head';
 import type { NextPage } from 'next';
 import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
 import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { AffiliateInquiryForm, InquirySuccessMessage, FormErrorMessage } from '../../components/forms';
 import { useFormSubmission } from '../../hooks';
 import logger from '../../lib/logger';
+import SEOHead from '../../components/seo/SEOHead';
 import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createAffiliates, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
@@ -388,12 +388,48 @@ const Affiliate: NextPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Head>
-        <title>Affiliate Inquiry - Contact Us</title>
-        <meta name="description" content="Interested in becoming a RealTechee affiliate? Join our network of trusted service providers and contractors." />
-        <link rel="icon" href="/favicon_white.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <SEOHead 
+        pageKey="affiliate"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': 'https://realtechee.com/contact/affiliate#webpage',
+          name: 'RealTechee Affiliate Program - Partnership Opportunities',
+          description: 'Join the RealTechee affiliate program. Partner with us to offer property valuation and real estate technology services.',
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://realtechee.com'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: 'https://realtechee.com/contact'
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'Affiliate Program',
+                item: 'https://realtechee.com/contact/affiliate'
+              }
+            ]
+          },
+          mainEntity: {
+            '@type': 'PartnershipProgram',
+            name: 'RealTechee Affiliate Program',
+            description: 'Partnership opportunities for service providers and contractors in the real estate technology space',
+            provider: {
+              '@type': 'Organization',
+              name: 'RealTechee'
+            }
+          }
+        }}
+      />
 
       <main className="flex-grow">
         <ContactHeroSection contactType={ContactType.AFFILIATE} />

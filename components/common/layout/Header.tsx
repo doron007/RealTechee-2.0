@@ -530,7 +530,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                   >
                     <Image 
                       src="/assets/icons/user.svg" 
-                      alt="" 
+                      alt="User profile icon" 
                       width={18} 
                       height={18} 
                       className="mr-3" 
@@ -545,7 +545,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                   >
                     <Image 
                       src="/assets/icons/folder.svg" 
-                      alt="" 
+                      alt="Projects folder icon" 
                       width={18} 
                       height={18} 
                       className="mr-3" 
@@ -560,7 +560,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                   >
                     <Image 
                       src="/assets/icons/settings.svg" 
-                      alt="" 
+                      alt="Account settings icon" 
                       width={18} 
                       height={18} 
                       className="mr-3" 
@@ -585,7 +585,7 @@ export default function Header({ userLoggedIn = false, user, onSignOut, ...props
                   >
                     <Image 
                       src="/assets/icons/log-out.svg" 
-                      alt="" 
+                      alt="Sign out icon" 
                       width={18} 
                       height={18} 
                       className="mr-3" 

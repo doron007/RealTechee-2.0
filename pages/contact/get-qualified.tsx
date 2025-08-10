@@ -1,10 +1,10 @@
-import Head from 'next/head';
 import type { NextPage } from 'next';
 import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
 import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { GetQualifiedForm, InquirySuccessMessage, FormErrorMessage } from '../../components/forms';
 import { useFormSubmission } from '../../hooks';
 import logger from '../../lib/logger';
+import SEOHead from '../../components/seo/SEOHead';
 import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createContactUs, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
@@ -406,12 +406,53 @@ ${JSON.stringify({
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Head>
-        <title>Get Qualified - Contact Us</title>
-        <meta name="description" content="Real Estate agents - schedule your training session to learn how RealTechee can help you win more listings and sell faster." />
-        <link rel="icon" href="/favicon_white.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <SEOHead 
+        pageKey="get-qualified"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': 'https://realtechee.com/contact/get-qualified#webpage',
+          name: 'Property Qualification Services - RealTechee',
+          description: 'Get qualified for property investments with RealTechee. Professional assessment and training for real estate agents and investors.',
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://realtechee.com'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: 'https://realtechee.com/contact'
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'Get Qualified',
+                item: 'https://realtechee.com/contact/get-qualified'
+              }
+            ]
+          },
+          mainEntity: {
+            '@type': 'EducationalOrganization',
+            name: 'RealTechee Training Programs',
+            description: 'Professional real estate training and qualification programs',
+            offers: {
+              '@type': 'Course',
+              name: 'Real Estate Agent Training',
+              description: 'Learn how RealTechee can help you win more listings and sell faster',
+              provider: {
+                '@type': 'Organization',
+                name: 'RealTechee'
+              }
+            }
+          }
+        }}
+      />
 
       <main className="flex-grow">
         <ContactHeroSection contactType={ContactType.QUALIFIED} />

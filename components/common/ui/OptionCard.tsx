@@ -53,7 +53,7 @@ export const OptionCard: React.FC<OptionCardProps> = ({
             <div key={idx} className="flex items-start gap-1">
               <Image 
                 src="/assets/icons/ic-tick-circle.svg"
-                alt=""
+                alt="Feature included checkmark"
                 width={16}
                 height={16}
                 className="mt-1 flex-shrink-0"

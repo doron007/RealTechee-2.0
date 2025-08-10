@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
@@ -9,6 +8,7 @@ import H2 from '../../components/typography/H2';
 import H3 from '../../components/typography/H3';
 import P1 from '../../components/typography/P1';
 import logger from '../../lib/logger';
+import SEOHead from '../../components/seo/SEOHead';
 import { generateClient } from 'aws-amplify/api';
 import { createProperties, createContacts, createRequests, updateContacts } from '../../mutations';
 import { listProperties, listContacts } from '../../queries';
@@ -809,12 +809,65 @@ const GetEstimate: NextPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Head>
-        <title>Get an Estimate - Contact Us</title>
-        <meta name="description" content="Request a free estimate for your real estate project. Our experts will provide a detailed quote and consultation." />
-        <link rel="icon" href="/favicon_white.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <SEOHead 
+        pageKey="get-estimate"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': 'https://realtechee.com/contact/get-estimate#webpage',
+          name: 'Get Property Renovation Estimate - RealTechee',
+          description: 'Request a free property renovation estimate from RealTechee experts. Get detailed cost analysis and consultation within 24 hours.',
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://realtechee.com'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: 'https://realtechee.com/contact'
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'Get Estimate',
+                item: 'https://realtechee.com/contact/get-estimate'
+              }
+            ]
+          },
+          mainEntity: {
+            '@type': 'Service',
+            name: 'Property Renovation Estimate',
+            description: 'Professional property renovation cost estimation and planning service',
+            serviceType: 'Real Estate Valuation',
+            provider: {
+              '@type': 'Organization',
+              name: 'RealTechee'
+            },
+            offers: {
+              '@type': 'Offer',
+              description: 'Free property renovation estimate with detailed cost analysis',
+              price: '0',
+              priceCurrency: 'USD',
+              availability: 'https://schema.org/InStock',
+              deliveryLeadTime: {
+                '@type': 'QuantitativeValue',
+                value: 1,
+                unitCode: 'DAY'
+              }
+            },
+            areaServed: {
+              '@type': 'Country',
+              name: 'United States'
+            }
+          }
+        }}
+      />
 
       <main className="flex-grow">
         <ContactHeroSection contactType={ContactType.ESTIMATE} />

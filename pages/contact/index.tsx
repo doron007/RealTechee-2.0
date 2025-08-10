@@ -4,13 +4,63 @@ import Section from '../../components/common/layout/Section';
 import H1 from '../../components/typography/H1';
 import P2 from '../../components/typography/P2';
 import ContactScenarioSelector from '../../components/contact/ContactScenarioSelector';
+import SEOHead from '../../components/seo/SEOHead';
 
 export default function ContactPage() {
   return (
-    <Layout 
-      title="Contact Us" 
-      description="Get in touch with the RealTechee team. Choose from our contact options: Get an Estimate, General Inquiry, Get Qualified, or Affiliate Inquiry."
-    >
+    <div className="flex flex-col min-h-screen">
+      <SEOHead 
+        pageKey="contact"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          '@id': 'https://realtechee.com/contact#webpage',
+          name: 'Contact RealTechee - Real Estate Technology Experts',
+          description: 'Get in touch with RealTechee for property valuation, renovation estimates, and real estate technology services.',
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://realtechee.com'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: 'https://realtechee.com/contact'
+              }
+            ]
+          },
+          mainEntity: {
+            '@type': 'Organization',
+            name: 'RealTechee',
+            contactPoint: [
+              {
+                '@type': 'ContactPoint',
+                contactType: 'Property Estimates',
+                url: 'https://realtechee.com/contact/get-estimate'
+              },
+              {
+                '@type': 'ContactPoint',
+                contactType: 'Agent Training',
+                url: 'https://realtechee.com/contact/get-qualified'
+              },
+              {
+                '@type': 'ContactPoint',
+                contactType: 'Partnership',
+                url: 'https://realtechee.com/contact/affiliate'
+              }
+            ]
+          }
+        }}
+      />
+      <Layout 
+        title="Contact Us" 
+        description="Get in touch with the RealTechee team. Choose from our contact options: Get an Estimate, General Inquiry, Get Qualified, or Affiliate Inquiry."
+      >
       {/* Hero Section with Background Image */}
       <Section
         id="hero"
@@ -40,5 +90,6 @@ export default function ContactPage() {
         </div>
       </Section>
     </Layout>
+    </div>
   );
 }

@@ -30,14 +30,27 @@ const ddbClient = new DynamoDBClient({
 
 const docClient = DynamoDBDocumentClient.from(ddbClient);
 
-// Get table names from current environment (development environment pattern)
+// Get table names with dynamic environment detection
 const getTableName = (modelName) => {
-  // Development environment uses fvn7t5hbobaxjklhrqzdl4ac34 pattern
-  // Production environment uses aqnqdrctpzfwfjwyxxsmu6peoq pattern
-  const envId = 'fvn7t5hbobaxjklhrqzdl4ac34'; // Development environment
-  const tableName = `${modelName}-${envId}-NONE`;
+  // Detect environment based on BASE_URL or process.env
+  const baseUrl = process.env.BASE_URL || '';
+  let envId;
+  let envName;
   
-  console.log(`Using table name: ${tableName} for model: ${modelName}`);
+  if (baseUrl.includes('realtechee.com') || baseUrl.includes('production')) {
+    // Production environment
+    envId = 'aqnqdrctpzfwfjwyxxsmu6peoq';
+    envName = 'production';
+  } else {
+    // Development/staging environment (localhost, staging URLs, etc.)
+    envId = 'fvn7t5hbobaxjklhrqzdl4ac34';
+    envName = 'development/staging';
+  }
+  
+  const tableName = `${modelName}-${envId}-NONE`;
+  console.log(`🔍 Environment detected: ${envName} (${baseUrl})`);
+  console.log(`📊 Using table name: ${tableName} for model: ${modelName}`);
+  
   return tableName;
 };
 
