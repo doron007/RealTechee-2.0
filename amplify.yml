@@ -1,48 +1,55 @@
 version: 1
 backend:
-    phases:
-        build:
-            commands:
-                - 'npm ci'
-                - 'echo "Installing Lambda function dependencies..."'
-                - 'npm ci --prefix amplify/functions/notification-processor'
-                - 'npm ci --prefix amplify/functions/post-confirmation'
-                - 'npm ci --prefix amplify/functions/status-processor'
-                - 'echo "AWS Amplify Console will handle backend deployment natively"'
+  phases:
+    build:
+      commands:
+        - set -e
+        - 'echo "🔧 Backend dependency install"'
+        - 'npm ci'
+        - 'echo "Installing Lambda function dependencies..."'
+        - 'npm ci --prefix amplify/functions/notification-processor'
+        - 'npm ci --prefix amplify/functions/post-confirmation'
+        - 'npm ci --prefix amplify/functions/status-processor'
+        - 'echo "ℹ️ Backend infra deployment handled by Amplify Console"'
 frontend:
-    phases:
-        preBuild:
-            commands:
-                - set -e
-                - npm ci
-        build:
-            commands:
-                - 'echo "🔍 Build Info:"'
-                - 'echo "AWS_APP_ID=$AWS_APP_ID"'
-                - 'echo "AWS_BRANCH=$AWS_BRANCH"'
-                - 'echo "BACKEND_SUFFIX=$BACKEND_SUFFIX"'
-                - 'echo "GRAPHQL_URL=$GRAPHQL_URL"'
-                - |
-                  if [ "$AWS_BRANCH" = "production" ]; then
-                    echo "📝 Generating production-specific amplify_outputs.json..."
-                    npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
-                    [ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json"; exit 1; }
-                    echo "✅ Production amplify_outputs.json generated"
-                  else
-                    echo "📝 (Non-production) Generating amplify_outputs.json to avoid stale cache..."
-                    npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" || echo "⚠️ Generation failed (will continue)"
-                  fi
-                - |
-                  {
-                    echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
-                    echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL"
-                    echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID"
-                    echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
-                    echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
-                  } > .env.production
-                - 'cat .env.production'
-                - 'echo "🏗️ Building application..."'
-                - 'npm run build'
+  phases:
+    preBuild:
+      commands:
+        - set -e
+        - npm ci
+    build:
+      commands:
+        - 'echo "🔍 Build Info:"'
+        - 'echo "AWS_APP_ID=$AWS_APP_ID"'
+        - 'echo "AWS_BRANCH=$AWS_BRANCH"'
+        - 'echo "BACKEND_SUFFIX=$BACKEND_SUFFIX"'
+        - 'echo "GRAPHQL_URL=$GRAPHQL_URL"'
+        - |
+          set -e
+          if [ "$AWS_BRANCH" = "production" ]; then
+            echo "📝 Generating production-specific amplify_outputs.json..."
+            npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
+            [ -f amplify_outputs.json ] || { echo "❌ Missing amplify_outputs.json"; exit 1; }
+            echo "✅ Production amplify_outputs.json generated"
+          else
+            echo "📝 Generating amplify_outputs.json for $AWS_BRANCH..."
+            npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"
+            if [ ! -f amplify_outputs.json ]; then
+              echo "⚠️ amplify_outputs.json missing after generation (non-prod)"; exit 1;
+            fi
+          fi
+        - |
+          {
+            echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX"
+            echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL"
+            echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID"
+            echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID"
+            echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION"
+          } > .env.production
+        - 'echo "🔎 amplify_outputs.json (first 20 lines)"'
+        - 'head -n 20 amplify_outputs.json || true'
+        - 'echo "🏗️ Building application..."'
+        - 'npm run build'
     artifacts:
         baseDirectory: .next
         files:
