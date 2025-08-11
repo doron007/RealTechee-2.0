@@ -14,9 +14,28 @@ backend:
         - npm install
         - echo "Install function deps"
         - bash -c 'for d in amplify/functions/*; do if [ -f "$d/package.json" ]; then echo "-> $d"; (cd "$d" && npm install); fi; done'
-        - echo "Generate Amplify backend outputs"
-        - echo "APP_ID=$AWS_APP_ID BRANCH=$AWS_BRANCH"
-        - npx ampx generate outputs --app-id $AWS_APP_ID --branch $AWS_BRANCH --outputs-version 1
+        - echo "Deploy or update backend first"
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        - echo "Generate Amplify backend outputs (with retry if stack not ready)"
+        - |
+          echo "APP_ID=$AWS_APP_ID BRANCH=$AWS_BRANCH"
+          attempts=0
+          max_attempts=15  # ~2 minutes (15 * 8s)
+          sleep_seconds=8
+          while true; do
+            attempts=$((attempts+1))
+            echo "[outputs] Attempt $attempts/$max_attempts"
+            if npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" --outputs-version 1; then
+              echo "[outputs] Success"
+              break
+            fi
+            if [ $attempts -ge $max_attempts ]; then
+              echo "[outputs] WARNING: Stack still not available after $attempts attempts. Proceeding without regenerated outputs (existing amplify_outputs.json will be used if present)." >&2
+              break
+            fi
+            echo "[outputs] Stack not ready yet (StackDoesNotExist). Sleeping ${sleep_seconds}s..."
+            sleep $sleep_seconds
+          done
 
 frontend:
   phases:
