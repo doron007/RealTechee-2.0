@@ -10,14 +10,14 @@ backend:
         - npm -v
     build:
       commands:
-        - echo "Installing root dependencies (ci -> install fallback)..."
-        - (npm ci || npm install)
-        - echo "Installing Lambda function dependencies (ci -> install fallback)..."
+    - echo "Installing root dependencies (npm install minimal approach)..."
+    - npm install
+    - echo "Installing Lambda function dependencies (npm install)..."
         - |
           for d in amplify/functions/*; do
             if [ -f "$d/package.json" ]; then
               echo "-> $d"
-              (cd "$d" && (npm ci || npm install))
+      (cd "$d" && npm install)
             fi
           done
         - echo "Generating backend outputs with branch-specific environment variables..."
@@ -34,8 +34,8 @@ frontend:
         - npm -v
     build:
       commands:
-        - echo "Installing frontend dependencies (ci -> install fallback)..."
-        - (npm ci || npm install)
+  - echo "Installing frontend dependencies (npm install)..."
+  - npm install
         - echo "Building frontend - environment variables automatically provided by Amplify"
         - npm run build
   artifacts:
