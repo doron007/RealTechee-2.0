@@ -10,19 +10,13 @@ backend:
         - npm -v
     build:
       commands:
-        - echo "Installing root dependencies (npm install minimal approach)..."
+        - echo "Install root deps"
         - npm install
-        - echo "Installing Lambda function dependencies (npm install)..."
-        - |
-          for d in amplify/functions/*; do
-            if [ -f "$d/package.json" ]; then
-              echo "-> $d"
-              (cd "$d" && npm install)
-            fi
-          done
-  - echo "Generating backend outputs (ampx generate outputs)"
-  - echo "Using AWS_APP_ID=$AWS_APP_ID AWS_BRANCH=$AWS_BRANCH" && env | grep -E 'AWS_APP_ID|AWS_BRANCH' || true
-  - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        - echo "Install function deps"
+        - bash -c 'for d in amplify/functions/*; do if [ -f "$d/package.json" ]; then echo "-> $d"; (cd "$d" && npm install); fi; done'
+        - echo "Generate Amplify backend outputs"
+        - echo "APP_ID=$AWS_APP_ID BRANCH=$AWS_BRANCH"
+        - npx ampx generate outputs --app-id $AWS_APP_ID --branch $AWS_BRANCH --outputs-version 1
 
 frontend:
   phases:
