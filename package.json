@@ -1,6 +1,6 @@
 {
   "name": "realtechee-clone",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
@@ -42,6 +42,9 @@
     "audit:prod:aws": "./scripts/audit-production-aws.sh",
     "analyze:prod:audit": "node scripts/analyze-production-audit.js",
     "validate:prod:deployment": "./scripts/validate-production-deployment.sh",
+    "migrate:data:analyze": "./scripts/simple-migrate-data.sh analyze",
+    "migrate:data:full": "./scripts/simple-migrate-data.sh migrate",
+    "migrate:data:complex": "./scripts/migrate-data.sh analyze",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:validate-env": "node scripts/validate-test-environment.js",
@@ -76,6 +79,7 @@
     "@types/formidable": "^3.4.5",
     "@types/react-image-gallery": "^1.2.4",
     "aws-amplify": "^6.15.0",
+    "aws-sdk": "^2.1692.0",
     "axios": "^1.9.0",
     "boto3": "^0.0.1",
     "csv": "^6.3.11",
