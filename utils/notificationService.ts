@@ -322,8 +322,9 @@ export class NotificationService {
   }): Promise<string> {
     
     try {
-      console.log(`📬 Queueing ${params.eventType} direct notification (pre-generated content)`);
+      console.log(`📬 Queueing ${params.eventType} notification (template-based for production compatibility)`);
 
+      // Use template-based approach for backward compatibility with production
       const result = await client.graphql({
         query: createNotificationQueue,
         variables: {
@@ -331,9 +332,9 @@ export class NotificationService {
             eventType: params.eventType,
             recipientIds: JSON.stringify(params.recipientIds),
             channels: JSON.stringify(params.channels),
-            directContent: JSON.stringify(params.content), // Store as directContent instead of payload
+            payload: JSON.stringify(params.content), // Use payload instead of directContent for production compatibility
+            templateId: this.getTemplateIdByEventType(params.eventType, params.channels), // Use correct template ID based on event type
             status: 'PENDING' as any,
-            priority: 'MEDIUM' as any,
             scheduledAt: params.scheduledAt?.toISOString(),
             retryCount: 0,
             owner: 'anonymous'
@@ -349,6 +350,32 @@ export class NotificationService {
       console.error('❌ Failed to queue direct notification:', error);
       throw new Error(`Failed to queue ${params.eventType} notification: ${(error as any).message}`);
     }
+  }
+
+  /**
+   * Get the appropriate template ID based on event type and channels
+   */
+  private static getTemplateIdByEventType(eventType: string, channels: string[]): string {
+    const isEmail = channels.includes('EMAIL');
+    const isSms = channels.includes('SMS');
+    
+    // Default to email template if both are requested
+    const channelType = isEmail ? 'email' : 'sms';
+    
+    const templateMap: { [key: string]: string } = {
+      'contact_us_submission': `contact-us-${channelType}-template-001`,
+      'get_estimate_request': `get-estimate-${channelType}-template-001`,
+      'get_qualified_submission': `get-qualified-${channelType}-template-001`,
+      'affiliate_submission': `affiliate-${channelType}-template-001`
+    };
+    
+    const templateId = templateMap[eventType];
+    if (!templateId) {
+      console.warn(`No template found for event type: ${eventType}, using contact-us template as fallback`);
+      return `contact-us-${channelType}-template-001`;
+    }
+    
+    return templateId;
   }
 
   /**
