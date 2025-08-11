@@ -20,8 +20,9 @@ backend:
               (cd "$d" && npm install)
             fi
           done
-        - echo "Generating backend outputs with branch-specific environment variables..."
-        - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
+  - echo "Generating backend outputs (ampx generate outputs)"
+  - echo "Using AWS_APP_ID=$AWS_APP_ID AWS_BRANCH=$AWS_BRANCH" && env | grep -E 'AWS_APP_ID|AWS_BRANCH' || true
+  - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
 
 frontend:
   phases:
