@@ -1,33 +1,29 @@
 version: 1
 backend:
-    phases:
-        build:
-            commands:
-                - 'npm ci'
-                - 'echo "Installing Lambda function dependencies..."'
-                - 'npm ci --prefix amplify/functions/notification-processor'
-                - 'npm ci --prefix amplify/functions/post-confirmation'
-                - 'npm ci --prefix amplify/functions/status-processor'
-                - 'echo "AWS Amplify Console will handle backend deployment natively"'
+  phases:
+    build:
+      commands:
+        - npm ci
+        - echo "Installing Lambda function dependencies..."
+        - npm ci --prefix amplify/functions/notification-processor
+        - npm ci --prefix amplify/functions/post-confirmation
+        - npm ci --prefix amplify/functions/status-processor
+        - npm ci --prefix amplify/functions/reputation-monitor
+        - npm ci --prefix amplify/functions/ses-bounce-handler
+        - echo "Generating backend outputs with branch-specific environment variables..."
+        - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
-    phases:
-        build:
-            commands:
-                - 'echo "Writing Amplify environment variables to .env.production"'
-                - 'echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" >> .env.production'
-                - 'echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production'
-                - 'echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production'
-                - 'echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production'
-                - 'echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production'
-                - 'cat .env.production'
-                - 'npm run build'
-    artifacts:
-        baseDirectory: .next
-        files:
-            - '**/*'
-    cache:
-        paths:
-            - .next/cache/**/*
-            - .npm/**/*
-            - node_modules/**/*
-            - amplify/functions/*/node_modules/**/*
+  phases:
+    build:
+      commands:
+        - echo "Building frontend - environment variables automatically provided by Amplify"
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
+      - amplify/functions/*/node_modules/**/*
