@@ -20,8 +20,7 @@ const amplifyConfig = {
       mfaMethods: outputs.auth.mfa_methods,
       standardRequiredAttributes: outputs.auth.standard_required_attributes,
       usernameAttributes: outputs.auth.username_attributes,
-      userVerificationTypes: outputs.auth.user_verification_types,
-      groups: outputs.auth.groups
+      userVerificationTypes: outputs.auth.user_verification_types
     }
   } : {},
   API: outputs.data ? {
@@ -347,6 +346,17 @@ export const notificationEventsAPI = getAPI('NotificationEvents');
 // Export the raw client for advanced usage
 export { client };
 export type { Schema };
+
+// Export Cognito groups if available (for reference, not used in auth config)
+// Safe access with type guard to handle server-generated outputs that may lack groups
+const authGroups = (outputs as any).auth?.groups ?? [];
+export const definedGroups = authGroups.map((g: any) => Object.keys(g)[0]).filter(Boolean);
+export const groupPrecedence: Record<string, number> = Object.fromEntries(
+  authGroups.flatMap((g: any) => {
+    const name = Object.keys(g)[0];
+    return name ? [[name, g[name].precedence ?? 999]] : [];
+  })
+);
 
 // Relational query helpers  
 export const relationAPI = {

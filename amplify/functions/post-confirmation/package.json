@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "PostConfirmation trigger for automatic user-contact linking",
   "main": "index.js",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"

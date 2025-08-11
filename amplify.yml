@@ -1,23 +1,55 @@
 version: 1
 backend:
   phases:
+    preBuild:
+      commands:
+        - echo "Node 20"
+        - nvm install 20 || true
+        - nvm use 20
+        - node -v
+        - npm -v
     build:
       commands:
-        - npm ci
-        - npm ci --prefix amplify/functions/notification-processor
-        - npm ci --prefix amplify/functions/post-confirmation
-        - npm ci --prefix amplify/functions/status-processor
-        - npm ci --prefix amplify/functions/reputation-monitor
-        - npm ci --prefix amplify/functions/ses-bounce-handler
+        - echo "Install root deps"
+        - npm install
+        - echo "Install function deps"
+        - bash -c 'for d in amplify/functions/*; do if [ -f "$d/package.json" ]; then echo "-> $d"; (cd "$d" && npm install); fi; done'
+        - echo "Deploy or update backend first"
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        - echo "Generate Amplify backend outputs (with retry if stack not ready)"
+        - |
+          echo "APP_ID=$AWS_APP_ID BRANCH=$AWS_BRANCH"
+          attempts=0
+          max_attempts=15  # ~2 minutes (15 * 8s)
+          sleep_seconds=8
+          while true; do
+            attempts=$((attempts+1))
+            echo "[outputs] Attempt $attempts/$max_attempts"
+            if npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"; then
+              echo "[outputs] Success"
+              break
+            fi
+            if [ $attempts -ge $max_attempts ]; then
+              echo "[outputs] WARNING: Stack still not available after $attempts attempts. Proceeding without regenerated outputs (existing amplify_outputs.json will be used if present)." >&2
+              break
+            fi
+            echo "[outputs] Stack not ready yet (StackDoesNotExist). Sleeping ${sleep_seconds}s..."
+            sleep $sleep_seconds
+          done
+
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "Node 20 (frontend)"
+        - nvm install 20 || true
+        - nvm use 20
+        - node -v
+        - npm -v
+        - npm install
     build:
       commands:
-        - echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" > .env.production
-        - echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production
-        - echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production
-        - echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production
-        - echo "NEXT_PUBLIC_AWS_REGION=$AWS_REGION" >> .env.production
+        - echo "Build frontend"
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -25,6 +57,6 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - .next/cache/**/*
       - node_modules/**/*
       - amplify/functions/*/node_modules/**/*
+      - .next/cache/**/*

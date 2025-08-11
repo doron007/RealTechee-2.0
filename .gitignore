@@ -63,6 +63,11 @@ migration-*.json
 reorganization-*.json
 test-migration-*.json
 
+# AWS credentials for migration scripts
+aws-credentials.sh
+.aws-credentials
+migration-credentials.sh
+
 # archived scripts - cleanup archive directory
 /scripts/cleanup-archive/
 

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "AWS SES bounce and complaint handler for RealTechee notifications",
   "main": "src/index.ts",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
