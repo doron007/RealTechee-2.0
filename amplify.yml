@@ -3,7 +3,7 @@ backend:
   phases:
     preBuild:
       commands:
-        - echo "Selecting Node.js 20 (LTS) for backend build"
+        - echo "Node 20"
         - nvm install 20 || true
         - nvm use 20
         - node -v
@@ -22,16 +22,15 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Selecting Node.js 20 (LTS) for frontend build"
+        - echo "Node 20 (frontend)"
         - nvm install 20 || true
         - nvm use 20
         - node -v
         - npm -v
+        - npm install
     build:
       commands:
-        - echo "Installing frontend dependencies (npm install)..."
-        - npm install
-        - echo "Building frontend - environment variables automatically provided by Amplify"
+        - echo "Build frontend"
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -39,6 +38,6 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - .next/cache/**/*
       - node_modules/**/*
       - amplify/functions/*/node_modules/**/*
+      - .next/cache/**/*
