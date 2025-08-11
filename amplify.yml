@@ -25,7 +25,7 @@ backend:
           while true; do
             attempts=$((attempts+1))
             echo "[outputs] Attempt $attempts/$max_attempts"
-            if npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH" --outputs-version 1; then
+            if npx ampx generate outputs --app-id "$AWS_APP_ID" --branch "$AWS_BRANCH"; then
               echo "[outputs] Success"
               break
             fi

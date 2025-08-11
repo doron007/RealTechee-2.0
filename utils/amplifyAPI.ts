@@ -348,11 +348,13 @@ export { client };
 export type { Schema };
 
 // Export Cognito groups if available (for reference, not used in auth config)
-export const definedGroups = (outputs.auth?.groups ?? []).map(g => Object.keys(g)[0]).filter(Boolean);
+// Safe access with type guard to handle server-generated outputs that may lack groups
+const authGroups = (outputs as any).auth?.groups ?? [];
+export const definedGroups = authGroups.map((g: any) => Object.keys(g)[0]).filter(Boolean);
 export const groupPrecedence: Record<string, number> = Object.fromEntries(
-  (outputs.auth?.groups ?? []).flatMap(g => {
+  authGroups.flatMap((g: any) => {
     const name = Object.keys(g)[0];
-    return name ? [[name, (g as any)[name].precedence ?? 999]] : [];
+    return name ? [[name, g[name].precedence ?? 999]] : [];
   })
 );
 
