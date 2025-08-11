@@ -11,7 +11,7 @@
  * - Get Estimate Form (existing integration maintained)
  */
 
-import { NotificationService } from '../utils/notificationService';
+import { NotificationService } from './notificationService';
 import logger from '@/lib/logger';
 
 export interface FormSubmissionData {
@@ -143,7 +143,7 @@ export class FormNotificationIntegration {
       testMode?: boolean;
     } = {}
   ): Promise<NotificationResult> {
-    const { channels = 'both', testMode = false } = options;
+    const { priority = 'high', channels = 'both', testMode = false } = options;
 
     try {
       logger.info('Sending Contact Us form notification', {
@@ -153,41 +153,44 @@ export class FormNotificationIntegration {
         testMode
       });
 
-      // Generate final email/SMS content in backend (no template dependency)
-      const emailContent = this.generateContactUsEmailContent(data);
-      const smsContent = this.generateContactUsSmsContent(data);
-
-      const channelArray = channels === 'both' ? ['EMAIL', 'SMS'] : 
-                          channels === 'email' ? ['EMAIL'] : ['SMS'];
-
-      // Queue pre-generated content (Lambda just sends, no processing)
-      const notificationId = await NotificationService.queueDirectNotification({
-        eventType: 'contact_us_submission',
-        recipientIds: ['admin-team'],
-        channels: channelArray,
-        content: {
-          email: {
-            subject: emailContent.subject,
-            html: emailContent.html,
-            text: emailContent.text,
-            to: 'info@realtechee.com'
-          },
-          sms: {
-            message: smsContent,
-            to: process.env.DEBUG_PHONE || ''
-          }
-        }
+      // Use the existing NotificationService with quickSend method
+      const notificationService = NotificationService.getInstance();
+      
+      const result = await notificationService.quickSend('contactUs', data, {
+        priority,
+        channels,
+        testMode
       });
 
-      const result = {
-        success: true,
-        notificationId,
-        recipientsNotified: 1,
-        environment: 'development',
-        debugMode: true
-      };
+      if (result.success) {
+        logger.info('Contact Us notification sent successfully', {
+          recipientValidation: result.recipientValidation,
+          results: result.results
+        });
 
-      return this.transformNotificationResult(result, 'contactUs');
+        return {
+          success: true,
+          notificationId: `contactUs_${Date.now()}`,
+          recipientsNotified: Math.max(
+            result.results?.email?.length || 0,
+            result.results?.sms?.length || 0
+          ),
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false
+        };
+      } else {
+        logger.warn('Contact Us notification failed', {
+          errors: result.errors
+        });
+
+        return {
+          success: false,
+          recipientsNotified: 0,
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false,
+          errors: result.errors
+        };
+      }
 
     } catch (error) {
       logger.error('Failed to send Contact Us notification', { error, data });
@@ -212,7 +215,7 @@ export class FormNotificationIntegration {
       testMode?: boolean;
     } = {}
   ): Promise<NotificationResult> {
-    const { channels = 'both', testMode = false } = options;
+    const { priority = 'medium', channels = 'both', testMode = false } = options;
 
     try {
       logger.info('Sending Get Qualified form notification', {
@@ -222,41 +225,44 @@ export class FormNotificationIntegration {
         testMode
       });
 
-      // Generate final email/SMS content in backend (no template dependency)
-      const emailContent = this.generateGetQualifiedEmailContent(data);
-      const smsContent = this.generateGetQualifiedSmsContent(data);
-
-      const channelArray = channels === 'both' ? ['EMAIL', 'SMS'] : 
-                          channels === 'email' ? ['EMAIL'] : ['SMS'];
-
-      // Queue pre-generated content (Lambda just sends, no processing)
-      const notificationId = await NotificationService.queueDirectNotification({
-        eventType: 'get_qualified_submission',
-        recipientIds: ['admin-team'],
-        channels: channelArray,
-        content: {
-          email: {
-            subject: emailContent.subject,
-            html: emailContent.html,
-            text: emailContent.text,
-            to: 'info@realtechee.com'
-          },
-          sms: {
-            message: smsContent,
-            to: process.env.DEBUG_PHONE || ''
-          }
-        }
+      // Use the existing NotificationService with quickSend method
+      const notificationService = NotificationService.getInstance();
+      
+      const result = await notificationService.quickSend('getQualified', data, {
+        priority,
+        channels,
+        testMode
       });
 
-      const result = {
-        success: true,
-        notificationId,
-        recipientsNotified: 1,
-        environment: 'development',
-        debugMode: true
-      };
+      if (result.success) {
+        logger.info('Get Qualified notification sent successfully', {
+          recipientValidation: result.recipientValidation,
+          results: result.results
+        });
 
-      return this.transformNotificationResult(result, 'getQualified');
+        return {
+          success: true,
+          notificationId: `getQualified_${Date.now()}`,
+          recipientsNotified: Math.max(
+            result.results?.email?.length || 0,
+            result.results?.sms?.length || 0
+          ),
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false
+        };
+      } else {
+        logger.warn('Get Qualified notification failed', {
+          errors: result.errors
+        });
+
+        return {
+          success: false,
+          recipientsNotified: 0,
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false,
+          errors: result.errors
+        };
+      }
 
     } catch (error) {
       logger.error('Failed to send Get Qualified notification', { error, data });
@@ -291,41 +297,44 @@ export class FormNotificationIntegration {
         testMode
       });
 
-      // Generate final email/SMS content in backend (no template dependency)
-      const emailContent = this.generateAffiliateEmailContent(data);
-      const smsContent = this.generateAffiliateSmsContent(data);
-
-      const channelArray = channels === 'both' ? ['EMAIL', 'SMS'] : 
-                          channels === 'email' ? ['EMAIL'] : ['SMS'];
-
-      // Queue pre-generated content (Lambda just sends, no processing)
-      const notificationId = await NotificationService.queueDirectNotification({
-        eventType: 'affiliate_submission',
-        recipientIds: ['admin-team'],
-        channels: channelArray,
-        content: {
-          email: {
-            subject: emailContent.subject,
-            html: emailContent.html,
-            text: emailContent.text,
-            to: 'info@realtechee.com'
-          },
-          sms: {
-            message: smsContent,
-            to: process.env.DEBUG_PHONE || ''
-          }
-        }
+      // Use the existing NotificationService with quickSend method
+      const notificationService = NotificationService.getInstance();
+      
+      const result = await notificationService.quickSend('affiliate', data, {
+        priority,
+        channels,
+        testMode
       });
 
-      const result = {
-        success: true,
-        notificationId,
-        recipientsNotified: 1,
-        environment: 'development',
-        debugMode: true
-      };
+      if (result.success) {
+        logger.info('Affiliate notification sent successfully', {
+          recipientValidation: result.recipientValidation,
+          results: result.results
+        });
 
-      return this.transformNotificationResult(result, 'affiliate');
+        return {
+          success: true,
+          notificationId: `affiliate_${Date.now()}`,
+          recipientsNotified: Math.max(
+            result.results?.email?.length || 0,
+            result.results?.sms?.length || 0
+          ),
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false
+        };
+      } else {
+        logger.warn('Affiliate notification failed', {
+          errors: result.errors
+        });
+
+        return {
+          success: false,
+          recipientsNotified: 0,
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false,
+          errors: result.errors
+        };
+      }
 
     } catch (error) {
       logger.error('Failed to send Affiliate notification', { error, data });
@@ -350,7 +359,7 @@ export class FormNotificationIntegration {
       testMode?: boolean;
     } = {}
   ): Promise<NotificationResult> {
-    const { channels = 'both', testMode = false } = options;
+    const { priority = 'high', channels = 'both', testMode = false } = options;
 
     try {
       logger.info('Sending Get Estimate form notification', {
@@ -361,41 +370,45 @@ export class FormNotificationIntegration {
         testMode
       });
 
-      // Generate final email/SMS content in backend (no template dependency)
-      const emailContent = this.generateGetEstimateEmailContent(data);
-      const smsContent = this.generateGetEstimateSmsContent(data);
-
-      const channelArray = channels === 'both' ? ['EMAIL', 'SMS'] : 
-                          channels === 'email' ? ['EMAIL'] : ['SMS'];
-
-      // Queue pre-generated content (Lambda just sends, no processing)
-      const notificationId = await NotificationService.queueDirectNotification({
-        eventType: 'get_estimate_submission',
-        recipientIds: ['admin-team'],
-        channels: channelArray,
-        content: {
-          email: {
-            subject: emailContent.subject,
-            html: emailContent.html,
-            text: emailContent.text,
-            to: 'info@realtechee.com'
-          },
-          sms: {
-            message: smsContent,
-            to: process.env.DEBUG_PHONE || ''
-          }
-        }
+      // Use the existing NotificationService with quickSend method
+      // Since getEstimate template is not available, use contactUs as fallback
+      const notificationService = NotificationService.getInstance();
+      
+      const result = await notificationService.quickSend('contactUs', data, {
+        priority,
+        channels,
+        testMode
       });
 
-      const result = {
-        success: true,
-        notificationId,
-        recipientsNotified: 1,
-        environment: 'development',
-        debugMode: true
-      };
+      if (result.success) {
+        logger.info('Get Estimate notification sent successfully', {
+          recipientValidation: result.recipientValidation,
+          results: result.results
+        });
 
-      return this.transformNotificationResult(result, 'getEstimate');
+        return {
+          success: true,
+          notificationId: `getEstimate_${Date.now()}`,
+          recipientsNotified: Math.max(
+            result.results?.email?.length || 0,
+            result.results?.sms?.length || 0
+          ),
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false
+        };
+      } else {
+        logger.warn('Get Estimate notification failed', {
+          errors: result.errors
+        });
+
+        return {
+          success: false,
+          recipientsNotified: 0,
+          environment: this.getEnvironment(),
+          debugMode: result.recipientValidation?.debugMode || false,
+          errors: result.errors
+        };
+      }
 
     } catch (error) {
       logger.error('Failed to send Get Estimate notification', { error, data });
