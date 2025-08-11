@@ -3,19 +3,25 @@ backend:
   phases:
     build:
       commands:
-        - npm ci
-        - echo "Installing Lambda function dependencies..."
-        - npm ci --prefix amplify/functions/notification-processor
-        - npm ci --prefix amplify/functions/post-confirmation
-        - npm ci --prefix amplify/functions/status-processor
-        - npm ci --prefix amplify/functions/reputation-monitor
-        - npm ci --prefix amplify/functions/ses-bounce-handler
+        - echo "Installing root dependencies (ci -> install fallback)..."
+        - (npm ci || npm install)
+        - echo "Installing Lambda function dependencies (ci -> install fallback)..."
+        - |
+          for d in amplify/functions/*; do
+            if [ -f "$d/package.json" ]; then
+              echo "-> $d"
+              (cd "$d" && (npm ci || npm install))
+            fi
+          done
         - echo "Generating backend outputs with branch-specific environment variables..."
         - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
+
 frontend:
   phases:
     build:
       commands:
+        - echo "Installing frontend dependencies (ci -> install fallback)..."
+        - (npm ci || npm install)
         - echo "Building frontend - environment variables automatically provided by Amplify"
         - npm run build
   artifacts:
