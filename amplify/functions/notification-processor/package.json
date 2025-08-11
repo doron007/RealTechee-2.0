@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Amplify Lambda function for processing notification queue",
   "main": "handler.js",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.620.0",
     "@aws-sdk/client-ses": "^3.855.0",

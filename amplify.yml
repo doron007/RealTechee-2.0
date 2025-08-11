@@ -1,6 +1,13 @@
 version: 1
 backend:
   phases:
+    preBuild:
+      commands:
+        - echo "Selecting Node.js 20 (LTS) for backend build"
+        - nvm install 20 || true
+        - nvm use 20
+        - node -v
+        - npm -v
     build:
       commands:
         - echo "Installing root dependencies (ci -> install fallback)..."
@@ -18,6 +25,13 @@ backend:
 
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "Selecting Node.js 20 (LTS) for frontend build"
+        - nvm install 20 || true
+        - nvm use 20
+        - node -v
+        - npm -v
     build:
       commands:
         - echo "Installing frontend dependencies (ci -> install fallback)..."

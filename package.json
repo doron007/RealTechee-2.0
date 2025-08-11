@@ -2,6 +2,9 @@
   "name": "realtechee-clone",
   "version": "3.4.2",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev --turbo",
     "dev:primed": "npm run dev & sleep 8 && ./scripts/prime-pages.sh && fg",
