@@ -263,7 +263,8 @@ const createModelAPI = (modelName: string) => {
       return { success: false, error };
     }
   }
-});
+  };
+};
 
 // Lazy-loaded API instances to reduce main bundle size
 const apiCache = new Map<string, any>();
