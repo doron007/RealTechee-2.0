@@ -67,10 +67,20 @@ const apiLogger = createLogger('AmplifyAPI');
 const projectsLogger = createLogger('ProjectsAPI');
 const relationLogger = createLogger('RelationAPI');
 
-// Generic API helper for any model
-const createModelAPI = (modelName: string) => ({
+// Generic API helper for any model with client safety checks
+const createModelAPI = (modelName: string) => {
+  
+  // Helper function to ensure client is ready before making API calls
+  const ensureClientReady = () => {
+    if (!client.models || !(client.models as any)[modelName]) {
+      throw new Error(`Model ${modelName} not available on client. Client may not be initialized properly.`);
+    }
+  };
+  
+  return {
   async create(data: any) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].create(data);
       return { success: true, data: result.data };
     } catch (error) {
@@ -114,6 +124,7 @@ const createModelAPI = (modelName: string) => ({
         return { success: true, data: result.data.listProjectPaymentTerms.items };
       }
       
+      ensureClientReady();
       const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };
     } catch (error) {
@@ -205,6 +216,7 @@ const createModelAPI = (modelName: string) => ({
 
   async get(id: string) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].get({ id });
       return { success: true, data: result.data };
     } catch (error) {
@@ -216,6 +228,11 @@ const createModelAPI = (modelName: string) => ({
   // Get with relationships (leverages Amplify Gen2 relationships)
   async getWithRelations(id: string, includes: string[] = []) {
     try {
+      // Safety check: ensure client.models is available
+      if (!client.models || !(client.models as any)[modelName]) {
+        throw new Error(`Model ${modelName} not available on client. Client may not be initialized properly.`);
+      }
+      
       // For now, just get the basic record - relationships will be auto-included by Amplify
       const result = await (client.models as any)[modelName].get({ id });
       return { success: true, data: result.data };
@@ -227,6 +244,7 @@ const createModelAPI = (modelName: string) => ({
 
   async update(id: string, updates: any) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].update({ id, ...updates });
       return { success: true, data: result.data };
     } catch (error) {
@@ -237,6 +255,7 @@ const createModelAPI = (modelName: string) => ({
 
   async delete(id: string) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].delete({ id });
       return { success: true, data: result.data };
     } catch (error) {
@@ -783,6 +802,11 @@ export const optimizedProjectsAPI = {
     projectsLogger.info('Loading project by id', { projectId });
     
     try {
+      // Safety check: ensure client.models is available
+      if (!client.models || !(client.models as any).Projects) {
+        throw new Error('Projects model not available on client. Client may not be initialized properly.');
+      }
+      
       // Query by auto-generated id field
       const result = await (client.models as any).Projects.get({ 
         id: projectId
