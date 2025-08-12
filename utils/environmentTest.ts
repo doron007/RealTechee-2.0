@@ -1,53 +1,45 @@
-// Environment Configuration Test Utility
-import outputs from '../amplify_outputs.json';
+/**
+ * DEPRECATED (Phase 2): environmentTest
+ * --------------------------------------------------
+ * This legacy utility previously duplicated environment resolution logic
+ * and hard‑coded backend suffix heuristics. It is now a thin compatibility
+ * adapter over the new environmentConfig module so existing imports do not
+ * break mid‑refactor. All new code MUST import from `environmentConfig`.
+ *
+ * Removal Plan:
+ *  - Phase 3: Eliminate remaining imports (amplifyAPI, SystemConfigPage, etc.)
+ *  - Phase 4: Delete this file once no references remain and verifier passes
+ */
+import { getClientConfig, logClientConfigOnce } from './environmentConfig';
 
 export const getEnvironmentInfo = () => {
-  const envVars = {
-    NEXT_PUBLIC_BACKEND_SUFFIX: process.env.NEXT_PUBLIC_BACKEND_SUFFIX,
-    NEXT_PUBLIC_GRAPHQL_URL: process.env.NEXT_PUBLIC_GRAPHQL_URL,
-    NEXT_PUBLIC_USER_POOL_ID: process.env.NEXT_PUBLIC_USER_POOL_ID,
-    NEXT_PUBLIC_USER_POOL_CLIENT_ID: process.env.NEXT_PUBLIC_USER_POOL_CLIENT_ID,
-    NEXT_PUBLIC_AWS_REGION: process.env.NEXT_PUBLIC_AWS_REGION,
-  };
-
-  const fallbackValues = {
-    GRAPHQL_URL: outputs.data?.url,
-    USER_POOL_ID: outputs.auth?.user_pool_id,
-    USER_POOL_CLIENT_ID: outputs.auth?.user_pool_client_id,
-    AWS_REGION: outputs.auth?.aws_region || outputs.data?.aws_region,
-  };
-
-  const effectiveConfig = {
-    backendSuffix: envVars.NEXT_PUBLIC_BACKEND_SUFFIX || 'NOT_SET',
-    graphqlUrl: envVars.NEXT_PUBLIC_GRAPHQL_URL || fallbackValues.GRAPHQL_URL,
-    userPoolId: envVars.NEXT_PUBLIC_USER_POOL_ID || fallbackValues.USER_POOL_ID,
-    userPoolClientId: envVars.NEXT_PUBLIC_USER_POOL_CLIENT_ID || fallbackValues.USER_POOL_CLIENT_ID,
-    region: envVars.NEXT_PUBLIC_AWS_REGION || fallbackValues.AWS_REGION,
-  };
-
-  // Detect environment based on table suffix
-  const environment = (() => {
-    if (effectiveConfig.backendSuffix?.includes('aqnqdrctpzfwfjwyxxsmu6peoq')) return 'production';
-    if (effectiveConfig.backendSuffix?.includes('fvn7t5hbobaxjklhrqzdl4ac34')) return 'development/staging';
-    if (effectiveConfig.graphqlUrl?.includes('aqnqdrctpzfwfjwyxxsmu6peoq')) return 'production';
-    if (effectiveConfig.graphqlUrl?.includes('fvn7t5hbobaxjklhrqzdl4ac34')) return 'development/staging';
-    return 'unknown';
-  })();
-
+  const cfg = getClientConfig();
   return {
-    environment,
-    usingEnvironmentVariables: !!envVars.NEXT_PUBLIC_BACKEND_SUFFIX,
-    envVars,
-    fallbackValues,
-    effectiveConfig,
-    buildTime: new Date().toISOString(),
-    nodeEnv: process.env.NODE_ENV,
+    environment: cfg.environment,
+    usingEnvironmentVariables: !!cfg.backendSuffix,
+    envVars: {
+      NEXT_PUBLIC_BACKEND_SUFFIX: cfg.backendSuffix,
+      NEXT_PUBLIC_GRAPHQL_URL: cfg.graphqlUrl,
+      NEXT_PUBLIC_USER_POOL_ID: cfg.cognito.userPoolId,
+      NEXT_PUBLIC_USER_POOL_CLIENT_ID: cfg.cognito.clientId,
+      NEXT_PUBLIC_AWS_REGION: cfg.region
+    },
+    fallbackValues: {},
+    effectiveConfig: {
+      backendSuffix: cfg.backendSuffix,
+      graphqlUrl: cfg.graphqlUrl,
+      userPoolId: cfg.cognito.userPoolId,
+      userPoolClientId: cfg.cognito.clientId,
+      region: cfg.region
+    },
+    buildTime: cfg.build.timestamp,
+    nodeEnv: cfg.build.nodeEnv,
   };
 };
 
-// Console logger for debugging
 export const logEnvironmentInfo = () => {
+  logClientConfigOnce();
   const info = getEnvironmentInfo();
-  console.log('🔧 Environment Configuration Test:', info);
+  console.log('🔧 Environment Configuration (compat adapter):', info);
   return info;
 };

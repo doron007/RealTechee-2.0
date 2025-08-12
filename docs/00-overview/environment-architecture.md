@@ -23,26 +23,26 @@ The platform maintains zero shared resources between environments to eliminate c
 ## Database Architecture & Table Mapping
 
 ### Production Database Schema
-All production tables follow the naming pattern: `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
+All production tables follow the naming pattern: `TableName-<dynamic-backend-suffix>-NONE` (previous static example `aqnqdrctpzfwfjwyxxsmu6peoq` prior to dynamic refactor)
 
 **Core Business Entities:**
 ```
 Production Tables (26+ total):
-├── BackOfficeRequestStatuses-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (5 records)
-├── Contacts-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (273 records)
-├── Properties-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (234 records)
-├── Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (863 records)
-├── Projects-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (64 records)
-├── Quotes-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (15 records)
+├── BackOfficeRequestStatuses-<dynamic-backend-suffix>-NONE (5 records)
+├── Contacts-<dynamic-backend-suffix>-NONE (273 records)
+├── Properties-<dynamic-backend-suffix>-NONE (234 records)
+├── Requests-<dynamic-backend-suffix>-NONE (863 records)
+├── Projects-<dynamic-backend-suffix>-NONE (64 records)
+├── Quotes-<dynamic-backend-suffix>-NONE (15 records)
 └── Supporting Tables:
-    ├── NotificationQueue-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
-    ├── NotificationTemplate-aqnqdrctpzfwfjwyxxsmu6peoq-NONE  
-    ├── ProjectComments-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
-    └── ProjectMilestones-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+  ├── NotificationQueue-<dynamic-backend-suffix>-NONE
+  ├── NotificationTemplate-<dynamic-backend-suffix>-NONE  
+  ├── ProjectComments-<dynamic-backend-suffix>-NONE
+  └── ProjectMilestones-<dynamic-backend-suffix>-NONE
 ```
 
 ### Development Database Schema
-All development tables follow the naming pattern: `TableName-fvn7t5hbobaxjklhrqzdl4ac34-NONE`
+All development tables follow the naming pattern: `TableName-<dynamic-backend-suffix>-NONE` (previous static example `fvn7t5hbobaxjklhrqzdl4ac34`)
 
 **Environment Isolation Benefits:**
 - ✅ **Zero Data Contamination**: Development cannot affect production data

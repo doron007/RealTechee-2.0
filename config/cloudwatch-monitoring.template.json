@@ -1,0 +1,61 @@
+{
+  "dashboards": {
+    "production": {
+      "name": "RealTechee-Production-Dashboard",
+      "widgets": [
+        {
+          "type": "metric",
+          "title": "Application Health",
+          "metrics": [
+            {"namespace": "AWS/Amplify", "metricName": "RequestCount", "dimensions": {"AppId": "${AMPLIFY_APP_ID}", "BranchName": "${PROD_BRANCH}"}},
+            {"namespace": "AWS/Amplify", "metricName": "ErrorCount", "dimensions": {"AppId": "${AMPLIFY_APP_ID}", "BranchName": "${PROD_BRANCH}"}}
+          ]
+        },
+        {
+          "type": "metric",
+          "title": "Lambda Functions Performance",
+          "metrics": [
+            {"namespace": "AWS/Lambda", "metricName": "Duration", "dimensions": {"FunctionName": "${LAMBDA_NOTIFICATION}"}},
+            {"namespace": "AWS/Lambda", "metricName": "Duration", "dimensions": {"FunctionName": "${LAMBDA_USER_ADMIN}"}},
+            {"namespace": "AWS/Lambda", "metricName": "Duration", "dimensions": {"FunctionName": "${LAMBDA_STATUS}"}}
+          ]
+        },
+        {
+          "type": "metric",
+          "title": "DynamoDB Performance",
+          "metrics": [
+            {"namespace": "AWS/DynamoDB", "metricName": "ConsumedReadCapacityUnits", "dimensions": {"TableName": "Requests-${BACKEND_SUFFIX}-NONE"}},
+            {"namespace": "AWS/DynamoDB", "metricName": "ConsumedWriteCapacityUnits", "dimensions": {"TableName": "Requests-${BACKEND_SUFFIX}-NONE"}},
+            {"namespace": "AWS/DynamoDB", "metricName": "ThrottleEvents", "dimensions": {"TableName": "Requests-${BACKEND_SUFFIX}-NONE"}}
+          ]
+        },
+        {
+          "type": "log",
+          "title": "Recent Application Errors",
+          "query": "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 20",
+          "region": "${AWS_REGION}",
+          "logGroups": [
+            "/aws/lambda/${LAMBDA_NOTIFICATION}",
+            "/aws/lambda/${LAMBDA_USER_ADMIN}",
+            "/aws/lambda/${LAMBDA_STATUS}"
+          ]
+        }
+      ]
+    }
+  },
+  "alarms": [
+    {
+      "name": "RealTechee-Production-HighErrorRate",
+      "description": "Alert when error rate exceeds 5% in production",
+      "metricName": "ErrorCount",
+      "namespace": "AWS/Amplify",
+      "dimensions": {"AppId": "${AMPLIFY_APP_ID}", "BranchName": "${PROD_BRANCH}"},
+      "threshold": 5,
+      "comparisonOperator": "GreaterThanThreshold",
+      "evaluationPeriods": 2,
+      "period": 300,
+      "statistic": "Sum",
+      "actions": {"alarm": ["arn:aws:sns:${AWS_REGION}:${ACCOUNT_ID}:realtechee-production-alerts"]}
+    }
+  ]
+}

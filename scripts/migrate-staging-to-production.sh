@@ -27,9 +27,10 @@ SOURCE_ENV="staging"
 TARGET_ENV="production"
 AWS_REGION="${AWS_REGION:-us-west-1}"
 
-# Environment Variables (from AMPLIFY_ENV_PLAN.md reference table)
-SOURCE_BACKEND_SUFFIX="${SOURCE_BACKEND_SUFFIX:-fvn7t5hbobaxjklhrqzdl4ac34}"  # Staging backend suffix
-TARGET_BACKEND_SUFFIX="${TARGET_BACKEND_SUFFIX:-aqnqdrctpzfwfjwyxxsmu6peoq}"  # Production backend suffix
+# Environment Variables (must be exported explicitly – Phase 5 hardening removed defaults)
+# REQUIRE: export SOURCE_BACKEND_SUFFIX=staging_suffix && export TARGET_BACKEND_SUFFIX=production_suffix
+SOURCE_BACKEND_SUFFIX="${SOURCE_BACKEND_SUFFIX}"  # Staging backend suffix (required)
+TARGET_BACKEND_SUFFIX="${TARGET_BACKEND_SUFFIX}"  # Production backend suffix (required)
 MIGRATION_DEFAULT_PASSWORD="${MIGRATION_DEFAULT_PASSWORD}"
 
 # Backup and logging
@@ -142,19 +143,12 @@ check_production_prerequisites() {
     
     # Production-specific environment variable validation
     if [[ -z "$SOURCE_BACKEND_SUFFIX" ]]; then
-        log_error "SOURCE_BACKEND_SUFFIX is required (staging: fvn7t5hbobaxjklhrqzdl4ac34)"
+        log_error "SOURCE_BACKEND_SUFFIX is required (no default; export explicitly)"
         ((errors++))
-    elif [[ "$SOURCE_BACKEND_SUFFIX" != "fvn7t5hbobaxjklhrqzdl4ac34" ]]; then
-        log_warning "SOURCE_BACKEND_SUFFIX doesn't match expected staging suffix"
-        ((warnings++))
     fi
-    
     if [[ -z "$TARGET_BACKEND_SUFFIX" ]]; then
-        log_error "TARGET_BACKEND_SUFFIX is required (production: aqnqdrctpzfwfjwyxxsmu6peoq)"
+        log_error "TARGET_BACKEND_SUFFIX is required (no default; export explicitly)"
         ((errors++))
-    elif [[ "$TARGET_BACKEND_SUFFIX" != "aqnqdrctpzfwfjwyxxsmu6peoq" ]]; then
-        log_warning "TARGET_BACKEND_SUFFIX doesn't match expected production suffix"
-        ((warnings++))
     fi
     
     # AWS credentials validation
@@ -600,13 +594,15 @@ ${BOLD}Examples:${NC}
   $0 migrate                          # PRODUCTION MIGRATION (requires multiple confirmations)
 
 ${BOLD}Required Environment Variables:${NC}
-  ${YELLOW}SOURCE_BACKEND_SUFFIX${NC}         # Staging backend suffix (fvn7t5hbobaxjklhrqzdl4ac34)
-  ${YELLOW}TARGET_BACKEND_SUFFIX${NC}         # Production backend suffix (aqnqdrctpzfwfjwyxxsmu6peoq)
+    ${YELLOW}SOURCE_BACKEND_SUFFIX${NC}         # Staging backend suffix (example)
+    ${YELLOW}TARGET_BACKEND_SUFFIX${NC}         # Production backend suffix (example)
+    (No embedded defaults – must export explicitly)
 
-${BOLD}Production Setup:${NC}
-  export SOURCE_BACKEND_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"
-  export TARGET_BACKEND_SUFFIX="aqnqdrctpzfwfjwyxxsmu6peoq"
+${BOLD}Production Setup (example):${NC}
+    export SOURCE_BACKEND_SUFFIX="<staging_suffix>"
+    export TARGET_BACKEND_SUFFIX="<production_suffix>"
   export AWS_REGION="us-west-1"
+    # Destructive commands require --confirm-suffix <production_suffix>
   
   # Production migration workflow:
   $0 analyze          # First, analyze with safety checks
@@ -638,6 +634,30 @@ ${PURPLE}AWS Region: $AWS_REGION${NC}
 
 EOF
 }
+
+# Global arg parsing (Phase 5 hardening)
+CONFIRM_SUFFIX=""
+for arg in "$@"; do
+    case $arg in
+        --confirm-suffix)
+            shift
+            CONFIRM_SUFFIX="$1";
+            shift
+            ;;
+    esac
+done
+
+# Enforce confirmation for destructive migrate command
+if [[ "$1" == "migrate" ]]; then
+    if [[ -z "$CONFIRM_SUFFIX" ]]; then
+        echo -e "${RED}[ERROR]${NC} --confirm-suffix <production_suffix> required for migrate command" >&2
+        exit 2
+    fi
+    if [[ "$CONFIRM_SUFFIX" != "$TARGET_BACKEND_SUFFIX" ]]; then
+        echo -e "${RED}[ERROR]${NC} --confirm-suffix value ($CONFIRM_SUFFIX) does not match TARGET_BACKEND_SUFFIX ($TARGET_BACKEND_SUFFIX)" >&2
+        exit 2
+    fi
+fi
 
 # Main command dispatcher with production safeguards
 main() {

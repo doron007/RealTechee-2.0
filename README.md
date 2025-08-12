@@ -10,6 +10,20 @@ This is a Next.js-based website for RealTechee, a company that helps property ow
 - Contact form for customer inquiries
 - Server-side image processing for Wix media URLs
 
+## Dynamic Environment Configuration (Backend Suffix)
+
+Environment table suffixes are now dynamic (no hardcoded IDs). See `docs/ENVIRONMENT_CONFIG_DYNAMIC_PLAN.md`.
+
+Key points:
+- `NEXT_PUBLIC_BACKEND_SUFFIX` (and Lambda `TABLE_SUFFIX`) compose table names: `ModelName-<suffix>-NONE`.
+- Config templates rendered via: `npm run render:configs`.
+- Smoke test for staging/backends: `npm run smoke:staging` (requires AWS creds + suffix vars).
+- Guard script: `npm run verify:env-contract` enforces no legacy literals.
+
+This enables safer environment rotations and eliminates brittle static identifiers.
+
+See `CHANGELOG.md` (version X.Y.Z) for detailed migration notes on the dynamic environment configuration rollout.
+
 ## Technologies Used
 
 - Next.js

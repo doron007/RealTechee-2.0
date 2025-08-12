@@ -50,6 +50,13 @@ frontend:
     build:
       commands:
         - echo "Build frontend"
+        - echo "Transfer Amplify environment variables to Next.js runtime"
+        - env | grep -e NEXT_PUBLIC_ >> .env.production
+        - env | grep -e AWS_REGION >> .env.production || echo "AWS_REGION=us-west-1" >> .env.production
+        - echo "Environment variables transferred to .env.production:"
+        - cat .env.production
+        - echo "Run strict environment contract verification"
+        - STRICT_SUFFIX_ENFORCEMENT=true npm run verify:env-contract
         - npm run build
   artifacts:
     baseDirectory: .next

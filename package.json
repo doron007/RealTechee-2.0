@@ -54,7 +54,20 @@
     "test:e2e:forms": "playwright test form-validation",
     "test:e2e:forms:headed": "playwright test --headed form-validation",
     "test:e2e:notifications": "playwright test admin-notifications-screenshot.spec.js",
-    "test:e2e:notifications:headed": "playwright test --headed admin-notifications-screenshot.spec.js"
+  "test:e2e:notifications:headed": "playwright test --headed admin-notifications-screenshot.spec.js",
+  "verify:env-contract": "node scripts/verify-env-contract.js",
+  "invoke:status-processor": "node scripts/invoke-status-processor-local.js",
+  "verify:status-processor": "node scripts/verify-status-processor-sandbox.js",
+  "invoke:status-processor:remote": "node scripts/invoke-status-processor-remote.js",
+  "render:configs": "node scripts/render-configs.js",
+  "smoke:staging": "node scripts/smoke-staging-backend.js",
+  "verify:status-processor:prod": "node scripts/verify-status-processor-production.js",
+  "verify:rendered-configs": "node scripts/verify-rendered-configs.js",
+  "verify:migration-guards": "bash scripts/verify-migration-guards.sh",
+  "verify:active-suffix": "bash scripts/verify-active-suffixes.sh",
+  "test:guard:suffix": "NODE_ENV=test node --test tests/environment/legacySuffixGuard.test.ts",
+  "scan:runtime:suffixes": "node scripts/scan-runtime-suffixes.js",
+  "test:unit:env": "NODE_ENV=test node --test tests/environment/*.test.ts"
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.16.1",

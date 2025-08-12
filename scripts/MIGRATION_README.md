@@ -8,17 +8,29 @@ Two comprehensive migration scripts implementing the **Hybrid Three-Stack Approa
 
 | Script | Purpose | Source | Target | Safety Level |
 |--------|---------|--------|--------|--------------|
-| `migrate-sandbox-to-staging.sh` | Development to QA | Sandbox | Staging | Standard |
-| `migrate-staging-to-production.sh` | QA to Live | Staging | Production | **Maximum** |
+| `migrate-sandbox-to-staging.sh` | Development to QA | Sandbox | New Staging | Standard |
+| `migrate-staging-to-production.sh` | QA to Live | New Staging | Production | **Maximum** |
 
-## 🚀 Quick Start
+## � Current Backend Suffix Map
 
-### 1. Sandbox → Staging Migration
+| Purpose | Suffix | Notes |
+|---------|--------|-------|
+| Legacy Shared Dev/Staging (old) | `fvn7t5hbobaxjklhrqzdl4ac34` | Previous shared dev+staging dataset (kept temporarily for local reference) |
+| New Staging (active) | `irgzgwsfnzba3fqtum5k2eyp4m` | Primary non‑prod stack (All branches env vars) |
+| Production (active) | `yk6ecaswg5aehj3ev76xzpbe` | Live stack |
+
+Migration sequence now requires a two-phase bootstrap: (1) legacy staging → new staging, (2) new staging → production.
+
+> Clarification: The suffix `fvn7t5hbobaxjklhrqzdl4ac34` represents the prior combined dev/staging backend that local developers have been pointing to. It is NOT automatically deleted after bootstrap. We will retain it until (a) new staging + sandbox workflows are fully validated and (b) all required historical data is verified in the new stacks. Decommissioning (deleting tables / stack) becomes an explicit, scheduled cleanup step once confidence is established. If desired, we can also repurpose it as a long‑term sandbox snapshot.
+
+## �🚀 Quick Start
+
+### 1. Sandbox → New Staging Migration (Standard Dev Sync)
 
 ```bash
 # Set environment variables
-export SOURCE_BACKEND_SUFFIX="your_sandbox_suffix"
-export TARGET_BACKEND_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"
+export SOURCE_BACKEND_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"
+export TARGET_BACKEND_SUFFIX="irgzgwsfnzba3fqtum5k2eyp4m"
 export AWS_REGION="us-west-1"
 
 # Migration workflow
@@ -28,18 +40,67 @@ export AWS_REGION="us-west-1"
 ./scripts/migrate-sandbox-to-staging.sh migrate         # Execute full migration
 ```
 
-### 2. Staging → Production Migration
+### 2. New Staging → Production Migration
 
 ```bash
 # Set production environment
-export SOURCE_BACKEND_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"
-export TARGET_BACKEND_SUFFIX="aqnqdrctpzfwfjwyxxsmu6peoq"
+export SOURCE_BACKEND_SUFFIX="irgzgwsfnzba3fqtum5k2eyp4m"
+export TARGET_BACKEND_SUFFIX="yk6ecaswg5aehj3ev76xzpbe"
 export AWS_REGION="us-west-1"
 
 # Production workflow (enhanced safety)
 ./scripts/migrate-staging-to-production.sh analyze      # Production safety analysis
 ./scripts/migrate-staging-to-production.sh dry-run     # Validate production readiness
 ./scripts/migrate-staging-to-production.sh migrate     # PRODUCTION DEPLOYMENT
+
+### 3. One-Time Legacy → New Staging Bootstrap (ALREADY REQUIRED BEFORE REGRESSION)
+
+Run this ONLY ONCE to move existing data from the old staging suffix to the new staging & production environments:
+
+```bash
+# Phase A: Legacy Staging -> New Staging
+export SOURCE_BACKEND_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"   # legacy
+export TARGET_BACKEND_SUFFIX="irgzgwsfnzba3fqtum5k2eyp4m"   # new staging
+export AWS_REGION="us-west-1"
+./scripts/migrate-sandbox-to-staging.sh analyze
+./scripts/migrate-sandbox-to-staging.sh dry-run
+./scripts/migrate-sandbox-to-staging.sh migrate
+
+# Validation checkpoint (counts, sample queries)
+
+# Phase B: New Staging -> Production (synchronize production before frontend cutover)
+export SOURCE_BACKEND_SUFFIX="irgzgwsfnzba3fqtum5k2eyp4m"   # new staging
+export TARGET_BACKEND_SUFFIX="yk6ecaswg5aehj3ev76xzpbe"   # production
+./scripts/migrate-staging-to-production.sh analyze
+./scripts/migrate-staging-to-production.sh dry-run
+./scripts/migrate-staging-to-production.sh migrate
+```
+
+After both phases: lock (or delete) legacy staging resources to prevent drift.
+
+### 4. Single-Pass Full Chain Bootstrap (All Tables, Hard-Coded)
+
+If you want a single command to export every legacy table (expected 33) and import into both new staging and production preserving IDs, use:
+
+```bash
+./scripts/migrate-onetime-fullchain.sh all
+```
+
+Step breakdown:
+```bash
+./scripts/migrate-onetime-fullchain.sh export      # Export legacy tables to JSON
+./scripts/migrate-onetime-fullchain.sh staging     # Import export -> new staging
+./scripts/migrate-onetime-fullchain.sh production  # Import export -> production
+```
+
+Properties:
+- Hardcoded suffixes: legacy=fvn7t5hbobaxjklhrqzdl4ac34, staging=irgzgwsfnzba3fqtum5k2eyp4m, production=yk6ecaswg5aehj3ev76xzpbe
+- Exports each legacy table to backups/migrations/fullchain_export_<timestamp>
+- Reuses SAME export JSON for both target imports (ensures identical dataset)
+- Item IDs preserved (no FK or suffix rewriting performed)
+- Validation via approximate ItemCount + deep scan fallback if lower than expected
+- Safe to re-run (idempotent for unchanged rows)
+- Intended only for initial bootstrap; subsequent deltas should use targeted scripts if needed
 ```
 
 ## 🛡️ Security & Safety Features
@@ -133,7 +194,7 @@ logs/
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `SOURCE_BACKEND_SUFFIX` | Source environment backend suffix | `abc123def456` |
-| `TARGET_BACKEND_SUFFIX` | Target environment backend suffix | `fvn7t5hbobaxjklhrqzdl4ac34` |
+| `TARGET_BACKEND_SUFFIX` | Target environment backend suffix | `irgzgwsfnzba3fqtum5k2eyp4m` |
 | `AWS_REGION` | AWS region for resources | `us-west-1` |
 
 ### Optional Variables

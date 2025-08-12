@@ -4,7 +4,7 @@ import { Amplify } from 'aws-amplify';
 import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
 import { listProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms } from '../queries';
 import { createLogger } from './logger';
-import { logEnvironmentInfo } from './environmentTest';
+import { logClientConfigOnce } from './environmentConfig';
 
 // Fallback to hardcoded values for development when env vars not available
 import outputs from '../amplify_outputs.json';
@@ -48,7 +48,8 @@ Amplify.configure(amplifyConfig);
 
 // Debug: Log environment configuration on initialization
 if (typeof window !== 'undefined') {
-  logEnvironmentInfo();
+  // Log new unified environment configuration once per session
+  logClientConfigOnce();
 }
 
 // Generate a typed client for your schema with API key auth for anonymous access

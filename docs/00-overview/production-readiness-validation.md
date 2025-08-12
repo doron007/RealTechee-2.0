@@ -49,7 +49,7 @@ Production Readiness Matrix:
 **Development Environment:**
 ```bash
 Backend ID: amplify-realtecheeclone-main-sandbox-8d5b2b35c8
-Table Suffix: *-fvn7t5hbobaxjklhrqzdl4ac34-NONE
+Table Suffix: *-<dynamic-backend-suffix>-NONE (was `fvn7t5hbobaxjklhrqzdl4ac34` pre dynamic refactor)
 GraphQL Endpoint: sandbox-generated-endpoint
 S3 Bucket: amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu
 Cognito Pool: us-west-1_5pFbWcwtU
@@ -58,7 +58,7 @@ Cognito Pool: us-west-1_5pFbWcwtU
 **Production Environment:**
 ```bash
 Backend ID: amplify-realtecheeclone-production-sandbox-70796fa803
-Table Suffix: *-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+Table Suffix: *-<dynamic-backend-suffix>-NONE (was `aqnqdrctpzfwfjwyxxsmu6peoq` pre dynamic refactor)
 GraphQL Endpoint: https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql
 S3 Bucket: amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii
 Cognito Pool: us-west-1_5pFbWcwtU (shared - validated for low volume)
@@ -70,7 +70,7 @@ Cognito Pool: us-west-1_5pFbWcwtU (shared - validated for low volume)
 ./scripts/validate-environment.sh
 
 # Check DynamoDB table isolation
-aws dynamodb list-tables --region us-west-1 | grep -E "(aqnqdrctpzfwfjwyxxsmu6peoq|fvn7t5hbobaxjklhrqzdl4ac34)"
+aws dynamodb list-tables --region us-west-1 | grep "$(printenv NEXT_PUBLIC_BACKEND_SUFFIX)"
 
 # Verify S3 bucket separation
 aws s3 ls --region us-west-1 | grep amplify-realtecheeclone
@@ -98,7 +98,7 @@ node scripts/check-data.mjs --validate-integrity
 
 # Cross-reference record counts
 aws dynamodb describe-table --region us-west-1 \
-  --table-name "Contacts-aqnqdrctpzfwfjwyxxsmu6peoq-NONE" \
+  --table-name "Contacts-$(printenv NEXT_PUBLIC_BACKEND_SUFFIX)-NONE" \
   --query 'Table.ItemCount'
 ```
 

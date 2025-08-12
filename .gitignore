@@ -32,6 +32,10 @@ server.log
 # local env files
 .env*.local
 
+# build-generated env files (generated during Amplify deployment)
+.env.production
+.env.staging
+
 # notification system - prevent accidental credential commits
 env-vars*.json
 *-template*.json

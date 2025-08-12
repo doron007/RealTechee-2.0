@@ -1,10 +1,10 @@
 {
-  "allowedSuffixes": ["localsandbox", "prodactual"],
+  "allowedSuffixes": ["${BACKEND_SUFFIX_DEV}", "${BACKEND_SUFFIX_PROD}"],
   "environments": {
     "development": {
       "name": "development",
       "amplifyAppId": "sandbox",
-      "backendSuffix": "localsandbox",
+      "backendSuffix": "${BACKEND_SUFFIX_DEV}",
       "graphqlEndpoint": "sandbox-generated-endpoint",
       "branch": "main",
       "protection": {
@@ -22,10 +22,10 @@
     },
     "production": {
       "name": "production",
-      "amplifyAppId": "d200k2wsaf8th3",
-      "backendSuffix": "prodactual",
-      "graphqlEndpoint": "https://example.appsync-api.us-west-1.amazonaws.com/graphql",
-      "branch": "prod-v2",
+      "amplifyAppId": "${AMPLIFY_APP_ID}",
+      "backendSuffix": "${BACKEND_SUFFIX_PROD}",
+      "graphqlEndpoint": "${GRAPHQL_ENDPOINT_PROD}",
+      "branch": "${PROD_BRANCH}",
       "protection": {
         "allowDestructiveOperations": false,
         "requireApproval": true,
@@ -90,7 +90,7 @@
       "accessLogging": true
     },
     "compliance": {
-      "dataResidency": "us-west-1",
+      "dataResidency": "${AWS_REGION}",
       "auditLogging": true,
       "changeTracking": true
     }

@@ -6,178 +6,278 @@
 ## Purpose
 You are a senior React/Next.js developer. Given the following Amplify Gen 2 folder structure, update the GraphQL schema and generate queries using Amplify’s GraphQL transformer v2. Provide clean, production-ready code with inline comments. 
 Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable library.
+````instructions
+# RealTechee 2.0 – Unified Copilot Session Instructions (COO + Production Architecture)
 
-## Core Reqs
-1. **COO**: Props-only styling + ! duplicate
-2. **Existing only** - ! new comps w/o approval  
-3. **TS strict** - Complete typing compliance
-4. **Props-only** - ! external CSS deps
-5. **Approval @** - * comp changes @ confirmation
+VERSION: 2025-08-05  
+SOURCE OF TRUTH: CLAUDE.md (auto-synced summary here)  
+PRIORITY: Enforce COO (Component-Oriented Output) + Strict TypeScript + Production Safety  
 
-## COO Rules
+---
 
-**Props-Only Styling:**
-- Internal styling via props only, ! external CSS deps
-- Client focuses on behavior, ! appearance
+## 0. Role & Mode
+You are a senior React + Next.js (App Router) + AWS Amplify Gen 2 engineer.  
+Goals:
+1. Reuse existing components (NO new components without explicit approval).
+2. Props-only styling (no external CSS libs, no duplicate styling layers).
+3. Preserve production data integrity (backup before schema changes).
+4. Output TypeScript strict-compliant, production-ready code.
+5. Follow Amplify Gen 2 patterns (backend.ts, data/auth resources, GraphQL Transformer v2).
+6. Use semantic typography system ONLY (H1–H6, P1–P3).
 
-**! Duplicate:**
-- + existing comps, ! duplicate
-- One comp per unique functionality, reuse ints + patterns
+If component or schema change is uncertain: request confirmation using Decision Template.
 
-**Priorities:**
-1. + comp ints over wrapper comps
-2. Min DOM nesting - React.Fragment over divs  
-3. + style props vs className manipulation
-4. Direct solutions over complex workarounds
+---
 
-## Existing Comp Library
+## 1. COO (Component-Oriented Output) Rules
+Symbols: `!`=not, `+`=add/extend, `@`=requires confirmation, `*`=all, `->`=maps to  
+Core:
+- ! duplicate components
+- Props-only styling
+- Prefer extending interfaces over wrappers
+- Minimal DOM (React.Fragment where possible)
+- Direct solutions; avoid unnecessary abstraction
 
-**Typography:** `H1` `H2` `H3` `H4` `H5` `H6` `P1` `P2` `P3` (modern semantic system w/ CSS clamp() responsive scaling)
+Typography (ONLY):
+H1 page | H2 section | H3 subsection/card | H4 minor | H5 small | H6 labels  
+P1 emphasis | P2 body | P3 supporting  
 
-**UI:** `Card` (default|feature|dealBreaker|step) • `Button` (primary|secondary|tertiary) • `FeatureCard` • `BenefitCard` • `OptionCard` • `BenefitBlock` • `TestimonialCard` • `StatItem` • `SliderNavBar`
+Mappings:
+PageHeader -> H1  
+SectionTitle -> H2  
+CardTitle -> H3  
+BodyContent -> P1/P2  
+SubContent -> P3  
 
-**Layout:** `Layout` `Section` `Header` `Footer` `ContentWrapper` `GridContainer` `ContainerTwoColumns` `ContainerThreeColumns`
+---
 
-**MUI:** See [docs](https://mui.com/components/)
-- **Input:** Autocomplete, Button, ButtonGroup, Checkbox, FAB, RadioGroup, Rating, Select, Slider, Switch, TextField, TransferList, ToggleButton
-- **Display:** Avatar, Badge, Chip, Divider, Icons, List, Table, Tooltip, Typography  
-- **Feedback:** Alert, Backdrop, Dialog, Progress, Skeleton, Snackbar
-- **Surface:** Accordion, AppBar, Card, Paper
-- **Navigation:** BottomNavigation, Breadcrumbs, Drawer, Link, Menu, Pagination, SpeedDial, Stepper, Tabs
-- **Layout:** Box, Container, Grid, Stack, ImageList
-- **Utility:** ClickAwayListener, CssBaseline, Modal, NoSsr, Popover, Popper, Portal, TextareaAutosize, Transitions, useMediaQuery
+## 2. Existing Component Inventory (Use First)
+Typography: H1 H2 H3 H4 H5 H6 P1 P2 P3  
+UI: Card (default|feature|dealBreaker|step) Button (primary|secondary|tertiary) FeatureCard BenefitCard OptionCard BenefitBlock TestimonialCard StatItem SliderNavBar StatusPill TagLabel Tooltip  
+Forms: FormInput FormTextarea FormDropdown FormDateInput FormFileUpload  
+Modals: BaseModal ContactModal PropertyModal  
+Admin: AdminCard AdminDataGrid VirtualizedDataGrid MeetingScheduler  
+Layout: Layout Section Header Footer ContentWrapper GridContainer ContainerTwoColumns ContainerThreeColumns  
 
-**MUI-X:** DataGrid, TreeView, Charts, DatePicker, TimePicker, DateTimePicker, DateRangePicker, CalendarPicker *(Pro/Premium licenses @)*
+Use MUI/MUI-X only if no existing custom component satisfies requirement.
 
-## Typography System (H1-H6, P1-P3 ONLY)
+---
 
-**CRITICAL:** Use ONLY H1-H6, P1-P3 comps. Legacy typography deprecated.
+## 3. Amplify Gen 2 Standards
+Structure:  
+amplify/backend.ts  
+amplify/auth/resource.ts  
+amplify/data/resource.ts  
 
-**Headings:** H1=page titles | H2=sections | H3=subsections/cards | H4=minor | H5=small | H6=labels
-**Paragraphs:** P1=emphasis (20px->16px) | P2=standard (16px->14px) | P3=supporting (14px->12px)
+GraphQL:
+- Use Transformer v2 directives (@model @auth @index @hasMany @belongsTo etc.)
+- Design for pagination (limit, nextToken)
+- Selective field querying (avoid over-fetch)
+- amplify codegen assumed
 
-**Features:** CSS clamp() fluid scaling | Semantic HTML | ! complex props | Context-independent
+Deploy / Dev:
+npx ampx sandbox  
+(Do NOT invent commands like ampx status)  
 
-**Usage:**
-```tsx
-<H1>Page Title</H1>         // Always main page title
-<H2>Section</H2>            // Always section header
-<H3>Card Title</H3>         // Always subsection/card
-<P1>Important</P1>          // Emphasis body text
-<P2>Regular</P2>            // Standard paragraphs
-<P3>Small/labels</P3>       // Supporting info
-```
+Backup before schema mutation: ./scripts/backup-data.sh  
 
-**Legacy -> New:**
-```tsx
-PageHeader -> H1 | SectionTitle -> H2 | Subtitle -> H2/H3
-CardTitle -> H3 | BodyContent -> P1/P2 | SubContent -> P3
-```
+Multi-branch single Amplify app (d200k2wsaf8th3):  
+main + staging share (*-fvn7t5hbobaxjklhrqzdl4ac34-*)  
+production isolated (*-aqnqdrctpzfwfjwyxxsmu6peoq-*)  
 
-## Figma -> Code Migration (7-Step)
-1. **Figma Link** - Desktop+mobile URLs
-2. **Extract Tokens** - Size/weight/lineHeight both breakpoints  
-3. **Semantic Map** - Content hierarchy > Figma names (H1=page, H2=sections, H3=cards, P1=emphasis, P2=body, P3=labels)
-4. **Update Code** - Replace w/ H*/P* comps
-5. **Build Check** - `npm run build` verify
-6. **Visual Check** - Compare w/ Figma intent
-7. **Responsive Test** - Verify clamp() scaling
+Promotion Flow:
+git checkout staging && git merge main && git push origin staging  
+QA  
+git checkout production && git merge staging && git push origin production  
 
-**Rules:** Main title -> H1 (always, ! Figma semantic) | Use CSS clamp() | Readability > exact pixels | Semantic HTML priority
+---
 
-## Workflow
-1. Review existing comps before impl
-2. Doc @ exts, submit change proposal  
-3. Impl w/ backward compat
-4. Let me know if I need to run CLI commands, update schema, or change configs — always tell me what side effects your suggestion might have.
+## 4. Production Safeguards
+Before schema changes:
+1. Run ./scripts/backup-data.sh
+2. Provide decision block
+3. Explain impact (data purge risk if resource recreated)
 
-## Technical Rules
-1. ! new comps w/o approval
-2. ! duplicate/overlapping ints
-3. Bias toward ! external styling deps unless simpler
-4. ! unnecessary DOM nesting/wrappers
-5. @ TS strict compliance
-6. Props = sole config method
-7. Prop config over class overrides
-8. Follow TS ints exactly
-9. Use the Amplify Gen 2 project structure with amplify/backend.ts, amplify/auth/resource.ts, amplify/data/resource.ts.
-10. For GraphQL, use Amplify’s GraphQL Transformer v2 syntax (@model, @auth, @index, etc.).
-11. Assume that I’m using the amplify codegen CLI to generate types and hooks automatically.
-12. When working in the frontend, follow React + TypeScript best practices, using useEffect, useState, and useQuery/useMutation hooks from Amplify.
-13. Write code compatible with Next.js App Router, using app/ directory, server components where needed, and route.ts for APIs.
-14. Structure Amplify mutations and queries for performance and scalability (pagination, filtering, etc.).
-15. When writing utilities or helpers, follow a modular, reusable pattern.
+Test data markers:
+leadSource: 'E2E_TEST'  
+additionalNotes: test session ID  
 
-## Docs Reqs
-1. Doc * int exts w/ examples (style-guide.tsx)
-2. Include prop docs w/ types + defaults  
-3. Doc * approved deviations
+Never modify production records without explicit instruction.
 
-## Amplify Gen2 @
-- **Deploy:** `npx ampx sandbox` (! `ampx deploy`)
-- **! USE:** `ampx status` (doesn't exist)
-- **Envs:** dev (doron), staging only
-- **Status:** `npx ampx sandbox` + wait ~1min
-- **documentation:** [Amplify Gen2 Docs](https://docs.amplify.aws/react/)
-- **database documentation:** [Amplify Gen2 Database Docs](https://docs.amplify.aws/react/build-a-backend/data/)
-- **storage documentation:** [Amplify Gen2 Storage Docs](https://docs.amplify.aws/react/build-a-backend/storage/set-up-storage/)
-- **auth documentation:** [Amplify Gen2 Auth Docs](https://docs.amplify.aws/react/build-a-backend/auth/)
-- **CLI:** `npx ampx` commands: 
-`ampx <command>
-Commands:
-  ampx generate             Generates post deployment artifacts
-  ampx sandbox              Starts sandbox, watch mode for Amplify backend deplo
-                            yments
-  ampx pipeline-deploy      Command to deploy backends in a custom CI/CD pipelin
-                            e. This command is not intended to be used locally.
-  ampx configure <command>  Configure AWS Amplify
-  ampx info                 Generates information for Amplify troubleshooting
-  ampx notices              Manage and interact with Amplify backend tooling not
-                            ices. View and acknowledge important notifications a
-                            bout your Amplify environment, including package com
-                            patibility issues, version updates, and potential is
-                            sues that may affect your development workflow.
+---
 
-Options:
-      --debug    Print debug logs to the console      [boolean] [default: false]
-  -h, --help     Show help                                             [boolean]
-  -v, --version  Show version number                                   [boolean]`
+## 5. Decision Template
+Use EXACT format when ambiguity / risk:
 
-## Decision Rules
-**100% Confidence @ Before Action:**
-1. Issue identified + clear plan
-2. Aligns w/ COO + impact understood
-
-**Ask Confirmation If:**
-- Any doubt/arch changes/multiple solutions/critical functionality
-
-**Format:**
-```
 Issue: [problem] | Analysis: [findings] | Solution: [steps] | Impact: [risks] | Alternatives: [options] | Proceed?
-```
 
-## Figma Extraction (Enhanced Methodology)
+Wait for approval before acting.
 
-**Analysis Structure:**
-1. **Comp Name:** [Figma node] - scope (reusable|section|layout)
-2. **Elements:** List top-down, map -> existing comps
-3. **Layout:** Type, direction, alignment, responsive (sm|md|lg|xl)  
-4. **Typography:** Map -> H1-H6, P1-P3 (! legacy comps), semantic hierarchy > Figma names
-5. **Media:** Assets, sizes, interactions, a11y
+---
 
-**Typography Extraction:**
-- Extract desktop+mobile tokens (size/weight/lineHeight)
-- Map by content hierarchy: page title=H1, sections=H2, cards=H3, emphasis=P1, body=P2, labels=P3
-- Priority: readability > exact pixels, semantic HTML > Figma component names
+## 6. Figma → Code Migration (7 Steps)
+1. Collect desktop + mobile links  
+2. Extract tokens (size / weight / lineHeight both breakpoints)  
+3. Semantic map (content hierarchy > design names)  
+4. Replace with H1–H6 / P1–P3  
+5. npm run build (zero TS errors)  
+6. Visual intent check (readability > pixel perfection)  
+7. Responsive clamp() verification  
 
-**Impl Rules:**
-1. Map Figma -> existing comps first
-2. Use H1-H6, P1-P3 for * typography (! raw HTML)
-3. + comp props vs new comps
-4. Leverage existing layout comps
-5. Flat hierarchies
+Rules:
+- One H1 per page
+- No raw <h*> / <p> outside approved typography components unless internal to them
 
-**Goal:** Impl Figma w/ existing library + semantic typography, + vs duplicate.
+---
 
-## Confirmation @
-Respond "Understood" to confirm compliance.
+## 7. Coding Standards
+- TypeScript strict (no implicit any)
+- Narrow types, readonly where safe
+- Small, composable utilities
+- Avoid side effects in shared modules
+- Tree-shake friendly (avoid circular barrels)
+- Early returns > deep nesting
+
+---
+
+## 8. Query & Mutation Patterns
+Pagination variables: { limit?: number; nextToken?: string; filter?: ModelXFilterInput }  
+Support selective field usage (fragments encouraged)  
+Filtering: beginsWith / eq / between / contains  
+@auth: least privilege (explain expansion if needed)  
+@index only when justified by access pattern (document rationale)
+
+---
+
+## 9. Performance & Accessibility
+- Avoid over-fetch / N+1 patterns
+- Defer non-critical data
+- WCAG 2.1 AA: semantic roles, ARIA only when needed
+- Provide text equivalents for visual indicators
+
+---
+
+## 10. Code Snippet Rules
+Use 4 backticks + language id.  
+If file changed:
+````ts
+// filepath: /absolute/or/project-relative/path
+// ...existing code...
+// modifications
+````
+
+Show ...existing code... delimiters for partial edits.  
+Full replacements: provide entire file.  
+No new component files without approval.
+
+---
+
+## 11. Testing & Validation
+Recommend:
+npm run type-check  
+npm run build  
+Manual QA (E2E unstable)  
+
+After schema changes:
+- amplify codegen (implicit)
+- Identify affected types / nullability / UI adjustments
+
+---
+
+## 12. Prohibited Without Approval
+- New components
+- External styling libs / global CSS overrides
+- Destructive schema changes (rename/remove)
+- Broadening auth surface
+- Index proliferation without access pattern justification
+
+---
+
+## 13. Example Additive GraphQL Extension
+````graphql
+type Request @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admin"]}]) {
+  id: ID!
+  createdAt: AWSDateTime!
+  status: RequestStatus!
+  priority: PriorityLevel @index(name: "byPriority", queryField: "requestsByPriority")
+}
+````
+
+Explain when used:
+- Additive non-breaking
+- New index supports dashboard sorting
+- Requires codegen + optional UI filter
+
+---
+
+## 14. Session Start Checklist
+1. Read latest CLAUDE.md
+2. Confirm task scope
+3. Map need to existing components
+4. Use decision template if ambiguous
+5. Implement minimal diff
+6. Provide next steps (codegen/build/deploy)
+
+---
+
+## 15. Response Style
+- Concise, technical
+- No marketing tone
+- Decision template for ambiguity
+- Explicit next actions (e.g., run npx ampx sandbox)
+
+---
+
+## 16. Quick Commands
+Dev:
+npm run dev:primed  
+npm run type-check  
+npm run build  
+npx ampx sandbox  
+
+Backup:
+./scripts/backup-data.sh  
+
+Promotion:
+git checkout staging && git merge main && git push origin staging  
+git checkout production && git merge staging && git push origin production  
+
+---
+
+## 17. Escalation Triggers
+Must request approval before proceeding if:
+- Multiple architectural options
+- Data migration needed
+- New indexes (beyond 1–2 additive)
+- Auth model expansion
+- Denormalization trade-offs
+
+---
+
+## 18. Output Guardrails
+If request conflicts with COO / data safety / typography / TS strict: warn + propose compliant alternative.  
+If disallowed content: "Sorry, I can't assist with that."
+
+---
+
+## 19. Minimal Examples
+Typography Replacement:
+````tsx
+// Before
+// <PageHeader>Dashboard</PageHeader>
+// After
+<H1>Dashboard</H1>
+````
+
+Paginated Query (conceptual usage):
+````ts
+const { data, isLoading, fetchMore } = useRequestsByPriority({ priority, limit: 25 });
+````
+
+---
+
+## 20. Acknowledgment
+If user asks for rule confirmation respond exactly: "Understood".
+
+End of instructions.
+````

@@ -31,83 +31,19 @@ import {
 import { AuthorizationService } from '../../utils/authorizationHelpers';
 import { UserService } from '../../utils/userService';
 
-// Environment configuration - inline definition to avoid build issues
-const environmentsConfig = {
-  environments: {
-    development: {
-      name: "Development",
-      description: "Local development environment",
-      git_branch: "main",
-      amplify: {
-        app_id: "d3atadjk90y9q5",
-        app_name: "RealTechee-2.0",
-        url: "http://localhost:3000"
-      },
-      cognito: {
-        user_pool_id: "us-west-1_5pFbWcwtU",
-        user_pool_client_id: "4pdj4qp05o47a0g42cqlt99ccs",
-        identity_pool_id: "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
-      },
-      storage: {
-        bucket_name: "amplify-realtecheeclone-main-bucket",
-        region: "us-west-1"
-      },
-      api: {
-        graphql_url: "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
-        api_key: "da2-qe4fczl75zhgjb4rz3dh5r7xky"
-      },
-      tables_suffix: "fvn7t5hbobaxjklhrqzdl4ac34"
-    },
-    staging: {
-      name: "Staging",
-      description: "Staging environment",
-      git_branch: "prod",
-      amplify: {
-        app_id: "d3atadjk90y9q5", 
-        app_name: "RealTechee-2.0",
-        url: "https://prod.d3atadjk90y9q5.amplifyapp.com"
-      },
-      cognito: {
-        user_pool_id: "us-west-1_5pFbWcwtU",
-        user_pool_client_id: "4pdj4qp05o47a0g42cqlt99ccs",
-        identity_pool_id: "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851"
-      },
-      storage: {
-        bucket_name: "amplify-realtecheeclone-main-bucket",
-        region: "us-west-1"
-      },
-      api: {
-        graphql_url: "https://vbnhy6yqnfelrkdbx2anbhvdhe.appsync-api.us-west-1.amazonaws.com/graphql",
-        api_key: "da2-qe4fczl75zhgjb4rz3dh5r7xky"
-      },
-      tables_suffix: "fvn7t5hbobaxjklhrqzdl4ac34"
-    },
-    production: {
-      name: "Production",
-      description: "Production environment",
-      git_branch: "prod-v2",
-      amplify: {
-        app_id: "d200k2wsaf8th3",
-        app_name: "RealTechee-Gen2", 
-        url: "https://prod-v2.d200k2wsaf8th3.amplifyapp.com"
-      },
-      cognito: {
-        user_pool_id: "us-west-1_1eQCIgm5h",
-        user_pool_client_id: "5qcjd3l5i733b2tn99qf2g6675",
-        identity_pool_id: "us-west-1:11d5c002-cbe3-4414-bd8f-4f046d2ab457"
-      },
-      storage: {
-        bucket_name: "amplify-realtecheeclone-production-bucket-PROD",
-        region: "us-west-1"
-      },
-      api: {
-        graphql_url: "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
-        api_key: "da2-PRODUCTION_API_KEY"
-      },
-      tables_suffix: "aqnqdrctpzfwfjwyxxsmu6peoq"
-    }
-  }
-};
+// Dynamic config shape (from API route)
+interface EnvApiResponse {
+  environment: string;
+  backendSuffix?: string;
+  graphqlUrl?: string;
+  region?: string;
+  cognito: { userPoolId?: string; clientId?: string };
+  storage: { publicBaseUrl?: string };
+  flags: { isProd: boolean; isStaging: boolean; isSandbox: boolean };
+  drift: { status: string; message?: string; expectedSuffix?: string; actualSuffix?: string };
+  build: { nodeEnv?: string; timestamp: string };
+  health: string;
+}
 
 interface CurrentEnvironment {
   name: string;
@@ -126,7 +62,7 @@ const AdminConfigurationPage: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [currentEnv, setCurrentEnv] = useState<CurrentEnvironment | null>(null);
+  const [currentEnv, setCurrentEnv] = useState<EnvApiResponse | null>(null);
   const [serviceStatuses, setServiceStatuses] = useState<ServiceStatus[]>([]);
   const [userProfile, setUserProfile] = useState<any>(null);
 
@@ -157,41 +93,10 @@ const AdminConfigurationPage: React.FC = () => {
   const loadConfiguration = async () => {
     try {
       setRefreshing(true);
-      
-      // Determine current environment based on URL
-      const currentUrl = window.location.href;
-      let environment: CurrentEnvironment;
-      
-      if (currentUrl.includes('localhost')) {
-        environment = {
-          name: 'Development (Local)',
-          environment: 'development',
-          config: environmentsConfig.environments.development
-        };
-      } else if (currentUrl.includes('d3atadjk90y9q5')) {
-        environment = {
-          name: 'Staging',
-          environment: 'staging', 
-          config: environmentsConfig.environments.staging
-        };
-      } else if (currentUrl.includes('d200k2wsaf8th3')) {
-        environment = {
-          name: 'Production',
-          environment: 'production',
-          config: environmentsConfig.environments.production
-        };
-      } else {
-        environment = {
-          name: 'Unknown Environment',
-          environment: 'development',
-          config: environmentsConfig.environments.development
-        };
-      }
-      
-      setCurrentEnv(environment);
-      
-      // Check service statuses based on current environment
-      const statuses = checkServiceStatuses(environment);
+      const res = await fetch('/api/system/env');
+      const json: EnvApiResponse = await res.json();
+      setCurrentEnv(json);
+      const statuses = checkServiceStatuses(json);
       setServiceStatuses(statuses);
       
     } catch (error) {
@@ -201,90 +106,58 @@ const AdminConfigurationPage: React.FC = () => {
     }
   };
 
-  const checkServiceStatuses = (env: CurrentEnvironment): ServiceStatus[] => {
+  const checkServiceStatuses = (env: EnvApiResponse): ServiceStatus[] => {
     const statuses: ServiceStatus[] = [];
-    const config = env.config;
-
-    // Check Environment Match
-    const currentUrl = window.location.href;
-    let envStatus: ServiceStatus['status'] = 'healthy';
-    let envDetails = `Running on correct environment: ${env.name}`;
-    
-    // For development, check if we're on localhost
-    if (env.environment === 'development') {
-      if (!currentUrl.includes('localhost')) {
-        envStatus = 'warning';
-        envDetails = `Development environment should run on localhost, currently on: ${currentUrl}`;
-      }
-    } else {
-      // For staging/production, check App ID in URL
-      if (!currentUrl.includes(config.amplify.app_id)) {
-        envStatus = 'error';
-        envDetails = `Environment mismatch! Expected App ID: ${config.amplify.app_id}`;
-      }
-    }
+    const envName = env.environment || 'unknown';
+    let envStatus: ServiceStatus['status'] = env.health === 'ok' ? 'healthy' : 'warning';
+    if (env.drift?.status === 'mismatch') envStatus = 'warning';
+    const envDetails = `Detected environment: ${envName}` + (env.drift?.message ? ` | ${env.drift.message}` : '');
 
     statuses.push({
       service: 'Environment Detection',
       status: envStatus,
       details: envDetails,
-      value: `${env.name} (${config.amplify.app_id})`
+      value: envName
     });
 
-    // Check DynamoDB Tables
+    // DynamoDB suffix
     let dynamoStatus: ServiceStatus['status'] = 'healthy';
-    let dynamoDetails = `Tables using suffix: ${config.tables_suffix}`;
-    
-    // Environment-specific validations
-    if (env.environment === 'production' && config.tables_suffix !== 'aqnqdrctpzfwfjwyxxsmu6peoq') {
-      dynamoStatus = 'error';
-      dynamoDetails = 'Production should use isolated table suffix: aqnqdrctpzfwfjwyxxsmu6peoq';
-    } else if (env.environment === 'staging' && config.tables_suffix !== 'fvn7t5hbobaxjklhrqzdl4ac34') {
-      dynamoStatus = 'warning';
-      dynamoDetails = 'Staging should use shared table suffix: fvn7t5hbobaxjklhrqzdl4ac34';
-    }
+    let dynamoDetails = `Table suffix: ${env.backendSuffix || 'unset'}`;
+    if (!env.backendSuffix) { dynamoStatus = 'error'; dynamoDetails = 'Table suffix missing'; }
 
     statuses.push({
       service: 'DynamoDB Tables',
       status: dynamoStatus,
       details: dynamoDetails,
-      value: config.tables_suffix
+      value: env.backendSuffix
     });
 
     // Check AWS Cognito
     let cognitoStatus: ServiceStatus['status'] = 'healthy';
-    let cognitoDetails = 'Cognito configuration loaded from environment config';
-    
-    // Validate production has different cognito than staging
-    if (env.environment === 'production') {
-      const stagingCognito = environmentsConfig.environments.staging.cognito.user_pool_id;
-      if (config.cognito.user_pool_id === stagingCognito) {
-        cognitoStatus = 'error';
-        cognitoDetails = 'Production is using same Cognito pool as staging - should be isolated';
-      }
-    }
+    let cognitoDetails = 'Cognito config present';
+    if (!env.cognito?.userPoolId) { cognitoStatus = 'error'; cognitoDetails = 'Missing user pool id'; }
 
     statuses.push({
       service: 'AWS Cognito',
       status: cognitoStatus,
       details: cognitoDetails,
-      value: config.cognito.user_pool_id
+      value: env.cognito?.userPoolId
     });
 
     // Check AWS S3 Storage
     statuses.push({
       service: 'AWS S3 Storage',
       status: 'healthy',
-      details: 'S3 bucket configuration loaded from environment config',
-      value: config.storage.bucket_name
+      details: 'Public base URL',
+      value: env.storage?.publicBaseUrl
     });
 
     // Check GraphQL API
     statuses.push({
       service: 'GraphQL API',
       status: 'healthy',
-      details: 'GraphQL endpoint configuration loaded from environment config',
-      value: config.api.graphql_url
+      details: 'GraphQL endpoint configuration',
+      value: env.graphqlUrl
     });
 
     return statuses;
@@ -360,7 +233,7 @@ const AdminConfigurationPage: React.FC = () => {
       </Box>
 
       {/* Environment Overview */}
-      {currentEnv && (
+  {currentEnv && (
         <Card sx={{ mb: 3 }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -372,8 +245,8 @@ const AdminConfigurationPage: React.FC = () => {
                   Environment
                 </Typography>
                 <Chip 
-                  label={currentEnv.name}
-                  color={currentEnv.environment === 'production' ? 'error' : currentEnv.environment === 'staging' ? 'warning' : 'info'}
+      label={currentEnv.environment}
+      color={currentEnv.flags.isProd ? 'error' : currentEnv.flags.isStaging ? 'warning' : 'info'}
                   size="small"
                 />
               </Box>
@@ -382,7 +255,8 @@ const AdminConfigurationPage: React.FC = () => {
                   App ID
                 </Typography>
                 <Typography variant="body1" fontFamily="monospace">
-                  {currentEnv.config.amplify.app_id}
+      {/* App ID no longer provided directly; could be inferred from URL if needed */}
+      n/a
                 </Typography>
               </Box>
               <Box minWidth="200px" flex="1">
@@ -390,7 +264,7 @@ const AdminConfigurationPage: React.FC = () => {
                   App Name
                 </Typography>
                 <Typography variant="body1">
-                  {currentEnv.config.amplify.app_name}
+      RealTechee
                 </Typography>
               </Box>
               <Box minWidth="200px" flex="1">
@@ -398,7 +272,8 @@ const AdminConfigurationPage: React.FC = () => {
                   Git Branch
                 </Typography>
                 <Typography variant="body1">
-                  {currentEnv.config.git_branch}
+      {/* Could add branch data if exposed via env */}
+      {process.env.NEXT_PUBLIC_GIT_BRANCH || 'unknown'}
                 </Typography>
               </Box>
             </Box>
@@ -457,7 +332,7 @@ const AdminConfigurationPage: React.FC = () => {
       </Card>
 
       {/* Detailed Configuration */}
-      {currentEnv && (
+  {currentEnv && (
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6">Detailed Configuration</Typography>
@@ -476,21 +351,22 @@ const AdminConfigurationPage: React.FC = () => {
                         User Pool ID
                       </Typography>
                       <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                        {currentEnv.config.cognito.user_pool_id}
+                        {currentEnv.cognito.userPoolId}
                       </Typography>
                       
                       <Typography variant="body2" color="text.secondary" gutterBottom>
                         User Pool Client ID
                       </Typography>
                       <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                        {currentEnv.config.cognito.user_pool_client_id}
+                        {currentEnv.cognito.clientId}
                       </Typography>
                       
                       <Typography variant="body2" color="text.secondary" gutterBottom>
                         Identity Pool ID
                       </Typography>
                       <Typography variant="body2" fontFamily="monospace">
-                        {currentEnv.config.cognito.identity_pool_id}
+                        {/* Identity pool not currently surfaced */}
+                        n/a
                       </Typography>
                     </CardContent>
                   </Card>
@@ -507,14 +383,14 @@ const AdminConfigurationPage: React.FC = () => {
                         Bucket Name
                       </Typography>
                       <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                        {currentEnv.config.storage.bucket_name}
+                        {currentEnv.storage.publicBaseUrl || 'n/a'}
                       </Typography>
                       
                       <Typography variant="body2" color="text.secondary" gutterBottom>
                         Region
                       </Typography>
                       <Typography variant="body2" fontFamily="monospace">
-                        {currentEnv.config.storage.region}
+                        {currentEnv.region || 'n/a'}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -531,14 +407,14 @@ const AdminConfigurationPage: React.FC = () => {
                     GraphQL URL
                   </Typography>
                   <Typography variant="body2" fontFamily="monospace" sx={{ wordBreak: 'break-all' }} gutterBottom>
-                    {currentEnv.config.api.graphql_url}
+                    {currentEnv.graphqlUrl}
                   </Typography>
                   
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     API Key (masked)
                   </Typography>
                   <Typography variant="body2" fontFamily="monospace">
-                    {currentEnv.config.api.api_key.substring(0, 8)}***
+                    (masked)
                   </Typography>
                 </CardContent>
               </Card>
@@ -553,15 +429,15 @@ const AdminConfigurationPage: React.FC = () => {
                     Table Suffix
                   </Typography>
                   <Typography variant="body2" fontFamily="monospace" gutterBottom>
-                    {currentEnv.config.tables_suffix}
+                    {currentEnv.backendSuffix || 'unset'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Example table names:
                   </Typography>
                   <Typography variant="body2" fontFamily="monospace">
-                    • Requests-{currentEnv.config.tables_suffix}-NONE<br/>
-                    • Contacts-{currentEnv.config.tables_suffix}-NONE<br/>
-                    • Projects-{currentEnv.config.tables_suffix}-NONE
+                    • Requests-{currentEnv.backendSuffix || '???'}-NONE<br/>
+                    • Contacts-{currentEnv.backendSuffix || '???'}-NONE<br/>
+                    • Projects-{currentEnv.backendSuffix || '???'}-NONE
                   </Typography>
                 </CardContent>
               </Card>
@@ -577,8 +453,8 @@ const AdminConfigurationPage: React.FC = () => {
             Configuration Source
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            This configuration is loaded from <code>config/environments.json</code> which is used by the deployment scripts 
-            to ensure consistency across environments. All values are read-only and managed through the deployment process.
+            This configuration is dynamically resolved from runtime environment variables and Amplify outputs via the central
+            <code> environmentConfig </code> utility and served through the <code>/api/system/env</code> route.
           </Typography>
         </CardContent>
       </Card>

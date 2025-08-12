@@ -1,6 +1,7 @@
 import type { ScheduledHandler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, ScanCommand, UpdateCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
+import { requestsTableName } from '../../_shared/tableNames';
 
 const dynamoClient = new DynamoDBClient({ region: process.env.AWS_REGION });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
@@ -13,33 +14,8 @@ interface Request {
   officeNotes?: string;
 }
 
-// Get table name from environment (Amplify will set this)
-const getTableName = (baseTableName: string): string => {
-  // Look for environment variables that match the pattern
-  const envVars = Object.keys(process.env);
-  const tableEnvVar = envVars.find(key => 
-    key.includes(baseTableName.toUpperCase()) && 
-    key.includes('TABLE') && 
-    key.includes('NAME')
-  );
-  
-  if (tableEnvVar && process.env[tableEnvVar]) {
-    return process.env[tableEnvVar];
-  }
-  
-  // Fallback to scanning environment for table names with suffix
-  const suffixedName = envVars.find(key => 
-    process.env[key]?.includes(baseTableName) && 
-    process.env[key]?.includes('-NONE')
-  );
-  
-  if (suffixedName && process.env[suffixedName]) {
-    return process.env[suffixedName];
-  }
-  
-  // Last resort: use known pattern
-  return `${baseTableName}-fvn7t5hbobaxjklhrqzdl4ac34-NONE`;
-};
+// Wrapper using shared helper (maintain function name for any future imports)
+const getRequestsTableName = (): string => requestsTableName();
 
 /**
  * Scheduled Lambda function to process request status expiration
@@ -51,9 +27,17 @@ export const handler: ScheduledHandler = async (event): Promise<void> => {
     resources: event.resources 
   });
 
+  // DRY_RUN mode: allow local invocation without hitting DynamoDB
+  if (process.env.DRY_RUN === 'true') {
+  const rTable = getRequestsTableName();
+  console.log('[DRY_RUN] Would process table:', rTable);
+    console.log('[DRY_RUN] Exiting before DynamoDB operations.');
+    return;
+  }
+
   try {
-    const requestsTableName = getTableName('Requests');
-    console.log('Using Requests table:', requestsTableName);
+  const rTable = getRequestsTableName();
+  console.log('Using Requests table:', rTable, { explicit: !!process.env.REQUESTS_TABLE });
 
     // Calculate 14 days ago timestamp
     const fourteenDaysAgo = new Date();
@@ -65,7 +49,7 @@ export const handler: ScheduledHandler = async (event): Promise<void> => {
     // Scan for requests that are in 'New' or 'Pending walk-thru' status 
     // and haven't been updated in 14+ days
     const scanParams = {
-      TableName: requestsTableName,
+      TableName: rTable,
       FilterExpression: '#status IN (:newStatus, :pendingStatus) AND #updatedAt < :threshold',
       ExpressionAttributeNames: {
         '#status': 'status',
@@ -107,7 +91,7 @@ export const handler: ScheduledHandler = async (event): Promise<void> => {
 
         // Update request status to 'Expired'
         const updateParams = {
-          TableName: requestsTableName,
+          TableName: rTable,
           Key: { id: request.id },
           UpdateExpression: 'SET #status = :expiredStatus, #expiredDate = :now, #officeNotes = :notes, #updatedAt = :now',
           ExpressionAttributeNames: {

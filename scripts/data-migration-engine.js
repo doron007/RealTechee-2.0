@@ -27,8 +27,8 @@ const path = require('path');
 // Configuration
 const CONFIG = {
   region: 'us-west-1',
-  sourceEnv: 'fvn7t5hbobaxjklhrqzdl4ac34', // dev/staging tables
-  targetEnv: 'aqnqdrctpzfwfjwyxxsmu6peoq', // production tables
+  sourceEnv: process.env.SOURCE_BACKEND_SUFFIX || process.env.SOURCE_ENV_SUFFIX || 'UNSET_SOURCE', // Phase5 hardened
+  targetEnv: process.env.TARGET_BACKEND_SUFFIX || process.env.TARGET_ENV_SUFFIX || 'UNSET_TARGET', // Phase5 hardened
   
   // Table migration order (respects foreign key dependencies)
   migrationOrder: [

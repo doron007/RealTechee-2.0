@@ -18,7 +18,7 @@ After thorough investigation of the codebase, AWS resources, and configuration f
 | **Frontend**           | `npm run dev:primed` → localhost:3000              |
 | **Amplify App**        | "RealTechee-2.0" (App ID: `d3atadjk90y9q5`)       |
 | **Sandbox**            | `amplify-realtecheeclone-doron-sandbox-648934873b` |
-| **DynamoDB Tables**    | `*-fvn7t5hbobaxjklhrqzdl4ac34-NONE`                |
+| **DynamoDB Tables**    | `*-<dynamic-backend-suffix>-NONE` (formerly showed `fvn7t5hbobaxjklhrqzdl4ac34`; now injected at runtime) |
 | **Git Branch**         | `main` (development branch)                        |
 | **Data**               | Current CSV import + manual testing data           |
 | **Config File**        | `.env.development` + `amplify_outputs.dev.json`    |
@@ -29,7 +29,7 @@ After thorough investigation of the codebase, AWS resources, and configuration f
 | **Frontend**           | `https://prod.d3atadjk90y9q5.amplifyapp.com/`     |
 | **Amplify App**        | "RealTechee-2.0" (same as dev)                    |
 | **Sandbox**            | Same as development (shared backend)              |
-| **DynamoDB Tables**    | `*-fvn7t5hbobaxjklhrqzdl4ac34-NONE` (shared)      |
+| **DynamoDB Tables**    | `*-<dynamic-backend-suffix>-NONE` (shared; suffix resolved via env config utility)      |
 | **Git Branch**         | `prod` (auto-deploys when pushed)                 |
 | **Data**               | Shared with development environment               |
 | **Config File**        | `.env.staging` + `amplify_outputs.dev.json`       |
@@ -40,7 +40,7 @@ After thorough investigation of the codebase, AWS resources, and configuration f
 | **Frontend**           | `https://d200k2wsaf8th3.amplifyapp.com`                |
 | **Amplify App**        | "RealTechee-Gen2" (App ID: `d200k2wsaf8th3`)           |
 | **Sandbox**            | `amplify-realtecheeclone-production-sandbox-70796fa803` |
-| **DynamoDB Tables**    | `*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`                    |
+| **DynamoDB Tables**    | `*-<dynamic-backend-suffix>-NONE` (production isolated; previous static `aqnqdrctpzfwfjwyxxsmu6peoq`)                    |
 | **Git Branch**         | `prod-v2` (production deployment)                      |
 | **Data**               | 1,449 production records (isolated)                    |
 | **Config File**        | `.env.production` + `amplify_outputs.prod.json`       |
@@ -85,8 +85,8 @@ Production Environment
 ```
 
 ### **Backend Connection Map**
-- **Dev/Staging**: `RealTechee-2.0` app → `*-fvn7t5hbobaxjklhrqzdl4ac34-NONE` tables
-- **Production**: `RealTechee-Gen2` app → `*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE` tables
+- **Dev/Staging**: `RealTechee-2.0` app → `*-<dynamic-backend-suffix>-NONE` tables (suffix now environment variable)
+- **Production**: `RealTechee-Gen2` app → `*-<dynamic-backend-suffix>-NONE` tables
 - **Configuration**: Managed via separate `amplify_outputs.{dev|prod}.json` files
 
 ---

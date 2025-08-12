@@ -7,7 +7,7 @@
       "command": "bash",
       "args": [
         "-c",
-        "if ! pgrep -f 'ampx sandbox' > /dev/null && ! lsof -ti:3000 > /dev/null 2>&1; then echo 'Starting Amplify sandbox...'; npx ampx sandbox; else echo 'Amplify sandbox is already running'; fi"
+  "if ! pgrep -f 'ampx sandbox' > /dev/null && ! lsof -ti:3000 > /dev/null 2>&1; then echo 'Starting Amplify sandbox (single run with --once)...'; npx ampx sandbox --once; else echo 'Amplify sandbox is already running'; fi"
       ],
       "group": "build",
       "isBackground": true,

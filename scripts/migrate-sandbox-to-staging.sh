@@ -27,9 +27,9 @@ SOURCE_ENV="sandbox"
 TARGET_ENV="staging"
 AWS_REGION="${AWS_REGION:-us-west-1}"
 
-# Environment Variables (should be set externally for security)
-SOURCE_BACKEND_SUFFIX="${SOURCE_BACKEND_SUFFIX}"  # Sandbox backend suffix
-TARGET_BACKEND_SUFFIX="${TARGET_BACKEND_SUFFIX:-fvn7t5hbobaxjklhrqzdl4ac34}"  # Staging backend suffix
+# Environment Variables (must be set externally – Phase 5 removed defaults)
+SOURCE_BACKEND_SUFFIX="${SOURCE_BACKEND_SUFFIX}"  # Sandbox backend suffix (required)
+TARGET_BACKEND_SUFFIX="${TARGET_BACKEND_SUFFIX}"  # Staging backend suffix (required)
 MIGRATION_DEFAULT_PASSWORD="${MIGRATION_DEFAULT_PASSWORD}"
 
 # Backup and logging
@@ -39,19 +39,30 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOG_FILE="$LOG_DIR/migration_${SOURCE_ENV}_to_${TARGET_ENV}_${TIMESTAMP}.log"
 REPORT_FILE="$SCRIPT_DIR/migration-report-${TIMESTAMP}.json"
 
-# Core business tables (from CLAUDE.md)
-declare -a CORE_TABLES=(
+# Deterministic table classification
+# Required tables MUST exist in source (and target before migrate) or we abort.
+declare -a REQUIRED_TABLES=(
     "Requests"
-    "Contacts" 
+    "Contacts"
     "Projects"
     "Properties"
     "BackOfficeRequestStatuses"
+)
+
+# Optional tables are migrated only if provisioned (exist in both source & target).
+declare -a OPTIONAL_TABLES=(
     "Users"
     "Notifications"
     "ProjectImages"
     "PropertyImages"
     "Documents"
 )
+
+# Populated dynamically after discovery (ordered: required first, then optional included)
+declare -a MIGRATION_TABLES=()
+declare -a OPTIONAL_INCLUDED=()
+declare -a OPTIONAL_SKIPPED=()
+declare -a REQUIRED_MISSING=()
 
 # Helper functions for logging
 log_info() {
@@ -108,7 +119,7 @@ EOF
     log_success "Environment initialized"
 }
 
-# Check prerequisites and permissions
+    for core_table in "${MIGRATION_TABLES[@]}"; do
 check_prerequisites() {
     log_info "Checking prerequisites and permissions..."
     
@@ -126,7 +137,7 @@ check_prerequisites() {
     # Check Node.js for JSON processing
     if ! command -v node &> /dev/null; then
         log_error "Node.js is not installed. Required for JSON processing."
-        ((errors++))
+        echo "Migration tables: ${#MIGRATION_TABLES[@]} (Required defined: ${#REQUIRED_TABLES[@]}, Optional included: ${#OPTIONAL_INCLUDED[@]}, Optional skipped: ${#OPTIONAL_SKIPPED[@]})"
     fi
     
     # Check jq for JSON processing
@@ -142,8 +153,8 @@ check_prerequisites() {
     fi
     
     if [[ -z "$TARGET_BACKEND_SUFFIX" ]]; then
-        log_error "TARGET_BACKEND_SUFFIX environment variable is required" 
-        echo "  Set it with: export TARGET_BACKEND_SUFFIX=fvn7t5hbobaxjklhrqzdl4ac34"
+        log_error "TARGET_BACKEND_SUFFIX environment variable is required (no default)"
+        echo "  Set it with: export TARGET_BACKEND_SUFFIX=<staging_suffix>"
         ((errors++))
     fi
     
@@ -183,52 +194,131 @@ check_prerequisites() {
 # Discover and validate table structure
 discover_table_structure() {
     log_info "Discovering source and target table structure..."
-    
+
     local source_tables=()
     local target_tables=()
     local missing_tables=()
-    
-    # List source tables (sandbox)
+
+    # Helper to list ALL tables with pagination (avoids 100-table cap)
+    list_all_tables() {
+        local exclusive=""
+        while true; do
+            local cmd=(aws dynamodb list-tables --region "$AWS_REGION")
+            if [[ -n "$exclusive" ]]; then
+                cmd+=(--exclusive-start-table-name "$exclusive")
+            fi
+            local resp
+            if ! resp="$(${cmd[@]} 2>/dev/null)"; then
+                log_error "Failed to list tables"
+                return 1
+            fi
+            # Extract table names (prefer jq if installed)
+            if command -v jq >/dev/null 2>&1; then
+                echo "$resp" | jq -r '.TableNames[]'
+                exclusive=$(echo "$resp" | jq -r '.LastEvaluatedTableName // empty')
+            else
+                # Fallback to Node for JSON parsing
+                echo "$resp" | node -e 'let d="";process.stdin.on("data",c=>d+=c);process.stdin.on("end",()=>{let j=JSON.parse(d);(j.TableNames||[]).forEach(n=>console.log(n)); if(j.LastEvaluatedTableName) process.stdout.write("__NEXT__"+j.LastEvaluatedTableName);});' | while IFS= read -r line; do
+                    if [[ $line == __NEXT__* ]]; then
+                        exclusive=${line#__NEXT__}
+                    else
+                        printf '%s\n' "$line"
+                    fi
+                done
+            fi
+            [[ -z "$exclusive" ]] && break
+        done
+    }
+
+    # Cache all tables once
+    local all_tables
+    if ! all_tables=$(list_all_tables); then
+        log_error "Unable to enumerate DynamoDB tables"
+        return 1
+    fi
+
     log_info "Scanning for source tables with suffix: $SOURCE_BACKEND_SUFFIX"
     while IFS= read -r table_name; do
+        [[ -z "$table_name" ]] && continue
         if [[ "$table_name" == *"$SOURCE_BACKEND_SUFFIX"* ]]; then
             source_tables+=("$table_name")
         fi
-    done < <(aws dynamodb list-tables --region "$AWS_REGION" --query 'TableNames[]' --output text)
-    
-    # List target tables (staging)
+    done <<< "$all_tables"
+
     log_info "Scanning for target tables with suffix: $TARGET_BACKEND_SUFFIX"
     while IFS= read -r table_name; do
+        [[ -z "$table_name" ]] && continue
         if [[ "$table_name" == *"$TARGET_BACKEND_SUFFIX"* ]]; then
             target_tables+=("$table_name")
         fi
-    done < <(aws dynamodb list-tables --region "$AWS_REGION" --query 'TableNames[]' --output text)
-    
+    done <<< "$all_tables"
+
     log_info "Found ${#source_tables[@]} source tables"
     log_info "Found ${#target_tables[@]} target tables"
-    
-    # Check for core business tables
-    for core_table in "${CORE_TABLES[@]}"; do
-        local source_table_name="${core_table}-${SOURCE_BACKEND_SUFFIX}-NONE"
-        local target_table_name="${core_table}-${TARGET_BACKEND_SUFFIX}-NONE"
-        
-        # Check if source exists
-        if [[ ! " ${source_tables[*]} " =~ " $source_table_name " ]]; then
-            log_warning "Core table missing in source: $source_table_name"
+
+    # Reset classification arrays
+    MIGRATION_TABLES=()
+    OPTIONAL_INCLUDED=()
+    OPTIONAL_SKIPPED=()
+    REQUIRED_MISSING=()
+
+    # Handle required tables first
+    for req in "${REQUIRED_TABLES[@]}"; do
+        local source_table_name="${req}-${SOURCE_BACKEND_SUFFIX}-NONE"
+        local target_table_name="${req}-${TARGET_BACKEND_SUFFIX}-NONE"
+        local source_exists=false
+        local target_exists=false
+        [[ " ${source_tables[*]} " =~ " $source_table_name " ]] && source_exists=true
+        [[ " ${target_tables[*]} " =~ " $target_table_name " ]] && target_exists=true
+        if ! $source_exists; then
+            REQUIRED_MISSING+=("$req")
+            log_error "Required source table missing: $source_table_name"
+            continue
         fi
-        
-        # Check if target exists
-        if [[ ! " ${target_tables[*]} " =~ " $target_table_name " ]]; then
+        if ! $target_exists; then
             missing_tables+=("$target_table_name")
-            log_error "Core table missing in target: $target_table_name"
+            log_error "Required target table missing: $target_table_name"
+            continue
+        fi
+        MIGRATION_TABLES+=("$req")
+    done
+
+    # Handle optional tables: include only if present in source (target must also exist)
+    for opt in "${OPTIONAL_TABLES[@]}"; do
+        local source_table_name="${opt}-${SOURCE_BACKEND_SUFFIX}-NONE"
+        local target_table_name="${opt}-${TARGET_BACKEND_SUFFIX}-NONE"
+        local source_exists=false
+        local target_exists=false
+        [[ " ${source_tables[*]} " =~ " $source_table_name " ]] && source_exists=true
+        [[ " ${target_tables[*]} " =~ " $target_table_name " ]] && target_exists=true
+        if $source_exists && $target_exists; then
+            MIGRATION_TABLES+=("$opt")
+            OPTIONAL_INCLUDED+=("$opt")
+            log_info "Including optional table: $opt"
+        else
+            OPTIONAL_SKIPPED+=("$opt")
+            if $source_exists && ! $target_exists; then
+                log_warning "Optional table exists in source but not target (skipping until provisioned): $opt"
+            fi
+            if ! $source_exists && $target_exists; then
+                log_info "Optional table has target but no source data yet: $opt (skipping)"
+            fi
+            if ! $source_exists && ! $target_exists; then
+                log_info "Optional table not provisioned in either env: $opt (skipping)"
+            fi
         fi
     done
-    
-    if [[ ${#missing_tables[@]} -gt 0 ]]; then
-        log_error "Missing ${#missing_tables[@]} core tables in target environment"
-        log_error "Please deploy the backend to staging environment first"
+
+    if [[ ${#REQUIRED_MISSING[@]} -gt 0 ]]; then
+        log_error "Missing ${#REQUIRED_MISSING[@]} required source table(s): ${REQUIRED_MISSING[*]}"
         return 1
     fi
+    if [[ ${#missing_tables[@]} -gt 0 ]]; then
+        log_error "Missing ${#missing_tables[@]} required target table(s). Deploy backend to target environment first."
+        return 1
+    fi
+
+    log_success "Table classification complete: ${#MIGRATION_TABLES[@]} tables will be processed (${#REQUIRED_TABLES[@]} required defined, ${#OPTIONAL_INCLUDED[@]} optional included, ${#OPTIONAL_SKIPPED[@]} optional skipped)."
     
     # Store discovered structure
     cat > "$SCRIPT_DIR/discovered-tables-${TIMESTAMP}.json" << EOF
@@ -238,9 +328,12 @@ discover_table_structure() {
     "target_env": "$TARGET_ENV", 
     "source_suffix": "$SOURCE_BACKEND_SUFFIX",
     "target_suffix": "$TARGET_BACKEND_SUFFIX",
-    "source_tables": [$(printf '"%s",' "${source_tables[@]}" | sed 's/,$//')]],
-    "target_tables": [$(printf '"%s",' "${target_tables[@]}" | sed 's/,$//')]],
-    "core_tables": [$(printf '"%s",' "${CORE_TABLES[@]}" | sed 's/,$//')]
+    "source_tables": [$(printf '"%s",' "${source_tables[@]}" | sed 's/,$//')],
+    "target_tables": [$(printf '"%s",' "${target_tables[@]}" | sed 's/,$//')],
+    "required_tables": [$(printf '"%s",' "${REQUIRED_TABLES[@]}" | sed 's/,$//')],
+    "optional_tables_included": [$(printf '"%s",' "${OPTIONAL_INCLUDED[@]}" | sed 's/,$//')],
+    "optional_tables_skipped": [$(printf '"%s",' "${OPTIONAL_SKIPPED[@]}" | sed 's/,$//')],
+    "migration_tables": [$(printf '"%s",' "${MIGRATION_TABLES[@]}" | sed 's/,$//')]
 }
 EOF
     
@@ -260,11 +353,11 @@ analyze_migration() {
     local analysis_data="["
     local first_table=true
     
-    for core_table in "${CORE_TABLES[@]}"; do
-        local source_table_name="${core_table}-${SOURCE_BACKEND_SUFFIX}-NONE"
-        local target_table_name="${core_table}-${TARGET_BACKEND_SUFFIX}-NONE"
+    for mt in "${MIGRATION_TABLES[@]}"; do
+        local source_table_name="${mt}-${SOURCE_BACKEND_SUFFIX}-NONE"
+        local target_table_name="${mt}-${TARGET_BACKEND_SUFFIX}-NONE"
         
-        log_info "Analyzing table: $core_table"
+        log_info "Analyzing table: $mt"
         
         # Get source table item count
         local source_count=0
@@ -278,14 +371,14 @@ analyze_migration() {
             target_count=$(aws dynamodb describe-table --table-name "$target_table_name" --region "$AWS_REGION" --query 'Table.ItemCount' --output text 2>/dev/null || echo "0")
         fi
         
-        log_info "  Source items: $source_count, Target items: $target_count"
+    log_info "  Source items: $source_count, Target items: $target_count"
         total_items=$((total_items + source_count))
         
         # Add to analysis data
         if [[ "$first_table" != true ]]; then
             analysis_data+=","
         fi
-        analysis_data+="{\"table\":\"$core_table\",\"source_count\":$source_count,\"target_count\":$target_count,\"source_table_name\":\"$source_table_name\",\"target_table_name\":\"$target_table_name\"}"
+    analysis_data+="{\"table\":\"$mt\",\"source_count\":$source_count,\"target_count\":$target_count,\"source_table_name\":\"$source_table_name\",\"target_table_name\":\"$target_table_name\"}"
         first_table=false
     done
     
@@ -300,7 +393,10 @@ analyze_migration() {
     "source_suffix": "$SOURCE_BACKEND_SUFFIX",
     "target_suffix": "$TARGET_BACKEND_SUFFIX",
     "total_items_to_migrate": $total_items,
-    "core_tables_count": ${#CORE_TABLES[@]},
+    "required_tables_count": ${#REQUIRED_TABLES[@]},
+    "optional_tables_included_count": ${#OPTIONAL_INCLUDED[@]},
+    "optional_tables_skipped_count": ${#OPTIONAL_SKIPPED[@]},
+    "migration_tables_count": ${#MIGRATION_TABLES[@]},
     "table_analysis": $analysis_data,
     "estimated_duration_minutes": $((total_items / 100 + 5)),
     "aws_region": "$AWS_REGION"
@@ -312,7 +408,7 @@ EOF
     echo -e "${BOLD}MIGRATION ANALYSIS SUMMARY${NC}"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "Total items to migrate: $total_items"
-    echo "Core tables: ${#CORE_TABLES[@]}"
+    echo "Migration tables: ${#MIGRATION_TABLES[@]} (Required defined: ${#REQUIRED_TABLES[@]}, Optional included: ${#OPTIONAL_INCLUDED[@]}, Optional skipped: ${#OPTIONAL_SKIPPED[@]})"
     echo "Estimated duration: $((total_items / 100 + 5)) minutes"
     echo "Analysis report: migration-analysis-${TIMESTAMP}.json"
     echo ""
@@ -407,32 +503,48 @@ dry_run_migration() {
         
         log_info "Validating table: $core_table"
         
-        # Check source table access
+        local source_exists=true
+        local target_exists=true
         if ! aws dynamodb describe-table --table-name "$source_table_name" --region "$AWS_REGION" >/dev/null 2>&1; then
-            log_error "Cannot access source table: $source_table_name"
-            ((validation_errors++))
-            continue
+            source_exists=false
         fi
-        
-        # Check target table access  
         if ! aws dynamodb describe-table --table-name "$target_table_name" --region "$AWS_REGION" >/dev/null 2>&1; then
-            log_error "Cannot access target table: $target_table_name"
+            target_exists=false
+        fi
+
+        # Decision matrix:
+        # 1. source && target -> validate schema
+        # 2. source && !target -> ERROR (can't migrate data)
+        # 3. !source && target -> INFO (nothing to migrate yet, leave target as-is)
+        # 4. !source && !target -> WARNING (table not provisioned in either env yet)
+
+        if $source_exists && $target_exists; then
+            # Validate table schema compatibility
+            local source_schema target_schema
+            source_schema=$(aws dynamodb describe-table --table-name "$source_table_name" --region "$AWS_REGION" --query 'Table.{KeySchema:KeySchema,AttributeDefinitions:AttributeDefinitions}' --output json)
+            target_schema=$(aws dynamodb describe-table --table-name "$target_table_name" --region "$AWS_REGION" --query 'Table.{KeySchema:KeySchema,AttributeDefinitions:AttributeDefinitions}' --output json)
+            if [[ "$source_schema" != "$target_schema" ]]; then
+                log_warning "Schema differences detected for table: $core_table"
+                log_info "Source schema: $source_schema"
+                log_info "Target schema: $target_schema"
+            fi
+            log_success "Table validation passed: $core_table"
+            continue
+        fi
+
+        if $source_exists && ! $target_exists; then
+            log_error "Source table exists but target missing: $target_table_name"
             ((validation_errors++))
             continue
         fi
-        
-        # Validate table schema compatibility
-        local source_schema target_schema
-        source_schema=$(aws dynamodb describe-table --table-name "$source_table_name" --region "$AWS_REGION" --query 'Table.{KeySchema:KeySchema,AttributeDefinitions:AttributeDefinitions}' --output json)
-        target_schema=$(aws dynamodb describe-table --table-name "$target_table_name" --region "$AWS_REGION" --query 'Table.{KeySchema:KeySchema,AttributeDefinitions:AttributeDefinitions}' --output json)
-        
-        if [[ "$source_schema" != "$target_schema" ]]; then
-            log_warning "Schema differences detected for table: $core_table"
-            log_info "Source schema: $source_schema"
-            log_info "Target schema: $target_schema"
+
+        if ! $source_exists && $target_exists; then
+            log_info "Skipping table with no source data: $core_table (target table present)"
+            continue
         fi
-        
-        log_success "Table validation passed: $core_table"
+
+        # !source && !target
+        log_warning "Skipping unprovisioned table (absent in both source and target): $core_table"
     done
     
     if [[ $validation_errors -gt 0 ]]; then
@@ -454,7 +566,7 @@ full_migration() {
     echo "This will migrate ALL data from sandbox to staging environment:"
     echo "• Source: $SOURCE_ENV (suffix: $SOURCE_BACKEND_SUFFIX)"
     echo "• Target: $TARGET_ENV (suffix: $TARGET_BACKEND_SUFFIX)"
-    echo "• Tables: ${#CORE_TABLES[@]} core business tables"
+    echo "• Tables: ${#MIGRATION_TABLES[@]} (migration set: required + included optional)"
     echo "• Region: $AWS_REGION"
     echo ""
     echo -e "${YELLOW}This operation will:${NC}"
@@ -492,12 +604,12 @@ full_migration() {
     echo "{\"timestamp\":\"$(date -Iseconds)\",\"tables\":{" > "$backup_file"
     
     # Process each core table
-    for i in "${!CORE_TABLES[@]}"; do
-        local core_table="${CORE_TABLES[$i]}"
+    for i in "${!MIGRATION_TABLES[@]}"; do
+        local core_table="${MIGRATION_TABLES[$i]}"
         local source_table_name="${core_table}-${SOURCE_BACKEND_SUFFIX}-NONE"
         local target_table_name="${core_table}-${TARGET_BACKEND_SUFFIX}-NONE"
         
-        log_info "Migrating table: $core_table ($((i+1))/${#CORE_TABLES[@]})"
+    log_info "Migrating table: $core_table ($((i+1))/${#MIGRATION_TABLES[@]})"
         
         # Backup existing target data
         local existing_data
@@ -505,7 +617,7 @@ full_migration() {
         
         # Add to backup file
         echo "\"$core_table\":$existing_data" >> "$backup_file"
-        if [[ $((i+1)) -lt ${#CORE_TABLES[@]} ]]; then
+    if [[ $((i+1)) -lt ${#MIGRATION_TABLES[@]} ]]; then
             echo "," >> "$backup_file"
         fi
         
@@ -600,7 +712,7 @@ full_migration() {
         "durationSeconds": $migration_duration
     },
     "statistics": {
-        "tablesProcessed": ${#CORE_TABLES[@]},
+    "tablesProcessed": ${#MIGRATION_TABLES[@]},
         "recordsMigrated": $total_migrated,
         "errorsEncountered": $total_errors
     },
@@ -614,7 +726,7 @@ EOF
     echo -e "${BOLD}MIGRATION SUMMARY${NC}"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo "Duration: $migration_duration seconds"
-    echo "Tables processed: ${#CORE_TABLES[@]}"
+    echo "Tables processed: ${#MIGRATION_TABLES[@]}"
     echo "Records migrated: $total_migrated"
     echo "Errors encountered: $total_errors"
     echo "Backup created: $(basename "$backup_file")"
@@ -674,8 +786,14 @@ ${BOLD}Security Notes:${NC}
 • Backup is created before destructive operations
 • Migration supports rollback capability
 
-${BOLD}Core Tables Migrated:${NC}
-$(printf "  • %s\n" "${CORE_TABLES[@]}")
+${BOLD}Required Tables:${NC}
+$(printf "  • %s\n" "${REQUIRED_TABLES[@]}")
+
+${BOLD}Optional Tables (included only if provisioned):${NC}
+$(printf "  • %s\n" "${OPTIONAL_TABLES[@]}")
+
+${BOLD}Current Migration Set (this run):${NC}
+$(printf "  • %s\n" "${MIGRATION_TABLES[@]}")
 
 ${PURPLE}Script Version: $SCRIPT_VERSION${NC}
 ${PURPLE}AWS Region: $AWS_REGION${NC}
@@ -684,6 +802,26 @@ EOF
 }
 
 # Main command dispatcher
+
+# Phase 5: confirmation flag for migrate (staging destructive ops)
+CONFIRM_SUFFIX=""
+for arg in "$@"; do
+    case $arg in
+        --confirm-suffix)
+            shift; CONFIRM_SUFFIX="$1"; shift; ;;
+    esac
+done
+
+if [[ "$1" == "migrate" ]]; then
+    if [[ -z "$CONFIRM_SUFFIX" ]]; then
+        echo -e "${RED}[ERROR]${NC} --confirm-suffix <staging_suffix> required for migrate command" >&2
+        exit 2
+    fi
+    if [[ "$CONFIRM_SUFFIX" != "$TARGET_BACKEND_SUFFIX" ]]; then
+        echo -e "${RED}[ERROR]${NC} --confirm-suffix ($CONFIRM_SUFFIX) does not match TARGET_BACKEND_SUFFIX ($TARGET_BACKEND_SUFFIX)" >&2
+        exit 2
+    fi
+fi
 main() {
     # Initialize environment
     initialize_environment
