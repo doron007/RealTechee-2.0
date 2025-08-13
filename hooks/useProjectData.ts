@@ -111,9 +111,7 @@ export function useProjectData({
 
         // Tier 2: If not in sessionStorage, fetch from Amplify API
         if (!projectData && projectId) {
-          console.log('useProjectData: Fetching from API...');
           const result = await optimizedProjectsAPI.loadFullProject(projectId);
-          console.log('useProjectData: API result:', result.success);
           
           if (result.success && result.data) {
             projectData = result.data;
