@@ -3,7 +3,8 @@ import { generateClient } from 'aws-amplify/api';
 import { H2, H4, P2 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import { DateTimeUtils } from '../../../utils/dateTimeUtils';
-import { getEnvironmentInfo } from '../../../utils/environmentTest';
+// Using new dynamic environment configuration endpoint instead of legacy utility
+// Legacy environmentTest adapter remains only for backward compatibility elsewhere.
 
 const client = generateClient();
 
@@ -50,29 +51,29 @@ const SystemConfigPage: React.FC = () => {
   const loadSystemData = async () => {
     try {
       setLoading(true);
-      
-      // Load comprehensive environment information using the environment test utility
-      const envTestInfo = getEnvironmentInfo();
-      console.log('SystemConfigPage: Environment test info:', envTestInfo);
-      
+
+      // Fetch unified environment config via API (same source as AdminConfigurationPage)
+      const res = await fetch('/api/system/env');
+      if (!res.ok) throw new Error('Failed to load environment configuration');
+      const cfg = await res.json();
+
       const envInfo: EnvironmentInfo = {
-        environment: process.env.NEXT_PUBLIC_ENVIRONMENT || 'development',
-        backendSuffix: envTestInfo.effectiveConfig.backendSuffix || 'unknown',
+        environment: cfg.environment || 'unknown',
+        backendSuffix: cfg.backendSuffix || 'unknown',
         s3Bucket: process.env.NEXT_PUBLIC_S3_PUBLIC_BASE_URL || 'not-configured',
-        region: envTestInfo.effectiveConfig.region || 'us-west-1',
+        region: cfg.region || 'us-west-1',
         logLevel: process.env.NEXT_PUBLIC_LOG_LEVEL || 'INFO',
         deploymentBranch: getCurrentBranch(),
-        lastDeployment: envTestInfo.buildTime,
-        // Enhanced fields from environment test
-        usingEnvironmentVariables: envTestInfo.usingEnvironmentVariables,
-        graphqlUrl: envTestInfo.effectiveConfig.graphqlUrl || 'not-configured',
-        userPoolId: envTestInfo.effectiveConfig.userPoolId || 'not-configured',
-        userPoolClientId: envTestInfo.effectiveConfig.userPoolClientId || 'not-configured',
-        detectedEnvironment: envTestInfo.environment,
-        buildTime: envTestInfo.buildTime,
-        nodeEnv: envTestInfo.nodeEnv || 'unknown'
+        lastDeployment: cfg.build?.timestamp,
+        usingEnvironmentVariables: !!cfg.backendSuffix,
+        graphqlUrl: cfg.graphqlUrl || 'not-configured',
+        userPoolId: cfg.cognito?.userPoolId || 'not-configured',
+        userPoolClientId: cfg.cognito?.clientId || 'not-configured',
+        detectedEnvironment: cfg.environment || 'unknown',
+        buildTime: cfg.build?.timestamp || new Date().toISOString(),
+        nodeEnv: cfg.build?.nodeEnv || process.env.NODE_ENV || 'unknown'
       };
-      
+
       setEnvironmentInfo(envInfo);
 
       // Mock system configurations - in real implementation, these would come from a backend service

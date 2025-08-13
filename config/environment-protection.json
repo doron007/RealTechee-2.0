@@ -1,9 +1,10 @@
 {
+  "allowedSuffixes": ["localsandbox", "prodactual"],
   "environments": {
     "development": {
       "name": "development",
       "amplifyAppId": "sandbox",
-      "backendSuffix": "fvn7t5hbobaxjklhrqzdl4ac34",
+      "backendSuffix": "localsandbox",
       "graphqlEndpoint": "sandbox-generated-endpoint",
       "branch": "main",
       "protection": {
@@ -20,10 +21,10 @@
       }
     },
     "production": {
-      "name": "production", 
+      "name": "production",
       "amplifyAppId": "d200k2wsaf8th3",
-      "backendSuffix": "aqnqdrctpzfwfjwyxxsmu6peoq",
-      "graphqlEndpoint": "https://374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com/graphql",
+      "backendSuffix": "prodactual",
+      "graphqlEndpoint": "https://example.appsync-api.us-west-1.amazonaws.com/graphql",
       "branch": "prod-v2",
       "protection": {
         "allowDestructiveOperations": false,
@@ -32,21 +33,18 @@
         "testDataAllowed": false,
         "restrictedTables": [
           "Contacts",
-          "Properties", 
+          "Properties",
           "Projects",
           "Requests",
           "Quotes",
           "BackOfficeRequestStatuses"
         ],
         "approvers": ["info@realtechee.com"],
-        "maintenanceWindows": {
-          "allowed": ["02:00-04:00 UTC"],
-          "timezone": "UTC"
-        }
+        "maintenanceWindows": {"allowed": ["02:00-04:00 UTC"], "timezone": "UTC"}
       },
       "environment_variables": {
         "NEXT_PUBLIC_LOG_LEVEL": "INFO",
-        "LOG_LEVEL": "INFO", 
+        "LOG_LEVEL": "INFO",
         "DEBUG_NOTIFICATIONS": "false",
         "NODE_ENV": "production"
       },
@@ -55,18 +53,8 @@
           "enabled": true,
           "retentionDays": 30,
           "alarms": [
-            {
-              "name": "ErrorRate",
-              "metric": "Errors",
-              "threshold": 5,
-              "period": 300
-            },
-            {
-              "name": "ResponseTime", 
-              "metric": "Duration",
-              "threshold": 10000,
-              "period": 300
-            }
+            {"name": "ErrorRate", "metric": "Errors", "threshold": 5, "period": 300},
+            {"name": "ResponseTime", "metric": "Duration", "threshold": 10000, "period": 300}
           ]
         }
       }
@@ -76,18 +64,9 @@
     "crossEnvironmentAccess": false,
     "sharedResources": [],
     "validationRules": [
-      {
-        "rule": "no_test_data_in_production",
-        "description": "Prevent test data from being written to production"
-      },
-      {
-        "rule": "require_backup_before_schema_changes",
-        "description": "Mandatory backup before any schema modifications"
-      },
-      {
-        "rule": "production_approval_workflow",
-        "description": "All production changes require approval"
-      }
+      {"rule": "no_test_data_in_production", "description": "Prevent test data from being written to production"},
+      {"rule": "require_backup_before_schema_changes", "description": "Mandatory backup before any schema modifications"},
+      {"rule": "production_approval_workflow", "description": "All production changes require approval"}
     ]
   },
   "deployment": {
@@ -97,18 +76,9 @@
       "requiredReviewers": 1,
       "dismissStaleReviews": true,
       "deploymentGates": [
-        {
-          "name": "test_validation",
-          "description": "All tests must pass before deployment"
-        },
-        {
-          "name": "data_backup", 
-          "description": "Data backup must be completed"
-        },
-        {
-          "name": "security_scan",
-          "description": "Security vulnerability scan must pass"
-        }
+        {"name": "test_validation", "description": "All tests must pass before deployment"},
+        {"name": "data_backup", "description": "Data backup must be completed"},
+        {"name": "security_scan", "description": "Security vulnerability scan must pass"}
       ]
     }
   },

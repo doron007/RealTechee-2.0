@@ -11,9 +11,9 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Configuration
-REGION="us-west-1"
-SANDBOX_SUFFIX="fvn7t5hbobaxjklhrqzdl4ac34"
-PRODUCTION_SUFFIX="aqnqdrctpzfwfjwyxxsmu6peoq"
+REGION="${REGION:-us-west-1}"
+SANDBOX_SUFFIX="${SANDBOX_SUFFIX:?SANDBOX_SUFFIX env required}"  # Phase5 hardened
+PRODUCTION_SUFFIX="${PRODUCTION_SUFFIX:?PRODUCTION_SUFFIX env required}"  # Phase5 hardened
 
 echo_step() { echo -e "${GREEN}==>${NC} $1"; }
 echo_info() { echo -e "${BLUE}ℹ️  INFO:${NC} $1"; }
@@ -40,6 +40,16 @@ TABLES=(
 
 # Add mode parameter
 MODE=${1:-analyze}
+CONFIRM_SUFFIX=""
+shift_args=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --confirm-suffix)
+      shift; CONFIRM_SUFFIX="$1"; shift;;
+    *) shift_args+=("$1"); shift;;
+  esac
+done
+set -- "${shift_args[@]}"
 
 if [ "$MODE" = "analyze" ]; then
   echo_step "🔍 Data Migration Analysis"
@@ -96,9 +106,12 @@ elif [ "$MODE" = "migrate" ]; then
   echo_step "🚀 Data Migration (Full)"
   echo_info "This will migrate ALL data from sandbox to production"
   echo ""
-  read -p "Are you sure? Type 'YES' to continue: " confirm
-  
-  if [ "$confirm" != "YES" ]; then
+  if [[ -z "$CONFIRM_SUFFIX" || "$CONFIRM_SUFFIX" != "$PRODUCTION_SUFFIX" ]]; then
+    echo_info "--confirm-suffix <production_suffix> required and must match PRODUCTION_SUFFIX"
+    exit 2
+  fi
+  read -p "Type 'FULLMIGRATE' to continue: " confirm
+  if [ "$confirm" != "FULLMIGRATE" ]; then
     echo_info "Migration cancelled"
     exit 0
   fi
@@ -162,7 +175,7 @@ elif [ "$MODE" = "migrate" ]; then
   done
   
 else
-  echo "Usage: $0 [analyze|migrate]"
+  echo "Usage: $0 [analyze|migrate] --confirm-suffix <production_suffix>"
   echo ""
   echo "  analyze  - Show what would be migrated (safe, no changes)"
   echo "  migrate  - Perform full migration (destructive)"

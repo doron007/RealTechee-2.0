@@ -2,9 +2,9 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../amplify/data/resource';
 import { Amplify } from 'aws-amplify';
 import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
-import { listProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms } from '../queries';
+import { listProjects, getProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms, listQuotes, listRequests, listContacts, listBackOfficeProjectStatuses, listBackOfficeQuoteStatuses, listBackOfficeRequestStatuses } from '../queries';
 import { createLogger } from './logger';
-import { logEnvironmentInfo } from './environmentTest';
+import { logClientConfigOnce } from './environmentConfig';
 
 // Fallback to hardcoded values for development when env vars not available
 import outputs from '../amplify_outputs.json';
@@ -48,7 +48,8 @@ Amplify.configure(amplifyConfig);
 
 // Debug: Log environment configuration on initialization
 if (typeof window !== 'undefined') {
-  logEnvironmentInfo();
+  // Log new unified environment configuration once per session
+  logClientConfigOnce();
 }
 
 // Generate a typed client for your schema with API key auth for anonymous access
@@ -66,10 +67,20 @@ const apiLogger = createLogger('AmplifyAPI');
 const projectsLogger = createLogger('ProjectsAPI');
 const relationLogger = createLogger('RelationAPI');
 
-// Generic API helper for any model
-const createModelAPI = (modelName: string) => ({
+// Generic API helper for any model with client safety checks
+const createModelAPI = (modelName: string) => {
+  
+  // Helper function to ensure client is ready before making API calls
+  const ensureClientReady = () => {
+    if (!client.models || !(client.models as any)[modelName]) {
+      throw new Error(`Model ${modelName} not available on client. Client may not be initialized properly.`);
+    }
+  };
+  
+  return {
   async create(data: any) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].create(data);
       return { success: true, data: result.data };
     } catch (error) {
@@ -86,6 +97,14 @@ const createModelAPI = (modelName: string) => ({
           query: listProjects,
           variables: { limit: 2000 }
         });
+        
+        // Debug: Log the first few project IDs to help with local testing
+        if (result.data?.listProjects?.items?.length > 0) {
+          console.log('Available project IDs for local testing:', 
+            result.data.listProjects.items.slice(0, 5).map((p: any) => p.id)
+          );
+        }
+        
         return { success: true, data: result.data.listProjects.items };
       }
       
@@ -113,6 +132,140 @@ const createModelAPI = (modelName: string) => ({
         return { success: true, data: result.data.listProjectPaymentTerms.items };
       }
       
+      if (modelName === 'Quotes') {
+        try {
+          // Use minimal query to avoid field validation errors
+          const minimalQuotesQuery = `
+            query ListQuotesMinimal($limit: Int) {
+              listQuotes(limit: $limit) {
+                items {
+                  id
+                  status
+                  title
+                  requestId
+                  projectId
+                  assignedTo
+                  quoteNumber
+                  budget
+                  totalPrice
+                  product
+                  createdAt
+                  updatedAt
+                  __typename
+                }
+                nextToken
+                __typename
+              }
+            }
+          `;
+          
+          const result = await graphqlClient.graphql({
+            query: minimalQuotesQuery,
+            variables: { limit: 2000 }
+          });
+          
+          console.log(`📊 Quotes query result: ${result.data?.listQuotes?.items?.length || 0} items returned`);
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Quotes (${result.errors.length} errors) - using partial data`);
+            console.debug('First few errors:', result.errors.slice(0, 3).map(e => e.message));
+          }
+          
+          return { success: true, data: result.data?.listQuotes?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Quotes GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'Requests') {
+        try {
+          // Use minimal query to avoid field validation errors
+          const minimalRequestsQuery = `
+            query ListRequestsMinimal($limit: Int) {
+              listRequests(limit: $limit) {
+                items {
+                  id
+                  status
+                  product
+                  assignedTo
+                  message
+                  leadSource
+                  archived
+                  createdAt
+                  updatedAt
+                  __typename
+                }
+                nextToken
+                __typename
+              }
+            }
+          `;
+          
+          const result = await graphqlClient.graphql({
+            query: minimalRequestsQuery,
+            variables: { limit: 2000 }
+          });
+          
+          console.log(`📊 Requests query result: ${result.data?.listRequests?.items?.length || 0} items returned`);
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Requests (${result.errors.length} errors) - using partial data`);
+          }
+          
+          return { success: true, data: result.data?.listRequests?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Requests GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'Contacts') {
+        try {
+          const result = await graphqlClient.graphql({
+            query: listContacts,
+            variables: { limit: 2000 }
+          });
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Contacts (${result.errors.length} errors) - using partial data`);
+          }
+          
+          return { success: true, data: result.data?.listContacts?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Contacts GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'BackOfficeProjectStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeProjectStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeProjectStatuses.items };
+      }
+      
+      if (modelName === 'BackOfficeQuoteStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeQuoteStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeQuoteStatuses.items };
+      }
+      
+      if (modelName === 'BackOfficeRequestStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeRequestStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeRequestStatuses.items };
+      }
+      
+      ensureClientReady();
       const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };
     } catch (error) {
@@ -189,6 +342,84 @@ const createModelAPI = (modelName: string) => ({
         };
       }
       
+      if (modelName === 'Quotes') {
+        const result = await graphqlClient.graphql({
+          query: listQuotes,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listQuotes.items, 
+          nextToken: result.data.listQuotes.nextToken,
+          totalCount: result.data.listQuotes.items?.length 
+        };
+      }
+      
+      if (modelName === 'Requests') {
+        const result = await graphqlClient.graphql({
+          query: listRequests,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listRequests.items, 
+          nextToken: result.data.listRequests.nextToken,
+          totalCount: result.data.listRequests.items?.length 
+        };
+      }
+      
+      if (modelName === 'Contacts') {
+        const result = await graphqlClient.graphql({
+          query: listContacts,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listContacts.items, 
+          nextToken: result.data.listContacts.nextToken,
+          totalCount: result.data.listContacts.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeProjectStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeProjectStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeProjectStatuses.items, 
+          nextToken: result.data.listBackOfficeProjectStatuses.nextToken,
+          totalCount: result.data.listBackOfficeProjectStatuses.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeQuoteStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeQuoteStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeQuoteStatuses.items, 
+          nextToken: result.data.listBackOfficeQuoteStatuses.nextToken,
+          totalCount: result.data.listBackOfficeQuoteStatuses.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeRequestStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeRequestStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeRequestStatuses.items, 
+          nextToken: result.data.listBackOfficeRequestStatuses.nextToken,
+          totalCount: result.data.listBackOfficeRequestStatuses.items?.length 
+        };
+      }
+      
       const result = await (client.models as any)[modelName].list(queryOptions);
       return { 
         success: true, 
@@ -204,6 +435,7 @@ const createModelAPI = (modelName: string) => ({
 
   async get(id: string) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].get({ id });
       return { success: true, data: result.data };
     } catch (error) {
@@ -215,6 +447,18 @@ const createModelAPI = (modelName: string) => ({
   // Get with relationships (leverages Amplify Gen2 relationships)
   async getWithRelations(id: string, includes: string[] = []) {
     try {
+      // Safety check: ensure client.models is available
+      if (!client.models || !(client.models as any)[modelName]) {
+        console.error(`Client debug info for ${modelName}:`, {
+          clientExists: !!client,
+          modelsExists: !!client.models,
+          availableModels: client.models ? Object.keys(client.models) : [],
+          requestedModel: modelName,
+          hasProjectsModel: !!(client.models as any)?.Projects
+        });
+        throw new Error(`Model ${modelName} not available on client. Available models: ${client.models ? Object.keys(client.models).join(', ') : 'none'}`);
+      }
+      
       // For now, just get the basic record - relationships will be auto-included by Amplify
       const result = await (client.models as any)[modelName].get({ id });
       return { success: true, data: result.data };
@@ -226,6 +470,7 @@ const createModelAPI = (modelName: string) => ({
 
   async update(id: string, updates: any) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].update({ id, ...updates });
       return { success: true, data: result.data };
     } catch (error) {
@@ -236,6 +481,7 @@ const createModelAPI = (modelName: string) => ({
 
   async delete(id: string) {
     try {
+      ensureClientReady();
       const result = await (client.models as any)[modelName].delete({ id });
       return { success: true, data: result.data };
     } catch (error) {
@@ -243,7 +489,8 @@ const createModelAPI = (modelName: string) => ({
       return { success: false, error };
     }
   }
-});
+  };
+};
 
 // Lazy-loaded API instances to reduce main bundle size
 const apiCache = new Map<string, any>();
@@ -433,29 +680,21 @@ export const relationAPI = {
     try {
       relationLogger.info('Looking for project comments', { projectId, projectIdType: typeof projectId });
       
-      // Use simple client.models approach (working version)
+      // Use GraphQL client for reliable query execution
       const filter = { projectId: { eq: projectId } };
-      const result = await (client.models as any).ProjectComments.list({ filter, limit: 1000 });
+      const result = await graphqlClient.graphql({
+        query: listProjectComments,
+        variables: { filter, limit: 1000 }
+      });
+      
+      const comments = result.data?.listProjectComments?.items || [];
       
       relationLogger.info('Comments query result', {
         success: !!result.data,
-        count: result.data?.length || 0,
+        count: comments.length,
         hasErrors: !!result.errors,
-        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
+        firstItem: comments[0]
       });
-      
-      // Enhanced debugging for date fields investigation
-      if (result.data?.[0]) {
-        relationLogger.debug('Sample comment date fields', {
-          id: result.data[0].id,
-          createdAt: result.data[0].createdAt,
-          createdDate: result.data[0].createdDate,
-          updatedAt: result.data[0].updatedAt,
-          updatedDate: result.data[0].updatedDate,
-          hasCreatedDate: 'createdDate' in result.data[0],
-          hasUpdatedDate: 'updatedDate' in result.data[0]
-        });
-      }
       
       if (result.errors) {
         relationLogger.error('ProjectComments query errors', result.errors);
@@ -463,9 +702,9 @@ export const relationAPI = {
       
       return { 
         success: true, 
-        data: result.data || [], 
+        data: comments, 
         filterUsed: filter,
-        note: result.data?.length === 0 ? 'No comments found for this project' : undefined
+        note: comments.length === 0 ? 'No comments found for this project' : undefined
       };
     } catch (error) {
       relationLogger.error('Error getting project comments', error);
@@ -478,61 +717,31 @@ export const relationAPI = {
     try {
       relationLogger.info('Looking for project milestones', { projectId, projectIdType: typeof projectId });
       
-      // Use client.models to get all fields (including legacy fields from DynamoDB)
+      // Use GraphQL client for reliable query execution
       const filter = { projectId: { eq: projectId } };
-      const result = await (client.models as any).ProjectMilestones.list({ filter, limit: 1000 });
+      const result = await graphqlClient.graphql({
+        query: listProjectMilestones,
+        variables: { filter, limit: 1000 }
+      });
+      
+      const milestones = result.data?.listProjectMilestones?.items || [];
       
       relationLogger.info('Milestones query result', {
         success: !!result.data,
-        count: result.data?.length || 0,
+        count: milestones.length,
         hasErrors: !!result.errors,
-        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
+        firstItem: milestones[0]
       });
-      
-      // Enhanced debugging for date fields investigation
-      if (result.data?.[0]) {
-        relationLogger.debug('Sample milestone date fields', {
-          id: result.data[0].id,
-          name: result.data[0].name,
-          createdAt: result.data[0].createdAt,
-          createdDate: result.data[0].createdDate,
-          updatedAt: result.data[0].updatedAt,
-          updatedDate: result.data[0].updatedDate,
-          hasCreatedDate: 'createdDate' in result.data[0],
-          hasUpdatedDate: 'updatedDate' in result.data[0]
-        });
-      }
       
       if (result.errors) {
         relationLogger.error('ProjectMilestones query errors', result.errors);
       }
-      
-      // Always check what exists in the table for debugging
-      if (result.data?.length <= 1) {
-        console.log('relationAPI.getProjectMilestones: No results with filter, checking total records...');
-        try {
-          // Search with higher limit to find project 68 records
-          const allResult = await (client.models as any).ProjectMilestones.list({ limit: 100 });
-          const project68Records = allResult.data?.filter((item: any) => item?.projectId === "68");
-          console.log('relationAPI.getProjectMilestones: Searching 100 records for project 68...');
-          console.log('relationAPI.getProjectMilestones: Found project 68 records:', project68Records?.length || 0);
-          if (project68Records?.length > 0) {
-            console.log('relationAPI.getProjectMilestones: Project 68 milestone details:', project68Records.map((item: any) => ({
-              id: item?.id,
-              projectId: item?.projectId,
-              name: item?.name
-            })));
-          }
-        } catch (e) {
-          console.log('relationAPI.getProjectMilestones: Failed to search records');
-        }
-      }
 
       return { 
         success: true, 
-        data: result.data || [], 
+        data: milestones, 
         filterUsed: filter,
-        note: result.data?.length === 0 ? 'No milestones found for this project' : undefined
+        note: milestones.length === 0 ? 'No milestones found for this project' : undefined
       };
     } catch (error) {
       console.error('Error getting project milestones:', error);
@@ -545,7 +754,7 @@ export const relationAPI = {
     try {
       relationLogger.info('Looking for project payment terms', { projectId, projectIdType: typeof projectId, filterNote: 'filtering for type="byClient" only' });
       
-      // Use client.models to get all fields (including legacy fields from DynamoDB)
+      // Use GraphQL client for reliable query execution
       // Filter by projectId AND type = "byClient" to only show client payments
       const filter = { 
         and: [
@@ -553,59 +762,29 @@ export const relationAPI = {
           { type: { eq: "byClient" } }
         ]
       };
-      const result = await (client.models as any).ProjectPaymentTerms.list({ filter, limit: 1000 });
+      const result = await graphqlClient.graphql({
+        query: listProjectPaymentTerms,
+        variables: { filter, limit: 1000 }
+      });
+      
+      const paymentTerms = result.data?.listProjectPaymentTerms?.items || [];
       
       relationLogger.info('Payment terms query result', {
         success: !!result.data,
-        count: result.data?.length || 0,
+        count: paymentTerms.length,
         hasErrors: !!result.errors,
-        sampleFields: result.data?.[0] ? Object.keys(result.data[0]) : []
+        firstItem: paymentTerms[0]
       });
-      
-      // Enhanced debugging for date fields investigation
-      if (result.data?.[0]) {
-        relationLogger.debug('Sample payment term date fields', {
-          id: result.data[0].id,
-          paymentName: result.data[0].paymentName,
-          createdAt: result.data[0].createdAt,
-          createdDate: result.data[0].createdDate,
-          updatedAt: result.data[0].updatedAt,
-          updatedDate: result.data[0].updatedDate,
-          hasCreatedDate: 'createdDate' in result.data[0],
-          hasUpdatedDate: 'updatedDate' in result.data[0]
-        });
-      }
       
       if (result.errors) {
         relationLogger.error('ProjectPaymentTerms query errors', result.errors);
       }
-      
-      // Always check what exists in the table for debugging if we get <= 1 results
-      if (result.data?.length <= 1) {
-        console.log('relationAPI.getProjectPaymentTerms: Limited results, checking total records...');
-        try {
-          // Search with higher limit to find project 68 records
-          const allResult = await (client.models as any).ProjectPaymentTerms.list({ limit: 100 });
-          const project68Records = allResult.data?.filter((item: any) => item?.projectId === "68");
-          console.log('relationAPI.getProjectPaymentTerms: Searching 100 records for project 68...');
-          console.log('relationAPI.getProjectPaymentTerms: Found project 68 records:', project68Records?.length || 0);
-          if (project68Records?.length > 0) {
-            console.log('relationAPI.getProjectPaymentTerms: Project 68 payment details:', project68Records.map((item: any) => ({
-              id: item?.id,
-              projectId: item?.projectId,
-              paymentName: item?.paymentName
-            })));
-          }
-        } catch (e) {
-          console.log('relationAPI.getProjectPaymentTerms: Failed to search records');
-        }
-      }
 
       return { 
         success: true, 
-        data: result.data || [], 
+        data: paymentTerms, 
         filterUsed: filter,
-        note: result.data?.length === 0 ? 'No client payments found for this project' : undefined
+        note: paymentTerms.length === 0 ? 'No client payments found for this project' : undefined
       };
     } catch (error) {
       console.error('Error getting project payment terms:', error);
@@ -762,6 +941,13 @@ export const optimizedProjectsAPI = {
 
   // Tier 2: Background loading of related data for enhanced cards
   async loadProjectsWithRelations(projectIds: string[]) {
+    // Check if client.models is available before attempting relations loading
+    if (!client.models || Object.keys(client.models).length === 0) {
+      console.warn('Client models not available, skipping relations loading for projects:', projectIds.length);
+      // Return empty map since relations loading is not critical for basic functionality
+      return new Map();
+    }
+    
     const results = await Promise.all(
       projectIds.map(id => 
         projectsAPI.getWithRelations(id, ['address', 'agent', 'homeowner'])
@@ -782,15 +968,19 @@ export const optimizedProjectsAPI = {
     projectsLogger.info('Loading project by id', { projectId });
     
     try {
-      // Query by auto-generated id field
-      const result = await (client.models as any).Projects.get({ 
-        id: projectId
+      // FIXED: listProjects filtering is broken in GraphQL, but getProjects works
+      // Use direct getProjects query instead of broken listProjects filter
+      const result = await graphqlClient.graphql({
+        query: getProjects,
+        variables: { id: projectId }
       });
       
+      const projectData = result.data?.getProjects;
+      
       projectsLogger.debug('Project query result', {
-        success: !!result.data,
+        success: !!projectData,
         hasErrors: !!result.errors,
-        projectFound: result.data?.id
+        projectFound: projectData?.id
       });
       
       if (result.errors) {
@@ -798,9 +988,9 @@ export const optimizedProjectsAPI = {
         return { success: false, error: result.errors };
       }
       
-      if (result.data) {
-        projectsLogger.info('Project loaded successfully', { projectId: result.data.id });
-        return { success: true, data: result.data };
+      if (projectData) {
+        projectsLogger.info('Project loaded successfully', { projectId: projectData.id });
+        return { success: true, data: projectData };
       } else {
         projectsLogger.warn('No project found', { projectId });
         return { success: false, error: `No project found with id: ${projectId}` };

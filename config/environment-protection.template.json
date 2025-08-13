@@ -1,0 +1,98 @@
+{
+  "allowedSuffixes": ["${BACKEND_SUFFIX_DEV}", "${BACKEND_SUFFIX_PROD}"],
+  "environments": {
+    "development": {
+      "name": "development",
+      "amplifyAppId": "sandbox",
+      "backendSuffix": "${BACKEND_SUFFIX_DEV}",
+      "graphqlEndpoint": "sandbox-generated-endpoint",
+      "branch": "main",
+      "protection": {
+        "allowDestructiveOperations": true,
+        "requireApproval": false,
+        "autoBackup": true,
+        "testDataAllowed": true
+      },
+      "environment_variables": {
+        "NEXT_PUBLIC_LOG_LEVEL": "DEBUG",
+        "LOG_LEVEL": "DEBUG",
+        "DEBUG_NOTIFICATIONS": "true",
+        "NODE_ENV": "development"
+      }
+    },
+    "production": {
+      "name": "production",
+      "amplifyAppId": "${AMPLIFY_APP_ID}",
+      "backendSuffix": "${BACKEND_SUFFIX_PROD}",
+      "graphqlEndpoint": "${GRAPHQL_ENDPOINT_PROD}",
+      "branch": "${PROD_BRANCH}",
+      "protection": {
+        "allowDestructiveOperations": false,
+        "requireApproval": true,
+        "autoBackup": true,
+        "testDataAllowed": false,
+        "restrictedTables": [
+          "Contacts",
+          "Properties",
+          "Projects",
+          "Requests",
+          "Quotes",
+          "BackOfficeRequestStatuses"
+        ],
+        "approvers": ["info@realtechee.com"],
+        "maintenanceWindows": {"allowed": ["02:00-04:00 UTC"], "timezone": "UTC"}
+      },
+      "environment_variables": {
+        "NEXT_PUBLIC_LOG_LEVEL": "INFO",
+        "LOG_LEVEL": "INFO",
+        "DEBUG_NOTIFICATIONS": "false",
+        "NODE_ENV": "production"
+      },
+      "monitoring": {
+        "cloudwatch": {
+          "enabled": true,
+          "retentionDays": 30,
+          "alarms": [
+            {"name": "ErrorRate", "metric": "Errors", "threshold": 5, "period": 300},
+            {"name": "ResponseTime", "metric": "Duration", "threshold": 10000, "period": 300}
+          ]
+        }
+      }
+    }
+  },
+  "isolation": {
+    "crossEnvironmentAccess": false,
+    "sharedResources": [],
+    "validationRules": [
+      {"rule": "no_test_data_in_production", "description": "Prevent test data from being written to production"},
+      {"rule": "require_backup_before_schema_changes", "description": "Mandatory backup before any schema modifications"},
+      {"rule": "production_approval_workflow", "description": "All production changes require approval"}
+    ]
+  },
+  "deployment": {
+    "production": {
+      "requireBranchProtection": true,
+      "requiredStatusChecks": ["ci"],
+      "requiredReviewers": 1,
+      "dismissStaleReviews": true,
+      "deploymentGates": [
+        {"name": "test_validation", "description": "All tests must pass before deployment"},
+        {"name": "data_backup", "description": "Data backup must be completed"},
+        {"name": "security_scan", "description": "Security vulnerability scan must pass"}
+      ]
+    }
+  },
+  "security": {
+    "dataProtection": {
+      "backupRetention": 90,
+      "encryptionAtRest": true,
+      "encryptionInTransit": true,
+      "accessLogging": true
+    },
+    "compliance": {
+      "dataResidency": "${AWS_REGION}",
+      "auditLogging": true,
+      "changeTracking": true
+    }
+  }
+}

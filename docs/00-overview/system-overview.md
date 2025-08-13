@@ -193,41 +193,42 @@ External Integrations:
 ## Data Architecture & Infrastructure
 
 ### Production Database Schema (26+ Tables)
-**Table Naming Pattern**: `TableName-aqnqdrctpzfwfjwyxxsmu6peoq-NONE`
+**Table Naming Pattern**: `TableName-<dynamic-backend-suffix>-NONE` (historic static example `aqnqdrctpzfwfjwyxxsmu6peoq` before dynamic refactor)
 
 ```
 Core Business Entities:
-├── Contacts-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (273 records)
+├── Contacts-<dynamic-backend-suffix>-NONE (273 records)
 │   ├── Primary Key: id (String)
 │   ├── Business Data: fullName, email, phone, role
 │   └── Relationships: Projects, Properties, Users
-├── Properties-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (234 records)
+├── Properties-<dynamic-backend-suffix>-NONE (234 records)
 │   ├── Primary Key: id (String)
 │   ├── Business Data: address, city, state, propertyType
 │   └── Relationships: Projects, Requests
-├── Requests-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (863 records)
+├── Requests-<dynamic-backend-suffix>-NONE (863 records)
 │   ├── Primary Key: id (String)
 │   ├── Business Data: status, assignedTo, leadSource
 │   ├── Foreign Keys: contactId, propertyId
 │   └── Workflow: 5-status state machine with 14-day expiration
-├── Projects-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (64 records)
+├── Projects-<dynamic-backend-suffix>-NONE (64 records)
 │   ├── Primary Key: id (String)
 │   ├── Business Data: status, assignedPM, budget
 │   └── Relationships: Quotes, Milestones, Comments
-├── Quotes-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (15 records)
+├── Quotes-<dynamic-backend-suffix>-NONE (15 records)
 │   ├── Primary Key: id (String)
 │   ├── Business Data: totalAmount, status, approvalDate
 │   └── Relationships: Projects, Items, Terms
-└── Support Tables:
-    ├── BackOfficeRequestStatuses-aqnqdrctpzfwfjwyxxsmu6peoq-NONE (5 records)
-    ├── NotificationQueue-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
-    ├── NotificationTemplate-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
-    ├── ProjectComments-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
-    └── ProjectMilestones-aqnqdrctpzfwfjwyxxsmu6peoq-NONE
+├── Quotes-<dynamic-backend-suffix>-NONE (15 records)
+  ├── BackOfficeRequestStatuses-<dynamic-backend-suffix>-NONE (5 records)
+  ├── NotificationQueue-<dynamic-backend-suffix>-NONE
+  ├── NotificationTemplate-<dynamic-backend-suffix>-NONE
+  ├── ProjectComments-<dynamic-backend-suffix>-NONE
+  └── ProjectMilestones-<dynamic-backend-suffix>-NONE
 ```
 
 ### Infrastructure Scaling & Performance
 ```yaml
+├── Quotes-<dynamic-backend-suffix>-NONE (15 records)
 Auto-Scaling Configuration:
   DynamoDB:
     read_capacity: 5-4000 units (70% target utilization)
@@ -255,13 +256,13 @@ Performance Achievements:
 ### Environment Isolation Architecture
 ```yaml
 Production Environment:
-  tables: "*-aqnqdrctpzfwfjwyxxsmu6peoq-NONE"
+  tables: "*-<dynamic-backend-suffix>-NONE" # previously `aqnqdrctpzfwfjwyxxsmu6peoq`
   api_endpoint: "374sdjlh3bdnhp2sz4qttvyhce.appsync-api.us-west-1.amazonaws.com"
   app_url: "https://d200k2wsaf8th3.amplifyapp.com"
   data_records: 1449 (migrated from development)
 
 Development Environment:
-  tables: "*-fvn7t5hbobaxjklhrqzdl4ac34-NONE"  
+  tables: "*-<dynamic-backend-suffix>-NONE"  # previously `fvn7t5hbobaxjklhrqzdl4ac34`
   api_endpoint: "ik6nvyekjvhvhimgtomqcxvkty.appsync-api.us-west-1.amazonaws.com"
   app_url: "sandbox environment"
   isolation: Complete separation, zero shared resources

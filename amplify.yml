@@ -50,6 +50,47 @@ frontend:
     build:
       commands:
         - echo "Build frontend"
+        - echo "Creating runtime environment configuration from Amplify variables"
+        - touch .env.production
+        - echo "Mapping Amplify environment variables to Next.js format"
+        - |
+          if [ -n "$BACKEND_SUFFIX" ]; then
+            echo "NEXT_PUBLIC_BACKEND_SUFFIX=$BACKEND_SUFFIX" >> .env.production
+          fi
+        - |
+          if [ -n "$GRAPHQL_URL" ]; then
+            echo "NEXT_PUBLIC_GRAPHQL_URL=$GRAPHQL_URL" >> .env.production
+          fi
+        - |
+          if [ -n "$USER_POOL_ID" ]; then
+            echo "NEXT_PUBLIC_USER_POOL_ID=$USER_POOL_ID" >> .env.production
+          fi
+        - |
+          if [ -n "$USER_POOL_CLIENT_ID" ]; then
+            echo "NEXT_PUBLIC_USER_POOL_CLIENT_ID=$USER_POOL_CLIENT_ID" >> .env.production
+          fi
+        - |
+          if [ -n "$S3_BUCKET" ]; then
+            echo "NEXT_PUBLIC_S3_PUBLIC_BASE_URL=https://$S3_BUCKET.s3.us-west-1.amazonaws.com" >> .env.production
+          fi
+        - echo "NEXT_PUBLIC_AWS_REGION=us-west-1" >> .env.production
+        - |-
+          # Set environment based on AWS branch
+          case "$AWS_BRANCH" in
+            "production"|"prod-v2") 
+              echo "NEXT_PUBLIC_ENVIRONMENT=production" >> .env.production
+              ;;
+            "staging") 
+              echo "NEXT_PUBLIC_ENVIRONMENT=staging" >> .env.production
+              ;;
+            *) 
+              echo "NEXT_PUBLIC_ENVIRONMENT=development" >> .env.production
+              ;;
+          esac
+        - echo "Environment variables mapped to .env.production:"
+        - cat .env.production
+        - echo "Run strict environment contract verification"
+        - STRICT_SUFFIX_ENFORCEMENT=true npm run verify:env-contract
         - npm run build
   artifacts:
     baseDirectory: .next

@@ -27,20 +27,22 @@ const ProjectDetails: NextPage = () => {
   const projectIdParam = router.query.projectId;
   const projectId = Array.isArray(projectIdParam) ? projectIdParam[0] : projectIdParam;
 
-  // Extract projectId from URL if router.query is not ready yet
-  const getProjectIdFromUrl = (): string | undefined => {
-    if (projectId) {
+  // Extract projectId from URL - wait for router to be ready
+  const currentProjectId = useMemo(() => {
+    // First priority: router query param (after router is ready)
+    if (router.isReady && projectId) {
       return projectId;
     }
+    
+    // Second priority: manual URL parsing (client-side only)
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const urlProjectId = urlParams.get('projectId');
-      return urlProjectId || undefined; // Convert null to undefined
+      return urlProjectId || undefined;
     }
+    
     return undefined;
-  };
-
-  const currentProjectId = getProjectIdFromUrl();
+  }, [router.isReady, projectId]);
 
   // Detect if this is a direct URL access or page refresh
   // Only force refresh if there's no sessionStorage data for this project
@@ -60,12 +62,15 @@ const ProjectDetails: NextPage = () => {
     }
   }, [currentProjectId]);
 
-  // Use the reusable project data hook
+  // Use the reusable project data hook - only when we have a projectId
   const { project, milestones, payments, comments: initialComments, loading, error } = useProjectData({
     projectId: currentProjectId,
     loadFromSessionStorage: true,
     forceRefresh: isDirectAccess // Force fresh data on direct access/refresh
   });
+  
+  // Show loading if router is not ready yet or if we're loading data
+  const isLoading = !router.isReady || loading;
 
   // Local state for comments to handle real-time updates
   const [comments, setComments] = useState<Comment[]>([]);
@@ -142,15 +147,17 @@ const ProjectDetails: NextPage = () => {
       </Head>
 
       <main className="flex-grow">
-        {/* Loading State */}
-        {loading && (
+        {/* Loading State - show while router is not ready or data is loading */}
+        {isLoading && (
           <div className="container mx-auto px-4 py-16 flex justify-center">
-            <div className="animate-pulse text-gray-500 text-lg">Loading project details...</div>
+            <div className="animate-pulse text-gray-500 text-lg">
+              {!router.isReady ? 'Initializing...' : 'Loading project details...'}
+            </div>
           </div>
         )}
 
-        {/* Error State */}
-        {!loading && error && (
+        {/* Error State - only show when router is ready */}
+        {router.isReady && !loading && error && (
           <div className="container mx-auto px-4 py-16 flex flex-col items-center">
             <div className="text-amber-600 text-lg mb-6">{error}</div>
             <Button
@@ -162,8 +169,8 @@ const ProjectDetails: NextPage = () => {
           </div>
         )}
 
-        {/* Project Details */}
-        {!loading && !error && project && (
+        {/* Project Details - only show when router is ready */}
+        {router.isReady && !loading && !error && project && (
           <div className="container mx-auto px-4 py-12">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               {/* Left Column (60%) */}

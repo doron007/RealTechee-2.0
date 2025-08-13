@@ -34,21 +34,13 @@ const docClient = DynamoDBDocumentClient.from(ddbClient);
 const getTableName = (modelName) => {
   // Detect environment based on BASE_URL or process.env
   const baseUrl = process.env.BASE_URL || '';
-  let envId;
-  let envName;
-  
-  if (baseUrl.includes('realtechee.com') || baseUrl.includes('production')) {
-    // Production environment
-    envId = 'aqnqdrctpzfwfjwyxxsmu6peoq';
-    envName = 'production';
-  } else {
-    // Development/staging environment (localhost, staging URLs, etc.)
-    envId = 'fvn7t5hbobaxjklhrqzdl4ac34';
-    envName = 'development/staging';
+  const detectedSuffix = process.env.NEXT_PUBLIC_BACKEND_SUFFIX || process.env.TABLE_SUFFIX;
+  if (!detectedSuffix) {
+    throw new Error('Missing NEXT_PUBLIC_BACKEND_SUFFIX / TABLE_SUFFIX for test environment');
   }
-  
-  const tableName = `${modelName}-${envId}-NONE`;
-  console.log(`🔍 Environment detected: ${envName} (${baseUrl})`);
+  const envName = (process.env.NEXT_PUBLIC_ENVIRONMENT || baseUrl.includes('production') ? 'production' : 'non-production');
+  const tableName = `${modelName}-${detectedSuffix}-NONE`;
+  console.log(`🔍 Environment detected: ${envName} (${baseUrl}) suffix=${detectedSuffix}`);
   console.log(`📊 Using table name: ${tableName} for model: ${modelName}`);
   
   return tableName;

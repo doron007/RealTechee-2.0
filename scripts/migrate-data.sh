@@ -155,23 +155,18 @@ cmd_migrate() {
     echo "• Takes 10-30 minutes to complete"
     echo "• Includes automatic rollback on failure"
     echo ""
-    echo "Source Environment: fvn7t5hbobaxjklhrqzdl4ac34 (dev/staging)"
-    echo "Target Environment: aqnqdrctpzfwfjwyxxsmu6peoq (production)"
+    echo "Source Environment: ${SOURCE_BACKEND_SUFFIX:?SOURCE_BACKEND_SUFFIX required} (dev/staging)"
+    echo "Target Environment: ${TARGET_BACKEND_SUFFIX:?TARGET_BACKEND_SUFFIX required} (production)"
     echo ""
     
-    # Double confirmation
-    log_warning "Are you absolutely sure you want to proceed?"
-    read -p "Type 'MIGRATE' to confirm: " -r
-    echo
-    if [[ "$REPLY" != "MIGRATE" ]]; then
-        log_info "Migration cancelled"
-        exit 0
+    # Phase5: explicit suffix confirmation
+    if [[ "$CONFIRM_SUFFIX" != "$TARGET_BACKEND_SUFFIX" ]]; then
+        log_error "--confirm-suffix $CONFIRM_SUFFIX must match TARGET_BACKEND_SUFFIX $TARGET_BACKEND_SUFFIX"
+        exit 2
     fi
-    
-    log_warning "Final confirmation - this cannot be easily undone!"
-    read -p "Type 'YES' to begin migration: " -r
+    read -p "Type 'FULLMIGRATE' to confirm full migration: " -r
     echo
-    if [[ "$REPLY" != "YES" ]]; then
+    if [[ "$REPLY" != "FULLMIGRATE" ]]; then
         log_info "Migration cancelled"
         exit 0
     fi
@@ -239,6 +234,17 @@ cmd_status() {
 }
 
 # Main command dispatcher
+CONFIRM_SUFFIX=""
+args=()
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --confirm-suffix)
+            shift; CONFIRM_SUFFIX="$1"; shift;;
+        *) args+=("$1"); shift;;
+    esac
+done
+set -- "${args[@]}"
+
 main() {
     # Check prerequisites first
     check_prerequisites
