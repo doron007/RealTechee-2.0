@@ -162,14 +162,14 @@ const createModelAPI = (modelName: string) => {
           const result = await graphqlClient.graphql({
             query: minimalQuotesQuery,
             variables: { limit: 2000 }
-          });
+          }) as any; // Cast to any to handle GraphQL type issues
           
           console.log(`📊 Quotes query result: ${result.data?.listQuotes?.items?.length || 0} items returned`);
           
           // Handle GraphQL errors gracefully - log but continue with partial data
           if (result.errors) {
             console.warn(`GraphQL validation errors for Quotes (${result.errors.length} errors) - using partial data`);
-            console.debug('First few errors:', result.errors.slice(0, 3).map(e => e.message));
+            console.debug('First few errors:', result.errors.slice(0, 3).map((e: any) => e.message));
           }
           
           return { success: true, data: result.data?.listQuotes?.items || [] };
@@ -206,7 +206,7 @@ const createModelAPI = (modelName: string) => {
           const result = await graphqlClient.graphql({
             query: minimalRequestsQuery,
             variables: { limit: 2000 }
-          });
+          }) as any; // Cast to any to handle GraphQL type issues
           
           console.log(`📊 Requests query result: ${result.data?.listRequests?.items?.length || 0} items returned`);
           

@@ -114,7 +114,12 @@ export function useProjectData({
           const result = await optimizedProjectsAPI.loadFullProject(projectId);
           
           if (result.success && result.data) {
-            projectData = result.data;
+            // Transform API data to match Project interface
+            projectData = {
+              ...result.data,
+              title: result.data.title || 'Untitled Project', // Handle nullable title
+              status: result.data.status || 'New' // Handle nullable status
+            } as Project;
             setState(prev => ({ ...prev, project: projectData }));
           } else {
             throw new Error('Project not found');
