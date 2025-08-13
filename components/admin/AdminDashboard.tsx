@@ -63,18 +63,18 @@ const AdminDashboard: React.FC = () => {
     try {
       // Load all data in parallel for better performance
       const [
-        requestsResult, 
+        projectsResult,     // Fixed: Now correctly gets projects
         quotesResult, 
-        projectsResult, 
+        requestsResult,     // Fixed: Now correctly gets requests
         contactsResult, 
         usersResult,
         projectStatusesResult,
         quoteStatusesResult,
         requestStatusesResult
       ] = await Promise.all([
-        projectsAPI.list(),
-        quotesAPI.list(),
-        requestsAPI.list(),
+        projectsAPI.list(),        // Returns projects → projectsResult
+        quotesAPI.list(),          // Returns quotes → quotesResult
+        requestsAPI.list(),        // Returns requests → requestsResult
         contactsAPI.list(),
         AdminService.listUsers(100),
         backOfficeProjectStatusesAPI.list(),
@@ -87,8 +87,11 @@ const AdminDashboard: React.FC = () => {
       const quoteStatuses = quoteStatusesResult.success ? quoteStatusesResult.data : [];
       const requestStatuses = requestStatusesResult.success ? requestStatusesResult.data : [];
 
-      // Calculate project stats using actual status data
-      const projects = projectsResult.success ? projectsResult.data : [];
+      // Calculate project stats using actual status data (filter out archived)
+      const allProjects = projectsResult.success ? projectsResult.data : [];
+      const projects = allProjects.filter((p: any) => p.status !== 'Archived' && p.archived !== 'true');
+      console.log(`📊 Projects: ${allProjects.length} total, ${projects.length} non-archived`);
+      
       const projectStats = {
         total: projects.length,
         new: projects.filter((p: any) => p.status === 'New').length,
@@ -98,8 +101,11 @@ const AdminDashboard: React.FC = () => {
         completed: projects.filter((p: any) => ['Sold', 'Completed'].includes(p.status)).length
       };
 
-      // Calculate quote stats using actual status data
-      const quotes = quotesResult.success ? quotesResult.data : [];
+      // Calculate quote stats using actual status data (filter out archived)
+      const allQuotes = quotesResult.success ? quotesResult.data : [];
+      const quotes = allQuotes.filter((q: any) => q.status !== 'Archived' && q.archived !== 'true');
+      console.log(`📊 Quotes: ${allQuotes.length} total, ${quotes.length} non-archived`);
+      
       const quoteStats = {
         total: quotes.length,
         pending: quotes.filter((q: any) => 
@@ -109,8 +115,11 @@ const AdminDashboard: React.FC = () => {
         expired: quotes.filter((q: any) => q.status === 'Expired').length
       };
 
-      // Calculate request stats using actual status data
-      const requests = requestsResult.success ? requestsResult.data : [];
+      // Calculate request stats using actual status data (filter out archived)
+      const allRequests = requestsResult.success ? requestsResult.data : [];
+      const requests = allRequests.filter((r: any) => r.status !== 'Archived' && r.archived !== 'true');
+      console.log(`📊 Requests: ${allRequests.length} total, ${requests.length} non-archived`);
+      
       const requestStats = {
         total: requests.length,
         submitted: requests.filter((r: any) => r.status === 'Submitted').length,

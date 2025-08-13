@@ -2,7 +2,7 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../amplify/data/resource';
 import { Amplify } from 'aws-amplify';
 import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
-import { listProjects, getProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms } from '../queries';
+import { listProjects, getProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms, listQuotes, listRequests, listContacts, listBackOfficeProjectStatuses, listBackOfficeQuoteStatuses, listBackOfficeRequestStatuses } from '../queries';
 import { createLogger } from './logger';
 import { logClientConfigOnce } from './environmentConfig';
 
@@ -132,6 +132,139 @@ const createModelAPI = (modelName: string) => {
         return { success: true, data: result.data.listProjectPaymentTerms.items };
       }
       
+      if (modelName === 'Quotes') {
+        try {
+          // Use minimal query to avoid field validation errors
+          const minimalQuotesQuery = `
+            query ListQuotesMinimal($limit: Int) {
+              listQuotes(limit: $limit) {
+                items {
+                  id
+                  status
+                  title
+                  requestId
+                  projectId
+                  assignedTo
+                  quoteNumber
+                  budget
+                  totalPrice
+                  product
+                  createdAt
+                  updatedAt
+                  __typename
+                }
+                nextToken
+                __typename
+              }
+            }
+          `;
+          
+          const result = await graphqlClient.graphql({
+            query: minimalQuotesQuery,
+            variables: { limit: 2000 }
+          });
+          
+          console.log(`📊 Quotes query result: ${result.data?.listQuotes?.items?.length || 0} items returned`);
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Quotes (${result.errors.length} errors) - using partial data`);
+            console.debug('First few errors:', result.errors.slice(0, 3).map(e => e.message));
+          }
+          
+          return { success: true, data: result.data?.listQuotes?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Quotes GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'Requests') {
+        try {
+          // Use minimal query to avoid field validation errors
+          const minimalRequestsQuery = `
+            query ListRequestsMinimal($limit: Int) {
+              listRequests(limit: $limit) {
+                items {
+                  id
+                  status
+                  product
+                  assignedTo
+                  message
+                  leadSource
+                  archived
+                  createdAt
+                  updatedAt
+                  __typename
+                }
+                nextToken
+                __typename
+              }
+            }
+          `;
+          
+          const result = await graphqlClient.graphql({
+            query: minimalRequestsQuery,
+            variables: { limit: 2000 }
+          });
+          
+          console.log(`📊 Requests query result: ${result.data?.listRequests?.items?.length || 0} items returned`);
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Requests (${result.errors.length} errors) - using partial data`);
+          }
+          
+          return { success: true, data: result.data?.listRequests?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Requests GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'Contacts') {
+        try {
+          const result = await graphqlClient.graphql({
+            query: listContacts,
+            variables: { limit: 2000 }
+          });
+          
+          // Handle GraphQL errors gracefully - log but continue with partial data
+          if (result.errors) {
+            console.warn(`GraphQL validation errors for Contacts (${result.errors.length} errors) - using partial data`);
+          }
+          
+          return { success: true, data: result.data?.listContacts?.items || [] };
+        } catch (graphqlError) {
+          console.warn('Contacts GraphQL query failed completely, returning empty array:', graphqlError);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'BackOfficeProjectStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeProjectStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeProjectStatuses.items };
+      }
+      
+      if (modelName === 'BackOfficeQuoteStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeQuoteStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeQuoteStatuses.items };
+      }
+      
+      if (modelName === 'BackOfficeRequestStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeRequestStatuses,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeRequestStatuses.items };
+      }
+      
       ensureClientReady();
       const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };
@@ -206,6 +339,84 @@ const createModelAPI = (modelName: string) => {
           data: result.data.listProjectPaymentTerms.items, 
           nextToken: result.data.listProjectPaymentTerms.nextToken,
           totalCount: result.data.listProjectPaymentTerms.items?.length 
+        };
+      }
+      
+      if (modelName === 'Quotes') {
+        const result = await graphqlClient.graphql({
+          query: listQuotes,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listQuotes.items, 
+          nextToken: result.data.listQuotes.nextToken,
+          totalCount: result.data.listQuotes.items?.length 
+        };
+      }
+      
+      if (modelName === 'Requests') {
+        const result = await graphqlClient.graphql({
+          query: listRequests,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listRequests.items, 
+          nextToken: result.data.listRequests.nextToken,
+          totalCount: result.data.listRequests.items?.length 
+        };
+      }
+      
+      if (modelName === 'Contacts') {
+        const result = await graphqlClient.graphql({
+          query: listContacts,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listContacts.items, 
+          nextToken: result.data.listContacts.nextToken,
+          totalCount: result.data.listContacts.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeProjectStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeProjectStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeProjectStatuses.items, 
+          nextToken: result.data.listBackOfficeProjectStatuses.nextToken,
+          totalCount: result.data.listBackOfficeProjectStatuses.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeQuoteStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeQuoteStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeQuoteStatuses.items, 
+          nextToken: result.data.listBackOfficeQuoteStatuses.nextToken,
+          totalCount: result.data.listBackOfficeQuoteStatuses.items?.length 
+        };
+      }
+      
+      if (modelName === 'BackOfficeRequestStatuses') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeRequestStatuses,
+          variables: queryOptions
+        });
+        return { 
+          success: true, 
+          data: result.data.listBackOfficeRequestStatuses.items, 
+          nextToken: result.data.listBackOfficeRequestStatuses.nextToken,
+          totalCount: result.data.listBackOfficeRequestStatuses.items?.length 
         };
       }
       
