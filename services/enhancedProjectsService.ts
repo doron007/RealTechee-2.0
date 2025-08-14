@@ -376,7 +376,37 @@ export class EnhancedProjectsService {
       }
 
       const rawItems = result.data?.listProjects?.items || [];
-      const rawProjects = rawItems.filter((p: any) => p && p.status !== 'Archived');
+      const rawProjects = rawItems
+        .filter((p: any) => p && p.status !== 'Archived')
+        .sort((a: any, b: any) => {
+          // Two-tier sorting: projects without CreatedDate first, then with CreatedDate
+          const hasCreatedDateA = a.createdDate && a.createdDate.trim() !== '';
+          const hasCreatedDateB = b.createdDate && b.createdDate.trim() !== '';
+          
+          // If one has CreatedDate and other doesn't, prioritize the one without
+          if (!hasCreatedDateA && hasCreatedDateB) return -1; // a (no CreatedDate) comes first
+          if (hasCreatedDateA && !hasCreatedDateB) return 1;  // b (no CreatedDate) comes first
+          
+          // Both in same tier, sort by appropriate date DESC
+          if (!hasCreatedDateA && !hasCreatedDateB) {
+            // Both have no CreatedDate - sort by CreatedAt DESC
+            const dateA = a.createdAt;
+            const dateB = b.createdAt;
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;  // b comes first
+            if (!dateB) return -1; // a comes first
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+          } else {
+            // Both have CreatedDate - sort by CreatedDate DESC
+            const dateA = a.createdDate;
+            const dateB = b.createdDate;
+            if (!dateA && !dateB) return 0;
+            if (!dateA) return 1;  // b comes first
+            if (!dateB) return -1; // a comes first
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+          }
+        });
+      
       logger.info(`Fetched ${rawProjects.length} active projects`);
 
       // Directly map each project using nested address/contacts
