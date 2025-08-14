@@ -125,6 +125,7 @@
     "reflect-metadata": "^0.2.2",
     "tailwind-merge": "^3.2.0",
     "twilio": "^5.7.1",
+    "tsx": "^4.19.4",
     "typedjson": "^1.8.0",
     "uuid": "^11.1.0",
     "yup": "^1.6.1"
@@ -152,7 +153,6 @@
     "tailwindcss": "^3.4.17",
     "to-ico": "^1.1.5",
     "ts-node": "^10.9.2",
-    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
   "overrides": {
