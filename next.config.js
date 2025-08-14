@@ -44,6 +44,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii.s3.us-west-1.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'amplify-d200k2wsaf8th3-st-realtecheeuseruploadsbuc-lollpnfn8hd5.s3.us-west-1.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'amplify-d200k2wsaf8th3-pr-realtecheeuseruploadsbuc-u5mq35hrcrmj.s3.us-west-1.amazonaws.com'
       }
     ],
     // Image optimization settings
