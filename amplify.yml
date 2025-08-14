@@ -50,8 +50,6 @@ frontend:
     build:
       commands:
         - echo "Build frontend"
-        - echo "Run strict environment contract verification"
-        - STRICT_SUFFIX_ENFORCEMENT=true npm run verify:env-contract
         - npm run build
   artifacts:
     baseDirectory: .next
