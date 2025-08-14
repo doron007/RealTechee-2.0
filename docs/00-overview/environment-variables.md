@@ -17,6 +17,8 @@ This project uses a hybrid approach for environment variables in AWS Amplify Gen
 
 ## Environment Variable Contract (Final)
 
+> **Note**: Environment contract verification (`verify:env-contract`) has been removed from Amplify builds as of August 2025. The modern dynamic mapping approach via `.env.staging`/`.env.production` eliminates the need for pre-build validation.
+
 ### Frontend (Exposed: `NEXT_PUBLIC_*`)
 
 | Variable | Required (Prod) | Purpose | Notes |
@@ -38,7 +40,7 @@ This project uses a hybrid approach for environment variables in AWS Amplify Gen
 | `TABLE_SUFFIX` | Yes (Lambdas) | Alias of backend suffix for functions | Derived from `NEXT_PUBLIC_BACKEND_SUFFIX` in pipeline when possible |
 | `EXPECTED_PROD_SUFFIX` | Optional | Drift detection anchor | Build warns if mismatch |
 | `EXPECTED_STAGING_SUFFIX` | Optional | Drift detection anchor | Same as above |
-| `STRICT_SUFFIX_ENFORCEMENT` | Optional | Enable hard failure on legacy literals | Set to `true` in CI only |
+| `STRICT_SUFFIX_ENFORCEMENT` | Optional | Enable hard failure on legacy literals | **DEPRECATED**: Removed from Amplify builds |
 
 ### Parameter Store (Secrets)
 

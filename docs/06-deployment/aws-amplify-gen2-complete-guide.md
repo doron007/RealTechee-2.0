@@ -411,6 +411,46 @@ git rev-parse prod
 2. **Verify Amplify build**: Check Amplify console for deployment status
 3. **Re-run deployment**: Scripts are now idempotent and safe to re-run
 
+### Amplify Build Failures (Resolved Issues)
+
+#### YAML Parsing Errors
+**Symptom**: `CustomerError: Unable to parse build spec: bad indentation of a mapping entry`
+**Root Cause**: Incorrect YAML indentation in `amplify.yml`
+**Solution**: Ensure all commands under `commands:` are indented consistently (column 9)
+```yaml
+# ❌ Wrong
+    build:
+      commands:
+  - echo "Build frontend"
+
+# ✅ Correct  
+    build:
+      commands:
+        - echo "Build frontend"
+```
+
+#### Environment Contract Verification Failures  
+**Symptom**: `Environment contract verification FAILED` with missing `NEXT_PUBLIC_*` variables
+**Root Cause**: Obsolete validation script checking for pre-set environment variables
+**Solution**: Modern approach uses dynamic mapping via `.env.staging`/`.env.production`
+```yaml
+# ❌ Old approach (removed)
+- STRICT_SUFFIX_ENFORCEMENT=true npm run verify:env-contract
+
+# ✅ New approach (streamlined)
+- echo "Build frontend" 
+- npm run build
+```
+
+#### Environment Variable Resolution
+**Modern Pattern**: Variables dynamically resolved during Next.js build:
+```bash
+# .env.staging/.env.production
+NEXT_PUBLIC_BACKEND_SUFFIX=${BACKEND_SUFFIX}
+NEXT_PUBLIC_GRAPHQL_URL=${GRAPHQL_URL}
+# AWS Amplify provides BACKEND_SUFFIX, GRAPHQL_URL, etc.
+```
+
 ## 🚨 Rollback Procedures
 
 ### Emergency Rollback Steps

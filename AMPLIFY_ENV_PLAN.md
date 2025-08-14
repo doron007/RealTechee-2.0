@@ -270,7 +270,7 @@ Below are the updated Amplify environment variables (extracted from console scre
 | All branches| BACKEND_SUFFIX       | irgzwsfnba3sfqtum5k2eyp4m |
 | All branches| GRAPHQL_URL          | https://xcl73f4ymzdbr06xcvw72jnzr3a.appsync-api.us-west-1.amazonaws.com/graphql |
 | All branches| IDENTITY_POOL_ID     | us-west-1:231b7978-2f9b-458d-8345-a922f2c3e018 |
-| All branches| S3_BUCKET            | amplify-d200k2wsaf8th3-st-realteecheuseruploadsbuc-lollpnfhn8d5 |
+| All branches| S3_BUCKET            | amplify-d200k2wsaf8th3-st-realtecheeuseruploadsbuc-lollpnfn8hd5 |
 | All branches| USER_POOL_CLIENT_ID  | 13buiopad6u8rfl9p5fhi5vcc4 |
 | All branches| USER_POOL_ID         | us-west-1_NeGfFuVD7 |
 | production  | API_KEY              | da2-wwiaod7ylfb7fl3xejucyfbf4y |
