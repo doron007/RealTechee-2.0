@@ -145,7 +145,6 @@
     "@types/node": "22.15.2",
     "@types/node-fetch": "^2.6.12",
     "@types/react": "19.1.2",
-    "@types/react-window": "^1.8.8",
     "@types/uuid": "^10.0.0",
     "aws-cdk-lib": "^2.189.1",
     "babel-runtime": "^6.26.0",
