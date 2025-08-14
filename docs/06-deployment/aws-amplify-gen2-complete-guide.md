@@ -37,37 +37,87 @@ This comprehensive guide consolidates the complete AWS Amplify Gen 2 deployment 
 
 ## 🌐 Environment Structure
 
+### Three Distinct Environments
+
 ```
-Development  → main branch       → Single Amplify App (d200k2wsaf8th3)
-Staging      → staging branch    → Single Amplify App (d200k2wsaf8th3)  
-Production   → production branch → Single Amplify App (d200k2wsaf8th3)
+Local Development → ampx sandbox           → Local backend stack (ephemeral)
+Staging          → staging branch         → Single Amplify App (d200k2wsaf8th3) - Staging backend
+Production       → production branch      → Single Amplify App (d200k2wsaf8th3) - Production backend
 ```
 
-**Key Architecture Change**: Now using a single AWS Amplify app with three branches, each automatically deployed when pushed to respective git branches.
+**Environment Details**:
+
+| Environment | Backend Type | Location | Backend Suffix | Purpose |
+|-------------|--------------|----------|----------------|---------|
+| **Local Dev** | Sandbox | Local (`ampx sandbox`) | `fvn7t5hbobaxjklhrqzdl4ac34` | Development & testing |
+| **Staging** | Server-built | AWS Amplify branch | `irgzwsfnba3sfqtum5k2eyp4m` | Server validation & beta |
+| **Production** | Server-built | AWS Amplify branch | `yk6ecaswg5aehj3ev76xzpbe` | Live production traffic |
+
+**Key Architecture**: Each environment has **completely isolated backend infrastructure**:
+- **Local**: Uses `.env.development.local` → points to sandbox backend
+- **Staging**: AWS Amplify builds backend during deployment with staging-specific variables
+- **Production**: AWS Amplify builds backend during deployment with production overrides
+
+### Environment Variable Precedence Chain
+
+**AWS Amplify follows this exact precedence order** (higher priority overrides lower):
+
+```
+1. AWS Amplify Environment Variables (Default) 
+   ↓ (overridden by)
+2. AWS Amplify Branch-Specific Environment Variables
+   ↓ (overridden by) 
+3. .env.staging / .env.production files (if present)
+   ↓ (overridden by)
+4. .env.staging.local / .env.production.local files (if present)
+   ↓ (backend build)
+5. Backend built with resolved environment variables (ampx pipeline deploy)
+```
+
+**Current Configuration**:
+- **AWS Amplify Default**: Points to staging backend (`irgzwsfnba3sfqtum5k2eyp4m`)
+- **Production Branch Override**: Points to production backend (`yk6ecaswg5aehj3ev76xzpbe`)
+- **Local Development**: Uses `.env.development.local` → sandbox backend (`fvn7t5hbobaxjklhrqzdl4ac34`)
 
 ### Configuration Generation Flow
 
+#### AWS Amplify Server-Side Build Process:
 ```
 AWS Amplify Build Process:
-1. Code checkout from git branch
-2. Backend phase: Run amplify.yml backend commands
-3. Generate amplify_outputs.json via npx ampx generate outputs
-4. Frontend phase: Build with generated config
-5. Deploy to AWS infrastructure
+1. Code checkout from git branch (staging/production)
+2. Environment variable resolution (following precedence chain above)
+3. Backend phase: Run amplify.yml backend commands
+4. Generate amplify_outputs.json via npx ampx generate outputs (server-side)
+5. Frontend build with resolved backend configuration
+```
+
+#### Local Development Process:
+```
+Local Development Process:
+1. ampx sandbox (creates local backend stack)
+2. .env.development.local (points to sandbox backend)
+3. Next.js development server with local backend
+4. Direct connection to local DynamoDB, Lambda, and Cognito resources
 ```
 
 ## 🔧 Development Workflow
 
 ### Daily Development Session
 
-#### 1. Start Your Environment
+#### 1. Start Your Local Development Environment
 ```bash
-# Terminal 1: Start sandbox (leave running)
+# Terminal 1: Start local sandbox backend (leave running)
 npx ampx sandbox --identifier doron --watch
 
-# Terminal 2: Start Next.js (leave running)  
+# Terminal 2: Start Next.js development server (leave running)  
 npm run dev
 ```
+
+**What happens**:
+- Creates local sandbox backend stack (suffix: `fvn7t5hbobaxjklhrqzdl4ac34`)
+- Generates local `amplify_outputs.json` pointing to sandbox resources
+- Uses `.env.development.local` for local environment configuration
+- **Complete isolation**: Local development doesn't affect staging or production environments
 
 #### 2. Making Backend Changes
 

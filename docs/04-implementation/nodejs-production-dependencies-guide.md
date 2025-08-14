@@ -6,7 +6,12 @@ This guide documents the complete approach to managing Node.js dependencies for 
 
 ## Background
 
-AWS Amplify Gen 2 builds with `NODE_ENV=production` exclude devDependencies during installation, causing build failures when packages required for compilation (TypeScript types, ESLint, build tools) are placed in devDependencies. This guide establishes the enterprise pattern for dependency classification.
+RealTechee 2.0 uses a **three-environment architecture** with AWS Amplify Gen 2:
+1. **Local Development**: `ampx sandbox` with local backend stack
+2. **Staging**: AWS Amplify branch with server-built backend
+3. **Production**: AWS Amplify branch with isolated backend stack
+
+AWS Amplify builds with `NODE_ENV=production` exclude devDependencies during installation, causing build failures when packages required for compilation (TypeScript types, ESLint, build tools) are placed in devDependencies. This guide establishes the enterprise pattern for dependency classification across all three environments.
 
 ## Dependency Classification Strategy
 
@@ -83,11 +88,38 @@ Is package used during AWS Amplify build?
 
 ### Local Production Build Simulation
 
+#### Environment-Specific Testing Strategy
+
+**Local Development Testing**:
 ```bash
 #!/bin/bash
-# Simulate AWS Amplify production build locally
+# Test local development environment
+echo "=== Local Development Environment Test ==="
 
-echo "=== Testing NODE_ENV=production Build ==="
+# Start sandbox backend
+npx ampx sandbox --once
+
+# Verify local environment
+node -e "console.log('ENV:', process.env.NEXT_PUBLIC_ENVIRONMENT)"
+npm run dev
+```
+
+**Staging Environment Simulation**:
+```bash
+#!/bin/bash
+# Simulate AWS Amplify staging build locally
+echo "=== Staging Environment Simulation ==="
+export NODE_ENV=staging
+
+npm run build
+npm run type-check
+```
+
+**Production Environment Simulation**:
+```bash
+#!/bin/bash
+# Simulate AWS Amplify production build locally (CRITICAL TEST)
+echo "=== Production Environment Simulation ==="
 export NODE_ENV=production
 
 echo "1. Clean install (simulating AWS environment)"
