@@ -1,135 +1,149 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Check and Start Amplify Sandbox",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "-c",
-  "if ! pgrep -f 'ampx sandbox' > /dev/null && ! lsof -ti:3000 > /dev/null 2>&1; then echo 'Starting Amplify sandbox (single run with --once)...'; npx ampx sandbox --once; else echo 'Amplify sandbox is already running'; fi"
-      ],
-      "group": "build",
-      "isBackground": true,
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "dedicated",
-        "group": "amplify"
-      },
-      "problemMatcher": {
-        "pattern": {
-          "regexp": "."
-        },
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": ".*Starting.*",
-          "endsPattern": ".*(Watching for file changes|Sandbox is running|Started backend|already running).*"
-        }
-      },
-      "runOptions": {
-        "instanceLimit": 1
-      }
-    },
-    {
-      "label": "Start Next.js Debug Server",
-      "type": "shell",
-      "command": "npm",
-      "args": ["run", "dev:debug"],
-      "group": "build",
-      "isBackground": true,
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "dedicated",
-        "group": "nextjs"
-      },
-      "problemMatcher": {
-        "pattern": {
-          "regexp": "."
-        },
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": ".*starting.*",
-          "endsPattern": ".*(Ready in|started server on|Local:).*"
-        }
-      },
-      "dependsOn": "Check and Start Amplify Sandbox",
-      "dependsOrder": "sequence"
-    },
-    {
-      "label": "Start Full-Stack Debug Environment",
-      "type": "shell",
-      "command": "npm",
-      "args": ["run", "debug:full-stack"],
-      "group": "build",
-      "isBackground": true,
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": true,
-        "panel": "dedicated",
-        "group": "debug"
-      },
-      "problemMatcher": {
-        "pattern": {
-          "regexp": "."
-        },
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": ".*Starting Full-Stack Debug Environment.*",
-          "endsPattern": ".*Full-stack debugging environment is ready.*"
-        }
-      }
-    },
-    {
-      "type": "npm",
-      "script": "dev:debug",
-      "group": "build",
-      "label": "npm: dev:debug",
-      "detail": "NODE_OPTIONS='--inspect' next dev",
-      "isBackground": true,
-      "problemMatcher": {
-        "owner": "typescript",
-        "source": "ts",
-        "fileLocation": "relative",
-        "pattern": {
-          "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(TS\\d+)\\s*:\\s*(.*)$",
-          "file": 1,
-          "location": 2,
-          "severity": 3,
-          "code": 4,
-          "message": 5
-        },
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": ".*starting.*",
-          "endsPattern": ".*(Ready in|started server on|Local:).*"
-        }
-      },
-      "options": {
-        "env": {
-          "NODE_OPTIONS": "--inspect"
-        }
-      }
-    },
-    {
-      "label": "Stop All Debug Processes",
-      "type": "shell",
-      "command": "bash",
-      "args": [
-        "-c", 
-        "echo 'Stopping debug processes...'; pkill -f '(next dev|ampx sandbox|debug-full-stack)' || echo 'No processes to stop'"
-      ],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Check and Start Amplify Sandbox",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"-c",
+				"if ! pgrep -f 'ampx sandbox' > /dev/null && ! lsof -ti:3000 > /dev/null 2>&1; then echo 'Starting Amplify sandbox (single run with --once)...'; npx ampx sandbox --once; else echo 'Amplify sandbox is already running'; fi"
+			],
+			"group": "build",
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated",
+				"group": "amplify"
+			},
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "."
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*Starting.*",
+					"endsPattern": ".*(Watching for file changes|Sandbox is running|Started backend|already running).*"
+				}
+			},
+			"runOptions": {
+				"instanceLimit": 1
+			}
+		},
+		{
+			"label": "Start Next.js Debug Server",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev:debug"
+			],
+			"group": "build",
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated",
+				"group": "nextjs"
+			},
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "."
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*starting.*",
+					"endsPattern": ".*(Ready in|started server on|Local:).*"
+				}
+			},
+			"dependsOn": "Check and Start Amplify Sandbox",
+			"dependsOrder": "sequence"
+		},
+		{
+			"label": "Start Full-Stack Debug Environment",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"debug:full-stack"
+			],
+			"group": "build",
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"group": "debug"
+			},
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "."
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*Starting Full-Stack Debug Environment.*",
+					"endsPattern": ".*Full-stack debugging environment is ready.*"
+				}
+			}
+		},
+		{
+			"type": "npm",
+			"script": "dev:debug",
+			"group": "build",
+			"label": "npm: dev:debug",
+			"detail": "NODE_OPTIONS='--inspect' next dev",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "typescript",
+				"source": "ts",
+				"fileLocation": "relative",
+				"pattern": {
+					"regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(TS\\d+)\\s*:\\s*(.*)$",
+					"file": 1,
+					"location": 2,
+					"severity": 3,
+					"code": 4,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*starting.*",
+					"endsPattern": ".*(Ready in|started server on|Local:).*"
+				}
+			},
+			"options": {
+				"env": {
+					"NODE_OPTIONS": "--inspect"
+				}
+			}
+		},
+		{
+			"label": "Stop All Debug Processes",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"-c",
+				"echo 'Stopping debug processes...'; pkill -f '(next dev|ampx sandbox|debug-full-stack)' || echo 'No processes to stop'"
+			],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "Typecheck Project",
+			"type": "shell",
+			"command": "./node_modules/.bin/tsc",
+			"args": [
+				"--noEmit"
+			]
+		}
+	]
 }

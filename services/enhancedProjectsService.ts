@@ -1,7 +1,248 @@
-import { projectsAPI, contactsAPI } from '../utils/amplifyAPI';
+// Use a single GraphQL query with nested relations instead of multiple list calls
+import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
+import { projectsAPI } from '../utils/amplifyAPI';
 import { createLogger } from '../utils/logger';
 
 const logger = createLogger('EnhancedProjectsService');
+
+// Local GraphQL client (Amplify is already configured in utils/amplifyAPI)
+const graphqlClient = generateGraphQLClient({ authMode: 'apiKey' });
+
+// Minimal, safe selection set for Projects with nested relations
+// Only fields that exist in amplify/data/resource.ts are requested to avoid validation errors
+const LIST_PROJECTS_WITH_RELATIONS = /* GraphQL */ `
+  query ListProjectsWithRelations($filter: ModelProjectsFilterInput, $limit: Int, $nextToken: String) {
+    listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        status
+        description
+        image
+        gallery
+        createdAt
+        createdDate
+        updatedDate
+        addressId
+        agentContactId
+        homeownerContactId
+        homeowner2ContactId
+        homeowner3ContactId
+        propertyType
+        bedrooms
+        bathrooms
+        floors
+        sizeSqft
+        yearBuilt
+        zillowLink
+        redfinLink
+        originalValue
+        listingPrice
+        salePrice
+        boostPrice
+        addedValue
+        grossProfit
+        estimatedGrossProfit
+        boosterEstimatedCost
+        boosterActualCost
+        paidCost
+        loanBalance
+        revShareAmount
+        selectedProducts
+        projectManagerEmailList
+        projectManagerPhone
+        projectAdminProjectId
+        statusOrder
+        visitorId
+        excludeFromDashboard
+        requestDate
+        proposalDate
+        visitReviewDate
+        quoteSentDate
+        quoteOpenedDate
+        quoteSignedDate
+        contractDate
+        contractSentDate
+        contractingStartDate
+        underwritingDate
+        officeNotes
+        documents
+        brokerage
+        
+        address {
+          id
+          propertyFullAddress
+          houseAddress
+          city
+          state
+          zip
+          propertyType
+          bedrooms
+          bathrooms
+          floors
+          sizeSqft
+          yearBuilt
+          zillowLink
+          redfinLink
+        }
+        agent {
+          id
+          fullName
+          firstName
+          lastName
+          email
+          phone
+          mobile
+          brokerage
+        }
+        homeowner {
+          id
+          fullName
+          firstName
+          lastName
+          email
+          phone
+          mobile
+        }
+        homeowner2 {
+          id
+          fullName
+          firstName
+          lastName
+          email
+          phone
+          mobile
+        }
+        homeowner3 {
+          id
+          fullName
+          firstName
+          lastName
+          email
+          phone
+          mobile
+        }
+      }
+      nextToken
+    }
+  }
+`;
+
+// Single project with nested relations
+const GET_PROJECT_WITH_RELATIONS = /* GraphQL */ `
+  query GetProjectWithRelations($id: ID!) {
+    getProjects(id: $id) {
+      id
+      title
+      status
+      description
+      image
+      gallery
+      createdAt
+      createdDate
+      updatedDate
+      addressId
+      agentContactId
+      homeownerContactId
+      homeowner2ContactId
+      homeowner3ContactId
+      propertyType
+      bedrooms
+      bathrooms
+      floors
+      sizeSqft
+      yearBuilt
+      zillowLink
+      redfinLink
+      originalValue
+      listingPrice
+      salePrice
+      boostPrice
+      addedValue
+      grossProfit
+      estimatedGrossProfit
+      boosterEstimatedCost
+      boosterActualCost
+      paidCost
+      loanBalance
+      revShareAmount
+      selectedProducts
+      projectManagerEmailList
+      projectManagerPhone
+      projectAdminProjectId
+      statusOrder
+      visitorId
+      excludeFromDashboard
+      requestDate
+      proposalDate
+      visitReviewDate
+      quoteSentDate
+      quoteOpenedDate
+      quoteSignedDate
+      contractDate
+      contractSentDate
+      contractingStartDate
+      underwritingDate
+      officeNotes
+      documents
+      brokerage
+
+      address {
+        id
+        propertyFullAddress
+        houseAddress
+        city
+        state
+        zip
+        propertyType
+        bedrooms
+        bathrooms
+        floors
+        sizeSqft
+        yearBuilt
+        zillowLink
+        redfinLink
+      }
+      agent {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+        brokerage
+      }
+      homeowner {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+      }
+      homeowner2 {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+      }
+      homeowner3 {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+      }
+    }
+  }
+`;
 
 // Enhanced project interface with all related data
 export interface FullyEnhancedProject {
@@ -122,53 +363,58 @@ export class EnhancedProjectsService {
    */
   async getFullyEnhancedProjects(): Promise<{ success: boolean; data?: FullyEnhancedProject[]; error?: any }> {
     try {
-      logger.info('Fetching projects with full enhancement (Properties + Contacts)');
+      logger.info('Fetching projects with full enhancement via GraphQL relations');
 
-      // Check cache validity
-      if (this.isCacheExpired()) {
-        this.clearCaches();
+      // Single GraphQL query with nested relations to avoid N+1 and model mismatches
+      const result = await graphqlClient.graphql({
+        query: LIST_PROJECTS_WITH_RELATIONS,
+        variables: { limit: 2000 }
+      }) as any;
+
+      if (result.errors) {
+        logger.warn('GraphQL returned errors for ListProjectsWithRelations', result.errors);
       }
 
-      // Step 1: Fetch all projects
-      const projectsResult = await projectsAPI.list();
-      if (!projectsResult.success) {
-        return { success: false, error: 'Failed to fetch projects' };
-      }
-
-      const rawProjects = projectsResult.data.filter((project: any) => project.status !== 'Archived');
+      const rawItems = result.data?.listProjects?.items || [];
+      const rawProjects = rawItems.filter((p: any) => p && p.status !== 'Archived');
       logger.info(`Fetched ${rawProjects.length} active projects`);
 
-      // Step 2: Collect all unique contact and property IDs
-      const contactIds = new Set<string>();
-      const propertyIds = new Set<string>();
-      
-      rawProjects.forEach((project: any) => {
-        // Collect contact IDs
-        if (project.agentContactId) contactIds.add(project.agentContactId);
-        if (project.homeownerContactId) contactIds.add(project.homeownerContactId);
-        if (project.homeowner2ContactId) contactIds.add(project.homeowner2ContactId);
-        if (project.homeowner3ContactId) contactIds.add(project.homeowner3ContactId);
-        
-        // Collect property IDs
-        if (project.addressId) propertyIds.add(project.addressId);
-      });
-
-      logger.info(`Found ${contactIds.size} contact IDs and ${propertyIds.size} property IDs to resolve`);
-
-      // Step 3: Fetch all related data in parallel
-      await Promise.all([
-        this.preloadContacts(Array.from(contactIds)),
-        this.preloadProperties(Array.from(propertyIds))
-      ]);
-
-      // Step 4: Transform projects with all related data
-      const enhancedProjects = rawProjects.map((project: any) => this.fullyEnhanceProject(project));
+      // Directly map each project using nested address/contacts
+      const enhancedProjects = rawProjects.map((project: any) => this.fullyEnhanceProjectFromRelations(project));
 
       logger.info(`Fully enhanced ${enhancedProjects.length} projects`);
       return { success: true, data: enhancedProjects };
 
     } catch (error) {
       logger.error('Error fetching fully enhanced projects:', error);
+      return { success: false, error };
+    }
+  }
+
+  /**
+   * Fetch a single project with nested relations by ID
+   */
+  async getProjectByIdWithRelations(id: string): Promise<{ success: boolean; data?: FullyEnhancedProject; error?: any }> {
+    try {
+      logger.info('Fetching single project with relations', { id });
+      const result = await graphqlClient.graphql({
+        query: GET_PROJECT_WITH_RELATIONS,
+        variables: { id }
+      }) as any;
+
+      if (result.errors) {
+        logger.warn('GraphQL returned errors for GetProjectWithRelations', result.errors);
+      }
+
+      const proj = result.data?.getProjects;
+      if (!proj) {
+        return { success: false, error: 'Project not found' };
+      }
+
+      const enhanced = this.fullyEnhanceProjectFromRelations(proj);
+      return { success: true, data: enhanced };
+    } catch (error) {
+      logger.error('Error fetching project by id with relations:', error);
       return { success: false, error };
     }
   }
@@ -181,16 +427,8 @@ export class EnhancedProjectsService {
       const uncachedIds = contactIds.filter(id => !this.contactCache.has(id));
       if (uncachedIds.length === 0) return;
 
-      logger.info(`Fetching ${uncachedIds.length} contacts`);
-      const contactsResult = await contactsAPI.list();
-      
-      if (contactsResult.success) {
-        contactsResult.data.forEach((contact: Contact) => {
-          if (uncachedIds.includes(contact.id)) {
-            this.contactCache.set(contact.id, contact);
-          }
-        });
-      }
+  logger.info(`Skipping separate contact preload for ${uncachedIds.length} IDs (using nested GraphQL relations)`);
+  return;
     } catch (error) {
       logger.error('Error preloading contacts:', error);
     }
@@ -204,20 +442,8 @@ export class EnhancedProjectsService {
       const uncachedIds = propertyIds.filter(id => !this.propertyCache.has(id));
       if (uncachedIds.length === 0) return;
 
-      logger.info(`Fetching ${uncachedIds.length} properties`);
-      
-      // Note: You'll need to implement propertiesAPI similar to contactsAPI
-      // For now, we'll use a placeholder that imports from amplifyAPI
-      const { propertiesAPI } = await import('../utils/amplifyAPI');
-      const propertiesResult = await propertiesAPI.list();
-      
-      if (propertiesResult.success) {
-        propertiesResult.data.forEach((property: Property) => {
-          if (uncachedIds.includes(property.id)) {
-            this.propertyCache.set(property.id, property);
-          }
-        });
-      }
+  logger.info(`Skipping separate properties preload for ${uncachedIds.length} IDs (using nested GraphQL relations)`);
+  return;
     } catch (error) {
       logger.warn('Properties API not available, using project data only:', error);
     }
@@ -323,6 +549,99 @@ export class EnhancedProjectsService {
       // Additional fields
       officeNotes: rawProject.officeNotes,
       documents: rawProject.documents,
+    };
+  }
+
+  /**
+   * Enhance a project using nested GraphQL relations already present on the object
+   */
+  private fullyEnhanceProjectFromRelations(project: any): FullyEnhancedProject {
+    // Build property address
+    const addr = project.address || null;
+    let propertyAddress = project.propertyAddress;
+    if (addr) {
+      if (addr.propertyFullAddress) {
+        propertyAddress = addr.propertyFullAddress;
+      } else if (addr.houseAddress) {
+        const parts = [addr.houseAddress, addr.city, addr.state, addr.zip].filter(Boolean);
+        propertyAddress = parts.join(', ');
+      }
+    }
+    if (!propertyAddress) propertyAddress = project.title || 'No address provided';
+
+    // Contacts
+    const agent = project.agent || null;
+    const homeowner = project.homeowner || null;
+    const homeowner2 = project.homeowner2 || null;
+    const homeowner3 = project.homeowner3 || null;
+
+    return {
+      id: project.id,
+      title: project.title,
+      status: project.status,
+      propertyAddress,
+      description: project.description,
+      image: project.image,
+      gallery: project.gallery,
+      createdAt: project.createdAt,
+      createdDate: project.createdDate,
+      updatedDate: project.updatedDate,
+
+      // Prefer nested property values; fallback to top-level scalars
+      propertyType: addr?.propertyType || project.propertyType,
+      bedrooms: addr?.bedrooms ? String(addr.bedrooms) : (project.bedrooms ? String(project.bedrooms) : undefined),
+      bathrooms: addr?.bathrooms ? String(addr.bathrooms) : (project.bathrooms ? String(project.bathrooms) : undefined),
+      floors: addr?.floors ? String(addr.floors) : (project.floors ? String(project.floors) : undefined),
+      sizeSqft: addr?.sizeSqft ? String(addr.sizeSqft) : (project.sizeSqft ? String(project.sizeSqft) : undefined),
+      yearBuilt: addr?.yearBuilt ? String(addr.yearBuilt) : (project.yearBuilt ? String(project.yearBuilt) : undefined),
+      zillowLink: addr?.zillowLink || project.zillowLink,
+      redfinLink: addr?.redfinLink || project.redfinLink,
+
+      originalValue: project.originalValue,
+      listingPrice: project.listingPrice,
+      salePrice: project.salePrice,
+      boostPrice: project.boostPrice,
+      addedValue: project.addedValue,
+      grossProfit: project.grossProfit,
+      estimatedGrossProfit: project.estimatedGrossProfit,
+      boosterEstimatedCost: project.boosterEstimatedCost,
+      boosterActualCost: project.boosterActualCost,
+      paidCost: project.paidCost,
+      loanBalance: project.loanBalance,
+      revShareAmount: project.revShareAmount,
+
+      clientName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName) || 'N/A',
+      clientEmail: homeowner?.email,
+      clientPhone: homeowner?.phone || homeowner?.mobile,
+      homeownerName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName),
+      homeowner2Name: homeowner2?.fullName || (homeowner2?.firstName && homeowner2?.lastName ? `${homeowner2.firstName} ${homeowner2.lastName}` : homeowner2?.firstName || homeowner2?.lastName),
+      homeowner3Name: homeowner3?.fullName || (homeowner3?.firstName && homeowner3?.lastName ? `${homeowner3.firstName} ${homeowner3.lastName}` : homeowner3?.firstName || homeowner3?.lastName),
+      agentName: agent?.fullName || (agent?.firstName && agent?.lastName ? `${agent.firstName} ${agent.lastName}` : agent?.firstName || agent?.lastName),
+      agentEmail: agent?.email,
+      agentPhone: agent?.phone || agent?.mobile,
+      brokerage: agent?.brokerage || project.brokerage,
+
+      selectedProducts: project.selectedProducts,
+      projectManagerEmailList: project.projectManagerEmailList,
+      projectManagerPhone: project.projectManagerPhone,
+      projectAdminProjectId: project.projectAdminProjectId,
+      statusOrder: project.statusOrder,
+      visitorId: project.visitorId,
+      excludeFromDashboard: project.excludeFromDashboard,
+
+      requestDate: project.requestDate,
+      proposalDate: project.proposalDate,
+      visitReviewDate: project.visitReviewDate,
+      quoteSentDate: project.quoteSentDate,
+      quoteOpenedDate: project.quoteOpenedDate,
+      quoteSignedDate: project.quoteSignedDate,
+      contractDate: project.contractDate,
+      contractSentDate: project.contractSentDate,
+      contractingStartDate: project.contractingStartDate,
+      underwritingDate: project.underwritingDate,
+
+      officeNotes: project.officeNotes,
+      documents: project.documents,
     };
   }
 

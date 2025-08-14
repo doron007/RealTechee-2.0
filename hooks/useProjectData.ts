@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { optimizedProjectsAPI } from '../utils/amplifyAPI';
+import { enhancedProjectsService } from '../services/enhancedProjectsService';
 import { Project } from '../types/projects';
 import { Milestone } from '../components/projects/MilestonesList';
 import { Payment } from '../components/projects/PaymentList';
@@ -109,16 +110,29 @@ export function useProjectData({
           }
         }
 
-        // Tier 2: If not in sessionStorage, fetch from Amplify API
+        // Tier 2: If not in sessionStorage, fetch from single-query GraphQL with relations
         if (!projectData && projectId) {
-          const result = await optimizedProjectsAPI.loadFullProject(projectId);
-          
+          const result = await enhancedProjectsService.getProjectByIdWithRelations(projectId);
+
           if (result.success && result.data) {
-            // Transform API data to match Project interface
+            // Map to Project interface shape used by UI components
+            const ep = result.data as any;
             projectData = {
-              ...result.data,
-              title: result.data.title || 'Untitled Project', // Handle nullable title
-              status: result.data.status || 'New' // Handle nullable status
+              id: ep.id,
+              title: ep.propertyAddress || ep.title || 'Untitled Project',
+              status: ep.status || 'New',
+              description: ep.description,
+              imageUrl: ep.image,
+              createdAt: ep.createdAt,
+              updatedAt: ep.updatedDate || ep.createdAt,
+              bedrooms: ep.bedrooms ? Number(ep.bedrooms) : 0,
+              bathrooms: ep.bathrooms ? Number(ep.bathrooms) : 0,
+              floors: ep.floors ? Number(ep.floors) : 0,
+              sizeSqft: ep.sizeSqft ? Number(ep.sizeSqft) : 0,
+              addedValue: ep.addedValue,
+              boosterEstimatedCost: ep.boosterEstimatedCost,
+              boostPrice: ep.boostPrice,
+              salePrice: ep.salePrice
             } as Project;
             setState(prev => ({ ...prev, project: projectData }));
           } else {

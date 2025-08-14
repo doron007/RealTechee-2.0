@@ -7,6 +7,7 @@ import { optimizedProjectsAPI } from '../../utils/amplifyAPI';
 import { Project, ProjectFilter } from '../../types/projects';
 import { createLogger } from '../../utils/logger';
 import { useProjectImagePreload } from '../../hooks/useImagePreload';
+import { enhancedProjectsService } from '../../services/enhancedProjectsService';
 
 // No need for fallback data - we'll use the CSV data from projectsService
 
@@ -38,71 +39,61 @@ export default function ProjectsGridSection({
         setLoading(true);
         setError('');
 
-        // Tier 1: Load essential card data immediately
-        const amplifyFilter = {
-          category: filter?.category,
-          location: filter?.location,
-          status: filter?.status,
-          featured: filter?.featured,
-          search: filter?.search,
-          includeArchived: filter?.includeArchived
-        };
-
-        const result = await optimizedProjectsAPI.loadProjectCards(
-          amplifyFilter, 
-          1000 // Get all filtered projects for client-side pagination
-        );
+        // Unified read: Single GraphQL query with nested relations
+        const result = await enhancedProjectsService.getFullyEnhancedProjects();
 
         if (result.success && result.data) {
-          // Convert Amplify data to Project format (mapping Amplify fields to CSV field names)
-          const mappedProjects = result.data.map((amplifyProject: any) => ({
-            // Map Amplify fields to Project interface
-            id: amplifyProject.id,
-            title: amplifyProject.title || '',
-            description: amplifyProject.description || '',
-            imageUrl: amplifyProject.image || '',
-            category: amplifyProject.status || '',
-            location: '', // Will be filled from address relationship
-            completionDate: amplifyProject.updatedAt || amplifyProject.createdAt || '',
-            budget: amplifyProject.budget || '',
-            featured: amplifyProject.status === 'Completed',
-            createdAt: amplifyProject.createdAt || '',
-            updatedAt: amplifyProject.updatedAt || '',
-            
-            // Map Amplify field names to CSV field names for ProjectCard compatibility
-            'Status': amplifyProject.status,
-            'Bedrooms': amplifyProject.bedrooms || 0,
-            'Bathrooms': amplifyProject.bathrooms || 0,
-            'Floors': amplifyProject.floors || 0,
-            'Size Sqft.': amplifyProject.sizeSqft || 0,
-            'Added value': amplifyProject.addedValue || 0,
-            'Booster Estimated Cost': amplifyProject.boosterEstimatedCost || 0,
-            'Boost Price': amplifyProject.boostPrice || 0,
-            'Sale Price': amplifyProject.salePrice || 0,
-            
-            // Keep original Amplify data
-            ...amplifyProject
+          // Apply client-side filters (match previous behavior)
+          const filtered = result.data.filter((p: any) => {
+            if (!p) return false;
+            if (!filter?.includeArchived && p.status === 'Archived') return false;
+            if (filter?.category && p.status !== filter.category) return false;
+            if (filter?.status && p.status !== filter.status) return false;
+            if (filter?.featured !== undefined && (p.status === 'Completed') !== filter.featured) return false;
+            if (filter?.search) {
+              const s = filter.search.toLowerCase();
+              return (
+                (p.title && p.title.toLowerCase().includes(s)) ||
+                (p.description && p.description.toLowerCase().includes(s)) ||
+                (p.status && p.status.toLowerCase().includes(s))
+              );
+            }
+            return true;
+          });
+
+          // Map to Project interface consumed by ProjectCard
+          const mappedProjects: Project[] = filtered.map((ep: any) => ({
+            id: ep.id,
+            // Prefer propertyAddress for display; fallback to title
+            title: ep.propertyAddress || ep.title || '',
+            description: ep.description || '',
+            imageUrl: ep.image || '',
+            category: ep.status || '',
+            location: '',
+            completionDate: ep.updatedDate || ep.createdDate || ep.createdAt || '',
+            budget: ep.budget || '',
+            featured: ep.status === 'Completed',
+            createdAt: ep.createdAt || '',
+            updatedAt: ep.updatedDate || ep.createdAt || '',
+            status: ep.status,
+            bedrooms: ep.bedrooms ? Number(ep.bedrooms) : 0,
+            bathrooms: ep.bathrooms ? Number(ep.bathrooms) : 0,
+            floors: ep.floors ? Number(ep.floors) : 0,
+            sizeSqft: ep.sizeSqft ? Number(ep.sizeSqft) : 0,
+            addedValue: ep.addedValue,
+            boosterEstimatedCost: ep.boosterEstimatedCost,
+            boostPrice: ep.boostPrice,
+            salePrice: ep.salePrice
           }));
 
           setProjects(mappedProjects);
 
-          // Tier 2: Load related data in background for first page only (optimization)
-          if (mappedProjects.length > 0) {
-            setBackgroundLoading(true);
-            // Only background load first page to optimize initial UPL
-            const firstPageProjects = mappedProjects.slice(0, projectsPerPage);
-            const projectIds = firstPageProjects.map((p: Project) => p.id);
-            
-            optimizedProjectsAPI.loadProjectsWithRelations(projectIds)
-              .then(enrichedData => {
-                setEnrichedProjects(enrichedData);
-                setBackgroundLoading(false);
-              })
-              .catch(err => {
-                logger.warn('Background loading failed', err);
-                setBackgroundLoading(false);
-              });
-          }
+          // Seed enriched map for first page for snappy detail navigation
+          const firstPageProjects = result.data.slice(0, projectsPerPage);
+          const map = new Map<string, any>();
+          firstPageProjects.forEach((p: any) => map.set(p.id, p));
+          setEnrichedProjects(map);
+          setBackgroundLoading(false);
         } else {
           setProjects([]);
           setError('No projects found matching your criteria.');
@@ -197,7 +188,7 @@ export default function ProjectsGridSection({
         }
       }
 
-      if (projectData) {
+  if (projectData) {
         // Store complete project data with all related information in sessionStorage
         logger.info('Storing complete project data in sessionStorage', { projectId });
         sessionStorage.setItem('currentProject', JSON.stringify(projectData));
@@ -244,7 +235,7 @@ export default function ProjectsGridSection({
       )}
 
       {/* Background Loading Indicator */}
-      {backgroundLoading && !loading && (
+  {backgroundLoading && !loading && (
         <div className="w-full text-center mb-4">
           <div className="text-blue-500 text-sm">Loading enhanced details...</div>
         </div>
