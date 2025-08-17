@@ -103,6 +103,35 @@ function getAPI(modelName: string) {
 2. **Future**: Debug why `client.models` becomes empty during assignment
 3. **Long-term**: Standardize all services to dual GraphQL/API pattern
 
+### **⚠️ Signal-Driven Notification System Patterns (August 2025)**
+
+**✅ WORKING PATTERN - Professional Template Implementation**:
+```typescript
+// 1. Template Storage in DynamoDB 
+// Store templates with minimal escaping, use raw strings
+template.content = "<!DOCTYPE html>..."; // Direct HTML, no double escaping
+
+// 2. Handlebars Helper Registration (CRITICAL)
+// ALL helpers used in templates MUST be registered in templateProcessor.ts
+Handlebars.registerHelper('getUrgencyColor', (urgency: string) => { /* implementation */ });
+Handlebars.registerHelper('getUrgencyLabel', (urgency: string) => { /* implementation */ });
+Handlebars.registerHelper('formatPhone', (phone: string) => { /* implementation */ });
+Handlebars.registerHelper('fileLinks', (jsonString: string, type?: string) => { /* implementation */ });
+
+// 3. File Upload Integration
+// JSON array strings → parsed → HTML thumbnails
+{{{fileLinks uploadedMedia}}} // Triple braces for raw HTML output
+
+// 4. Lambda Testing Workflow
+// Deploy → Insert test signal → Trigger manually → Check logs → Verify results
+```
+
+**❌ COMMON FAILURES**:
+- **Template Parsing**: Double-escaped quotes cause Handlebars `INVALID` token errors
+- **Missing Helpers**: Runtime errors stop all notification processing  
+- **File Rendering**: Wrong brace count (`{{}}` vs `{{{}}}`) shows HTML entities
+- **Database Access**: Lambda timeouts if database calls take too long
+
 ---
 
 ## 🔧 **ESSENTIAL COMMANDS**
@@ -183,9 +212,17 @@ function getAPI(modelName: string) {
 ### **Session Start Protocol**
 0. **Initialize Serena**: Run `/mcp__serena__initial_instructions` for semantic code analysis
 1. Read `PLANNING.md`, `CLAUDE.md`, `TASKS.md`
-2. Complete next incomplete task from TASKS.md
-3. Use TodoWrite tool for complex tasks
-4. Mark tasks completed immediately
+2. **⭐ CRITICAL**: Review `/docs/09-migration/signal-notification-system-context.md` for signal/notification work
+3. Complete next incomplete task from TASKS.md
+4. Use TodoWrite tool for complex tasks
+5. Mark tasks completed immediately
+
+### **📋 Essential Documentation for Signal/Notification Work**
+**MUST READ** before working on forms, templates, or Lambda functions:
+- `/docs/09-migration/signal-notification-system-context.md` - Complete architecture & lessons learned
+- `/docs/signal-driven-notification-architecture.md` - Core system design
+- Template processing patterns documented in CLAUDE.md (above)
+- File upload integration documented in signal context
 
 ### **Documentation & Research Protocol**
 - **⭐ ALWAYS use Context7 first** for technical documentation queries (AWS, Amplify, Twilio, React, etc.)
@@ -214,6 +251,137 @@ function getAPI(modelName: string) {
 ---
 
 ## 🚨 **CRITICAL LEARNINGS**
+
+### **⚡ SUCCESSFUL DEBUGGING METHODOLOGY**
+**Problem**: Complex signal-notification system took several days to troubleshoot
+**Solution**: Break into small, validated steps
+
+**Working Pattern**:
+1. **Stop and validate after each small step** - Don't chain multiple changes
+2. **Test each component in isolation** - Signal emission → Hook matching → Template processing
+3. **Verify data at each layer** - Check database records before proceeding
+4. **Use simple payloads first** - Add complexity only after basic flow works
+5. **Ask for validation** - Claude should confirm each step works before continuing
+
+**Anti-Pattern**: Making multiple changes simultaneously and debugging complex failures
+
+### **🏗️ DATA ACCESS LAYER CRITICAL PATTERNS**
+
+#### **❌ NEVER USE: Direct GraphQL in Business Logic**
+```typescript
+// DON'T DO THIS - Caused days of debugging
+const client = generateClient<Schema>({ authMode: 'apiKey' });
+const result = await client.graphql({ query: customQuery });
+```
+
+#### **✅ ALWAYS USE: Service Layer Pattern (Like Projects)**
+```typescript
+// DO THIS - Follow proven patterns
+import { projectsAPI } from '../utils/amplifyAPI';
+import { requestsAPI } from '../utils/amplifyAPI';
+
+// Standard CRUD operations
+const result = await projectsAPI.update(projectId, updates);
+const requests = await requestsAPI.list();
+```
+
+**Why Service Layer Works**:
+- **Schema Safety**: Uses generated types, catches breaking changes
+- **Consistent Error Handling**: Standardized across all models
+- **Optional Field Management**: Handles optional schema fields correctly
+- **Browser/Lambda Compatibility**: Works in both environments
+
+#### **🚨 Schema & Optional Fields Critical Issue**
+**Problem**: Direct GraphQL ignores optional field validation
+**Example**: `signalType` field missing caused Lambda failures
+**Solution**: Service layer enforces schema requirements and validates optional fields
+
+### **⚙️ EVENT BRIDGE AUTOMATION LESSONS**
+
+#### **❌ Current Issue: EventBridge Schedule Syntax**
+```typescript
+// BROKEN - Amplify Gen 2 syntax unknown
+schedule: 'rate(2 minutes)', // Causes deployment failures
+```
+
+#### **✅ Working Alternative: Manual Triggers**
+```bash
+# Proven working pattern
+aws lambda invoke \
+  --function-name amplify-XXXXX-notificationprocessorlam-XXXXX \
+  --region us-west-1 \
+  /tmp/result.json
+```
+
+**Next Steps for EventBridge**:
+1. Research correct Amplify Gen 2 schedule syntax
+2. Test with simple 15-minute interval first
+3. Validate before implementing 2-minute production schedule
+4. **CRITICAL**: Test each step separately, don't combine with other changes
+
+### **🔧 TEMPLATE PROCESSING CRITICAL FIXES**
+
+#### **❌ Database Escaping Issues**
+**Problem**: Double-escaped JSON in DynamoDB broke Handlebars parsing
+```
+Parse error: ...Links uploadedMedia \"images\"}}}\nExpecting 'CLOSE_RAW_BLOCK', got 'INVALID'
+```
+
+**Root Cause**: Template content stored with excessive escaping
+**Solution**: Store clean HTML strings in database, use proper helper registration
+
+#### **✅ Helper Function Pattern**
+```typescript
+// ALWAYS register ALL helpers before processing
+Handlebars.registerHelper('getUrgencyColor', (urgency: string) => { /* implementation */ });
+Handlebars.registerHelper('formatDate', (date: string) => { /* implementation */ });
+Handlebars.registerHelper('fileLinks', (jsonString: string) => { /* implementation */ });
+// Critical: Use {{{fileLinks}}} for raw HTML output
+```
+
+### **📊 DEBUGGING WORKFLOW (PROVEN SUCCESSFUL)**
+
+#### **Step-by-Step Validation Process**:
+1. **Signal Creation**: Verify signal appears in database with correct `signalType`
+2. **Hook Matching**: Confirm hooks exist and match signal type
+3. **Template Retrieval**: Test template exists and is valid HTML
+4. **Helper Registration**: Verify all template helpers are registered
+5. **Template Compilation**: Test Handlebars compilation with real data
+6. **Notification Creation**: Confirm notification records created
+7. **Delivery Testing**: Test actual email/SMS delivery
+
+**Critical**: Stop and validate each step works before proceeding to next
+
+#### **Database Validation Commands**:
+```bash
+# 1. Check signal creation
+aws dynamodb get-item --table-name SignalEvents-{suffix}-NONE --key '{"id":{"S":"signal-id"}}'
+
+# 2. Check hook matching  
+aws dynamodb scan --table-name SignalNotificationHooks-{suffix}-NONE --filter-expression "signalType = :type"
+
+# 3. Check template exists
+aws dynamodb get-item --table-name NotificationTemplate-{suffix}-NONE --key '{"id":{"S":"template-id"}}'
+
+# 4. Check notification creation
+aws dynamodb scan --table-name NotificationQueue-{suffix}-NONE --limit 5
+```
+
+### **🎯 ARCHITECTURAL DECISIONS**
+
+#### **Why Service Layer > Direct GraphQL**:
+1. **Type Safety**: Generated types catch schema changes
+2. **Error Consistency**: Standardized error handling across app
+3. **Optional Field Handling**: Service layer manages schema evolution
+4. **Testing**: Easier to mock and test service methods
+5. **Debugging**: Single place to add logging and monitoring
+
+#### **Why Step-by-Step Validation Works**:
+1. **Isolates Issues**: Each step has single responsibility
+2. **Faster Debugging**: Know exactly which component failed
+3. **Prevents Compound Errors**: Multiple issues don't mask each other
+4. **Builds Confidence**: Working foundation before adding complexity
+5. **Documentation**: Each step creates debugging knowledge
 
 ### **Data Safety**
 - **ALWAYS** backup before schema changes

@@ -1,15 +1,18 @@
 # Signal-Driven Notification System - Session Context
 
-## 🎯 **CURRENT STATUS (August 15, 2025)**
+## 🎯 **CURRENT STATUS (August 17, 2025)**
 
-### **✅ COMPLETED IMPLEMENTATION**
+### **✅ COMPLETED IMPLEMENTATION - PROFESSIONAL TEMPLATE SYSTEM**
 - **Signal-Driven Architecture**: Complete with SignalEvents & SignalNotificationHooks tables deployed ✅
-- **All 4 Forms Integrated**: Contact Us, Get Estimate, Get Qualified, and Affiliate forms now emit signals ✅
+- **Professional Email Template**: Modern card-based design with CSS variables and file thumbnails ✅
+- **Template Processing**: Enhanced Handlebars helpers with file upload integration ✅
+- **Get Estimate Form**: Complete signal emission with professional template ✅
+- **Contact Us Form**: Signal emission integrated and working ✅  
 - **Unified Lambda Function**: Processes signals AND delivers emails/SMS via AWS SES & Twilio ✅ 
-- **Database Templates**: 8 notification hooks created mapping signals to existing templates ✅
+- **Database Templates**: Professional template deployed and tested ✅
 - **Parameter Store Integration**: Secure API key management for SES/Twilio ✅
 - **Lambda Processing**: Manual trigger verified - signal processing pipeline operational ✅
-- **End-to-End Testing**: Verified signal emission for all forms via E2E tests ✅
+- **File Upload Support**: S3 URLs → JSON → HTML thumbnails working ✅
 
 ### **✅ SIGNAL PROCESSING VERIFICATION (August 15, 2025)**
 **Pipeline Status**: **OPERATIONAL** - Core signal-driven architecture working correctly
@@ -19,12 +22,12 @@
 - ✅ **Template Processing**: EMAIL and SMS templates processed correctly
 - ✅ **Database Integration**: SignalEvents → SignalNotificationHooks → NotificationQueue flow confirmed
 
-### **✅ FORM INTEGRATION COMPLETE**
-**All forms now using signalEmitter.emitFormSubmission():**
-1. ✅ Contact Us form (`/pages/contact/contact-us.tsx`) - Working
-2. ✅ Get Estimate form (`/pages/contact/get-estimate.tsx`) - Working  
-3. ✅ Get Qualified form (`/pages/contact/get-qualified.tsx`) - Working
-4. ✅ Affiliate form (`/pages/contact/affiliate.tsx`) - Working
+### **📋 FORM INTEGRATION STATUS**
+**Signal Emission Implementation:**
+1. ✅ Contact Us form (`/pages/contact/contact-us.tsx`) - Working with professional template
+2. ✅ Get Estimate form (`/pages/contact/get-estimate.tsx`) - Working with professional template
+3. 🎯 Get Qualified form (`/pages/contact/get-qualified.tsx`) - **NEXT: Needs signal emission**
+4. 🎯 Affiliate form (`/pages/contact/affiliate.tsx`) - **NEXT: Needs signal emission**
 
 ---
 
@@ -195,6 +198,83 @@ Automatic scheduling pending - commented out due to Amplify Gen 2 syntax require
 
 ### **🚧 Admin Interface Development**
 Signal monitoring, hook management, real-time dashboard (Phase C - Optional)
+
+---
+
+## 🎯 **CRITICAL LEARNINGS FROM PRODUCTION IMPLEMENTATION**
+
+### **Template Processing Lessons**
+**Issue**: Handlebars template parsing errors with escaped quotes
+```
+Parse error: ...Links uploadedMedia \"images\"}}}
+Expecting 'CLOSE_RAW_BLOCK', got 'INVALID'
+```
+
+**Root Cause**: JSON strings in database were double-escaped causing Handlebars parse failures
+
+**Solutions Applied**:
+1. **Template Storage**: Store HTML templates without excessive escaping in DynamoDB
+2. **Helper Functions**: Always register ALL helpers used in templates before processing
+3. **File Links**: Use `{{{fileLinks}}}` (triple braces) for raw HTML output
+4. **Testing**: Test template compilation with real data during development
+
+**Required Handlebars Helpers**:
+```typescript
+// Always include these in templateProcessor.ts
+Handlebars.registerHelper('getUrgencyColor', (urgency: string) => { /* implementation */ });
+Handlebars.registerHelper('getUrgencyLabel', (urgency: string) => { /* implementation */ });
+Handlebars.registerHelper('formatPhone', (phone: string) => { /* implementation */ });
+Handlebars.registerHelper('formatDate', (date: string, format?: string) => { /* implementation */ });
+```
+
+### **Lambda Development Best Practices**
+**Testing Workflow**:
+1. Deploy Lambda with `npx ampx sandbox`
+2. Insert test signal into database manually
+3. Trigger Lambda with `aws lambda invoke`
+4. Check CloudWatch logs for errors
+5. Verify notification creation in database
+
+**Common Issues**:
+- Template compilation failures stop all processing
+- Missing helpers cause runtime errors
+- Database connections may timeout
+- EventBridge scheduling requires specific Amplify Gen 2 syntax
+
+### **File Upload Integration**
+**Working Pattern**: S3 URLs → JSON strings → Handlebars → HTML thumbnails
+```typescript
+// In fileLinks helper
+const files = JSON.parse(jsonString || '[]');
+return files.map((url: string) => {
+  const absoluteUrl = url.startsWith('http') ? url : `https://d200k2wsaf8th3.amplifyapp.com${url}`;
+  return `<a class="thumb" href="${absoluteUrl}" target="_blank">...</a>`;
+}).join('');
+```
+
+**File Type Detection**:
+- Images: Show actual thumbnail with `<img src="${absoluteUrl}">`
+- Videos: Show placeholder with "Video" caption
+- Documents: Show placeholder with "Document" caption
+
+### **Professional Template Architecture**
+**Design Pattern**: Modern card-based email with CSS variables
+```css
+:root {
+  --rt-navy: #0b3a5d;
+  --rt-teal: #18b5a4;
+  --rt-ink: #0f172a;
+  /* etc. */
+}
+```
+
+**Mobile Optimization**: Grid layouts that collapse on small screens
+```css
+@media (max-width:520px) {
+  .kv { grid-template-columns: 1fr; gap: 4px; }
+  .content { padding: 16px; }
+}
+```
 
 ---
 
