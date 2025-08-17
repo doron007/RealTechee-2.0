@@ -82,11 +82,12 @@ export const generateS3Key = (projectId: string, fileName: string): string => {
  * @param category - File category (images, videos, docs)
  * @param timestamp - Timestamp for file uniqueness
  * @param fileName - Original file name
- * @returns Relative path that will be stored in database
+ * @param cleanAddress - Normalized property address
+ * @returns Relative path that matches actual S3 upload location
  */
-export const getRelativePathForUpload = (category: string, timestamp: number, fileName: string): string => {
+export const getRelativePathForUpload = (category: string, timestamp: number, fileName: string, cleanAddress: string): string => {
   const sanitizedFileName = fileName.replace(/\s+/g, '_');
-  return `/assets/${category}/${timestamp}-${sanitizedFileName}`;
+  return `/public/${cleanAddress}/requests/${category}/${timestamp}-${sanitizedFileName}`;
 };
 
 /**

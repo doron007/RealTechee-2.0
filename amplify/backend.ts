@@ -48,12 +48,15 @@ backend.auth.resources.userPool.grant(
 // PostConfirmation function permissions are handled through the auth trigger definition
 // The Lambda function gets the necessary permissions automatically when defined as a trigger
 
-// Set up CloudWatch Events rule to trigger every 5 minutes
+// Configure notification processor environment with signal-driven architecture support
 backend.notificationProcessor.addEnvironment('NOTIFICATION_QUEUE_TABLE', backend.data.resources.tables['NotificationQueue'].tableName);
 backend.notificationProcessor.addEnvironment('NOTIFICATION_TEMPLATE_TABLE', backend.data.resources.tables['NotificationTemplate'].tableName);
 backend.notificationProcessor.addEnvironment('NOTIFICATION_EVENTS_TABLE', backend.data.resources.tables['NotificationEvents'].tableName);
 backend.notificationProcessor.addEnvironment('EMAIL_SUPPRESSION_LIST_TABLE', backend.data.resources.tables['EmailSuppressionList'].tableName);
 backend.notificationProcessor.addEnvironment('CONTACTS_TABLE', backend.data.resources.tables['Contacts'].tableName);
+// Signal-driven architecture tables
+backend.notificationProcessor.addEnvironment('SIGNAL_EVENTS_TABLE', backend.data.resources.tables['SignalEvents'].tableName);
+backend.notificationProcessor.addEnvironment('SIGNAL_HOOKS_TABLE', backend.data.resources.tables['SignalNotificationHooks'].tableName);
 
 // Configure status processor function environment
 backend.statusProcessor.addEnvironment('REQUESTS_TABLE', backend.data.resources.tables['Requests'].tableName);
@@ -73,6 +76,9 @@ backend.data.resources.tables['NotificationTemplate'].grantReadData(backend.noti
 backend.data.resources.tables['NotificationEvents'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['EmailSuppressionList'].grantReadData(backend.notificationProcessor.resources.lambda);
 backend.data.resources.tables['Contacts'].grantReadData(backend.notificationProcessor.resources.lambda);
+// Grant permissions for signal-driven architecture tables
+backend.data.resources.tables['SignalEvents'].grantReadWriteData(backend.notificationProcessor.resources.lambda);
+backend.data.resources.tables['SignalNotificationHooks'].grantReadData(backend.notificationProcessor.resources.lambda);
 
 // Grant status processor permissions to read/write Requests table
 backend.data.resources.tables['Requests'].grantReadWriteData(backend.statusProcessor.resources.lambda);

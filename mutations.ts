@@ -563,6 +563,19 @@ export const createNotificationQueue = /* GraphQL */ `mutation CreateNotificatio
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -604,6 +617,10 @@ export const createNotificationTemplate = /* GraphQL */ `mutation CreateNotifica
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -1744,6 +1761,69 @@ export const createSecureConfig = /* GraphQL */ `mutation CreateSecureConfig(
   APITypes.CreateSecureConfigMutationVariables,
   APITypes.CreateSecureConfigMutation
 >;
+export const createSignalEvents = /* GraphQL */ `mutation CreateSignalEvents(
+  $condition: ModelSignalEventsConditionInput
+  $input: CreateSignalEventsInput!
+) {
+  createSignalEvents(condition: $condition, input: $input) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateSignalEventsMutationVariables,
+  APITypes.CreateSignalEventsMutation
+>;
+export const createSignalNotificationHooks = /* GraphQL */ `mutation CreateSignalNotificationHooks(
+  $condition: ModelSignalNotificationHooksConditionInput
+  $input: CreateSignalNotificationHooksInput!
+) {
+  createSignalNotificationHooks(condition: $condition, input: $input) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateSignalNotificationHooksMutationVariables,
+  APITypes.CreateSignalNotificationHooksMutation
+>;
 export const deleteAffiliates = /* GraphQL */ `mutation DeleteAffiliates(
   $condition: ModelAffiliatesConditionInput
   $input: DeleteAffiliatesInput!
@@ -2299,6 +2379,19 @@ export const deleteNotificationQueue = /* GraphQL */ `mutation DeleteNotificatio
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -2340,6 +2433,10 @@ export const deleteNotificationTemplate = /* GraphQL */ `mutation DeleteNotifica
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -3480,6 +3577,69 @@ export const deleteSecureConfig = /* GraphQL */ `mutation DeleteSecureConfig(
   APITypes.DeleteSecureConfigMutationVariables,
   APITypes.DeleteSecureConfigMutation
 >;
+export const deleteSignalEvents = /* GraphQL */ `mutation DeleteSignalEvents(
+  $condition: ModelSignalEventsConditionInput
+  $input: DeleteSignalEventsInput!
+) {
+  deleteSignalEvents(condition: $condition, input: $input) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteSignalEventsMutationVariables,
+  APITypes.DeleteSignalEventsMutation
+>;
+export const deleteSignalNotificationHooks = /* GraphQL */ `mutation DeleteSignalNotificationHooks(
+  $condition: ModelSignalNotificationHooksConditionInput
+  $input: DeleteSignalNotificationHooksInput!
+) {
+  deleteSignalNotificationHooks(condition: $condition, input: $input) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteSignalNotificationHooksMutationVariables,
+  APITypes.DeleteSignalNotificationHooksMutation
+>;
 export const updateAffiliates = /* GraphQL */ `mutation UpdateAffiliates(
   $condition: ModelAffiliatesConditionInput
   $input: UpdateAffiliatesInput!
@@ -4035,6 +4195,19 @@ export const updateNotificationQueue = /* GraphQL */ `mutation UpdateNotificatio
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -4076,6 +4249,10 @@ export const updateNotificationTemplate = /* GraphQL */ `mutation UpdateNotifica
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -5215,4 +5392,67 @@ export const updateSecureConfig = /* GraphQL */ `mutation UpdateSecureConfig(
 ` as GeneratedMutation<
   APITypes.UpdateSecureConfigMutationVariables,
   APITypes.UpdateSecureConfigMutation
+>;
+export const updateSignalEvents = /* GraphQL */ `mutation UpdateSignalEvents(
+  $condition: ModelSignalEventsConditionInput
+  $input: UpdateSignalEventsInput!
+) {
+  updateSignalEvents(condition: $condition, input: $input) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateSignalEventsMutationVariables,
+  APITypes.UpdateSignalEventsMutation
+>;
+export const updateSignalNotificationHooks = /* GraphQL */ `mutation UpdateSignalNotificationHooks(
+  $condition: ModelSignalNotificationHooksConditionInput
+  $input: UpdateSignalNotificationHooksInput!
+) {
+  updateSignalNotificationHooks(condition: $condition, input: $input) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateSignalNotificationHooksMutationVariables,
+  APITypes.UpdateSignalNotificationHooksMutation
 >;

@@ -776,6 +776,8 @@ export type NotificationQueue = {
   retryCount?: number | null,
   scheduledAt?: string | null,
   sentAt?: string | null,
+  signalEvent?: SignalEvents | null,
+  signalEventId?: string | null,
   status?: NotificationQueueStatus | null,
   template?: NotificationTemplate | null,
   templateId?: string | null,
@@ -788,6 +790,26 @@ export enum NotificationQueuePriority {
   MEDIUM = "MEDIUM",
 }
 
+
+export type SignalEvents = {
+  __typename: "SignalEvents",
+  createdAt: string,
+  emittedAt: string,
+  emittedBy?: string | null,
+  id: string,
+  payload: string,
+  processed?: boolean | null,
+  signalType: string,
+  source?: string | null,
+  triggeredNotifications?: ModelNotificationQueueConnection | null,
+  updatedAt: string,
+};
+
+export type ModelNotificationQueueConnection = {
+  __typename: "ModelNotificationQueueConnection",
+  items:  Array<NotificationQueue | null >,
+  nextToken?: string | null,
+};
 
 export enum NotificationQueueStatus {
   FAILED = "FAILED",
@@ -808,6 +830,7 @@ export type NotificationTemplate = {
   name: string,
   notifications?: ModelNotificationQueueConnection | null,
   owner?: string | null,
+  signalHooks?: ModelSignalNotificationHooksConnection | null,
   subject?: string | null,
   updatedAt: string,
   variables?: string | null,
@@ -821,11 +844,35 @@ export enum NotificationTemplateChannel {
 }
 
 
-export type ModelNotificationQueueConnection = {
-  __typename: "ModelNotificationQueueConnection",
-  items:  Array<NotificationQueue | null >,
+export type ModelSignalNotificationHooksConnection = {
+  __typename: "ModelSignalNotificationHooksConnection",
+  items:  Array<SignalNotificationHooks | null >,
   nextToken?: string | null,
 };
+
+export type SignalNotificationHooks = {
+  __typename: "SignalNotificationHooks",
+  channels: string,
+  conditions?: string | null,
+  createdAt: string,
+  enabled?: boolean | null,
+  id: string,
+  notificationTemplateId: string,
+  priority?: SignalNotificationHooksPriority | null,
+  recipientDynamic?: string | null,
+  recipientEmails?: string | null,
+  recipientRoles?: string | null,
+  signalType: string,
+  template?: NotificationTemplate | null,
+  updatedAt: string,
+};
+
+export enum SignalNotificationHooksPriority {
+  high = "high",
+  low = "low",
+  medium = "medium",
+}
+
 
 export type PendingAppoitments = {
   __typename: "PendingAppoitments",
@@ -1619,6 +1666,7 @@ export type ModelNotificationQueueFilterInput = {
   retryCount?: ModelIntInput | null,
   scheduledAt?: ModelStringInput | null,
   sentAt?: ModelStringInput | null,
+  signalEventId?: ModelIDInput | null,
   status?: ModelNotificationQueueStatusInput | null,
   templateId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
@@ -2109,6 +2157,50 @@ export type ModelSecureConfigConnection = {
   __typename: "ModelSecureConfigConnection",
   items:  Array<SecureConfig | null >,
   nextToken?: string | null,
+};
+
+export type ModelSignalEventsFilterInput = {
+  and?: Array< ModelSignalEventsFilterInput | null > | null,
+  createdAt?: ModelStringInput | null,
+  emittedAt?: ModelStringInput | null,
+  emittedBy?: ModelStringInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelSignalEventsFilterInput | null,
+  or?: Array< ModelSignalEventsFilterInput | null > | null,
+  payload?: ModelStringInput | null,
+  processed?: ModelBooleanInput | null,
+  signalType?: ModelStringInput | null,
+  source?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelSignalEventsConnection = {
+  __typename: "ModelSignalEventsConnection",
+  items:  Array<SignalEvents | null >,
+  nextToken?: string | null,
+};
+
+export type ModelSignalNotificationHooksFilterInput = {
+  and?: Array< ModelSignalNotificationHooksFilterInput | null > | null,
+  channels?: ModelStringInput | null,
+  conditions?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  enabled?: ModelBooleanInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelSignalNotificationHooksFilterInput | null,
+  notificationTemplateId?: ModelIDInput | null,
+  or?: Array< ModelSignalNotificationHooksFilterInput | null > | null,
+  priority?: ModelSignalNotificationHooksPriorityInput | null,
+  recipientDynamic?: ModelStringInput | null,
+  recipientEmails?: ModelStringInput | null,
+  recipientRoles?: ModelStringInput | null,
+  signalType?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelSignalNotificationHooksPriorityInput = {
+  eq?: SignalNotificationHooksPriority | null,
+  ne?: SignalNotificationHooksPriority | null,
 };
 
 export type ModelAffiliatesConditionInput = {
@@ -2779,6 +2871,7 @@ export type ModelNotificationQueueConditionInput = {
   retryCount?: ModelIntInput | null,
   scheduledAt?: ModelStringInput | null,
   sentAt?: ModelStringInput | null,
+  signalEventId?: ModelIDInput | null,
   status?: ModelNotificationQueueStatusInput | null,
   templateId?: ModelIDInput | null,
   updatedAt?: ModelStringInput | null,
@@ -2798,6 +2891,7 @@ export type CreateNotificationQueueInput = {
   retryCount?: number | null,
   scheduledAt?: string | null,
   sentAt?: string | null,
+  signalEventId?: string | null,
   status?: NotificationQueueStatus | null,
   templateId?: string | null,
   updatedAt?: string | null,
@@ -3579,6 +3673,60 @@ export type CreateSecureConfigInput = {
   updatedBy?: string | null,
 };
 
+export type ModelSignalEventsConditionInput = {
+  and?: Array< ModelSignalEventsConditionInput | null > | null,
+  createdAt?: ModelStringInput | null,
+  emittedAt?: ModelStringInput | null,
+  emittedBy?: ModelStringInput | null,
+  not?: ModelSignalEventsConditionInput | null,
+  or?: Array< ModelSignalEventsConditionInput | null > | null,
+  payload?: ModelStringInput | null,
+  processed?: ModelBooleanInput | null,
+  signalType?: ModelStringInput | null,
+  source?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateSignalEventsInput = {
+  emittedAt: string,
+  emittedBy?: string | null,
+  id?: string | null,
+  payload: string,
+  processed?: boolean | null,
+  signalType: string,
+  source?: string | null,
+};
+
+export type ModelSignalNotificationHooksConditionInput = {
+  and?: Array< ModelSignalNotificationHooksConditionInput | null > | null,
+  channels?: ModelStringInput | null,
+  conditions?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  enabled?: ModelBooleanInput | null,
+  not?: ModelSignalNotificationHooksConditionInput | null,
+  notificationTemplateId?: ModelIDInput | null,
+  or?: Array< ModelSignalNotificationHooksConditionInput | null > | null,
+  priority?: ModelSignalNotificationHooksPriorityInput | null,
+  recipientDynamic?: ModelStringInput | null,
+  recipientEmails?: ModelStringInput | null,
+  recipientRoles?: ModelStringInput | null,
+  signalType?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateSignalNotificationHooksInput = {
+  channels: string,
+  conditions?: string | null,
+  enabled?: boolean | null,
+  id?: string | null,
+  notificationTemplateId: string,
+  priority?: SignalNotificationHooksPriority | null,
+  recipientDynamic?: string | null,
+  recipientEmails?: string | null,
+  recipientRoles?: string | null,
+  signalType: string,
+};
+
 export type DeleteAffiliatesInput = {
   id: string,
 };
@@ -3716,6 +3864,14 @@ export type DeleteSESReputationMetricsInput = {
 };
 
 export type DeleteSecureConfigInput = {
+  id: string,
+};
+
+export type DeleteSignalEventsInput = {
+  id: string,
+};
+
+export type DeleteSignalNotificationHooksInput = {
   id: string,
 };
 
@@ -4019,6 +4175,7 @@ export type UpdateNotificationQueueInput = {
   retryCount?: number | null,
   scheduledAt?: string | null,
   sentAt?: string | null,
+  signalEventId?: string | null,
   status?: NotificationQueueStatus | null,
   templateId?: string | null,
   updatedAt?: string | null,
@@ -4386,6 +4543,29 @@ export type UpdateSecureConfigInput = {
   service?: string | null,
   updatedAt?: string | null,
   updatedBy?: string | null,
+};
+
+export type UpdateSignalEventsInput = {
+  emittedAt?: string | null,
+  emittedBy?: string | null,
+  id: string,
+  payload?: string | null,
+  processed?: boolean | null,
+  signalType?: string | null,
+  source?: string | null,
+};
+
+export type UpdateSignalNotificationHooksInput = {
+  channels?: string | null,
+  conditions?: string | null,
+  enabled?: boolean | null,
+  id: string,
+  notificationTemplateId?: string | null,
+  priority?: SignalNotificationHooksPriority | null,
+  recipientDynamic?: string | null,
+  recipientEmails?: string | null,
+  recipientRoles?: string | null,
+  signalType?: string | null,
 };
 
 export type ModelSubscriptionAffiliatesFilterInput = {
@@ -4829,6 +5009,7 @@ export type ModelSubscriptionNotificationQueueFilterInput = {
   retryCount?: ModelSubscriptionIntInput | null,
   scheduledAt?: ModelSubscriptionStringInput | null,
   sentAt?: ModelSubscriptionStringInput | null,
+  signalEventId?: ModelSubscriptionIDInput | null,
   status?: ModelSubscriptionStringInput | null,
   templateId?: ModelSubscriptionIDInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
@@ -5244,6 +5425,37 @@ export type ModelSubscriptionSecureConfigFilterInput = {
   service?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   updatedBy?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionSignalEventsFilterInput = {
+  and?: Array< ModelSubscriptionSignalEventsFilterInput | null > | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  emittedAt?: ModelSubscriptionStringInput | null,
+  emittedBy?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  or?: Array< ModelSubscriptionSignalEventsFilterInput | null > | null,
+  payload?: ModelSubscriptionStringInput | null,
+  processed?: ModelSubscriptionBooleanInput | null,
+  signalType?: ModelSubscriptionStringInput | null,
+  source?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionSignalNotificationHooksFilterInput = {
+  and?: Array< ModelSubscriptionSignalNotificationHooksFilterInput | null > | null,
+  channels?: ModelSubscriptionStringInput | null,
+  conditions?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  enabled?: ModelSubscriptionBooleanInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  notificationTemplateId?: ModelSubscriptionIDInput | null,
+  or?: Array< ModelSubscriptionSignalNotificationHooksFilterInput | null > | null,
+  priority?: ModelSubscriptionStringInput | null,
+  recipientDynamic?: ModelSubscriptionStringInput | null,
+  recipientEmails?: ModelSubscriptionStringInput | null,
+  recipientRoles?: ModelSubscriptionStringInput | null,
+  signalType?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
 };
 
 export type GetAffiliatesQueryVariables = {
@@ -5761,6 +5973,19 @@ export type GetNotificationQueueQuery = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -5800,6 +6025,10 @@ export type GetNotificationTemplateQuery = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -6912,6 +7141,65 @@ export type GetSecureConfigQuery = {
   } | null,
 };
 
+export type GetSignalEventsQueryVariables = {
+  id: string,
+};
+
+export type GetSignalEventsQuery = {
+  getSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetSignalNotificationHooksQueryVariables = {
+  id: string,
+};
+
+export type GetSignalNotificationHooksQuery = {
+  getSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type ListAffiliatesQueryVariables = {
   filter?: ModelAffiliatesFilterInput | null,
   limit?: number | null,
@@ -7535,6 +7823,7 @@ export type ListNotificationQueuesQuery = {
       retryCount?: number | null,
       scheduledAt?: string | null,
       sentAt?: string | null,
+      signalEventId?: string | null,
       status?: NotificationQueueStatus | null,
       templateId?: string | null,
       updatedAt?: string | null,
@@ -8100,6 +8389,59 @@ export type ListSecureConfigsQuery = {
   } | null,
 };
 
+export type ListSignalEventsQueryVariables = {
+  filter?: ModelSignalEventsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSignalEventsQuery = {
+  listSignalEvents?:  {
+    __typename: "ModelSignalEventsConnection",
+    items:  Array< {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListSignalNotificationHooksQueryVariables = {
+  filter?: ModelSignalNotificationHooksFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSignalNotificationHooksQuery = {
+  listSignalNotificationHooks?:  {
+    __typename: "ModelSignalNotificationHooksConnection",
+    items:  Array< {
+      __typename: "SignalNotificationHooks",
+      channels: string,
+      conditions?: string | null,
+      createdAt: string,
+      enabled?: boolean | null,
+      id: string,
+      notificationTemplateId: string,
+      priority?: SignalNotificationHooksPriority | null,
+      recipientDynamic?: string | null,
+      recipientEmails?: string | null,
+      recipientRoles?: string | null,
+      signalType: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type CreateAffiliatesMutationVariables = {
   condition?: ModelAffiliatesConditionInput | null,
   input: CreateAffiliatesInput,
@@ -8637,6 +8979,19 @@ export type CreateNotificationQueueMutation = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -8677,6 +9032,10 @@ export type CreateNotificationTemplateMutation = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -9801,6 +10160,67 @@ export type CreateSecureConfigMutation = {
   } | null,
 };
 
+export type CreateSignalEventsMutationVariables = {
+  condition?: ModelSignalEventsConditionInput | null,
+  input: CreateSignalEventsInput,
+};
+
+export type CreateSignalEventsMutation = {
+  createSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateSignalNotificationHooksMutationVariables = {
+  condition?: ModelSignalNotificationHooksConditionInput | null,
+  input: CreateSignalNotificationHooksInput,
+};
+
+export type CreateSignalNotificationHooksMutation = {
+  createSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type DeleteAffiliatesMutationVariables = {
   condition?: ModelAffiliatesConditionInput | null,
   input: DeleteAffiliatesInput,
@@ -10338,6 +10758,19 @@ export type DeleteNotificationQueueMutation = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -10378,6 +10811,10 @@ export type DeleteNotificationTemplateMutation = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -11502,6 +11939,67 @@ export type DeleteSecureConfigMutation = {
   } | null,
 };
 
+export type DeleteSignalEventsMutationVariables = {
+  condition?: ModelSignalEventsConditionInput | null,
+  input: DeleteSignalEventsInput,
+};
+
+export type DeleteSignalEventsMutation = {
+  deleteSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteSignalNotificationHooksMutationVariables = {
+  condition?: ModelSignalNotificationHooksConditionInput | null,
+  input: DeleteSignalNotificationHooksInput,
+};
+
+export type DeleteSignalNotificationHooksMutation = {
+  deleteSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type UpdateAffiliatesMutationVariables = {
   condition?: ModelAffiliatesConditionInput | null,
   input: UpdateAffiliatesInput,
@@ -12039,6 +12537,19 @@ export type UpdateNotificationQueueMutation = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -12079,6 +12590,10 @@ export type UpdateNotificationTemplateMutation = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -13203,6 +13718,67 @@ export type UpdateSecureConfigMutation = {
   } | null,
 };
 
+export type UpdateSignalEventsMutationVariables = {
+  condition?: ModelSignalEventsConditionInput | null,
+  input: UpdateSignalEventsInput,
+};
+
+export type UpdateSignalEventsMutation = {
+  updateSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateSignalNotificationHooksMutationVariables = {
+  condition?: ModelSignalNotificationHooksConditionInput | null,
+  input: UpdateSignalNotificationHooksInput,
+};
+
+export type UpdateSignalNotificationHooksMutation = {
+  updateSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateAffiliatesSubscriptionVariables = {
   filter?: ModelSubscriptionAffiliatesFilterInput | null,
 };
@@ -13718,6 +14294,19 @@ export type OnCreateNotificationQueueSubscription = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -13757,6 +14346,10 @@ export type OnCreateNotificationTemplateSubscription = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -14870,6 +15463,65 @@ export type OnCreateSecureConfigSubscription = {
   } | null,
 };
 
+export type OnCreateSignalEventsSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalEventsFilterInput | null,
+};
+
+export type OnCreateSignalEventsSubscription = {
+  onCreateSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateSignalNotificationHooksSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalNotificationHooksFilterInput | null,
+};
+
+export type OnCreateSignalNotificationHooksSubscription = {
+  onCreateSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnDeleteAffiliatesSubscriptionVariables = {
   filter?: ModelSubscriptionAffiliatesFilterInput | null,
 };
@@ -15385,6 +16037,19 @@ export type OnDeleteNotificationQueueSubscription = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -15424,6 +16089,10 @@ export type OnDeleteNotificationTemplateSubscription = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -16537,6 +17206,65 @@ export type OnDeleteSecureConfigSubscription = {
   } | null,
 };
 
+export type OnDeleteSignalEventsSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalEventsFilterInput | null,
+};
+
+export type OnDeleteSignalEventsSubscription = {
+  onDeleteSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteSignalNotificationHooksSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalNotificationHooksFilterInput | null,
+};
+
+export type OnDeleteSignalNotificationHooksSubscription = {
+  onDeleteSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnUpdateAffiliatesSubscriptionVariables = {
   filter?: ModelSubscriptionAffiliatesFilterInput | null,
 };
@@ -17052,6 +17780,19 @@ export type OnUpdateNotificationQueueSubscription = {
     retryCount?: number | null,
     scheduledAt?: string | null,
     sentAt?: string | null,
+    signalEvent?:  {
+      __typename: "SignalEvents",
+      createdAt: string,
+      emittedAt: string,
+      emittedBy?: string | null,
+      id: string,
+      payload: string,
+      processed?: boolean | null,
+      signalType: string,
+      source?: string | null,
+      updatedAt: string,
+    } | null,
+    signalEventId?: string | null,
     status?: NotificationQueueStatus | null,
     template?:  {
       __typename: "NotificationTemplate",
@@ -17091,6 +17832,10 @@ export type OnUpdateNotificationTemplateSubscription = {
       nextToken?: string | null,
     } | null,
     owner?: string | null,
+    signalHooks?:  {
+      __typename: "ModelSignalNotificationHooksConnection",
+      nextToken?: string | null,
+    } | null,
     subject?: string | null,
     updatedAt: string,
     variables?: string | null,
@@ -18201,5 +18946,64 @@ export type OnUpdateSecureConfigSubscription = {
     service: string,
     updatedAt?: string | null,
     updatedBy?: string | null,
+  } | null,
+};
+
+export type OnUpdateSignalEventsSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalEventsFilterInput | null,
+};
+
+export type OnUpdateSignalEventsSubscription = {
+  onUpdateSignalEvents?:  {
+    __typename: "SignalEvents",
+    createdAt: string,
+    emittedAt: string,
+    emittedBy?: string | null,
+    id: string,
+    payload: string,
+    processed?: boolean | null,
+    signalType: string,
+    source?: string | null,
+    triggeredNotifications?:  {
+      __typename: "ModelNotificationQueueConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateSignalNotificationHooksSubscriptionVariables = {
+  filter?: ModelSubscriptionSignalNotificationHooksFilterInput | null,
+};
+
+export type OnUpdateSignalNotificationHooksSubscription = {
+  onUpdateSignalNotificationHooks?:  {
+    __typename: "SignalNotificationHooks",
+    channels: string,
+    conditions?: string | null,
+    createdAt: string,
+    enabled?: boolean | null,
+    id: string,
+    notificationTemplateId: string,
+    priority?: SignalNotificationHooksPriority | null,
+    recipientDynamic?: string | null,
+    recipientEmails?: string | null,
+    recipientRoles?: string | null,
+    signalType: string,
+    template?:  {
+      __typename: "NotificationTemplate",
+      channel?: NotificationTemplateChannel | null,
+      contentHtml?: string | null,
+      contentText?: string | null,
+      createdAt: string,
+      id: string,
+      isActive?: boolean | null,
+      name: string,
+      owner?: string | null,
+      subject?: string | null,
+      updatedAt: string,
+      variables?: string | null,
+    } | null,
+    updatedAt: string,
   } | null,
 };

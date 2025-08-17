@@ -67,65 +67,66 @@ export type NotificationTemplates = {
   contactUs: NotificationTemplate;
   getQualified: NotificationTemplate;
   affiliate: NotificationTemplate;
+  getEstimate: NotificationTemplate;
 };
 
-// Import all templates using dynamic imports to avoid circular dependency
+// Import all templates
 import { contactUsTemplate } from './contactUsTemplate';
 import { getQualifiedTemplate } from './getQualifiedTemplate';
 import { affiliateTemplate } from './affiliateTemplate';
+import { getEstimateTemplate } from './getEstimateTemplate';
 
 // Re-export individual templates
-export { contactUsTemplate, getQualifiedTemplate, affiliateTemplate };
+export { contactUsTemplate, getQualifiedTemplate, affiliateTemplate, getEstimateTemplate };
+
+// Re-export the enhanced Get Estimate template type and helper
+export type { GetEstimateFormData } from './getEstimateTemplate';
+export { fileLinks } from './getEstimateTemplate';
+
+// Import utilities
+import { 
+  formatTimestamp, 
+  formatPhoneForDisplay, 
+  getUrgencyColor, 
+  getUrgencyLabel 
+} from './utils';
+
+// Legacy interface - replaced by enhanced GetEstimateFormData in getEstimateTemplate.ts
+// Legacy interface - now in getEstimateTemplate.ts with enhanced fields
+export interface LegacyGetEstimateFormData extends BaseNotificationData {
+  name: string;
+  email: string;
+  phone?: string;
+  address?: {
+    streetAddress: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  serviceType?: string;
+  budget?: string;
+  timeline?: string;
+  workingOnsite?: boolean;
+  projectDescription?: string;
+  submissionId: string;
+  submittedAt: string;
+  urgency?: 'low' | 'medium' | 'high';
+}
+
+// Legacy template removed - now using enhanced template from getEstimateTemplate.ts
 
 // Combined templates object for easy import
 export const notificationTemplates: NotificationTemplates = {
   contactUs: contactUsTemplate,
   getQualified: getQualifiedTemplate,
   affiliate: affiliateTemplate,
+  getEstimate: getEstimateTemplate,
 };
 
-// Utility functions
-export const formatPhoneForDisplay = (phone?: string): string => {
-  if (!phone) return 'Not provided';
-  // Basic phone formatting - can be enhanced
-  const cleaned = phone.replace(/\D/g, '');
-  if (cleaned.length === 10) {
-    return `(${cleaned.slice(0,3)}) ${cleaned.slice(3,6)}-${cleaned.slice(6)}`;
-  }
-  return phone;
-};
-
-export const formatTimestamp = (timestamp: string): string => {
-  try {
-    const date = new Date(timestamp);
-    return date.toLocaleString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZoneName: 'short'
-    });
-  } catch (error) {
-    return timestamp;
-  }
-};
-
-export const getUrgencyColor = (urgency?: string): string => {
-  switch (urgency) {
-    case 'high': return '#D11919'; // accent-red
-    case 'medium': return '#FFB900'; // accent-yellow
-    case 'low': return '#3BE8B0'; // accent-teal
-    default: return '#17619C'; // accent-blue
-  }
-};
-
-export const getUrgencyLabel = (urgency?: string): string => {
-  switch (urgency) {
-    case 'high': return '🔴 HIGH PRIORITY';
-    case 'medium': return '🟡 MEDIUM PRIORITY';
-    case 'low': return '🟢 LOW PRIORITY';
-    default: return '🔵 STANDARD';
-  }
-};
+// Re-export utility functions from utils file
+export { 
+  formatPhoneForDisplay, 
+  formatTimestamp, 
+  getUrgencyColor, 
+  getUrgencyLabel 
+} from './utils';

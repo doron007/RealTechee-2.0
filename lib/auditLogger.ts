@@ -47,6 +47,7 @@ export interface AuditEntry {
 
 export class AuditLogger {
   private client = generateClient();
+  private apiKeyClient = generateClient({ authMode: 'apiKey' });
   private defaultTTLDays = 30;
 
   /**
@@ -132,7 +133,12 @@ export class AuditLogger {
         ttl: this.calculateTTL(entry.context.ttlDays)
       };
 
-      await this.client.graphql({
+      // Use API key client for anonymous users, authenticated client for logged-in users
+      const clientToUse = entry.context.userId === 'system' || entry.context.userId === 'anonymous' || !entry.context.userId 
+        ? this.apiKeyClient 
+        : this.client;
+        
+      await clientToUse.graphql({
         query: createAuditLog,
         variables: { input: auditLogInput }
       });

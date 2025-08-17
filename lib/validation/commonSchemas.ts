@@ -163,11 +163,26 @@ export const futureTimeSchema = yup.string()
     if (!selectedDate) return true; // If no date selected, time validation is not relevant
     
     const today = new Date();
-    const selectedDateObj = new Date(selectedDate);
+    
+    // Parse the date string properly to avoid timezone issues
+    const [year, month, day] = selectedDate.split('-').map(Number);
+    const selectedDateObj = new Date(year, month - 1, day); // month is 0-indexed
+    
+    // Reset times for accurate date comparison
+    const todayDateOnly = new Date(today);
+    todayDateOnly.setHours(0, 0, 0, 0);
+    
+    const selectedDateOnly = new Date(selectedDateObj);
+    selectedDateOnly.setHours(0, 0, 0, 0);
     
     // If selected date is in the future, any time is valid
-    if (selectedDateObj.toDateString() !== today.toDateString()) {
+    if (selectedDateOnly > todayDateOnly) {
       return true;
+    }
+    
+    // If selected date is in the past, time is invalid
+    if (selectedDateOnly < todayDateOnly) {
+      return false;
     }
     
     // If selected date is today, check if time is in the future

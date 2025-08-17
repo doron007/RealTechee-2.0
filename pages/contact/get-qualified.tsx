@@ -9,7 +9,7 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { FormNotificationIntegration, GetQualifiedSubmissionData } from '../../services/formNotificationIntegration';
+import { signalEmitter } from '../../services/signalEmitter';
 import { client } from '../../utils/amplifyAPI';
 
 const GetQualified: NextPage = () => {
@@ -302,53 +302,39 @@ ${JSON.stringify({
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Send internal staff notification for agent qualification using NEW decoupled architecture
-      logger.info('Step 5: Sending internal AE team notification for agent qualification (NEW decoupled architecture)');
+      // Step 5: Emit signal for get qualified notification processing
+      logger.info('Step 5: Emitting signal for get qualified submission');
       
       try {
-        // Get FormNotificationIntegration service instance
-        const formNotifications = FormNotificationIntegration.getInstance();
-        
-        const notificationData: GetQualifiedSubmissionData = {
-          formType: 'getQualified',
-          submissionId: contactUsData.id,
-          submittedAt: contactUsData.submissionTime || new Date().toISOString(),
-          name: formData.contactInfo.fullName,
-          email: formData.contactInfo.email,
-          phone: formData.contactInfo.phone,
+        const signalResult = await signalEmitter.emitFormSubmission('get_qualified', {
+          agentName: formData.contactInfo.fullName,
+          agentEmail: formData.contactInfo.email,
+          agentPhone: formData.contactInfo.phone,
+          company: brokerageName,
           licenseNumber: formData.licenseNumber,
-          brokerage: brokerageName,
           yearsExperience: formData.experienceYears,
-          specialties: formData.specialties,
-          marketAreas: formData.primaryMarkets ? [formData.primaryMarkets] : [],
-          currentVolume: formData.recentTransactions || 'Not specified',
-          goals: formData.qualificationMessage,
-          testData: false,
-          leadSource: 'get_qualified_form'
-        };
-        
-        // Use NEW decoupled architecture - content generated in backend
-        const notificationResult = await formNotifications.notifyGetQualifiedSubmission(notificationData, {
-          priority: 'medium', // Get Qualified forms are medium priority
-          channels: 'both',   // Send both email and SMS to AE team
-          testMode: false
+          submissionId: contactUsData.id,
+          submissionTimestamp: new Date().toISOString(),
+          dashboardUrl: `${window.location.origin}/admin/contact-us/${contactUsData.id}`
+        }, { 
+          urgency: 'medium', 
+          testMode: false 
         });
         
-        if (notificationResult.success) {
-          logger.info('Step 5a: ✅ AE team notification sent', {
-            recipientsNotified: notificationResult.recipientsNotified,
-            environment: notificationResult.environment,
-            debugMode: notificationResult.debugMode
+        if (signalResult.success) {
+          logger.info('Step 5a: ✅ Signal emitted successfully', {
+            signalId: signalResult.signalId,
+            timestamp: signalResult.timestamp
           });
         } else {
-          logger.warn('Step 5a: ⚠️ AE team notification failed', {
-            errors: notificationResult.errors
+          logger.warn('Step 5a: ⚠️ Signal emission failed', {
+            error: signalResult.error
           });
         }
-      } catch (notificationError) {
-        // Don't fail the form submission if notification fails
-        logger.error('Step 5a: ❌ AE team notification error', {
-          error: notificationError
+      } catch (signalError) {
+        // Don't fail the form submission if signal emission fails
+        logger.error('Step 5a: ❌ Signal emission error', {
+          error: signalError instanceof Error ? signalError.message : String(signalError)
         });
       }
 

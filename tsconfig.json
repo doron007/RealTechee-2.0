@@ -61,6 +61,7 @@
   "exclude": [
     "node_modules",
     "scripts/cleanup-archive",
+    "scripts/setup-signal-hooks.ts",
     "amplify/functions"
   ]
 }

@@ -491,6 +491,19 @@ export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($i
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -529,6 +542,10 @@ export const getNotificationTemplate = /* GraphQL */ `query GetNotificationTempl
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -1630,6 +1647,63 @@ export const getSecureConfig = /* GraphQL */ `query GetSecureConfig($id: ID!) {
   APITypes.GetSecureConfigQueryVariables,
   APITypes.GetSecureConfigQuery
 >;
+export const getSignalEvents = /* GraphQL */ `query GetSignalEvents($id: ID!) {
+  getSignalEvents(id: $id) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetSignalEventsQueryVariables,
+  APITypes.GetSignalEventsQuery
+>;
+export const getSignalNotificationHooks = /* GraphQL */ `query GetSignalNotificationHooks($id: ID!) {
+  getSignalNotificationHooks(id: $id) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetSignalNotificationHooksQueryVariables,
+  APITypes.GetSignalNotificationHooksQuery
+>;
 export const listAffiliates = /* GraphQL */ `query ListAffiliates(
   $filter: ModelAffiliatesFilterInput
   $limit: Int
@@ -2325,6 +2399,7 @@ export const listNotificationQueues = /* GraphQL */ `query ListNotificationQueue
       retryCount
       scheduledAt
       sentAt
+      signalEventId
       status
       templateId
       updatedAt
@@ -2933,4 +3008,63 @@ export const listSecureConfigs = /* GraphQL */ `query ListSecureConfigs(
 ` as GeneratedQuery<
   APITypes.ListSecureConfigsQueryVariables,
   APITypes.ListSecureConfigsQuery
+>;
+export const listSignalEvents = /* GraphQL */ `query ListSignalEvents(
+  $filter: ModelSignalEventsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSignalEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListSignalEventsQueryVariables,
+  APITypes.ListSignalEventsQuery
+>;
+export const listSignalNotificationHooks = /* GraphQL */ `query ListSignalNotificationHooks(
+  $filter: ModelSignalNotificationHooksFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listSignalNotificationHooks(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      channels
+      conditions
+      createdAt
+      enabled
+      id
+      notificationTemplateId
+      priority
+      recipientDynamic
+      recipientEmails
+      recipientRoles
+      signalType
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListSignalNotificationHooksQueryVariables,
+  APITypes.ListSignalNotificationHooksQuery
 >;

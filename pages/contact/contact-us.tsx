@@ -9,7 +9,7 @@ import { createProperties, createContacts, createContactUs, updateContacts } fro
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { FormNotificationIntegration, ContactUsSubmissionData } from '../../services/formNotificationIntegration';
+import { signalEmitter } from '../../services/signalEmitter';
 import { client } from '../../utils/amplifyAPI';
 
 const ContactUs: NextPage = () => {
@@ -250,52 +250,47 @@ const ContactUs: NextPage = () => {
       
       logger.info('Step 4a: ✅ ContactUs record created', { contactUsData: cleanContactUsData });
 
-      // Step 5: Send internal staff notification using NEW decoupled architecture
-      logger.info('Step 5: Sending internal staff notification (NEW decoupled architecture)');
+      // Step 5: Emit signal for notification system (NEW signal-driven architecture)
+      logger.info('Step 5: Emitting form submission signal (signal-driven architecture)');
       
       try {
-        // Get FormNotificationIntegration service instance
-        const formNotifications = FormNotificationIntegration.getInstance();
-        
-        const notificationData: ContactUsSubmissionData = {
-          formType: 'contactUs',
-          submissionId: contactUsData.id,
-          submittedAt: contactUsData.submissionTime || new Date().toISOString(),
-          name: formData.contactInfo.fullName,
-          email: formData.contactInfo.email,
-          phone: formData.contactInfo.phone,
+        // Emit signal using new signal-driven architecture
+        const signalResult = await signalEmitter.emitFormSubmission('contact_us', {
+          // Customer information
+          customerName: formData.contactInfo.fullName,
+          customerEmail: formData.contactInfo.email,
+          customerPhone: formData.contactInfo.phone,
+          
+          // Form-specific data
           subject: formData.subject,
           message: formData.message,
-          urgency: 'medium', // Default to medium for general inquiries
-          preferredContact: formData.contactInfo.phone ? 'phone' : 'email',
           product: formData.product,
           address: formData.address,
-          testData: false,
+          
+          // Metadata
+          submissionId: contactUsData.id,
+          submittedAt: contactUsData.submissionTime || new Date().toISOString(),
+          preferredContact: formData.contactInfo.phone ? 'phone' : 'email',
           leadSource: 'contact_us_form'
-        };
-        
-        // Use NEW decoupled architecture - content generated in backend
-        const notificationResult = await formNotifications.notifyContactUsSubmission(notificationData, {
-          priority: 'high', // Contact Us forms are high priority
-          channels: 'both',  // Send both email and SMS
+        }, {
+          urgency: 'high', // Contact Us forms are high priority
           testMode: false
         });
         
-        if (notificationResult.success) {
-          logger.info('Step 5a: ✅ Internal staff notification sent', {
-            recipientsNotified: notificationResult.recipientsNotified,
-            environment: notificationResult.environment,
-            debugMode: notificationResult.debugMode
+        if (signalResult.success) {
+          logger.info('Step 5a: ✅ Signal emitted successfully', {
+            signalId: signalResult.signalId,
+            timestamp: signalResult.timestamp
           });
         } else {
-          logger.warn('Step 5a: ⚠️ Internal staff notification failed', {
-            errors: notificationResult.errors
+          logger.warn('Step 5a: ⚠️ Signal emission failed', {
+            error: signalResult.error
           });
         }
-      } catch (notificationError) {
-        // Don't fail the form submission if notification fails
-        logger.error('Step 5a: ❌ Internal staff notification error', {
-          error: notificationError
+      } catch (signalError) {
+        // Don't fail the form submission if signal emission fails
+        logger.error('Step 5a: ❌ Signal emission error', {
+          error: signalError
         });
       }
 

@@ -9,7 +9,7 @@ import { createProperties, createContacts, createAffiliates, updateContacts } fr
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { FormNotificationIntegration, AffiliateSubmissionData } from '../../services/formNotificationIntegration';
+import { signalEmitter } from '../../services/signalEmitter';
 import { client } from '../../utils/amplifyAPI';
 
 const Affiliate: NextPage = () => {
@@ -269,70 +269,39 @@ const Affiliate: NextPage = () => {
       
       logger.info('Step 4a: ✅ Affiliates record created', { affiliateData: cleanAffiliateData });
 
-      // Step 5: Send internal partnerships team notification using NEW decoupled architecture
-      logger.info('Step 5: Sending partnerships team notification for affiliate inquiry (NEW decoupled architecture)');
+      // Step 5: Emit signal for affiliate notification processing
+      logger.info('Step 5: Emitting signal for affiliate submission');
       
       try {
-        // Get FormNotificationIntegration service instance
-        const formNotifications = FormNotificationIntegration.getInstance();
-        
-        const notificationData: AffiliateSubmissionData = {
-          formType: 'affiliate',
-          submissionId: affiliateData.id,
-          submittedAt: affiliateData.date || new Date().toISOString(),
+        const signalResult = await signalEmitter.emitFormSubmission('affiliate', {
           companyName: formData.companyName,
           contactName: formData.contactInfo.fullName,
-          email: formData.contactInfo.email,
-          phone: formData.contactInfo.phone,
+          contactEmail: formData.contactInfo.email,
+          contactPhone: formData.contactInfo.phone,
           serviceType: formData.serviceType,
-          // Address information
-          address: {
-            streetAddress: formData.address.streetAddress,
-            city: formData.address.city,
-            state: formData.address.state,
-            zip: formData.address.zip
-          },
-          // Map General Contractor specific fields or provide defaults
-          businessLicense: formData.generalContractorInfo?.license || '',
-          insurance: formData.generalContractorInfo?.workersCompensation || false,
-          workersCompensation: formData.generalContractorInfo?.workersCompensation || false,
-          environmentalFactor: formData.generalContractorInfo?.environmentalFactor || false,
-          oshaCompliance: formData.generalContractorInfo?.oshaCompliance || false,
-          signedNDA: formData.generalContractorInfo?.signedNDA || false,
-          safetyPlan: formData.generalContractorInfo?.safetyPlan || false,
-          numberOfEmployees: formData.generalContractorInfo?.numberOfEmployees || '',
-          bonded: false, // Not collected in current form
-          yearsInBusiness: 'Not provided', // Not collected in current form
-          serviceAreas: [], // Not collected in current form
-          certifications: [], // Not collected in current form
-          portfolio: 'Not provided', // Not collected in current form
-          testData: false,
-          leadSource: 'affiliate_form'
-        };
-        
-        // Use NEW decoupled architecture - content generated in backend
-        const notificationResult = await formNotifications.notifyAffiliateSubmission(notificationData, {
-          priority: 'low',    // Affiliate forms are low priority
-          channels: 'email',  // Email only for partnerships team
-          testMode: false
+          serviceDescription: `${formData.serviceType} services from ${formData.companyName}`,
+          submissionId: affiliateData.id,
+          submissionTimestamp: new Date().toISOString(),
+          dashboardUrl: `${window.location.origin}/admin/affiliates/${affiliateData.id}`
+        }, { 
+          urgency: 'low', 
+          testMode: false 
         });
         
-        if (notificationResult.success) {
-          logger.info('Step 5a: ✅ Partnerships team notification sent (NEW decoupled architecture)', {
-            notificationId: notificationResult.notificationId,
-            recipientsNotified: notificationResult.recipientsNotified,
-            environment: notificationResult.environment,
-            debugMode: notificationResult.debugMode
+        if (signalResult.success) {
+          logger.info('Step 5a: ✅ Signal emitted successfully', {
+            signalId: signalResult.signalId,
+            timestamp: signalResult.timestamp
           });
         } else {
-          logger.warn('Step 5a: ⚠️ Partnerships team notification failed (NEW decoupled architecture)', {
-            errors: notificationResult.errors
+          logger.warn('Step 5a: ⚠️ Signal emission failed', {
+            error: signalResult.error
           });
         }
-      } catch (notificationError) {
-        // Don't fail the form submission if notification fails
-        logger.error('Step 5a: ❌ Partnerships team notification error (NEW decoupled architecture)', {
-          error: notificationError
+      } catch (signalError) {
+        // Don't fail the form submission if signal emission fails
+        logger.error('Step 5a: ❌ Signal emission error', {
+          error: signalError instanceof Error ? signalError.message : String(signalError)
         });
       }
 

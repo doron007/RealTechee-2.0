@@ -42,9 +42,105 @@ export class TemplateProcessor {
       return value || defaultValue;
     });
 
+    // Urgency color helper
+    Handlebars.registerHelper('getUrgencyColor', (urgency: string) => {
+      switch (urgency?.toLowerCase()) {
+        case 'high': return '#dc2626';
+        case 'medium': return '#d97706';
+        case 'low': return '#059669';
+        default: return '#6b7280';
+      }
+    });
+
+    // Urgency label helper
+    Handlebars.registerHelper('getUrgencyLabel', (urgency: string) => {
+      switch (urgency?.toLowerCase()) {
+        case 'high': return '🔴 HIGH';
+        case 'medium': return '🟡 MEDIUM';
+        case 'low': return '🟢 LOW';
+        default: return '⚪ STANDARD';
+      }
+    });
+
+    // Phone number formatting helper
+    Handlebars.registerHelper('formatPhone', (phone: string) => {
+      if (!phone) return '';
+      // Remove all non-digits
+      const cleaned = phone.replace(/\D/g, '');
+      // Format as (XXX) XXX-XXXX for US numbers
+      if (cleaned.length === 10) {
+        return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+      }
+      return phone; // Return original if not 10 digits
+    });
+
     // Join array helper
     Handlebars.registerHelper('join', (array: any[], separator: string = ', ') => {
       return Array.isArray(array) ? array.join(separator) : '';
+    });
+
+    // Parse JSON array helper
+    Handlebars.registerHelper('parseJson', (jsonString: string) => {
+      try {
+        return JSON.parse(jsonString || '[]');
+      } catch (error) {
+        return [];
+      }
+    });
+
+    // File links helper - creates HTML links for file arrays (supports new template format)
+    Handlebars.registerHelper('fileLinks', (jsonString: string, type: string = 'file') => {
+      try {
+        const files = JSON.parse(jsonString || '[]');
+        if (!Array.isArray(files) || files.length === 0) {
+          return '';
+        }
+
+        return files.map((url: string) => {
+          // Convert relative URLs to absolute URLs for email clients
+          const absoluteUrl = url.startsWith('http') ? url : `https://d200k2wsaf8th3.amplifyapp.com${url}`;
+          const filename = url.split('/').pop() || url;
+          const cleanFilename = filename.replace(/^\d+-/, ''); // Remove timestamp prefix if present
+          
+          // Create thumbnail based on file type
+          if (type === 'images' || /\.(jpg|jpeg|png|gif|webp)$/i.test(filename)) {
+            return `<a class="thumb" href="${absoluteUrl}" target="_blank">
+              <img src="${absoluteUrl}" alt="Uploaded Image" />
+              <div class="thumb__cap">Photo</div>
+            </a>`;
+          } else if (type === 'videos' || /\.(mp4|mov|avi|wmv)$/i.test(filename)) {
+            return `<a class="thumb" href="${absoluteUrl}" target="_blank">
+              <img src="https://dummyimage.com/320x200/ffffff/e2e8f0.png&text=Video" alt="Uploaded Video" />
+              <div class="thumb__cap">Video</div>
+            </a>`;
+          } else {
+            return `<a class="thumb" href="${absoluteUrl}" target="_blank">
+              <img src="https://dummyimage.com/320x200/ffffff/e2e8f0.png&text=Document" alt="Uploaded Document" />
+              <div class="thumb__cap">Document</div>
+            </a>`;
+          }
+        }).join('');
+      } catch (error) {
+        return '<p style="color: #ef4444;">Error loading files</p>';
+      }
+    });
+
+    // File list helper for text emails
+    Handlebars.registerHelper('fileList', (jsonString: string, type: string = 'file') => {
+      try {
+        const files = JSON.parse(jsonString || '[]');
+        if (!Array.isArray(files) || files.length === 0) {
+          return 'No files uploaded';
+        }
+
+        return files.map((url: string) => {
+          const filename = url.split('/').pop() || url;
+          const cleanFilename = filename.replace(/^\d+-/, '');
+          return `• ${cleanFilename}: ${url}`;
+        }).join('\n');
+      } catch (error) {
+        return 'Error loading files';
+      }
     });
 
     console.log('✅ Handlebars helpers registered');
@@ -62,11 +158,11 @@ export class TemplateProcessor {
       const subject = subjectTemplate(data);
 
       // Process HTML content
-      const htmlTemplate = Handlebars.compile(template.contentHtml || '');
+      const htmlTemplate = Handlebars.compile(template.content || template.contentHtml || '');
       const htmlContent = htmlTemplate(data);
 
       // Process text content
-      const textTemplate = Handlebars.compile(template.contentText || '');
+      const textTemplate = Handlebars.compile(template.contentText || template.content || '');
       const textContent = textTemplate(data);
 
       console.log(`✅ Template processed successfully: ${template.name}`);

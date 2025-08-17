@@ -23,20 +23,85 @@
 - **Database**: 26+ isolated production tables (`*-aqnqdrctpzfwfjwyxxsmu6peoq-*`)
 - **Testing Framework**: Playwright 100% pass rate across 5 test suites
 
-### **🎯 NEXT PRIORITY: Enhancement Phase (Optional)**
-**Current Focus**: Platform is production-ready. Future enhancements:
+### **🎯 NEXT PRIORITY: Complete Signal-Driven Notification System**
+**Current Focus**: Core signal architecture complete, need form integration
 
-**Phase 1 - Security & Compliance (Optional)**:
-1. **Multi-Factor Authentication (MFA)** - Enhanced user security
-2. **Security Headers & CSRF** - Web security hardening
-3. **GDPR Compliance** - Data privacy implementation
-4. **Security Audit** - Professional penetration testing
+**✅ COMPLETED (August 14, 2025)**:
+- **Signal-Driven Architecture**: SignalEvents & SignalNotificationHooks tables deployed
+- **Contact Us Form**: Signal emission integrated and tested end-to-end  
+- **Unified Lambda**: Processes signals + delivers email/SMS via AWS SES & Twilio
+- **Database Templates**: 8 notification hooks created for all 4 form types
 
-**Phase 2 - Advanced Features (Optional)**:
-5. **Custom Domain** - Replace amplifyapp.com with custom domain
-6. **Load Testing** - Performance validation under production load
-7. **Advanced Analytics** - Custom business metrics and dashboards
-8. **Mobile App** - React Native mobile application
+**⚠️ IMMEDIATE TASKS**:
+1. **Form Integration**: Update Get Estimate, Get Qualified, Affiliate forms to emit signals
+2. **EventBridge Scheduling**: Automate Lambda processing (every 2 minutes)
+3. **Admin UI**: Signal-hook management interface
+4. **Real-time Dashboard**: Notification monitoring system
+
+**Enhancement Phase (Optional)**:
+5. **Multi-Factor Authentication (MFA)** - Enhanced user security
+6. **Security Headers & CSRF** - Web security hardening  
+7. **Custom Domain** - Replace amplifyapp.com with custom domain
+8. **Advanced Analytics** - Custom business metrics and dashboards
+
+---
+
+## 📋 **DATA ACCESS PATTERNS - CRITICAL ARCHITECTURE**
+
+### **🎯 Standard Data Access Architecture (Used by Projects Service)**
+
+**Pattern 1: Service Layer with Dual Access Methods**
+```typescript
+// 1. Import both GraphQL client and API utility
+import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
+import { projectsAPI } from '../utils/amplifyAPI';
+
+// 2. Initialize GraphQL client
+const graphqlClient = generateGraphQLClient({ authMode: 'apiKey' });
+
+// 3. Use GraphQL for complex queries with relations
+const result = await graphqlClient.graphql({
+  query: LIST_PROJECTS_WITH_RELATIONS,
+  variables: { limit: 2000 }
+});
+
+// 4. Use API utility for simple CRUD operations
+const updateResult = await projectsAPI.update(projectId, updates);
+```
+
+**Pattern 2: API Utility Structure (utils/amplifyAPI.ts)**
+```typescript
+// All APIs follow this pattern:
+export const requestsAPI = getAPI('Requests');
+export const projectsAPI = getAPI('Projects');
+export const contactsAPI = getAPI('Contacts');
+
+// Where getAPI creates a standardized interface:
+function getAPI(modelName: string) {
+  return {
+    async create(data: any) { /* uses client.models */ },
+    async list() { /* uses client.models */ },
+    async update(id: string, updates: any) { /* uses client.models */ },
+    async delete(id: string) { /* uses client.models */ }
+  };
+}
+```
+
+**Pattern 3: Working vs Non-Working Methods**
+- ✅ **WORKS**: GraphQL queries (`client.graphql()`) - Used by form submissions
+- ✅ **WORKS**: API utilities for Projects (`projectsAPI.update()`)
+- ❌ **FAILS**: API utilities for Requests (`requestsAPI.update()`) - Browser context issue
+
+**Root Cause Analysis**
+- Projects service uses both GraphQL AND API utilities successfully
+- Form submissions use GraphQL mutations exclusively
+- Assignment service fails with API utilities in browser context
+- Issue: `client.models` is empty in browser during assignment
+
+**Recommended Fix Priority**
+1. **Immediate**: Use GraphQL pattern like form submissions
+2. **Future**: Debug why `client.models` becomes empty during assignment
+3. **Long-term**: Standardize all services to dual GraphQL/API pattern
 
 ---
 
@@ -235,7 +300,7 @@ export const modelAPI = createModelAPI('ModelName');
 
 **Usage**: Type the command (e.g., `/new_session`) in Claude Code to execute the predefined workflow.
 
-**Previous Session Focus**: "Focus on the CRITICAL TESTING PRIORITIES section in TASKS.md and begin with Phase 1: Form Validation & File Upload implementation."
+**Previous Session Focus**: "Complete signal-driven notification system implementation. Core architecture is done - need to integrate remaining 3 forms (Get Estimate, Get Qualified, Affiliate) with signal emission. See /docs/09-migration/signal-notification-system-context.md for complete technical context."
 
 ---
 
@@ -423,4 +488,4 @@ production.d200k2wsaf8th3.amplifyapp.com → Single Amplify App (d200k2wsaf8th3)
 
 ---
 
-*Last Updated: August 5, 2025 - 📚 Documentation Consolidation + Single-App Architecture Update Complete ✅*
+*Last Updated: August 14, 2025 - 🔄 Signal-Driven Notification Architecture Core Complete - Form Integration Next ✅*

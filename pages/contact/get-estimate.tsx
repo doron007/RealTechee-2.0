@@ -13,7 +13,7 @@ import { createProperties, createContacts, createRequests, updateContacts } from
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { FormNotificationIntegration, GetEstimateSubmissionData } from '../../services/formNotificationIntegration';
+import { signalEmitter } from '../../services/signalEmitter';
 import { assignmentService } from '../../services/assignmentService';
 import { client } from '../../utils/amplifyAPI';
 
@@ -497,59 +497,71 @@ const GetEstimate: NextPage = () => {
         });
       }
 
-      // Step 5d: Send internal staff notification using NEW decoupled architecture
+      // Step 5d: Emit signal for notification processing
       try {
-        logger.info('Step 5d: Sending internal staff notification for estimate request (NEW decoupled architecture)');
+        logger.info('Step 5d: Emitting signal for get estimate submission');
         
-        // Get FormNotificationIntegration service instance
-        const formNotifications = FormNotificationIntegration.getInstance();
-        
-        const notificationData: GetEstimateSubmissionData = {
-          formType: 'getEstimate',
+        const signalResult = await signalEmitter.emitFormSubmission('get_estimate', {
+          // Agent Information (primary contact)
+          customerName: agentData?.fullName || formData.agentInfo.fullName,
+          customerEmail: agentData?.email || formData.agentInfo.email,
+          customerPhone: agentData?.phone || formData.agentInfo.phone,
+          agentFullName: agentData?.fullName || formData.agentInfo.fullName,
+          agentEmail: agentData?.email || formData.agentInfo.email,
+          agentPhone: agentData?.phone || formData.agentInfo.phone,
+          agentBrokerage: agentData?.brokerage || formData.agentInfo.brokerage,
+          
+          // Homeowner Information (optional)
+          homeownerFullName: homeownerData?.fullName || formData.homeownerInfo?.fullName || '',
+          homeownerEmail: homeownerData?.email || formData.homeownerInfo?.email || '',
+          homeownerPhone: homeownerData?.phone || formData.homeownerInfo?.phone || '',
+          
+          // Property Information
+          propertyAddress: `${formData.propertyAddress.streetAddress}, ${formData.propertyAddress.city}, ${formData.propertyAddress.state} ${formData.propertyAddress.zip}`,
+          propertyStreetAddress: formData.propertyAddress.streetAddress,
+          propertyCity: formData.propertyAddress.city,
+          propertyState: formData.propertyAddress.state,
+          propertyZip: formData.propertyAddress.zip,
+          
+          // Project Information
+          relationToProperty: formData.relationToProperty,
+          needFinance: formData.needFinance,
+          projectType: formData.rtDigitalSelection || 'General Renovation',
+          projectMessage: formData.notes || 'No additional notes provided',
+          
+          // Meeting Information
+          meetingType: formData.rtDigitalSelection,
+          meetingDateTime: formData.requestedVisitDateTime || '',
+          requestedVisitDateTime: formData.requestedVisitDateTime || '',
+          
+          // File Upload Information (matching schema field names)
+          uploadedMedia: JSON.stringify(mediaFiles.map((f: any) => f.url)),
+          uplodedDocuments: JSON.stringify(docFiles.map((f: any) => f.url)), // Note: keeping typo to match schema
+          uploadedVideos: JSON.stringify(videoFiles.map((f: any) => f.url)),
+          
+          // System Information
           submissionId: requestData.id,
-          submittedAt: new Date().toISOString(),
-          name: agentData?.fullName || formData.agentInfo.fullName,
-          email: agentData?.email || formData.agentInfo.email,
-          phone: agentData?.phone || formData.agentInfo.phone,
-          address: {
-            streetAddress: formData.propertyAddress.streetAddress,
-            city: formData.propertyAddress.city,
-            state: formData.propertyAddress.state,
-            zip: formData.propertyAddress.zip
-          },
-          serviceType: formData.rtDigitalSelection || 'General Renovation',
-          urgency: 'high', // Get Estimate requests are typically urgent
-          budget: formData.budget || 'Not specified',
-          projectDescription: formData.notes || 'No additional notes provided',
-          timeline: formData.requestedVisitDateTime || 'Not specified',
-          workingOnsite: formData.relationToProperty !== 'Remote Planning',
-          testData: isTestSubmission,
-          leadSource: isTestSubmission ? 'E2E_TEST' : 'get_estimate_form'
-        };
-        
-        // Use NEW decoupled architecture - content generated in backend
-        const notificationResult = await formNotifications.notifyGetEstimateSubmission(notificationData, {
-          priority: 'high',  // Get Estimate forms are high priority
-          channels: 'both',  // Send both email and SMS to sales team
-          testMode: false
+          submissionTimestamp: new Date().toISOString(),
+          dashboardUrl: `${window.location.origin}/admin/requests/${requestData.id}`
+        }, { 
+          urgency: 'high', // Changed to high for estimate requests
+          testMode: isTestSubmission 
         });
         
-        if (notificationResult.success) {
-          logger.info('Step 5d: ✅ Internal staff notification sent (NEW decoupled architecture)', {
-            notificationId: notificationResult.notificationId,
-            recipientsNotified: notificationResult.recipientsNotified,
-            environment: notificationResult.environment,
-            debugMode: notificationResult.debugMode
+        if (signalResult.success) {
+          logger.info('Step 5d: ✅ Signal emitted successfully', {
+            signalId: signalResult.signalId,
+            timestamp: signalResult.timestamp
           });
         } else {
-          logger.warn('Step 5d: ⚠️ Internal staff notification failed (NEW decoupled architecture)', {
-            errors: notificationResult.errors
+          logger.warn('Step 5d: ⚠️ Signal emission failed', {
+            error: signalResult.error
           });
         }
-      } catch (notificationError) {
-        // Don't fail the entire form submission if notification fails
-        logger.error('Step 5d: ❌ Internal staff notification error (NEW decoupled architecture)', {
-          error: notificationError instanceof Error ? notificationError.message : String(notificationError)
+      } catch (signalError) {
+        // Don't fail the entire form submission if signal emission fails
+        logger.error('Step 5d: ❌ Signal emission error', {
+          error: signalError instanceof Error ? signalError.message : String(signalError)
         });
       }
 

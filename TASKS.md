@@ -11,7 +11,41 @@
 
 ## 🎯 **NEXT PRIORITIES**
 
-### **Priority 1: E2E Testing - Story-Driven Implementation** ⚡
+### **Priority 1: Complete Signal-Driven Notification System** ⚡
+**Status**: Core Architecture Complete - Need Form Integration | **Foundation**: Signal emission working for Contact Us form
+
+**Current Status (August 14, 2025):**
+- ✅ **Signal-Driven Architecture**: Complete with SignalEvents & SignalNotificationHooks tables
+- ✅ **Contact Us Form**: Signal emission implemented and tested end-to-end
+- ✅ **Unified Lambda**: Processing signals + email/SMS delivery via AWS SES & Twilio
+- ✅ **Database Templates**: 8 notification hooks created (2 per form type)
+- ⚠️ **Missing Integration**: Get Estimate, Get Qualified, Affiliate forms still using old direct notification calls
+
+**Phase A: Form Signal Integration (IMMEDIATE)**
+- [ ] Update Get Estimate form to emit signals (`form_get_estimate_submission`)
+- [ ] Update Get Qualified form to emit signals (`form_get_qualified_submission`) 
+- [ ] Update Affiliate form to emit signals (`form_affiliate_submission`)
+- [ ] Remove old notification service calls from all 3 forms
+- [ ] Test end-to-end signal flow for all 4 forms
+
+**Phase B: Production Automation (HIGH)**
+- [ ] EventBridge scheduling for automated Lambda processing (every 2 minutes)
+- [ ] Remove manual Lambda trigger dependency
+- [ ] Production testing with automated scheduling
+
+**Phase C: Admin Management Interface (MEDIUM)**
+- [ ] Admin UI for signal-hook management (create/edit/disable hooks)
+- [ ] Real-time notification status dashboard
+- [ ] Signal monitoring and debugging interface
+- [ ] Hook condition editor for advanced filtering
+
+**Current Implementation Context:**
+- **Signal Emitter**: `/services/signalEmitter.ts` - Ready for all form types
+- **Signal Processor**: `/services/signalProcessor.ts` - Handles all signal types
+- **Database Setup**: Signal hooks exist for all 4 forms (Contact Us working, others need form updates)
+- **Lambda Function**: `amplify-d200k2wsaf8th3-st-notificationprocessorlam-CyqmoAmXrj2F` - Fully functional
+
+### **Priority 2: E2E Testing - Story-Driven Implementation** ⚡
 **Status**: Ready for Implementation | **Foundation**: Clean Playwright setup complete
 
 **Implementation Approach:**
@@ -21,7 +55,7 @@
 
 **Next Steps**: Implement user journey tests for critical business flows
 
-### **Priority 2: AWS SES Compliance Implementation** 🚨
+### **Priority 3: AWS SES Compliance Implementation** 🚨
 **Status**: Critical for Production Email Safety
 
 **Phase A: Bounce & Complaint Handling (IMMEDIATE)**
@@ -45,29 +79,30 @@
 - [ ] Monitoring validation
 - [ ] Operational runbooks
 
-### **Priority 3: Notification System Admin Interface** 📊
-**Status**: In Planning | **Goal**: Complete admin notification management
+### **Priority 4: Enhanced Notification System Admin Interface** 📊
+**Status**: Legacy Queue Management - Migrate to Signal System | **Goal**: Complete signal-driven admin management
 
-**Phase A: Core Queue Management**
-- [ ] Pending notifications queue display
+**Phase A: Signal System Management** 
+- [ ] Signal events monitoring dashboard
+- [ ] Hook management interface (already in Priority 1)
+- [ ] Signal-to-notification mapping editor
+- [ ] Signal debugging and troubleshooting tools
+
+**Phase B: Legacy Queue Migration**
+- [ ] Pending notifications queue display (for old system)
 - [ ] Status tracking with retry capabilities
 - [ ] Queue operations (pause/resume/cancel)
-- [ ] Real-time updates
-
-**Phase B: History & Management** 
-- [ ] Sent notifications audit trail
-- [ ] Failed notifications recovery
-- [ ] Notification editing capabilities
-- [ ] Search and filtering
+- [ ] Migration tools to signal system
 
 **Phase C: Template Management**
-- [ ] Template library with WYSIWYG editor
+- [ ] Database template editor interface
 - [ ] Dynamic variable management
 - [ ] Template versioning
+- [ ] Multi-channel template support
 
 **Phase D: AWS Infrastructure Monitoring**
 - [ ] Lambda function monitoring
-- [ ] SQS/SNS management interface
+- [ ] EventBridge trigger management
 - [ ] CloudWatch integration
 
 ---

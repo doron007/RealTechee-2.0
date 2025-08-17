@@ -20,5 +20,5 @@ export const notificationProcessor = defineFunction({
   runtime: 20,
   timeoutSeconds: 900, // 15 minutes max for processing large batches
   memoryMB: 512,
-  // schedule will be configured in backend.ts
+  // schedule: 'rate(2 minutes)', // TODO: Add EventBridge scheduling - manual trigger for testing
 });

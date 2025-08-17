@@ -39,12 +39,41 @@ export interface NotificationTemplate {
   id: string;
   name: string;
   subject?: string;
+  content?: string; // Main content field used in database
   contentHtml?: string;
   contentText?: string;
   channel: 'EMAIL' | 'SMS' | 'TELEGRAM' | 'WHATSAPP';
   variables?: string; // JSON string of required variables array
   isActive?: boolean;
   owner?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Signal-driven architecture types
+export interface SignalEvent {
+  id: string;
+  signalType: string;
+  payload: any; // JSON payload or string
+  emittedAt: string;
+  emittedBy?: string;
+  source?: string;
+  processed: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SignalNotificationHook {
+  id: string;
+  signalType: string;
+  notificationTemplateId: string;
+  enabled: boolean;
+  priority?: 'low' | 'medium' | 'high';
+  channels: string; // JSON string array
+  recipientEmails?: string; // JSON string array
+  recipientRoles?: string; // JSON string array
+  recipientDynamic?: string; // JSON string array
+  conditions?: any; // JSON conditions for filtering
   createdAt: string;
   updatedAt: string;
 }

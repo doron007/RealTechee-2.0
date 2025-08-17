@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { uploadData } from 'aws-amplify/storage';
+import { Amplify } from 'aws-amplify';
 import { Close, Photo, VideoFile, Description } from '@mui/icons-material';
-import { P3 } from '../typography/P3' 
+import { P3 } from '../typography/P3';
 import amplifyConfig from '../../amplify_outputs.json';
-import { getRelativePathForUpload } from '../../utils/s3Utils';
 
 interface UploadedFile {
   id: string;
@@ -79,6 +79,23 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
   const [error, setError] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Ensure Amplify is configured before any uploads
+  useEffect(() => {
+    try {
+      const config = Amplify.getConfig();
+      console.log('🔧 FileUploadField: Current Amplify config:', config);
+      if (!config.Storage) {
+        console.warn('Amplify Storage not configured, attempting to reconfigure...');
+        Amplify.configure(amplifyConfig);
+        console.log('🔧 FileUploadField: Reconfigured Amplify');
+      }
+    } catch (err) {
+      console.error('Amplify configuration error:', err);
+      Amplify.configure(amplifyConfig);
+      console.log('🔧 FileUploadField: Force-configured Amplify after error');
+    }
+  }, []);
+
   // Create clean address for folder structure
   const getCleanAddress = () => {
     if (!addressInfo?.streetAddress) return 'unknown-address';
@@ -129,26 +146,29 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
     const category = getFileCategory(file);
     const cleanAddress = getCleanAddress();
     
-    // Create S3 key with consistent session ID: address/Requests/YYYYMMDD_HHMMSS/category/file
-    const fileKey = `Requests/${cleanAddress}/${sessionId}/${category}/${timestamp}-${sanitizedFileName}`;
+    // Use EXACT same pattern as successful debug page
+    const fileKey = `form-uploads/${timestamp}-${sanitizedFileName}`;
 
     try {
-      // Upload to S3 with guest access (for public visibility)
+      console.log('🔧 FileUploadField: Starting upload with key:', fileKey);
+      
+      // Force reconfigure Amplify right before upload
+      console.log('🔧 FileUploadField: Force reconfiguring Amplify before upload...');
+      Amplify.configure(amplifyConfig);
+      
+      // Use EXACT same uploadData call as successful debug page
       const uploadTask = uploadData({
         key: fileKey,
         data: file,
         options: {
-          accessLevel: 'guest', // Use guest access for public visibility
-          onProgress: ({ transferredBytes, totalBytes }) => {
-            if (totalBytes) {
-              const progress = Math.round((transferredBytes / totalBytes) * 100);
-              setUploading(prev => ({ ...prev, [fileId]: progress }));
-            }
-          }
+          accessLevel: 'guest'
         }
       });
 
-      await uploadTask.result;
+      console.log('🔧 FileUploadField: Upload task created:', uploadTask);
+      
+      const result = await uploadTask.result;
+      console.log('🔧 FileUploadField: Upload completed:', result);
 
       // Remove from uploading state
       setUploading(prev => {
@@ -157,16 +177,16 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
         return newUploading;
       });
 
-      // Return relative path that will be stored in database
-      // The path follows the new architecture: /assets/[category]/[file]
-      const relativePath = getRelativePathForUpload(category, timestamp, file.name);
+      // Return the actual S3 path that matches the upload location
+      // This ensures the URL points to where the file actually exists
+      const actualPath = `/public/form-uploads/${timestamp}-${sanitizedFileName}`;
 
       return {
         id: fileId,
         name: file.name,
         size: file.size,
         type: file.type,
-        url: relativePath, // Store relative path instead of full URL
+        url: actualPath, // Store actual S3 path that matches upload location
         key: fileKey,
         category
       };

@@ -1,4 +1,6 @@
-import { backOfficeAssignToAPI, contactsAPI, requestsAPI } from '../utils/amplifyAPI';
+import { contactsAPI, requestsAPI } from '../utils/amplifyAPI';
+import { generateClient } from 'aws-amplify/api';
+import { updateRequests } from '../mutations';
 import { createLogger } from '../utils/logger';
 
 const logger = createLogger('AssignmentService');
@@ -116,14 +118,21 @@ export class AssignmentService {
         return { success: false, error: 'Failed to select AE' };
       }
 
-      // Update request with assignment
-      const updateResult = await requestsAPI.update(requestId, {
+      // Update request using proven GraphQL pattern (same as form submissions)
+      const graphqlClient = generateClient({ authMode: 'apiKey' });
+      const updateInput = {
+        id: requestId,
         assignedTo: selectedAE.name,
         assignedDate: new Date().toISOString()
+      };
+      
+      const updateResult = await graphqlClient.graphql({
+        query: updateRequests,
+        variables: { input: updateInput }
       });
 
-      if (!updateResult.success) {
-        logger.error('Failed to update request with assignment', { requestId, error: updateResult.error });
+      if (!updateResult.data?.updateRequests) {
+        logger.error('Failed to update request with assignment', { requestId, error: 'No data returned from GraphQL' });
         return { success: false, error: 'Failed to update request' };
       }
 
@@ -581,42 +590,58 @@ export class AssignmentService {
   }
 
   /**
-   * Refresh AE cache from database
+   * Refresh AE cache from Contacts table (filtering by roleType: 'AE')
    */
   private async refreshAECache(): Promise<void> {
     try {
-      logger.info('Refreshing AE cache');
+      logger.info('Refreshing AE cache from Contacts table');
 
-      const result = await backOfficeAssignToAPI.list();
+      const result = await contactsAPI.list();
       if (!result.success) {
-        logger.error('Failed to fetch AEs from database', result.error);
+        logger.error('Failed to fetch contacts from database', result.error);
         return;
       }
 
       // Clear cache and rebuild
       this.aeCache.clear();
       
-      result.data.forEach((ae: any) => {
-        const aeProfile: AEProfile = {
-          id: ae.id,
-          name: ae.name || 'Unknown',
-          email: ae.email || '',
-          mobile: ae.mobile,
-          active: ae.active ?? true,
-          order: ae.order || 999,
-          sendEmailNotifications: ae.sendEmailNotifications ?? true,
-          sendSmsNotifications: ae.sendSmsNotifications ?? true,
-          contactId: ae.contactId
-        };
-        
-        this.aeCache.set(ae.id, aeProfile);
+      // Filter contacts for AE role type and convert to AEProfile
+      result.data.forEach((contact: any) => {
+        if (contact.roleType && contact.roleType.includes('AE')) {
+          const aeProfile: AEProfile = {
+            id: contact.id,
+            name: `${contact.firstName || ''} ${contact.lastName || ''}`.trim() || 'Unknown AE',
+            email: contact.email || '',
+            mobile: contact.mobile || contact.phone || '',
+            active: contact.isActive ?? true,
+            order: contact.assignmentPriority || 999,
+            sendEmailNotifications: contact.emailNotifications ?? true,
+            sendSmsNotifications: contact.smsNotifications ?? true,
+            contactId: contact.id
+          };
+          
+          this.aeCache.set(contact.id, aeProfile);
+        }
+      });
+
+      // Always add "Unassigned" as a special AE for fallback
+      this.aeCache.set('unassigned', {
+        id: 'unassigned',
+        name: 'Unassigned',
+        email: '',
+        mobile: '',
+        active: true,
+        order: 9999,
+        sendEmailNotifications: false,
+        sendSmsNotifications: false,
+        contactId: 'unassigned'
       });
 
       this.cacheTimestamp = Date.now();
-      logger.info('AE cache refreshed', { count: this.aeCache.size });
+      logger.info('AE cache refreshed from Contacts', { count: this.aeCache.size });
 
     } catch (error) {
-      logger.error('Error refreshing AE cache', error);
+      logger.error('Error refreshing AE cache from Contacts', error);
     }
   }
 

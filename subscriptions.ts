@@ -531,6 +531,19 @@ export const onCreateNotificationQueue = /* GraphQL */ `subscription OnCreateNot
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -571,6 +584,10 @@ export const onCreateNotificationTemplate = /* GraphQL */ `subscription OnCreate
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -1694,6 +1711,67 @@ export const onCreateSecureConfig = /* GraphQL */ `subscription OnCreateSecureCo
   APITypes.OnCreateSecureConfigSubscriptionVariables,
   APITypes.OnCreateSecureConfigSubscription
 >;
+export const onCreateSignalEvents = /* GraphQL */ `subscription OnCreateSignalEvents(
+  $filter: ModelSubscriptionSignalEventsFilterInput
+) {
+  onCreateSignalEvents(filter: $filter) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateSignalEventsSubscriptionVariables,
+  APITypes.OnCreateSignalEventsSubscription
+>;
+export const onCreateSignalNotificationHooks = /* GraphQL */ `subscription OnCreateSignalNotificationHooks(
+  $filter: ModelSubscriptionSignalNotificationHooksFilterInput
+) {
+  onCreateSignalNotificationHooks(filter: $filter) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateSignalNotificationHooksSubscriptionVariables,
+  APITypes.OnCreateSignalNotificationHooksSubscription
+>;
 export const onDeleteAffiliates = /* GraphQL */ `subscription OnDeleteAffiliates(
   $filter: ModelSubscriptionAffiliatesFilterInput
 ) {
@@ -2217,6 +2295,19 @@ export const onDeleteNotificationQueue = /* GraphQL */ `subscription OnDeleteNot
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -2257,6 +2348,10 @@ export const onDeleteNotificationTemplate = /* GraphQL */ `subscription OnDelete
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -3380,6 +3475,67 @@ export const onDeleteSecureConfig = /* GraphQL */ `subscription OnDeleteSecureCo
   APITypes.OnDeleteSecureConfigSubscriptionVariables,
   APITypes.OnDeleteSecureConfigSubscription
 >;
+export const onDeleteSignalEvents = /* GraphQL */ `subscription OnDeleteSignalEvents(
+  $filter: ModelSubscriptionSignalEventsFilterInput
+) {
+  onDeleteSignalEvents(filter: $filter) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteSignalEventsSubscriptionVariables,
+  APITypes.OnDeleteSignalEventsSubscription
+>;
+export const onDeleteSignalNotificationHooks = /* GraphQL */ `subscription OnDeleteSignalNotificationHooks(
+  $filter: ModelSubscriptionSignalNotificationHooksFilterInput
+) {
+  onDeleteSignalNotificationHooks(filter: $filter) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteSignalNotificationHooksSubscriptionVariables,
+  APITypes.OnDeleteSignalNotificationHooksSubscription
+>;
 export const onUpdateAffiliates = /* GraphQL */ `subscription OnUpdateAffiliates(
   $filter: ModelSubscriptionAffiliatesFilterInput
 ) {
@@ -3903,6 +4059,19 @@ export const onUpdateNotificationQueue = /* GraphQL */ `subscription OnUpdateNot
     retryCount
     scheduledAt
     sentAt
+    signalEvent {
+      createdAt
+      emittedAt
+      emittedBy
+      id
+      payload
+      processed
+      signalType
+      source
+      updatedAt
+      __typename
+    }
+    signalEventId
     status
     template {
       channel
@@ -3943,6 +4112,10 @@ export const onUpdateNotificationTemplate = /* GraphQL */ `subscription OnUpdate
       __typename
     }
     owner
+    signalHooks {
+      nextToken
+      __typename
+    }
     subject
     updatedAt
     variables
@@ -5065,4 +5238,65 @@ export const onUpdateSecureConfig = /* GraphQL */ `subscription OnUpdateSecureCo
 ` as GeneratedSubscription<
   APITypes.OnUpdateSecureConfigSubscriptionVariables,
   APITypes.OnUpdateSecureConfigSubscription
+>;
+export const onUpdateSignalEvents = /* GraphQL */ `subscription OnUpdateSignalEvents(
+  $filter: ModelSubscriptionSignalEventsFilterInput
+) {
+  onUpdateSignalEvents(filter: $filter) {
+    createdAt
+    emittedAt
+    emittedBy
+    id
+    payload
+    processed
+    signalType
+    source
+    triggeredNotifications {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateSignalEventsSubscriptionVariables,
+  APITypes.OnUpdateSignalEventsSubscription
+>;
+export const onUpdateSignalNotificationHooks = /* GraphQL */ `subscription OnUpdateSignalNotificationHooks(
+  $filter: ModelSubscriptionSignalNotificationHooksFilterInput
+) {
+  onUpdateSignalNotificationHooks(filter: $filter) {
+    channels
+    conditions
+    createdAt
+    enabled
+    id
+    notificationTemplateId
+    priority
+    recipientDynamic
+    recipientEmails
+    recipientRoles
+    signalType
+    template {
+      channel
+      contentHtml
+      contentText
+      createdAt
+      id
+      isActive
+      name
+      owner
+      subject
+      updatedAt
+      variables
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateSignalNotificationHooksSubscriptionVariables,
+  APITypes.OnUpdateSignalNotificationHooksSubscription
 >;

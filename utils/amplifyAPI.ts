@@ -2,7 +2,7 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../amplify/data/resource';
 import { Amplify } from 'aws-amplify';
 import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
-import { listProjects, getProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms, listQuotes, listRequests, listContacts, listBackOfficeProjectStatuses, listBackOfficeQuoteStatuses, listBackOfficeRequestStatuses } from '../queries';
+import { listProjects, getProjects, listProjectComments, listProjectMilestones, listProjectPaymentTerms, listQuotes, listRequests, listContacts, listBackOfficeProjectStatuses, listBackOfficeQuoteStatuses, listBackOfficeRequestStatuses, listBackOfficeAssignTos } from '../queries';
 import { createLogger } from './logger';
 import { logClientConfigOnce } from './environmentConfig';
 
@@ -57,6 +57,11 @@ const client = generateClient<Schema>({
   authMode: 'apiKey'
 });
 
+// Generate authenticated client for logged-in users
+const authenticatedClient = generateClient<Schema>({
+  authMode: 'userPool'
+});
+
 // Generate GraphQL client for custom queries
 const graphqlClient = generateGraphQLClient({
   authMode: 'apiKey'
@@ -74,6 +79,13 @@ const createModelAPI = (modelName: string) => {
   const ensureClientReady = () => {
     if (!client.models || !(client.models as any)[modelName]) {
       throw new Error(`Model ${modelName} not available on client. Client may not be initialized properly.`);
+    }
+  };
+
+  // Helper function to ensure API key client is ready (for models requiring public access)
+  const ensureApiKeyClientReady = () => {
+    if (!client.models || !(client.models as any)[modelName]) {
+      throw new Error(`Model ${modelName} not available on API key client. Client may not be initialized properly.`);
     }
   };
   
@@ -263,6 +275,14 @@ const createModelAPI = (modelName: string) => {
           variables: { limit: 2000 }
         });
         return { success: true, data: result.data.listBackOfficeRequestStatuses.items };
+      }
+      
+      if (modelName === 'BackOfficeAssignTo') {
+        const result = await graphqlClient.graphql({
+          query: listBackOfficeAssignTos,
+          variables: { limit: 2000 }
+        });
+        return { success: true, data: result.data.listBackOfficeAssignTos.items };
       }
       
       ensureClientReady();
@@ -479,6 +499,7 @@ const createModelAPI = (modelName: string) => {
     }
   },
 
+
   async delete(id: string) {
     try {
       ensureClientReady();
@@ -532,6 +553,8 @@ export function getESignatureDocumentsAPI() { return getAPI('eSignatureDocuments
 export function getNotificationTemplatesAPI() { return getAPI('NotificationTemplate'); }
 export function getNotificationQueueAPI() { return getAPI('NotificationQueue'); }
 export function getNotificationEventsAPI() { return getAPI('NotificationEvents'); }
+export function getSignalEventsAPI() { return getAPI('SignalEvents'); }
+export function getSignalNotificationHooksAPI() { return getAPI('SignalNotificationHooks'); }
 
 // Core APIs that are frequently used - create immediately
 export const contactsAPI = getAPI('Contacts');
@@ -567,6 +590,8 @@ export const getQuoteItemsAPIInstance = getQuoteItemsAPI;
 export const getESignatureDocumentsAPIInstance = getESignatureDocumentsAPI;
 export const getNotificationTemplatesAPIInstance = getNotificationTemplatesAPI;
 export const getNotificationEventsAPIInstance = getNotificationEventsAPI;
+export const getSignalEventsAPIInstance = getSignalEventsAPI;
+export const getSignalNotificationHooksAPIInstance = getSignalNotificationHooksAPI;
 
 // Backward compatibility - create instances for existing code
 export const affiliatesAPI = getAPI('Affiliates');
@@ -589,6 +614,8 @@ export const quoteItemsAPI = getAPI('QuoteItems');
 export const eSignatureDocumentsAPI = getAPI('eSignatureDocuments');
 export const notificationTemplatesAPI = getAPI('NotificationTemplate');
 export const notificationEventsAPI = getAPI('NotificationEvents');
+export const signalEventsAPI = getAPI('SignalEvents');
+export const signalNotificationHooksAPI = getAPI('SignalNotificationHooks');
 
 // Export the raw client for advanced usage
 export { client };

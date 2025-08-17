@@ -490,7 +490,7 @@ export class NotificationService {
    * Get default notification recipients for different form types
    * In production, this will be overridden by Cognito user queries
    */
-  public getDefaultRecipients(formType: 'contactUs' | 'getQualified' | 'affiliate'): NotificationRecipient[] {
+  public getDefaultRecipients(formType: 'contactUs' | 'getQualified' | 'affiliate' | 'getEstimate'): NotificationRecipient[] {
     // Fallback recipients - only used if Cognito query fails
     const baseRecipients: NotificationRecipient[] = [
       {
@@ -541,6 +541,18 @@ export class NotificationService {
           }
         ];
 
+      case 'getEstimate':
+        return [
+          ...baseRecipients,
+          {
+            name: 'Estimates Team',
+            email: 'estimates@realtechee.com',
+            phone: '+17135919404',
+            role: 'manager',
+            active: true
+          }
+        ];
+
       default:
         return baseRecipients;
     }
@@ -550,7 +562,7 @@ export class NotificationService {
    * Get dynamic recipients from Cognito for production use
    */
   public async getDynamicRecipients(
-    formType: 'contactUs' | 'getQualified' | 'affiliate'
+    formType: 'contactUs' | 'getQualified' | 'affiliate' | 'getEstimate'
   ): Promise<NotificationRecipient[]> {
     const environment = this.getEnvironment();
     
@@ -616,6 +628,205 @@ export class NotificationService {
       channels,
       priority
     });
+  }
+
+  /**
+   * Enhanced queue-based notification system
+   * Combines quickSend's recipient logic with proper queue-based architecture
+   */
+  public async queueNotification(
+    templateType: 'contactUs' | 'getQualified' | 'affiliate' | 'getEstimate',
+    data: any,
+    options: {
+      priority?: 'low' | 'medium' | 'high';
+      channels?: NotificationChannel;
+      customRecipients?: NotificationRecipient[];
+      testMode?: boolean;
+    } = {}
+  ): Promise<{
+    success: boolean;
+    notificationId?: string;
+    recipientsQueued: number;
+    environment: 'development' | 'staging' | 'production';
+    debugMode: boolean;
+    error?: string;
+  }> {
+    const {
+      priority = 'medium',
+      channels = 'both',
+      customRecipients,
+      testMode = false
+    } = options;
+
+    try {
+      logger.info('=== QUEUE-BASED NOTIFICATION SYSTEM ===', {
+        templateType,
+        priority,
+        channels,
+        testMode,
+        timestamp: new Date().toISOString()
+      });
+
+      // Mark test data if in test mode
+      if (testMode) {
+        data.testData = true;
+        data.leadSource = 'E2E_TEST';
+      }
+
+      // Step 1: Use quickSend's recipient logic (validated, environment-aware)
+      const recipients = customRecipients || await this.getDynamicRecipients(templateType);
+      const recipientValidation = await this.validateAndFilterRecipients(recipients, data);
+      const validRecipients = recipientValidation.validRecipients;
+
+      logger.info('Queue notification recipient validation completed', {
+        templateType,
+        originalCount: recipients.length,
+        validCount: validRecipients.length,
+        environmentOverride: recipientValidation.environmentOverride,
+        debugMode: recipientValidation.debugMode
+      });
+
+      // Step 2: Pre-render content using existing templates (client-side generation)
+      const preRenderedContent = this.generatePreRenderedContent(templateType, data, channels);
+
+      // Step 3: Queue notification with pre-rendered content
+      const notificationId = await this.queuePreRenderedNotification({
+        eventType: `${templateType}_submission`,
+        recipientIds: validRecipients.map(r => r.email), // Use email as ID for now
+        channels: this.getChannelArray(channels),
+        content: preRenderedContent,
+        priority: priority.toUpperCase(),
+        metadata: {
+          formType: templateType,
+          environment: this.getEnvironment(),
+          testMode,
+          submissionTimestamp: new Date().toISOString()
+        }
+      });
+
+      logger.info('Notification queued successfully', {
+        notificationId,
+        templateType,
+        recipientsQueued: validRecipients.length,
+        channels,
+        priority
+      });
+
+      return {
+        success: true,
+        notificationId,
+        recipientsQueued: validRecipients.length,
+        environment: this.getEnvironment(),
+        debugMode: recipientValidation.debugMode || false
+      };
+
+    } catch (error) {
+      logger.error('Failed to queue notification', {
+        templateType,
+        error: error instanceof Error ? error.message : error
+      });
+
+      return {
+        success: false,
+        recipientsQueued: 0,
+        environment: this.getEnvironment(),
+        debugMode: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      };
+    }
+  }
+
+  /**
+   * Generate pre-rendered content for all requested channels
+   */
+  private generatePreRenderedContent(
+    templateType: 'contactUs' | 'getQualified' | 'affiliate' | 'getEstimate',
+    data: any,
+    channels: NotificationChannel
+  ): any {
+    const content: any = {};
+
+    if (channels === 'email' || channels === 'both') {
+      const emailTemplate = notificationTemplates[templateType].email(data);
+      content.email = {
+        subject: emailTemplate.subject,
+        html: emailTemplate.html,
+        text: emailTemplate.text
+      };
+    }
+
+    if (channels === 'sms' || channels === 'both') {
+      const smsMessage = notificationTemplates[templateType].sms(data);
+      content.sms = {
+        message: smsMessage
+      };
+    }
+
+    return content;
+  }
+
+  /**
+   * Queue notification with pre-rendered content
+   */
+  private async queuePreRenderedNotification(params: {
+    eventType: string;
+    recipientIds: string[];
+    channels: string[];
+    content: any;
+    priority: string;
+    metadata: any;
+  }): Promise<string> {
+    // Import the queue API dynamically to avoid circular dependencies
+    const { notificationQueueAPI } = await import('../utils/amplifyAPI');
+
+    try {
+      logger.info('Queueing pre-rendered notification', {
+        eventType: params.eventType,
+        recipientCount: params.recipientIds.length,
+        channels: params.channels,
+        priority: params.priority
+      });
+
+      const result = await notificationQueueAPI.create({
+        eventType: params.eventType,
+        recipientIds: JSON.stringify(params.recipientIds),
+        channels: JSON.stringify(params.channels),
+        directContent: JSON.stringify(params.content), // Use directContent for pre-rendered
+        status: 'PENDING',
+        priority: params.priority,
+        retryCount: 0,
+        owner: 'system',
+        // Metadata for debugging and tracking
+        payload: JSON.stringify(params.metadata)
+      });
+
+      const notificationId = result.id;
+      logger.info('✅ Notification queued successfully', {
+        notificationId,
+        eventType: params.eventType
+      });
+
+      return notificationId;
+
+    } catch (error) {
+      logger.error('❌ Failed to queue notification', {
+        eventType: params.eventType,
+        error: error instanceof Error ? error.message : error
+      });
+      throw new Error(`Failed to queue ${params.eventType} notification: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+
+  /**
+   * Convert channel string to array format
+   */
+  private getChannelArray(channels: NotificationChannel): string[] {
+    switch (channels) {
+      case 'email': return ['EMAIL'];
+      case 'sms': return ['SMS'];
+      case 'both': return ['EMAIL', 'SMS'];
+      default: return ['EMAIL', 'SMS'];
+    }
   }
   
   /**

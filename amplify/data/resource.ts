@@ -680,6 +680,47 @@ const eSignatureDocuments = a.model({
   allow.authenticated()
 ]);
 
+// Signal-Driven Notification System Models
+
+// Signal Events Store - All emitted signals
+const SignalEvents = a.model({
+  signalType: a.string().required(), // 'form_contact_us_submission'
+  payload: a.json().required(),      // Form data or event data
+  emittedAt: a.datetime().required(),
+  emittedBy: a.string(),            // User or system identifier
+  source: a.string(),               // 'contact_form', 'admin_action', etc.
+  processed: a.boolean(),
+  
+  // Relationships
+  triggeredNotifications: a.hasMany('NotificationQueue', 'signalEventId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
+
+// Signal-to-Notification Mapping Configuration
+const SignalNotificationHooks = a.model({
+  signalType: a.string().required(),                    // 'form_contact_us_submission' 
+  notificationTemplateId: a.id().required(),           // Reference to NotificationTemplate
+  enabled: a.boolean(),                                // Admin can enable/disable
+  priority: a.enum(['low', 'medium', 'high']),
+  channels: a.json().required(),                       // ['EMAIL', 'SMS'] array
+  
+  // Recipient Configuration
+  recipientEmails: a.json(),                           // Static email addresses
+  recipientRoles: a.json(),                            // Role-based recipients ['AE', 'PM']  
+  recipientDynamic: a.json(),                          // Extract from payload ['payload.customerEmail']
+  
+  // Optional filtering conditions
+  conditions: a.json(),                                // Filter conditions for signal processing
+  
+  // Relationships
+  template: a.belongsTo('NotificationTemplate', 'notificationTemplateId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated()
+]);
+
 // Notification System Models
 const NotificationTemplate = a.model({
   name: a.string().required(),
@@ -691,8 +732,9 @@ const NotificationTemplate = a.model({
   isActive: a.boolean(),
   owner: a.string(),
   
-  // Reverse relationship
+  // Reverse relationships
   notifications: a.hasMany('NotificationQueue', 'templateId'),
+  signalHooks: a.hasMany('SignalNotificationHooks', 'notificationTemplateId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -701,6 +743,9 @@ const NotificationTemplate = a.model({
 const NotificationQueue = a.model({
   eventType: a.string().required(),
   
+  // Signal-driven architecture support
+  signalEventId: a.id(),                               // Reference to originating signal
+  
   // Legacy template-based approach (for backward compatibility)
   payload: a.json(), // Dynamic data for template injection
   templateId: a.id(),
@@ -708,8 +753,10 @@ const NotificationQueue = a.model({
   // New direct content approach (decoupled from templates)
   directContent: a.json(), // Pre-generated email/SMS content
   
+  // Multi-channel consolidated approach (replaces legacy channels field)
+  channels: a.json().required(), // { email: {...}, sms: {...}, push: {...} }
+  
   recipientIds: a.json().required(), // Array of Contact IDs
-  channels: a.json().required(), // Array of channel types
   scheduledAt: a.datetime(),
   status: a.enum(['PENDING', 'SENT', 'FAILED', 'RETRYING']),
   priority: a.enum(['LOW', 'MEDIUM', 'HIGH']),
@@ -724,6 +771,7 @@ const NotificationQueue = a.model({
   
   // Relationships (optional for backward compatibility)
   template: a.belongsTo('NotificationTemplate', 'templateId'),
+  signalEvent: a.belongsTo('SignalEvents', 'signalEventId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -884,6 +932,8 @@ const schema = a.schema({
   ContactAuditLog,
   Legal,
   MemberSignature,
+  SignalEvents,
+  SignalNotificationHooks,
   NotificationTemplate,
   NotificationQueue,
   NotificationEvents,

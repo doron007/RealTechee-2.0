@@ -146,60 +146,68 @@ export class FormNotificationIntegration {
     const { priority = 'high', channels = 'both', testMode = false } = options;
 
     try {
-      logger.info('Sending Contact Us form notification', {
+      logger.info('=== CONTACT US FORM NOTIFICATION (QUEUE-BASED) ===', {
         submissionId: data.submissionId,
         email: data.email,
         subject: data.subject,
-        testMode
+        testMode,
+        timestamp: new Date().toISOString()
       });
 
-      // Use the existing NotificationService with quickSend method
+      // Use the new queue-based notification system
       const notificationService = NotificationService.getInstance();
       
-      const result = await notificationService.quickSend('contactUs', data, {
+      const result = await notificationService.queueNotification('contactUs', data, {
         priority,
         channels,
         testMode
       });
 
       if (result.success) {
-        logger.info('Contact Us notification sent successfully', {
-          recipientValidation: result.recipientValidation,
-          results: result.results
+        logger.info('✅ Contact Us notification queued successfully', {
+          notificationId: result.notificationId,
+          recipientsQueued: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         });
 
         return {
           success: true,
-          notificationId: `contactUs_${Date.now()}`,
-          recipientsNotified: Math.max(
-            result.results?.email?.length || 0,
-            result.results?.sms?.length || 0
-          ),
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false
+          notificationId: result.notificationId || `contactUs_${Date.now()}`,
+          recipientsNotified: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         };
       } else {
-        logger.warn('Contact Us notification failed', {
-          errors: result.errors
+        logger.warn('❌ Contact Us notification queueing failed', {
+          error: result.error,
+          environment: result.environment
         });
 
         return {
           success: false,
           recipientsNotified: 0,
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false,
-          errors: result.errors
+          environment: result.environment,
+          debugMode: result.debugMode,
+          errors: result.error ? [result.error] : ['Unknown error']
         };
       }
 
     } catch (error) {
-      logger.error('Failed to send Contact Us notification', { error, data });
+      logger.error('❌ Failed to queue Contact Us notification', { 
+        error: error instanceof Error ? error.message : error, 
+        data: {
+          submissionId: data.submissionId,
+          email: data.email
+        }
+      });
+      
       return {
         success: false,
         recipientsNotified: 0,
         environment: this.getEnvironment(),
         debugMode: process.env.DEBUG_NOTIFICATIONS === 'true',
-        errors: [error]
+        errors: [error instanceof Error ? error.message : 'Unknown error']
       };
     }
   }
@@ -215,63 +223,71 @@ export class FormNotificationIntegration {
       testMode?: boolean;
     } = {}
   ): Promise<NotificationResult> {
-    const { priority = 'medium', channels = 'both', testMode = false } = options;
+    const { priority = 'high', channels = 'both', testMode = false } = options;
 
     try {
-      logger.info('Sending Get Qualified form notification', {
+      logger.info('=== GET QUALIFIED FORM NOTIFICATION (QUEUE-BASED) ===', {
         submissionId: data.submissionId,
         email: data.email,
-        name: data.name,
-        testMode
+        brokerage: data.brokerage,
+        testMode,
+        timestamp: new Date().toISOString()
       });
 
-      // Use the existing NotificationService with quickSend method
+      // Use the new queue-based notification system
       const notificationService = NotificationService.getInstance();
       
-      const result = await notificationService.quickSend('getQualified', data, {
+      const result = await notificationService.queueNotification('getQualified', data, {
         priority,
         channels,
         testMode
       });
 
       if (result.success) {
-        logger.info('Get Qualified notification sent successfully', {
-          recipientValidation: result.recipientValidation,
-          results: result.results
+        logger.info('✅ Get Qualified notification queued successfully', {
+          notificationId: result.notificationId,
+          recipientsQueued: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         });
 
         return {
           success: true,
-          notificationId: `getQualified_${Date.now()}`,
-          recipientsNotified: Math.max(
-            result.results?.email?.length || 0,
-            result.results?.sms?.length || 0
-          ),
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false
+          notificationId: result.notificationId || `getQualified_${Date.now()}`,
+          recipientsNotified: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         };
       } else {
-        logger.warn('Get Qualified notification failed', {
-          errors: result.errors
+        logger.warn('❌ Get Qualified notification queueing failed', {
+          error: result.error,
+          environment: result.environment
         });
 
         return {
           success: false,
           recipientsNotified: 0,
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false,
-          errors: result.errors
+          environment: result.environment,
+          debugMode: result.debugMode,
+          errors: result.error ? [result.error] : ['Unknown error']
         };
       }
 
     } catch (error) {
-      logger.error('Failed to send Get Qualified notification', { error, data });
+      logger.error('❌ Failed to queue Get Qualified notification', { 
+        error: error instanceof Error ? error.message : error, 
+        data: {
+          submissionId: data.submissionId,
+          email: data.email
+        }
+      });
+      
       return {
         success: false,
         recipientsNotified: 0,
         environment: this.getEnvironment(),
         debugMode: process.env.DEBUG_NOTIFICATIONS === 'true',
-        errors: [error]
+        errors: [error instanceof Error ? error.message : 'Unknown error']
       };
     }
   }
@@ -287,63 +303,71 @@ export class FormNotificationIntegration {
       testMode?: boolean;
     } = {}
   ): Promise<NotificationResult> {
-    const { priority = 'low', channels = 'email', testMode = false } = options;
+    const { priority = 'medium', channels = 'both', testMode = false } = options;
 
     try {
-      logger.info('Sending Affiliate form notification', {
+      logger.info('=== AFFILIATE FORM NOTIFICATION (QUEUE-BASED) ===', {
         submissionId: data.submissionId,
-        companyName: data.companyName,
         email: data.email,
-        testMode
+        companyName: data.companyName,
+        testMode,
+        timestamp: new Date().toISOString()
       });
 
-      // Use the existing NotificationService with quickSend method
+      // Use the new queue-based notification system
       const notificationService = NotificationService.getInstance();
       
-      const result = await notificationService.quickSend('affiliate', data, {
+      const result = await notificationService.queueNotification('affiliate', data, {
         priority,
         channels,
         testMode
       });
 
       if (result.success) {
-        logger.info('Affiliate notification sent successfully', {
-          recipientValidation: result.recipientValidation,
-          results: result.results
+        logger.info('✅ Affiliate notification queued successfully', {
+          notificationId: result.notificationId,
+          recipientsQueued: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         });
 
         return {
           success: true,
-          notificationId: `affiliate_${Date.now()}`,
-          recipientsNotified: Math.max(
-            result.results?.email?.length || 0,
-            result.results?.sms?.length || 0
-          ),
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false
+          notificationId: result.notificationId || `affiliate_${Date.now()}`,
+          recipientsNotified: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         };
       } else {
-        logger.warn('Affiliate notification failed', {
-          errors: result.errors
+        logger.warn('❌ Affiliate notification queueing failed', {
+          error: result.error,
+          environment: result.environment
         });
 
         return {
           success: false,
           recipientsNotified: 0,
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false,
-          errors: result.errors
+          environment: result.environment,
+          debugMode: result.debugMode,
+          errors: result.error ? [result.error] : ['Unknown error']
         };
       }
 
     } catch (error) {
-      logger.error('Failed to send Affiliate notification', { error, data });
+      logger.error('❌ Failed to queue Affiliate notification', { 
+        error: error instanceof Error ? error.message : error, 
+        data: {
+          submissionId: data.submissionId,
+          email: data.email
+        }
+      });
+      
       return {
         success: false,
         recipientsNotified: 0,
         environment: this.getEnvironment(),
         debugMode: process.env.DEBUG_NOTIFICATIONS === 'true',
-        errors: [error]
+        errors: [error instanceof Error ? error.message : 'Unknown error']
       };
     }
   }
@@ -362,62 +386,68 @@ export class FormNotificationIntegration {
     const { priority = 'high', channels = 'both', testMode = false } = options;
 
     try {
-      logger.info('Sending Get Estimate form notification', {
+      logger.info('=== GET ESTIMATE FORM NOTIFICATION (QUEUE-BASED) ===', {
         submissionId: data.submissionId,
         email: data.email,
-        name: data.name,
         serviceType: data.serviceType,
-        testMode
+        testMode,
+        timestamp: new Date().toISOString()
       });
 
-      // Use the existing NotificationService with quickSend method
-      // Since getEstimate template is not available, use contactUs as fallback
+      // Use the new queue-based notification system
       const notificationService = NotificationService.getInstance();
       
-      const result = await notificationService.quickSend('contactUs', data, {
+      const result = await notificationService.queueNotification('getEstimate', data, {
         priority,
         channels,
         testMode
       });
 
       if (result.success) {
-        logger.info('Get Estimate notification sent successfully', {
-          recipientValidation: result.recipientValidation,
-          results: result.results
+        logger.info('✅ Get Estimate notification queued successfully', {
+          notificationId: result.notificationId,
+          recipientsQueued: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         });
 
         return {
           success: true,
-          notificationId: `getEstimate_${Date.now()}`,
-          recipientsNotified: Math.max(
-            result.results?.email?.length || 0,
-            result.results?.sms?.length || 0
-          ),
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false
+          notificationId: result.notificationId || `getEstimate_${Date.now()}`,
+          recipientsNotified: result.recipientsQueued,
+          environment: result.environment,
+          debugMode: result.debugMode
         };
       } else {
-        logger.warn('Get Estimate notification failed', {
-          errors: result.errors
+        logger.warn('❌ Get Estimate notification queueing failed', {
+          error: result.error,
+          environment: result.environment
         });
 
         return {
           success: false,
           recipientsNotified: 0,
-          environment: this.getEnvironment(),
-          debugMode: result.recipientValidation?.debugMode || false,
-          errors: result.errors
+          environment: result.environment,
+          debugMode: result.debugMode,
+          errors: result.error ? [result.error] : ['Unknown error']
         };
       }
 
     } catch (error) {
-      logger.error('Failed to send Get Estimate notification', { error, data });
+      logger.error('❌ Failed to queue Get Estimate notification', { 
+        error: error instanceof Error ? error.message : error, 
+        data: {
+          submissionId: data.submissionId,
+          email: data.email
+        }
+      });
+      
       return {
         success: false,
         recipientsNotified: 0,
         environment: this.getEnvironment(),
         debugMode: process.env.DEBUG_NOTIFICATIONS === 'true',
-        errors: [error]
+        errors: [error instanceof Error ? error.message : 'Unknown error']
       };
     }
   }
