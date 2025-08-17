@@ -273,16 +273,16 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
             }}
             onClick={() => setIsModalOpen(true)}
           >
-            <img
+            <Image
               src={imageUrl}
               alt={currentImage.alt || `Project image ${currentImageIndex + 1}`}
+              fill
               style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
                 objectFit: 'contain',
                 borderRadius: '8px'
               }}
               onError={() => handleImageError(currentImageIndex)}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
             />
           </Box>
           
@@ -324,15 +324,15 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
                 isSelected={idx === currentImageIndex}
                 onClick={() => handleThumbnailClick(idx)}
               >
-                <img
+                <Image
                   src={imageErrors.has(idx) ? FALLBACK_IMAGE : img.url}
                   alt={img.alt || `Thumbnail ${idx + 1}`}
+                  fill
                   style={{
-                    width: '100%',
-                    height: '100%',
                     objectFit: 'cover'
                   }}
                   onError={() => handleImageError(idx)}
+                  sizes="64px"
                 />
               </ThumbnailButton>
             ))}
@@ -361,16 +361,14 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
             </ModalCloseButton>
             
             <ModalImageContainer>
-              <img
+              <Image
                 src={imageUrl}
                 alt={currentImage.alt || `Project image ${currentImageIndex + 1}`}
+                fill
                 style={{
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-                  objectFit: 'contain',
-                  width: 'auto',
-                  height: 'auto'
+                  objectFit: 'contain'
                 }}
+                sizes="95vw"
               />
               
               {/* Modal Navigation */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { H2, H4, P2 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
@@ -44,11 +44,7 @@ const SystemConfigPage: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'environment' | 'settings' | 'monitoring'>('environment');
 
-  useEffect(() => {
-    loadSystemData();
-  }, []);
-
-  const loadSystemData = async () => {
+  const loadSystemData = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -137,7 +133,11 @@ const SystemConfigPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadSystemData();
+  }, [loadSystemData]);
 
   const getCurrentBranch = (): string => {
     // In real implementation, this would be determined from build info or environment

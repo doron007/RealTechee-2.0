@@ -274,7 +274,7 @@ const ContactUs: NextPage = () => {
           leadSource: 'contact_us_form'
         }, {
           urgency: 'high', // Contact Us forms are high priority
-          testMode: false
+          testMode: process.env.NODE_ENV === 'development'
         });
         
         if (signalResult.success) {

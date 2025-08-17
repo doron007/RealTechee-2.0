@@ -166,27 +166,7 @@ class MyDocument extends Document {
             }}
           />
           
-          {/* Google Analytics - Production Only */}
-          {process.env.NODE_ENV === 'production' && (
-            <>
-              <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'GA_MEASUREMENT_ID', {
-                      page_title: document.title,
-                      page_location: window.location.href,
-                      anonymize_ip: true,
-                      allow_google_signals: false
-                    });
-                  `,
-                }}
-              />
-            </>
-          )}
+          {/* Google Analytics moved to next/script component in _app.tsx */}
         </Head>
         <body className="antialiased">
           <Main />

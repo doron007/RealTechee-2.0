@@ -310,15 +310,19 @@ ${JSON.stringify({
           agentName: formData.contactInfo.fullName,
           agentEmail: formData.contactInfo.email,
           agentPhone: formData.contactInfo.phone,
-          company: brokerageName,
+          brokerage: brokerageName,
           licenseNumber: formData.licenseNumber,
           yearsExperience: formData.experienceYears,
+          primaryMarkets: formData.primaryMarkets,
+          specialties: formData.specialties,
+          recentTransactionVolume: formData.recentTransactions,
+          whyDoYouWantToWorkWithRealTechee: formData.qualificationMessage,
           submissionId: contactUsData.id,
           submissionTimestamp: new Date().toISOString(),
-          dashboardUrl: `${window.location.origin}/admin/contact-us/${contactUsData.id}`
+          dashboardUrl: `${window.location.origin}/admin/get-qualified/${contactUsData.id}`
         }, { 
           urgency: 'medium', 
-          testMode: false 
+          testMode: process.env.NODE_ENV === 'development' 
         });
         
         if (signalResult.success) {

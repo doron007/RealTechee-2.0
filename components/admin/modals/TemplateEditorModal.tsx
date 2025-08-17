@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Button, 
   TextField, 
@@ -51,7 +51,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   const [previewData, setPreviewData] = useState('');
 
   // Sample payload for preview
-  const samplePayload = {
+  const samplePayload = useMemo(() => ({
     customer: {
       name: 'John Smith',
       email: 'john.smith@example.com',
@@ -76,7 +76,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
     admin: {
       dashboardUrl: 'https://app.realtechee.com/admin/requests'
     }
-  };
+  }), []);
 
   useEffect(() => {
     if (template && mode === 'edit') {
@@ -130,7 +130,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
     }
   };
 
-  const generatePreview = () => {
+  const generatePreview = useCallback(() => {
     if (!editedTemplate.contentHtml && !editedTemplate.contentText) return;
     
     if (editedTemplate.channel === NotificationTemplateChannel.EMAIL) {
@@ -156,11 +156,11 @@ ${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
         </div>
       `);
     }
-  };
+  }, [editedTemplate.contentHtml, editedTemplate.contentText, editedTemplate.subject, editedTemplate.channel, samplePayload]);
 
   useEffect(() => {
     generatePreview();
-  }, [editedTemplate.contentHtml, editedTemplate.contentText, editedTemplate.subject, editedTemplate.channel]);
+  }, [generatePreview]);
 
   return (
     <BaseModal

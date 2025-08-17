@@ -274,18 +274,42 @@ const Affiliate: NextPage = () => {
       
       try {
         const signalResult = await signalEmitter.emitFormSubmission('affiliate', {
+          // Company Information
           companyName: formData.companyName,
+          serviceType: formData.serviceType,
+          
+          // Contact Information
           contactName: formData.contactInfo.fullName,
           contactEmail: formData.contactInfo.email,
           contactPhone: formData.contactInfo.phone,
-          serviceType: formData.serviceType,
-          serviceDescription: `${formData.serviceType} services from ${formData.companyName}`,
+          
+          // Address Information
+          address: {
+            streetAddress: formData.address.streetAddress,
+            city: formData.address.city,
+            state: formData.address.state,
+            zip: formData.address.zip
+          },
+          
+          // General Contractor Specific Fields (if applicable)
+          ...(formData.serviceType === 'General Contractor' && formData.generalContractorInfo ? {
+            workersCompensationInsurance: formData.generalContractorInfo.workersCompensation,
+            contractorLicense: formData.generalContractorInfo.license,
+            environmentalFactorCompliance: formData.generalContractorInfo.environmentalFactor,
+            oshaCompliance: formData.generalContractorInfo.oshaCompliance,
+            signedNDA: formData.generalContractorInfo.signedNDA,
+            safetyPlanInPlace: formData.generalContractorInfo.safetyPlan,
+            numberOfEmployees: formData.generalContractorInfo.numberOfEmployees
+          } : {}),
+          
+          // System Information
           submissionId: affiliateData.id,
           submissionTimestamp: new Date().toISOString(),
-          dashboardUrl: `${window.location.origin}/admin/affiliates/${affiliateData.id}`
+          dashboardUrl: `${window.location.origin}/admin/affiliates/${affiliateData.id}`,
+          serviceDescription: `${formData.serviceType} services from ${formData.companyName}`
         }, { 
           urgency: 'low', 
-          testMode: false 
+          testMode: process.env.NODE_ENV === 'development' 
         });
         
         if (signalResult.success) {

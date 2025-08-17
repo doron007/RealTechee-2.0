@@ -49,7 +49,7 @@ const NotificationManagement: React.FC = () => {
   const [refreshInterval, setRefreshInterval] = useState<NodeJS.Timeout | null>(null);
 
   // Helper functions for safe data parsing
-  const parseChannels = (channels: string | string[]) => {
+  const parseChannels = useCallback((channels: string | string[]) => {
     try {
       if (typeof channels !== 'string') {
         return Array.isArray(channels) ? channels : [];
@@ -65,9 +65,9 @@ const NotificationManagement: React.FC = () => {
     } catch {
       return [];
     }
-  };
+  }, []);
 
-  const parseRecipients = (recipients: string | string[]) => {
+  const parseRecipients = useCallback((recipients: string | string[]) => {
     try {
       if (typeof recipients !== 'string') {
         return Array.isArray(recipients) ? recipients : [];
@@ -83,7 +83,7 @@ const NotificationManagement: React.FC = () => {
     } catch {
       return [];
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadData();

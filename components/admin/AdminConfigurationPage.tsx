@@ -66,6 +66,22 @@ const AdminConfigurationPage: React.FC = () => {
   const [serviceStatuses, setServiceStatuses] = useState<ServiceStatus[]>([]);
   const [userProfile, setUserProfile] = useState<any>(null);
 
+  const loadConfiguration = useCallback(async () => {
+    try {
+      setRefreshing(true);
+      const res = await fetch('/api/system/env');
+      const json: EnvApiResponse = await res.json();
+      setCurrentEnv(json);
+      const statuses = checkServiceStatuses(json);
+      setServiceStatuses(statuses);
+      
+    } catch (error) {
+      console.error('Failed to load configuration:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
+
   const checkAuthorization = useCallback(async () => {
     try {
       setLoading(true);
@@ -84,27 +100,11 @@ const AdminConfigurationPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loadConfiguration]);
 
   useEffect(() => {
     checkAuthorization();
   }, [checkAuthorization]);
-
-  const loadConfiguration = async () => {
-    try {
-      setRefreshing(true);
-      const res = await fetch('/api/system/env');
-      const json: EnvApiResponse = await res.json();
-      setCurrentEnv(json);
-      const statuses = checkServiceStatuses(json);
-      setServiceStatuses(statuses);
-      
-    } catch (error) {
-      console.error('Failed to load configuration:', error);
-    } finally {
-      setRefreshing(false);
-    }
-  };
 
   const checkServiceStatuses = (env: EnvApiResponse): ServiceStatus[] => {
     const statuses: ServiceStatus[] = [];
