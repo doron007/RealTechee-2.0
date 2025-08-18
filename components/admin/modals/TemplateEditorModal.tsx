@@ -104,8 +104,9 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   useEffect(() => {
     if (template && mode === 'edit') {
       setEditedTemplate(template);
-      // Initialize editable preview data from template
-      setEditablePreviewData(template.previewData || JSON.stringify(samplePayload, null, 2));
+      // Initialize editable preview data from template, ensure it's valid JSON
+      const previewData = template.previewData || JSON.stringify(samplePayload, null, 2);
+      setEditablePreviewData(previewData);
     } else if (mode === 'create') {
       setEditedTemplate({
         name: '',
@@ -204,6 +205,13 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
 
   const generatePreview = useCallback(async () => {
     try {
+      // Only try to parse if editablePreviewData is not empty
+      if (!editablePreviewData || editablePreviewData.trim() === '') {
+        console.log('No preview data available, using sample payload');
+        await processTemplatePreview(editedTemplate, samplePayload);
+        return;
+      }
+      
       // Parse the editable preview data
       const parsedPreviewData = JSON.parse(editablePreviewData);
       await processTemplatePreview(editedTemplate, parsedPreviewData);
@@ -414,10 +422,14 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
                         variant="outlined"
                         onClick={() => {
                           try {
+                            if (!editablePreviewData || editablePreviewData.trim() === '') {
+                              console.warn('No content to format');
+                              return;
+                            }
                             const parsed = JSON.parse(editablePreviewData);
                             setEditablePreviewData(JSON.stringify(parsed, null, 2));
                           } catch (error) {
-                            console.warn('Invalid JSON, cannot format');
+                            console.warn('Invalid JSON, cannot format:', error);
                           }
                         }}
                       >
