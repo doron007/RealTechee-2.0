@@ -92,7 +92,19 @@ const TemplateList: React.FC<TemplateListProps> = ({
       setTemplates(items as Template[]);
     } catch (error: any) {
       console.error('Error loading templates:', error);
-      setError(`Failed to load templates: ${error.message}`);
+      
+      // More detailed error handling
+      let errorMessage = 'Failed to load templates';
+      if (error?.errors && Array.isArray(error.errors)) {
+        errorMessage = `GraphQL Error: ${error.errors.map((e: any) => e.message).join(', ')}`;
+      } else if (error?.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      
+      setError(errorMessage);
+      
+      // For development: provide empty array as fallback instead of complete failure
+      setTemplates([]);
     } finally {
       setLoading(false);
     }

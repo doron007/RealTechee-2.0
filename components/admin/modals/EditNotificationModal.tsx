@@ -25,10 +25,20 @@ const EditNotificationModal: React.FC<EditNotificationModalProps> = ({
 
   useEffect(() => {
     if (notification) {
+      // Pretty-format the JSON payload for better readability
+      let formattedPayload = notification.payload;
+      try {
+        const parsed = JSON.parse(notification.payload);
+        formattedPayload = JSON.stringify(parsed, null, 2);
+      } catch {
+        // If JSON parsing fails, use the original payload
+        formattedPayload = notification.payload;
+      }
+
       setEditedData({
         eventType: notification.eventType,
         templateId: notification.templateId,
-        payload: notification.payload,
+        payload: formattedPayload,
         recipientIds: notification.recipientIds,
         channels: notification.channels,
         status: notification.status
@@ -135,7 +145,7 @@ const EditNotificationModal: React.FC<EditNotificationModalProps> = ({
       subtitle={`ID: ${notification.id.slice(0, 8)}... | ${notification.eventType}`}
       maxWidth="lg"
     >
-      <div className="space-y-6">
+      <div className="space-y-6 pt-4">
         {/* Basic Information */}
         <div className="grid grid-cols-2 gap-4">
           <TextField

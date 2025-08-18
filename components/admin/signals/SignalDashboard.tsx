@@ -185,9 +185,21 @@ const SignalDashboard: React.FC = () => {
       const notificationData = result.data?.listNotificationQueues?.items || [];
       setNotifications(notificationData);
       
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error fetching notifications:', err);
-      setError('Failed to fetch notification data');
+      
+      // More detailed error handling
+      let errorMessage = 'Failed to fetch notification data';
+      if (err?.errors && Array.isArray(err.errors)) {
+        errorMessage = `GraphQL Error: ${err.errors.map((e: any) => e.message).join(', ')}`;
+      } else if (err?.message) {
+        errorMessage = `Error: ${err.message}`;
+      }
+      
+      setError(errorMessage);
+      
+      // Provide empty array as fallback instead of complete failure
+      setNotifications([]);
     }
   }, []);
 
@@ -292,7 +304,16 @@ const SignalDashboard: React.FC = () => {
             <Select
               value={autoRefresh ? 'on' : 'off'}
               onChange={(e) => setAutoRefresh(e.target.value === 'on')}
-              sx={{ minWidth: 120 }}
+              sx={{ 
+                minWidth: 120,
+                '& .MuiSelect-select': {
+                  position: 'relative',
+                  zIndex: 50
+                },
+                '& .MuiMenu-paper': {
+                  zIndex: 1400
+                }
+              }}
             >
               <MenuItem value="on">On (30s)</MenuItem>
               <MenuItem value="off">Off</MenuItem>

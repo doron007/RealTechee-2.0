@@ -248,7 +248,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
           }}
         >
           {/* Top Div: Title Bar + CTA Buttons - 100% width of parent container */}
-          <div className="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0">
+          <div className="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0 relative z-40">
             <div className="w-full px-4 sm:px-6 py-3 sm:py-4">
               <div className="flex items-center justify-between w-full">
                 {/* Left side - Title and user info */}
@@ -265,7 +265,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <div className="flex items-center space-x-3 flex-shrink-0">
                   <button
                     onClick={() => router.push('/')}
-                    className="text-gray-600 hover:text-gray-900 text-sm px-3 py-2 rounded hover:bg-gray-100"
+                    className="text-gray-600 hover:text-gray-900 text-sm px-3 py-2 rounded hover:bg-gray-100 whitespace-nowrap relative z-50"
                     title="View Site"
                   >
                     View Site
