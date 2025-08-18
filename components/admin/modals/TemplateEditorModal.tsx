@@ -56,17 +56,36 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   // Template processor instance
   const templateProcessor = useMemo(() => ClientTemplateProcessor.getInstance(), []);
 
+  // Helper function to clean escaped JSON string from database
+  const cleanJsonString = (jsonString: string): string => {
+    return jsonString
+      .replace(/\\n/g, '')           // Remove escaped newlines  
+      .replace(/\\r/g, '')           // Remove escaped carriage returns
+      .replace(/\\t/g, '')           // Remove escaped tabs
+      .replace(/\\"/g, '"')          // Replace escaped quotes with actual quotes
+      .replace(/\\'/g, "'")          // Replace escaped single quotes
+      .replace(/\\\\/g, '\\')        // Replace double escapes with single backslash
+      .replace(/\\b/g, '')           // Remove escaped backspace
+      .replace(/\\f/g, '')           // Remove escaped form feed
+      .trim();
+  };
+
   // Use real preview data from the template or fallback to sample
   const samplePayload = useMemo(() => {
     // Try to use previewData from the template if available
     if (template?.previewData) {
       try {
-        const parsed = JSON.parse(template.previewData);
+        // Clean escape characters first
+        const cleanedData = cleanJsonString(template.previewData);
+        console.log('🧹 Cleaned JSON string:', cleanedData.substring(0, 100) + '...');
+        
+        const parsed = JSON.parse(cleanedData);
         console.log('✅ Using real previewData from database for template:', template.name);
         console.log('📋 Preview data keys:', Object.keys(parsed));
         return parsed;
       } catch (error) {
-        console.warn('❌ Failed to parse template previewData, using fallback:', error);
+        console.warn('❌ Failed to parse template previewData after cleaning, using fallback:', error);
+        console.warn('Raw previewData:', template.previewData?.substring(0, 200));
       }
     } else {
       console.log('⚠️ No previewData found in template, using fallback sample data');
@@ -104,8 +123,17 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   useEffect(() => {
     if (template && mode === 'edit') {
       setEditedTemplate(template);
-      // Initialize editable preview data from template, ensure it's valid JSON
-      const previewData = template.previewData || JSON.stringify(samplePayload, null, 2);
+      // Initialize editable preview data from template, clean and format it
+      let previewData = JSON.stringify(samplePayload, null, 2);
+      if (template.previewData) {
+        try {
+          const cleanedData = cleanJsonString(template.previewData);
+          const parsed = JSON.parse(cleanedData);
+          previewData = JSON.stringify(parsed, null, 2); // Format nicely
+        } catch (error) {
+          console.warn('Failed to clean and parse previewData for editing, using fallback');
+        }
+      }
       setEditablePreviewData(previewData);
     } else if (mode === 'create') {
       setEditedTemplate({
