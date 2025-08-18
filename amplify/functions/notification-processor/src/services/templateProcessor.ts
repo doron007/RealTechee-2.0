@@ -88,6 +88,11 @@ export class TemplateProcessor {
       }
     });
 
+    // URL encoding helper for email links
+    Handlebars.registerHelper('encodeURI', (str: string) => {
+      return str ? encodeURIComponent(str) : '';
+    });
+
     // File links helper - creates HTML links for file arrays (supports new template format)
     Handlebars.registerHelper('fileLinks', (jsonString: string, type: string = 'file') => {
       try {
