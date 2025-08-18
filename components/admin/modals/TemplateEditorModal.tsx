@@ -51,6 +51,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   const [previewTab, setPreviewTab] = useState(0);
   const [previewData, setPreviewData] = useState('');
   const [previewError, setPreviewError] = useState('');
+  const [editablePreviewData, setEditablePreviewData] = useState('');
   
   // Template processor instance
   const templateProcessor = useMemo(() => ClientTemplateProcessor.getInstance(), []);
@@ -103,6 +104,8 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   useEffect(() => {
     if (template && mode === 'edit') {
       setEditedTemplate(template);
+      // Initialize editable preview data from template
+      setEditablePreviewData(template.previewData || JSON.stringify(samplePayload, null, 2));
     } else if (mode === 'create') {
       setEditedTemplate({
         name: '',
@@ -120,8 +123,10 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
         variables: JSON.stringify([]),
         owner: 'admin'
       });
+      // Initialize with default sample data for new templates
+      setEditablePreviewData(JSON.stringify(samplePayload, null, 2));
     }
-  }, [template, mode]);
+  }, [template, mode, samplePayload]);
 
   // Process template using the real lambda processor
   const processTemplatePreview = async (templateData: Partial<TemplateItem>, payload: any): Promise<void> => {
@@ -183,7 +188,12 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
   const handleSave = async () => {
     setLoading(true);
     try {
-      await onSave(editedTemplate);
+      // Include the edited preview data in the template to save
+      const templateToSave = {
+        ...editedTemplate,
+        previewData: editablePreviewData
+      };
+      await onSave(templateToSave);
       onClose();
     } catch (error) {
       console.error('Failed to save template:', error);
@@ -193,8 +203,16 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
   };
 
   const generatePreview = useCallback(async () => {
-    await processTemplatePreview(editedTemplate, samplePayload);
-  }, [editedTemplate, samplePayload]);
+    try {
+      // Parse the editable preview data
+      const parsedPreviewData = JSON.parse(editablePreviewData);
+      await processTemplatePreview(editedTemplate, parsedPreviewData);
+    } catch (error) {
+      console.error('Failed to parse preview data:', error);
+      // Fall back to sample payload if preview data is invalid
+      await processTemplatePreview(editedTemplate, samplePayload);
+    }
+  }, [editedTemplate, editablePreviewData, samplePayload]);
 
   useEffect(() => {
     generatePreview();
@@ -388,11 +406,44 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
                 </TabPanel>
                 
                 <TabPanel value={previewTab} index={1}>
-                  <div style={{ fontFamily: 'Monaco, Menlo, monospace', fontSize: '12px' }}>
-                    <H5 className="mb-2">Sample Payload Data:</H5>
-                    <pre className="bg-gray-50 p-3 rounded text-xs overflow-auto">
-                      {JSON.stringify(samplePayload, null, 2)}
-                    </pre>
+                  <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <H5>Sample Data for Preview</H5>
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => {
+                          try {
+                            const parsed = JSON.parse(editablePreviewData);
+                            setEditablePreviewData(JSON.stringify(parsed, null, 2));
+                          } catch (error) {
+                            console.warn('Invalid JSON, cannot format');
+                          }
+                        }}
+                      >
+                        Format JSON
+                      </Button>
+                    </div>
+                    <P2 className="text-gray-600 mb-3">
+                      Edit this sample data to test your template with different values. Changes will be saved with the template.
+                    </P2>
+                    <TextField
+                      multiline
+                      rows={20}
+                      value={editablePreviewData}
+                      onChange={(e) => setEditablePreviewData(e.target.value)}
+                      fullWidth
+                      variant="outlined"
+                      placeholder="Enter JSON sample data..."
+                      sx={{
+                        flex: 1,
+                        '& .MuiInputBase-input': {
+                          fontFamily: 'Monaco, Menlo, monospace',
+                          fontSize: '12px'
+                        }
+                      }}
+                      helperText="This data will be used to preview how your template renders with actual values"
+                    />
                   </div>
                 </TabPanel>
               </div>
