@@ -18,7 +18,7 @@ export const notificationProcessor = defineFunction({
     DEBUG_PHONE: process.env.DEBUG_PHONE || ''
   },
   runtime: 20,
-  timeoutSeconds: 900, // 15 minutes max for processing large batches
+  timeoutSeconds: 90, // 90 seconds - sufficient for signal processing batches
   memoryMB: 512,
-  // schedule: 'rate(2 minutes)', // TODO: Add EventBridge scheduling - manual trigger for testing
+  schedule: 'every 2m', // EventBridge automation for all environments
 });

@@ -153,6 +153,6 @@ backend.reputationMonitor.resources.lambda.addToRolePolicy(
   })
 );
 
-// TODO: Add EventBridge scheduling for notification processor
-// For now, the notification processor can be invoked manually or via API
-// Consider using AWS EventBridge directly in the AWS console or via separate CDK stack
+// EventBridge scheduling is now handled via Amplify Gen 2 in the function definition
+// All environments (sandbox, staging, production) will have automated processing
+// Schedule: every 2 minutes for consistent processing across environments
