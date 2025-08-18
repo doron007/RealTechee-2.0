@@ -48,82 +48,73 @@ const TemplateList: React.FC<TemplateListProps> = ({
     { value: 'affiliate', label: 'Affiliate', icon: '🤝' }
   ];
 
-  // Load templates with custom handling for nullable required fields
+  // Load templates using proper Data Access Layer
   const loadTemplates = async () => {
     setLoading(true);
     setError('');
     
     try {
-      console.log('Loading notification templates...');
+      console.log('Loading notification templates with API service...');
       
-      // Create mock data for now since the database has null values in required fields
-      // This is a temporary solution until the database is cleaned up
-      const mockTemplates = [
-        {
-          id: 'template_1',
-          name: 'Contact Us Template',
-          formType: 'contact-us',
-          emailSubject: 'New Contact Form Submission',
-          emailContentHtml: '<p>A new contact form has been submitted.</p>',
-          smsContent: 'New contact form submitted',
-          variables: ['name', 'email', 'message'],
-          isActive: true,
-          version: '1.0',
-          createdBy: 'system',
-          lastModifiedBy: 'system',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        },
-        {
-          id: 'template_2',
-          name: 'Get Estimate Template',
-          formType: 'get-estimate',
-          emailSubject: 'New Estimate Request',
-          emailContentHtml: '<p>A new estimate request has been submitted.</p>',
-          smsContent: 'New estimate request',
-          variables: ['name', 'email', 'project'],
-          isActive: true,
-          version: '1.0',
-          createdBy: 'system',
-          lastModifiedBy: 'system',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        },
-        {
-          id: 'template_3',
-          name: 'Get Qualified Template',
-          formType: 'get-qualified',
-          emailSubject: 'New Qualification Request',
-          emailContentHtml: '<p>A new qualification request has been submitted.</p>',
-          smsContent: 'New qualification request',
-          variables: ['name', 'email', 'service'],
-          isActive: true,
-          version: '1.0',
-          createdBy: 'system',
-          lastModifiedBy: 'system',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        },
-        {
-          id: 'template_4',
-          name: 'Affiliate Form Template',
-          formType: 'affiliate',
-          emailSubject: 'New Affiliate Application',
-          emailContentHtml: '<p>A new affiliate application has been submitted.</p>',
-          smsContent: 'New affiliate application',
-          variables: ['name', 'email', 'company'],
-          isActive: true,
-          version: '1.0',
-          createdBy: 'system',
-          lastModifiedBy: 'system',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
-      ];
+      // Use the proper API service which now handles GraphQL complexity
+      const result = await notificationTemplatesAPI.list();
       
-      console.log(`Loaded ${mockTemplates.length} templates (mock data due to schema constraints)`);
-      setTemplates(mockTemplates as Template[]);
-      
+      if (result.success) {
+        console.log(`Loaded ${result.data.length} templates:`, result.data);
+        
+        // Map the data to handle form type categorization and variable parsing
+        const mappedTemplates = result.data.map((item: any) => {
+          // Infer form type from template name if not provided
+          let formType = item.formType || '';
+          if (!formType && item.name) {
+            const name = item.name.toLowerCase();
+            if (name.includes('contact') || name.includes('contact us')) {
+              formType = 'contact-us';
+            } else if (name.includes('estimate')) {
+              formType = 'get-estimate';
+            } else if (name.includes('qualified')) {
+              formType = 'get-qualified';
+            } else if (name.includes('affiliate')) {
+              formType = 'affiliate';
+            }
+          }
+          
+          return {
+            id: item.id || '',
+            name: item.name || 'Unnamed Template',
+            formType,
+            emailSubject: item.emailSubject || 'Template Subject Not Available',
+            emailContentHtml: item.emailContentHtml || 'Template Content Not Available',
+            smsContent: item.smsContent || 'SMS Content Not Available',
+            variables: (() => {
+              try {
+                if (!item.variables) return [];
+                if (Array.isArray(item.variables)) return item.variables;
+                if (typeof item.variables === 'string') {
+                  const parsed = JSON.parse(item.variables);
+                  return Array.isArray(parsed) ? parsed : [];
+                }
+                return [];
+              } catch (e) {
+                console.warn('Failed to parse variables for template:', item.id, e);
+                return [];
+              }
+            })(),
+            isActive: item.isActive ?? true,
+            version: item.version || '1.0',
+            createdBy: item.createdBy || 'system',
+            lastModifiedBy: item.lastModifiedBy || 'system',
+            createdAt: item.createdAt || new Date().toISOString(),
+            updatedAt: item.updatedAt || new Date().toISOString()
+          };
+        });
+        
+        setTemplates(mappedTemplates as Template[]);
+      } else {
+        console.error('API call failed:', result.error);
+        setError('Failed to load templates');
+        setTemplates([]);
+      }
     } catch (error: any) {
       console.error('Error loading templates:', error);
       setError('Failed to load templates');
