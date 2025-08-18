@@ -287,7 +287,7 @@ const createModelAPI = (modelName: string) => {
       
       if (modelName === 'NotificationTemplate') {
         try {
-          // Use minimal query to avoid nullable field validation errors
+          // First try minimal query to get template IDs
           const minimalTemplatesQuery = `
             query ListNotificationTemplatesMinimal($limit: Int) {
               listNotificationTemplates(limit: $limit) {
@@ -311,19 +311,62 @@ const createModelAPI = (modelName: string) => {
             }
           `;
           
-          const result = await graphqlClient.graphql({
+          const listResult = await graphqlClient.graphql({
             query: minimalTemplatesQuery,
             variables: { limit: 2000 }
           }) as any;
           
-          console.log(`📊 NotificationTemplates query result: ${result.data?.listNotificationTemplates?.items?.length || 0} items returned`);
+          const templateIds = listResult.data?.listNotificationTemplates?.items || [];
+          console.log(`📊 Found ${templateIds.length} template IDs, fetching full content for each...`);
           
-          // Handle GraphQL errors gracefully - log but continue with partial data
-          if (result.errors) {
-            console.warn(`GraphQL validation errors for NotificationTemplates (${result.errors.length} errors) - using partial data`);
-          }
+          // For each template, try to get full content individually (more error tolerant)
+          const fullTemplates = await Promise.allSettled(
+            templateIds.map(async (template: any) => {
+              try {
+                const getTemplateQuery = `
+                  query GetNotificationTemplate($id: ID!) {
+                    getNotificationTemplate(id: $id) {
+                      id
+                      name
+                      formType
+                      emailSubject
+                      emailContentHtml
+                      smsContent
+                      variables
+                      previewData
+                      isActive
+                      version
+                      createdBy
+                      lastModifiedBy
+                      createdAt
+                      updatedAt
+                      __typename
+                    }
+                  }
+                `;
+                
+                const getResult = await graphqlClient.graphql({
+                  query: getTemplateQuery,
+                  variables: { id: template.id }
+                }) as any;
+                
+                return getResult.data?.getNotificationTemplate || template;
+              } catch (error) {
+                console.warn(`Failed to get full content for template ${template.id}, using partial data:`, error);
+                return template; // Fallback to minimal data
+              }
+            })
+          );
           
-          return { success: true, data: result.data?.listNotificationTemplates?.items || [] };
+          // Extract successful results
+          const validTemplates = fullTemplates
+            .filter(result => result.status === 'fulfilled')
+            .map(result => (result as PromiseFulfilledResult<any>).value)
+            .filter(template => template); // Remove nulls
+          
+          console.log(`📊 Successfully loaded ${validTemplates.length} templates with full content`);
+          return { success: true, data: validTemplates };
+          
         } catch (graphqlError) {
           console.warn('NotificationTemplates GraphQL query failed completely, returning empty array:', graphqlError);
           return { success: true, data: [] };

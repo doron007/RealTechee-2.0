@@ -21,15 +21,26 @@ export interface NotificationItem {
 export interface TemplateItem {
   id: string;
   name: string;
-  channel: NotificationTemplateChannel;
+  formType?: string;
+  // New unified structure
+  emailSubject?: string;
+  emailContentHtml?: string;
+  smsContent?: string;
+  // Legacy structure (backward compatibility)
+  channel?: NotificationTemplateChannel;
   subject?: string | null;
   contentHtml?: string | null;
   contentText?: string | null;
+  // Common fields
+  variables?: string | null;
+  previewData?: string;
   isActive?: boolean | null;
+  version?: string;
+  createdBy?: string;
+  lastModifiedBy?: string;
+  owner?: string;
   createdAt: string;
   updatedAt: string;
-  variables?: string | null;
-  owner?: string;
   __typename?: string;
 }
 

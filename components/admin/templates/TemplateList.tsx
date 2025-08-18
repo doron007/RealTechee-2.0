@@ -13,6 +13,7 @@ interface Template {
   emailContentHtml: string;
   smsContent: string;
   variables: string[];
+  previewData?: string;
   isActive: boolean;
   version: string;
   createdBy: string;
@@ -100,6 +101,7 @@ const TemplateList: React.FC<TemplateListProps> = ({
                 return [];
               }
             })(),
+            previewData: item.previewData || undefined,
             isActive: item.isActive ?? true,
             version: item.version || '1.0',
             createdBy: item.createdBy || 'system',

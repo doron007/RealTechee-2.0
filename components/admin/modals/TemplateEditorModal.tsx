@@ -17,6 +17,7 @@ import {
 import BaseModal from '../../common/modals/BaseModal';
 import { H4, H5, P2 } from '../../typography';
 import { TemplateItem, NotificationTemplateChannel } from '../../../types/notifications';
+import { ClientTemplateProcessor } from '../../../services/clientTemplateProcessor';
 
 interface TemplateEditorModalProps {
   open: boolean;
@@ -49,34 +50,55 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [previewTab, setPreviewTab] = useState(0);
   const [previewData, setPreviewData] = useState('');
+  const [previewError, setPreviewError] = useState('');
+  
+  // Template processor instance
+  const templateProcessor = useMemo(() => ClientTemplateProcessor.getInstance(), []);
 
-  // Sample payload for preview
-  const samplePayload = useMemo(() => ({
-    customer: {
-      name: 'John Smith',
-      email: 'john.smith@example.com',
-      phone: '(555) 123-4567',
-      company: 'Sample Real Estate Group'
-    },
-    property: {
-      address: '123 Main Street, Beverly Hills, CA 90210'
-    },
-    project: {
-      product: 'Kitchen & Bathroom Renovation',
-      message: 'Looking for a complete renovation estimate for a luxury property.',
-      relationToProperty: 'Property Owner',
-      needFinance: true,
-      consultationType: 'in-person'
-    },
-    submission: {
-      id: 'SAMPLE-001',
-      timestamp: new Date().toLocaleString(),
-      leadSource: 'WEBSITE'
-    },
-    admin: {
-      dashboardUrl: 'https://app.realtechee.com/admin/requests'
+  // Use real preview data from the template or fallback to sample
+  const samplePayload = useMemo(() => {
+    // Try to use previewData from the template if available
+    if (template?.previewData) {
+      try {
+        const parsed = JSON.parse(template.previewData);
+        console.log('✅ Using real previewData from database for template:', template.name);
+        console.log('📋 Preview data keys:', Object.keys(parsed));
+        return parsed;
+      } catch (error) {
+        console.warn('❌ Failed to parse template previewData, using fallback:', error);
+      }
+    } else {
+      console.log('⚠️ No previewData found in template, using fallback sample data');
     }
-  }), []);
+    
+    // Fallback to hardcoded sample data
+    return {
+      customer: {
+        name: 'John Smith',
+        email: 'john.smith@example.com',
+        phone: '(555) 123-4567',
+        company: 'Sample Real Estate Group'
+      },
+      property: {
+        address: '123 Main Street, Beverly Hills, CA 90210'
+      },
+      project: {
+        product: 'Kitchen & Bathroom Renovation',
+        message: 'Looking for a complete renovation estimate for a luxury property.',
+        relationToProperty: 'Property Owner',
+        needFinance: true,
+        consultationType: 'in-person'
+      },
+      submission: {
+        id: 'SAMPLE-001',
+        timestamp: new Date().toLocaleString(),
+        leadSource: 'WEBSITE'
+      },
+      admin: {
+        dashboardUrl: 'https://app.realtechee.com/admin/requests'
+      }
+    };
+  }, [template?.previewData]);
 
   useEffect(() => {
     if (template && mode === 'edit') {
@@ -84,10 +106,16 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
     } else if (mode === 'create') {
       setEditedTemplate({
         name: '',
+        formType: '',
+        emailSubject: '',
+        emailContentHtml: '',
+        smsContent: '',
+        // Legacy fallbacks
         channel: NotificationTemplateChannel.EMAIL,
         subject: '',
         contentHtml: '',
         contentText: '',
+        // Common fields
         isActive: true,
         variables: JSON.stringify([]),
         owner: 'admin'
@@ -95,27 +123,61 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
     }
   }, [template, mode]);
 
-  // Simple template variable replacement (for preview)
-  const renderTemplate = (content: string, payload: any): string => {
-    let rendered = content;
-    
-    // Replace variables like {{customer.name}}
-    const replaceVariables = (text: string, obj: any, prefix = ''): string => {
-      Object.keys(obj).forEach(key => {
-        const fullKey = prefix ? `${prefix}.${key}` : key;
-        const value = obj[key];
-        
-        if (typeof value === 'object' && value !== null) {
-          text = replaceVariables(text, value, fullKey);
-        } else {
-          const regex = new RegExp(`{{\\s*${fullKey}\\s*}}`, 'g');
-          text = text.replace(regex, String(value || ''));
-        }
-      });
-      return text;
-    };
-    
-    return replaceVariables(rendered, payload);
+  // Process template using the real lambda processor
+  const processTemplatePreview = async (templateData: Partial<TemplateItem>, payload: any): Promise<void> => {
+    try {
+      setPreviewError('');
+      
+      // Only process if we have content
+      if (!templateData.emailContentHtml && !templateData.contentHtml && !templateData.contentText) {
+        setPreviewData('');
+        return;
+      }
+
+      // Create a template object that matches the lambda processor expectations
+      const templateForProcessing = {
+        name: templateData.name || 'Preview Template',
+        emailSubject: templateData.emailSubject || templateData.subject || '',
+        emailContentHtml: templateData.emailContentHtml || templateData.contentHtml || '',
+        smsContent: templateData.contentText || '',
+        // Legacy fallbacks
+        subject: templateData.subject || '',
+        contentHtml: templateData.contentHtml || '',
+        contentText: templateData.contentText || ''
+      };
+
+      console.log('Processing template preview with processor:', templateForProcessing);
+      
+      const result = await templateProcessor.processTemplate(templateForProcessing, payload);
+      
+      // Format the preview based on channel
+      if (templateData.channel === NotificationTemplateChannel.EMAIL || !templateData.channel) {
+        setPreviewData(`
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px;">
+            <div style="background: #f8f9fa; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
+              <strong>Subject:</strong> ${result.subject}
+            </div>
+            ${result.htmlContent}
+          </div>
+        `);
+      } else {
+        setPreviewData(`
+          <div style="font-family: monospace; background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap;">
+<strong>SMS Message:</strong>
+${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
+          </div>
+        `);
+      }
+      
+    } catch (error) {
+      console.error('Template processing error:', error);
+      setPreviewError(error instanceof Error ? error.message : String(error));
+      setPreviewData(`
+        <div style="color: #dc2626; background: #fef2f2; padding: 15px; border-radius: 4px; border: 1px solid #fca5a5;">
+          <strong>Template compilation error:</strong> ${error instanceof Error ? error.message : String(error)}
+        </div>
+      `);
+    }
   };
 
   const handleSave = async () => {
@@ -130,33 +192,9 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
     }
   };
 
-  const generatePreview = useCallback(() => {
-    if (!editedTemplate.contentHtml && !editedTemplate.contentText) return;
-    
-    if (editedTemplate.channel === NotificationTemplateChannel.EMAIL) {
-      const htmlContent = renderTemplate(editedTemplate.contentHtml || '', samplePayload);
-      const subject = renderTemplate(editedTemplate.subject || '', samplePayload);
-      
-      setPreviewData(`
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; padding: 20px;">
-          <div style="background: #f8f9fa; padding: 10px; margin-bottom: 20px; border-radius: 4px;">
-            <strong>Subject:</strong> ${subject}
-          </div>
-          ${htmlContent}
-        </div>
-      `);
-    } else {
-      const textContent = renderTemplate(editedTemplate.contentText || '', samplePayload);
-      const subject = renderTemplate(editedTemplate.subject || '', samplePayload);
-      
-      setPreviewData(`
-        <div style="font-family: monospace; background: #f8f9fa; padding: 15px; border-radius: 4px; white-space: pre-wrap;">
-<strong>SMS Message:</strong>
-${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
-        </div>
-      `);
-    }
-  }, [editedTemplate.contentHtml, editedTemplate.contentText, editedTemplate.subject, editedTemplate.channel, samplePayload]);
+  const generatePreview = useCallback(async () => {
+    await processTemplatePreview(editedTemplate, samplePayload);
+  }, [editedTemplate, samplePayload]);
 
   useEffect(() => {
     generatePreview();
@@ -207,27 +245,35 @@ ${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
                 </FormControl>
 
                 <TextField
-                  label="Subject"
-                  value={editedTemplate.subject || ''}
-                  onChange={(e) => setEditedTemplate(prev => ({ ...prev, subject: e.target.value }))}
+                  label="Email Subject"
+                  value={editedTemplate.emailSubject || editedTemplate.subject || ''}
+                  onChange={(e) => setEditedTemplate(prev => ({ 
+                    ...prev, 
+                    emailSubject: e.target.value,
+                    subject: e.target.value // Keep legacy field in sync
+                  }))}
                   fullWidth
                   variant="outlined"
                   size="small"
-                  placeholder="e.g., New Request - {{customer.name}}"
+                  placeholder="e.g., Contact Us — {{subject}} ({{customerName}}) — {{formatDate submittedAt}}"
                 />
 
                 {/* Content based on channel */}
                 {editedTemplate.channel === NotificationTemplateChannel.EMAIL ? (
                   <>
                     <TextField
-                      label="HTML Content"
+                      label="Email HTML Content"
                       multiline
                       rows={12}
-                      value={editedTemplate.contentHtml || ''}
-                      onChange={(e) => setEditedTemplate(prev => ({ ...prev, contentHtml: e.target.value }))}
+                      value={editedTemplate.emailContentHtml || editedTemplate.contentHtml || ''}
+                      onChange={(e) => setEditedTemplate(prev => ({ 
+                        ...prev, 
+                        emailContentHtml: e.target.value,
+                        contentHtml: e.target.value // Keep legacy field in sync
+                      }))}
                       fullWidth
                       variant="outlined"
-                      placeholder="Enter HTML template..."
+                      placeholder="Enter HTML email template..."
                       sx={{
                         '& .MuiInputBase-input': {
                           fontFamily: 'Monaco, Menlo, monospace',
@@ -237,14 +283,18 @@ ${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
                     />
                     
                     <TextField
-                      label="Text Content (Fallback)"
+                      label="SMS Content"
                       multiline
                       rows={8}
-                      value={editedTemplate.contentText || ''}
-                      onChange={(e) => setEditedTemplate(prev => ({ ...prev, contentText: e.target.value }))}
+                      value={editedTemplate.smsContent || editedTemplate.contentText || ''}
+                      onChange={(e) => setEditedTemplate(prev => ({ 
+                        ...prev, 
+                        smsContent: e.target.value,
+                        contentText: e.target.value // Keep legacy field in sync
+                      }))}
                       fullWidth
                       variant="outlined"
-                      placeholder="Enter plain text version..."
+                      placeholder="Enter SMS template..."
                       sx={{
                         '& .MuiInputBase-input': {
                           fontFamily: 'Monaco, Menlo, monospace',
@@ -258,8 +308,12 @@ ${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
                     label="Message Content"
                     multiline
                     rows={10}
-                    value={editedTemplate.contentText || ''}
-                    onChange={(e) => setEditedTemplate(prev => ({ ...prev, contentText: e.target.value }))}
+                    value={editedTemplate.smsContent || editedTemplate.contentText || ''}
+                    onChange={(e) => setEditedTemplate(prev => ({ 
+                      ...prev, 
+                      smsContent: e.target.value,
+                      contentText: e.target.value // Keep legacy field in sync
+                    }))}
                     fullWidth
                     variant="outlined"
                     placeholder="Enter your message template..."
@@ -359,7 +413,7 @@ ${subject ? `Subject: ${subject}\n\n` : ''}${textContent}
             variant="contained"
             color="primary"
             onClick={handleSave}
-            disabled={loading || !editedTemplate.name || (!editedTemplate.contentHtml && !editedTemplate.contentText)}
+            disabled={loading || !editedTemplate.name || (!editedTemplate.emailContentHtml && !editedTemplate.contentHtml && !editedTemplate.smsContent && !editedTemplate.contentText)}
           >
             {loading ? 'Saving...' : mode === 'create' ? 'Create Template' : 'Save Changes'}
           </Button>
