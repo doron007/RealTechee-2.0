@@ -1,6 +1,59 @@
-# Amplify Gen 2.0 Patterns and Best Practices
+# AWS Amplify Gen 2.0 Data Access Patterns
 
 This document outlines the reusable patterns established for working with Amplify Gen 2.0 across the RealTechee project.
+
+## 🎯 **Current Data Access Architecture (2025)**
+
+### **Pattern 1: Service Layer with Dual Access Methods (Recommended)**
+```typescript
+// 1. Import both GraphQL client and API utility
+import { generateClient as generateGraphQLClient } from 'aws-amplify/api';
+import { projectsAPI } from '../utils/amplifyAPI';
+
+// 2. Initialize GraphQL client
+const graphqlClient = generateGraphQLClient({ authMode: 'apiKey' });
+
+// 3. Use GraphQL for complex queries with relations
+const result = await graphqlClient.graphql({
+  query: LIST_PROJECTS_WITH_RELATIONS,
+  variables: { limit: 2000 }
+});
+
+// 4. Use API utility for simple CRUD operations
+const updateResult = await projectsAPI.update(projectId, updates);
+```
+
+### **Pattern 2: Working vs Non-Working Methods**
+- ✅ **WORKS**: GraphQL queries (`client.graphql()`) - Used by form submissions
+- ✅ **WORKS**: API utilities for Projects (`projectsAPI.update()`)
+- ❌ **FAILS**: API utilities for Requests (`requestsAPI.update()`) - Browser context issue
+
+**Root Cause**: `client.models` is empty in browser during assignment operations
+
+**Fix Priority**:
+1. **Immediate**: Use GraphQL pattern for all new features
+2. **Future**: Debug why `client.models` becomes empty during assignment
+3. **Long-term**: Standardize all services to dual GraphQL/API pattern
+
+### **Pattern 3: Signal-Driven Notification System**
+```typescript
+// Signal emission pattern for forms
+import { signalEmitter } from '@/services/signalEmitter';
+
+await signalEmitter.emitFormSubmission('form_type', {
+  customerName: formData.name,
+  customerEmail: formData.email,
+  dashboardUrl: `${window.location.origin}/admin/path/${recordId}`
+});
+
+// Template processing pattern
+Handlebars.registerHelper('formatPhone', (phone: string) => { /* implementation */ });
+{{{fileLinks uploadedMedia}}} // Triple braces for raw HTML output
+```
+
+---
+
+# Legacy Patterns (Pre-2025)
 
 ## Architecture Overview
 

@@ -38,12 +38,12 @@ const graphqlClient = generateClient({
   authMode: 'apiKey'
 });
 
-// Signal types for the four forms
+// Signal types for the four forms (updated to match notification hook conventions)
 export type FormSignalType = 
-  | 'form_contact_us_submission'
-  | 'form_get_qualified_submission' 
-  | 'form_affiliate_submission'
-  | 'form_get_estimate_submission';
+  | 'CONTACT_US_FORM_SUBMITTED'
+  | 'GET_QUALIFIED_FORM_SUBMITTED' 
+  | 'AFFILIATE_FORM_SUBMITTED'
+  | 'GET_ESTIMATE_FORM_SUBMITTED';
 
 export type SystemSignalType =
   | 'status_change_request'
@@ -171,7 +171,7 @@ class SignalEmitter {
 
   /**
    * Emit form submission signal
-   * Convenience method for form submissions
+   * Convenience method for form submissions (updated for unified notification system)
    */
   public async emitFormSubmission(
     formType: 'contact_us' | 'get_qualified' | 'affiliate' | 'get_estimate',
@@ -182,7 +182,18 @@ class SignalEmitter {
       sessionId?: string;
     } = {}
   ): Promise<EmitSignalResult> {
-    const signalType: FormSignalType = `form_${formType}_submission` as FormSignalType;
+    // Map form types to new signal type convention
+    const signalTypeMap: Record<string, FormSignalType> = {
+      'contact_us': 'CONTACT_US_FORM_SUBMITTED',
+      'get_qualified': 'GET_QUALIFIED_FORM_SUBMITTED',
+      'affiliate': 'AFFILIATE_FORM_SUBMITTED',
+      'get_estimate': 'GET_ESTIMATE_FORM_SUBMITTED'
+    };
+    
+    const signalType = signalTypeMap[formType];
+    if (!signalType) {
+      throw new Error(`Unknown form type: ${formType}`);
+    }
     
     const payload: SignalPayload = {
       ...formData,
@@ -192,6 +203,13 @@ class SignalEmitter {
       testMode: options.testMode || false,
       sessionId: options.sessionId || `session_${Date.now()}`
     };
+
+    logger.info(`🎯 Emitting unified signal: ${signalType}`, {
+      formType,
+      urgency: options.urgency,
+      testMode: options.testMode,
+      customerEmail: formData.customerEmail || formData.email
+    });
 
     return this.emit(signalType, payload, {
       source: `${formType}_form`,

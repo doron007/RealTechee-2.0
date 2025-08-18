@@ -2454,6 +2454,13 @@
               "isRequired": true,
               "attributes": []
             },
+            "channel": {
+              "name": "channel",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "enabled": {
               "name": "enabled",
               "isArray": false,
@@ -2464,17 +2471,8 @@
             "priority": {
               "name": "priority",
               "isArray": false,
-              "type": {
-                "enum": "SignalNotificationHooksPriority"
-              },
+              "type": "String",
               "isRequired": false,
-              "attributes": []
-            },
-            "channels": {
-              "name": "channels",
-              "isArray": false,
-              "type": "AWSJSON",
-              "isRequired": true,
               "attributes": []
             },
             "recipientEmails": {
@@ -2500,6 +2498,41 @@
             },
             "conditions": {
               "name": "conditions",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "deliveryDelay": {
+              "name": "deliveryDelay",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "maxRetries": {
+              "name": "maxRetries",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdBy": {
+              "name": "createdBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "lastModifiedBy": {
+              "name": "lastModifiedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "channels": {
+              "name": "channels",
               "isArray": false,
               "type": "AWSJSON",
               "isRequired": false,
@@ -2594,6 +2627,83 @@
               "isRequired": true,
               "attributes": []
             },
+            "formType": {
+              "name": "formType",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "emailSubject": {
+              "name": "emailSubject",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "emailContentHtml": {
+              "name": "emailContentHtml",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "smsContent": {
+              "name": "smsContent",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "variables": {
+              "name": "variables",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "previewData": {
+              "name": "previewData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isActive": {
+              "name": "isActive",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "version": {
+              "name": "version",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdBy": {
+              "name": "createdBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "lastModifiedBy": {
+              "name": "lastModifiedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "owner": {
+              "name": "owner",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "subject": {
               "name": "subject",
               "isArray": false,
@@ -2621,27 +2731,6 @@
               "type": {
                 "enum": "NotificationTemplateChannel"
               },
-              "isRequired": false,
-              "attributes": []
-            },
-            "variables": {
-              "name": "variables",
-              "isArray": false,
-              "type": "AWSJSON",
-              "isRequired": false,
-              "attributes": []
-            },
-            "isActive": {
-              "name": "isActive",
-              "isArray": false,
-              "type": "Boolean",
-              "isRequired": false,
-              "attributes": []
-            },
-            "owner": {
-              "name": "owner",
-              "isArray": false,
-              "type": "String",
               "isRequired": false,
               "attributes": []
             },
@@ -6931,14 +7020,6 @@
           "values": [
             "created",
             "updated"
-          ]
-        },
-        "SignalNotificationHooksPriority": {
-          "name": "SignalNotificationHooksPriority",
-          "values": [
-            "low",
-            "medium",
-            "high"
           ]
         },
         "NotificationTemplateChannel": {

@@ -95,6 +95,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       isImplemented: true
     },
     {
+      id: 'notification-monitor',
+      name: 'Live Monitor',
+      route: '/admin/notification-monitor',
+      icon: '/assets/icons/ic-chart.svg',
+      isImplemented: true
+    },
+    {
       id: 'system',
       name: 'System Config',
       route: '/admin/system',

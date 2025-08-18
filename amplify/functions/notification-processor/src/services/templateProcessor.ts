@@ -146,26 +146,42 @@ export class TemplateProcessor {
     console.log('✅ Handlebars helpers registered');
   }
 
-  async processTemplate(template: NotificationTemplate, data: any): Promise<ProcessedTemplate> {
+  async processTemplate(template: NotificationTemplate, data: any, channel?: string): Promise<ProcessedTemplate> {
     try {
-      console.log(`🎨 Processing template: ${template.name}`);
+      console.log(`🎨 Processing unified template: ${template.name} for channel: ${channel || 'both'}`);
 
       // Validate required variables
       await this.validateTemplateData(template, data);
 
-      // Process subject
-      const subjectTemplate = Handlebars.compile(template.subject || '');
-      const subject = subjectTemplate(data);
+      // Process email content (new unified structure)
+      let subject = '';
+      let htmlContent = '';
+      let textContent = '';
 
-      // Process HTML content
-      const htmlTemplate = Handlebars.compile(template.content || template.contentHtml || '');
-      const htmlContent = htmlTemplate(data);
+      if (template.emailSubject || template.emailContentHtml) {
+        // New unified structure
+        const subjectTemplate = Handlebars.compile(template.emailSubject || '');
+        subject = subjectTemplate(data);
 
-      // Process text content
-      const textTemplate = Handlebars.compile(template.contentText || template.content || '');
-      const textContent = textTemplate(data);
+        const htmlTemplate = Handlebars.compile(template.emailContentHtml || '');
+        htmlContent = htmlTemplate(data);
 
-      console.log(`✅ Template processed successfully: ${template.name}`);
+        // Use SMS content for text
+        const smsTemplate = Handlebars.compile(template.smsContent || '');
+        textContent = smsTemplate(data);
+      } else {
+        // Legacy structure fallback
+        const subjectTemplate = Handlebars.compile(template.subject || '');
+        subject = subjectTemplate(data);
+
+        const htmlTemplate = Handlebars.compile(template.content || template.contentHtml || '');
+        htmlContent = htmlTemplate(data);
+
+        const textTemplate = Handlebars.compile(template.contentText || template.content || '');
+        textContent = textTemplate(data);
+      }
+
+      console.log(`✅ Unified template processed successfully: ${template.name}`);
 
       return {
         subject: this.sanitizeSubject(subject),

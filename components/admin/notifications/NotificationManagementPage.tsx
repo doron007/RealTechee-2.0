@@ -9,11 +9,13 @@ import { NotificationQueueStatus, NotificationTemplateChannel } from '../../../A
 import EditNotificationModal from '../modals/EditNotificationModal';
 import TemplateEditorModal from '../modals/TemplateEditorModal';
 import BulkActionModal from '../modals/BulkActionModal';
+import TemplateManagementPage from '../templates/TemplateManagementPage';
+import SignalManagementPage from '../signals/SignalManagementPage';
 import { NotificationItem, TemplateItem } from '../../../types/notifications';
 
 const client = generateClient();
 
-type ViewMode = 'queue' | 'history' | 'templates' | 'monitoring';
+type ViewMode = 'queue' | 'history' | 'templates' | 'monitoring' | 'signals' | 'realtime';
 
 const NotificationManagementPage: React.FC = () => {
   // State management
@@ -432,6 +434,7 @@ const NotificationManagementPage: React.FC = () => {
     { id: 'queue', name: 'Queue', count: notifications.filter(n => n.status === NotificationQueueStatus.PENDING).length },
     { id: 'history', name: 'History', count: notifications.filter(n => n.status !== NotificationQueueStatus.PENDING).length },
     { id: 'templates', name: 'Templates', count: templates.length },
+    { id: 'signals', name: 'Signals', count: 0 },
     { id: 'monitoring', name: 'Monitor', count: notifications.filter(n => n.status === NotificationQueueStatus.FAILED).length }
   ];
 
@@ -717,58 +720,11 @@ const NotificationManagementPage: React.FC = () => {
         )}
 
         {viewMode === 'templates' && (
-          <>
-            {/* Template Actions */}
-            <div className="bg-white border border-gray-200 rounded-lg shadow-sm mb-6">
-              <div className="p-4">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                  <H4>Notification Templates</H4>
-                  <button
-                    onClick={handleCreateTemplate}
-                    className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
-                  >
-                    Create New Template
-                  </button>
-                </div>
-              </div>
-            </div>
+          <TemplateManagementPage />
+        )}
 
-            {/* Templates List */}
-            <div className="space-y-4">
-              {templates.length === 0 ? (
-                <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
-                  <div className="p-8 text-center text-gray-500">
-                    No templates found. Create your first template to get started.
-                  </div>
-                </div>
-              ) : (
-                templates.map((template) => (
-                  <div key={template.id} className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div className="p-4 lg:p-6">
-                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                        <div>
-                          <H4 className="text-gray-900">{template.name}</H4>
-                          <P2 className="text-gray-600">Channel: {template.channel}</P2>
-                          {template.subject && (
-                            <P2 className="text-gray-500 text-sm">Subject: {template.subject}</P2>
-                          )}
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <StatusPill status={template.isActive ? 'Active' : 'Inactive'} />
-                          <button
-                            onClick={() => handleEditTemplate(template)}
-                            className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-                          >
-                            Edit Template
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </>
+        {viewMode === 'signals' && (
+          <SignalManagementPage />
         )}
 
         {viewMode === 'history' && (

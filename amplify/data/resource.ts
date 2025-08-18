@@ -700,19 +700,28 @@ const SignalEvents = a.model({
 
 // Signal-to-Notification Mapping Configuration
 const SignalNotificationHooks = a.model({
-  signalType: a.string().required(),                    // 'form_contact_us_submission' 
-  notificationTemplateId: a.id().required(),           // Reference to NotificationTemplate
-  enabled: a.boolean(),                                // Admin can enable/disable
-  priority: a.enum(['low', 'medium', 'high']),
-  channels: a.json().required(),                       // ['EMAIL', 'SMS'] array
+  signalType: a.string().required(),
+  notificationTemplateId: a.id().required(),
+  channel: a.string(), // 'email' or 'sms'
+  enabled: a.boolean(),
+  priority: a.string(), // 'low', 'medium', 'high'
   
   // Recipient Configuration
-  recipientEmails: a.json(),                           // Static email addresses
-  recipientRoles: a.json(),                            // Role-based recipients ['AE', 'PM']  
-  recipientDynamic: a.json(),                          // Extract from payload ['payload.customerEmail']
+  recipientEmails: a.json(),
+  recipientRoles: a.json(),
+  recipientDynamic: a.json(),
   
-  // Optional filtering conditions
-  conditions: a.json(),                                // Filter conditions for signal processing
+  // Advanced Configuration
+  conditions: a.json(),
+  deliveryDelay: a.integer(),
+  maxRetries: a.integer(),
+  
+  // Audit fields
+  createdBy: a.string(),
+  lastModifiedBy: a.string(),
+  
+  // Legacy support (deprecated)
+  channels: a.json(),
   
   // Relationships
   template: a.belongsTo('NotificationTemplate', 'notificationTemplateId'),
@@ -723,14 +732,33 @@ const SignalNotificationHooks = a.model({
 
 // Notification System Models
 const NotificationTemplate = a.model({
+  // Form identification
   name: a.string().required(),
+  formType: a.string(), // 'contact-us', 'get-estimate', 'get-qualified', 'affiliate'
+  
+  // Email content (HTML + subject)
+  emailSubject: a.string().required(),
+  emailContentHtml: a.string().required(),
+  
+  // SMS content (plain text)
+  smsContent: a.string().required(),
+  
+  // Template metadata
+  variables: a.json(),
+  previewData: a.json(),
+  isActive: a.boolean(),
+  version: a.string(),
+  
+  // Audit fields
+  createdBy: a.string(),
+  lastModifiedBy: a.string(),
+  owner: a.string(),
+  
+  // Legacy support (deprecated)
   subject: a.string(),
   contentHtml: a.string(),
   contentText: a.string(),
   channel: a.enum(['EMAIL', 'SMS', 'TELEGRAM', 'WHATSAPP']),
-  variables: a.json(), // Array of required variables for template
-  isActive: a.boolean(),
-  owner: a.string(),
   
   // Reverse relationships
   notifications: a.hasMany('NotificationQueue', 'templateId'),

@@ -38,14 +38,31 @@ export interface NotificationQueue {
 export interface NotificationTemplate {
   id: string;
   name: string;
+  formType: string; // 'contact-us', 'get-estimate', 'get-qualified', 'affiliate'
+  
+  // New unified structure
+  emailSubject: string;
+  emailContentHtml: string;
+  smsContent: string;
+  
+  // Template metadata
+  variables?: string; // JSON string of required variables array
+  previewData?: string; // JSON string of sample data for preview
+  isActive?: boolean;
+  version?: string;
+  
+  // Audit fields
+  createdBy?: string;
+  lastModifiedBy?: string;
+  owner?: string;
+  
+  // Legacy support (deprecated)
   subject?: string;
-  content?: string; // Main content field used in database
+  content?: string;
   contentHtml?: string;
   contentText?: string;
-  channel: 'EMAIL' | 'SMS' | 'TELEGRAM' | 'WHATSAPP';
-  variables?: string; // JSON string of required variables array
-  isActive?: boolean;
-  owner?: string;
+  channel?: 'EMAIL' | 'SMS' | 'TELEGRAM' | 'WHATSAPP';
+  
   createdAt: string;
   updatedAt: string;
 }
@@ -67,13 +84,27 @@ export interface SignalNotificationHook {
   id: string;
   signalType: string;
   notificationTemplateId: string;
+  channel: string; // 'email' or 'sms' - which content to use from template
   enabled: boolean;
-  priority?: 'low' | 'medium' | 'high';
-  channels: string; // JSON string array
+  priority?: string; // 'low', 'medium', 'high'
+  
+  // Recipient Configuration
   recipientEmails?: string; // JSON string array
   recipientRoles?: string; // JSON string array
   recipientDynamic?: string; // JSON string array
+  
+  // Advanced Configuration
   conditions?: any; // JSON conditions for filtering
+  deliveryDelay?: number; // Delay in minutes before sending
+  maxRetries?: number; // Max retry attempts for failed deliveries
+  
+  // Audit fields
+  createdBy?: string;
+  lastModifiedBy?: string;
+  
+  // Legacy support (deprecated)
+  channels?: string; // DEPRECATED: Use individual channel records
+  
   createdAt: string;
   updatedAt: string;
 }

@@ -267,14 +267,16 @@ function evaluateCondition(fieldValue: any, operator: string, expectedValue: any
 async function createNotificationFromSignal(hook: SignalNotificationHook, signal: SignalEvent): Promise<void> {
   console.log(`📋 Creating notification from hook ${hook.id} for signal ${signal.id}`);
 
-  // Get the template
+  // Get the unified template
   const template = await getTemplate(hook.notificationTemplateId);
   if (!template) {
     throw new Error(`Template ${hook.notificationTemplateId} not found`);
   }
 
   const payload = typeof signal.payload === 'string' ? JSON.parse(signal.payload) : signal.payload;
-  const channels = typeof hook.channels === 'string' ? JSON.parse(hook.channels) : hook.channels;
+  
+  // New unified approach: hook.channel specifies which content to use (email/sms)
+  const channelType = hook.channel || 'email'; // Default to email if not specified
 
   // Resolve recipients from hook configuration
   const recipients = await resolveSignalRecipients(hook, payload);
@@ -284,8 +286,8 @@ async function createNotificationFromSignal(hook: SignalNotificationHook, signal
     return;
   }
 
-  // Build channels data for the notification
-  const channelsData = await buildChannelsDataFromSignal(channels, template, payload, recipients);
+  // Build channels data for the notification using new unified approach
+  const channelsData = await buildChannelsDataFromSignal([channelType], template, payload, recipients);
 
   // Create notification queue record
   const notification = {
@@ -306,7 +308,7 @@ async function createNotificationFromSignal(hook: SignalNotificationHook, signal
   // Insert into NotificationQueue table
   await insertNotificationQueue(notification);
 
-  console.log(`✅ Notification created successfully: ${notification.id}`);
+  console.log(`✅ Notification created successfully: ${notification.id} for channel: ${channelType}`);
 }
 
 async function resolveSignalRecipients(hook: SignalNotificationHook, payload: any): Promise<any[]> {
@@ -358,31 +360,38 @@ async function buildChannelsDataFromSignal(channels: string[], template: Notific
   // Transform payload for template variables
   const transformedPayload = transformPayloadForTemplates(payload);
 
-  // Process template with proper template processor
+  // Process unified template with proper template processor
   const processed = await templateProcessor.processTemplate(template, transformedPayload);
 
-  for (const channelType of channels) {
-    const recipientList = recipients.map(r => r.email).filter(Boolean);
+  console.log(`🔄 Building channels data for: ${channels.join(', ')} using unified template: ${template.name}`);
 
-    switch (channelType.toUpperCase()) {
-      case 'EMAIL':
+  for (const channelType of channels) {
+    switch (channelType.toLowerCase()) {
+      case 'email':
+        const emailRecipients = recipients.map(r => r.email).filter(Boolean);
         channelsData.email = {
           enabled: true,
-          recipients: recipientList,
+          recipients: emailRecipients,
           subject: processed.subject,
           content: processed.htmlContent,
           status: 'PENDING'
         };
+        console.log(`📧 Email channel configured for ${emailRecipients.length} recipients`);
         break;
 
-      case 'SMS':
+      case 'sms':
+        const smsRecipients = recipients.map(r => r.phone).filter(Boolean);
         channelsData.sms = {
           enabled: true,
-          recipients: recipientList, // In real implementation, would map to phone numbers
+          recipients: smsRecipients,
           content: processed.textContent || processed.htmlContent.substring(0, 160),
           status: 'PENDING'
         };
+        console.log(`📱 SMS channel configured for ${smsRecipients.length} recipients`);
         break;
+
+      default:
+        console.warn(`⚠️ Unknown channel type: ${channelType}`);
     }
   }
 
@@ -529,14 +538,8 @@ async function processNotification(notification: NotificationQueue): Promise<voi
       htmlContent = processed.htmlContent;
       textContent = processed.textContent;
 
-      // Get SMS-specific content if available
-      const smsTemplate = await getTemplate(notification.templateId, 'SMS');
-      if (smsTemplate) {
-        const smsProcessed = await templateProcessor.processTemplate(smsTemplate, payload);
-        smsContent = smsProcessed.textContent;
-      } else {
-        smsContent = textContent;
-      }
+      // With unified templates, SMS content is already processed in the main template
+      smsContent = processed.textContent;
     }
 
     // Determine recipients
@@ -604,46 +607,9 @@ async function processNotification(notification: NotificationQueue): Promise<voi
 
 async function getTemplate(templateId: string, channel?: string): Promise<NotificationTemplate | null> {
   try {
-    // If a specific channel is requested, try to find channel-specific template
-    if (channel && channel === 'SMS') {
-      // First, try to find a direct SMS template match
-      const smsCommand = new ScanCommand({
-        TableName: NOTIFICATION_TEMPLATE_TABLE,
-        FilterExpression: 'id = :templateId AND channel = :channel',
-        ExpressionAttributeValues: {
-          ':templateId': templateId,
-          ':channel': 'SMS'
-        }
-      });
-
-      const smsResult = await docClient.send(smsCommand);
-      if (smsResult.Items && smsResult.Items.length > 0) {
-        console.log(`✅ Found direct SMS template: ${templateId}`);
-        return smsResult.Items[0] as NotificationTemplate;
-      }
-
-      // If no direct match, try to find an SMS-specific variant (replace email with sms in ID)
-      const smsVariantId = templateId.replace('-email-', '-sms-');
-      if (smsVariantId !== templateId) {
-        const smsVariantCommand = new ScanCommand({
-          TableName: NOTIFICATION_TEMPLATE_TABLE,
-          FilterExpression: 'id = :templateId',
-          ExpressionAttributeValues: {
-            ':templateId': smsVariantId
-          }
-        });
-
-        const smsVariantResult = await docClient.send(smsVariantCommand);
-        if (smsVariantResult.Items && smsVariantResult.Items.length > 0) {
-          console.log(`✅ Found SMS variant template: ${smsVariantId}`);
-          return smsVariantResult.Items[0] as NotificationTemplate;
-        }
-      }
-
-      console.log(`⚠️ No SMS-specific template found for ${templateId}, falling back to original template`);
-    }
-
-    // Fallback to original template ID
+    console.log(`🔍 Getting unified template: ${templateId}${channel ? ` for channel: ${channel}` : ''}`);
+    
+    // With the new unified schema, we get the single template that contains both email and SMS content
     const command = new ScanCommand({
       TableName: NOTIFICATION_TEMPLATE_TABLE,
       FilterExpression: 'id = :templateId',
@@ -653,7 +619,15 @@ async function getTemplate(templateId: string, channel?: string): Promise<Notifi
     });
 
     const result = await docClient.send(command);
-    return result.Items?.[0] as NotificationTemplate || null;
+    const template = result.Items?.[0] as NotificationTemplate || null;
+    
+    if (template) {
+      console.log(`✅ Found unified template: ${template.name} (Form: ${template.formType})`);
+    } else {
+      console.warn(`⚠️ Template not found: ${templateId}`);
+    }
+    
+    return template;
   } catch (error) {
     console.error(`Error fetching template ${templateId}:`, error);
     return null;
