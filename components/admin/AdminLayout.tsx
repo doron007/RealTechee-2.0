@@ -234,41 +234,31 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 
         {/* Main Content Container - Takes remaining viewport width after sidebar */}
         <div 
-          className={`
-            flex-1 flex flex-col min-h-screen
-            ${isMobile ? (isCollapsed ? 'ml-16' : 'ml-64') : ''}
-          `}
-          style={{
-            width: isMobile 
-              ? `calc(100vw - ${isCollapsed ? '64px' : '256px'})` 
-              : 'calc(100vw - var(--sidebar-width, 64px))',
-            maxWidth: isMobile 
-              ? `calc(100vw - ${isCollapsed ? '64px' : '256px'})` 
-              : 'calc(100vw - var(--sidebar-width, 64px))'
-          }}
+          className="flex-1 flex flex-col min-h-screen overflow-hidden"
         >
           {/* Top Div: Title Bar + CTA Buttons - 100% width of parent container */}
           <div className="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0 relative z-40">
             <div className="w-full px-4 sm:px-6 py-3 sm:py-4">
-              <div className="flex items-center justify-between w-full">
+              <div className="flex items-center justify-between w-full min-w-0">
                 {/* Left side - Title and user info */}
-                <div className="flex-1 min-w-0 pr-4">
-                  <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 mb-1">
+                <div className="flex-1 min-w-0 pr-2 lg:pr-4">
+                  <h1 className="text-sm sm:text-lg lg:text-xl font-semibold text-gray-900 mb-1 truncate">
                     {title}
                   </h1>
-                  <P2 className="text-gray-600 text-sm">
+                  <P2 className="text-gray-600 text-xs sm:text-sm truncate">
                     Logged in as: {userEmail} ({userRole})
                   </P2>
                 </div>
                 
                 {/* Right side - CTA Actions */}
-                <div className="flex items-center space-x-3 flex-shrink-0">
+                <div className="flex items-center space-x-2 lg:space-x-3 flex-shrink-0">
                   <button
                     onClick={() => router.push('/')}
-                    className="text-gray-600 hover:text-gray-900 text-sm px-3 py-2 rounded hover:bg-gray-100 whitespace-nowrap relative z-50"
+                    className="text-gray-600 hover:text-gray-900 text-xs sm:text-sm px-2 sm:px-3 py-2 rounded hover:bg-gray-100 whitespace-nowrap relative z-50"
                     title="View Site"
                   >
-                    View Site
+                    <span className="hidden sm:inline">View Site</span>
+                    <span className="sm:hidden">Site</span>
                   </button>
                   
                   <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
