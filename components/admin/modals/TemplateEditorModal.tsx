@@ -72,23 +72,30 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
 
   // Use real preview data from the template or fallback to sample
   const samplePayload = useMemo(() => {
+    console.log('🔍 DEBUG: template object:', template);
+    console.log('🔍 DEBUG: template.previewData exists?', !!template?.previewData);
+    console.log('🔍 DEBUG: template.previewData raw:', template?.previewData);
+    
     // Try to use previewData from the template if available
     if (template?.previewData) {
       try {
         // Clean escape characters first
         const cleanedData = cleanJsonString(template.previewData);
-        console.log('🧹 Cleaned JSON string:', cleanedData.substring(0, 100) + '...');
+        console.log('🧹 Cleaned JSON string:', cleanedData);
         
         const parsed = JSON.parse(cleanedData);
         console.log('✅ Using real previewData from database for template:', template.name);
         console.log('📋 Preview data keys:', Object.keys(parsed));
+        console.log('📋 Full parsed data:', parsed);
         return parsed;
       } catch (error) {
         console.warn('❌ Failed to parse template previewData after cleaning, using fallback:', error);
-        console.warn('Raw previewData:', template.previewData?.substring(0, 200));
+        console.warn('Raw previewData:', template.previewData);
+        console.warn('Cleaned data that failed:', cleanJsonString(template.previewData || ''));
       }
     } else {
       console.log('⚠️ No previewData found in template, using fallback sample data');
+      console.log('⚠️ Template object keys:', template ? Object.keys(template) : 'template is null/undefined');
     }
     
     // Fallback to hardcoded sample data
@@ -122,17 +129,25 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
 
   useEffect(() => {
     if (template && mode === 'edit') {
+      console.log('🔥 TEMPLATE MODAL DEBUG - Template received:', template);
+      console.log('🔥 TEMPLATE MODAL DEBUG - previewData field:', template.previewData);
+      console.log('🔥 TEMPLATE MODAL DEBUG - All template fields:', Object.keys(template));
+      
       setEditedTemplate(template);
       // Initialize editable preview data from template, clean and format it
       let previewData = JSON.stringify(samplePayload, null, 2);
       if (template.previewData) {
         try {
           const cleanedData = cleanJsonString(template.previewData);
+          console.log('🔥 CLEANED DATA:', cleanedData);
           const parsed = JSON.parse(cleanedData);
+          console.log('🔥 PARSED DATA:', parsed);
           previewData = JSON.stringify(parsed, null, 2); // Format nicely
         } catch (error) {
           console.warn('Failed to clean and parse previewData for editing, using fallback');
         }
+      } else {
+        console.log('🔥 NO PREVIEW DATA FOUND IN TEMPLATE');
       }
       setEditablePreviewData(previewData);
     } else if (mode === 'create') {
