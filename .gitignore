@@ -52,9 +52,10 @@ backups/
 /archive/
 archive/
 
-# E2E Testing - Archived Infrastructure (moved to /archive/e2e-legacy/)
-/e2e/
-e2e/
+# E2E Testing - Legacy Infrastructure (moved to /archive/e2e-legacy/)
+# Note: Current E2E tests in /tests/e2e/ are preserved
+/e2e-legacy/
+/archive/e2e/
 playwright.config.js
 playwright.*.config.js
 /playwright/
