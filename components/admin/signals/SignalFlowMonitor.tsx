@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { generateClient } from 'aws-amplify/api';
+import { signalEventsAPI, notificationQueueAPI } from '../../../utils/amplifyAPI';
 import { H3, H4, P1, P2 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import Button from '../../common/buttons/Button';
@@ -99,26 +100,11 @@ const SignalFlowMonitor: React.FC<SignalFlowMonitorProps> = ({
       setLoading(true);
       setError('');
 
-      // 1. Fetch signal details
-      const getSignalQuery = `
-        query GetSignalEvents($id: ID!) {
-          getSignalEvents(id: $id) {
-            id
-            signalType
-            payload
-            emittedAt
-            processed
-            source
-          }
-        }
-      `;
-
-      const signalResult = await client.graphql({
-        query: getSignalQuery,
-        variables: { id }
-      }) as any;
-
-      const signal = signalResult.data?.getSignalEvents;
+      // 1. Fetch all signals and find the specific one
+      const signalsResult = await signalEventsAPI.list({ limit: 100 });
+      const allSignals = signalsResult?.data || [];
+      const signal = allSignals.find((s: any) => s.id === id);
+      
       if (!signal) {
         setError('Signal not found');
         return;
@@ -147,30 +133,8 @@ const SignalFlowMonitor: React.FC<SignalFlowMonitorProps> = ({
       const matchingHooks = allHooks.filter((hook: any) => hook.signalType === signal.signalType);
 
       // 3. Fetch notifications created from this signal
-      const listNotificationsQuery = `
-        query ListNotificationQueues {
-          listNotificationQueues {
-            items {
-              id
-              eventType
-              status
-              templateId
-              signalEventId
-              createdAt
-              sentAt
-              deliveryChannel
-              recipientIds
-              payload
-            }
-          }
-        }
-      `;
-
-      const notificationsResult = await client.graphql({
-        query: listNotificationsQuery
-      }) as any;
-
-      const allNotifications = notificationsResult.data?.listNotificationQueues?.items || [];
+      const notificationsResult = await notificationQueueAPI.list({ limit: 200 });
+      const allNotifications = notificationsResult?.data || [];
       const signalNotifications = allNotifications.filter((n: any) => n.signalEventId === id);
 
       // 4. Fetch template details if notifications exist
@@ -202,12 +166,12 @@ const SignalFlowMonitor: React.FC<SignalFlowMonitorProps> = ({
       setFlowData({
         signal: {
           ...signal,
-          payload: JSON.parse(signal.payload || '{}')
+          payload: typeof signal.payload === 'string' ? JSON.parse(signal.payload || '{}') : signal.payload
         },
         hooks: matchingHooks,
         notifications: signalNotifications.map((n: any) => ({
           ...n,
-          payload: n.payload ? JSON.parse(n.payload) : null
+          payload: n.payload ? (typeof n.payload === 'string' ? JSON.parse(n.payload) : n.payload) : null
         })),
         template
       });
@@ -223,24 +187,9 @@ const SignalFlowMonitor: React.FC<SignalFlowMonitorProps> = ({
   // Fetch latest signal if showLatest is true
   const fetchLatestSignal = useCallback(async () => {
     try {
-      const listSignalsQuery = `
-        query ListSignalEvents($limit: Int) {
-          listSignalEvents(limit: $limit) {
-            items {
-              id
-              signalType
-              emittedAt
-            }
-          }
-        }
-      `;
-
-      const result = await client.graphql({
-        query: listSignalsQuery,
-        variables: { limit: 1 }
-      }) as any;
-
-      const signals = result.data?.listSignalEvents?.items || [];
+      const result = await signalEventsAPI.list({ limit: 1 });
+      const signals = result?.data || [];
+      
       if (signals.length > 0) {
         const latestSignal = signals[0];
         setSelectedSignalId(latestSignal.id);

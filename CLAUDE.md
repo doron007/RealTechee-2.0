@@ -32,6 +32,30 @@
 - Focus on real user workflows and business impact
 - Test forms, admin functions, and notification delivery
 
+### **🚨 CRITICAL: DATA-DRIVEN DEVELOPMENT ONLY**
+**NEVER make theoretical assumptions. ALWAYS verify with actual data.**
+
+#### **Evidence-Based Success Criteria:**
+- **Use Playwright tests**: `CI=true npx playwright test --reporter=line` with browser console logging
+- **Check actual UI behavior**: Take screenshots, verify data displayed in tables/grids
+- **Capture real errors**: Console logs, network errors, GraphQL responses
+- **Test with existing server**: Server runs on port 3000, use `reuseExistingServer:true`
+
+#### **When fixing issues:**
+1. **Run Playwright test FIRST** - capture actual errors and UI state
+2. **Analyze real console logs** - not code assumptions
+3. **Verify data flow** - API → UI → user experience
+4. **Test the fix** - run Playwright again to verify actual success
+5. **Base success on UI behavior** - not API responses or code logic
+
+#### **Questions to ask before claiming success:**
+- What does the user actually see in the UI?
+- What errors appear in browser console?
+- How many items are displayed vs. how many the API returns?
+- What is the actual user experience?
+
+**Remember: "Are you sure it is working based on data and not theoretical assumptions?"**
+
 ### **Deployment**
 ```bash
 # Staging deployment

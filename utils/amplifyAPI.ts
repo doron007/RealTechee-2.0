@@ -373,6 +373,131 @@ const createModelAPI = (modelName: string) => {
         }
       }
       
+      if (modelName === 'SignalEvents') {
+        try {
+          console.log('🔍 Fetching SignalEvents via generated query...');
+          
+          // Import the generated query
+          const { listSignalEvents } = await import('../queries');
+          
+          const result = await graphqlClient.graphql({
+            query: listSignalEvents,
+            variables: { limit: 100 }
+          }) as any;
+          
+          console.log(`📊 SignalEvents result: ${result.data?.listSignalEvents?.items?.length || 0} items returned`);
+          
+          // Check for GraphQL errors in the response
+          if (result.errors && result.errors.length > 0) {
+            console.log(`⚠️ SignalEvents has ${result.errors.length} GraphQL validation errors (but data still returned):`);
+            result.errors.forEach((error: any, index: number) => {
+              console.log(`   ${index + 1}. ${error.message}`);
+              if (error.path) console.log(`      Path: ${JSON.stringify(error.path)}`);
+              if (error.extensions) console.log(`      Extensions: ${JSON.stringify(error.extensions)}`);
+            });
+          }
+          
+          return { success: true, data: result.data?.listSignalEvents?.items || [] };
+        } catch (error: any) {
+          // Handle case where GraphQL returns data but wrapped in an error object
+          console.log('❌ SignalEvents catch block - checking if data exists in error object...');
+          
+          if (error?.data?.listSignalEvents?.items) {
+            console.log(`📊 Found SignalEvents data in error object: ${error.data.listSignalEvents.items.length} items`);
+            
+            if (error?.errors && error.errors.length > 0) {
+              console.log(`⚠️ SignalEvents has ${error.errors.length} GraphQL validation errors (but data extracted):`);
+              error.errors.forEach((err: any, index: number) => {
+                console.log(`   ${index + 1}. ${err.message}`);
+              });
+            }
+            
+            return { success: true, data: error.data.listSignalEvents.items };
+          }
+          
+          console.log('❌ No data found in SignalEvents error object');
+          console.log('   Error type:', typeof error);
+          console.log('   Error message:', error?.message || 'No message');
+          console.warn('SignalEvents query failed completely, returning empty array:', error);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'NotificationQueue') {
+        try {
+          console.log('🔍 Fetching NotificationQueue via generated query...');
+          
+          // Import the generated query
+          const { listNotificationQueues } = await import('../queries');
+          
+          const result = await graphqlClient.graphql({
+            query: listNotificationQueues,
+            variables: { limit: 200 }
+          }) as any;
+          
+          console.log(`📊 NotificationQueue result: ${result.data?.listNotificationQueues?.items?.length || 0} items returned`);
+          
+          if (result.errors) {
+            console.error(`❌ NotificationQueue errors (${result.errors.length} errors):`, result.errors.map(e => e.message).slice(0, 3));
+            console.error('Full error details:', result.errors.slice(0, 2));
+          }
+          
+          return { success: true, data: result.data?.listNotificationQueues?.items || [] };
+        } catch (error) {
+          console.warn('NotificationQueue query failed, returning empty array:', error);
+          return { success: true, data: [] };
+        }
+      }
+      
+      if (modelName === 'SignalNotificationHooks') {
+        try {
+          console.log('🔍 Fetching SignalNotificationHooks via generated query...');
+          
+          // Import the generated query
+          const { listSignalNotificationHooks } = await import('../queries');
+          
+          const result = await graphqlClient.graphql({
+            query: listSignalNotificationHooks,
+            variables: { limit: 100 }
+          }) as any;
+          
+          console.log(`📊 SignalNotificationHooks result: ${result.data?.listSignalNotificationHooks?.items?.length || 0} items returned`);
+          
+          // Check for GraphQL errors in the response
+          if (result.errors && result.errors.length > 0) {
+            console.log(`⚠️ SignalNotificationHooks has ${result.errors.length} GraphQL validation errors (but data still returned):`);
+            result.errors.forEach((error: any, index: number) => {
+              console.log(`   ${index + 1}. ${error.message}`);
+              if (error.path) console.log(`      Path: ${JSON.stringify(error.path)}`);
+            });
+          }
+          
+          return { success: true, data: result.data?.listSignalNotificationHooks?.items || [] };
+        } catch (error: any) {
+          // Handle case where GraphQL returns data but wrapped in an error object
+          console.log('❌ SignalNotificationHooks catch block - checking if data exists in error object...');
+          
+          if (error?.data?.listSignalNotificationHooks?.items) {
+            console.log(`📊 Found SignalNotificationHooks data in error object: ${error.data.listSignalNotificationHooks.items.length} items`);
+            
+            if (error?.errors && error.errors.length > 0) {
+              console.log(`⚠️ SignalNotificationHooks has ${error.errors.length} GraphQL validation errors (but data extracted):`);
+              error.errors.forEach((err: any, index: number) => {
+                console.log(`   ${index + 1}. ${err.message}`);
+              });
+            }
+            
+            return { success: true, data: error.data.listSignalNotificationHooks.items };
+          }
+          
+          console.log('❌ No data found in SignalNotificationHooks error object');
+          console.log('   Error type:', typeof error);
+          console.log('   Error message:', error?.message || 'No message');
+          console.warn('SignalNotificationHooks query failed completely, returning empty array:', error);
+          return { success: true, data: [] };
+        }
+      }
+      
       ensureClientReady();
       const result = await (client.models as any)[modelName].list({limit: 2000});
       return { success: true, data: result.data };

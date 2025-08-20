@@ -139,6 +139,22 @@ const StatusPill: React.FC<StatusPillProps> = ({ status, className = '' }) => {
           bg: 'bg-[#FEECEC]', // Light red
           text: 'text-[#D32F2F]'
         };
+      // Signal statuses
+      case 'processed':
+        return {
+          bg: 'bg-[#F1FAEC]', // Light green
+          text: 'text-[#438522]'
+        };
+      case 'pending':
+        return {
+          bg: 'bg-[#FFF8E1]', // Light amber
+          text: 'text-[#A67C00]'
+        };
+      case 'failed':
+        return {
+          bg: 'bg-[#FEECEC]', // Light red
+          text: 'text-[#D32F2F]'
+        };
       default:
         return {
           bg: 'bg-gray-100',

@@ -186,6 +186,21 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
     registerHandlebarsHelpers();
   }, []);
 
+  // Parse variables safely - they might come as JSON string from database
+  const parseVariables = (variables: any): string[] => {
+    if (Array.isArray(variables)) return variables;
+    if (typeof variables === 'string') {
+      try {
+        const parsed = JSON.parse(variables);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  };
+
+
   // Form state
   const [formData, setFormData] = useState({
     name: template?.name || '',
@@ -193,7 +208,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
     emailSubject: template?.emailSubject || '',
     emailContentHtml: template?.emailContentHtml || '',
     smsContent: template?.smsContent || '',
-    variables: template?.variables || [],
+    variables: parseVariables(template?.variables),
     isActive: template?.isActive ?? true,
     version: template?.version || '1.0'
   });
@@ -201,6 +216,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
   // Preview state
   const [previewMode, setPreviewMode] = useState<'email' | 'sms'>('email');
   const [previewError, setPreviewError] = useState<string>('');
+  const [editablePreviewData, setEditablePreviewData] = useState<string>('');
 
   // Form options
   const formTypeOptions = [
@@ -210,13 +226,135 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
     { value: 'affiliate', label: 'Affiliate Form' }
   ];
 
-  // Get sample data for current form type
-  const sampleData = SAMPLE_DATA[formData.formType as keyof typeof SAMPLE_DATA];
+  // Helper function to clean escaped JSON string from database and return parsed object
+  const cleanJsonString = (jsonString: string): any => {
+    console.log('🔧 cleanJsonString called with:', typeof jsonString, jsonString.substring(0, 100));
+    
+    try {
+      // First check if it's already a valid JSON object
+      if (typeof jsonString === 'object') {
+        console.log('🔧 Already an object, returning as-is');
+        return jsonString;
+      }
+      
+      // Try to parse as-is first
+      try {
+        console.log('🔧 Attempting first JSON.parse...');
+        const result = JSON.parse(jsonString);
+        console.log('🔧 First parse result type:', typeof result);
+        console.log('🔧 First parse result constructor:', result.constructor.name);
+        console.log('🔧 First parse result:', result);
+        return result;
+      } catch (error1) {
+        console.log('🔧 First parse failed:', error1.message);
+        // If that fails, it might be double-encoded, try parsing twice
+        try {
+          console.log('🔧 Attempting double parse...');
+          const firstParse = JSON.parse(jsonString);
+          console.log('🔧 Double parse - first result type:', typeof firstParse);
+          if (typeof firstParse === 'string') {
+            console.log('🔧 Double parse - attempting second parse...');
+            const secondParse = JSON.parse(firstParse);
+            console.log('🔧 Double parse - second result type:', typeof secondParse);
+            return secondParse;
+          }
+          return firstParse;
+        } catch (error2) {
+          console.log('🔧 Double parse failed:', error2.message);
+          // If still fails, clean escape characters manually
+          console.log('🔧 Attempting manual cleaning...');
+          const cleaned = jsonString
+            .replace(/\\n/g, '')           // Remove escaped newlines  
+            .replace(/\\r/g, '')           // Remove escaped carriage returns
+            .replace(/\\t/g, '')           // Remove escaped tabs
+            .replace(/\\"/g, '"')          // Replace escaped quotes with actual quotes
+            .replace(/\\'/g, "'")          // Replace escaped single quotes
+            .replace(/\\\\/g, '\\')        // Replace double escapes with single backslash
+            .replace(/\\b/g, '')           // Remove escaped backspace
+            .replace(/\\f/g, '')           // Remove escaped form feed
+            .trim();
+          console.log('🔧 Cleaned string:', cleaned.substring(0, 100));
+          const finalResult = JSON.parse(cleaned);
+          console.log('🔧 Final parse result type:', typeof finalResult);
+          return finalResult;
+        }
+      }
+    } catch (error) {
+      console.error('🔧 Failed to clean JSON string:', error);
+      throw error;
+    }
+  };
 
-  // Generate preview content
+  // Get sample data - try real previewData first, fallback to hardcoded
+  const sampleData = useMemo(() => {
+    
+    // Try to use previewData from the template if available
+    if (template?.previewData) {
+      try {
+        // Handle different previewData formats from database
+        let parsed;
+        
+        if (typeof template.previewData === 'object') {
+          // Data is already an object (direct from DynamoDB)
+          parsed = template.previewData;
+        } else if (typeof template.previewData === 'string') {
+          // Data is a JSON string - try parsing once or twice if double-encoded
+          try {
+            parsed = JSON.parse(template.previewData);
+            // If result is still a string, try parsing again (double-encoded)
+            if (typeof parsed === 'string') {
+              parsed = JSON.parse(parsed);
+            }
+          } catch (parseError) {
+            throw parseError;
+          }
+        }
+        
+        return parsed;
+      } catch (error) {
+        console.warn('❌ TemplateEditor Failed to parse template previewData, using fallback:', error);
+        console.warn('TemplateEditor Raw previewData type:', typeof template.previewData);
+        console.warn('TemplateEditor Raw previewData:', template.previewData);
+      }
+    }
+    
+    // Fallback to hardcoded sample data based on form type
+    return SAMPLE_DATA[formData.formType as keyof typeof SAMPLE_DATA];
+  }, [template?.previewData, formData.formType]);
+
+  // Initialize editable preview data when template or sampleData changes
+  useEffect(() => {
+    // If sampleData is already an object, stringify it nicely
+    // If it came from cleaned database data, it should already be parsed
+    if (typeof sampleData === 'object') {
+      setEditablePreviewData(JSON.stringify(sampleData, null, 2));
+    } else {
+      // If it's still a string, try to parse and re-stringify
+      try {
+        const parsed = typeof sampleData === 'string' ? JSON.parse(sampleData) : sampleData;
+        setEditablePreviewData(JSON.stringify(parsed, null, 2));
+      } catch (error) {
+        console.warn('Failed to parse sampleData for editing:', error);
+        setEditablePreviewData(JSON.stringify(sampleData, null, 2));
+      }
+    }
+  }, [sampleData]);
+
+  // Generate preview content - use editable data if available, otherwise sampleData
   const previewContent = useMemo(() => {
     try {
       setPreviewError('');
+      
+      // Use editable preview data if available and valid, otherwise fall back to sampleData
+      let dataForPreview = sampleData;
+      if (editablePreviewData && editablePreviewData.trim()) {
+        try {
+          dataForPreview = JSON.parse(editablePreviewData);
+        } catch (error) {
+          console.warn('Invalid JSON in editable preview data, using sampleData:', error);
+          // Keep using sampleData as fallback
+        }
+      }
       
       if (previewMode === 'email') {
         // Email preview
@@ -224,13 +362,13 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
         const contentTemplate = Handlebars.compile(formData.emailContentHtml || '');
         
         return {
-          subject: subjectTemplate(sampleData),
-          content: contentTemplate(sampleData)
+          subject: subjectTemplate(dataForPreview),
+          content: contentTemplate(dataForPreview)
         };
       } else {
         // SMS preview
         const smsTemplate = Handlebars.compile(formData.smsContent || '');
-        const content = smsTemplate(sampleData);
+        const content = smsTemplate(dataForPreview);
         
         return {
           content,
@@ -242,7 +380,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
       setPreviewError(`Template compilation error: ${error.message}`);
       return null;
     }
-  }, [formData, previewMode, sampleData]);
+  }, [formData, previewMode, sampleData, editablePreviewData]);
 
   // Extract variables from template content
   const extractVariables = (content: string): string[] => {
@@ -297,17 +435,28 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
       return;
     }
 
-    // Add metadata
+    // Add metadata - include editable preview data and ensure proper field formatting
+    // Preserve all original template fields and update only the ones we're editing
     const templateData: any = {
-      ...formData,
-      previewData: sampleData,
+      ...template, // Start with all original fields to avoid data loss
+      ...formData, // Override with edited fields
+      variables: JSON.stringify(formData.variables), // Ensure variables is a JSON string
+      previewData: editablePreviewData || JSON.stringify(sampleData),
       lastModifiedBy: 'admin', // TODO: Get from auth context
       updatedAt: new Date().toISOString()
     };
 
+    // Remove any undefined/null fields that might cause GraphQL issues
+    Object.keys(templateData).forEach(key => {
+      if (templateData[key] === undefined) {
+        delete templateData[key];
+      }
+    });
+
     if (mode === 'create') {
       templateData.createdBy = 'admin'; // TODO: Get from auth context
     }
+
 
     onSave(templateData);
   };
@@ -522,18 +671,38 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
             )}
           </div>
 
-          {/* Sample Data Display */}
+          {/* Sample Data Editor */}
           <div className="bg-white rounded-lg shadow-sm border p-6">
-            <H4 className="mb-4">Sample Data</H4>
+            <div className="flex items-center justify-between mb-4">
+              <H4>Sample Data</H4>
+              <button
+                onClick={() => {
+                  try {
+                    if (editablePreviewData && editablePreviewData.trim()) {
+                      const parsed = JSON.parse(editablePreviewData);
+                      setEditablePreviewData(JSON.stringify(parsed, null, 2));
+                    }
+                  } catch (error) {
+                    console.warn('Invalid JSON, cannot format:', error);
+                  }
+                }}
+                className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200"
+              >
+                Format JSON
+              </button>
+            </div>
             <P2 className="text-gray-600 mb-4">
-              Preview uses this sample data for {formTypeOptions.find(opt => opt.value === formData.formType)?.label}:
+              Edit this sample data to test your template with different values. Changes will be saved with the template.
             </P2>
             
-            <div className="bg-gray-50 p-4 rounded border max-h-64 overflow-y-auto">
-              <pre className="text-xs text-gray-700">
-                {JSON.stringify(sampleData, null, 2)}
-              </pre>
-            </div>
+            <SimpleTextarea
+              label=""
+              value={editablePreviewData}
+              onChange={(value: string) => setEditablePreviewData(value)}
+              placeholder="Enter JSON sample data..."
+              rows={16}
+              helperText="This data will be used to preview how your template renders with actual values"
+            />
           </div>
         </div>
       </div>

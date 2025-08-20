@@ -41,7 +41,7 @@ module.exports = defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         // Override viewport to use most common desktop resolution
-        viewport: { width: 1920, height: 1080 },
+        viewport: { width: 1920, height: 2500 },
       },
     },
   ],
@@ -50,7 +50,7 @@ module.exports = defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true, // Always reuse existing server since dev server runs on port 3000
     timeout: 120 * 1000, // 2 minutes
   },
 });

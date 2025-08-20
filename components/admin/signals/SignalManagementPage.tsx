@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { H2 } from '../../typography';
 import SignalDashboard from './SignalDashboard';
 import SignalFlowMonitor from './SignalFlowMonitor';
+import HooksConfiguration from './HooksConfiguration';
 import { 
   Box, 
   Tabs, 
@@ -95,18 +96,7 @@ const SignalManagementPage: React.FC = () => {
 
       <TabPanel value={tabValue} index={2}>
         <Box sx={{ px: 3 }}>
-          <Paper sx={{ p: 3 }}>
-            <H2>Hooks & Configuration</H2>
-            <p>Signal notification hooks and configuration management will be implemented here.</p>
-            <p>This will include:</p>
-            <ul>
-              <li>Creating and editing notification hooks</li>
-              <li>Managing signal type mappings</li>
-              <li>Configuring delivery channels</li>
-              <li>Setting up recipient lists</li>
-              <li>Template assignments</li>
-            </ul>
-          </Paper>
+          <HooksConfiguration />
         </Box>
       </TabPanel>
     </Box>

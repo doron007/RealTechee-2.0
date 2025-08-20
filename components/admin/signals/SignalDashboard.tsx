@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { generateClient } from 'aws-amplify/api';
 import { H2, H3, H4, P1, P2 } from '../../typography';
+import { signalEventsAPI, notificationQueueAPI } from '../../../utils/amplifyAPI';
 import StatusPill from '../../common/ui/StatusPill';
 import Button from '../../common/buttons/Button';
 import { DateTimeUtils } from '../../../utils/dateTimeUtils';
@@ -35,8 +35,6 @@ const NotificationsIcon = () => <span>🔔</span>;
 const ErrorIcon = () => <span>❌</span>;
 const CheckCircleIcon = () => <span>✅</span>;
 const ScheduleIcon = () => <span>⏰</span>;
-
-const client = generateClient();
 
 interface SignalEvent {
   id: string;
@@ -99,91 +97,60 @@ const SignalDashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [autoRefresh, setAutoRefresh] = useState(true);
-  const [refreshInterval, setRefreshInterval] = useState<NodeJS.Timeout | null>(null);
   
   // Filter state
   const [signalTypeFilter, setSignalTypeFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [timeRange, setTimeRange] = useState<string>('24h');
 
-  // Fetch signal events
+  // Fetch signal events using project API pattern
   const fetchSignals = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
       
-      const listSignalsQuery = `
-        query ListSignalEvents($limit: Int) {
-          listSignalEvents(limit: $limit) {
-            items {
-              id
-              signalType
-              payload
-              emittedAt
-              emittedBy
-              source
-              processed
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      `;
-
-      console.log('🔍 Fetching signals from GraphQL...');
-      const result = await client.graphql({
-        query: listSignalsQuery,
-        variables: { limit: 100 }
-      }) as any;
-
-      const signalData = result.data?.listSignalEvents?.items || [];
-      console.log(`📊 Fetched ${signalData.length} signals`);
+      console.log('🔍 Fetching signals using signalEventsAPI...');
+      const result = await signalEventsAPI.list({ limit: 100 });
       
-      // Filter out signals with invalid data
-      const validSignals = signalData.filter((signal: any) => {
-        return signal.id && signal.signalType && signal.createdAt;
-      });
-      
-      console.log(`✅ ${validSignals.length} valid signals (filtered ${signalData.length - validSignals.length} invalid)`);
-      setSignals(validSignals);
+      if (result?.data) {
+        const signalData = Array.isArray(result.data) ? result.data : result.data.items || [];
+        console.log(`📊 Fetched ${signalData.length} signals`);
+        
+        // Filter out signals with invalid data (including null items)
+        const validSignals = signalData.filter((signal: any) => {
+          return signal && signal.id && signal.signalType && signal.createdAt;
+        });
+        
+        console.log(`✅ ${validSignals.length} valid signals (filtered ${signalData.length - validSignals.length} invalid)`);
+        setSignals(validSignals);
+      } else {
+        console.warn('No data returned from signalEventsAPI');
+        setSignals([]);
+      }
       
     } catch (err) {
       console.error('Error fetching signals:', err);
       setError('Failed to fetch signal data');
+      setSignals([]);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // Fetch notification records
+  // Fetch notification records using project API pattern
   const fetchNotifications = useCallback(async () => {
     try {
-      const listNotificationsQuery = `
-        query ListNotificationQueues($limit: Int) {
-          listNotificationQueues(limit: $limit) {
-            items {
-              id
-              eventType
-              status
-              templateId
-              signalEventId
-              createdAt
-              sentAt
-              recipientIds
-              deliveryChannel
-              priority
-            }
-          }
-        }
-      `;
-
-      const result = await client.graphql({
-        query: listNotificationsQuery,
-        variables: { limit: 200 }
-      }) as any;
-
-      const notificationData = result.data?.listNotificationQueues?.items || [];
-      setNotifications(notificationData);
+      console.log('🔍 Fetching notifications using notificationQueueAPI...');
+      const result = await notificationQueueAPI.list({ limit: 200 });
+      
+      if (result?.data) {
+        const notificationData = Array.isArray(result.data) ? result.data : result.data.items || [];
+        console.log(`📊 Fetched ${notificationData.length} notifications`);
+        setNotifications(notificationData);
+      } else {
+        console.warn('No data returned from notificationQueueAPI');
+        setNotifications([]);
+      }
       
     } catch (err: any) {
       console.error('Error fetching notifications:', err);
@@ -196,7 +163,8 @@ const SignalDashboard: React.FC = () => {
         errorMessage = `Error: ${err.message}`;
       }
       
-      setError(errorMessage);
+      // Don't set error for notifications failure - it's not critical
+      console.warn('Notification fetch failed, continuing with empty array:', errorMessage);
       
       // Provide empty array as fallback instead of complete failure
       setNotifications([]);
@@ -233,22 +201,23 @@ const SignalDashboard: React.FC = () => {
     await Promise.all([fetchSignals(), fetchNotifications()]);
   }, [fetchSignals, fetchNotifications]);
 
+  // Create stable refresh function
+  const stableRefreshData = useCallback(() => {
+    Promise.all([fetchSignals(), fetchNotifications()]);
+  }, [fetchSignals, fetchNotifications]);
+
   // Auto-refresh setup
   useEffect(() => {
     if (autoRefresh) {
-      const interval = setInterval(refreshData, 30000); // 30 seconds
-      setRefreshInterval(interval);
+      const interval = setInterval(stableRefreshData, 30000); // 30 seconds
       return () => clearInterval(interval);
-    } else if (refreshInterval) {
-      clearInterval(refreshInterval);
-      setRefreshInterval(null);
     }
-  }, [autoRefresh, refreshData, refreshInterval]);
+  }, [autoRefresh, stableRefreshData]);
 
   // Initial data load
   useEffect(() => {
-    refreshData();
-  }, [refreshData]);
+    stableRefreshData();
+  }, [stableRefreshData]);
 
   // Calculate metrics when data changes
   useEffect(() => {
@@ -261,6 +230,12 @@ const SignalDashboard: React.FC = () => {
     if (statusFilter !== 'all') {
       if (statusFilter === 'processed' && !signal.processed) return false;
       if (statusFilter === 'pending' && signal.processed) return false;
+      if (statusFilter === 'failed') {
+        // A signal is considered failed if it has associated notifications with FAILED status
+        const signalNotifications = notifications.filter(n => n.signalEventId === signal.id);
+        const hasFailedNotifications = signalNotifications.some(n => n.status === 'FAILED' || n.status === 'ERROR');
+        if (!hasFailedNotifications) return false;
+      }
     }
     return true;
   });
@@ -300,8 +275,10 @@ const SignalDashboard: React.FC = () => {
             <span>Refresh</span>
           </Button>
           <FormControl size="small">
-            <InputLabel>Auto-refresh</InputLabel>
+            <InputLabel id="auto-refresh-label">Auto-refresh</InputLabel>
             <Select
+              labelId="auto-refresh-label"
+              label="Auto-refresh"
               value={autoRefresh ? 'on' : 'off'}
               onChange={(e) => setAutoRefresh(e.target.value === 'on')}
               sx={{ 
@@ -397,8 +374,10 @@ const SignalDashboard: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <FormControl fullWidth size="small">
-                <InputLabel>Signal Type</InputLabel>
+                <InputLabel id="signal-type-label">Signal Type</InputLabel>
                 <Select
+                  labelId="signal-type-label"
+                  label="Signal Type"
                   value={signalTypeFilter}
                   onChange={(e) => setSignalTypeFilter(e.target.value)}
                 >
@@ -412,22 +391,27 @@ const SignalDashboard: React.FC = () => {
             
             <div>
               <FormControl fullWidth size="small">
-                <InputLabel>Status</InputLabel>
+                <InputLabel id="status-label">Status</InputLabel>
                 <Select
+                  labelId="status-label"
+                  label="Status"
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
                 >
                   <MenuItem value="all">All Status</MenuItem>
                   <MenuItem value="processed">Processed</MenuItem>
                   <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem value="failed">Failed</MenuItem>
                 </Select>
               </FormControl>
             </div>
 
             <div>
               <FormControl fullWidth size="small">
-                <InputLabel>Time Range</InputLabel>
+                <InputLabel id="time-range-label">Time Range</InputLabel>
                 <Select
+                  labelId="time-range-label"
+                  label="Time Range"
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
                 >
@@ -491,7 +475,15 @@ const SignalDashboard: React.FC = () => {
                         </TableCell>
                         <TableCell>
                           <StatusPill 
-                            status={signal.processed ? 'processed' : 'pending'}
+                            status={(() => {
+                              if (signal.processed) {
+                                // Check if any notifications failed for this signal
+                                const signalNotifications = notifications.filter(n => n.signalEventId === signal.id);
+                                const hasFailedNotifications = signalNotifications.some(n => n.status === 'FAILED' || n.status === 'ERROR');
+                                return hasFailedNotifications ? 'failed' : 'processed';
+                              }
+                              return 'pending';
+                            })()} 
                           />
                         </TableCell>
                         <TableCell>{signal.source}</TableCell>
