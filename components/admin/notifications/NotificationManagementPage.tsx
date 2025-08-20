@@ -639,7 +639,7 @@ const NotificationManagementPage: React.FC = () => {
                               className="mt-1"
                             />
                             <div>
-                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" title={notification.eventType}>
+                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" >
                                 {notification.eventType.length > 25 ? `${notification.eventType.slice(0, 22)}...` : notification.eventType}
                               </P2>
                               <P2 className="text-gray-600 text-sm">ID: {notification.id.slice(0, 12)}...</P2>
@@ -691,7 +691,7 @@ const NotificationManagementPage: React.FC = () => {
                               }}
                             />
                             <div>
-                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" title={notification.eventType}>
+                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" >
                                 {notification.eventType.length > 25 ? `${notification.eventType.slice(0, 22)}...` : notification.eventType}
                               </P2>
                               <P2 className="text-gray-600">ID: {notification.id.slice(0, 12)}...</P2>
@@ -848,7 +848,7 @@ const NotificationManagementPage: React.FC = () => {
                               className="mt-1"
                             />
                             <div>
-                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" title={notification.eventType}>
+                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" >
                                 {notification.eventType.length > 25 ? `${notification.eventType.slice(0, 22)}...` : notification.eventType}
                               </P2>
                               <P2 className="text-gray-600 text-sm">ID: {notification.id.slice(0, 12)}...</P2>
@@ -922,7 +922,7 @@ const NotificationManagementPage: React.FC = () => {
                               }}
                             />
                             <div>
-                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" title={notification.eventType}>
+                              <P2 className="text-gray-900 font-bold truncate max-w-[200px]" >
                                 {notification.eventType.length > 25 ? `${notification.eventType.slice(0, 22)}...` : notification.eventType}
                               </P2>
                               <P2 className="text-gray-600">ID: {notification.id.slice(0, 12)}...</P2>

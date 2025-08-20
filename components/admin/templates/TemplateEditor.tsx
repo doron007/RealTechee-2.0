@@ -246,7 +246,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
         console.log('🔧 First parse result:', result);
         return result;
       } catch (error1) {
-        console.log('🔧 First parse failed:', error1.message);
+        console.log('🔧 First parse failed:', error1 instanceof Error ? error1.message : String(error1));
         // If that fails, it might be double-encoded, try parsing twice
         try {
           console.log('🔧 Attempting double parse...');
@@ -260,7 +260,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
           }
           return firstParse;
         } catch (error2) {
-          console.log('🔧 Double parse failed:', error2.message);
+          console.log('🔧 Double parse failed:', error2 instanceof Error ? error2.message : String(error2));
           // If still fails, clean escape characters manually
           console.log('🔧 Attempting manual cleaning...');
           const cleaned = jsonString

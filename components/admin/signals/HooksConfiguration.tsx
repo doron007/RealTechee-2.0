@@ -594,10 +594,10 @@ const HooksConfiguration: React.FC = () => {
                   <TableRow key={hook.id} hover>
                     <TableCell>
                       <Box>
-                        <P2 sx={{ fontWeight: 600 }}>
+                        <P2 className="font-semibold">
                           {SIGNAL_TYPES[hook.signalType]?.displayName || hook.signalType}
                         </P2>
-                        <P2 sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                        <P2 className="text-gray-500 text-sm">
                           {hook.signalType}
                         </P2>
                       </Box>
@@ -612,7 +612,7 @@ const HooksConfiguration: React.FC = () => {
                           color={hook.channel === 'email' ? 'primary' : 'secondary'}
                         />
                       ) : (
-                        <P2 sx={{ color: 'text.secondary', fontStyle: 'italic' }}>Not set</P2>
+                        <P2 className="text-gray-500 italic">Not set</P2>
                       )}
                     </TableCell>
                     <TableCell>
@@ -642,12 +642,12 @@ const HooksConfiguration: React.FC = () => {
                             )}
                           </Box>
                         ) : (
-                          <P2 sx={{ color: 'text.secondary', fontStyle: 'italic' }}>No recipients</P2>
+                          <P2 className="text-gray-500 italic">No recipients</P2>
                         )}
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <P2 sx={{ color: 'text.secondary', fontStyle: 'italic' }}>-</P2>
+                      <P2 className="text-gray-500 italic">-</P2>
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -671,7 +671,7 @@ const HooksConfiguration: React.FC = () => {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <P2 sx={{ color: 'text.secondary' }}>
+                      <P2 className="text-gray-500">
                         {new Date(hook.updatedAt).toLocaleDateString()}
                       </P2>
                     </TableCell>
@@ -715,7 +715,7 @@ const HooksConfiguration: React.FC = () => {
 
       <Grid container spacing={3}>
         {Object.values(SIGNAL_TYPES).map((mapping) => (
-          <Grid item xs={12} key={mapping.signalType}>
+          <Grid size={12} key={mapping.signalType}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', justify: 'space-between', alignItems: 'center' }}>
@@ -778,7 +778,7 @@ const HooksConfiguration: React.FC = () => {
 
       <Grid container spacing={3}>
         {recipientGroups.map((group) => (
-          <Grid item xs={12} md={6} key={group.id}>
+          <Grid size={{ xs: 12, md: 6 }} key={group.id}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
@@ -907,8 +907,8 @@ const HooksConfiguration: React.FC = () => {
                     {Object.values(SIGNAL_TYPES).map(type => (
                       <MenuItem key={type.signalType} value={type.signalType}>
                         <Box>
-                          <P2 sx={{ fontWeight: 600 }}>{type.displayName}</P2>
-                          <P2 sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
+                          <P2 className="font-semibold">{type.displayName}</P2>
+                          <P2 className="text-xs text-gray-500">
                             {type.description}
                           </P2>
                         </Box>
@@ -954,16 +954,10 @@ const HooksConfiguration: React.FC = () => {
                   border: '1px solid',
                   borderColor: 'grey.200'
                 }}>
-                  <H4 sx={{ 
-                    mb: 0, 
-                    color: 'primary.main',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1
-                  }}>
+                  <H4 className="mb-0 text-blue-600 flex items-center gap-1">
                     📧 Recipients Configuration
                   </H4>
-                  <P2 sx={{ color: 'text.secondary', mt: 0.5 }}>
+                  <P2 className="text-gray-500 mt-1">
                     Configure who receives notifications for this signal type
                   </P2>
                 </Box>
@@ -986,7 +980,7 @@ const HooksConfiguration: React.FC = () => {
                       borderRadius: '50%', 
                       backgroundColor: 'error.main' 
                     }} />
-                    <P2 sx={{ fontWeight: 600, color: 'primary.main', fontSize: '0.95rem' }}>
+                    <P2 className="font-semibold text-blue-600 text-sm">
                       TO Recipients (Required)
                     </P2>
                   </Box>
@@ -1056,7 +1050,7 @@ const HooksConfiguration: React.FC = () => {
                         return (
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {safeSelected.length === 0 ? (
-                              <P2 sx={{ color: 'text.secondary' }}>Select roles...</P2>
+                              <P2 className="text-gray-500">Select roles...</P2>
                             ) : (
                               safeSelected.map((value) => {
                                 const role = USER_ROLES.find(r => r.value === value);
@@ -1105,8 +1099,8 @@ const HooksConfiguration: React.FC = () => {
                             sx={{ mr: 2, m: 0 }}
                           />
                           <Box sx={{ flexGrow: 1 }}>
-                            <P2 sx={{ fontWeight: 600, mb: 0.5 }}>{role.label}</P2>
-                            <P2 sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
+                            <P2 className="font-semibold mb-1">{role.label}</P2>
+                            <P2 className="text-xs text-gray-500">
                               {role.description}
                             </P2>
                           </Box>
@@ -1134,7 +1128,7 @@ const HooksConfiguration: React.FC = () => {
                       borderRadius: '50%', 
                       backgroundColor: 'grey.400' 
                     }} />
-                    <P2 sx={{ fontWeight: 600, color: 'text.secondary', fontSize: '0.95rem' }}>
+                    <P2 className="font-semibold text-gray-500 text-sm">
                       CC Recipients (Optional)
                     </P2>
                   </Box>
@@ -1196,7 +1190,7 @@ const HooksConfiguration: React.FC = () => {
                         return (
                           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {safeSelected.length === 0 ? (
-                              <P2 sx={{ color: 'text.secondary' }}>Select roles...</P2>
+                              <P2 className="text-gray-500">Select roles...</P2>
                             ) : (
                               safeSelected.map((value) => {
                                 const role = USER_ROLES.find(r => r.value === value);
@@ -1246,8 +1240,8 @@ const HooksConfiguration: React.FC = () => {
                             sx={{ mr: 2, m: 0 }}
                           />
                           <Box sx={{ flexGrow: 1 }}>
-                            <P2 sx={{ fontWeight: 600, mb: 0.5 }}>{role.label}</P2>
-                            <P2 sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
+                            <P2 className="font-semibold mb-1">{role.label}</P2>
+                            <P2 className="text-xs text-gray-500">
                               {role.description}
                             </P2>
                           </Box>
@@ -1271,7 +1265,7 @@ const HooksConfiguration: React.FC = () => {
                 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <H4 sx={{ color: 'success.main', mb: 0 }}>⚙️ Hook Settings</H4>
+                      <H4 className="text-green-600 mb-0">⚙️ Hook Settings</H4>
                     </Box>
                     <Box sx={{ 
                       display: 'flex', 
@@ -1283,7 +1277,7 @@ const HooksConfiguration: React.FC = () => {
                       border: '1px solid',
                       borderColor: 'success.300'
                     }}>
-                      <P2 sx={{ fontWeight: 600, color: 'text.secondary' }}>Status:</P2>
+                      <P2 className="font-semibold text-gray-500">Status:</P2>
                       <FormControlLabel
                         control={
                           <Switch
@@ -1316,7 +1310,7 @@ const HooksConfiguration: React.FC = () => {
                   }}
                 >
                   <Box>
-                    <P2 sx={{ fontWeight: 600, mb: 1.5, color: 'info.main' }}>
+                    <P2 className="font-semibold mb-3 text-blue-600">
                       📋 Recipients Guide
                     </P2>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

@@ -438,7 +438,7 @@ const createModelAPI = (modelName: string) => {
           console.log(`📊 NotificationQueue result: ${result.data?.listNotificationQueues?.items?.length || 0} items returned`);
           
           if (result.errors) {
-            console.error(`❌ NotificationQueue errors (${result.errors.length} errors):`, result.errors.map(e => e.message).slice(0, 3));
+            console.error(`❌ NotificationQueue errors (${result.errors.length} errors):`, result.errors.map((e: any) => e.message).slice(0, 3));
             console.error('Full error details:', result.errors.slice(0, 2));
           }
           
