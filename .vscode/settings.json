@@ -20,5 +20,8 @@
   "python.terminal.activateEnvironment": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+  "playwright.configPath": "playwright.config.js",
+  "playwright.reuseBrowser": false,
+  "playwright.showTrace": false
 }

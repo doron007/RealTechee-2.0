@@ -1,11 +1,8 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
 
-// Production testing configuration
-const isProductionTest = process.env.PLAYWRIGHT_PROD === 'true';
-const baseURL = isProductionTest ? 'https://www.realtechee.com' : 'http://localhost:3000';
-
 /**
+ * Production testing configuration for VSCode Playwright extension
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
@@ -29,7 +26,7 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: baseURL,
+    baseURL: 'https://www.realtechee.com',
     
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -50,11 +47,5 @@ module.exports = defineConfig({
     },
   ],
 
-  /* Run your local dev server before starting the tests (only for local testing) */
-  webServer: isProductionTest ? undefined : {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: true, // Always reuse existing server since dev server runs on port 3000
-    timeout: 120 * 1000, // 2 minutes
-  },
+  /* No web server needed for production testing */
 });

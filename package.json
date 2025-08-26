@@ -50,6 +50,8 @@
     "migrate:data:complex": "./scripts/migrate-data.sh analyze",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
+    "test:e2e:prod": "PLAYWRIGHT_PROD=true playwright test",
+    "test:e2e:prod:headed": "PLAYWRIGHT_PROD=true playwright test --headed",
     "test:validate-env": "node scripts/validate-test-environment.js",
     "test:e2e:forms": "playwright test form-validation",
     "test:e2e:forms:headed": "playwright test --headed form-validation",
