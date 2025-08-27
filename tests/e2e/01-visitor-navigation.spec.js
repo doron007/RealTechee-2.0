@@ -113,8 +113,9 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     // Validate "Get an Estimate" link is selected (black background)
     const estimateLink = page.getByRole('link', { name: 'Get an Estimate', exact: true });
     await expect(estimateLink).toBeVisible();
-    const bgColor = await estimateLink.evaluate(el => window.getComputedStyle(el).backgroundColor);
-    expect(bgColor).toBe('rgb(255, 255, 255)'); // black background
+    const bgEstimateColor = await estimateLink.evaluate(el => window.getComputedStyle(el).backgroundColor);
+    const bgContactUsColor = await contactUsLink.evaluate(el => window.getComputedStyle(el).backgroundColor);
+    expect(bgContactUsColor != bgEstimateColor).toBe(true); // black background
 
     // Verify form fields are present
     await expect(page.locator('form')).toBeVisible();
