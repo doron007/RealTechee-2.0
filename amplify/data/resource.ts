@@ -184,6 +184,10 @@ const Contacts = a.model({
   homeowner3Projects: a.hasMany('Projects', 'homeowner3ContactId'),
   agentQuotes: a.hasMany('Quotes', 'agentContactId'),
   homeownerQuotes: a.hasMany('Quotes', 'homeownerContactId'),
+  
+  // Reverse relationships for Requests - matching Projects pattern
+  agentRequests: a.hasMany('Requests', 'agentContactId'),
+  homeownerRequests: a.hasMany('Requests', 'homeownerContactId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -512,6 +516,7 @@ const Properties = a.model({
   
   // Reverse relationships - see all projects for this property
   projects: a.hasMany('Projects', 'addressId'),
+  requests: a.hasMany('Requests', 'addressId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -653,6 +658,11 @@ const Requests = a.model({
   agentContactId: a.id(),
   homeownerContactId: a.id(),
   addressId: a.id(),
+  
+  // Relationships - Match Projects pattern exactly!
+  agent: a.belongsTo('Contacts', 'agentContactId'),
+  homeowner: a.belongsTo('Contacts', 'homeownerContactId'),
+  address: a.belongsTo('Properties', 'addressId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()

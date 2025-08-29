@@ -27,7 +27,7 @@ const pattern = /[A-Za-z0-9]+-([a-z0-9]{8,})-NONE/g;
 const foundSuffixes = new Set();
 let m; while((m = pattern.exec(combinedText))){ foundSuffixes.add(m[1]); }
 
-const legacyCandidates = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'aqnqdrctpzfwfjwyxxsmu6peoq' ];
+const legacyCandidates = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'yk6ecaswg5aehjn3ev76xzpbfe' ];
 const extraneous = [...foundSuffixes].filter(s => !allowed.has(s));
 const unexpectedLegacy = legacyCandidates.filter(s => foundSuffixes.has(s) && !allowed.has(s));
 

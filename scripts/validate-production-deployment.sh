@@ -29,7 +29,7 @@ CRITICAL_ENV_VARS=(
 declare -A EXPECTED_VALUES
 EXPECTED_VALUES["NEXT_PUBLIC_S3_PUBLIC_BASE_URL"]="https://amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii.s3.us-west-1.amazonaws.com"
 EXPECTED_VALUES["NEXT_PUBLIC_ENVIRONMENT"]="production"
-EXPECTED_VALUES["NEXT_PUBLIC_BACKEND_SUFFIX"]="aqnqdrctpzfwfjwyxxsmu6peoq"
+EXPECTED_VALUES["NEXT_PUBLIC_BACKEND_SUFFIX"]="yk6ecaswg5aehjn3ev76xzpbfe"
 
 # Function to validate environment variable
 validate_env_var() {

@@ -38,7 +38,7 @@ if (expected) {
 } else { console.log('ℹ️  No EXPECTED_* suffix specified; drift detection skipped'); }
 
 section('Hardcoded Suffix Scan');
-const LEGACY_IDS = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'aqnqdrctpzfwfjwyxxsmu6peoq' ];
+const LEGACY_IDS = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'yk6ecaswg5aehjn3ev76xzpbfe' ];
 const ROOT = process.cwd();
 const RUNTIME_DIRS = ['components', 'utils', 'amplify/functions'];
 const EXCLUDE_FILES = new Set(['environmentConfig.ts']);

@@ -774,13 +774,13 @@ export const contactsAPI = getAPI('Contacts');
 export const propertiesAPI = getAPI('Properties'); 
 export const requestsAPI = getAPI('Requests');
 export const backOfficeRequestStatusesAPI = getAPI('BackOfficeRequestStatuses');
-export const backOfficeProductsAPI = getAPI('BackOfficeProducts');
 
 // Admin-only APIs - lazy loaded to reduce main bundle  
 export const projectsAPI = getAPI('Projects');
 export const quotesAPI = getAPI('Quotes');
 export const projectCommentsAPI = getAPI('ProjectComments');
 export const notificationQueueAPI = getAPI('NotificationQueue');
+export const backOfficeProductsAPI = getAPI('BackOfficeProducts');
 
 // Less frequently used APIs - function exports for lazy loading
 export const getAffiliatesAPIInstance = getAffiliatesAPI;

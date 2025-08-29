@@ -11,7 +11,7 @@ const { join } = require('path');
 
 const ROOT = process.cwd();
 const CURRENT = process.env.NEXT_PUBLIC_BACKEND_SUFFIX || process.env.TABLE_SUFFIX || '';
-const LEGACY = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'aqnqdrctpzfwfjwyxxsmu6peoq' ];
+const LEGACY = [ 'fvn7t5hbobaxjklhrqzdl4ac34', 'yk6ecaswg5aehjn3ev76xzpbfe' ];
 const SCAN_DIRS = [ 'components', 'pages', 'app', 'lib', 'utils', 'services', 'hooks', 'contexts' ];
 const IGNORE_FILES = /\.(png|jpg|jpeg|gif|svg|ico|map|lock)$/i;
 

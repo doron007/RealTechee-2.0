@@ -47,7 +47,7 @@ const checks = [
         category: '🔗 Backend Configuration',
         vars: [
             { key: 'NEXT_PUBLIC_BACKEND_ENVIRONMENT', expected: 'production', critical: true },
-            { key: 'NEXT_PUBLIC_BACKEND_SUFFIX', pattern: /^aqnqdrctpzfwfjwyxxsmu6peoq$/, critical: true }
+            { key: 'NEXT_PUBLIC_BACKEND_SUFFIX', pattern: /^yk6ecaswg5aehjn3ev76xzpbfe$/, critical: true }
         ]
     },
     {

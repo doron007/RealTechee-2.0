@@ -80,7 +80,7 @@ log_section "📋 4. Lambda Functions Audit"
 echo "Auditing Lambda functions..."
 
 # Production Lambda functions (look for production suffix)
-aws lambda list-functions --region us-west-1 --query "Functions[?contains(FunctionName, 'aqnqdrctpzfwfjwyxxsmu6peoq')]" > "$AUDIT_DIR/prod-lambda-functions.json" 2>/dev/null || log_error "Failed to get production Lambda functions"
+aws lambda list-functions --region us-west-1 --query "Functions[?contains(FunctionName, 'yk6ecaswg5aehjn3ev76xzpbfe')]" > "$AUDIT_DIR/prod-lambda-functions.json" 2>/dev/null || log_error "Failed to get production Lambda functions"
 
 # Staging Lambda functions (look for staging suffix)
 aws lambda list-functions --region us-west-1 --query "Functions[?contains(FunctionName, 'fvn7t5hbobaxjklhrqzdl4ac34')]" > "$AUDIT_DIR/staging-lambda-functions.json" 2>/dev/null || log_error "Failed to get staging Lambda functions"
@@ -89,7 +89,7 @@ log_section "📋 5. DynamoDB Tables Audit"
 
 # Production tables
 echo "Auditing DynamoDB tables..."
-aws dynamodb list-tables --region us-west-1 --query "TableNames[?contains(@, 'aqnqdrctpzfwfjwyxxsmu6peoq')]" > "$AUDIT_DIR/prod-dynamodb-tables.json" 2>/dev/null || log_error "Failed to get production DynamoDB tables"
+aws dynamodb list-tables --region us-west-1 --query "TableNames[?contains(@, 'yk6ecaswg5aehjn3ev76xzpbfe')]" > "$AUDIT_DIR/prod-dynamodb-tables.json" 2>/dev/null || log_error "Failed to get production DynamoDB tables"
 
 # Staging tables
 aws dynamodb list-tables --region us-west-1 --query "TableNames[?contains(@, 'fvn7t5hbobaxjklhrqzdl4ac34')]" > "$AUDIT_DIR/staging-dynamodb-tables.json" 2>/dev/null || log_error "Failed to get staging DynamoDB tables"

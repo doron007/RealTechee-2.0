@@ -52,7 +52,7 @@ detect_current_env() {
     # Check for environment indicators using backend suffixes from centralized config
     if grep -q "fvn7t5hbobaxjklhrqzdl4ac34" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
         echo "development"
-    elif grep -q "aqnqdrctpzfwfjwyxxsmu6peoq" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
+    elif grep -q "yk6ecaswg5aehjn3ev76xzpbfe" "$PROJECT_ROOT/amplify_outputs.json" 2>/dev/null; then
         echo "production"
     else
         echo "unknown"

@@ -26,7 +26,7 @@ if ! grep -q "^$CURRENT_SUFFIX," /tmp/active-suffixes.$$; then
   exit 1
 fi
 
-LEGACY_LIST=(fvn7t5hbobaxjklhrqzdl4ac34 aqnqdrctpzfwfjwyxxsmu6peoq)
+LEGACY_LIST=(fvn7t5hbobaxjklhrqzdl4ac34 yk6ecaswg5aehjn3ev76xzpbfe)
 for legacy in "${LEGACY_LIST[@]}"; do
   if grep -q "^$legacy," /tmp/active-suffixes.$$ && [[ "$legacy" != "$CURRENT_SUFFIX" ]]; then
     echo "[WARN] Legacy suffix still present: $legacy (consider cleanup)" >&2
