@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { quotesAPI, quoteItemsAPI, projectPaymentTermsAPI, requestsAPI, projectsAPI } from '../../../utils/amplifyAPI';
+import { enhancedQuotesService } from '../../../services/enhancedQuotesService';
 
 interface Quote {
   id: string;
@@ -144,7 +145,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     setState(prev => ({ ...prev, loading: true, error: '' }));
     
     try {
-      const result = await quotesAPI.get(quoteId);
+      const result = await enhancedQuotesService.getQuoteByIdWithRelations(quoteId);
       
       if (result.success && result.data) {
         setState(prev => ({
@@ -186,6 +187,12 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       }
     } catch (err) {
       console.error('Error loading quote items:', err);
+      // Don't break the component if QuoteItems model is not available
+      // Just set empty array and continue
+      setState(prev => ({
+        ...prev,
+        quoteItems: []
+      }));
     }
   }, [quoteId]);
 
@@ -206,6 +213,11 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       }
     } catch (err) {
       console.error('Error loading payment terms:', err);
+      // Don't break the component if model is not available
+      setState(prev => ({
+        ...prev,
+        paymentTerms: []
+      }));
     }
   }, [quoteId]);
 
@@ -226,32 +238,42 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     try {
       // Load related request if requestId exists on the quote
       if (state.quote?.requestId) {
-        const requestResult = await requestsAPI.get(state.quote.requestId);
-        if (requestResult.success && requestResult.data) {
-          setState(prev => ({
-            ...prev,
-            relatedRequest: {
-              id: requestResult.data.id,
-              title: `Request ${requestResult.data.id.slice(0, 8)}`,
-              status: requestResult.data.status,
-              message: requestResult.data.message,
-            }
-          }));
+        try {
+          const requestResult = await requestsAPI.get(state.quote.requestId);
+          if (requestResult.success && requestResult.data) {
+            setState(prev => ({
+              ...prev,
+              relatedRequest: {
+                id: requestResult.data.id,
+                title: `Request ${requestResult.data.id.slice(0, 8)}`,
+                status: requestResult.data.status,
+                message: requestResult.data.message,
+              }
+            }));
+          }
+        } catch (requestError) {
+          console.error('Error loading related request:', requestError);
+          // Don't break the component if Requests model is not available
         }
       }
 
       // Load related project if projectId exists on the quote
       if (state.quote?.projectId) {
-        const projectResult = await projectsAPI.get(state.quote.projectId);
-        if (projectResult.success && projectResult.data) {
-          setState(prev => ({
-            ...prev,
-            relatedProject: {
-              id: projectResult.data.id,
-              title: projectResult.data.title || `Project ${projectResult.data.id.slice(0, 8)}`,
-              status: projectResult.data.status,
-            }
-          }));
+        try {
+          const projectResult = await projectsAPI.get(state.quote.projectId);
+          if (projectResult.success && projectResult.data) {
+            setState(prev => ({
+              ...prev,
+              relatedProject: {
+                id: projectResult.data.id,
+                title: projectResult.data.title || `Project ${projectResult.data.id.slice(0, 8)}`,
+                status: projectResult.data.status,
+              }
+            }));
+          }
+        } catch (projectError) {
+          console.error('Error loading related project:', projectError);
+          // Don't break the component if Projects model is not available
         }
       }
     } catch (error) {

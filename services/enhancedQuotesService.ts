@@ -1,7 +1,69 @@
 import { quotesAPI, contactsAPI, propertiesAPI } from '../utils/amplifyAPI';
 import { createLogger } from '../utils/logger';
+import { generateClient } from 'aws-amplify/api';
 
 const logger = createLogger('EnhancedQuotesService');
+const graphqlClient = generateClient();
+
+// Single quote with nested relations
+const GET_QUOTE_WITH_RELATIONS = /* GraphQL */ `
+  query GetQuoteWithRelations($id: ID!) {
+    getQuotes(id: $id) {
+      id
+      title
+      status
+      quoteNumber
+      totalPrice
+      totalCost
+      budget
+      projectedListingPrice
+      product
+      assignedTo
+      operationManagerApproved
+      underwritingApproved
+      signed
+      creditScore
+      estimatedWeeksDuration
+      requestDate
+      sentDate
+      openedDate
+      signedDate
+      expiredDate
+      officeNotes
+      requestId
+      projectId
+      agentContactId
+      homeownerContactId
+      addressId
+      bedrooms
+      yearBuilt
+      bathrooms
+      sizeSqft
+      createdAt
+      updatedAt
+      
+      agent {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+        brokerage
+      }
+      homeowner {
+        id
+        fullName
+        firstName
+        lastName
+        email
+        phone
+        mobile
+      }
+    }
+  }
+`;
 
 // Enhanced quote interface with all related data
 export interface FullyEnhancedQuote {
@@ -273,6 +335,97 @@ export class EnhancedQuotesService {
 
   private isCacheExpired(): boolean {
     return Date.now() - this.cacheTimestamp > this.CACHE_TTL;
+  }
+
+  /**
+   * Fetch a single quote with nested relations by ID
+   */
+  async getQuoteByIdWithRelations(id: string): Promise<{ success: boolean; data?: FullyEnhancedQuote; error?: any }> {
+    try {
+      logger.info('Fetching single quote with relations', { id });
+      const result = await graphqlClient.graphql({
+        query: GET_QUOTE_WITH_RELATIONS,
+        variables: { id }
+      }) as any;
+
+      if (result.errors) {
+        logger.warn('GraphQL returned errors for GetQuoteWithRelations', result.errors);
+      }
+
+      const quote = result.data?.getQuotes;
+      if (!quote) {
+        return { success: false, error: 'Quote not found' };
+      }
+
+      const enhanced = this.fullyEnhanceQuoteFromRelations(quote);
+      return { success: true, data: enhanced };
+    } catch (error) {
+      logger.error('Error fetching quote by id with relations:', error);
+      return { success: false, error };
+    }
+  }
+
+  /**
+   * Enhance a quote with all related data using nested relations
+   */
+  private fullyEnhanceQuoteFromRelations(quote: any): FullyEnhancedQuote {
+    // For quotes, we don't have nested address relationship, so use the quote's title as address
+    let propertyAddress = quote.title || 'No address provided';
+
+    // Contacts - matching requests pattern
+    const agent = quote.agent || null;
+    const homeowner = quote.homeowner || null;
+
+    return {
+      // Core quote data
+      id: quote.id,
+      title: quote.title,
+      status: quote.status,
+      quoteNumber: quote.quoteNumber,
+      totalPrice: quote.totalPrice,
+      totalCost: quote.totalCost,
+      budget: quote.budget,
+      projectedListingPrice: quote.projectedListingPrice,
+      product: quote.product,
+      assignedTo: quote.assignedTo,
+      operationManagerApproved: quote.operationManagerApproved,
+      underwritingApproved: quote.underwritingApproved,
+      signed: quote.signed,
+      creditScore: quote.creditScore,
+      estimatedWeeksDuration: quote.estimatedWeeksDuration,
+      
+      // Resolved address
+      propertyAddress,
+      
+      // Property data (use quote's own property fields since no nested address)
+      bedrooms: quote.bedrooms,
+      bathrooms: quote.bathrooms,
+      sizeSqft: quote.sizeSqft,
+      yearBuilt: quote.yearBuilt,
+      
+      // Contact data (resolved from nested relations)
+      clientName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName) || 'N/A',
+      clientEmail: homeowner?.email,
+      agentName: agent?.fullName || (agent?.firstName && agent?.lastName ? `${agent.firstName} ${agent.lastName}` : agent?.firstName || agent?.lastName) || 'N/A',
+      agentEmail: agent?.email,
+      brokerage: agent?.brokerage || quote.brokerage || 'N/A',
+      
+      // Dates
+      requestDate: quote.requestDate,
+      sentDate: quote.sentDate,
+      openedDate: quote.openedDate,
+      signedDate: quote.signedDate,
+      expiredDate: quote.expiredDate,
+      createdAt: quote.createdAt,
+      updatedAt: quote.updatedAt,
+      businessCreatedDate: quote.createdAt,
+      businessUpdatedDate: quote.updatedAt,
+      
+      // Additional fields
+      officeNotes: quote.officeNotes,
+      requestId: quote.requestId,
+      projectId: quote.projectId,
+    };
   }
 
   private clearCaches(): void {
