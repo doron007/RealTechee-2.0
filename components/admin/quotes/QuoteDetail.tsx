@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { quotesAPI, quoteItemsAPI, projectPaymentTermsAPI, requestsAPI, projectsAPI } from '../../../utils/amplifyAPI';
-import { enhancedQuotesService } from '../../../services/enhancedQuotesService';
+import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
 
 interface Quote {
   id: string;
@@ -14,7 +14,7 @@ interface Quote {
   clientName?: string;
   clientEmail?: string;
   clientPhone?: string;
-  totalAmount?: number;
+  totalPrice?: number;
   validUntil?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -79,7 +79,7 @@ interface RelatedEntity {
 }
 
 interface QuoteDetailState {
-  quote: Quote | null;
+  quote: FullyEnhancedQuote | null;
   quoteItems: QuoteItem[];
   paymentTerms: PaymentTerm[];
   comments: QuoteComment[];
@@ -150,7 +150,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       if (result.success && result.data) {
         setState(prev => ({
           ...prev,
-          quote: result.data,
+          quote: result.data || null,
           loading: false
         }));
       } else {
@@ -177,7 +177,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       ...prev,
       quoteItems: []
     }));
-  }, [quoteId]);
+  }, []);
 
   const loadPaymentTerms = useCallback(async () => {
     // Skip loading ProjectPaymentTerms - this model is often not available in development
@@ -186,7 +186,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
       ...prev,
       paymentTerms: []
     }));
-  }, [quoteId]);
+  }, []);
 
   const loadComments = useCallback(async () => {
     try {
@@ -205,7 +205,7 @@ const QuoteDetail: React.FC<QuoteDetailProps> = ({ quoteId }) => {
     // Skip loading related entities - these models are often not available in development
     // The quote functionality works fine without related entities
     console.log('Skipping related entities loading to prevent runtime errors');
-  }, [state.quote?.requestId, state.quote?.projectId]);
+  }, []);
 
   const handleSave = async () => {
     if (!state.quote) return;
@@ -389,7 +389,7 @@ Quote Preview: ${state.quote.title || 'Untitled Quote'}
 
 Customer: ${state.quote.clientName || 'N/A'}
 Email: ${state.quote.clientEmail || 'N/A'}
-Total Amount: $${state.quote.totalAmount || 0}
+Total Amount: $${state.quote.totalPrice || 0}
 
 Items:
 ${state.quoteItems.map(item => `- ${item.description}: $${item.totalPrice || 0}`).join('\n')}
@@ -469,7 +469,7 @@ Generated: ${new Date().toLocaleDateString()}
         title: state.quote.title || 'Untitled Quote',
         contactName: state.quote.clientName || 'N/A',
         contactEmail: state.quote.clientEmail || 'N/A',
-        totalAmount: state.quote.totalAmount || 0,
+        totalPrice: state.quote.totalPrice || 0,
         items: state.quoteItems,
         paymentTerms: state.paymentTerms,
         createdDate: state.quote.createdAt || state.quote.businessCreatedDate
@@ -702,8 +702,8 @@ Generated: ${new Date().toLocaleDateString()}
                 <input
                   type="number"
                   step="0.01"
-                  value={quote.totalAmount || ''}
-                  onChange={(e) => handleFieldChange('totalAmount', parseFloat(e.target.value) || 0)}
+                  value={quote.totalPrice || ''}
+                  onChange={(e) => handleFieldChange('totalPrice', parseFloat(e.target.value) || 0)}
                   disabled={false}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                 />
@@ -1011,8 +1011,8 @@ Generated: ${new Date().toLocaleDateString()}
                         <input
                           type="number"
                           step="0.01"
-                          value={quote.totalAmount || ''}
-                          onChange={(e) => handleFieldChange('totalAmount', parseFloat(e.target.value) || 0)}
+                          value={quote.totalPrice || ''}
+                          onChange={(e) => handleFieldChange('totalPrice', parseFloat(e.target.value) || 0)}
                           disabled={false}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
                         />

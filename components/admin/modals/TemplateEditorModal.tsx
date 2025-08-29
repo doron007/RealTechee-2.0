@@ -125,7 +125,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
         dashboardUrl: 'https://app.realtechee.com/admin/requests'
       }
     };
-  }, [template?.previewData]);
+  }, [template]);
 
   useEffect(() => {
     if (template && mode === 'edit') {
@@ -173,7 +173,7 @@ const TemplateEditorModal: React.FC<TemplateEditorModalProps> = ({
   }, [template, mode, samplePayload]);
 
   // Process template using the real lambda processor
-  const processTemplatePreview = async (templateData: Partial<TemplateItem>, payload: any): Promise<void> => {
+  const processTemplatePreview = useCallback(async (templateData: Partial<TemplateItem>, payload: any): Promise<void> => {
     try {
       setPreviewError('');
       
@@ -227,7 +227,7 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
         </div>
       `);
     }
-  };
+  }, [templateProcessor]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -263,7 +263,7 @@ ${result.subject ? `Subject: ${result.subject}\n\n` : ''}${result.textContent}
       // Fall back to sample payload if preview data is invalid
       await processTemplatePreview(editedTemplate, samplePayload);
     }
-  }, [editedTemplate, editablePreviewData, samplePayload]);
+  }, [editedTemplate, editablePreviewData, samplePayload, processTemplatePreview]);
 
   useEffect(() => {
     generatePreview();

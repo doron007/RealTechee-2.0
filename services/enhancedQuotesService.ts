@@ -98,6 +98,7 @@ export interface FullyEnhancedQuote {
   // Contact data (resolved from Contacts table)
   clientName?: string;
   clientEmail?: string;
+  clientPhone?: string;
   agentName?: string;
   agentEmail?: string;
   brokerage?: string;
@@ -108,6 +109,7 @@ export interface FullyEnhancedQuote {
   openedDate?: string;
   signedDate?: string;
   expiredDate?: string;
+  validUntil?: string;
   createdAt?: string;
   updatedAt?: string;
   businessCreatedDate?: string;
@@ -311,6 +313,7 @@ export class EnhancedQuotesService {
       // Contact data (resolved from Contacts table)
       clientName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName) || rawQuote.clientName || 'N/A',
       clientEmail: homeowner?.email || rawQuote.clientEmail,
+      clientPhone: homeowner?.phone || homeowner?.mobile || rawQuote.clientPhone,
       agentName: agent?.fullName || (agent?.firstName && agent?.lastName ? `${agent.firstName} ${agent.lastName}` : agent?.firstName || agent?.lastName) || rawQuote.agentName || 'N/A',
       agentEmail: agent?.email,
       brokerage: agent?.brokerage || rawQuote.brokerage || 'N/A',
@@ -321,6 +324,7 @@ export class EnhancedQuotesService {
       openedDate: rawQuote.openedDate,
       signedDate: rawQuote.signedDate,
       expiredDate: rawQuote.expiredDate,
+      validUntil: rawQuote.validUntil,
       createdAt: rawQuote.createdAt,
       updatedAt: rawQuote.updatedAt,
       businessCreatedDate: rawQuote.businessCreatedDate,
@@ -406,6 +410,7 @@ export class EnhancedQuotesService {
       // Contact data (resolved from nested relations)
       clientName: homeowner?.fullName || (homeowner?.firstName && homeowner?.lastName ? `${homeowner.firstName} ${homeowner.lastName}` : homeowner?.firstName || homeowner?.lastName) || 'N/A',
       clientEmail: homeowner?.email,
+      clientPhone: homeowner?.phone || homeowner?.mobile,
       agentName: agent?.fullName || (agent?.firstName && agent?.lastName ? `${agent.firstName} ${agent.lastName}` : agent?.firstName || agent?.lastName) || 'N/A',
       agentEmail: agent?.email,
       brokerage: agent?.brokerage || quote.brokerage || 'N/A',
@@ -416,6 +421,7 @@ export class EnhancedQuotesService {
       openedDate: quote.openedDate,
       signedDate: quote.signedDate,
       expiredDate: quote.expiredDate,
+      validUntil: quote.validUntil,
       createdAt: quote.createdAt,
       updatedAt: quote.updatedAt,
       businessCreatedDate: quote.createdAt,
