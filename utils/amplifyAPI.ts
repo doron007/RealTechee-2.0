@@ -805,6 +805,12 @@ export const getNotificationTemplatesAPIInstance = getNotificationTemplatesAPI;
 export const getNotificationEventsAPIInstance = getNotificationEventsAPI;
 export const getSignalEventsAPIInstance = getSignalEventsAPI;
 export const getSignalNotificationHooksAPIInstance = getSignalNotificationHooksAPI;
+export const getRequestNotesAPIInstance = () => getAPI('RequestNotes');
+export const getRequestAssignmentsAPIInstance = () => getAPI('RequestAssignments');
+export const getRequestStatusHistoryAPIInstance = () => getAPI('RequestStatusHistory');
+export const getRequestInformationItemsAPIInstance = () => getAPI('RequestInformationItems');
+export const getRequestScopeItemsAPIInstance = () => getAPI('RequestScopeItems');
+export const getRequestWorkflowStatesAPIInstance = () => getAPI('RequestWorkflowStates');
 
 // Backward compatibility - create instances for existing code
 export const affiliatesAPI = getAPI('Affiliates');
@@ -829,6 +835,14 @@ export const notificationTemplatesAPI = getAPI('NotificationTemplate');
 export const notificationEventsAPI = getAPI('NotificationEvents');
 export const signalEventsAPI = getAPI('SignalEvents');
 export const signalNotificationHooksAPI = getAPI('SignalNotificationHooks');
+
+// Case Management APIs
+export const requestNotesAPI = getAPI('RequestNotes');
+export const requestAssignmentsAPI = getAPI('RequestAssignments');
+export const requestStatusHistoryAPI = getAPI('RequestStatusHistory');
+export const requestInformationItemsAPI = getAPI('RequestInformationItems');
+export const requestScopeItemsAPI = getAPI('RequestScopeItems');
+export const requestWorkflowStatesAPI = getAPI('RequestWorkflowStates');
 
 // Export the raw client for advanced usage
 export { client };

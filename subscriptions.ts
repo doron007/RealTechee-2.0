@@ -345,6 +345,10 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -367,6 +371,10 @@ export const onCreateContacts = /* GraphQL */ `subscription OnCreateContacts($fi
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -550,13 +558,21 @@ export const onCreateNotificationQueue = /* GraphQL */ `subscription OnCreateNot
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -576,21 +592,29 @@ export const onCreateNotificationTemplate = /* GraphQL */ `subscription OnCreate
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -1260,6 +1284,10 @@ export const onCreateProperties = /* GraphQL */ `subscription OnCreateProperties
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -1615,37 +1643,645 @@ export const onCreateQuotes = /* GraphQL */ `subscription OnCreateQuotes($filter
   APITypes.OnCreateQuotesSubscriptionVariables,
   APITypes.OnCreateQuotesSubscription
 >;
+export const onCreateRequestAssignments = /* GraphQL */ `subscription OnCreateRequestAssignments(
+  $filter: ModelSubscriptionRequestAssignmentsFilterInput
+) {
+  onCreateRequestAssignments(filter: $filter) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestAssignmentsSubscriptionVariables,
+  APITypes.OnCreateRequestAssignmentsSubscription
+>;
+export const onCreateRequestInformationItems = /* GraphQL */ `subscription OnCreateRequestInformationItems(
+  $filter: ModelSubscriptionRequestInformationItemsFilterInput
+) {
+  onCreateRequestInformationItems(filter: $filter) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestInformationItemsSubscriptionVariables,
+  APITypes.OnCreateRequestInformationItemsSubscription
+>;
+export const onCreateRequestNotes = /* GraphQL */ `subscription OnCreateRequestNotes(
+  $filter: ModelSubscriptionRequestNotesFilterInput
+) {
+  onCreateRequestNotes(filter: $filter) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestNotesSubscriptionVariables,
+  APITypes.OnCreateRequestNotesSubscription
+>;
+export const onCreateRequestScopeItems = /* GraphQL */ `subscription OnCreateRequestScopeItems(
+  $filter: ModelSubscriptionRequestScopeItemsFilterInput
+) {
+  onCreateRequestScopeItems(filter: $filter) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestScopeItemsSubscriptionVariables,
+  APITypes.OnCreateRequestScopeItemsSubscription
+>;
+export const onCreateRequestStatusHistory = /* GraphQL */ `subscription OnCreateRequestStatusHistory(
+  $filter: ModelSubscriptionRequestStatusHistoryFilterInput
+) {
+  onCreateRequestStatusHistory(filter: $filter) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestStatusHistorySubscriptionVariables,
+  APITypes.OnCreateRequestStatusHistorySubscription
+>;
+export const onCreateRequestWorkflowStates = /* GraphQL */ `subscription OnCreateRequestWorkflowStates(
+  $filter: ModelSubscriptionRequestWorkflowStatesFilterInput
+) {
+  onCreateRequestWorkflowStates(filter: $filter) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRequestWorkflowStatesSubscriptionVariables,
+  APITypes.OnCreateRequestWorkflowStatesSubscription
+>;
 export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($filter: ModelSubscriptionRequestsFilterInput) {
   onCreateRequests(filter: $filter) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -1653,6 +2289,10 @@ export const onCreateRequests = /* GraphQL */ `subscription OnCreateRequests($fi
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -1739,11 +2379,16 @@ export const onCreateSignalNotificationHooks = /* GraphQL */ `subscription OnCre
   $filter: ModelSubscriptionSignalNotificationHooksFilterInput
 ) {
   onCreateSignalNotificationHooks(filter: $filter) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -1755,13 +2400,21 @@ export const onCreateSignalNotificationHooks = /* GraphQL */ `subscription OnCre
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt
@@ -2109,6 +2762,10 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -2131,6 +2788,10 @@ export const onDeleteContacts = /* GraphQL */ `subscription OnDeleteContacts($fi
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -2314,13 +2975,21 @@ export const onDeleteNotificationQueue = /* GraphQL */ `subscription OnDeleteNot
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -2340,21 +3009,29 @@ export const onDeleteNotificationTemplate = /* GraphQL */ `subscription OnDelete
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -3024,6 +3701,10 @@ export const onDeleteProperties = /* GraphQL */ `subscription OnDeleteProperties
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -3379,37 +4060,645 @@ export const onDeleteQuotes = /* GraphQL */ `subscription OnDeleteQuotes($filter
   APITypes.OnDeleteQuotesSubscriptionVariables,
   APITypes.OnDeleteQuotesSubscription
 >;
+export const onDeleteRequestAssignments = /* GraphQL */ `subscription OnDeleteRequestAssignments(
+  $filter: ModelSubscriptionRequestAssignmentsFilterInput
+) {
+  onDeleteRequestAssignments(filter: $filter) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestAssignmentsSubscriptionVariables,
+  APITypes.OnDeleteRequestAssignmentsSubscription
+>;
+export const onDeleteRequestInformationItems = /* GraphQL */ `subscription OnDeleteRequestInformationItems(
+  $filter: ModelSubscriptionRequestInformationItemsFilterInput
+) {
+  onDeleteRequestInformationItems(filter: $filter) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestInformationItemsSubscriptionVariables,
+  APITypes.OnDeleteRequestInformationItemsSubscription
+>;
+export const onDeleteRequestNotes = /* GraphQL */ `subscription OnDeleteRequestNotes(
+  $filter: ModelSubscriptionRequestNotesFilterInput
+) {
+  onDeleteRequestNotes(filter: $filter) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestNotesSubscriptionVariables,
+  APITypes.OnDeleteRequestNotesSubscription
+>;
+export const onDeleteRequestScopeItems = /* GraphQL */ `subscription OnDeleteRequestScopeItems(
+  $filter: ModelSubscriptionRequestScopeItemsFilterInput
+) {
+  onDeleteRequestScopeItems(filter: $filter) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestScopeItemsSubscriptionVariables,
+  APITypes.OnDeleteRequestScopeItemsSubscription
+>;
+export const onDeleteRequestStatusHistory = /* GraphQL */ `subscription OnDeleteRequestStatusHistory(
+  $filter: ModelSubscriptionRequestStatusHistoryFilterInput
+) {
+  onDeleteRequestStatusHistory(filter: $filter) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestStatusHistorySubscriptionVariables,
+  APITypes.OnDeleteRequestStatusHistorySubscription
+>;
+export const onDeleteRequestWorkflowStates = /* GraphQL */ `subscription OnDeleteRequestWorkflowStates(
+  $filter: ModelSubscriptionRequestWorkflowStatesFilterInput
+) {
+  onDeleteRequestWorkflowStates(filter: $filter) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRequestWorkflowStatesSubscriptionVariables,
+  APITypes.OnDeleteRequestWorkflowStatesSubscription
+>;
 export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($filter: ModelSubscriptionRequestsFilterInput) {
   onDeleteRequests(filter: $filter) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -3417,6 +4706,10 @@ export const onDeleteRequests = /* GraphQL */ `subscription OnDeleteRequests($fi
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -3503,11 +4796,16 @@ export const onDeleteSignalNotificationHooks = /* GraphQL */ `subscription OnDel
   $filter: ModelSubscriptionSignalNotificationHooksFilterInput
 ) {
   onDeleteSignalNotificationHooks(filter: $filter) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -3519,13 +4817,21 @@ export const onDeleteSignalNotificationHooks = /* GraphQL */ `subscription OnDel
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt
@@ -3873,6 +5179,10 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -3895,6 +5205,10 @@ export const onUpdateContacts = /* GraphQL */ `subscription OnUpdateContacts($fi
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -4078,13 +5392,21 @@ export const onUpdateNotificationQueue = /* GraphQL */ `subscription OnUpdateNot
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -4104,21 +5426,29 @@ export const onUpdateNotificationTemplate = /* GraphQL */ `subscription OnUpdate
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -4788,6 +6118,10 @@ export const onUpdateProperties = /* GraphQL */ `subscription OnUpdateProperties
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -5143,37 +6477,645 @@ export const onUpdateQuotes = /* GraphQL */ `subscription OnUpdateQuotes($filter
   APITypes.OnUpdateQuotesSubscriptionVariables,
   APITypes.OnUpdateQuotesSubscription
 >;
+export const onUpdateRequestAssignments = /* GraphQL */ `subscription OnUpdateRequestAssignments(
+  $filter: ModelSubscriptionRequestAssignmentsFilterInput
+) {
+  onUpdateRequestAssignments(filter: $filter) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestAssignmentsSubscriptionVariables,
+  APITypes.OnUpdateRequestAssignmentsSubscription
+>;
+export const onUpdateRequestInformationItems = /* GraphQL */ `subscription OnUpdateRequestInformationItems(
+  $filter: ModelSubscriptionRequestInformationItemsFilterInput
+) {
+  onUpdateRequestInformationItems(filter: $filter) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestInformationItemsSubscriptionVariables,
+  APITypes.OnUpdateRequestInformationItemsSubscription
+>;
+export const onUpdateRequestNotes = /* GraphQL */ `subscription OnUpdateRequestNotes(
+  $filter: ModelSubscriptionRequestNotesFilterInput
+) {
+  onUpdateRequestNotes(filter: $filter) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestNotesSubscriptionVariables,
+  APITypes.OnUpdateRequestNotesSubscription
+>;
+export const onUpdateRequestScopeItems = /* GraphQL */ `subscription OnUpdateRequestScopeItems(
+  $filter: ModelSubscriptionRequestScopeItemsFilterInput
+) {
+  onUpdateRequestScopeItems(filter: $filter) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestScopeItemsSubscriptionVariables,
+  APITypes.OnUpdateRequestScopeItemsSubscription
+>;
+export const onUpdateRequestStatusHistory = /* GraphQL */ `subscription OnUpdateRequestStatusHistory(
+  $filter: ModelSubscriptionRequestStatusHistoryFilterInput
+) {
+  onUpdateRequestStatusHistory(filter: $filter) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestStatusHistorySubscriptionVariables,
+  APITypes.OnUpdateRequestStatusHistorySubscription
+>;
+export const onUpdateRequestWorkflowStates = /* GraphQL */ `subscription OnUpdateRequestWorkflowStates(
+  $filter: ModelSubscriptionRequestWorkflowStatesFilterInput
+) {
+  onUpdateRequestWorkflowStates(filter: $filter) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRequestWorkflowStatesSubscriptionVariables,
+  APITypes.OnUpdateRequestWorkflowStatesSubscription
+>;
 export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($filter: ModelSubscriptionRequestsFilterInput) {
   onUpdateRequests(filter: $filter) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -5181,6 +7123,10 @@ export const onUpdateRequests = /* GraphQL */ `subscription OnUpdateRequests($fi
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -5267,11 +7213,16 @@ export const onUpdateSignalNotificationHooks = /* GraphQL */ `subscription OnUpd
   $filter: ModelSubscriptionSignalNotificationHooksFilterInput
 ) {
   onUpdateSignalNotificationHooks(filter: $filter) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -5283,13 +7234,21 @@ export const onUpdateSignalNotificationHooks = /* GraphQL */ `subscription OnUpd
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt

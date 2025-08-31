@@ -62,6 +62,16 @@
     "node_modules",
     "scripts/cleanup-archive",
     "scripts/setup-signal-hooks.ts",
-    "amplify/functions"
+  "amplify/functions",
+  "archive",
+  "archive/**",
+  "backups",
+  "backups/**",
+  "coverage",
+  "coverage/**",
+  "playwright-report",
+  "playwright-report/**",
+  "test-results",
+  "test-results/**"
   ]
 }

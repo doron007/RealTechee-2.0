@@ -1653,6 +1653,38 @@
                 ]
               }
             },
+            "agentRequests": {
+              "name": "agentRequests",
+              "isArray": true,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "agentContactId"
+                ]
+              }
+            },
+            "homeownerRequests": {
+              "name": "homeownerRequests",
+              "isArray": true,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "homeownerContactId"
+                ]
+              }
+            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,
@@ -5362,6 +5394,22 @@
                 ]
               }
             },
+            "requests": {
+              "name": "requests",
+              "isArray": true,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "addressId"
+                ]
+              }
+            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,
@@ -6428,6 +6476,230 @@
               "isRequired": false,
               "attributes": []
             },
+            "priority": {
+              "name": "priority",
+              "isArray": false,
+              "type": {
+                "enum": "RequestsPriority"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "source": {
+              "name": "source",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "tags": {
+              "name": "tags",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "estimatedValue": {
+              "name": "estimatedValue",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "followUpDate": {
+              "name": "followUpDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "lastContactDate": {
+              "name": "lastContactDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "clientResponseDate": {
+              "name": "clientResponseDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "informationGatheringStatus": {
+              "name": "informationGatheringStatus",
+              "isArray": false,
+              "type": {
+                "enum": "RequestsInformationGatheringStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "scopeDefinitionStatus": {
+              "name": "scopeDefinitionStatus",
+              "isArray": false,
+              "type": {
+                "enum": "RequestsScopeDefinitionStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "readinessScore": {
+              "name": "readinessScore",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "missingInformation": {
+              "name": "missingInformation",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "agent": {
+              "name": "agent",
+              "isArray": false,
+              "type": {
+                "model": "Contacts"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "agentContactId"
+                ]
+              }
+            },
+            "homeowner": {
+              "name": "homeowner",
+              "isArray": false,
+              "type": {
+                "model": "Contacts"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "homeownerContactId"
+                ]
+              }
+            },
+            "address": {
+              "name": "address",
+              "isArray": false,
+              "type": {
+                "model": "Properties"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "addressId"
+                ]
+              }
+            },
+            "notes": {
+              "name": "notes",
+              "isArray": true,
+              "type": {
+                "model": "RequestNotes"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
+            "assignments": {
+              "name": "assignments",
+              "isArray": true,
+              "type": {
+                "model": "RequestAssignments"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
+            "statusHistory": {
+              "name": "statusHistory",
+              "isArray": true,
+              "type": {
+                "model": "RequestStatusHistory"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
+            "informationItems": {
+              "name": "informationItems",
+              "isArray": true,
+              "type": {
+                "model": "RequestInformationItems"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
+            "scopeItems": {
+              "name": "scopeItems",
+              "isArray": true,
+              "type": {
+                "model": "RequestScopeItems"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
+            "workflowStates": {
+              "name": "workflowStates",
+              "isArray": true,
+              "type": {
+                "model": "RequestWorkflowStates"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "requestId"
+                ]
+              }
+            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,
@@ -6468,6 +6740,1346 @@
                   },
                   {
                     "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestNotes": {
+          "name": "RequestNotes",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "content": {
+              "name": "content",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "type": {
+              "name": "type",
+              "isArray": false,
+              "type": {
+                "enum": "RequestNotesType"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "category": {
+              "name": "category",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isPrivate": {
+              "name": "isPrivate",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "authorId": {
+              "name": "authorId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "authorName": {
+              "name": "authorName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "authorRole": {
+              "name": "authorRole",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "attachments": {
+              "name": "attachments",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "relatedToStatusChange": {
+              "name": "relatedToStatusChange",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "priority": {
+              "name": "priority",
+              "isArray": false,
+              "type": {
+                "enum": "RequestNotesPriority"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "tags": {
+              "name": "tags",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "communicationMethod": {
+              "name": "communicationMethod",
+              "isArray": false,
+              "type": {
+                "enum": "RequestNotesCommunicationMethod"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "clientResponse": {
+              "name": "clientResponse",
+              "isArray": false,
+              "type": {
+                "enum": "RequestNotesClientResponse"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "followUpRequired": {
+              "name": "followUpRequired",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "followUpDate": {
+              "name": "followUpDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestNotes",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent",
+                      "project_manager"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestAssignments": {
+          "name": "RequestAssignments",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignedToId": {
+              "name": "assignedToId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignedToName": {
+              "name": "assignedToName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignedToRole": {
+              "name": "assignedToRole",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignmentType": {
+              "name": "assignmentType",
+              "isArray": false,
+              "type": {
+                "enum": "RequestAssignmentsAssignmentType"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "assignedById": {
+              "name": "assignedById",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignedByName": {
+              "name": "assignedByName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "assignmentReason": {
+              "name": "assignmentReason",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "status": {
+              "name": "status",
+              "isArray": false,
+              "type": {
+                "enum": "RequestAssignmentsStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "priority": {
+              "name": "priority",
+              "isArray": false,
+              "type": {
+                "enum": "RequestAssignmentsPriority"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "dueDate": {
+              "name": "dueDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "completedAt": {
+              "name": "completedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "transferredAt": {
+              "name": "transferredAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "transferredToId": {
+              "name": "transferredToId",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "transferredToName": {
+              "name": "transferredToName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "transferReason": {
+              "name": "transferReason",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "estimatedHours": {
+              "name": "estimatedHours",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "actualHours": {
+              "name": "actualHours",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestAssignments",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestStatusHistory": {
+          "name": "RequestStatusHistory",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "previousStatus": {
+              "name": "previousStatus",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "newStatus": {
+              "name": "newStatus",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "statusReason": {
+              "name": "statusReason",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "triggeredBy": {
+              "name": "triggeredBy",
+              "isArray": false,
+              "type": {
+                "enum": "RequestStatusHistoryTriggeredBy"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "triggeredById": {
+              "name": "triggeredById",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "triggeredByName": {
+              "name": "triggeredByName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "automationRule": {
+              "name": "automationRule",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "businessImpact": {
+              "name": "businessImpact",
+              "isArray": false,
+              "type": {
+                "enum": "RequestStatusHistoryBusinessImpact"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "clientNotified": {
+              "name": "clientNotified",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "internalNotification": {
+              "name": "internalNotification",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "timeInPreviousStatus": {
+              "name": "timeInPreviousStatus",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "expectedDuration": {
+              "name": "expectedDuration",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "metadata": {
+              "name": "metadata",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "timestamp": {
+              "name": "timestamp",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestStatusHistories",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestInformationItems": {
+          "name": "RequestInformationItems",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "category": {
+              "name": "category",
+              "isArray": false,
+              "type": {
+                "enum": "RequestInformationItemsCategory"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "itemName": {
+              "name": "itemName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "description": {
+              "name": "description",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "status": {
+              "name": "status",
+              "isArray": false,
+              "type": {
+                "enum": "RequestInformationItemsStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "importance": {
+              "name": "importance",
+              "isArray": false,
+              "type": {
+                "enum": "RequestInformationItemsImportance"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "requestedDate": {
+              "name": "requestedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "receivedDate": {
+              "name": "receivedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "verifiedDate": {
+              "name": "verifiedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "requestedBy": {
+              "name": "requestedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "source": {
+              "name": "source",
+              "isArray": false,
+              "type": {
+                "enum": "RequestInformationItemsSource"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "value": {
+              "name": "value",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "attachments": {
+              "name": "attachments",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "notes": {
+              "name": "notes",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "followUpRequired": {
+              "name": "followUpRequired",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "followUpDate": {
+              "name": "followUpDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "remindersSent": {
+              "name": "remindersSent",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestInformationItems",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent",
+                      "project_manager"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestScopeItems": {
+          "name": "RequestScopeItems",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "category": {
+              "name": "category",
+              "isArray": false,
+              "type": {
+                "enum": "RequestScopeItemsCategory"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "description": {
+              "name": "description",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "parentItemId": {
+              "name": "parentItemId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": false,
+              "attributes": []
+            },
+            "orderIndex": {
+              "name": "orderIndex",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "isCategory": {
+              "name": "isCategory",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "specifications": {
+              "name": "specifications",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "materials": {
+              "name": "materials",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "laborRequirements": {
+              "name": "laborRequirements",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "timeline": {
+              "name": "timeline",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "estimatedCost": {
+              "name": "estimatedCost",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "estimatedHours": {
+              "name": "estimatedHours",
+              "isArray": false,
+              "type": "Float",
+              "isRequired": false,
+              "attributes": []
+            },
+            "complexity": {
+              "name": "complexity",
+              "isArray": false,
+              "type": {
+                "enum": "RequestScopeItemsComplexity"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "status": {
+              "name": "status",
+              "isArray": false,
+              "type": {
+                "enum": "RequestScopeItemsStatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "approvedBy": {
+              "name": "approvedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "approvedDate": {
+              "name": "approvedDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "clientApproval": {
+              "name": "clientApproval",
+              "isArray": false,
+              "type": {
+                "enum": "RequestScopeItemsClientApproval"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "clientNotes": {
+              "name": "clientNotes",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdBy": {
+              "name": "createdBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedBy": {
+              "name": "updatedBy",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            },
+            "parentItem": {
+              "name": "parentItem",
+              "isArray": false,
+              "type": {
+                "model": "RequestScopeItems"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "parentItemId"
+                ]
+              }
+            },
+            "childItems": {
+              "name": "childItems",
+              "isArray": true,
+              "type": {
+                "model": "RequestScopeItems"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "parentItemId"
+                ]
+              }
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestScopeItems",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent",
+                      "project_manager"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "RequestWorkflowStates": {
+          "name": "RequestWorkflowStates",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "requestId": {
+              "name": "requestId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "workflowName": {
+              "name": "workflowName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "currentState": {
+              "name": "currentState",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "availableActions": {
+              "name": "availableActions",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "stateData": {
+              "name": "stateData",
+              "isArray": false,
+              "type": "AWSJSON",
+              "isRequired": false,
+              "attributes": []
+            },
+            "progress": {
+              "name": "progress",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "totalSteps": {
+              "name": "totalSteps",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "completedSteps": {
+              "name": "completedSteps",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": false,
+              "attributes": []
+            },
+            "startedAt": {
+              "name": "startedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "expectedCompletionDate": {
+              "name": "expectedCompletionDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "actualCompletionDate": {
+              "name": "actualCompletionDate",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "automationEnabled": {
+              "name": "automationEnabled",
+              "isArray": false,
+              "type": "Boolean",
+              "isRequired": false,
+              "attributes": []
+            },
+            "nextAutomationCheck": {
+              "name": "nextAutomationCheck",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "request": {
+              "name": "request",
+              "isArray": false,
+              "type": {
+                "model": "Requests"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "requestId"
+                ]
+              }
+            }
+          },
+          "syncable": true,
+          "pluralName": "RequestWorkflowStates",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "admin",
+                      "agent"
+                    ],
                     "operations": [
                       "create",
                       "update",
@@ -7104,6 +8716,181 @@
             "SES_NOTIFICATION",
             "MANUAL_ADMIN",
             "USER_REQUEST"
+          ]
+        },
+        "RequestsPriority": {
+          "name": "RequestsPriority",
+          "values": [
+            "low",
+            "medium",
+            "high",
+            "urgent"
+          ]
+        },
+        "RequestsInformationGatheringStatus": {
+          "name": "RequestsInformationGatheringStatus",
+          "values": [
+            "pending",
+            "in_progress",
+            "completed"
+          ]
+        },
+        "RequestsScopeDefinitionStatus": {
+          "name": "RequestsScopeDefinitionStatus",
+          "values": [
+            "not_started",
+            "in_progress",
+            "completed"
+          ]
+        },
+        "RequestNotesType": {
+          "name": "RequestNotesType",
+          "values": [
+            "internal",
+            "client_communication",
+            "technical",
+            "follow_up"
+          ]
+        },
+        "RequestNotesPriority": {
+          "name": "RequestNotesPriority",
+          "values": [
+            "normal",
+            "important",
+            "urgent"
+          ]
+        },
+        "RequestNotesCommunicationMethod": {
+          "name": "RequestNotesCommunicationMethod",
+          "values": [
+            "phone",
+            "email",
+            "text",
+            "in_person",
+            "other"
+          ]
+        },
+        "RequestNotesClientResponse": {
+          "name": "RequestNotesClientResponse",
+          "values": [
+            "pending",
+            "responded",
+            "no_response"
+          ]
+        },
+        "RequestAssignmentsAssignmentType": {
+          "name": "RequestAssignmentsAssignmentType",
+          "values": [
+            "primary",
+            "secondary",
+            "observer"
+          ]
+        },
+        "RequestAssignmentsStatus": {
+          "name": "RequestAssignmentsStatus",
+          "values": [
+            "active",
+            "completed",
+            "transferred",
+            "cancelled"
+          ]
+        },
+        "RequestAssignmentsPriority": {
+          "name": "RequestAssignmentsPriority",
+          "values": [
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "RequestStatusHistoryTriggeredBy": {
+          "name": "RequestStatusHistoryTriggeredBy",
+          "values": [
+            "user",
+            "system",
+            "automation"
+          ]
+        },
+        "RequestStatusHistoryBusinessImpact": {
+          "name": "RequestStatusHistoryBusinessImpact",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "RequestInformationItemsCategory": {
+          "name": "RequestInformationItemsCategory",
+          "values": [
+            "property",
+            "client",
+            "project",
+            "financial",
+            "technical"
+          ]
+        },
+        "RequestInformationItemsStatus": {
+          "name": "RequestInformationItemsStatus",
+          "values": [
+            "missing",
+            "requested",
+            "received",
+            "verified"
+          ]
+        },
+        "RequestInformationItemsImportance": {
+          "name": "RequestInformationItemsImportance",
+          "values": [
+            "required",
+            "important",
+            "optional"
+          ]
+        },
+        "RequestInformationItemsSource": {
+          "name": "RequestInformationItemsSource",
+          "values": [
+            "client",
+            "agent",
+            "inspection",
+            "documents"
+          ]
+        },
+        "RequestScopeItemsCategory": {
+          "name": "RequestScopeItemsCategory",
+          "values": [
+            "room",
+            "area",
+            "system",
+            "material",
+            "service"
+          ]
+        },
+        "RequestScopeItemsComplexity": {
+          "name": "RequestScopeItemsComplexity",
+          "values": [
+            "simple",
+            "moderate",
+            "complex",
+            "very_complex"
+          ]
+        },
+        "RequestScopeItemsStatus": {
+          "name": "RequestScopeItemsStatus",
+          "values": [
+            "draft",
+            "defined",
+            "approved",
+            "quoted"
+          ]
+        },
+        "RequestScopeItemsClientApproval": {
+          "name": "RequestScopeItemsClientApproval",
+          "values": [
+            "pending",
+            "approved",
+            "rejected",
+            "modified"
           ]
         },
         "AppPreferencesDataType": {

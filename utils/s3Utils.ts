@@ -13,19 +13,29 @@ const getS3BaseUrl = (): string => {
 };
 
 /**
- * Convert a full S3 URL to a relative path
- * @param fullUrl - Full S3 URL
+ * Convert a full S3 URL or relative path to a normalized relative path
+ * @param urlOrPath - Full S3 URL or relative path
  * @returns Relative path starting with /
  */
-export const getRelativePathFromUrl = (fullUrl: string): string => {
+export const getRelativePathFromUrl = (urlOrPath: string): string => {
   try {
-    const baseUrl = getS3BaseUrl();
-    if (fullUrl.startsWith(baseUrl)) {
-      return fullUrl.replace(baseUrl, '');
+    // If it's already a relative path starting with /public/, return as-is
+    if (urlOrPath.startsWith('/public/')) {
+      return urlOrPath;
     }
     
-    // Handle legacy URLs or other S3 URL formats
-    const url = new URL(fullUrl);
+    // If it's already a relative path starting with /, return as-is
+    if (urlOrPath.startsWith('/') && !urlOrPath.startsWith('http')) {
+      return urlOrPath;
+    }
+    
+    const baseUrl = getS3BaseUrl();
+    if (urlOrPath.startsWith(baseUrl)) {
+      return urlOrPath.replace(baseUrl, '');
+    }
+    
+    // Try to parse as full URL
+    const url = new URL(urlOrPath);
     let pathname = url.pathname;
     
     // Remove /public/ prefix if it exists (legacy format)
@@ -37,7 +47,8 @@ export const getRelativePathFromUrl = (fullUrl: string): string => {
     return pathname;
   } catch (error) {
     console.error('Error parsing S3 URL:', error);
-    return fullUrl; // Return original if parsing fails
+    // If it's not a valid URL, assume it's already a relative path
+    return urlOrPath;
   }
 };
 
@@ -57,9 +68,9 @@ export const getFullUrlFromPath = (relativePath: string): string => {
   // Ensure path starts with /
   let normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
   
-  // Remove /public/ prefix if it exists (legacy format)
-  if (normalizedPath.startsWith('/public/')) {
-    normalizedPath = normalizedPath.substring('/public'.length);
+  // Ensure path has /public/ prefix for S3 bucket structure
+  if (!normalizedPath.startsWith('/public/')) {
+    normalizedPath = `/public${normalizedPath}`;
   }
   
   return `${baseUrl}${normalizedPath}`;

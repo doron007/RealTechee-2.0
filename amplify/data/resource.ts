@@ -659,10 +659,31 @@ const Requests = a.model({
   homeownerContactId: a.id(),
   addressId: a.id(),
   
+  // Enhanced Case Management Fields
+  priority: a.enum(['low', 'medium', 'high', 'urgent']),
+  source: a.string(), // 'form_submission', 'phone_call', 'email', 'referral'
+  tags: a.json(), // Array of tags for categorization
+  estimatedValue: a.float(), // Potential project value
+  followUpDate: a.datetime(), // Next scheduled follow-up
+  lastContactDate: a.datetime(), // Last time client was contacted
+  clientResponseDate: a.datetime(), // Last client response
+  informationGatheringStatus: a.enum(['pending', 'in_progress', 'completed']),
+  scopeDefinitionStatus: a.enum(['not_started', 'in_progress', 'completed']),
+  readinessScore: a.integer().default(0), // 0-100 score for quote readiness
+  missingInformation: a.json(), // Array of missing information items
+  
   // Relationships - Match Projects pattern exactly!
   agent: a.belongsTo('Contacts', 'agentContactId'),
   homeowner: a.belongsTo('Contacts', 'homeownerContactId'),
   address: a.belongsTo('Properties', 'addressId'),
+  
+  // Case management relationships
+  notes: a.hasMany('RequestNotes', 'requestId'),
+  assignments: a.hasMany('RequestAssignments', 'requestId'),
+  statusHistory: a.hasMany('RequestStatusHistory', 'requestId'),
+  informationItems: a.hasMany('RequestInformationItems', 'requestId'),
+  scopeItems: a.hasMany('RequestScopeItems', 'requestId'),
+  workflowStates: a.hasMany('RequestWorkflowStates', 'requestId'),
 }).authorization((allow) => [
   allow.publicApiKey(),
   allow.authenticated()
@@ -952,6 +973,214 @@ const SESReputationMetrics = a.model({
   allow.groups(['admin'])
 ]);
 
+// Case Management Models
+const RequestNotes = a.model({
+  requestId: a.id().required(),
+  content: a.string().required(),
+  type: a.enum(['internal', 'client_communication', 'technical', 'follow_up']),
+  category: a.string(), // 'status_update', 'meeting_notes', 'client_call', etc.
+  isPrivate: a.boolean().default(true), // Internal notes vs client-visible
+  authorId: a.string(), // Cognito user ID
+  authorName: a.string(),
+  authorRole: a.string(), // 'AE', 'PM', 'Admin'
+  attachments: a.json(), // Array of file references
+  relatedToStatusChange: a.boolean().default(false),
+  priority: a.enum(['normal', 'important', 'urgent']),
+  tags: a.json(), // Array of tags
+  
+  // Client communication tracking
+  communicationMethod: a.enum(['phone', 'email', 'text', 'in_person', 'other']),
+  clientResponse: a.enum(['pending', 'responded', 'no_response']),
+  followUpRequired: a.boolean().default(false),
+  followUpDate: a.datetime(),
+  
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent', 'project_manager'])
+]);
+
+const RequestAssignments = a.model({
+  requestId: a.id().required(),
+  assignedToId: a.string().required(), // Contact ID or user ID
+  assignedToName: a.string().required(),
+  assignedToRole: a.string().required(), // 'AE', 'PM', 'Admin'
+  assignmentType: a.enum(['primary', 'secondary', 'observer']),
+  assignedById: a.string().required(), // Who made the assignment
+  assignedByName: a.string().required(),
+  assignmentReason: a.string(),
+  status: a.enum(['active', 'completed', 'transferred', 'cancelled']),
+  priority: a.enum(['normal', 'high', 'urgent']),
+  dueDate: a.datetime(),
+  completedAt: a.datetime(),
+  transferredAt: a.datetime(),
+  transferredToId: a.string(),
+  transferredToName: a.string(),
+  transferReason: a.string(),
+  
+  // Workload tracking
+  estimatedHours: a.float(),
+  actualHours: a.float(),
+  
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent'])
+]);
+
+const RequestStatusHistory = a.model({
+  requestId: a.id().required(),
+  previousStatus: a.string(),
+  newStatus: a.string().required(),
+  statusReason: a.string(),
+  triggeredBy: a.enum(['user', 'system', 'automation']),
+  triggeredById: a.string(), // User ID if triggered by user
+  triggeredByName: a.string(),
+  automationRule: a.string(), // If triggered by automation
+  
+  // Business context
+  businessImpact: a.enum(['none', 'low', 'medium', 'high']),
+  clientNotified: a.boolean().default(false),
+  internalNotification: a.boolean().default(true),
+  
+  // Duration tracking
+  timeInPreviousStatus: a.integer(), // Minutes spent in previous status
+  expectedDuration: a.integer(), // Expected minutes for current status
+  
+  metadata: a.json(), // Additional context data
+  
+  timestamp: a.datetime(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent'])
+]);
+
+const RequestInformationItems = a.model({
+  requestId: a.id().required(),
+  category: a.enum(['property', 'client', 'project', 'financial', 'technical']),
+  itemName: a.string().required(),
+  description: a.string(),
+  status: a.enum(['missing', 'requested', 'received', 'verified']),
+  importance: a.enum(['required', 'important', 'optional']),
+  requestedDate: a.datetime(),
+  receivedDate: a.datetime(),
+  verifiedDate: a.datetime(),
+  requestedBy: a.string(),
+  source: a.enum(['client', 'agent', 'inspection', 'documents']),
+  
+  // Content
+  value: a.string(), // The actual information when received
+  attachments: a.json(), // Related files/documents
+  notes: a.string(),
+  
+  // Follow-up
+  followUpRequired: a.boolean().default(false),
+  followUpDate: a.datetime(),
+  remindersSent: a.integer().default(0),
+  
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent', 'project_manager'])
+]);
+
+const RequestScopeItems = a.model({
+  requestId: a.id().required(),
+  category: a.enum(['room', 'area', 'system', 'material', 'service']),
+  name: a.string().required(),
+  description: a.string(),
+  
+  // Hierarchy
+  parentItemId: a.id(), // For nested scope items
+  orderIndex: a.integer().default(0),
+  isCategory: a.boolean().default(false),
+  
+  // Scope definition
+  specifications: a.json(), // Detailed specs as structured data
+  materials: a.json(), // Material requirements
+  laborRequirements: a.json(), // Labor specifications
+  timeline: a.string(), // Time estimates
+  
+  // Estimates
+  estimatedCost: a.float(),
+  estimatedHours: a.float(),
+  complexity: a.enum(['simple', 'moderate', 'complex', 'very_complex']),
+  
+  // Status
+  status: a.enum(['draft', 'defined', 'approved', 'quoted']),
+  approvedBy: a.string(),
+  approvedDate: a.datetime(),
+  
+  // Client interaction
+  clientApproval: a.enum(['pending', 'approved', 'rejected', 'modified']),
+  clientNotes: a.string(),
+  
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  createdBy: a.string(),
+  updatedBy: a.string(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+  parentItem: a.belongsTo('RequestScopeItems', 'parentItemId'),
+  childItems: a.hasMany('RequestScopeItems', 'parentItemId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent', 'project_manager'])
+]);
+
+const RequestWorkflowStates = a.model({
+  requestId: a.id().required(),
+  workflowName: a.string().required(), // 'information_gathering', 'scope_definition'
+  currentState: a.string().required(),
+  availableActions: a.json(), // Array of possible next actions
+  stateData: a.json(), // Workflow-specific data
+  
+  // Progress tracking
+  progress: a.integer().default(0), // 0-100%
+  totalSteps: a.integer(),
+  completedSteps: a.integer(),
+  
+  // Timing
+  startedAt: a.datetime(),
+  expectedCompletionDate: a.datetime(),
+  actualCompletionDate: a.datetime(),
+  
+  // Automation
+  automationEnabled: a.boolean().default(true),
+  nextAutomationCheck: a.datetime(),
+  
+  createdAt: a.datetime(),
+  updatedAt: a.datetime(),
+  
+  // Relationships
+  request: a.belongsTo('Requests', 'requestId'),
+}).authorization((allow) => [
+  allow.publicApiKey(),
+  allow.authenticated(),
+  allow.groups(['admin', 'agent'])
+]);
+
 const schema = a.schema({
   Affiliates,
   Auth,
@@ -987,6 +1216,12 @@ const schema = a.schema({
   QuoteItems,
   Quotes,
   Requests,
+  RequestNotes,
+  RequestAssignments,
+  RequestStatusHistory,
+  RequestInformationItems,
+  RequestScopeItems,
+  RequestWorkflowStates,
   eSignatureDocuments,
   AppPreferences,
   SecureConfig

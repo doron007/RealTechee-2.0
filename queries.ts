@@ -318,6 +318,10 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -340,6 +344,10 @@ export const getContacts = /* GraphQL */ `query GetContacts($id: ID!) {
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -510,13 +518,21 @@ export const getNotificationQueue = /* GraphQL */ `query GetNotificationQueue($i
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -534,21 +550,29 @@ export const getNotificationTemplate = /* GraphQL */ `query GetNotificationTempl
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -1205,6 +1229,10 @@ export const getProperties = /* GraphQL */ `query GetProperties($id: ID!) {
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -1555,37 +1583,633 @@ export const getQuotes = /* GraphQL */ `query GetQuotes($id: ID!) {
   }
 }
 ` as GeneratedQuery<APITypes.GetQuotesQueryVariables, APITypes.GetQuotesQuery>;
+export const getRequestAssignments = /* GraphQL */ `query GetRequestAssignments($id: ID!) {
+  getRequestAssignments(id: $id) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestAssignmentsQueryVariables,
+  APITypes.GetRequestAssignmentsQuery
+>;
+export const getRequestInformationItems = /* GraphQL */ `query GetRequestInformationItems($id: ID!) {
+  getRequestInformationItems(id: $id) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestInformationItemsQueryVariables,
+  APITypes.GetRequestInformationItemsQuery
+>;
+export const getRequestNotes = /* GraphQL */ `query GetRequestNotes($id: ID!) {
+  getRequestNotes(id: $id) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestNotesQueryVariables,
+  APITypes.GetRequestNotesQuery
+>;
+export const getRequestScopeItems = /* GraphQL */ `query GetRequestScopeItems($id: ID!) {
+  getRequestScopeItems(id: $id) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestScopeItemsQueryVariables,
+  APITypes.GetRequestScopeItemsQuery
+>;
+export const getRequestStatusHistory = /* GraphQL */ `query GetRequestStatusHistory($id: ID!) {
+  getRequestStatusHistory(id: $id) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestStatusHistoryQueryVariables,
+  APITypes.GetRequestStatusHistoryQuery
+>;
+export const getRequestWorkflowStates = /* GraphQL */ `query GetRequestWorkflowStates($id: ID!) {
+  getRequestWorkflowStates(id: $id) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetRequestWorkflowStatesQueryVariables,
+  APITypes.GetRequestWorkflowStatesQuery
+>;
 export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
   getRequests(id: $id) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -1593,6 +2217,10 @@ export const getRequests = /* GraphQL */ `query GetRequests($id: ID!) {
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -1671,11 +2299,16 @@ export const getSignalEvents = /* GraphQL */ `query GetSignalEvents($id: ID!) {
 >;
 export const getSignalNotificationHooks = /* GraphQL */ `query GetSignalNotificationHooks($id: ID!) {
   getSignalNotificationHooks(id: $id) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -1687,13 +2320,21 @@ export const getSignalNotificationHooks = /* GraphQL */ `query GetSignalNotifica
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt
@@ -2428,13 +3069,21 @@ export const listNotificationTemplates = /* GraphQL */ `query ListNotificationTe
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     nextToken
@@ -2881,6 +3530,242 @@ export const listQuotes = /* GraphQL */ `query ListQuotes(
   APITypes.ListQuotesQueryVariables,
   APITypes.ListQuotesQuery
 >;
+export const listRequestAssignments = /* GraphQL */ `query ListRequestAssignments(
+  $filter: ModelRequestAssignmentsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestAssignments(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      actualHours
+      assignedById
+      assignedByName
+      assignedToId
+      assignedToName
+      assignedToRole
+      assignmentReason
+      assignmentType
+      completedAt
+      createdAt
+      dueDate
+      estimatedHours
+      id
+      priority
+      requestId
+      status
+      transferReason
+      transferredAt
+      transferredToId
+      transferredToName
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestAssignmentsQueryVariables,
+  APITypes.ListRequestAssignmentsQuery
+>;
+export const listRequestInformationItems = /* GraphQL */ `query ListRequestInformationItems(
+  $filter: ModelRequestInformationItemsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestInformationItems(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      attachments
+      category
+      createdAt
+      description
+      followUpDate
+      followUpRequired
+      id
+      importance
+      itemName
+      notes
+      receivedDate
+      remindersSent
+      requestId
+      requestedBy
+      requestedDate
+      source
+      status
+      updatedAt
+      value
+      verifiedDate
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestInformationItemsQueryVariables,
+  APITypes.ListRequestInformationItemsQuery
+>;
+export const listRequestNotes = /* GraphQL */ `query ListRequestNotes(
+  $filter: ModelRequestNotesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      attachments
+      authorId
+      authorName
+      authorRole
+      category
+      clientResponse
+      communicationMethod
+      content
+      createdAt
+      followUpDate
+      followUpRequired
+      id
+      isPrivate
+      priority
+      relatedToStatusChange
+      requestId
+      tags
+      type
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestNotesQueryVariables,
+  APITypes.ListRequestNotesQuery
+>;
+export const listRequestScopeItems = /* GraphQL */ `query ListRequestScopeItems(
+  $filter: ModelRequestScopeItemsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestScopeItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestScopeItemsQueryVariables,
+  APITypes.ListRequestScopeItemsQuery
+>;
+export const listRequestStatusHistories = /* GraphQL */ `query ListRequestStatusHistories(
+  $filter: ModelRequestStatusHistoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestStatusHistories(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      automationRule
+      businessImpact
+      clientNotified
+      createdAt
+      expectedDuration
+      id
+      internalNotification
+      metadata
+      newStatus
+      previousStatus
+      requestId
+      statusReason
+      timeInPreviousStatus
+      timestamp
+      triggeredBy
+      triggeredById
+      triggeredByName
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestStatusHistoriesQueryVariables,
+  APITypes.ListRequestStatusHistoriesQuery
+>;
+export const listRequestWorkflowStates = /* GraphQL */ `query ListRequestWorkflowStates(
+  $filter: ModelRequestWorkflowStatesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRequestWorkflowStates(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      actualCompletionDate
+      automationEnabled
+      availableActions
+      completedSteps
+      createdAt
+      currentState
+      expectedCompletionDate
+      id
+      nextAutomationCheck
+      progress
+      requestId
+      startedAt
+      stateData
+      totalSteps
+      updatedAt
+      workflowName
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListRequestWorkflowStatesQueryVariables,
+  APITypes.ListRequestWorkflowStatesQuery
+>;
 export const listRequests = /* GraphQL */ `query ListRequests(
   $filter: ModelRequestsFilterInput
   $limit: Int
@@ -2897,26 +3782,37 @@ export const listRequests = /* GraphQL */ `query ListRequests(
       assignedTo
       bookingId
       budget
+      clientResponseDate
       createdAt
+      estimatedValue
       expiredDate
+      followUpDate
       homeownerContactId
       id
+      informationGatheringStatus
+      lastContactDate
       leadFromSync
       leadFromVenturaStone
       leadSource
       message
+      missingInformation
       moveToQuotingDate
       needFinance
       officeNotes
       owner
+      priority
       product
+      readinessScore
       relationToProperty
       requestedSlot
       requestedVisitDateTime
       rtDigitalSelection
+      scopeDefinitionStatus
+      source
       status
       statusImage
       statusOrder
+      tags
       updatedAt
       uploadedMedia
       uploadedVideos
@@ -3046,11 +3942,16 @@ export const listSignalNotificationHooks = /* GraphQL */ `query ListSignalNotifi
     nextToken: $nextToken
   ) {
     items {
+      channel
       channels
       conditions
       createdAt
+      createdBy
+      deliveryDelay
       enabled
       id
+      lastModifiedBy
+      maxRetries
       notificationTemplateId
       priority
       recipientDynamic

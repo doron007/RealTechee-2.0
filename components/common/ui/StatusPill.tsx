@@ -11,6 +11,16 @@ export type StatusType =
   // Quote statuses
   'sent' | 'opened' | 'underwriting' | 'approved' | 'contracting' | 'contract sent' | 
   'accounting' | 'converted' | 'rejected' |
+  // Case management statuses
+  'in review' | 'information gathering' | 'scope definition' | 'quote ready' | 'quoted' | 'on hold' | 'cancelled' |
+  // Assignment statuses
+  'active' | 'completed' | 'transferred' | 'cancelled' |
+  // Information and scope statuses
+  'missing' | 'requested' | 'received' | 'verified' | 'draft' | 'defined' | 'approved' |
+  // Note types
+  'internal' | 'client communication' | 'technical' | 'follow up' |
+  // Client approval statuses
+  'client pending' | 'client approved' | 'client rejected' | 'client modified' |
   string;
 
 interface StatusPillProps {
@@ -155,6 +165,137 @@ const StatusPill: React.FC<StatusPillProps> = ({ status, className = '' }) => {
           bg: 'bg-[#FEECEC]', // Light red
           text: 'text-[#D32F2F]'
         };
+      
+      // Case management statuses
+      case 'in review':
+        return {
+          bg: 'bg-[#E3F2FD]', // Light blue
+          text: 'text-[#1565C0]'
+        };
+      case 'information gathering':
+        return {
+          bg: 'bg-[#FFF3E0]', // Light orange
+          text: 'text-[#E65100]'
+        };
+      case 'scope definition':
+        return {
+          bg: 'bg-[#F3E5F5]', // Light purple
+          text: 'text-[#7B1FA2]'
+        };
+      case 'quote ready':
+        return {
+          bg: 'bg-[#E8F5E8]', // Light green
+          text: 'text-[#2E7D32]'
+        };
+      case 'quoted':
+        return {
+          bg: 'bg-[#E1F5FE]', // Light cyan
+          text: 'text-[#0277BD]'
+        };
+      case 'on hold':
+        return {
+          bg: 'bg-[#FFF8E1]', // Light amber
+          text: 'text-[#F57F17]'
+        };
+      case 'cancelled':
+        return {
+          bg: 'bg-[#FFEBEE]', // Light red
+          text: 'text-[#C62828]'
+        };
+      
+      // Assignment statuses
+      case 'active':
+        return {
+          bg: 'bg-[#E8F5E8]', // Light green
+          text: 'text-[#2E7D32]'
+        };
+      case 'completed':
+        return {
+          bg: 'bg-[#E3F2FD]', // Light blue
+          text: 'text-[#1565C0]'
+        };
+      case 'transferred':
+        return {
+          bg: 'bg-[#F3E5F5]', // Light purple
+          text: 'text-[#7B1FA2]'
+        };
+      
+      // Information and scope statuses
+      case 'missing':
+        return {
+          bg: 'bg-[#FFEBEE]', // Light red
+          text: 'text-[#C62828]'
+        };
+      case 'requested':
+        return {
+          bg: 'bg-[#FFF8E1]', // Light amber
+          text: 'text-[#F57F17]'
+        };
+      case 'received':
+        return {
+          bg: 'bg-[#E3F2FD]', // Light blue
+          text: 'text-[#1565C0]'
+        };
+      case 'verified':
+        return {
+          bg: 'bg-[#E8F5E8]', // Light green
+          text: 'text-[#2E7D32]'
+        };
+      case 'draft':
+        return {
+          bg: 'bg-[#F5F5F5]', // Light gray
+          text: 'text-[#616161]'
+        };
+      case 'defined':
+        return {
+          bg: 'bg-[#E3F2FD]', // Light blue
+          text: 'text-[#1565C0]'
+        };
+      
+      // Note types
+      case 'internal':
+        return {
+          bg: 'bg-[#F3E5F5]', // Light purple
+          text: 'text-[#7B1FA2]'
+        };
+      case 'client communication':
+        return {
+          bg: 'bg-[#E1F5FE]', // Light cyan
+          text: 'text-[#0277BD]'
+        };
+      case 'technical':
+        return {
+          bg: 'bg-[#FFF3E0]', // Light orange
+          text: 'text-[#E65100]'
+        };
+      case 'follow up':
+        return {
+          bg: 'bg-[#FFF8E1]', // Light amber
+          text: 'text-[#F57F17]'
+        };
+      
+      // Client approval statuses
+      case 'client pending':
+        return {
+          bg: 'bg-[#FFF8E1]', // Light amber
+          text: 'text-[#F57F17]'
+        };
+      case 'client approved':
+        return {
+          bg: 'bg-[#E8F5E8]', // Light green
+          text: 'text-[#2E7D32]'
+        };
+      case 'client rejected':
+        return {
+          bg: 'bg-[#FFEBEE]', // Light red
+          text: 'text-[#C62828]'
+        };
+      case 'client modified':
+        return {
+          bg: 'bg-[#E3F2FD]', // Light blue
+          text: 'text-[#1565C0]'
+        };
+      
       default:
         return {
           bg: 'bg-gray-100',

@@ -354,12 +354,12 @@ const NotificationManagementPage: React.FC = () => {
             input: {
               name: templateData.name || 'Untitled Template',
               channel: templateData.channel as NotificationTemplateChannel,
-              subject: templateData.subject,
-              contentHtml: templateData.contentHtml,
-              contentText: templateData.contentText,
               isActive: templateData.isActive,
               variables: templateData.variables,
-              owner: templateData.owner
+              owner: templateData.owner,
+              emailSubject: templateData.subject ?? '',
+              emailContentHtml: templateData.contentHtml ?? '',
+              smsContent: templateData.contentText ?? ''
             }
           }
         });
@@ -371,11 +371,11 @@ const NotificationManagementPage: React.FC = () => {
               id: editingTemplate.id,
               name: templateData.name,
               channel: templateData.channel as NotificationTemplateChannel,
-              subject: templateData.subject,
-              contentHtml: templateData.contentHtml,
-              contentText: templateData.contentText,
               isActive: templateData.isActive,
-              variables: templateData.variables
+              variables: templateData.variables,
+              emailSubject: templateData.subject ?? '',
+              emailContentHtml: templateData.contentHtml ?? '',
+              smsContent: templateData.contentText ?? ''
             }
           }
         });

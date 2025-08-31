@@ -58,7 +58,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   // Check authorization on mount
   useEffect(() => {
     if (!user) {
-      router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+      // Wait for router to be ready before redirecting to avoid using [id] literal
+      if (router.isReady) {
+        router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+      }
       return;
     }
 
@@ -165,11 +168,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
                       onClick={async () => {
                         try {
                           await signOut();
-                          router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+                          router.push('/login?redirect=' + encodeURIComponent(router.isReady ? router.asPath : '/admin'));
                         } catch (error) {
                           console.error('Sign out error:', error);
                           // Force navigation even if signOut fails
-                          router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+                          router.push('/login?redirect=' + encodeURIComponent(router.isReady ? router.asPath : '/admin'));
                         }
                       }}
                       className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition-colors"

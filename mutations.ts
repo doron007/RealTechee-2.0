@@ -369,6 +369,10 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -391,6 +395,10 @@ export const createContacts = /* GraphQL */ `mutation CreateContacts(
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -582,13 +590,21 @@ export const createNotificationQueue = /* GraphQL */ `mutation CreateNotificatio
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -609,21 +625,29 @@ export const createNotificationTemplate = /* GraphQL */ `mutation CreateNotifica
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -1301,6 +1325,10 @@ export const createProperties = /* GraphQL */ `mutation CreateProperties(
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -1660,40 +1688,654 @@ export const createQuotes = /* GraphQL */ `mutation CreateQuotes(
   APITypes.CreateQuotesMutationVariables,
   APITypes.CreateQuotesMutation
 >;
+export const createRequestAssignments = /* GraphQL */ `mutation CreateRequestAssignments(
+  $condition: ModelRequestAssignmentsConditionInput
+  $input: CreateRequestAssignmentsInput!
+) {
+  createRequestAssignments(condition: $condition, input: $input) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestAssignmentsMutationVariables,
+  APITypes.CreateRequestAssignmentsMutation
+>;
+export const createRequestInformationItems = /* GraphQL */ `mutation CreateRequestInformationItems(
+  $condition: ModelRequestInformationItemsConditionInput
+  $input: CreateRequestInformationItemsInput!
+) {
+  createRequestInformationItems(condition: $condition, input: $input) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestInformationItemsMutationVariables,
+  APITypes.CreateRequestInformationItemsMutation
+>;
+export const createRequestNotes = /* GraphQL */ `mutation CreateRequestNotes(
+  $condition: ModelRequestNotesConditionInput
+  $input: CreateRequestNotesInput!
+) {
+  createRequestNotes(condition: $condition, input: $input) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestNotesMutationVariables,
+  APITypes.CreateRequestNotesMutation
+>;
+export const createRequestScopeItems = /* GraphQL */ `mutation CreateRequestScopeItems(
+  $condition: ModelRequestScopeItemsConditionInput
+  $input: CreateRequestScopeItemsInput!
+) {
+  createRequestScopeItems(condition: $condition, input: $input) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestScopeItemsMutationVariables,
+  APITypes.CreateRequestScopeItemsMutation
+>;
+export const createRequestStatusHistory = /* GraphQL */ `mutation CreateRequestStatusHistory(
+  $condition: ModelRequestStatusHistoryConditionInput
+  $input: CreateRequestStatusHistoryInput!
+) {
+  createRequestStatusHistory(condition: $condition, input: $input) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestStatusHistoryMutationVariables,
+  APITypes.CreateRequestStatusHistoryMutation
+>;
+export const createRequestWorkflowStates = /* GraphQL */ `mutation CreateRequestWorkflowStates(
+  $condition: ModelRequestWorkflowStatesConditionInput
+  $input: CreateRequestWorkflowStatesInput!
+) {
+  createRequestWorkflowStates(condition: $condition, input: $input) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateRequestWorkflowStatesMutationVariables,
+  APITypes.CreateRequestWorkflowStatesMutation
+>;
 export const createRequests = /* GraphQL */ `mutation CreateRequests(
   $condition: ModelRequestsConditionInput
   $input: CreateRequestsInput!
 ) {
   createRequests(condition: $condition, input: $input) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -1701,6 +2343,10 @@ export const createRequests = /* GraphQL */ `mutation CreateRequests(
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -1791,11 +2437,16 @@ export const createSignalNotificationHooks = /* GraphQL */ `mutation CreateSigna
   $input: CreateSignalNotificationHooksInput!
 ) {
   createSignalNotificationHooks(condition: $condition, input: $input) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -1807,13 +2458,21 @@ export const createSignalNotificationHooks = /* GraphQL */ `mutation CreateSigna
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt
@@ -2185,6 +2844,10 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -2207,6 +2870,10 @@ export const deleteContacts = /* GraphQL */ `mutation DeleteContacts(
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -2398,13 +3065,21 @@ export const deleteNotificationQueue = /* GraphQL */ `mutation DeleteNotificatio
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -2425,21 +3100,29 @@ export const deleteNotificationTemplate = /* GraphQL */ `mutation DeleteNotifica
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -3117,6 +3800,10 @@ export const deleteProperties = /* GraphQL */ `mutation DeleteProperties(
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -3476,40 +4163,654 @@ export const deleteQuotes = /* GraphQL */ `mutation DeleteQuotes(
   APITypes.DeleteQuotesMutationVariables,
   APITypes.DeleteQuotesMutation
 >;
+export const deleteRequestAssignments = /* GraphQL */ `mutation DeleteRequestAssignments(
+  $condition: ModelRequestAssignmentsConditionInput
+  $input: DeleteRequestAssignmentsInput!
+) {
+  deleteRequestAssignments(condition: $condition, input: $input) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestAssignmentsMutationVariables,
+  APITypes.DeleteRequestAssignmentsMutation
+>;
+export const deleteRequestInformationItems = /* GraphQL */ `mutation DeleteRequestInformationItems(
+  $condition: ModelRequestInformationItemsConditionInput
+  $input: DeleteRequestInformationItemsInput!
+) {
+  deleteRequestInformationItems(condition: $condition, input: $input) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestInformationItemsMutationVariables,
+  APITypes.DeleteRequestInformationItemsMutation
+>;
+export const deleteRequestNotes = /* GraphQL */ `mutation DeleteRequestNotes(
+  $condition: ModelRequestNotesConditionInput
+  $input: DeleteRequestNotesInput!
+) {
+  deleteRequestNotes(condition: $condition, input: $input) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestNotesMutationVariables,
+  APITypes.DeleteRequestNotesMutation
+>;
+export const deleteRequestScopeItems = /* GraphQL */ `mutation DeleteRequestScopeItems(
+  $condition: ModelRequestScopeItemsConditionInput
+  $input: DeleteRequestScopeItemsInput!
+) {
+  deleteRequestScopeItems(condition: $condition, input: $input) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestScopeItemsMutationVariables,
+  APITypes.DeleteRequestScopeItemsMutation
+>;
+export const deleteRequestStatusHistory = /* GraphQL */ `mutation DeleteRequestStatusHistory(
+  $condition: ModelRequestStatusHistoryConditionInput
+  $input: DeleteRequestStatusHistoryInput!
+) {
+  deleteRequestStatusHistory(condition: $condition, input: $input) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestStatusHistoryMutationVariables,
+  APITypes.DeleteRequestStatusHistoryMutation
+>;
+export const deleteRequestWorkflowStates = /* GraphQL */ `mutation DeleteRequestWorkflowStates(
+  $condition: ModelRequestWorkflowStatesConditionInput
+  $input: DeleteRequestWorkflowStatesInput!
+) {
+  deleteRequestWorkflowStates(condition: $condition, input: $input) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteRequestWorkflowStatesMutationVariables,
+  APITypes.DeleteRequestWorkflowStatesMutation
+>;
 export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
   $condition: ModelRequestsConditionInput
   $input: DeleteRequestsInput!
 ) {
   deleteRequests(condition: $condition, input: $input) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -3517,6 +4818,10 @@ export const deleteRequests = /* GraphQL */ `mutation DeleteRequests(
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -3607,11 +4912,16 @@ export const deleteSignalNotificationHooks = /* GraphQL */ `mutation DeleteSigna
   $input: DeleteSignalNotificationHooksInput!
 ) {
   deleteSignalNotificationHooks(condition: $condition, input: $input) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -3623,13 +4933,21 @@ export const deleteSignalNotificationHooks = /* GraphQL */ `mutation DeleteSigna
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt
@@ -4001,6 +5319,10 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
       nextToken
       __typename
     }
+    agentRequests {
+      nextToken
+      __typename
+    }
     assignmentPriority
     brokerage
     canReceiveNotifications
@@ -4023,6 +5345,10 @@ export const updateContacts = /* GraphQL */ `mutation UpdateContacts(
       __typename
     }
     homeownerQuotes {
+      nextToken
+      __typename
+    }
+    homeownerRequests {
       nextToken
       __typename
     }
@@ -4214,13 +5540,21 @@ export const updateNotificationQueue = /* GraphQL */ `mutation UpdateNotificatio
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     templateId
@@ -4241,21 +5575,29 @@ export const updateNotificationTemplate = /* GraphQL */ `mutation UpdateNotifica
     contentHtml
     contentText
     createdAt
+    createdBy
+    emailContentHtml
+    emailSubject
+    formType
     id
     isActive
+    lastModifiedBy
     name
     notifications {
       nextToken
       __typename
     }
     owner
+    previewData
     signalHooks {
       nextToken
       __typename
     }
+    smsContent
     subject
     updatedAt
     variables
+    version
     __typename
   }
 }
@@ -4933,6 +6275,10 @@ export const updateProperties = /* GraphQL */ `mutation UpdateProperties(
     propertyFullAddress
     propertyType
     redfinLink
+    requests {
+      nextToken
+      __typename
+    }
     sizeSqft
     state
     updatedAt
@@ -5292,40 +6638,654 @@ export const updateQuotes = /* GraphQL */ `mutation UpdateQuotes(
   APITypes.UpdateQuotesMutationVariables,
   APITypes.UpdateQuotesMutation
 >;
+export const updateRequestAssignments = /* GraphQL */ `mutation UpdateRequestAssignments(
+  $condition: ModelRequestAssignmentsConditionInput
+  $input: UpdateRequestAssignmentsInput!
+) {
+  updateRequestAssignments(condition: $condition, input: $input) {
+    actualHours
+    assignedById
+    assignedByName
+    assignedToId
+    assignedToName
+    assignedToRole
+    assignmentReason
+    assignmentType
+    completedAt
+    createdAt
+    dueDate
+    estimatedHours
+    id
+    priority
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    status
+    transferReason
+    transferredAt
+    transferredToId
+    transferredToName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestAssignmentsMutationVariables,
+  APITypes.UpdateRequestAssignmentsMutation
+>;
+export const updateRequestInformationItems = /* GraphQL */ `mutation UpdateRequestInformationItems(
+  $condition: ModelRequestInformationItemsConditionInput
+  $input: UpdateRequestInformationItemsInput!
+) {
+  updateRequestInformationItems(condition: $condition, input: $input) {
+    attachments
+    category
+    createdAt
+    description
+    followUpDate
+    followUpRequired
+    id
+    importance
+    itemName
+    notes
+    receivedDate
+    remindersSent
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    requestedBy
+    requestedDate
+    source
+    status
+    updatedAt
+    value
+    verifiedDate
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestInformationItemsMutationVariables,
+  APITypes.UpdateRequestInformationItemsMutation
+>;
+export const updateRequestNotes = /* GraphQL */ `mutation UpdateRequestNotes(
+  $condition: ModelRequestNotesConditionInput
+  $input: UpdateRequestNotesInput!
+) {
+  updateRequestNotes(condition: $condition, input: $input) {
+    attachments
+    authorId
+    authorName
+    authorRole
+    category
+    clientResponse
+    communicationMethod
+    content
+    createdAt
+    followUpDate
+    followUpRequired
+    id
+    isPrivate
+    priority
+    relatedToStatusChange
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    tags
+    type
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestNotesMutationVariables,
+  APITypes.UpdateRequestNotesMutation
+>;
+export const updateRequestScopeItems = /* GraphQL */ `mutation UpdateRequestScopeItems(
+  $condition: ModelRequestScopeItemsConditionInput
+  $input: UpdateRequestScopeItemsInput!
+) {
+  updateRequestScopeItems(condition: $condition, input: $input) {
+    approvedBy
+    approvedDate
+    category
+    childItems {
+      nextToken
+      __typename
+    }
+    clientApproval
+    clientNotes
+    complexity
+    createdAt
+    createdBy
+    description
+    estimatedCost
+    estimatedHours
+    id
+    isCategory
+    laborRequirements
+    materials
+    name
+    orderIndex
+    parentItem {
+      approvedBy
+      approvedDate
+      category
+      clientApproval
+      clientNotes
+      complexity
+      createdAt
+      createdBy
+      description
+      estimatedCost
+      estimatedHours
+      id
+      isCategory
+      laborRequirements
+      materials
+      name
+      orderIndex
+      parentItemId
+      requestId
+      specifications
+      status
+      timeline
+      updatedAt
+      updatedBy
+      __typename
+    }
+    parentItemId
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    specifications
+    status
+    timeline
+    updatedAt
+    updatedBy
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestScopeItemsMutationVariables,
+  APITypes.UpdateRequestScopeItemsMutation
+>;
+export const updateRequestStatusHistory = /* GraphQL */ `mutation UpdateRequestStatusHistory(
+  $condition: ModelRequestStatusHistoryConditionInput
+  $input: UpdateRequestStatusHistoryInput!
+) {
+  updateRequestStatusHistory(condition: $condition, input: $input) {
+    automationRule
+    businessImpact
+    clientNotified
+    createdAt
+    expectedDuration
+    id
+    internalNotification
+    metadata
+    newStatus
+    previousStatus
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    statusReason
+    timeInPreviousStatus
+    timestamp
+    triggeredBy
+    triggeredById
+    triggeredByName
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestStatusHistoryMutationVariables,
+  APITypes.UpdateRequestStatusHistoryMutation
+>;
+export const updateRequestWorkflowStates = /* GraphQL */ `mutation UpdateRequestWorkflowStates(
+  $condition: ModelRequestWorkflowStatesConditionInput
+  $input: UpdateRequestWorkflowStatesInput!
+) {
+  updateRequestWorkflowStates(condition: $condition, input: $input) {
+    actualCompletionDate
+    automationEnabled
+    availableActions
+    completedSteps
+    createdAt
+    currentState
+    expectedCompletionDate
+    id
+    nextAutomationCheck
+    progress
+    request {
+      accountExecutive
+      addressId
+      agentContactId
+      archived
+      archivedDate
+      assignedDate
+      assignedTo
+      bookingId
+      budget
+      clientResponseDate
+      createdAt
+      estimatedValue
+      expiredDate
+      followUpDate
+      homeownerContactId
+      id
+      informationGatheringStatus
+      lastContactDate
+      leadFromSync
+      leadFromVenturaStone
+      leadSource
+      message
+      missingInformation
+      moveToQuotingDate
+      needFinance
+      officeNotes
+      owner
+      priority
+      product
+      readinessScore
+      relationToProperty
+      requestedSlot
+      requestedVisitDateTime
+      rtDigitalSelection
+      scopeDefinitionStatus
+      source
+      status
+      statusImage
+      statusOrder
+      tags
+      updatedAt
+      uploadedMedia
+      uploadedVideos
+      uplodedDocuments
+      virtualWalkthrough
+      visitDate
+      visitorId
+      __typename
+    }
+    requestId
+    startedAt
+    stateData
+    totalSteps
+    updatedAt
+    workflowName
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateRequestWorkflowStatesMutationVariables,
+  APITypes.UpdateRequestWorkflowStatesMutation
+>;
 export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
   $condition: ModelRequestsConditionInput
   $input: UpdateRequestsInput!
 ) {
   updateRequests(condition: $condition, input: $input) {
     accountExecutive
+    address {
+      bathrooms
+      bedrooms
+      city
+      createdAt
+      floors
+      houseAddress
+      id
+      owner
+      propertyFullAddress
+      propertyType
+      redfinLink
+      sizeSqft
+      state
+      updatedAt
+      yearBuilt
+      zillowLink
+      zip
+      __typename
+    }
     addressId
+    agent {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     agentContactId
     archived
     archivedDate
     assignedDate
     assignedTo
+    assignments {
+      nextToken
+      __typename
+    }
     bookingId
     budget
+    clientResponseDate
     createdAt
+    estimatedValue
     expiredDate
+    followUpDate
+    homeowner {
+      assignmentPriority
+      brokerage
+      canReceiveNotifications
+      company
+      createdAt
+      email
+      emailNotifications
+      firstName
+      fullName
+      id
+      isActive
+      lastName
+      mobile
+      owner
+      phone
+      roleType
+      smsNotifications
+      updatedAt
+      __typename
+    }
     homeownerContactId
     id
+    informationGatheringStatus
+    informationItems {
+      nextToken
+      __typename
+    }
+    lastContactDate
     leadFromSync
     leadFromVenturaStone
     leadSource
     message
+    missingInformation
     moveToQuotingDate
     needFinance
+    notes {
+      nextToken
+      __typename
+    }
     officeNotes
     owner
+    priority
     product
+    readinessScore
     relationToProperty
     requestedSlot
     requestedVisitDateTime
     rtDigitalSelection
+    scopeDefinitionStatus
+    scopeItems {
+      nextToken
+      __typename
+    }
+    source
     status
+    statusHistory {
+      nextToken
+      __typename
+    }
     statusImage
     statusOrder
+    tags
     updatedAt
     uploadedMedia
     uploadedVideos
@@ -5333,6 +7293,10 @@ export const updateRequests = /* GraphQL */ `mutation UpdateRequests(
     virtualWalkthrough
     visitDate
     visitorId
+    workflowStates {
+      nextToken
+      __typename
+    }
     __typename
   }
 }
@@ -5423,11 +7387,16 @@ export const updateSignalNotificationHooks = /* GraphQL */ `mutation UpdateSigna
   $input: UpdateSignalNotificationHooksInput!
 ) {
   updateSignalNotificationHooks(condition: $condition, input: $input) {
+    channel
     channels
     conditions
     createdAt
+    createdBy
+    deliveryDelay
     enabled
     id
+    lastModifiedBy
+    maxRetries
     notificationTemplateId
     priority
     recipientDynamic
@@ -5439,13 +7408,21 @@ export const updateSignalNotificationHooks = /* GraphQL */ `mutation UpdateSigna
       contentHtml
       contentText
       createdAt
+      createdBy
+      emailContentHtml
+      emailSubject
+      formType
       id
       isActive
+      lastModifiedBy
       name
       owner
+      previewData
+      smsContent
       subject
       updatedAt
       variables
+      version
       __typename
     }
     updatedAt

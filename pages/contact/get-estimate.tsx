@@ -433,33 +433,60 @@ const GetEstimate: NextPage = () => {
         searchParams: typeof window !== 'undefined' ? window.location.search : 'server'
       });
       
-      const requestInput = {
+      // Build robust request input with safe defaults and proper type handling
+      const requestInput: Record<string, any> = {
+        // Core required fields with safe defaults
         message: formData.notes || '',
         relationToProperty: formData.relationToProperty,
-        needFinance: formData.needFinance,
+        needFinance: Boolean(formData.needFinance), // Ensure boolean type
         rtDigitalSelection: formData.rtDigitalSelection,
-        requestedVisitDateTime: formData.requestedVisitDateTime || null,
-        leadSource: isTestSubmission ? 'E2E_TEST' : 'Website', // Use existing leadSource field for test marking
+        leadSource: isTestSubmission ? 'E2E_TEST' : 'Website',
         assignedTo: 'Unassigned',
         status: 'New',
         
-        // Add test session ID to officeNotes if this is a test (using existing field)
-        officeNotes: isTestSubmission ? `TEST_SESSION: ${testSessionId}` : '',
+        // File arrays as JSON strings (matching existing data format)
+        uploadedMedia: mediaFiles.length > 0 ? JSON.stringify(mediaFiles.map((f: any) => f.url)) : '[]',
+        uplodedDocuments: docFiles.length > 0 ? JSON.stringify(docFiles.map((f: any) => f.url)) : '[]', // Note: typo matches schema
+        uploadedVideos: videoFiles.length > 0 ? JSON.stringify(videoFiles.map((f: any) => f.url)) : '[]',
         
-        // File URLs as JSON strings (matching schema)
-        uploadedMedia: JSON.stringify(mediaFiles.map((f: any) => f.url)),
-        uplodedDocuments: JSON.stringify(docFiles.map((f: any) => f.url)), // Note: typo in schema
-        uploadedVideos: JSON.stringify(videoFiles.map((f: any) => f.url)),
-        
-        // Foreign keys - agent priority logic applied
+        // Required foreign keys
         addressId: propertyData.id,
-        homeownerContactId: finalHomeownerContactId, // null if emails match
-        agentContactId: finalAgentContactId, // primary contact when emails match
+        agentContactId: finalAgentContactId,
         
-        // System fields with proper user attribution
-              // createdAt/updatedAt are automatically managed by Amplify
+        // System fields
         owner: recordOwner
       };
+
+      // Conditionally add optional fields only if they have meaningful values
+      if (formData.requestedVisitDateTime && formData.requestedVisitDateTime.trim()) {
+        requestInput.requestedVisitDateTime = formData.requestedVisitDateTime;
+      }
+      
+      if (finalHomeownerContactId) {
+        requestInput.homeownerContactId = finalHomeownerContactId;
+      }
+      
+      if (isTestSubmission && testSessionId) {
+        requestInput.officeNotes = `TEST_SESSION: ${testSessionId}`;
+      }
+
+      // Remove any undefined values to prevent GraphQL issues
+      Object.keys(requestInput).forEach(key => {
+        if (requestInput[key] === undefined) {
+          delete requestInput[key];
+        }
+      });
+
+      logger.info('=== REQUEST INPUT PREPARED ===', {
+        timestamp: new Date().toISOString(),
+        fieldsIncluded: Object.keys(requestInput),
+        hasFiles: {
+          media: mediaFiles.length > 0,
+          documents: docFiles.length > 0, 
+          videos: videoFiles.length > 0
+        },
+        isTestSubmission
+      });
       
       const requestResponse = await client.graphql({
         query: createRequests,
@@ -593,14 +620,87 @@ const GetEstimate: NextPage = () => {
         behavior: 'smooth'
       });
       
-    } catch (error) {
-      const errorObj = error instanceof Error ? error : new Error(String(error) || 'Unknown error');
-      
-      logger.error('=== FORM SUBMISSION FAILED ===', { 
+  } catch (error: unknown) {
+      // Enhanced error handling for robust business continuity
+      type GraphQLErrorLike = { message: string; extensions?: any; path?: string };
+      type NetworkErrorLike = { message?: string; statusCode?: number };
+      type AmplifyGraphQLError = { errors?: GraphQLErrorLike[]; message?: string; networkError?: NetworkErrorLike } & Record<string, any>;
+
+      const e = (error || {}) as AmplifyGraphQLError;
+
+      const errorDetails: {
+        timestamp: string;
+        rawError: unknown;
+        errorType: string;
+        isGraphQLError: boolean;
+        graphQLErrors: GraphQLErrorLike[];
+        networkError: { message: string; statusCode?: number } | null;
+        message: string;
+      } = {
         timestamp: new Date().toISOString(),
-        error: errorObj.message,
-        stack: errorObj.stack
+        rawError: error,
+        errorType: typeof error,
+        isGraphQLError: false,
+        graphQLErrors: [],
+        networkError: null,
+        message: 'Unknown error'
+      };
+
+      // Extract GraphQL-specific error details
+      if (e && typeof e === 'object') {
+        // Handle AWS Amplify GraphQL errors
+        if (Array.isArray(e.errors)) {
+          errorDetails.isGraphQLError = true;
+          errorDetails.graphQLErrors = e.errors.map((err: GraphQLErrorLike) => ({
+            message: err?.message,
+            extensions: err?.extensions,
+            path: err?.path
+          }));
+          errorDetails.message = e.errors.map((ge: GraphQLErrorLike) => ge?.message).join('; ');
+        } else if (typeof e.message === 'string') {
+          errorDetails.message = e.message;
+        } else if (typeof (e as any).toString === 'function') {
+          errorDetails.message = (e as any).toString();
+        }
+
+        // Check for network errors
+        if (e.networkError) {
+          errorDetails.networkError = {
+            message: e.networkError.message || 'Network error',
+            statusCode: e.networkError.statusCode
+          };
+        }
+      }
+
+      const errorObj = new Error(errorDetails.message);
+      errorObj.name = errorDetails.isGraphQLError ? 'GraphQLError' : 'FormSubmissionError';
+
+      logger.error('=== FORM SUBMISSION FAILED ===', { 
+        ...errorDetails,
+  stack: (error as any)?.stack
       });
+
+      // For business continuity, try to log the attempt even if submission fails
+      try {
+        logger.error('=== BUSINESS CONTINUITY: LOGGING FAILED SUBMISSION ATTEMPT ===', {
+          timestamp: new Date().toISOString(),
+          formData: {
+            agentEmail: formData.agentInfo?.email,
+            agentName: formData.agentInfo?.fullName, 
+            propertyAddress: formData.propertyAddress?.streetAddress,
+            relationToProperty: formData.relationToProperty,
+            isTestSubmission: typeof window !== 'undefined' && (
+              window.location.search.includes('test=true') ||
+              window.navigator.userAgent.includes('HeadlessChrome') ||
+              window.navigator.userAgent.includes('Playwright')
+            )
+          },
+          errorSummary: errorDetails.message,
+          recoveryNote: 'Manual follow-up required - form data preserved above'
+        });
+      } catch (logError) {
+        console.error('Failed to log business continuity info:', logError);
+      }
       
       setSubmitStatus('error');
       setErrorDetails(errorObj);

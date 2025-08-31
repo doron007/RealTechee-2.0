@@ -613,14 +613,16 @@ const NotificationManagement: React.FC = () => {
           query: createNotificationTemplate,
           variables: {
             input: {
+              // Required base fields
               name: templateData.name || 'Untitled Template',
               channel: templateData.channel as NotificationTemplateChannel,
-              subject: templateData.subject,
-              contentHtml: templateData.contentHtml,
-              contentText: templateData.contentText,
               isActive: templateData.isActive,
               variables: templateData.variables,
-              owner: templateData.owner
+              owner: templateData.owner,
+              // New generated input fields mapped from legacy fields
+              emailSubject: templateData.subject ?? '',
+              emailContentHtml: templateData.contentHtml ?? '',
+              smsContent: templateData.contentText ?? ''
             }
           }
         });
@@ -632,11 +634,12 @@ const NotificationManagement: React.FC = () => {
               id: editingTemplate.id,
               name: templateData.name,
               channel: templateData.channel as NotificationTemplateChannel,
-              subject: templateData.subject,
-              contentHtml: templateData.contentHtml,
-              contentText: templateData.contentText,
               isActive: templateData.isActive,
-              variables: templateData.variables
+              variables: templateData.variables,
+              // Maintain backward compatibility by mapping to new fields
+              emailSubject: templateData.subject ?? '',
+              emailContentHtml: templateData.contentHtml ?? '',
+              smsContent: templateData.contentText ?? ''
             }
           }
         });
@@ -890,9 +893,10 @@ const NotificationManagement: React.FC = () => {
       const testTemplate = {
         name: 'Admin Test Template',
         channel: NotificationTemplateChannel.EMAIL,
-        subject: 'Test Notification - {{customer.name}}',
-        contentHtml: '<html><body><h2>Test Notification</h2><p>Hello {{customer.name}},</p><p>{{message}}</p><p>Sent at: {{timestamp}}</p></body></html>',
-        contentText: 'Test Notification: Hello {{customer.name}}, {{message}} - Sent at: {{timestamp}}',
+        // Mapped fields for new input
+        emailSubject: 'Test Notification - {{customer.name}}',
+        emailContentHtml: '<html><body><h2>Test Notification</h2><p>Hello {{customer.name}},</p><p>{{message}}</p><p>Sent at: {{timestamp}}</p></body></html>',
+        smsContent: 'Test Notification: Hello {{customer.name}}, {{message}} - Sent at: {{timestamp}}',
         isActive: true,
         variables: JSON.stringify(['customer.name', 'message', 'timestamp']),
         owner: 'admin'
@@ -927,8 +931,8 @@ const NotificationManagement: React.FC = () => {
         id: 'get-estimate-template-001',
         name: 'Get Estimate Request - Email',
         channel: NotificationTemplateChannel.EMAIL,
-        subject: 'New Estimate Request - {{customer.name}} ({{property.address}})',
-        contentHtml: `
+        emailSubject: 'New Estimate Request - {{customer.name}} ({{property.address}})',
+        emailContentHtml: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #2563eb;">New Estimate Request Received</h2>
             
@@ -972,7 +976,7 @@ const NotificationManagement: React.FC = () => {
             </p>
           </div>
         `,
-        contentText: `
+  smsContent: `
 New Estimate Request Received
 
 CUSTOMER INFORMATION:
@@ -1041,8 +1045,10 @@ Please respond to the customer within 24 hours.
         id: 'get-estimate-sms-template-001',
         name: 'Get Estimate Request - SMS',
         channel: NotificationTemplateChannel.SMS,
-        subject: 'New Estimate Request',
-        contentText: `🏠 NEW ESTIMATE REQUEST
+        // For SMS we still need to satisfy email fields in the input shape
+        emailSubject: '',
+        emailContentHtml: '',
+        smsContent: `🏠 NEW ESTIMATE REQUEST
 
 Customer: {{customer.name}}
 Phone: {{customer.phone}}

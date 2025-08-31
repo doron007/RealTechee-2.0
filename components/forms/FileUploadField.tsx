@@ -96,7 +96,7 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
     }
   }, []);
 
-  // Create clean address for folder structure
+  // Create normalized address for folder structure
   const getCleanAddress = () => {
     if (!addressInfo?.streetAddress) return 'unknown-address';
     
@@ -105,7 +105,7 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
       .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special characters except spaces
       .replace(/\s+/g, '_') // Replace spaces with underscores
       .toLowerCase()
-      .substring(0, 50); // Limit length
+      .substring(0, 100); // Allow longer addresses to match expected format
   };
 
   // Determine file category based on MIME type
@@ -146,8 +146,8 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
     const category = getFileCategory(file);
     const cleanAddress = getCleanAddress();
     
-    // Use EXACT same pattern as successful debug page
-    const fileKey = `form-uploads/${timestamp}-${sanitizedFileName}`;
+    // Create proper folder structure: address/requests/category/file
+    const fileKey = `${cleanAddress}/requests/${category}/${timestamp}-${sanitizedFileName}`;
 
     try {
       console.log('🔧 FileUploadField: Starting upload with key:', fileKey);
@@ -179,7 +179,7 @@ export const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
       // Return the actual S3 path that matches the upload location
       // This ensures the URL points to where the file actually exists
-      const actualPath = `/public/form-uploads/${timestamp}-${sanitizedFileName}`;
+      const actualPath = `/public/${cleanAddress}/requests/${category}/${timestamp}-${sanitizedFileName}`;
 
       return {
         id: fileId,
