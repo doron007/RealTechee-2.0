@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphQL Schema Inspector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .schema-nav {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: #e9ecef;
+        }
+        
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+        
+        .filter-group input,
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .schema-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .schema-sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .schema-tree {
+            list-style: none;
+        }
+        
+        .tree-item {
+            margin-bottom: 5px;
+        }
+        
+        .tree-node {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tree-node:hover {
+            background: #f8f9ff;
+        }
+        
+        .tree-node.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tree-icon {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .tree-children {
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 2px solid #f8f9fa;
+        }
+        
+        .schema-main {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .entity-header {
+            padding: 30px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .entity-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .entity-type {
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            background: #e9ecef;
+            border-radius: 20px;
+            color: #495057;
+        }
+        
+        .entity-description {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        
+        .entity-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .entity-body {
+            padding: 0;
+        }
+        
+        .section-tabs {
+            display: flex;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .section-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .section-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .section-tab:hover:not(.active) {
+            background: #f8f9fa;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .fields-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .field-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .field-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+        
+        .field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .field-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        
+        .field-type {
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            color: #495057;
+        }
+        
+        .field-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .field-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .required-indicator {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .relationships-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .relationship-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9ff;
+        }
+        
+        .relationship-type {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .relationship-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .relationship-target {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .authorization-rules {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        
+        .auth-rule {
+            background: white;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .auth-rule:last-child {
+            margin-bottom: 0;
+        }
+        
+        .auth-type {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 5px;
+        }
+        
+        .auth-permissions {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .schema-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .entity-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .relationships-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔧 RealTechee Schema Inspector</h1>
+        <p>Deep dive into GraphQL schema structure, relationships, and business rules</p>
+    </div>
+    
+    <div class="container">
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+        
+        <div class="schema-nav">
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showView('entities')">📋 Entities</div>
+                <div class="nav-tab" onclick="showView('relationships')">🔗 Relationships</div>
+                <div class="nav-tab" onclick="showView('queries')">🔍 Queries</div>
+                <div class="nav-tab" onclick="showView('mutations')">✏️ Mutations</div>
+                <div class="nav-tab" onclick="showView('authorization')">🔒 Authorization</div>
+                <div class="nav-tab" onclick="showView('statistics')">📊 Statistics</div>
+            </div>
+            
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label for="searchField">Search Schema</label>
+                    <input type="text" id="searchField" placeholder="Search entities, fields, types..." onkeyup="filterSchema()">
+                </div>
+                <div class="filter-group">
+                    <label for="entityFilter">Entity Type</label>
+                    <select id="entityFilter" onchange="filterSchema()">
+                        <option value="">All Entities</option>
+                        <option value="core">Core Business</option>
+                        <option value="notification">Notifications</option>
+                        <option value="admin">Administration</option>
+                        <option value="audit">Audit & Logs</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="fieldFilter">Field Type</label>
+                    <select id="fieldFilter" onchange="filterSchema()">
+                        <option value="">All Fields</option>
+                        <option value="string">String</option>
+                        <option value="email">Email</option>
+                        <option value="datetime">DateTime</option>
+                        <option value="enum">Enum</option>
+                        <option value="relationship">Relationships</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="schema-content">
+            <div class="schema-sidebar">
+                <h4>📋 Schema Explorer</h4>
+                <ul class="schema-tree" id="schemaTree">
+                    <!-- Schema tree will be populated by JavaScript -->
+                </ul>
+            </div>
+            
+            <div class="schema-main" id="schemaMain">
+                <div class="entity-header">
+                    <div class="entity-title">
+                        Contacts
+                        <span class="entity-type">Core Entity</span>
+                    </div>
+                    <div class="entity-description">
+                        Central contact management with role-based assignments and notification preferences
+                    </div>
+                    <div class="entity-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Fields</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Relationships</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Auth Rules</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="entity-body">
+                    <div class="section-tabs">
+                        <div class="section-tab active" onclick="showSection('fields')">Fields</div>
+                        <div class="section-tab" onclick="showSection('relationships')">Relationships</div>
+                        <div class="section-tab" onclick="showSection('authorization')">Authorization</div>
+                        <div class="section-tab" onclick="showSection('usage')">Usage Examples</div>
+                    </div>
+                    
+                    <div class="section-content" id="sectionContent">
+                        <div class="fields-grid">
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">fullName</div>
+                                    <div class="field-type">String</div>
+                                </div>
+                                <div class="field-description">Complete contact name for display purposes</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span>📝</span>
+                                        <span>Optional</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>🔍</span>
+                                        <span>Searchable</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">email</div>
+                                    <div class="field-type">Email!</div>
+                                </div>
+                                <div class="field-description">Primary email address (unique identifier)</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span class="required-indicator">*</span>
+                                        <span>Required</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>🔑</span>
+                                        <span>Unique</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>📧</span>
+                                        <span>Email validation</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">roleType</div>
+                                    <div class="field-type">String</div>
+                                </div>
+                                <div class="field-description">Business role: 'AE', 'PM', 'Admin', 'Customer', etc.</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span>🏷️</span>
+                                        <span>Business Logic</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>🔄</span>
+                                        <span>Assignment Rules</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">assignmentPriority</div>
+                                    <div class="field-type">Integer</div>
+                                </div>
+                                <div class="field-description">Priority for automatic assignments (1 = highest)</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span>📊</span>
+                                        <span>Default: 1</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>⚡</span>
+                                        <span>Auto-assignment</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">emailNotifications</div>
+                                    <div class="field-type">Boolean</div>
+                                </div>
+                                <div class="field-description">Email notification preference</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span>✅</span>
+                                        <span>Default: true</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>📧</span>
+                                        <span>Notification System</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="field-card">
+                                <div class="field-header">
+                                    <div class="field-name">smsNotifications</div>
+                                    <div class="field-type">Boolean</div>
+                                </div>
+                                <div class="field-description">SMS notification preference</div>
+                                <div class="field-meta">
+                                    <div class="meta-item">
+                                        <span>❌</span>
+                                        <span>Default: false</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span>📱</span>
+                                        <span>SMS System</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Schema data structure (simplified representation of the actual GraphQL schema)
+        const schemaData = {
+            entities: {
+                // Core Business Entities
+                'Contacts': {
+                    type: 'core',
+                    description: 'Central contact management with role-based assignments and notification preferences',
+                    fields: {
+                        'id': { type: 'ID!', description: 'Unique identifier', required: true },
+                        'fullName': { type: 'String', description: 'Complete contact name for display purposes' },
+                        'firstName': { type: 'String', description: 'First name' },
+                        'lastName': { type: 'String', description: 'Last name' },
+                        'email': { type: 'Email!', description: 'Primary email address (unique identifier)', required: true, unique: true },
+                        'phone': { type: 'String', description: 'Primary phone number' },
+                        'mobile': { type: 'String', description: 'Mobile phone number' },
+                        'company': { type: 'String', description: 'Company name' },
+                        'brokerage': { type: 'String', description: 'Real estate brokerage' },
+                        'roleType': { type: 'String', description: 'Business role: AE, PM, Admin, Customer, etc.' },
+                        'isActive': { type: 'Boolean', description: 'Whether contact is active for assignments', default: true },
+                        'assignmentPriority': { type: 'Integer', description: 'Priority for automatic assignment (1=highest)', default: 1 },
+                        'emailNotifications': { type: 'Boolean', description: 'Email notification preference', default: true },
+                        'smsNotifications': { type: 'Boolean', description: 'SMS notification preference', default: false },
+                        'canReceiveNotifications': { type: 'Boolean', description: 'Master notification toggle', default: true }
+                    },
+                    relationships: {
+                        'agentProjects': { type: 'hasMany', target: 'Projects', field: 'agentContactId' },
+                        'homeownerProjects': { type: 'hasMany', target: 'Projects', field: 'homeownerContactId' },
+                        'agentQuotes': { type: 'hasMany', target: 'Quotes', field: 'agentContactId' },
+                        'homeownerQuotes': { type: 'hasMany', target: 'Quotes', field: 'homeownerContactId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read', 'create', 'update'] }
+                    ]
+                },
+                'Requests': {
+                    type: 'core',
+                    description: 'Customer service requests and lead tracking with enhanced case management',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'status': { type: 'String', description: 'Current request status' },
+                        'priority': { type: 'Enum', description: 'low | medium | high | urgent' },
+                        'product': { type: 'String', description: 'Requested service/product' },
+                        'message': { type: 'String', description: 'Customer message/description' },
+                        'estimatedValue': { type: 'Float', description: 'Potential project value' },
+                        'readinessScore': { type: 'Integer', description: '0-100 score for quote readiness', default: 0 },
+                        'followUpDate': { type: 'DateTime', description: 'Next scheduled follow-up' },
+                        'lastContactDate': { type: 'DateTime', description: 'Last time client was contacted' },
+                        'informationGatheringStatus': { type: 'Enum', description: 'pending | in_progress | completed' },
+                        'scopeDefinitionStatus': { type: 'Enum', description: 'not_started | in_progress | completed' },
+                        'missingInformation': { type: 'JSON', description: 'Array of missing information items' },
+                        'assignedTo': { type: 'String', description: 'Assigned agent email' },
+                        'assignedDate': { type: 'DateTime', description: 'When request was assigned' }
+                    },
+                    relationships: {
+                        'agent': { type: 'belongsTo', target: 'Contacts', field: 'agentContactId' },
+                        'homeowner': { type: 'belongsTo', target: 'Contacts', field: 'homeownerContactId' },
+                        'address': { type: 'belongsTo', target: 'Properties', field: 'addressId' },
+                        'notes': { type: 'hasMany', target: 'RequestNotes', field: 'requestId' },
+                        'assignments': { type: 'hasMany', target: 'RequestAssignments', field: 'requestId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['create', 'read'] },
+                        { type: 'authenticated', operations: ['read', 'update', 'delete'] }
+                    ]
+                },
+                'Projects': {
+                    type: 'core',
+                    description: 'Active renovation projects with full lifecycle management',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'title': { type: 'String', description: 'Project title/name' },
+                        'status': { type: 'String', description: 'Current project status' },
+                        'description': { type: 'String', description: 'Project description' },
+                        'budget': { type: 'String', description: 'Project budget allocation' },
+                        'boosterEstimatedCost': { type: 'Float', description: 'Estimated renovation costs' },
+                        'boosterActualCost': { type: 'Float', description: 'Actual costs incurred' },
+                        'revShareAmount': { type: 'Float', description: 'Revenue sharing amount' },
+                        'requestDate': { type: 'DateTime', description: 'Initial request date' },
+                        'estimatedClosingDate': { type: 'DateTime', description: 'Expected completion' },
+                        'closingDate': { type: 'DateTime', description: 'Actual completion date' }
+                    },
+                    relationships: {
+                        'agent': { type: 'belongsTo', target: 'Contacts', field: 'agentContactId' },
+                        'homeowner': { type: 'belongsTo', target: 'Contacts', field: 'homeownerContactId' },
+                        'homeowner2': { type: 'belongsTo', target: 'Contacts', field: 'homeowner2ContactId' },
+                        'homeowner3': { type: 'belongsTo', target: 'Contacts', field: 'homeowner3ContactId' },
+                        'address': { type: 'belongsTo', target: 'Properties', field: 'addressId' },
+                        'quotes': { type: 'hasMany', target: 'Quotes', field: 'projectId' },
+                        'milestones': { type: 'hasMany', target: 'ProjectMilestones', field: 'projectId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read', 'create', 'update'] }
+                    ]
+                },
+                'Quotes': {
+                    type: 'core',
+                    description: 'Quote generation and management with approval workflow',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'quoteNumber': { type: 'Integer', description: 'Unique quote number' },
+                        'title': { type: 'String', description: 'Quote title' },
+                        'status': { type: 'String', description: 'Quote status' },
+                        'totalPrice': { type: 'Float', description: 'Total quote price' },
+                        'totalCost': { type: 'Float', description: 'Total internal cost' },
+                        'budget': { type: 'Float', description: 'Project budget' },
+                        'operationManagerApproved': { type: 'Boolean', description: 'Operations approval' },
+                        'underwritingApproved': { type: 'Boolean', description: 'Underwriting approval' },
+                        'signed': { type: 'Boolean', description: 'Customer signature status' },
+                        'sentDate': { type: 'DateTime', description: 'When quote was sent' },
+                        'signedDate': { type: 'DateTime', description: 'When quote was signed' }
+                    },
+                    relationships: {
+                        'project': { type: 'belongsTo', target: 'Projects', field: 'projectId' },
+                        'agent': { type: 'belongsTo', target: 'Contacts', field: 'agentContactId' },
+                        'homeowner': { type: 'belongsTo', target: 'Contacts', field: 'homeownerContactId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read', 'create', 'update'] }
+                    ]
+                },
+                'Properties': {
+                    type: 'core',
+                    description: 'Property information and specifications',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'propertyFullAddress': { type: 'String', description: 'Complete formatted address' },
+                        'houseAddress': { type: 'String', description: 'Street address' },
+                        'city': { type: 'String', description: 'City name' },
+                        'state': { type: 'String', description: 'State abbreviation' },
+                        'zip': { type: 'String', description: 'ZIP/postal code' },
+                        'propertyType': { type: 'String', description: 'Type of property' },
+                        'bedrooms': { type: 'Float', description: 'Number of bedrooms' },
+                        'bathrooms': { type: 'Float', description: 'Number of bathrooms' },
+                        'sizeSqft': { type: 'Float', description: 'Square footage' },
+                        'yearBuilt': { type: 'Integer', description: 'Year property was built' }
+                    },
+                    relationships: {
+                        'projects': { type: 'hasMany', target: 'Projects', field: 'addressId' },
+                        'requests': { type: 'hasMany', target: 'Requests', field: 'addressId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read', 'create', 'update'] }
+                    ]
+                },
+                
+                // Notification System Entities
+                'SignalEvents': {
+                    type: 'notification',
+                    description: 'All emitted business signals for notification triggers',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'signalType': { type: 'String!', description: 'Type of signal emitted', required: true },
+                        'payload': { type: 'JSON!', description: 'Signal data payload', required: true },
+                        'emittedAt': { type: 'DateTime!', description: 'When signal was emitted', required: true },
+                        'emittedBy': { type: 'String', description: 'User or system identifier' },
+                        'source': { type: 'String', description: 'Signal source (form, admin, etc.)' },
+                        'processed': { type: 'Boolean', description: 'Processing status' }
+                    },
+                    relationships: {
+                        'triggeredNotifications': { type: 'hasMany', target: 'NotificationQueue', field: 'signalEventId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['create', 'read'] },
+                        { type: 'authenticated', operations: ['read', 'update'] }
+                    ]
+                },
+                'NotificationTemplate': {
+                    type: 'notification',
+                    description: 'Email and SMS templates for notifications',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'name': { type: 'String!', description: 'Template name', required: true },
+                        'formType': { type: 'String', description: 'Associated form type' },
+                        'emailSubject': { type: 'String!', description: 'Email subject line', required: true },
+                        'emailContentHtml': { type: 'String!', description: 'HTML email content', required: true },
+                        'smsContent': { type: 'String!', description: 'SMS message content', required: true },
+                        'variables': { type: 'JSON', description: 'Available template variables' },
+                        'isActive': { type: 'Boolean', description: 'Template active status' }
+                    },
+                    relationships: {
+                        'notifications': { type: 'hasMany', target: 'NotificationQueue', field: 'templateId' },
+                        'signalHooks': { type: 'hasMany', target: 'SignalNotificationHooks', field: 'notificationTemplateId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read', 'create', 'update'] }
+                    ]
+                },
+                'NotificationQueue': {
+                    type: 'notification',
+                    description: 'Notification delivery queue with retry logic',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'eventType': { type: 'String!', description: 'Type of notification event', required: true },
+                        'signalEventId': { type: 'ID', description: 'Originating signal reference' },
+                        'channels': { type: 'JSON!', description: 'Multi-channel delivery config', required: true },
+                        'recipientIds': { type: 'JSON!', description: 'Array of recipient Contact IDs', required: true },
+                        'status': { type: 'Enum', description: 'PENDING | SENT | FAILED | RETRYING' },
+                        'priority': { type: 'Enum', description: 'LOW | MEDIUM | HIGH' },
+                        'retryCount': { type: 'Integer', description: 'Number of retry attempts' },
+                        'scheduledAt': { type: 'DateTime', description: 'Scheduled delivery time' },
+                        'sentAt': { type: 'DateTime', description: 'Actual delivery time' }
+                    },
+                    relationships: {
+                        'template': { type: 'belongsTo', target: 'NotificationTemplate', field: 'templateId' },
+                        'signalEvent': { type: 'belongsTo', target: 'SignalEvents', field: 'signalEventId' }
+                    },
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['create', 'read'] },
+                        { type: 'authenticated', operations: ['read', 'update'] }
+                    ]
+                },
+                
+                // Audit and Admin Entities
+                'AuditLog': {
+                    type: 'audit',
+                    description: 'Generic audit log for all DynamoDB table changes',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'tableName': { type: 'String!', description: 'Table that was changed', required: true },
+                        'recordId': { type: 'ID!', description: 'ID of changed record', required: true },
+                        'action': { type: 'Enum', description: 'created | updated | deleted' },
+                        'changeType': { type: 'String', description: 'Context of change' },
+                        'previousData': { type: 'JSON', description: 'Data before change' },
+                        'newData': { type: 'JSON', description: 'Data after change' },
+                        'userId': { type: 'String', description: 'User who made change' },
+                        'userEmail': { type: 'Email', description: 'User email if available' },
+                        'timestamp': { type: 'DateTime!', description: 'When change occurred', required: true }
+                    },
+                    relationships: {},
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['create'] },
+                        { type: 'authenticated', operations: ['read'] },
+                        { type: 'groups', groups: ['admin', 'agent'], operations: ['read'] }
+                    ]
+                },
+                'AppPreferences': {
+                    type: 'admin',
+                    description: 'Application configuration and settings',
+                    fields: {
+                        'id': { type: 'ID!', required: true },
+                        'category': { type: 'String!', description: 'Setting category', required: true },
+                        'key': { type: 'String!', description: 'Setting key', required: true },
+                        'value': { type: 'String!', description: 'Setting value (JSON for complex)', required: true },
+                        'dataType': { type: 'Enum', description: 'string | number | boolean | json | encrypted' },
+                        'description': { type: 'String', description: 'Setting description' },
+                        'isSystemSetting': { type: 'Boolean', description: 'System vs user setting', default: false },
+                        'environment': { type: 'Enum', description: 'dev | staging | prod | all' }
+                    },
+                    relationships: {},
+                    authorization: [
+                        { type: 'publicApiKey', operations: ['read'] },
+                        { type: 'authenticated', operations: ['read'] },
+                        { type: 'groups', groups: ['admin'], operations: ['create', 'read', 'update', 'delete'] }
+                    ]
+                }
+            },
+            
+            queries: {
+                'getContacts': { returnType: 'Contacts', args: ['id: ID!'] },
+                'listContacts': { returnType: '[Contacts]', args: ['filter', 'limit', 'nextToken'] },
+                'getRequests': { returnType: 'Requests', args: ['id: ID!'] },
+                'listRequests': { returnType: '[Requests]', args: ['filter', 'limit', 'nextToken'] },
+                'getProjects': { returnType: 'Projects', args: ['id: ID!'] },
+                'listProjects': { returnType: '[Projects]', args: ['filter', 'limit', 'nextToken'] },
+                'getQuotes': { returnType: 'Quotes', args: ['id: ID!'] },
+                'listQuotes': { returnType: '[Quotes]', args: ['filter', 'limit', 'nextToken'] }
+            },
+            
+            mutations: {
+                'createContacts': { returnType: 'Contacts', args: ['input: CreateContactsInput!'] },
+                'updateContacts': { returnType: 'Contacts', args: ['input: UpdateContactsInput!'] },
+                'deleteContacts': { returnType: 'Contacts', args: ['input: DeleteContactsInput!'] },
+                'createRequests': { returnType: 'Requests', args: ['input: CreateRequestsInput!'] },
+                'updateRequests': { returnType: 'Requests', args: ['input: UpdateRequestsInput!'] },
+                'createProjects': { returnType: 'Projects', args: ['input: CreateProjectsInput!'] },
+                'updateProjects': { returnType: 'Projects', args: ['input: UpdateProjectsInput!'] }
+            }
+        };
+        
+        // Initialize schema explorer
+        document.addEventListener('DOMContentLoaded', () => {
+            buildSchemaTree();
+            updateEntityStats();
+        });
+        
+        // Build schema tree navigation
+        function buildSchemaTree() {
+            const tree = document.getElementById('schemaTree');
+            tree.innerHTML = '';
+            
+            // Group entities by type
+            const entityGroups = {
+                'core': { name: '🏢 Core Business', entities: [] },
+                'notification': { name: '📧 Notifications', entities: [] },
+                'admin': { name: '⚙️ Administration', entities: [] },
+                'audit': { name: '📋 Audit & Logs', entities: [] }
+            };
+            
+            Object.entries(schemaData.entities).forEach(([name, entity]) => {
+                entityGroups[entity.type].entities.push(name);
+            });
+            
+            // Build tree structure
+            Object.entries(entityGroups).forEach(([groupType, group]) => {
+                if (group.entities.length === 0) return;
+                
+                const groupItem = document.createElement('li');
+                groupItem.className = 'tree-item';
+                
+                const groupNode = document.createElement('div');
+                groupNode.className = 'tree-node';
+                groupNode.innerHTML = `
+                    <span class="tree-icon">📁</span>
+                    <span>${group.name}</span>
+                `;
+                
+                const childrenList = document.createElement('ul');
+                childrenList.className = 'tree-children';
+                
+                group.entities.forEach(entityName => {
+                    const entityItem = document.createElement('li');
+                    entityItem.className = 'tree-item';
+                    
+                    const entityNode = document.createElement('div');
+                    entityNode.className = 'tree-node';
+                    entityNode.innerHTML = `
+                        <span class="tree-icon">📄</span>
+                        <span>${entityName}</span>
+                    `;
+                    
+                    entityNode.onclick = () => showEntity(entityName);
+                    
+                    entityItem.appendChild(entityNode);
+                    childrenList.appendChild(entityItem);
+                });
+                
+                groupItem.appendChild(groupNode);
+                groupItem.appendChild(childrenList);
+                tree.appendChild(groupItem);
+            });
+            
+            // Add operations sections
+            const operationsGroup = document.createElement('li');
+            operationsGroup.className = 'tree-item';
+            operationsGroup.innerHTML = `
+                <div class="tree-node">
+                    <span class="tree-icon">📁</span>
+                    <span>⚡ Operations</span>
+                </div>
+                <ul class="tree-children">
+                    <li class="tree-item">
+                        <div class="tree-node" onclick="showOperations('queries')">
+                            <span class="tree-icon">🔍</span>
+                            <span>Queries</span>
+                        </div>
+                    </li>
+                    <li class="tree-item">
+                        <div class="tree-node" onclick="showOperations('mutations')">
+                            <span class="tree-icon">✏️</span>
+                            <span>Mutations</span>
+                        </div>
+                    </li>
+                </ul>
+            `;
+            tree.appendChild(operationsGroup);
+        }
+        
+        // Show entity details
+        function showEntity(entityName) {
+            const entity = schemaData.entities[entityName];
+            if (!entity) return;
+            
+            // Update active state in tree
+            document.querySelectorAll('.tree-node').forEach(node => {
+                node.classList.remove('active');
+            });
+            event.target.closest('.tree-node').classList.add('active');
+            
+            // Update main content
+            const main = document.getElementById('schemaMain');
+            
+            const fieldCount = Object.keys(entity.fields || {}).length;
+            const relationshipCount = Object.keys(entity.relationships || {}).length;
+            const authRuleCount = (entity.authorization || []).length;
+            
+            main.innerHTML = `
+                <div class="entity-header">
+                    <div class="entity-title">
+                        ${entityName}
+                        <span class="entity-type">${getEntityTypeLabel(entity.type)}</span>
+                    </div>
+                    <div class="entity-description">
+                        ${entity.description}
+                    </div>
+                    <div class="entity-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${fieldCount}</div>
+                            <div class="stat-label">Fields</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${relationshipCount}</div>
+                            <div class="stat-label">Relationships</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${authRuleCount}</div>
+                            <div class="stat-label">Auth Rules</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="entity-body">
+                    <div class="section-tabs">
+                        <div class="section-tab active" onclick="showEntitySection('${entityName}', 'fields')">Fields</div>
+                        <div class="section-tab" onclick="showEntitySection('${entityName}', 'relationships')">Relationships</div>
+                        <div class="section-tab" onclick="showEntitySection('${entityName}', 'authorization')">Authorization</div>
+                        <div class="section-tab" onclick="showEntitySection('${entityName}', 'usage')">Usage Examples</div>
+                    </div>
+                    
+                    <div class="section-content" id="entitySectionContent">
+                        ${renderEntityFields(entity.fields || {})}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Show entity section
+        function showEntitySection(entityName, section) {
+            const entity = schemaData.entities[entityName];
+            if (!entity) return;
+            
+            // Update tab states
+            document.querySelectorAll('.section-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const content = document.getElementById('entitySectionContent');
+            
+            switch (section) {
+                case 'fields':
+                    content.innerHTML = renderEntityFields(entity.fields || {});
+                    break;
+                case 'relationships':
+                    content.innerHTML = renderEntityRelationships(entity.relationships || {});
+                    break;
+                case 'authorization':
+                    content.innerHTML = renderEntityAuthorization(entity.authorization || []);
+                    break;
+                case 'usage':
+                    content.innerHTML = renderEntityUsage(entityName);
+                    break;
+            }
+        }
+        
+        // Render entity fields
+        function renderEntityFields(fields) {
+            if (Object.keys(fields).length === 0) {
+                return '<p>No fields defined for this entity.</p>';
+            }
+            
+            const fieldCards = Object.entries(fields).map(([fieldName, field]) => {
+                const metaItems = [];
+                
+                if (field.required) {
+                    metaItems.push('<div class="meta-item"><span class="required-indicator">*</span><span>Required</span></div>');
+                } else {
+                    metaItems.push('<div class="meta-item"><span>📝</span><span>Optional</span></div>');
+                }
+                
+                if (field.unique) {
+                    metaItems.push('<div class="meta-item"><span>🔑</span><span>Unique</span></div>');
+                }
+                
+                if (field.default !== undefined) {
+                    metaItems.push(`<div class="meta-item"><span>📊</span><span>Default: ${field.default}</span></div>`);
+                }
+                
+                if (field.type.includes('Email')) {
+                    metaItems.push('<div class="meta-item"><span>📧</span><span>Email validation</span></div>');
+                }
+                
+                return `
+                    <div class="field-card">
+                        <div class="field-header">
+                            <div class="field-name">${fieldName}</div>
+                            <div class="field-type">${field.type}</div>
+                        </div>
+                        <div class="field-description">${field.description || 'No description available'}</div>
+                        <div class="field-meta">
+                            ${metaItems.join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            return `<div class="fields-grid">${fieldCards}</div>`;
+        }
+        
+        // Render entity relationships
+        function renderEntityRelationships(relationships) {
+            if (Object.keys(relationships).length === 0) {
+                return '<p>No relationships defined for this entity.</p>';
+            }
+            
+            const relationshipCards = Object.entries(relationships).map(([relName, rel]) => {
+                return `
+                    <div class="relationship-card">
+                        <div class="relationship-type">${rel.type}</div>
+                        <div class="relationship-name">${relName}</div>
+                        <div>→ <span class="relationship-target">${rel.target}</span></div>
+                        ${rel.field ? `<div style="font-size: 0.8rem; color: #6c757d; margin-top: 5px;">via ${rel.field}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            return `<div class="relationships-grid">${relationshipCards}</div>`;
+        }
+        
+        // Render entity authorization
+        function renderEntityAuthorization(authRules) {
+            if (authRules.length === 0) {
+                return '<p>No authorization rules defined for this entity.</p>';
+            }
+            
+            const authCards = authRules.map(rule => {
+                const operations = rule.operations || ['all'];
+                const groups = rule.groups || [];
+                
+                return `
+                    <div class="auth-rule">
+                        <div class="auth-type">${rule.type}</div>
+                        <div class="auth-permissions">
+                            Operations: ${operations.join(', ')}
+                            ${groups.length > 0 ? `<br>Groups: ${groups.join(', ')}` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            return `<div class="authorization-rules">${authCards}</div>`;
+        }
+        
+        // Render entity usage examples
+        function renderEntityUsage(entityName) {
+            const examples = {
+                'Contacts': {
+                    query: `query GetContactWithProjects($id: ID!) {
+  getContacts(id: $id) {
+    id
+    fullName
+    email
+    phone
+    company
+    brokerage
+    roleType
+    agentProjects {
+      items {
+        id
+        title
+        status
+      }
+    }
+    homeownerProjects {
+      items {
+        id
+        title
+        status
+      }
+    }
+  }
+}`,
+                    mutation: `mutation CreateContact($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+    roleType
+    createdAt
+  }
+}`
+                },
+                'Requests': {
+                    query: `query GetRequestWithDetails($id: ID!) {
+  getRequests(id: $id) {
+    id
+    status
+    priority
+    product
+    estimatedValue
+    readinessScore
+    homeowner {
+      fullName
+      email
+      phone
+    }
+    agent {
+      fullName
+      email
+    }
+    address {
+      propertyFullAddress
+      city
+      state
+    }
+    notes {
+      items {
+        content
+        type
+        authorName
+      }
+    }
+  }
+}`,
+                    mutation: `mutation UpdateRequestStatus($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    status
+    assignedTo
+    readinessScore
+    updatedAt
+  }
+}`
+                }
+            };
+            
+            const entityExample = examples[entityName];
+            if (!entityExample) {
+                return '<p>No usage examples available for this entity.</p>';
+            }
+            
+            return `
+                <div>
+                    <h4>Query Example</h4>
+                    <div class="code-block">${entityExample.query}</div>
+                    
+                    <h4>Mutation Example</h4>
+                    <div class="code-block">${entityExample.mutation}</div>
+                </div>
+            `;
+        }
+        
+        // Show operations (queries/mutations)
+        function showOperations(type) {
+            // Update active state in tree
+            document.querySelectorAll('.tree-node').forEach(node => {
+                node.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const operations = schemaData[type] || {};
+            const operationCards = Object.entries(operations).map(([name, op]) => {
+                return `
+                    <div class="field-card">
+                        <div class="field-header">
+                            <div class="field-name">${name}</div>
+                            <div class="field-type">${op.returnType}</div>
+                        </div>
+                        <div class="field-description">Arguments: ${op.args.join(', ')}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            const main = document.getElementById('schemaMain');
+            main.innerHTML = `
+                <div class="entity-header">
+                    <div class="entity-title">
+                        ${type.charAt(0).toUpperCase() + type.slice(1)}
+                        <span class="entity-type">Operations</span>
+                    </div>
+                    <div class="entity-description">
+                        Available ${type} operations in the GraphQL schema
+                    </div>
+                    <div class="entity-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${Object.keys(operations).length}</div>
+                            <div class="stat-label">Operations</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="entity-body">
+                    <div class="section-content">
+                        <div class="fields-grid">${operationCards}</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Helper functions
+        function getEntityTypeLabel(type) {
+            const labels = {
+                'core': 'Core Business',
+                'notification': 'Notification System',
+                'admin': 'Administration',
+                'audit': 'Audit & Logging'
+            };
+            return labels[type] || type;
+        }
+        
+        function showView(view) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // For now, just show the entities view as it's the most comprehensive
+            // In a full implementation, you'd switch between different views
+            console.log(`Showing ${view} view`);
+        }
+        
+        function showSection(section) {
+            // Update section tabs
+            document.querySelectorAll('.section-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            console.log(`Showing ${section} section`);
+        }
+        
+        function filterSchema() {
+            const searchTerm = document.getElementById('searchField').value.toLowerCase();
+            const entityFilter = document.getElementById('entityFilter').value;
+            const fieldFilter = document.getElementById('fieldFilter').value;
+            
+            // In a full implementation, this would filter the displayed schema
+            console.log('Filtering schema:', { searchTerm, entityFilter, fieldFilter });
+        }
+        
+        function updateEntityStats() {
+            const totalEntities = Object.keys(schemaData.entities).length;
+            const totalQueries = Object.keys(schemaData.queries).length;
+            const totalMutations = Object.keys(schemaData.mutations).length;
+            
+            console.log(`Schema stats: ${totalEntities} entities, ${totalQueries} queries, ${totalMutations} mutations`);
+        }
+    </script>
+</body>
+</html>

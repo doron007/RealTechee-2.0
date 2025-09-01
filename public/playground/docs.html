@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphQL API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .nav-bar {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-item {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section h3 {
+            color: #34495e;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+        
+        .section h4 {
+            color: #555;
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        .inline-code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge.query { background: #d4edda; color: #155724; }
+        .badge.mutation { background: #f8d7da; color: #721c24; }
+        .badge.subscription { background: #d1ecf1; color: #0c5460; }
+        
+        .type-badge {
+            background: #e2e3e5;
+            color: #495057;
+        }
+        
+        .required {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .optional {
+            color: #6c757d;
+        }
+        
+        .entity-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .entity-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .entity-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .entity-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .entity-body {
+            padding: 20px;
+        }
+        
+        .field-list {
+            list-style: none;
+        }
+        
+        .field-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f8f9fa;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .field-name {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-weight: 600;
+            color: #667eea;
+            min-width: 150px;
+        }
+        
+        .field-type {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .field-description {
+            color: #6c757d;
+            flex: 1;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .toc a:hover {
+            color: #5a6fd8;
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 RealTechee GraphQL API Documentation</h1>
+        <p>Comprehensive API reference for the RealTechee backend system</p>
+    </div>
+    
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-item">← Back to Playground</a>
+            <a href="#overview" class="nav-item active">Overview</a>
+            <a href="#entities" class="nav-item">Entities</a>
+            <a href="#operations" class="nav-item">Operations</a>
+            <a href="#authentication" class="nav-item">Authentication</a>
+            <a href="#business-rules" class="nav-item">Business Rules</a>
+            <a href="#examples" class="nav-item">Examples</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">API Overview</a></li>
+                <li><a href="#authentication">Authentication & Authorization</a></li>
+                <li><a href="#core-entities">Core Business Entities</a>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><a href="#contacts">Contacts</a></li>
+                        <li><a href="#requests">Requests</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#quotes">Quotes</a></li>
+                        <li><a href="#properties">Properties</a></li>
+                        <li><a href="#notifications">Notification System</a></li>
+                    </ul>
+                </li>
+                <li><a href="#operations">GraphQL Operations</a></li>
+                <li><a href="#business-workflows">Business Workflows</a></li>
+                <li><a href="#error-handling">Error Handling</a></li>
+                <li><a href="#performance">Performance Guidelines</a></li>
+            </ul>
+        </div>
+        
+        <section id="overview" class="section">
+            <h2>🎯 API Overview</h2>
+            <p>The RealTechee GraphQL API provides a complete backend solution for managing real estate renovation projects, from initial customer requests to project completion. Built on AWS Amplify Gen 2 with DynamoDB, it offers powerful relationship management and real-time notifications.</p>
+            
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Lead Management:</strong> Complete customer request lifecycle from form submission to project conversion</li>
+                <li><strong>Contact Management:</strong> Unified contact system with role-based assignments and preferences</li>
+                <li><strong>Project Tracking:</strong> End-to-end project management with milestones, comments, and payment tracking</li>
+                <li><strong>Quote Generation:</strong> Dynamic quote creation with itemized pricing and approval workflows</li>
+                <li><strong>Notification System:</strong> Signal-driven notifications with email/SMS delivery and template management</li>
+                <li><strong>Audit Trail:</strong> Comprehensive logging of all data changes with user attribution</li>
+            </ul>
+            
+            <div class="alert alert-info">
+                <strong>💡 Pro Tip:</strong> Use the GraphiQL IDE for interactive exploration of the schema. All queries support filtering, sorting, and pagination out of the box.
+            </div>
+            
+            <h3>Environment Configuration</h3>
+            <table class="table">
+                <tr>
+                    <th>Environment</th>
+                    <th>Database Suffix</th>
+                    <th>Purpose</th>
+                    <th>Data Isolation</th>
+                </tr>
+                <tr>
+                    <td>Development</td>
+                    <td><code>*-fvn7t5hbobaxjklhrqzdl4ac34-*</code></td>
+                    <td>Development & Staging</td>
+                    <td>Shared</td>
+                </tr>
+                <tr>
+                    <td>Production</td>
+                    <td><code>*-aqnqdrctpzfwfjwyxxsmu6peoq-*</code></td>
+                    <td>Live Production</td>
+                    <td>Isolated</td>
+                </tr>
+            </table>
+        </section>
+        
+        <section id="authentication" class="section">
+            <h2>🔐 Authentication & Authorization</h2>
+            <p>The API supports multiple authentication modes for different use cases:</p>
+            
+            <h3>Authentication Modes</h3>
+            <table class="table">
+                <tr>
+                    <th>Mode</th>
+                    <th>Use Case</th>
+                    <th>Configuration</th>
+                </tr>
+                <tr>
+                    <td><strong>API Key</strong></td>
+                    <td>Public forms, anonymous access</td>
+                    <td>
+                        <div class="code-block">headers: { 'x-api-key': 'your-api-key' }</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>User Pool</strong></td>
+                    <td>Authenticated users (admin, agents)</td>
+                    <td>
+                        <div class="code-block">headers: { 'Authorization': 'Bearer jwt-token' }</div>
+                    </td>
+                </tr>
+            </table>
+            
+            <h3>User Roles & Permissions</h3>
+            <table class="table">
+                <tr>
+                    <th>Role</th>
+                    <th>Precedence</th>
+                    <th>Permissions</th>
+                </tr>
+                <tr>
+                    <td><strong>super_admin</strong></td>
+                    <td>0 (highest)</td>
+                    <td>Full access to all operations and data</td>
+                </tr>
+                <tr>
+                    <td><strong>admin</strong></td>
+                    <td>1</td>
+                    <td>Full business operations, limited system config</td>
+                </tr>
+                <tr>
+                    <td><strong>accounting</strong></td>
+                    <td>2</td>
+                    <td>Financial data, payments, quotes</td>
+                </tr>
+                <tr>
+                    <td><strong>srm</strong></td>
+                    <td>3</td>
+                    <td>Senior relationship management</td>
+                </tr>
+                <tr>
+                    <td><strong>agent</strong></td>
+                    <td>4</td>
+                    <td>Assigned projects, client communication</td>
+                </tr>
+                <tr>
+                    <td><strong>homeowner</strong></td>
+                    <td>5</td>
+                    <td>Own projects and quotes (read-only)</td>
+                </tr>
+                <tr>
+                    <td><strong>provider</strong></td>
+                    <td>6</td>
+                    <td>Service provider access</td>
+                </tr>
+            </table>
+            
+            <div class="alert alert-warning">
+                <strong>⚠️ Security Note:</strong> All mutations require authentication. Public API key access is limited to read operations and form submissions.
+            </div>
+        </section>
+        
+        <section id="core-entities" class="section">
+            <h2>🏢 Core Business Entities</h2>
+            <p>The RealTechee system is built around these primary entities, each representing a key aspect of the renovation business process.</p>
+            
+            <div id="requests" class="entity-card">
+                <div class="entity-header">
+                    <div class="entity-title">Requests</div>
+                    <span class="badge type-badge">Lead Management</span>
+                    <div class="entity-description">Customer service requests and lead tracking with enhanced case management</div>
+                </div>
+                <div class="entity-body">
+                    <p><strong>Purpose:</strong> Manages the complete lead lifecycle from initial customer inquiry through qualification and conversion to projects.</p>
+                    
+                    <h4>Enhanced Case Management Fields</h4>
+                    <ul class="field-list">
+                        <li class="field-item">
+                            <span class="field-name">priority</span>
+                            <span class="field-type">Enum</span>
+                            <span class="field-description">low | medium | high | urgent</span>
+                        </li>
+                        <li class="field-item">
+                            <span class="field-name">readinessScore</span>
+                            <span class="field-type">Integer</span>
+                            <span class="field-description">0-100 score for quote readiness</span>
+                        </li>
+                        <li class="field-item">
+                            <span class="field-name">estimatedValue</span>
+                            <span class="field-type">Float</span>
+                            <span class="field-description">Potential project value</span>
+                        </li>
+                        <li class="field-item">
+                            <span class="field-name">followUpDate</span>
+                            <span class="field-type">DateTime</span>
+                            <span class="field-description">Next scheduled follow-up</span>
+                        </li>
+                    </ul>
+                    
+                    <h4>Case Management Relationships</h4>
+                    <ul>
+                        <li><code>notes</code> - RequestNotes for tracking communication</li>
+                        <li><code>assignments</code> - RequestAssignments for workload management</li>
+                        <li><code>statusHistory</code> - Complete status change audit trail</li>
+                        <li><code>informationItems</code> - Structured information gathering</li>
+                        <li><code>scopeItems</code> - Detailed project scope definition</li>
+                    </ul>
+                    
+                    <div class="alert alert-success">
+                        <strong>✅ Case Management Ready:</strong> Full case management system is operational with notes, assignments, information gathering, and scope definition.
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="operations" class="section">
+            <h2>⚡ GraphQL Operations</h2>
+            <p>The API provides comprehensive CRUD operations for all entities with advanced filtering, sorting, and pagination capabilities.</p>
+            
+            <h3>Case Management Operations</h3>
+            <table class="table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Auth Required</th>
+                </tr>
+                <tr>
+                    <td><code>createRequestNotes</code></td>
+                    <td><span class="badge mutation">Mutation</span></td>
+                    <td>Add notes to requests with follow-up tracking</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><code>createRequestAssignments</code></td>
+                    <td><span class="badge mutation">Mutation</span></td>
+                    <td>Assign requests to team members</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><code>listRequestStatusHistory</code></td>
+                    <td><span class="badge query">Query</span></td>
+                    <td>Complete audit trail of status changes</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><code>createRequestInformationItems</code></td>
+                    <td><span class="badge mutation">Mutation</span></td>
+                    <td>Track required information gathering</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </section>
+        
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+    </div>
+</body>
+</html>

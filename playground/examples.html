@@ -1,0 +1,2642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphQL Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 0;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            color: #666;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .nav-tab:hover {
+            color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            min-height: 600px;
+        }
+        
+        .tab-pane {
+            padding: 30px;
+            display: none;
+        }
+        
+        .tab-pane.active {
+            display: block;
+        }
+        
+        .example-group {
+            margin-bottom: 40px;
+        }
+        
+        .example-group h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .example-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .example-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .example-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .example-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .example-body {
+            position: relative;
+        }
+        
+        .example-query {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        .example-variables {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border-top: 1px solid #4a5568;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .copy-btn.copied {
+            background: #48bb78;
+            border-color: #48bb78;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-playground {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-playground:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+        
+        .tags {
+            margin-top: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .tag.crud { background: #d4edda; color: #155724; }
+        .tag.business { background: #d1ecf1; color: #0c5460; }
+        .tag.advanced { background: #f8d7da; color: #721c24; }
+        .tag.performance { background: #fff3cd; color: #856404; }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        .syntax-highlight .keyword { color: #c678dd; }
+        .syntax-highlight .string { color: #98c379; }
+        .syntax-highlight .number { color: #d19a66; }
+        .syntax-highlight .comment { color: #5c6370; font-style: italic; }
+        .syntax-highlight .field { color: #61dafb; }
+        .syntax-highlight .type { color: #e06c75; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 RealTechee GraphQL Examples</h1>
+        <p>Pre-built queries and mutations for all business operations</p>
+    </div>
+    
+    <div class="container">
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+        <a href="./graphiql.html" class="btn-playground">🎮 Try in GraphiQL</a>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('crud')">CRUD Operations</button>
+            <button class="nav-tab" onclick="showTab('business')">Business Workflows</button>
+            <button class="nav-tab" onclick="showTab('relationships')">Relationships</button>
+            <button class="nav-tab" onclick="showTab('notifications')">Notifications</button>
+            <button class="nav-tab" onclick="showTab('advanced')">Advanced Queries</button>
+            <button class="nav-tab" onclick="showTab('performance')">Performance</button>
+            <button class="nav-tab" onclick="showTab('testing')">Testing</button>
+        </div>
+        
+        <div class="tab-content">
+            <!-- CRUD Operations Tab -->
+            <div id="crud" class="tab-pane active">
+                <div class="example-group">
+                    <h3>Contact Management</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Create New Contact</div>
+                            <div class="example-description">Create a new contact with full profile and notification preferences</div>
+                            <div class="tags">
+                                <span class="tag crud">CREATE</span>
+                                <span class="tag">Contacts</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation CreateContact($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    firstName
+    lastName
+    email
+    phone
+    mobile
+    company
+    brokerage
+    roleType
+    isActive
+    assignmentPriority
+    emailNotifications
+    smsNotifications
+    canReceiveNotifications
+    createdAt
+    updatedAt
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "fullName": "Sarah Johnson",
+    "email": "sarah.johnson@premiumrealty.com",
+    "phone": "+1-555-0123",
+    "mobile": "+1-555-0124",
+    "company": "Premium Realty Group",
+    "brokerage": "Keller Williams",
+    "roleType": "agent",
+    "isActive": true,
+    "assignmentPriority": 1,
+    "emailNotifications": true,
+    "smsNotifications": true,
+    "canReceiveNotifications": true
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">List Contacts with Filtering</div>
+                            <div class="example-description">Get active agents sorted by assignment priority</div>
+                            <div class="tags">
+                                <span class="tag crud">READ</span>
+                                <span class="tag">Filtering</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">query ListActiveAgents($filter: ModelContactsFilterInput, $limit: Int) {
+  listContacts(
+    filter: $filter
+    limit: $limit
+    sortDirection: ASC
+  ) {
+    items {
+      id
+      fullName
+      email
+      phone
+      company
+      brokerage
+      roleType
+      assignmentPriority
+      isActive
+      emailNotifications
+      smsNotifications
+      agentProjects {
+        items {
+          id
+          title
+          status
+          createdDate
+        }
+      }
+      agentRequests {
+        items {
+          id
+          status
+          priority
+          createdAt
+        }
+      }
+    }
+    nextToken
+  }
+}</div>
+                            <div class="example-variables">{
+  "filter": {
+    "and": [
+      { "roleType": { "eq": "agent" } },
+      { "isActive": { "eq": true } }
+    ]
+  },
+  "limit": 20
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Update Contact Preferences</div>
+                            <div class="example-description">Update notification preferences and assignment settings</div>
+                            <div class="tags">
+                                <span class="tag crud">UPDATE</span>
+                                <span class="tag">Preferences</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation UpdateContactPreferences($input: UpdateContactsInput!) {
+  updateContacts(input: $input) {
+    id
+    fullName
+    email
+    assignmentPriority
+    emailNotifications
+    smsNotifications
+    canReceiveNotifications
+    isActive
+    updatedAt
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "id": "contact-id-here",
+    "assignmentPriority": 2,
+    "emailNotifications": true,
+    "smsNotifications": false,
+    "canReceiveNotifications": true,
+    "isActive": true
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-group">
+                    <h3>Request Management</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Create Service Request</div>
+                            <div class="example-description">Create a new service request from form submission</div>
+                            <div class="tags">
+                                <span class="tag crud">CREATE</span>
+                                <span class="tag business">Lead Generation</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation CreateServiceRequest($input: CreateRequestsInput!) {
+  createRequests(input: $input) {
+    id
+    status
+    product
+    message
+    priority
+    source
+    estimatedValue
+    readinessScore
+    followUpDate
+    lastContactDate
+    informationGatheringStatus
+    scopeDefinitionStatus
+    missingInformation
+    homeownerContactId
+    agentContactId
+    addressId
+    createdAt
+    updatedAt
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "status": "new",
+    "product": "Kitchen Renovation",
+    "message": "Looking to renovate our kitchen before selling. Need estimate for modern updates including cabinets, countertops, and appliances.",
+    "priority": "medium",
+    "source": "form_submission",
+    "estimatedValue": 25000,
+    "readinessScore": 75,
+    "followUpDate": "2024-09-03T10:00:00Z",
+    "informationGatheringStatus": "pending",
+    "scopeDefinitionStatus": "not_started",
+    "missingInformation": [
+      "property_photos",
+      "timeline_requirements",
+      "budget_confirmation"
+    ],
+    "homeownerContactId": "homeowner-contact-id",
+    "addressId": "property-address-id"
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Update Request Status</div>
+                            <div class="example-description">Assign request to agent and update status</div>
+                            <div class="tags">
+                                <span class="tag crud">UPDATE</span>
+                                <span class="tag business">Assignment</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation AssignRequest($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    status
+    assignedTo
+    assignedDate
+    priority
+    followUpDate
+    officeNotes
+    readinessScore
+    informationGatheringStatus
+    updatedAt
+    agent {
+      fullName
+      email
+      phone
+    }
+    homeowner {
+      fullName
+      email
+      phone
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "id": "request-id-here",
+    "status": "assigned",
+    "assignedTo": "sarah.johnson@premiumrealty.com",
+    "assignedDate": "2024-09-01T12:00:00Z",
+    "priority": "high",
+    "followUpDate": "2024-09-02T09:00:00Z",
+    "officeNotes": "High-value kitchen renovation. Client ready to move forward quickly. Schedule site visit ASAP.",
+    "readinessScore": 85,
+    "informationGatheringStatus": "in_progress",
+    "agentContactId": "agent-contact-id"
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-group">
+                    <h3>Property Management</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Create Property Record</div>
+                            <div class="example-description">Add new property with complete details</div>
+                            <div class="tags">
+                                <span class="tag crud">CREATE</span>
+                                <span class="tag">Properties</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation CreateProperty($input: CreatePropertiesInput!) {
+  createProperties(input: $input) {
+    id
+    propertyFullAddress
+    houseAddress
+    city
+    state
+    zip
+    propertyType
+    bedrooms
+    bathrooms
+    floors
+    sizeSqft
+    yearBuilt
+    redfinLink
+    zillowLink
+    createdAt
+    updatedAt
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "houseAddress": "123 Maple Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94102",
+    "propertyFullAddress": "123 Maple Street, San Francisco, CA 94102",
+    "propertyType": "Single Family",
+    "bedrooms": 3,
+    "bathrooms": 2.5,
+    "floors": 2,
+    "sizeSqft": 1850,
+    "yearBuilt": 1995,
+    "redfinLink": "https://redfin.com/property/123",
+    "zillowLink": "https://zillow.com/homedetails/123"
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Workflows Tab -->
+            <div id="business" class="tab-pane">
+                <div class="example-group">
+                    <h3>Lead to Project Conversion</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Complete Lead Qualification</div>
+                            <div class="example-description">Multi-step workflow for qualifying and converting leads</div>
+                            <div class="tags">
+                                <span class="tag business">Workflow</span>
+                                <span class="tag">Lead Conversion</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Step 1: Get request with all qualification data
+query GetRequestForQualification($id: ID!) {
+  getRequests(id: $id) {
+    id
+    status
+    priority
+    product
+    message
+    estimatedValue
+    readinessScore
+    informationGatheringStatus
+    scopeDefinitionStatus
+    missingInformation
+    followUpDate
+    lastContactDate
+    budget
+    homeowner {
+      id
+      fullName
+      email
+      phone
+      company
+    }
+    agent {
+      id
+      fullName
+      email
+    }
+    address {
+      id
+      propertyFullAddress
+      propertyType
+      bedrooms
+      bathrooms
+      sizeSqft
+      yearBuilt
+    }
+    notes {
+      items {
+        id
+        content
+        type
+        category
+        authorName
+        createdAt
+      }
+    }
+    informationItems {
+      items {
+        id
+        category
+        itemName
+        status
+        importance
+        value
+      }
+    }
+    scopeItems {
+      items {
+        id
+        name
+        description
+        category
+        status
+        estimatedCost
+      }
+    }
+  }
+}
+
+# Step 2: Update readiness score after qualification
+mutation UpdateQualificationScore($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    readinessScore
+    informationGatheringStatus
+    scopeDefinitionStatus
+    status
+    missingInformation
+    followUpDate
+  }
+}
+
+# Step 3: Convert to project when ready
+mutation ConvertToProject($input: CreateProjectsInput!) {
+  createProjects(input: $input) {
+    id
+    title
+    status
+    description
+    budget
+    requestId
+    homeownerContactId
+    agentContactId
+    addressId
+    requestDate
+    estimatedClosingDate
+    createdDate
+  }
+}</div>
+                            <div class="example-variables"># Variables for UpdateQualificationScore:
+{
+  "input": {
+    "id": "request-id-here",
+    "readinessScore": 95,
+    "informationGatheringStatus": "completed",
+    "scopeDefinitionStatus": "completed",
+    "status": "qualified",
+    "missingInformation": [],
+    "followUpDate": "2024-09-05T10:00:00Z"
+  }
+}
+
+# Variables for ConvertToProject:
+{
+  "input": {
+    "title": "Kitchen Renovation - 123 Maple Street",
+    "status": "planning",
+    "description": "Complete kitchen renovation including cabinets, countertops, appliances, and flooring",
+    "budget": "25000-30000",
+    "requestId": "request-id-here",
+    "homeownerContactId": "homeowner-contact-id",
+    "agentContactId": "agent-contact-id",
+    "addressId": "property-address-id",
+    "requestDate": "2024-09-01T00:00:00Z",
+    "estimatedClosingDate": "2024-10-15T00:00:00Z"
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-group">
+                    <h3>Project Management Workflows</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Project Milestone Tracking</div>
+                            <div class="example-description">Create and manage project milestones with progress tracking</div>
+                            <div class="tags">
+                                <span class="tag business">Project Management</span>
+                                <span class="tag">Milestones</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Create project milestones
+mutation CreateProjectMilestones($milestones: [CreateProjectMilestonesInput!]!) {
+  milestone1: createProjectMilestones(input: $milestones[0]) {
+    id
+    name
+    description
+    projectId
+    order
+    isComplete
+    estimatedStart
+    estimatedFinish
+    isCategory
+    isInternal
+  }
+  milestone2: createProjectMilestones(input: $milestones[1]) {
+    id
+    name
+    description
+    projectId
+    order
+    isComplete
+    estimatedStart
+    estimatedFinish
+    isCategory
+    isInternal
+  }
+  milestone3: createProjectMilestones(input: $milestones[2]) {
+    id
+    name
+    description
+    projectId
+    order
+    isComplete
+    estimatedStart
+    estimatedFinish
+    isCategory
+    isInternal
+  }
+}
+
+# Update milestone completion
+mutation CompleteMilestone($input: UpdateProjectMilestonesInput!) {
+  updateProjectMilestones(input: $input) {
+    id
+    name
+    isComplete
+    estimatedFinish
+    updatedDate
+    project {
+      id
+      title
+      status
+    }
+  }
+}</div>
+                            <div class="example-variables"># Variables for CreateProjectMilestones:
+{
+  "milestones": [
+    {
+      "name": "Design Phase",
+      "description": "Kitchen design approval and material selection",
+      "projectId": "project-id-here",
+      "order": 1.0,
+      "isComplete": false,
+      "estimatedStart": "2024-09-01",
+      "estimatedFinish": "2024-09-07T00:00:00Z",
+      "isCategory": true,
+      "isInternal": false
+    },
+    {
+      "name": "Demolition",
+      "description": "Remove existing kitchen fixtures and prepare space",
+      "projectId": "project-id-here",
+      "order": 2.0,
+      "isComplete": false,
+      "estimatedStart": "2024-09-08",
+      "estimatedFinish": "2024-09-10T00:00:00Z",
+      "isCategory": false,
+      "isInternal": false
+    },
+    {
+      "name": "Installation",
+      "description": "Install new cabinets, countertops, and appliances",
+      "projectId": "project-id-here",
+      "order": 3.0,
+      "isComplete": false,
+      "estimatedStart": "2024-09-15",
+      "estimatedFinish": "2024-09-25T00:00:00Z",
+      "isCategory": false,
+      "isInternal": false
+    }
+  ]
+}
+
+# Variables for CompleteMilestone:
+{
+  "input": {
+    "id": "milestone-id-here",
+    "isComplete": true
+  }
+}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-group">
+                    <h3>Quote Generation Workflow</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Create Detailed Quote</div>
+                            <div class="example-description">Generate comprehensive quote with itemized pricing</div>
+                            <div class="tags">
+                                <span class="tag business">Quoting</span>
+                                <span class="tag">Financial</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Create quote with full details
+mutation CreateDetailedQuote($input: CreateQuotesInput!) {
+  createQuotes(input: $input) {
+    id
+    quoteNumber
+    title
+    status
+    budget
+    totalCost
+    totalPrice
+    product
+    operationManagerApproved
+    underwritingApproved
+    requestDate
+    visitDate
+    sentDate
+    expiredDate
+    requestId
+    projectId
+    homeownerContactId
+    agentContactId
+    addressId
+    createdAt
+  }
+}
+
+# Add quote items
+mutation CreateQuoteItems($items: [CreateQuoteItemsInput!]!) {
+  item1: createQuoteItems(input: $items[0]) {
+    id
+    itemName
+    description
+    quantity
+    unitPrice
+    total
+    type
+    recommendItem
+    marginPercent
+    cost
+    price
+  }
+  item2: createQuoteItems(input: $items[1]) {
+    id
+    itemName
+    description
+    quantity
+    unitPrice
+    total
+    type
+    recommendItem
+    marginPercent
+    cost
+    price
+  }
+  item3: createQuoteItems(input: $items[2]) {
+    id
+    itemName
+    description
+    quantity
+    unitPrice
+    total
+    type
+    recommendItem
+    marginPercent
+    cost
+    price
+  }
+}</div>
+                            <div class="example-variables"># Variables for CreateDetailedQuote:
+{
+  "input": {
+    "quoteNumber": 2024001,
+    "title": "Kitchen Renovation Quote - 123 Maple Street",
+    "status": "draft",
+    "budget": 28000,
+    "totalCost": 20000,
+    "totalPrice": 28000,
+    "product": "Kitchen Renovation",
+    "operationManagerApproved": false,
+    "underwritingApproved": false,
+    "requestDate": "2024-09-01T00:00:00Z",
+    "visitDate": "2024-09-03T10:00:00Z",
+    "expiredDate": "2024-09-30T23:59:59Z",
+    "requestId": "request-id-here",
+    "projectId": "project-id-here",
+    "homeownerContactId": "homeowner-contact-id",
+    "agentContactId": "agent-contact-id",
+    "addressId": "property-address-id"
+  }
+}
+
+# Variables for CreateQuoteItems:
+{
+  "items": [
+    {
+      "projectId": "project-id-here",
+      "itemName": "Custom Kitchen Cabinets",
+      "description": "Solid wood shaker-style cabinets with soft-close hinges",
+      "quantity": 1,
+      "unitPrice": "12000.00",
+      "total": "12000.00",
+      "type": "material",
+      "recommendItem": true,
+      "marginPercent": 40.0,
+      "cost": 8000.00,
+      "price": 12000.00
+    },
+    {
+      "projectId": "project-id-here",
+      "itemName": "Quartz Countertops",
+      "description": "Premium quartz countertops with undermount sink",
+      "quantity": 45,
+      "unitPrice": "120.00",
+      "total": "5400.00",
+      "type": "material",
+      "recommendItem": true,
+      "marginPercent": 35.0,
+      "cost": 3600.00,
+      "price": 5400.00
+    },
+    {
+      "projectId": "project-id-here",
+      "itemName": "Professional Installation",
+      "description": "Complete installation including plumbing and electrical",
+      "quantity": 40,
+      "unitPrice": "75.00",
+      "total": "3000.00",
+      "type": "labor",
+      "recommendItem": true,
+      "marginPercent": 25.0,
+      "cost": 2400.00,
+      "price": 3000.00
+    }
+  ]
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Relationships Tab -->
+            <div id="relationships" class="tab-pane">
+                <div class="example-group">
+                    <h3>Complex Relationship Queries</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Complete Project with All Relations</div>
+                            <div class="example-description">Load project with all related entities in single query</div>
+                            <div class="tags">
+                                <span class="tag advanced">Complex</span>
+                                <span class="tag">Relationships</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">query GetCompleteProject($id: ID!) {
+  getProjects(id: $id) {
+    # Project Basic Info
+    id
+    title
+    status
+    statusImage
+    statusOrder
+    description
+    budget
+    estimatedGrossProfit
+    boosterEstimatedCost
+    boosterActualCost
+    addedValue
+    
+    # Timeline
+    requestDate
+    visitReviewDate
+    proposalDate
+    contractDate
+    escrowDate
+    estimatedClosingDate
+    closingDate
+    boosterCompletionDate
+    
+    # Financial Details
+    originalValue
+    listingPrice
+    salePrice
+    boostPrice
+    revShareAmount
+    loanBalance
+    paidCost
+    
+    # Contact Relationships
+    agent {
+      id
+      fullName
+      email
+      phone
+      company
+      brokerage
+      roleType
+      assignmentPriority
+    }
+    
+    homeowner {
+      id
+      fullName
+      email
+      phone
+      company
+    }
+    
+    homeowner2 {
+      id
+      fullName
+      email
+      phone
+    }
+    
+    homeowner3 {
+      id
+      fullName
+      email
+      phone
+    }
+    
+    # Property Details
+    address {
+      id
+      propertyFullAddress
+      city
+      state
+      zip
+      propertyType
+      bedrooms
+      bathrooms
+      floors
+      sizeSqft
+      yearBuilt
+      redfinLink
+      zillowLink
+    }
+    
+    # Related Quotes
+    quotes {
+      items {
+        id
+        quoteNumber
+        title
+        status
+        totalPrice
+        totalCost
+        budget
+        operationManagerApproved
+        underwritingApproved
+        signed
+        sentDate
+        openedDate
+        signedDate
+        expiredDate
+        createdAt
+      }
+    }
+    
+    # Project Milestones
+    milestones {
+      items {
+        id
+        name
+        description
+        order
+        isComplete
+        estimatedStart
+        estimatedFinish
+        isCategory
+        isInternal
+        createdDate
+        updatedDate
+      }
+    }
+    
+    # Project Comments
+    comments {
+      items {
+        id
+        comment
+        nickname
+        isPrivate
+        postedByProfileImage
+        addToGallery
+        files
+        createdDate
+        updatedDate
+      }
+    }
+    
+    # Payment Terms
+    paymentTerms {
+      items {
+        id
+        type
+        paymentName
+        paymentAmount
+        paymentDue
+        description
+        order
+        paid
+        isCategory
+        internal
+        createdDate
+        updatedDate
+      }
+    }
+    
+    # Quote Items (if needed)
+    quoteItems {
+      items {
+        id
+        itemName
+        description
+        quantity
+        unitPrice
+        total
+        type
+        recommendItem
+        marginPercent
+        cost
+        price
+        itemCompleted
+      }
+    }
+    
+    # Audit Fields
+    createdDate
+    updatedDate
+    owner
+  }
+}</div>
+                            <div class="example-variables">{
+  "id": "project-id-here"
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Agent Dashboard Data</div>
+                            <div class="example-description">Get agent with all assigned projects and requests</div>
+                            <div class="tags">
+                                <span class="tag business">Dashboard</span>
+                                <span class="tag">Agent View</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">query GetAgentDashboard($contactId: ID!, $projectLimit: Int = 10, $requestLimit: Int = 20) {
+  getContacts(id: $contactId) {
+    id
+    fullName
+    email
+    phone
+    company
+    brokerage
+    roleType
+    assignmentPriority
+    isActive
+    
+    # Agent's Projects
+    agentProjects(limit: $projectLimit) {
+      items {
+        id
+        title
+        status
+        statusOrder
+        budget
+        requestDate
+        estimatedClosingDate
+        boosterEstimatedCost
+        
+        # Homeowner for each project
+        homeowner {
+          fullName
+          email
+          phone
+        }
+        
+        # Property for each project
+        address {
+          propertyFullAddress
+          city
+          state
+          propertyType
+        }
+        
+        # Recent quotes
+        quotes(limit: 3) {
+          items {
+            id
+            quoteNumber
+            status
+            totalPrice
+            sentDate
+          }
+        }
+        
+        # Active milestones
+        milestones(filter: { isComplete: { eq: false } }) {
+          items {
+            id
+            name
+            estimatedFinish
+            order
+          }
+        }
+        
+        createdDate
+        updatedDate
+      }
+    }
+    
+    # Agent's Active Requests
+    agentRequests(
+      filter: { status: { ne: "closed" } }
+      limit: $requestLimit
+    ) {
+      items {
+        id
+        status
+        priority
+        product
+        message
+        estimatedValue
+        readinessScore
+        followUpDate
+        lastContactDate
+        assignedDate
+        
+        # Homeowner for each request
+        homeowner {
+          fullName
+          email
+          phone
+        }
+        
+        # Property for each request
+        address {
+          propertyFullAddress
+          city
+          state
+        }
+        
+        # Recent notes
+        notes(limit: 3) {
+          items {
+            id
+            content
+            type
+            category
+            createdAt
+          }
+        }
+        
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "contactId": "agent-contact-id-here",
+  "projectLimit": 10,
+  "requestLimit": 20
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notifications Tab -->
+            <div id="notifications" class="tab-pane">
+                <div class="example-group">
+                    <h3>Signal-Driven Notifications</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Emit Form Submission Signal</div>
+                            <div class="example-description">Trigger notification workflow from form submission</div>
+                            <div class="tags">
+                                <span class="tag business">Notifications</span>
+                                <span class="tag">Form Processing</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation EmitFormSubmissionSignal($input: CreateSignalEventsInput!) {
+  createSignalEvents(input: $input) {
+    id
+    signalType
+    payload
+    emittedAt
+    emittedBy
+    source
+    processed
+    triggeredNotifications {
+      items {
+        id
+        eventType
+        status
+        channels
+        recipientIds
+        scheduledAt
+        sentAt
+      }
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "signalType": "form_contact_us_submission",
+    "payload": {
+      "customerName": "John and Jane Doe",
+      "customerEmail": "john.doe@email.com",
+      "customerPhone": "+1-555-0123",
+      "propertyAddress": "123 Main Street, San Francisco, CA",
+      "projectType": "Kitchen Renovation",
+      "budget": "25000-30000",
+      "timeline": "Within 2 months",
+      "message": "We're looking to renovate our kitchen before listing our home for sale. We need a modern update with new cabinets, countertops, and appliances.",
+      "formType": "get-estimate",
+      "dashboardUrl": "https://realtechee.com/admin/requests/new-request-id",
+      "submissionId": "submission-123456"
+    },
+    "emittedAt": "2024-09-01T12:30:00Z",
+    "emittedBy": "form_processor",
+    "source": "get_estimate_form",
+    "processed": false
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Configure Notification Hook</div>
+                            <div class="example-description">Set up automatic notifications for specific signals</div>
+                            <div class="tags">
+                                <span class="tag business">Configuration</span>
+                                <span class="tag">Admin</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">mutation CreateNotificationHook($input: CreateSignalNotificationHooksInput!) {
+  createSignalNotificationHooks(input: $input) {
+    id
+    signalType
+    notificationTemplateId
+    channel
+    enabled
+    priority
+    recipientEmails
+    recipientRoles
+    recipientDynamic
+    conditions
+    deliveryDelay
+    maxRetries
+    createdBy
+    lastModifiedBy
+    template {
+      id
+      name
+      formType
+      emailSubject
+      smsContent
+      isActive
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "input": {
+    "signalType": "form_get_estimate_submission",
+    "notificationTemplateId": "template-id-here",
+    "channel": "email",
+    "enabled": true,
+    "priority": "high",
+    "recipientEmails": [
+      "info@realtechee.com",
+      "estimates@realtechee.com"
+    ],
+    "recipientRoles": [
+      "admin",
+      "agent"
+    ],
+    "recipientDynamic": {
+      "includeAssignedAgent": true,
+      "includeProjectManager": false
+    },
+    "conditions": {
+      "estimatedValue": {
+        "gte": 10000
+      },
+      "priority": {
+        "in": ["medium", "high", "urgent"]
+      }
+    },
+    "deliveryDelay": 0,
+    "maxRetries": 3,
+    "createdBy": "admin@realtechee.com"
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Query Notification Status</div>
+                            <div class="example-description">Monitor notification delivery and troubleshoot issues</div>
+                            <div class="tags">
+                                <span class="tag">Monitoring</span>
+                                <span class="tag">Troubleshooting</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">query MonitorNotificationDelivery($filter: ModelNotificationQueueFilterInput, $limit: Int = 50) {
+  listNotificationQueue(
+    filter: $filter
+    limit: $limit
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      eventType
+      signalEventId
+      status
+      priority
+      channels
+      recipientIds
+      scheduledAt
+      sentAt
+      retryCount
+      errorMessage
+      createdAt
+      updatedAt
+      
+      # Related signal event
+      signalEvent {
+        id
+        signalType
+        emittedAt
+        source
+        payload
+      }
+      
+      # Template used
+      template {
+        id
+        name
+        formType
+        emailSubject
+      }
+    }
+    nextToken
+  }
+}
+
+# Get delivery events for troubleshooting
+query GetDeliveryEvents($notificationId: String!) {
+  listNotificationEvents(
+    filter: { notificationId: { eq: $notificationId } }
+    sortDirection: ASC
+  ) {
+    items {
+      id
+      eventId
+      eventType
+      channel
+      recipient
+      provider
+      providerId
+      providerStatus
+      errorCode
+      errorMessage
+      metadata
+      timestamp
+      processingTimeMs
+    }
+  }
+}</div>
+                            <div class="example-variables"># Variables for MonitorNotificationDelivery:
+{
+  "filter": {
+    "or": [
+      { "status": { "eq": "FAILED" } },
+      { "status": { "eq": "RETRYING" } }
+    ]
+  },
+  "limit": 50
+}
+
+# Variables for GetDeliveryEvents:
+{
+  "notificationId": "notification-queue-id-here"
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Queries Tab -->
+            <div id="advanced" class="tab-pane">
+                <div class="example-group">
+                    <h3>Advanced Filtering and Aggregation</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Complex Multi-Entity Search</div>
+                            <div class="example-description">Search across multiple entities with complex conditions</div>
+                            <div class="tags">
+                                <span class="tag advanced">Advanced</span>
+                                <span class="tag">Search</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Find high-value opportunities
+query FindHighValueOpportunities(
+  $minEstimatedValue: Float = 20000
+  $readinessThreshold: Int = 70
+  $timeframe: AWSDateTime
+  $limit: Int = 25
+) {
+  # High-value requests ready for conversion
+  highValueRequests: listRequests(
+    filter: {
+      and: [
+        { estimatedValue: { gte: $minEstimatedValue } }
+        { readinessScore: { gte: $readinessThreshold } }
+        { status: { ne: "closed" } }
+        { status: { ne: "cancelled" } }
+        { createdAt: { gte: $timeframe } }
+      ]
+    }
+    limit: $limit
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      status
+      priority
+      product
+      estimatedValue
+      readinessScore
+      followUpDate
+      lastContactDate
+      createdAt
+      
+      homeowner {
+        fullName
+        email
+        phone
+        company
+        brokerage
+      }
+      
+      agent {
+        fullName
+        email
+        assignmentPriority
+      }
+      
+      address {
+        propertyFullAddress
+        city
+        state
+        propertyType
+        sizeSqft
+        yearBuilt
+      }
+      
+      notes(limit: 3) {
+        items {
+          content
+          type
+          authorName
+          createdAt
+        }
+      }
+      
+      informationItems(filter: { status: { eq: "missing" } }) {
+        items {
+          itemName
+          importance
+          category
+        }
+      }
+    }
+    nextToken
+  }
+}
+
+# Get projects nearing completion for follow-up opportunities
+query ProjectsNearingCompletion(
+  $completionWindow: AWSDateTime
+  $limit: Int = 20
+) {
+  nearingCompletion: listProjects(
+    filter: {
+      and: [
+        { status: { ne: "completed" } }
+        { status: { ne: "cancelled" } }
+        { estimatedClosingDate: { lte: $completionWindow } }
+        { estimatedClosingDate: { gte: "2024-09-01T00:00:00Z" } }
+      ]
+    }
+    limit: $limit
+  ) {
+    items {
+      id
+      title
+      status
+      estimatedClosingDate
+      boosterEstimatedCost
+      boosterActualCost
+      revShareAmount
+      
+      homeowner {
+        fullName
+        email
+        phone
+      }
+      
+      agent {
+        fullName
+        email
+      }
+      
+      address {
+        propertyFullAddress
+        propertyType
+      }
+      
+      milestones(filter: { isComplete: { eq: false } }) {
+        items {
+          name
+          estimatedFinish
+          order
+        }
+      }
+      
+      quotes(limit: 1, sortDirection: DESC) {
+        items {
+          status
+          totalPrice
+          signedDate
+        }
+      }
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "minEstimatedValue": 20000,
+  "readinessThreshold": 70,
+  "timeframe": "2024-08-01T00:00:00Z",
+  "limit": 25,
+  "completionWindow": "2024-10-01T00:00:00Z"
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Agent Performance Analytics</div>
+                            <div class="example-description">Analyze agent performance across multiple metrics</div>
+                            <div class="tags">
+                                <span class="tag advanced">Analytics</span>
+                                <span class="tag business">Performance</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query">query AgentPerformanceAnalysis(
+  $agentId: ID!
+  $startDate: AWSDateTime
+  $endDate: AWSDateTime
+) {
+  agent: getContacts(id: $agentId) {
+    id
+    fullName
+    email
+    roleType
+    assignmentPriority
+    isActive
+    
+    # Agent's projects in timeframe
+    agentProjects(
+      filter: {
+        and: [
+          { createdDate: { gte: $startDate } }
+          { createdDate: { lte: $endDate } }
+        ]
+      }
+    ) {
+      items {
+        id
+        title
+        status
+        boosterEstimatedCost
+        boosterActualCost
+        revShareAmount
+        requestDate
+        closingDate
+        createdDate
+        
+        # Project timeline analysis
+        milestones {
+          items {
+            name
+            isComplete
+            estimatedFinish
+            updatedDate
+          }
+        }
+        
+        # Quote conversion analysis
+        quotes {
+          items {
+            status
+            totalPrice
+            sentDate
+            signedDate
+            operationManagerApproved
+            underwritingApproved
+          }
+        }
+      }
+    }
+    
+    # Agent's requests in timeframe
+    agentRequests(
+      filter: {
+        and: [
+          { createdAt: { gte: $startDate } }
+          { createdAt: { lte: $endDate } }
+        ]
+      }
+    ) {
+      items {
+        id
+        status
+        priority
+        estimatedValue
+        readinessScore
+        assignedDate
+        createdAt
+        
+        # Follow-up effectiveness
+        notes {
+          items {
+            type
+            category
+            followUpRequired
+            createdAt
+          }
+        }
+        
+        # Information gathering effectiveness
+        informationItems {
+          items {
+            status
+            importance
+            requestedDate
+            receivedDate
+          }
+        }
+      }
+    }
+  }
+}
+
+# Business metrics calculation helper
+query BusinessMetricsData(
+  $startDate: AWSDateTime
+  $endDate: AWSDateTime
+  $limit: Int = 1000
+) {
+  # All requests in period for conversion analysis
+  allRequests: listRequests(
+    filter: {
+      createdAt: { between: [$startDate, $endDate] }
+    }
+    limit: $limit
+  ) {
+    items {
+      id
+      status
+      estimatedValue
+      readinessScore
+      assignedTo
+      createdAt
+      moveToQuotingDate
+      expiredDate
+      archivedDate
+    }
+  }
+  
+  # All projects for revenue analysis
+  allProjects: listProjects(
+    filter: {
+      requestDate: { between: [$startDate, $endDate] }
+    }
+    limit: $limit
+  ) {
+    items {
+      id
+      status
+      boosterEstimatedCost
+      boosterActualCost
+      revShareAmount
+      requestDate
+      closingDate
+      estimatedClosingDate
+    }
+  }
+  
+  # All quotes for conversion tracking
+  allQuotes: listQuotes(
+    filter: {
+      requestDate: { between: [$startDate, $endDate] }
+    }
+    limit: $limit
+  ) {
+    items {
+      id
+      status
+      totalPrice
+      sentDate
+      signedDate
+      expiredDate
+      operationManagerApproved
+      underwritingApproved
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "agentId": "agent-contact-id-here",
+  "startDate": "2024-08-01T00:00:00Z",
+  "endDate": "2024-09-01T00:00:00Z",
+  "limit": 1000
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Tab -->
+            <div id="performance" class="tab-pane">
+                <div class="alert alert-info">
+                    <strong>💡 Performance Best Practices:</strong> These examples demonstrate optimal query patterns for high-performance GraphQL operations. Always use appropriate limits and filtering to minimize data transfer and processing time.
+                </div>
+                
+                <div class="example-group">
+                    <h3>Optimized Query Patterns</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Efficient Pagination Pattern</div>
+                            <div class="example-description">Implement cursor-based pagination for large datasets</div>
+                            <div class="tags">
+                                <span class="tag performance">Performance</span>
+                                <span class="tag">Pagination</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># First page - no cursor needed
+query GetFirstPageOfRequests($limit: Int = 20) {
+  listRequests(
+    limit: $limit
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      status
+      priority
+      product
+      estimatedValue
+      createdAt
+      homeowner {
+        fullName
+        email
+      }
+      agent {
+        fullName
+        email
+      }
+    }
+    nextToken
+  }
+}
+
+# Subsequent pages - use nextToken from previous response
+query GetNextPageOfRequests(
+  $limit: Int = 20
+  $nextToken: String
+) {
+  listRequests(
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      status
+      priority
+      product
+      estimatedValue
+      createdAt
+      homeowner {
+        fullName
+        email
+      }
+      agent {
+        fullName
+        email
+      }
+    }
+    nextToken
+  }
+}
+
+# Filtered pagination with cursor
+query GetFilteredRequestsWithPagination(
+  $filter: ModelRequestsFilterInput
+  $limit: Int = 20
+  $nextToken: String
+) {
+  listRequests(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      status
+      priority
+      product
+      estimatedValue
+      readinessScore
+      createdAt
+      # Only load essential fields for list view
+      homeowner {
+        id
+        fullName
+        email
+      }
+    }
+    nextToken
+  }
+}</div>
+                            <div class="example-variables"># Variables for GetFilteredRequestsWithPagination:
+{
+  "filter": {
+    "and": [
+      { "status": { "ne": "closed" } },
+      { "priority": { "in": ["medium", "high", "urgent"] } },
+      { "estimatedValue": { "gte": 10000 } }
+    ]
+  },
+  "limit": 20,
+  "nextToken": "eyJTdGFydEtleSI6eyJpZCI6eyJTIjoibGFzdC1pdGVtLWlkIn19fQ=="
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Minimal Field Selection</div>
+                            <div class="example-description">Load only required fields to minimize payload size</div>
+                            <div class="tags">
+                                <span class="tag performance">Performance</span>
+                                <span class="tag">Optimization</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># List view - minimal fields for performance
+query GetRequestsList($limit: Int = 50) {
+  listRequests(limit: $limit, sortDirection: DESC) {
+    items {
+      id
+      status
+      priority
+      product
+      estimatedValue
+      readinessScore
+      createdAt
+      # Only essential contact info
+      homeowner {
+        id
+        fullName
+        email
+      }
+      agent {
+        id
+        fullName
+      }
+      address {
+        id
+        propertyFullAddress
+        city
+        state
+      }
+    }
+  }
+}
+
+# Detail view - load all fields when needed
+query GetRequestDetail($id: ID!) {
+  getRequests(id: $id) {
+    # All fields for detail view
+    id
+    status
+    priority
+    product
+    message
+    estimatedValue
+    readinessScore
+    followUpDate
+    lastContactDate
+    informationGatheringStatus
+    scopeDefinitionStatus
+    missingInformation
+    budget
+    assignedTo
+    assignedDate
+    officeNotes
+    createdAt
+    updatedAt
+    
+    # Full contact details
+    homeowner {
+      id
+      fullName
+      firstName
+      lastName
+      email
+      phone
+      mobile
+      company
+      brokerage
+    }
+    
+    agent {
+      id
+      fullName
+      email
+      phone
+      company
+      roleType
+    }
+    
+    # Full property details
+    address {
+      id
+      propertyFullAddress
+      houseAddress
+      city
+      state
+      zip
+      propertyType
+      bedrooms
+      bathrooms
+      floors
+      sizeSqft
+      yearBuilt
+      redfinLink
+      zillowLink
+    }
+    
+    # Related data for detail view
+    notes(limit: 10) {
+      items {
+        id
+        content
+        type
+        category
+        authorName
+        authorRole
+        createdAt
+      }
+    }
+    
+    informationItems {
+      items {
+        id
+        itemName
+        status
+        importance
+        value
+        category
+      }
+    }
+  }
+}</div>
+                            <div class="example-variables"># Use different queries for different use cases:
+# List view: minimal fields, higher limits
+# Detail view: all fields, single item
+# This pattern minimizes data transfer and improves performance</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Batch Operations</div>
+                            <div class="example-description">Perform multiple operations efficiently in a single request</div>
+                            <div class="tags">
+                                <span class="tag performance">Performance</span>
+                                <span class="tag advanced">Batch</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Dashboard data - load everything in one request
+query GetDashboardData(
+  $agentId: ID!
+  $requestLimit: Int = 10
+  $projectLimit: Int = 5
+  $recentDays: AWSDateTime
+) {
+  # Agent profile
+  agent: getContacts(id: $agentId) {
+    id
+    fullName
+    email
+    roleType
+    assignmentPriority
+  }
+  
+  # Active requests requiring attention
+  activeRequests: listRequests(
+    filter: {
+      and: [
+        { agentContactId: { eq: $agentId } }
+        { status: { ne: "closed" } }
+        { followUpDate: { lte: "2024-09-01T23:59:59Z" } }
+      ]
+    }
+    limit: $requestLimit
+    sortDirection: ASC
+  ) {
+    items {
+      id
+      status
+      priority
+      product
+      followUpDate
+      readinessScore
+      homeowner {
+        fullName
+        email
+        phone
+      }
+    }
+  }
+  
+  # Active projects
+  activeProjects: listProjects(
+    filter: {
+      and: [
+        { agentContactId: { eq: $agentId } }
+        { status: { ne: "completed" } }
+        { status: { ne: "cancelled" } }
+      ]
+    }
+    limit: $projectLimit
+  ) {
+    items {
+      id
+      title
+      status
+      estimatedClosingDate
+      homeowner {
+        fullName
+      }
+      milestones(filter: { isComplete: { eq: false } }, limit: 3) {
+        items {
+          name
+          estimatedFinish
+        }
+      }
+    }
+  }
+  
+  # Recent activity
+  recentNotifications: listNotificationQueue(
+    filter: {
+      and: [
+        { createdAt: { gte: $recentDays } }
+        { recipientIds: { contains: $agentId } }
+      ]
+    }
+    limit: 5
+    sortDirection: DESC
+  ) {
+    items {
+      id
+      eventType
+      status
+      sentAt
+      createdAt
+    }
+  }
+  
+  # Performance metrics
+  monthlyRequests: listRequests(
+    filter: {
+      and: [
+        { agentContactId: { eq: $agentId } }
+        { createdAt: { gte: "2024-08-01T00:00:00Z" } }
+      ]
+    }
+    limit: 100
+  ) {
+    items {
+      id
+      status
+      estimatedValue
+      createdAt
+      moveToQuotingDate
+    }
+  }
+}</div>
+                            <div class="example-variables">{
+  "agentId": "agent-contact-id-here",
+  "requestLimit": 10,
+  "projectLimit": 5,
+  "recentDays": "2024-08-25T00:00:00Z"
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testing Tab -->
+            <div id="testing" class="tab-pane">
+                <div class="example-group">
+                    <h3>Error Scenario Testing</h3>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Validation Error Testing</div>
+                            <div class="example-description">Test input validation and error handling</div>
+                            <div class="tags">
+                                <span class="tag">Testing</span>
+                                <span class="tag">Validation</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Test 1: Missing required fields
+mutation TestMissingRequiredFields($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+  }
+}
+
+# Test 2: Invalid email format
+mutation TestInvalidEmail($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+  }
+}
+
+# Test 3: Duplicate email (should fail)
+mutation TestDuplicateEmail($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+  }
+}
+
+# Test 4: Invalid enum values
+mutation TestInvalidEnum($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    priority
+    status
+  }
+}</div>
+                            <div class="example-variables"># Test 1: Missing required email field
+{
+  "input": {
+    "fullName": "Test User"
+    // email field missing - should cause validation error
+  }
+}
+
+# Test 2: Invalid email format
+{
+  "input": {
+    "fullName": "Test User",
+    "email": "invalid-email-format"
+  }
+}
+
+# Test 3: Use an email that already exists
+{
+  "input": {
+    "fullName": "Another User",
+    "email": "existing@email.com"
+  }
+}
+
+# Test 4: Invalid priority enum
+{
+  "input": {
+    "id": "request-id-here",
+    "priority": "invalid_priority_value"
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Authorization Testing</div>
+                            <div class="example-description">Test role-based access control and permissions</div>
+                            <div class="tags">
+                                <span class="tag">Testing</span>
+                                <span class="tag">Security</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Test 1: Access without authentication (should fail for protected operations)
+mutation TestUnauthenticatedAccess($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+  }
+}
+
+# Test 2: Access with API key (should work for allowed operations)
+query TestApiKeyAccess {
+  listContacts(limit: 5) {
+    items {
+      id
+      fullName
+      email
+    }
+  }
+}
+
+# Test 3: Access with insufficient role permissions
+mutation TestInsufficientPermissions($input: UpdateContactsInput!) {
+  updateContacts(input: $input) {
+    id
+    fullName
+    email
+    updatedAt
+  }
+}
+
+# Test 4: Access own data vs other user's data
+query TestDataIsolation($id: ID!) {
+  getContacts(id: $id) {
+    id
+    fullName
+    email
+    owner
+  }
+}</div>
+                            <div class="example-variables"># Test scenarios:
+# 1. Run without Authorization header (should fail for mutations)
+# 2. Run with x-api-key header only (should work for reads)
+# 3. Run with homeowner role trying to modify admin data (should fail)
+# 4. Try to access data owned by different user (should respect owner field)
+
+{
+  "input": {
+    "fullName": "Test User",
+    "email": "test@example.com"
+  }
+}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-title">Business Rule Testing</div>
+                            <div class="example-description">Test business logic and constraint validation</div>
+                            <div class="tags">
+                                <span class="tag">Testing</span>
+                                <span class="tag business">Business Logic</span>
+                            </div>
+                        </div>
+                        <div class="example-body">
+                            <button class="copy-btn" onclick="copyExample(this)">Copy</button>
+                            <div class="example-query"># Test 1: Request assignment rules
+mutation TestRequestAssignment($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    assignedTo
+    status
+    assignedDate
+  }
+}
+
+# Test 2: Project status transitions
+mutation TestProjectStatusTransition($input: UpdateProjectsInput!) {
+  updateProjects(input: $input) {
+    id
+    status
+    statusOrder
+    updatedDate
+  }
+}
+
+# Test 3: Quote approval workflow
+mutation TestQuoteApproval($input: UpdateQuotesInput!) {
+  updateQuotes(input: $input) {
+    id
+    status
+    operationManagerApproved
+    underwritingApproved
+    signed
+  }
+}
+
+# Test 4: Notification delivery rules
+query TestNotificationRules(
+  $signalType: String!
+  $priority: String!
+) {
+  listSignalNotificationHooks(
+    filter: {
+      and: [
+        { signalType: { eq: $signalType } }
+        { enabled: { eq: true } }
+        { priority: { eq: $priority } }
+      ]
+    }
+  ) {
+    items {
+      id
+      signalType
+      channel
+      enabled
+      priority
+      recipientEmails
+      conditions
+      deliveryDelay
+    }
+  }
+}</div>
+                            <div class="example-variables"># Test 1: Assign to invalid agent (should fail)
+{
+  "input": {
+    "id": "request-id-here",
+    "assignedTo": "nonexistent@agent.com",
+    "status": "assigned"
+  }
+}
+
+# Test 2: Invalid status transition (e.g., draft to completed)
+{
+  "input": {
+    "id": "project-id-here",
+    "status": "completed"
+    // Without required intermediate steps
+  }
+}
+
+# Test 3: Sign quote without approvals (should fail if business rules enforce)
+{
+  "input": {
+    "id": "quote-id-here",
+    "signed": true
+    // Without operationManagerApproved: true
+  }
+}
+
+# Test 4: Check notification rules for high-priority signals
+{
+  "signalType": "form_get_estimate_submission",
+  "priority": "high"
+}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab pane
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        function copyExample(button) {
+            const exampleBody = button.parentElement;
+            const queryElement = exampleBody.querySelector('.example-query');
+            const variablesElement = exampleBody.querySelector('.example-variables');
+            
+            let textToCopy = queryElement.textContent;
+            if (variablesElement) {
+                textToCopy += '\n\n# Variables:\n' + variablesElement.textContent;
+            }
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text:', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+        
+        // Add syntax highlighting (basic)
+        document.addEventListener('DOMContentLoaded', () => {
+            const codeBlocks = document.querySelectorAll('.example-query, .example-variables');
+            codeBlocks.forEach(block => {
+                let html = block.innerHTML;
+                
+                // Highlight keywords
+                html = html.replace(/\b(query|mutation|subscription|fragment)\b/g, '<span class="keyword">$1</span>');
+                html = html.replace(/\b(String|Int|Float|Boolean|ID|AWSDateTime)\b/g, '<span class="type">$1</span>');
+                html = html.replace(/"([^"]*)"/g, '<span class="string">"$1"</span>');
+                html = html.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+                html = html.replace(/#([^\n]*)/g, '<span class="comment">#$1</span>');
+                
+                block.innerHTML = html;
+                block.classList.add('syntax-highlight');
+            });
+        });
+    </script>
+</body>
+</html>

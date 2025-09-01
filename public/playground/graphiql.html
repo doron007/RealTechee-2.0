@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphiQL IDE</title>
+    <link rel="stylesheet" href="https://unpkg.com/graphiql@2.4.7/graphiql.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .env-selector {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            color: white;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .env-selector option {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .auth-status {
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .auth-status.authenticated {
+            background: rgba(39, 174, 96, 0.8);
+        }
+        
+        .auth-status.unauthenticated {
+            background: rgba(231, 76, 60, 0.8);
+        }
+        
+        .btn-header {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-header:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        #graphiql {
+            height: calc(100vh - 70px);
+        }
+        
+        .graphiql-container {
+            height: 100%;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-content {
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 RealTechee GraphQL IDE</h1>
+        <div class="header-controls">
+            <select class="env-selector" id="envSelector">
+                <option value="dev">Development</option>
+                <option value="staging">Staging</option>
+                <option value="prod">Production</option>
+            </select>
+            <div class="auth-status" id="authStatus">Not Connected</div>
+            <a href="./index.html" class="btn-header">← Back to Playground</a>
+        </div>
+    </div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Loading GraphQL IDE...</p>
+            <small>Connecting to backend and loading schema</small>
+        </div>
+    </div>
+    
+    <div id="graphiql"></div>
+
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/graphiql@2.4.7/graphiql.min.js"></script>
+    
+    <script>
+        // Global configuration
+        let amplifyConfig = null;
+        let currentEnvironment = 'dev';
+        
+        // Sample queries for different business operations
+        const defaultQuery = `# Welcome to RealTechee GraphQL Playground!
+# This is your interactive GraphQL IDE for exploring and testing the backend API.
+
+# Sample Query 1: Get all requests with their related data
+query GetRequestsWithRelations($limit: Int = 10) {
+  listRequests(limit: $limit) {
+    items {
+      id
+      status
+      product
+      message
+      assignedTo
+      assignedDate
+      priority
+      estimatedValue
+      readinessScore
+      createdAt
+      homeowner {
+        id
+        fullName
+        email
+        phone
+        company
+        brokerage
+      }
+      agent {
+        id
+        fullName
+        email
+        phone
+        company
+        brokerage
+      }
+      address {
+        id
+        propertyFullAddress
+        city
+        state
+        zip
+        propertyType
+        bedrooms
+        bathrooms
+        sizeSqft
+        yearBuilt
+      }
+      notes {
+        items {
+          id
+          content
+          type
+          category
+          authorName
+          authorRole
+          createdAt
+        }
+      }
+    }
+  }
+}
+
+# Sample Query 2: Get contacts with their role assignments
+query GetContactsWithRoles($limit: Int = 10) {
+  listContacts(limit: $limit) {
+    items {
+      id
+      fullName
+      email
+      phone
+      company
+      brokerage
+      roleType
+      isActive
+      assignmentPriority
+      emailNotifications
+      smsNotifications
+      agentProjects {
+        items {
+          id
+          title
+          status
+          createdDate
+        }
+      }
+      homeownerProjects {
+        items {
+          id
+          title
+          status
+          createdDate
+        }
+      }
+    }
+  }
+}
+
+# Sample Query 3: Get projects with full relationship data
+query GetProjectsWithRelations($limit: Int = 5) {
+  listProjects(limit: $limit) {
+    items {
+      id
+      title
+      status
+      statusOrder
+      description
+      budget
+      requestDate
+      estimatedClosingDate
+      agent {
+        fullName
+        email
+        phone
+        company
+      }
+      homeowner {
+        fullName
+        email
+        phone
+      }
+      address {
+        propertyFullAddress
+        city
+        state
+        propertyType
+        bedrooms
+        bathrooms
+        sizeSqft
+      }
+      quotes {
+        items {
+          id
+          status
+          totalPrice
+          totalCost
+          quoteNumber
+          createdAt
+        }
+      }
+      milestones {
+        items {
+          id
+          name
+          description
+          isComplete
+          estimatedStart
+          estimatedFinish
+        }
+      }
+      comments {
+        items {
+          id
+          comment
+          nickname
+          isPrivate
+          createdDate
+        }
+      }
+    }
+  }
+}
+
+# Sample Mutation 1: Create a new contact
+mutation CreateContact($input: CreateContactsInput!) {
+  createContacts(input: $input) {
+    id
+    fullName
+    email
+    phone
+    company
+    brokerage
+    roleType
+    isActive
+    assignmentPriority
+    emailNotifications
+    smsNotifications
+    createdAt
+  }
+}
+
+# Sample Variables for CreateContact:
+# {
+#   "input": {
+#     "firstName": "John",
+#     "lastName": "Doe",
+#     "fullName": "John Doe",
+#     "email": "john.doe@example.com",
+#     "phone": "+1-555-0123",
+#     "company": "ABC Realty",
+#     "brokerage": "Premium Brokerage",
+#     "roleType": "agent",
+#     "isActive": true,
+#     "assignmentPriority": 1,
+#     "emailNotifications": true,
+#     "smsNotifications": false
+#   }
+# }
+
+# Sample Mutation 2: Update request status
+mutation UpdateRequestStatus($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    status
+    assignedTo
+    assignedDate
+    officeNotes
+    priority
+    updatedAt
+  }
+}
+
+# Sample Variables for UpdateRequestStatus:
+# {
+#   "input": {
+#     "id": "REQUEST_ID_HERE",
+#     "status": "in_progress",
+#     "assignedTo": "john.doe@realtechee.com",
+#     "assignedDate": "2024-09-01T00:00:00Z",
+#     "priority": "high",
+#     "officeNotes": "Assigned to John for follow-up"
+#   }
+# }
+
+# Try executing these queries to explore your data!
+# Use Ctrl+Space for auto-completion
+# Use Ctrl+Enter to execute queries
+`;
+
+        // GraphQL fetcher function
+        async function graphQLFetcher(graphQLParams, opts = {}) {
+            try {
+                if (!amplifyConfig?.data?.url) {
+                    throw new Error('GraphQL endpoint not configured');
+                }
+
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+
+                // Add API key if available
+                if (amplifyConfig?.data?.api_key) {
+                    headers['x-api-key'] = amplifyConfig.data.api_key;
+                }
+
+                // Add auth token if user is authenticated
+                const authToken = localStorage.getItem('authToken');
+                if (authToken) {
+                    headers['Authorization'] = `Bearer ${authToken}`;
+                }
+
+                const response = await fetch(amplifyConfig.data.url, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(graphQLParams),
+                });
+
+                const result = await response.json();
+                
+                // Handle GraphQL errors
+                if (result.errors && result.errors.length > 0) {
+                    console.warn('GraphQL Errors:', result.errors);
+                }
+
+                return result;
+            } catch (error) {
+                console.error('GraphQL request failed:', error);
+                return {
+                    errors: [{
+                        message: `Network error: ${error.message}`,
+                        extensions: {
+                            code: 'NETWORK_ERROR',
+                            timestamp: new Date().toISOString()
+                        }
+                    }]
+                };
+            }
+        }
+
+        // Initialize GraphiQL
+        async function initializeGraphiQL() {
+            try {
+                // Load Amplify configuration - FIXED PATH for Next.js public directory
+                const configResponse = await fetch('/amplify_outputs.json');
+                amplifyConfig = await configResponse.json();
+
+                // Update auth status
+                updateAuthStatus();
+
+                // Create GraphiQL element
+                const graphiql = React.createElement(GraphiQL, {
+                    fetcher: graphQLFetcher,
+                    defaultQuery: defaultQuery,
+                    headerEditorEnabled: true,
+                    shouldPersistHeaders: true,
+                    defaultVariableEditorOpen: true,
+                    editorTheme: 'light',
+                    onEditQuery: (query) => {
+                        // Save query to localStorage for persistence
+                        localStorage.setItem('graphiql:query', query);
+                    },
+                    onEditVariables: (variables) => {
+                        localStorage.setItem('graphiql:variables', variables);
+                    },
+                    onEditHeaders: (headers) => {
+                        localStorage.setItem('graphiql:headers', headers);
+                    },
+                    // Load persisted query, variables, and headers
+                    query: localStorage.getItem('graphiql:query') || defaultQuery,
+                    variables: localStorage.getItem('graphiql:variables') || '{}',
+                    headers: localStorage.getItem('graphiql:headers') || '{}',
+                });
+
+                // Render GraphiQL
+                ReactDOM.render(graphiql, document.getElementById('graphiql'));
+
+                // Hide loading overlay
+                document.getElementById('loadingOverlay').style.display = 'none';
+
+            } catch (error) {
+                console.error('Failed to initialize GraphiQL:', error);
+                showError(`Failed to load GraphQL IDE: ${error.message}`);
+            }
+        }
+
+        // Update authentication status
+        function updateAuthStatus() {
+            const authStatusEl = document.getElementById('authStatus');
+            const authToken = localStorage.getItem('authToken');
+            
+            if (authToken) {
+                authStatusEl.textContent = 'Authenticated';
+                authStatusEl.className = 'auth-status authenticated';
+            } else if (amplifyConfig?.data?.api_key) {
+                authStatusEl.textContent = 'API Key';
+                authStatusEl.className = 'auth-status authenticated';
+            } else {
+                authStatusEl.textContent = 'No Auth';
+                authStatusEl.className = 'auth-status unauthenticated';
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.innerHTML = `
+                <div class="loading-content">
+                    <div class="error-message">
+                        <strong>Error:</strong> ${message}
+                        <br><br>
+                        <button onclick="window.location.reload()" class="btn-header">Retry</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Environment selector change handler
+        document.getElementById('envSelector').addEventListener('change', (e) => {
+            currentEnvironment = e.target.value;
+            // In a real implementation, you would load different config for different environments
+            console.log('Switched to environment:', currentEnvironment);
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeGraphiQL);
+
+        // Add some helpful keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+K to focus query editor (handled by GraphiQL)
+            // Ctrl+Shift+P to open docs (handled by GraphiQL)
+            if (e.ctrlKey && e.key === 'h') {
+                e.preventDefault();
+                alert(`
+🚀 RealTechee GraphQL IDE Shortcuts:
+
+• Ctrl+Enter: Execute query
+• Ctrl+Space: Auto-complete
+• Ctrl+K: Focus query editor
+• Ctrl+Shift+P: Toggle docs panel
+• Ctrl+/: Toggle comments
+• Alt+Click: Add cursor
+• Ctrl+D: Duplicate line
+• Ctrl+H: This help dialog
+
+📚 Tips:
+• Use the docs panel (>) to explore schema
+• Try the sample queries provided
+• Variables panel supports JSON with validation
+• Headers panel for authentication tokens
+• Query history is automatically saved
+                `);
+            }
+        });
+    </script>
+</body>
+</html>
