@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphQL Playground</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+        
+        .playground-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .playground-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .playground-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        }
+        
+        .playground-card h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .playground-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .playground-card .features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .playground-card .features li {
+            color: #555;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .playground-card .features li::before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .btn.tertiary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .environment-info {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .environment-info h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .env-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .env-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .env-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .env-item code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .quick-links {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quick-links h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .link-item {
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .playground-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 RealTechee GraphQL Playground</h1>
+            <p>Interactive GraphQL IDE and API Documentation for Backend Validation</p>
+        </div>
+        
+        <div class="environment-info">
+            <h2>🔧 Environment Configuration</h2>
+            <div class="env-grid">
+                <div class="env-item">
+                    <strong>Development</strong>
+                    <code>*-fvn7t5hbobaxjklhrqzdl4ac34-*</code>
+                </div>
+                <div class="env-item">
+                    <strong>Production</strong>
+                    <code>*-aqnqdrctpzfwfjwyxxsmu6peoq-*</code>
+                </div>
+                <div class="env-item">
+                    <strong>GraphQL Endpoint</strong>
+                    <code id="graphql-endpoint">Loading...</code>
+                </div>
+                <div class="env-item">
+                    <strong>Auth Mode</strong>
+                    <code>API Key + User Pool</code>
+                </div>
+            </div>
+        </div>
+        
+        <div class="playground-grid">
+            <div class="playground-card">
+                <h3><span class="icon">🎮</span> Interactive Playground</h3>
+                <p>Full-featured GraphQL IDE with schema introspection, auto-complete, and real-time query execution.</p>
+                <ul class="features">
+                    <li>Schema exploration and documentation</li>
+                    <li>Query auto-completion and validation</li>
+                    <li>Real-time query execution</li>
+                    <li>Variables and headers management</li>
+                    <li>Query history and favorites</li>
+                </ul>
+                <a href="./graphiql.html" class="btn">Launch GraphiQL IDE</a>
+            </div>
+            
+            <div class="playground-card">
+                <h3><span class="icon">📚</span> API Documentation</h3>
+                <p>Comprehensive auto-generated documentation from your GraphQL schema with examples and guides.</p>
+                <ul class="features">
+                    <li>Complete schema reference</li>
+                    <li>Request/response examples</li>
+                    <li>Business logic documentation</li>
+                    <li>Error codes and handling</li>
+                    <li>Performance benchmarks</li>
+                </ul>
+                <a href="./docs.html" class="btn secondary">View Documentation</a>
+            </div>
+            
+            <div class="playground-card">
+                <h3><span class="icon">🧪</span> Query Examples</h3>
+                <p>Pre-built queries and mutations for all business operations with real-world scenarios.</p>
+                <ul class="features">
+                    <li>CRUD operations for all entities</li>
+                    <li>Business workflow examples</li>
+                    <li>Complex filtering and sorting</li>
+                    <li>Error scenarios and edge cases</li>
+                    <li>Performance testing queries</li>
+                </ul>
+                <a href="./examples.html" class="btn tertiary">Browse Examples</a>
+            </div>
+            
+            <div class="playground-card">
+                <h3><span class="icon">🔍</span> Testing Scenarios</h3>
+                <p>Comprehensive test scenarios for authentication, validation, and business rules.</p>
+                <ul class="features">
+                    <li>Authentication testing (all roles)</li>
+                    <li>Data validation scenarios</li>
+                    <li>Business rule validation</li>
+                    <li>Concurrent operation testing</li>
+                    <li>Error handling verification</li>
+                </ul>
+                <a href="./testing.html" class="btn">Run Test Scenarios</a>
+            </div>
+            
+            <div class="playground-card">
+                <h3><span class="icon">📊</span> Performance Monitor</h3>
+                <p>Real-time performance monitoring and benchmarking for all GraphQL operations.</p>
+                <ul class="features">
+                    <li>Query execution timing</li>
+                    <li>Resource utilization metrics</li>
+                    <li>Concurrent request testing</li>
+                    <li>Performance bottleneck identification</li>
+                    <li>Optimization recommendations</li>
+                </ul>
+                <a href="./performance.html" class="btn secondary">Monitor Performance</a>
+            </div>
+            
+            <div class="playground-card">
+                <h3><span class="icon">🔧</span> Schema Inspector</h3>
+                <p>Deep dive into your GraphQL schema structure, relationships, and business rules.</p>
+                <ul class="features">
+                    <li>Visual schema explorer</li>
+                    <li>Entity relationship diagrams</li>
+                    <li>Authorization rule analysis</li>
+                    <li>Field usage statistics</li>
+                    <li>Schema evolution tracking</li>
+                </ul>
+                <a href="./schema.html" class="btn tertiary">Inspect Schema</a>
+            </div>
+        </div>
+        
+        <div class="quick-links">
+            <h2>🔗 Quick Links</h2>
+            <div class="links-grid">
+                <div class="link-item">
+                    <a href="./business-workflows.html" class="btn">Business Workflows</a>
+                </div>
+                <div class="link-item">
+                    <a href="./notification-system.html" class="btn secondary">Notification System</a>
+                </div>
+                <div class="link-item">
+                    <a href="./lead-management.html" class="btn tertiary">Lead Management</a>
+                </div>
+                <div class="link-item">
+                    <a href="./reporting.html" class="btn">Reporting & Analytics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Load GraphQL endpoint from amplify_outputs.json
+        fetch('/amplify_outputs.json')
+            .then(response => response.json())
+            .then(config => {
+                const endpoint = config.data?.url || 'Not configured';
+                document.getElementById('graphql-endpoint').textContent = endpoint;
+            })
+            .catch(error => {
+                console.error('Failed to load amplify config:', error);
+                document.getElementById('graphql-endpoint').textContent = 'Error loading endpoint';
+            });
+    </script>
+</body>
+</html>

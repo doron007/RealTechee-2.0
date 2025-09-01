@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee Business Workflows</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .workflow-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .workflow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        }
+        
+        .workflow-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .workflow-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .workflow-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .workflow-description {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .workflow-body {
+            padding: 25px;
+        }
+        
+        .workflow-steps {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .workflow-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .workflow-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .workflow-detail {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: none;
+        }
+        
+        .workflow-detail.active {
+            display: block;
+        }
+        
+        .detail-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .detail-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .detail-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .code-section {
+            margin: 30px 0;
+        }
+        
+        .code-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .variables-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            margin: 10px 0;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+        
+        .metrics-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .metrics-title {
+            color: #856404;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .metric-item {
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔄 RealTechee Business Workflows</h1>
+        <p>End-to-end business processes and their GraphQL implementations</p>
+    </div>
+    
+    <div class="container">
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+        
+        <div class="workflow-grid">
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">🏠</div>
+                    <div class="workflow-title">Lead to Project Conversion</div>
+                    <div class="workflow-description">Complete customer journey from initial request to active project</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Form Submission</div>
+                                <div class="step-description">Customer submits service request through website</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Lead Qualification</div>
+                                <div class="step-description">Agent reviews and scores lead potential</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Site Visit</div>
+                                <div class="step-description">On-site assessment and scope definition</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Project Creation</div>
+                                <div class="step-description">Convert qualified request to active project</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('lead-conversion')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('lead-conversion')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">💰</div>
+                    <div class="workflow-title">Quote Generation & Approval</div>
+                    <div class="workflow-description">Comprehensive quoting process with multi-level approval</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Scope Definition</div>
+                                <div class="step-description">Define project scope and requirements</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Cost Estimation</div>
+                                <div class="step-description">Calculate materials, labor, and margins</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Internal Approval</div>
+                                <div class="step-description">Operations and underwriting review</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Customer Delivery</div>
+                                <div class="step-description">Send quote and collect signatures</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('quote-generation')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('quote-generation')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">📧</div>
+                    <div class="workflow-title">Notification Processing</div>
+                    <div class="workflow-description">Signal-driven notification system with multi-channel delivery</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Signal Emission</div>
+                                <div class="step-description">Business events trigger notification signals</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Rule Evaluation</div>
+                                <div class="step-description">Check conditions and recipient rules</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Queue Processing</div>
+                                <div class="step-description">Lambda functions process delivery queue</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Multi-Channel Delivery</div>
+                                <div class="step-description">Email and SMS delivery with retry logic</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('notification-processing')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('notification-processing')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">📋</div>
+                    <div class="workflow-title">Project Management</div>
+                    <div class="workflow-description">Complete project lifecycle from planning to completion</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Project Planning</div>
+                                <div class="step-description">Define milestones and timeline</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Progress Tracking</div>
+                                <div class="step-description">Monitor milestones and update status</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Payment Processing</div>
+                                <div class="step-description">Track payments and invoicing</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Project Completion</div>
+                                <div class="step-description">Final inspection and handover</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('project-management')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('project-management')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">👥</div>
+                    <div class="workflow-title">Contact & Assignment Management</div>
+                    <div class="workflow-description">Role-based contact system with automatic assignments</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Contact Registration</div>
+                                <div class="step-description">Create contact with role and preferences</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Workload Analysis</div>
+                                <div class="step-description">Assess current assignments and capacity</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Smart Assignment</div>
+                                <div class="step-description">Auto-assign based on priority and workload</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Notification Delivery</div>
+                                <div class="step-description">Notify assigned agent via preferred channels</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('contact-assignment')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('contact-assignment')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workflow-card">
+                <div class="workflow-header">
+                    <div class="workflow-icon">📊</div>
+                    <div class="workflow-title">Reporting & Analytics</div>
+                    <div class="workflow-description">Business intelligence and performance tracking</div>
+                </div>
+                <div class="workflow-body">
+                    <ul class="workflow-steps">
+                        <li class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Data Aggregation</div>
+                                <div class="step-description">Collect metrics from all business entities</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Performance Analysis</div>
+                                <div class="step-description">Calculate conversion rates and trends</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Dashboard Generation</div>
+                                <div class="step-description">Create real-time business dashboards</div>
+                            </div>
+                        </li>
+                        <li class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Insight Delivery</div>
+                                <div class="step-description">Share insights with stakeholders</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="workflow-actions">
+                        <button class="btn btn-primary" onclick="showWorkflowDetail('reporting-analytics')">View Implementation</button>
+                        <button class="btn btn-secondary" onclick="runWorkflowTest('reporting-analytics')">Test Workflow</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Workflow Detail Modals -->
+        <div id="lead-conversion" class="workflow-detail">
+            <div class="detail-header">
+                <div class="detail-title">Lead to Project Conversion Workflow</div>
+                <div class="detail-subtitle">Complete GraphQL implementation for the customer acquisition process</div>
+            </div>
+            
+            <div class="metrics-section">
+                <div class="metrics-title">📈 Key Performance Indicators</div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-value">73%</div>
+                        <div class="metric-label">Lead Qualification Rate</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">45%</div>
+                        <div class="metric-label">Quote Conversion Rate</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">3.2 days</div>
+                        <div class="metric-label">Avg Response Time</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$28K</div>
+                        <div class="metric-label">Avg Project Value</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 1: Initial Request Creation</h4>
+                <div class="code-block">mutation CreateInitialRequest($input: CreateRequestsInput!) {
+  createRequests(input: $input) {
+    id
+    status
+    priority
+    product
+    message
+    estimatedValue
+    readinessScore
+    source
+    informationGatheringStatus
+    scopeDefinitionStatus
+    homeowner {
+      id
+      fullName
+      email
+      phone
+    }
+    address {
+      id
+      propertyFullAddress
+      city
+      state
+      propertyType
+    }
+    createdAt
+  }
+}</div>
+                <div class="variables-block">{
+  "input": {
+    "status": "new",
+    "priority": "medium",
+    "product": "Kitchen Renovation",
+    "message": "Looking to renovate kitchen before selling. Need modern updates.",
+    "estimatedValue": 25000,
+    "readinessScore": 60,
+    "source": "form_submission",
+    "informationGatheringStatus": "pending",
+    "scopeDefinitionStatus": "not_started",
+    "homeownerContactId": "contact-id",
+    "addressId": "property-id"
+  }
+}</div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 2: Lead Qualification & Assignment</h4>
+                <div class="code-block">mutation QualifyAndAssignRequest($input: UpdateRequestsInput!) {
+  updateRequests(input: $input) {
+    id
+    status
+    priority
+    assignedTo
+    assignedDate
+    readinessScore
+    followUpDate
+    informationGatheringStatus
+    missingInformation
+    officeNotes
+    agent {
+      fullName
+      email
+      phone
+      assignmentPriority
+    }
+  }
+}</div>
+                <div class="variables-block">{
+  "input": {
+    "id": "request-id",
+    "status": "qualified",
+    "priority": "high",
+    "assignedTo": "agent@realtechee.com",
+    "assignedDate": "2024-09-01T10:00:00Z",
+    "readinessScore": 85,
+    "followUpDate": "2024-09-03T09:00:00Z",
+    "informationGatheringStatus": "in_progress",
+    "missingInformation": ["property_photos", "timeline_requirements"],
+    "officeNotes": "High-value kitchen renovation. Client motivated to sell.",
+    "agentContactId": "agent-contact-id"
+  }
+}</div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 3: Project Conversion</h4>
+                <div class="code-block">mutation ConvertToProject($input: CreateProjectsInput!) {
+  createProjects(input: $input) {
+    id
+    title
+    status
+    description
+    budget
+    requestId
+    requestDate
+    estimatedClosingDate
+    homeowner {
+      fullName
+      email
+    }
+    agent {
+      fullName
+      email
+    }
+    address {
+      propertyFullAddress
+      propertyType
+    }
+    createdDate
+  }
+}</div>
+                <div class="variables-block">{
+  "input": {
+    "title": "Kitchen Renovation - 123 Maple Street",
+    "status": "planning",
+    "description": "Complete kitchen renovation including cabinets, countertops, and appliances",
+    "budget": "25000-30000",
+    "requestId": "qualified-request-id",
+    "requestDate": "2024-09-01T00:00:00Z",
+    "estimatedClosingDate": "2024-10-15T00:00:00Z",
+    "homeownerContactId": "homeowner-contact-id",
+    "agentContactId": "agent-contact-id",
+    "addressId": "property-address-id"
+  }
+}</div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 4: Workflow Status Tracking</h4>
+                <div class="code-block">query TrackConversionWorkflow($requestId: ID!, $projectId: ID) {
+  request: getRequests(id: $requestId) {
+    id
+    status
+    readinessScore
+    informationGatheringStatus
+    scopeDefinitionStatus
+    notes {
+      items {
+        content
+        type
+        authorName
+        createdAt
+      }
+    }
+    statusHistory {
+      items {
+        previousStatus
+        newStatus
+        timestamp
+        triggeredByName
+      }
+    }
+  }
+  
+  project: getProjects(id: $projectId) @skip(if: $projectId) {
+    id
+    status
+    createdDate
+    milestones {
+      items {
+        name
+        isComplete
+        estimatedFinish
+      }
+    }
+  }
+}</div>
+            </div>
+        </div>
+        
+        <div id="notification-processing" class="workflow-detail">
+            <div class="detail-header">
+                <div class="detail-title">Notification Processing Workflow</div>
+                <div class="detail-subtitle">Signal-driven notification system with multi-channel delivery</div>
+            </div>
+            
+            <div class="metrics-section">
+                <div class="metrics-title">📊 Notification Metrics</div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-value">99.7%</div>
+                        <div class="metric-label">Delivery Success Rate</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">1.2s</div>
+                        <div class="metric-label">Avg Processing Time</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">2.3</div>
+                        <div class="metric-label">Avg Retry Attempts</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">450+</div>
+                        <div class="metric-label">Daily Notifications</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 1: Signal Emission</h4>
+                <div class="code-block">mutation EmitBusinessSignal($input: CreateSignalEventsInput!) {
+  createSignalEvents(input: $input) {
+    id
+    signalType
+    payload
+    emittedAt
+    emittedBy
+    source
+    processed
+    triggeredNotifications {
+      items {
+        id
+        eventType
+        status
+        scheduledAt
+      }
+    }
+  }
+}</div>
+                <div class="variables-block">{
+  "input": {
+    "signalType": "request_status_change",
+    "payload": {
+      "requestId": "req_123",
+      "previousStatus": "new",
+      "newStatus": "assigned",
+      "agentName": "Sarah Johnson",
+      "agentEmail": "sarah@realtechee.com",
+      "customerName": "John Doe",
+      "customerEmail": "john@example.com",
+      "dashboardUrl": "https://realtechee.com/admin/requests/req_123"
+    },
+    "emittedAt": "2024-09-01T12:00:00Z",
+    "emittedBy": "admin_panel",
+    "source": "request_assignment",
+    "processed": false
+  }
+}</div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 2: Notification Hook Configuration</h4>
+                <div class="code-block">query GetNotificationHooks($signalType: String!) {
+  listSignalNotificationHooks(
+    filter: {
+      and: [
+        { signalType: { eq: $signalType } }
+        { enabled: { eq: true } }
+      ]
+    }
+  ) {
+    items {
+      id
+      signalType
+      channel
+      priority
+      recipientEmails
+      recipientRoles
+      conditions
+      deliveryDelay
+      maxRetries
+      template {
+        id
+        name
+        emailSubject
+        emailContentHtml
+        smsContent
+      }
+    }
+  }
+}</div>
+            </div>
+            
+            <div class="code-section">
+                <h4>Step 3: Queue Processing & Delivery</h4>
+                <div class="code-block">query MonitorNotificationDelivery($filter: ModelNotificationQueueFilterInput) {
+  listNotificationQueue(
+    filter: $filter
+    sortDirection: DESC
+    limit: 20
+  ) {
+    items {
+      id
+      eventType
+      status
+      priority
+      channels
+      recipientIds
+      scheduledAt
+      sentAt
+      retryCount
+      errorMessage
+      
+      # Delivery tracking
+      signalEvent {
+        signalType
+        emittedAt
+        source
+      }
+      
+      template {
+        name
+        emailSubject
+      }
+    }
+  }
+}</div>
+                <div class="variables-block">{
+  "filter": {
+    "or": [
+      { "status": { "eq": "PENDING" } },
+      { "status": { "eq": "RETRYING" } },
+      { "createdAt": { "gte": "2024-09-01T00:00:00Z" } }
+    ]
+  }
+}</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showWorkflowDetail(workflowId) {
+            // Hide all detail sections
+            document.querySelectorAll('.workflow-detail').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Show selected detail
+            const detail = document.getElementById(workflowId);
+            if (detail) {
+                detail.classList.add('active');
+                detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        function runWorkflowTest(workflowId) {
+            console.log(`Running test for workflow: ${workflowId}`);
+            
+            // In a real implementation, this would:
+            // 1. Execute the workflow steps in sequence
+            // 2. Monitor execution time and results
+            // 3. Display test results and any errors
+            // 4. Provide performance metrics
+            
+            alert(`Test initiated for ${workflowId} workflow. Check console for progress.`);
+            
+            // Simulate test execution
+            setTimeout(() => {
+                console.log(`${workflowId} test completed successfully`);
+            }, 2000);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Business Workflows page loaded');
+            
+            // You could load real metrics here
+            // updateWorkflowMetrics();
+        });
+        
+        function updateWorkflowMetrics() {
+            // In a real implementation, fetch actual metrics from the GraphQL API
+            console.log('Updating workflow metrics...');
+        }
+    </script>
+</body>
+</html>

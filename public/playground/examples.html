@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTechee GraphQL Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .example-card h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            line-height: 1.4;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 RealTechee GraphQL Examples</h1>
+        <p>Pre-built queries and mutations for common business operations</p>
+    </div>
+    
+    <div class="container">
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+        
+        <div class="example-card">
+            <h3>Case Management - Add Note to Request</h3>
+            <div class="code-block">
+mutation AddRequestNote {
+  createRequestNotes(input: {
+    requestId: "your-request-id"
+    content: "Spoke with customer about timeline preferences"
+    type: "client_communication"
+    category: "client_call"
+    isPrivate: false
+    authorId: "user-id"
+    authorName: "Agent Name"
+    authorRole: "AE"
+    communicationMethod: "phone"
+    followUpRequired: true
+    followUpDate: "2024-09-15T10:00:00Z"
+    priority: "normal"
+    tags: ["timeline", "client_preference"]
+  }) {
+    id
+    content
+    type
+    followUpRequired
+    createdAt
+  }
+}
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <h3>Case Management - Assign Request</h3>
+            <div class="code-block">
+mutation AssignRequest {
+  createRequestAssignments(input: {
+    requestId: "your-request-id"
+    assignedToId: "agent-contact-id"
+    assignedToName: "John Smith"
+    assignedToRole: "AE"
+    assignmentType: "primary"
+    assignmentReason: "Expertise in kitchen renovations"
+    priority: "normal"
+    assignedBy: "manager-id"
+  }) {
+    id
+    assignedToName
+    assignmentType
+    createdAt
+  }
+}
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <h3>Case Management - Get Request with Case Data</h3>
+            <div class="code-block">
+query GetRequestWithCaseData($id: ID!) {
+  getRequests(id: $id) {
+    id
+    status
+    priority
+    readinessScore
+    homeowner {
+      fullName
+      email
+      phone
+    }
+    notes {
+      items {
+        id
+        content
+        type
+        authorName
+        followUpRequired
+        createdAt
+      }
+    }
+    assignments {
+      items {
+        id
+        assignedToName
+        assignedToRole
+        assignmentType
+        createdAt
+      }
+    }
+    statusHistory {
+      items {
+        id
+        previousStatus
+        newStatus
+        statusReason
+        changedAt
+      }
+    }
+  }
+}
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <h3>Information Gathering - Add Required Information Item</h3>
+            <div class="code-block">
+mutation AddInformationItem {
+  createRequestInformationItems(input: {
+    requestId: "your-request-id"
+    category: "client"
+    itemName: "Property Dimensions"
+    description: "Need exact measurements of kitchen space"
+    importance: "required"
+    status: "pending"
+    followUpRequired: true
+    followUpDate: "2024-09-10T14:00:00Z"
+    assignedTo: "agent-id"
+  }) {
+    id
+    itemName
+    importance
+    status
+    createdAt
+  }
+}
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <h3>Scope Definition - Add Scope Item</h3>
+            <div class="code-block">
+mutation AddScopeItem {
+  createRequestScopeItems(input: {
+    requestId: "your-request-id"
+    category: "room"
+    name: "Kitchen Renovation"
+    description: "Complete kitchen remodel including cabinets, countertops, and appliances"
+    complexity: "high"
+    estimatedHours: 120
+    estimatedCost: 25000.00
+    priority: "high"
+  }) {
+    id
+    name
+    complexity
+    estimatedCost
+    createdAt
+  }
+}
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <h3>List Requests with Filtering</h3>
+            <div class="code-block">
+query FilteredRequests {
+  listRequests(
+    filter: {
+      and: [
+        { status: { eq: "new" } }
+        { priority: { in: ["high", "urgent"] } }
+        { readinessScore: { gt: 70 } }
+      ]
+    }
+    limit: 20
+  ) {
+    items {
+      id
+      status
+      priority
+      readinessScore
+      homeowner {
+        fullName
+        email
+      }
+      assignedTo
+      createdAt
+    }
+    nextToken
+  }
+}
+            </div>
+        </div>
+        
+        <a href="./index.html" class="btn-back">← Back to Playground</a>
+    </div>
+</body>
+</html>

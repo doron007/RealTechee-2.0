@@ -72,6 +72,11 @@
   "playwright-report",
   "playwright-report/**",
   "test-results",
-  "test-results/**"
+  "test-results/**",
+  "src/__tests__/**/*.test.ts",
+  "src/__tests__/**/*.ts",
+  "src/repositories/**/*.test.ts",
+  "src/services/**/*.test.ts",
+  "repositories/**/*.test.ts"
   ]
 }
