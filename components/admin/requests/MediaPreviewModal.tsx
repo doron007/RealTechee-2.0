@@ -22,6 +22,18 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
   fileName,
   onDownload
 }) => {
+  const handleDownload = useCallback(() => {
+    if (onDownload) {
+      onDownload();
+    } else {
+      // Default download behavior
+      const link = document.createElement('a');
+      link.href = mediaUrl;
+      link.download = fileName;
+      link.click();
+    }
+  }, [onDownload, mediaUrl, fileName]);
+
   // Handle keyboard events
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -47,19 +59,7 @@ const MediaPreviewModal: React.FC<MediaPreviewModalProps> = ({
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [open, onClose]);
-  
-  const handleDownload = useCallback(() => {
-    if (onDownload) {
-      onDownload();
-    } else {
-      // Default download behavior
-      const link = document.createElement('a');
-      link.href = mediaUrl;
-      link.download = fileName;
-      link.click();
-    }
-  }, [onDownload, mediaUrl, fileName]);
+  }, [open, onClose, handleDownload]);
 
   const renderContent = () => {
     switch (mediaType) {

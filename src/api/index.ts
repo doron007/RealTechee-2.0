@@ -182,7 +182,7 @@ export function initializeAPI(config?: {
 // Default Export - Complete API
 // ============================================================================
 
-export default {
+const apiExports = {
   // Hooks
   // useRequest,
   // useRequests,
@@ -203,3 +203,5 @@ export default {
   API_VERSION,
   SUPPORTED_FEATURES,
 };
+
+export default apiExports;

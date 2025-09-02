@@ -487,7 +487,7 @@ export function createMockRetrySequence<T>(
   return sequence;
 }
 
-export default {
+const testFactories = {
   // Core factories
   createMockRequest,
   createMockEnhancedRequest,
@@ -534,3 +534,5 @@ export default {
   createMockConcurrentOperations,
   createMockErrorSequence
 };
+
+export default testFactories;
