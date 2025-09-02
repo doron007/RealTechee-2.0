@@ -114,34 +114,18 @@ git checkout production && git merge staging && git push origin production
 ## 🗄️ **DATABASE ARCHITECTURE**
 
 ### **Environment Setup**
-- **Development**: `*-fvn7t5hbobaxjklhrqzdl4ac34-*` (shared main/staging)
-- **Production**: `*-aqnqdrctpzfwfjwyxxsmu6peoq-*` (isolated)
+- **Development**: `*-fvn7t5hbobaxjklhrqzdl4ac34-*` (local using amplify ampx sandbox)
+- **Staging**: depdloyed on Amplify server side with configs in the Amplify Environmental Variables
+- **Production**: depdloyed on Amplify server side with configs in the Amplify Environmental Variables
 
 ### **Core Business Tables**
 - `Requests` - Form submissions and lead management
 - `Contacts` - Customer and agent contact records  
 - `Projects` - Project management and tracking
 - `Properties` - Property information
+- `Quotes` - Quote and QuoteItems management and tracking
 - `SignalEvents` - Real-time notification events
 - `NotificationQueue` - Email/SMS delivery tracking
-
-### **Data Access Patterns**
-```typescript
-// Standard pattern for business features
-import { generateClient } from 'aws-amplify/api';
-import { requestsAPI } from '../utils/amplifyAPI';
-
-const client = generateClient({ authMode: 'apiKey' });
-
-// Use GraphQL for complex queries
-const result = await client.graphql({
-  query: LIST_REQUESTS_WITH_RELATIONS,
-  variables: { limit: 100 }
-});
-
-// Use API utilities for simple operations
-const updateResult = await requestsAPI.update(requestId, updates);
-```
 
 ---
 
@@ -244,4 +228,4 @@ Every hour of development should contribute to:
 ---
 
 *System Status: **PRODUCTION READY** - Focus on Business Growth*
-*Last Updated: August 18, 2025*
+*Last Updated: September 1, 2025*

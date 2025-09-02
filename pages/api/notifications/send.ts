@@ -8,8 +8,7 @@
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { notificationService, NotificationRecipient } from '@/services/notificationService';
-import { ContactFormData, GetQualifiedFormData, AffiliateFormData } from '@/templates/notifications';
+import { notificationService, NotificationRecipient, ContactFormData, GetQualifiedFormData, AffiliateFormData } from '@/services/notificationService';
 
 export type NotificationRequest = {
   templateType: 'contactUs' | 'getQualified' | 'affiliate';

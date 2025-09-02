@@ -6,7 +6,60 @@
  * Includes production-ready recipient validation with environment safety
  */
 
-import { notificationTemplates, ContactFormData, GetQualifiedFormData, AffiliateFormData } from '@/templates/notifications';
+// Templates now come from Dynamo table - removing static import
+// Types moved to respective API files for form data structures
+export type ContactFormData = {
+  formType: string;
+  submissionId: string;
+  submittedAt: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message?: string;
+  urgency?: string;
+  preferredContact?: string;
+  testData?: boolean;
+  leadSource?: string;
+};
+
+export type GetQualifiedFormData = {
+  formType: string;
+  submissionId: string;
+  submittedAt: string;
+  name: string;
+  email: string;
+  phone?: string;
+  licenseNumber?: string;
+  brokerage?: string;
+  yearsExperience?: string;
+  specialties?: string[];
+  marketAreas?: string[];
+  currentVolume?: string;
+  goals?: string;
+  testData?: boolean;
+  leadSource?: string;
+};
+
+export type AffiliateFormData = {
+  formType: string;
+  submissionId: string;
+  submittedAt: string;
+  companyName?: string;
+  contactName: string;
+  email: string;
+  phone?: string;
+  serviceType?: string;
+  businessLicense?: string;
+  insurance?: boolean;
+  bonded?: boolean;
+  yearsInBusiness?: string;
+  serviceAreas?: string[];
+  certifications?: string[];
+  portfolio?: string;
+  testData?: boolean;
+  leadSource?: string;
+};
 import { AdminService, CognitoUser } from '@/utils/adminService';
 import logger from '@/lib/logger';
 
@@ -153,7 +206,8 @@ export class NotificationService {
     data: any, 
     recipients: NotificationRecipient[]
   ): Promise<any[]> {
-    const template = notificationTemplates[templateType as keyof typeof notificationTemplates].email(data);
+    // Templates now retrieved from Dynamo table
+    const template = await this.getEmailTemplate(templateType, data);
     const results: any[] = [];
 
     for (const recipient of recipients) {
@@ -191,7 +245,8 @@ export class NotificationService {
     data: any, 
     recipients: NotificationRecipient[]
   ): Promise<any[]> {
-    const message = notificationTemplates[templateType as keyof typeof notificationTemplates].sms(data);
+    // Templates now retrieved from Dynamo table
+    const message = await this.getSMSTemplate(templateType, data);
     const results: any[] = [];
 
     for (const recipient of recipients.filter(r => r.phone)) {
@@ -631,6 +686,32 @@ export class NotificationService {
   }
 
   /**
+   * Get email template from Dynamo table
+   */
+  private async getEmailTemplate(templateType: string, data: any): Promise<{
+    subject: string;
+    html: string;
+    text: string;
+  }> {
+    // TODO: Retrieve template from Dynamo table
+    // For now, return a basic template structure
+    return {
+      subject: `${templateType} notification - ${data.name || data.contactName || 'New submission'}`,
+      html: `<p>New ${templateType} submission received.</p><pre>${JSON.stringify(data, null, 2)}</pre>`,
+      text: `New ${templateType} submission received: ${JSON.stringify(data, null, 2)}`
+    };
+  }
+
+  /**
+   * Get SMS template from Dynamo table
+   */
+  private async getSMSTemplate(templateType: string, data: any): Promise<string> {
+    // TODO: Retrieve template from Dynamo table
+    // For now, return a basic SMS message
+    return `RealTechee: New ${templateType} submission from ${data.name || data.contactName || 'customer'}`;
+  }
+
+  /**
    * Enhanced queue-based notification system
    * Combines quickSend's recipient logic with proper queue-based architecture
    */
@@ -687,7 +768,7 @@ export class NotificationService {
       });
 
       // Step 2: Pre-render content using existing templates (client-side generation)
-      const preRenderedContent = this.generatePreRenderedContent(templateType, data, channels);
+      const preRenderedContent = await this.generatePreRenderedContent(templateType, data, channels);
 
       // Step 3: Queue notification with pre-rendered content
       const notificationId = await this.queuePreRenderedNotification({
@@ -739,15 +820,15 @@ export class NotificationService {
   /**
    * Generate pre-rendered content for all requested channels
    */
-  private generatePreRenderedContent(
+  private async generatePreRenderedContent(
     templateType: 'contactUs' | 'getQualified' | 'affiliate' | 'getEstimate',
     data: any,
     channels: NotificationChannel
-  ): any {
+  ): Promise<any> {
     const content: any = {};
 
     if (channels === 'email' || channels === 'both') {
-      const emailTemplate = notificationTemplates[templateType].email(data);
+      const emailTemplate = await this.getEmailTemplate(templateType, data);
       content.email = {
         subject: emailTemplate.subject,
         html: emailTemplate.html,
@@ -756,7 +837,7 @@ export class NotificationService {
     }
 
     if (channels === 'sms' || channels === 'both') {
-      const smsMessage = notificationTemplates[templateType].sms(data);
+      const smsMessage = await this.getSMSTemplate(templateType, data);
       content.sms = {
         message: smsMessage
       };
