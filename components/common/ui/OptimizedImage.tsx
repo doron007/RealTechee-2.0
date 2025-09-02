@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
 
 interface OptimizedImageProps {
@@ -20,6 +19,7 @@ interface OptimizedImageProps {
   fallbackSrc?: string;
   lazyLoad?: boolean;
   loading?: 'lazy' | 'eager';
+  thumbnailSrc?: string; // For progressive loading
 }
 
 const FALLBACK_IMAGES = [
@@ -48,10 +48,13 @@ export default function OptimizedImage({
   fallbackSrc,
   lazyLoad = true,
   loading = 'lazy',
+  thumbnailSrc,
   ...props
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState(src);
   const [hasErrored, setHasErrored] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(!!thumbnailSrc);
   const imageRef = useRef<HTMLDivElement>(null);
   const prevSrcRef = useRef<string>(src);
 
@@ -66,6 +69,8 @@ export default function OptimizedImage({
   const shouldLoad = priority || !lazyLoad || isInView;
 
   const handleLoad = () => {
+    setImageLoaded(true);
+    setShowPlaceholder(false);
     onLoad?.();
   };
 
@@ -90,26 +95,70 @@ export default function OptimizedImage({
     }
   }, [src]);
 
+  // Generate thumbnail from main src if not provided
+  const getEffectiveThumbnail = () => {
+    if (thumbnailSrc) return thumbnailSrc;
+    if (src.includes('_next/image')) {
+      return src.replace(/w=\d+/, 'w=64').replace(/q=\d+/, 'q=50');
+    }
+    return src; // Use same src for direct S3 URLs
+  };
+
+  const effectiveThumbnail = getEffectiveThumbnail();
+
+  // Base image styles
+  const baseImageStyle: React.CSSProperties = fill 
+    ? {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain'
+      }
+    : {
+        width: width || '100%',
+        height: height || 'auto'
+      };
+
   // For fill images, don't add wrapper div - return the image directly
   if (fill) {
     return (
-      <div ref={imageRef} className="contents">
+      <div ref={imageRef} className="contents" style={{ position: 'relative', ...style }}>
         {shouldLoad ? (
-          <Image
-            src={imageSrc}
-            alt={alt}
-            fill={fill}
-            sizes={sizes}
-            priority={priority}
-            quality={quality}
-            placeholder={placeholder === 'blur' && blurDataURL ? 'blur' : 'empty'}
-            blurDataURL={blurDataURL}
-            loading={priority ? 'eager' : loading}
-            onLoad={handleLoad}
-            onError={handleError}
-            className={`object-cover object-center ${className}`}
-            {...props}
-          />
+          <>
+            {/* Thumbnail/placeholder for progressive loading */}
+            {thumbnailSrc && showPlaceholder && (
+              <img
+                src={effectiveThumbnail}
+                alt={alt}
+                style={{
+                  ...baseImageStyle,
+                  filter: 'blur(2px)',
+                  transition: 'opacity 0.3s ease-in-out',
+                  opacity: showPlaceholder && !imageLoaded ? 1 : 0,
+                  zIndex: 1
+                }}
+                loading="eager"
+              />
+            )}
+            {/* Main high-resolution image */}
+            <img
+              src={imageSrc}
+              alt={alt}
+              style={{
+                ...baseImageStyle,
+                transition: 'opacity 0.3s ease-in-out',
+                opacity: imageLoaded || !thumbnailSrc ? 1 : 0,
+                zIndex: 2
+              }}
+              loading={priority ? 'eager' : loading}
+              onLoad={handleLoad}
+              onError={handleError}
+              className={className}
+              {...props}
+            />
+          </>
         ) : (
           // Simple CSS placeholder for better performance
           <div className={`absolute inset-0 bg-gray-200 animate-pulse ${className}`} />
@@ -120,24 +169,53 @@ export default function OptimizedImage({
 
   // For non-fill images, use the wrapper
   return (
-    <div ref={imageRef} className={`relative overflow-hidden ${className}`} style={style}>
+    <div 
+      ref={imageRef} 
+      className={`relative overflow-hidden ${className}`} 
+      style={{
+        display: 'inline-block',
+        width: width || 'auto',
+        height: height || 'auto',
+        ...style
+      }}
+    >
       {shouldLoad ? (
-        <Image
-          src={imageSrc}
-          alt={alt}
-          width={width}
-          height={height}
-          sizes={sizes}
-          priority={priority}
-          quality={quality}
-          placeholder={placeholder === 'blur' && blurDataURL ? 'blur' : 'empty'}
-          blurDataURL={blurDataURL}
-          loading={priority ? 'eager' : loading}
-          onLoad={handleLoad}
-          onError={handleError}
-          className={className}
-          {...props}
-        />
+        <>
+          {/* Thumbnail/placeholder for progressive loading */}
+          {thumbnailSrc && showPlaceholder && (
+            <img
+              src={effectiveThumbnail}
+              alt={alt}
+              style={{
+                ...baseImageStyle,
+                filter: 'blur(2px)',
+                transition: 'opacity 0.3s ease-in-out',
+                opacity: showPlaceholder && !imageLoaded ? 1 : 0,
+                position: 'absolute',
+                zIndex: 1
+              }}
+              loading="eager"
+            />
+          )}
+          {/* Main high-resolution image */}
+          <img
+            src={imageSrc}
+            alt={alt}
+            width={width}
+            height={height}
+            style={{
+              ...baseImageStyle,
+              transition: 'opacity 0.3s ease-in-out',
+              opacity: imageLoaded || !thumbnailSrc ? 1 : 0,
+              position: thumbnailSrc ? 'absolute' : 'static',
+              zIndex: 2
+            }}
+            loading={priority ? 'eager' : loading}
+            onLoad={handleLoad}
+            onError={handleError}
+            {...props}
+          />
+        </>
       ) : (
         // Simple CSS placeholder for better performance
         <div 

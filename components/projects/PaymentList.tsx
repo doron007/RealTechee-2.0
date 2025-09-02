@@ -4,6 +4,14 @@ import { CollapsibleSection } from '../common/ui';
 import P2 from '../typography/P2';
 import { formatCurrency } from '../../utils/formatUtils';
 
+// Function to mask payment amounts with dots
+const maskPaymentAmount = (amount: number): string => {
+  const formattedAmount = formatCurrency((amount || 0).toString());
+  const digitsOnly = formattedAmount.replace(/[^0-9]/g, '');
+  const maskedDigits = '•'.repeat(digitsOnly.length);
+  return '$' + maskedDigits;
+};
+
 export interface Payment {
   paymentName: string;
   description?: string;
@@ -90,8 +98,8 @@ export default function PaymentList({
                     {payment.paymentName}
                   </P2>
                   {!payment.isSummaryRow && (
-                    <P2 className="mb-0 text-right">
-                      ${formatCurrency((payment.paymentAmount || 0).toString())}
+                    <P2 className="mb-0 text-right font-mono">
+                      {maskPaymentAmount(payment.paymentAmount)}
                     </P2>
                   )}
                 </div>

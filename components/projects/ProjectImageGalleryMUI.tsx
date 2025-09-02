@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
+import OptimizedImage from '../common/ui/OptimizedImage';
 import { 
   Box, 
   IconButton, 
@@ -273,7 +273,7 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
             }}
             onClick={() => setIsModalOpen(true)}
           >
-            <Image
+            <OptimizedImage
               src={imageUrl}
               alt={currentImage.alt || `Project image ${currentImageIndex + 1}`}
               fill
@@ -282,7 +282,9 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
                 borderRadius: '8px'
               }}
               onError={() => handleImageError(currentImageIndex)}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              priority={currentImageIndex === 0}
+              thumbnailSrc={images.length > currentImageIndex ? images[currentImageIndex].url.replace(/w=\d+/, 'w=64').replace(/q=\d+/, 'q=50') : undefined}
             />
           </Box>
           
@@ -324,7 +326,7 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
                 isSelected={idx === currentImageIndex}
                 onClick={() => handleThumbnailClick(idx)}
               >
-                <Image
+                <OptimizedImage
                   src={imageErrors.has(idx) ? FALLBACK_IMAGE : img.url}
                   alt={img.alt || `Thumbnail ${idx + 1}`}
                   fill
@@ -333,6 +335,7 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
                   }}
                   onError={() => handleImageError(idx)}
                   sizes="64px"
+                  lazyLoad={false}
                 />
               </ThumbnailButton>
             ))}
@@ -361,14 +364,16 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
             </ModalCloseButton>
             
             <ModalImageContainer>
-              <Image
+              <OptimizedImage
                 src={imageUrl}
                 alt={currentImage.alt || `Project image ${currentImageIndex + 1}`}
                 fill
                 style={{
                   objectFit: 'contain'
                 }}
-                sizes="95vw"
+                sizes="1200px"
+                priority
+                thumbnailSrc={images.length > currentImageIndex ? images[currentImageIndex].url.replace(/w=\d+/, 'w=64').replace(/q=\d+/, 'q=50') : undefined}
               />
               
               {/* Modal Navigation */}

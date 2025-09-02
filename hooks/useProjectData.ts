@@ -123,6 +123,7 @@ export function useProjectData({
               status: ep.status || 'New',
               description: ep.description,
               imageUrl: ep.image,
+              gallery: ep.gallery,  // Include gallery field for direct navigation
               createdAt: ep.createdAt,
               updatedAt: ep.updatedDate || ep.createdAt,
               bedrooms: ep.bedrooms ? Number(ep.bedrooms) : 0,

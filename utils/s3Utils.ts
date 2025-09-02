@@ -68,10 +68,22 @@ export const getFullUrlFromPath = (relativePath: string): string => {
   // Ensure path starts with /
   let normalizedPath = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
   
-  // Ensure path has /public/ prefix for S3 bucket structure
-  if (!normalizedPath.startsWith('/public/')) {
+  // Determine if this is a user upload or static asset
+  // User uploads: files in /public/, requests/, comments/, or legacy patterns
+  // Static assets: /assets/ path (properties, images, etc.)
+  const isUserUpload = normalizedPath.startsWith('/public/') || 
+                       normalizedPath.includes('/requests/') || 
+                       normalizedPath.includes('/comments/') ||
+                       // Legacy upload pattern: /projectId/timestamp-filename
+                       /^\/[a-f0-9-]{36}\/\d+-/.test(normalizedPath);
+  
+  // Only add /public/ prefix for user uploads that don't already have it
+  if (isUserUpload && !normalizedPath.startsWith('/public/')) {
     normalizedPath = `/public${normalizedPath}`;
   }
+  
+  // Static assets (/assets/*) should NOT have /public/ prefix
+  // They are stored directly in the bucket root
   
   return `${baseUrl}${normalizedPath}`;
 };
@@ -99,6 +111,18 @@ export const generateS3Key = (projectId: string, fileName: string): string => {
 export const getRelativePathForUpload = (category: string, timestamp: number, fileName: string, cleanAddress: string): string => {
   const sanitizedFileName = fileName.replace(/\s+/g, '_');
   return `/public/${cleanAddress}/requests/${category}/${timestamp}-${sanitizedFileName}`;
+};
+
+/**
+ * Get the relative path for comment file uploads
+ * @param timestamp - Timestamp for file uniqueness
+ * @param fileName - Original file name
+ * @param cleanAddress - Normalized property address
+ * @returns Relative path for comment files
+ */
+export const getRelativePathForCommentUpload = (timestamp: number, fileName: string, cleanAddress: string): string => {
+  const sanitizedFileName = fileName.replace(/\s+/g, '_');
+  return `/${cleanAddress}/comments/${timestamp}-${sanitizedFileName}`;
 };
 
 /**

@@ -42,6 +42,7 @@ interface CommentsListProps {
     initialExpanded?: boolean;
     className?: string;
     projectId: string;
+    projectData?: any; // Project object containing address info
     onCommentAdded?: (comment: Comment) => void;
 }
 
@@ -105,6 +106,7 @@ const CommentsList: React.FC<CommentsListProps> = ({
     initialExpanded = true,
     className = "",
     projectId,
+    projectData,
     onCommentAdded
 }) => {
     const { user, authStatus } = useAuthenticator((context) => [context.user, context.authStatus]);
@@ -220,7 +222,8 @@ const CommentsList: React.FC<CommentsListProps> = ({
             const newComment = await addComment(
                 commentData, 
                 files, 
-                (progress) => logger.debug('File upload progress', { progress: `${progress}%` })
+                (progress) => logger.debug('File upload progress', { progress: `${progress}%` }),
+                projectData
             );
             
             // Notify parent component of the new comment

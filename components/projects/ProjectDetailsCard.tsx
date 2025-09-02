@@ -6,6 +6,15 @@ import H3 from '../typography/H3';
 import { formatCurrency } from '../../utils/formatUtils';
 import StatusPill from '../common/ui/StatusPill';
 
+// Function to mask financial amounts with dots
+const maskAmount = (amount: string | number | undefined, fallback: string): string => {
+  const value = amount ? amount.toString() : fallback;
+  const formattedAmount = formatCurrency(value);
+  const digitsOnly = formattedAmount.replace(/[^0-9]/g, '');
+  const maskedDigits = '•'.repeat(digitsOnly.length);
+  return '$' + maskedDigits;
+};
+
 interface ProjectDetailsCardProps {
   project: Project;
 }
@@ -23,21 +32,21 @@ const ProjectDetailsCard: React.FC<ProjectDetailsCardProps> = ({ project }) => {
       <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
         <div className="flex items-center w-full">
           <P2 className="text-gray-600 w-32 leading-none my-auto">Original Price:</P2>
-          <P2 className="leading-none my-auto">${formatCurrency(project.originalValue?.toString()) || '850,000'}</P2>
+          <P2 className="leading-none my-auto font-mono">{maskAmount(project.originalValue, '850000')}</P2>
         </div>
       </div>
 
       <div className="flex h-8">
         <div className="flex items-center w-full">
           <P2 className="text-gray-600 w-32 leading-none my-auto">Boost Price:</P2>
-          <P2 className="leading-none my-auto">${formatCurrency(project.boostPrice?.toString()) || '150,000'}</P2>
+          <P2 className="leading-none my-auto font-mono">{maskAmount(project.boostPrice, '150000')}</P2>
         </div>
       </div>
       
       <div className="flex h-8 bg-[#F9F9F9] -mx-4 px-4">
         <div className="flex items-center w-full">
           <P2 className="text-gray-600 w-32 leading-none my-auto font-bold">Value Added:</P2>
-          <P2 className="leading-none my-auto text-gray-600 font-bold">${formatCurrency(project.addedValue?.toString()) || '300,000'}</P2>
+          <P2 className="leading-none my-auto text-gray-600 font-bold font-mono">{maskAmount(project.addedValue, '300000')}</P2>
         </div>
       </div>
     </div>

@@ -190,7 +190,8 @@ const ProjectDetails: NextPage = () => {
                 {/* Project Comments */}
                 <CommentsList 
                   commentsData={comments} 
-                  projectId={project.id} 
+                  projectId={project.id}
+                  projectData={project}
                   onCommentAdded={handleCommentAdded} 
                 />
               </div>

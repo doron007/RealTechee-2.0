@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { uploadData } from 'aws-amplify/storage';
+import { Amplify } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import { createLogger } from '../utils/logger';
-import { generateS3Key, getRelativePathForUpload, convertPathsToJson } from '../utils/s3Utils';
+import { getRelativePathForUpload, convertPathsToJson, getRelativePathForCommentUpload } from '../utils/s3Utils';
+import amplifyConfig from '../amplify_outputs.json';
 
 // Custom mutation that matches the actual DynamoDB schema
 const CREATE_PROJECT_COMMENT = /* GraphQL */ `
@@ -72,24 +74,81 @@ export const useCommentsData = () => {
     return null;
   };
 
+  // Create normalized address for folder structure (same pattern as FileUploadField)
+  const getCleanAddress = (projectData: any) => {
+    logger.debug('getCleanAddress called with projectData', {
+      hasProjectData: !!projectData,
+      hasAddress: !!projectData?.address,
+      hasPropertyFullAddress: !!projectData?.address?.propertyFullAddress,
+      title: projectData?.title,
+      addressData: projectData?.address
+    });
+    
+    // Check multiple possible address locations
+    let fullAddress = null;
+    
+    if (projectData?.address?.propertyFullAddress) {
+      fullAddress = projectData.address.propertyFullAddress;
+    } else if (projectData?.title) {
+      // Fallback to project title if it looks like an address
+      fullAddress = projectData.title;
+    }
+    
+    if (!fullAddress) {
+      logger.warn('No address found in project data, using unknown-address');
+      return 'unknown-address';
+    }
+    
+    const cleanAddress = fullAddress
+      .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special characters except spaces
+      .replace(/\s+/g, '_') // Replace spaces with underscores
+      .toLowerCase()
+      .substring(0, 100); // Allow longer addresses to match expected format
+    
+    logger.debug('Generated clean address', { 
+      originalAddress: fullAddress, 
+      cleanAddress 
+    });
+    
+    return cleanAddress;
+  };
+
   /**
    * Upload files to S3 storage
    */
   const uploadFiles = async (
     files: File[], 
     projectId: string,
-    onProgress?: UploadProgressCallback
+    onProgress?: UploadProgressCallback,
+    projectData?: any
   ): Promise<string[]> => {
     if (!files.length) return [];
+    
+    // Ensure Storage is configured (same pattern as FileUploadField)
+    // This handles cases where Storage module isn't initialized even though Amplify is configured
+    try {
+      const config = Amplify.getConfig();
+      if (!config.Storage || !config.Storage.S3) {
+        logger.info('Storage not configured, reconfiguring Amplify...');
+        Amplify.configure(amplifyConfig);
+      }
+    } catch (err) {
+      logger.info('Reconfiguring Amplify after error:', err);
+      Amplify.configure(amplifyConfig);
+    }
     
     const relativePaths: string[] = [];
     const totalFiles = files.length;
     let completedFiles = 0;
+    const cleanAddress = getCleanAddress(projectData);
     
     try {
       for (const file of files) {
-        // Generate S3 key using utility function
-        const key = generateS3Key(projectId, file.name);
+        const timestamp = Date.now();
+        const sanitizedFileName = file.name.replace(/\s+/g, '_');
+        
+        // Create proper folder structure: address/comments/timestamp-file
+        const key = `${cleanAddress}/comments/${timestamp}-${sanitizedFileName}`;
         
         // Upload the file to S3
         await uploadData({
@@ -109,8 +168,8 @@ export const useCommentsData = () => {
           }
         }).result;
         
-        // Store relative path instead of full URL
-        const relativePath = `/${key}`;
+        // Store relative path using utility function - this will be stored in DB
+        const relativePath = getRelativePathForCommentUpload(timestamp, file.name, cleanAddress);
         relativePaths.push(relativePath);
         completedFiles++;
       }
@@ -129,7 +188,8 @@ export const useCommentsData = () => {
   const addComment = async (
     commentData: CommentInput,
     files: File[] = [],
-    onProgress?: UploadProgressCallback
+    onProgress?: UploadProgressCallback,
+    projectData?: any
   ): Promise<Comment> => {
     setLoading(true);
     setError(null);
@@ -138,7 +198,7 @@ export const useCommentsData = () => {
       // Upload files first if there are any
       let filePaths: string[] = [];
       if (files.length > 0) {
-        filePaths = await uploadFiles(files, commentData.projectId, onProgress);
+        filePaths = await uploadFiles(files, commentData.projectId, onProgress, projectData);
       }
       
       // Prepare the input data for the GraphQL mutation
