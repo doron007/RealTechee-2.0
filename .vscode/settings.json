@@ -22,6 +22,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "playwright.configPath": "playwright.config.js",
-  "playwright.reuseBrowser": false,
-  "playwright.showTrace": false
+  "playwright.reuseBrowser": true,
+  "playwright.showTrace": false,
+  "playwright.reuseExistingServer": true
 }

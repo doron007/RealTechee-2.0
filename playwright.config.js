@@ -18,10 +18,10 @@ module.exports = defineConfig({
   forbidOnly: !!process.env.CI,
   
   /* Retry on CI only */
-  retries: process.env.CI ? 1 : 0,
+  retries: 0, // Disabled retries - run tests only once
   
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1, // Force sequential execution for debugging
   
   /* Reporter to use */
   reporter: 'line',
@@ -45,16 +45,20 @@ module.exports = defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         // Override viewport to use most common desktop resolution
-        viewport: { width: 1920, height: 2500 },
+        viewport: { width: 1792, height: 1120 },
       },
     },
   ],
 
   /* Run your local dev server before starting the tests (only for local testing) */
+  // Commented out to prevent VS Code extension from running tests twice
+  // Uncomment if you need Playwright to start the dev server automatically
+  /*
   webServer: isProductionTest ? undefined : {
     command: 'npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: true, // Always reuse existing server since dev server runs on port 3000
     timeout: 120 * 1000, // 2 minutes
   },
+  */
 });
