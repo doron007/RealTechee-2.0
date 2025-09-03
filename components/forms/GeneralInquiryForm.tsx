@@ -39,10 +39,10 @@ export const GeneralInquiryForm: React.FC<BaseFormProps<GeneralInquiryFormData>>
   });
 
   return (
-    <div className="w-full max-w-[692px] flex flex-col gap-8">
+    <div className="w-full max-w-[692px] flex flex-col gap-6 sm:gap-8">
       <form 
         onSubmit={handleSubmit(onFormSubmit, onFormError)} 
-        className="w-full flex flex-col gap-8"
+        className="w-full flex flex-col gap-6 sm:gap-8"
       >
         {/* Contact Information Section */}
         <FormSection title="Contact Information">

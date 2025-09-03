@@ -1,8 +1,13 @@
 import type { NextPage } from 'next';
+import { useState, useEffect } from 'react';
 import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
 import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { GetQualifiedForm, InquirySuccessMessage, FormErrorMessage } from '../../components/forms';
 import { useFormSubmission } from '../../hooks';
+import Button from '../../components/common/buttons/Button';
+import H2 from '../../components/typography/H2';
+import H3 from '../../components/typography/H3';
+import P1 from '../../components/typography/P1';
 import logger from '../../lib/logger';
 import SEOHead from '../../components/seo/SEOHead';
 import { createProperties, createContacts, createContactUs, updateContacts } from '../../mutations';
@@ -366,28 +371,186 @@ ${JSON.stringify({
     });
   };
 
-  // Enhanced form component with better error handling
-  const formComponent = (() => {
-    if (status === 'success') return <InquirySuccessMessage onReset={reset} />;
-    
-    if (status === 'error') {
-      return (
-        <FormErrorMessage 
-          error={errorDetails}
-          onRetry={reset}
-          onContactSupport={() => {
-            // Custom contact support action for Get Qualified form
-            window.open('mailto:agents@realtechee.com?subject=Get Qualified Form Issue&body=I encountered an issue submitting the get qualified form. Please assist.', '_blank');
-          }}
-        />
-      );
-    }
+  // Mobile-optimized success message component
+  const SuccessMessage = () => {
+    // Auto-scroll to top on success for mobile visibility
+    useEffect(() => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
+        
+        const successElement = document.getElementById('qualified-success-message');
+        if (successElement) {
+          successElement.focus({ preventScroll: true });
+        }
+      }, 200);
+    }, []);
     
     return (
-      <GetQualifiedForm 
-        onSubmit={handleFormSubmit}
-        isLoading={isSubmitting}
-      />
+      <div id="qualified-success-message" tabIndex={-1} className="w-full max-w-[692px] mx-auto flex flex-col gap-6 sm:gap-8 text-center px-4 sm:px-6 md:px-0 outline-none">
+        <div className="flex flex-col items-center gap-6">
+          {/* Success Icon */}
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center">
+            <svg width="32" height="32" className="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+
+          {/* Success Message */}
+          <div className="space-y-3 sm:space-y-4">
+            <H2 className="text-[#22C55E] text-xl sm:text-2xl md:text-3xl">Agent Qualification Submitted!</H2>
+            <P1 className="max-w-lg mx-auto text-sm sm:text-base">
+              Thank you for your agent qualification application. Our team will review your submission and get back to you within 48 hours.
+            </P1>
+          </div>
+
+          {/* Next Steps */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 sm:p-6 w-full max-w-md mx-auto">
+            <H3 className="text-green-800 mb-3">What happens next?</H3>
+            <div className="space-y-2 text-left">
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold">1.</span>
+                <span className="text-green-700 text-sm">We'll review your qualifications and experience</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold">2.</span>
+                <span className="text-green-700 text-sm">Our agent success team will contact you</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 font-bold">3.</span>
+                <span className="text-green-700 text-sm">We'll schedule an interview and onboarding</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+            <Button 
+              variant="secondary" 
+              onClick={() => reset()}
+              size="lg"
+            >
+              Submit Another Application
+            </Button>
+            <Button 
+              variant="primary" 
+              href="/"
+              size="lg"
+            >
+              Return to Homepage
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Mobile-optimized error message component
+  const ErrorMessage = () => {
+    const handleContactSupport = () => {
+      window.open('mailto:agents@realtechee.com?subject=Get Qualified Form Issue&body=I encountered an issue submitting the get qualified form. Please assist.', '_blank');
+    };
+    
+    const getErrorInfo = (error: any) => {
+      if (!error) return {
+        type: 'general',
+        message: 'Something went wrong with your qualification application. Please try again or contact us for assistance.'
+      };
+      
+      if (error.message?.includes('Authentication') || error.message?.includes('auth')) {
+        return {
+          type: 'auth',
+          message: 'Authentication is required to submit the form. Please check your login status.'
+        };
+      }
+      
+      return {
+        type: 'general',
+        message: 'Something went wrong with your qualification application. Please try again or contact us for assistance.'
+      };
+    };
+    
+    const errorInfo = getErrorInfo(errorDetails);
+    
+    return (
+      <div className="w-full max-w-[692px] mx-auto flex flex-col gap-6 px-4 sm:px-6 md:px-0">
+        <div className="p-4 sm:p-6 bg-red-50 border border-red-200 rounded-lg">
+          {/* Error Icon and Header */}
+          <div className="text-center mb-6">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg width="28" height="28" className="sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none">
+                <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <H3 className="text-red-800 mb-2 text-lg sm:text-xl">
+              {errorInfo.type === 'auth' ? 'Authentication Required' : 'Application Failed to Submit'}
+            </H3>
+            <P1 className="text-red-700 mb-3 sm:mb-4 text-sm sm:text-base">
+              {errorInfo.message}
+            </P1>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button 
+              variant="primary" 
+              onClick={() => reset()}
+              size="lg"
+            >
+              Try Again
+            </Button>
+            <Button 
+              variant="secondary" 
+              onClick={handleContactSupport}
+              size="lg"
+            >
+              Contact Agent Support
+            </Button>
+          </div>
+          
+          {/* Support Information */}
+          <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-red-200 text-center">
+            <P1 className="text-red-600 text-xs sm:text-sm mb-2">Need immediate assistance?</P1>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
+              <a href="tel:+15551234567" className="text-red-700 hover:text-red-800 font-medium">
+                📞 Call (555) 123-4567
+              </a>
+              <span className="hidden sm:inline text-red-400">•</span>
+              <a href="mailto:agents@realtechee.com" className="text-red-700 hover:text-red-800 font-medium">
+                ✉️ agents@realtechee.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Enhanced form component with mobile loading overlay
+  const formComponent = (() => {
+    if (status === 'success') return <SuccessMessage />;
+    if (status === 'error') return <ErrorMessage />;
+    
+    return (
+      <div className="relative">
+        <GetQualifiedForm 
+          onSubmit={handleFormSubmit}
+          isLoading={isSubmitting}
+        />
+        
+        {/* Mobile-optimized loading overlay */}
+        {isSubmitting && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+              <H3 className="text-gray-800 mb-2">Submitting your application...</H3>
+              <P1 className="text-gray-600 text-sm">This may take a few seconds</P1>
+            </div>
+          </div>
+        )}
+      </div>
     );
   })();
 

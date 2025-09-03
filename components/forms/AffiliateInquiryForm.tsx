@@ -181,8 +181,8 @@ export const AffiliateInquiryForm: React.FC<AffiliateInquiryFormProps> = ({
 
 
   return (
-    <div className="w-full max-w-[692px] flex flex-col gap-8">
-      <form onSubmit={handleSubmit(onFormSubmit as any, onFormError)} className="w-full flex flex-col gap-8">
+    <div className="w-full max-w-[692px] flex flex-col gap-6 sm:gap-8">
+      <form onSubmit={handleSubmit(onFormSubmit as any, onFormError)} className="w-full flex flex-col gap-6 sm:gap-8">
         
         {/* Contact Information Section */}
         <FormSection title="Contact Information">
@@ -234,8 +234,8 @@ export const AffiliateInquiryForm: React.FC<AffiliateInquiryFormProps> = ({
               For general contractor, please provide the following information to proceed with your qualification:
             </P1>
             
-            {/* Boolean Fields - Two Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Boolean Fields - Mobile-Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <FormToggle
                 register={register}
                 name={"generalContractorInfo.workersCompensation" as any}
@@ -278,7 +278,7 @@ export const AffiliateInquiryForm: React.FC<AffiliateInquiryFormProps> = ({
             />
 
             {/* Number of Employees */}
-            <div className="w-full md:w-1/2">
+            <div className="w-full sm:w-1/2">
               <FormDropdown
                 register={register}
                 errors={errors as any}
