@@ -186,7 +186,7 @@ const AdminDashboard: React.FC = () => {
       case 'contacts':
       case 'notifications':
         // Navigate to current admin page with specific tab
-        router.push('/admin-legacy');
+        router.push('/admin/notifications');
         break;
       default:
         // Show placeholder for not yet implemented sections
