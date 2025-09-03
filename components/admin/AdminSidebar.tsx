@@ -16,12 +16,23 @@ interface SidebarItem {
 }
 
 interface AdminSidebarProps {
-  // Remove props since we'll manage state internally
+  isCollapsed: boolean;
+  isMobile: boolean;
+  isHamburgerMode: boolean;
+  isMenuOpen: boolean;
+  toggle: () => void;
+  closeMenu: () => void;
 }
 
-const AdminSidebar: React.FC<AdminSidebarProps> = () => {
+const AdminSidebar: React.FC<AdminSidebarProps> = ({ 
+  isCollapsed, 
+  isMobile, 
+  isHamburgerMode, 
+  isMenuOpen, 
+  toggle: handleToggle, 
+  closeMenu 
+}) => {
   const router = useRouter();
-  const { isCollapsed, isMobile, toggle: handleToggle } = useAdminSidebar();
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -130,10 +141,19 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       return;
     }
     
+    // Close hamburger menu when navigating on mobile
+    if (isHamburgerMode) {
+      closeMenu();
+    }
+    
     router.push(item.route);
   };
 
   const handleLogoClick = () => {
+    // Close hamburger menu when navigating on mobile
+    if (isHamburgerMode) {
+      closeMenu();
+    }
     router.push('/admin');
   };
 
@@ -147,25 +167,28 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
   return (
     <>
       {/* Mobile backdrop overlay when sidebar is expanded */}
-      {isMobile && !isCollapsed && (
+      {((isMobile && !isCollapsed) || (isHamburgerMode && isMenuOpen)) && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
-          onClick={handleToggle}
+          className="fixed inset-0 bg-black bg-opacity-50 z-[55] lg:hidden"
+          onClick={isHamburgerMode ? closeMenu : handleToggle}
           aria-label="Close sidebar"
         />
       )}
       
       <div
-        className={`fixed left-0 top-0 h-full bg-gray-900 text-white transition-all duration-300 shadow-lg flex flex-col lg:relative ${
-          isCollapsed ? 'w-16' : 'w-64'
+        className={`fixed left-0 top-0 h-full bg-gray-900 text-white flex flex-col lg:relative ${
+          // Width logic: hamburger mode uses full mobile width, otherwise collapse/expand
+          isHamburgerMode ? 'w-64' : (isCollapsed ? 'w-16' : 'w-64')
         } ${
-          // On mobile, use higher z-index overlay when expanded instead of hiding
-          isMobile && !isCollapsed ? 'z-[60] shadow-2xl' : 'z-50'
+          // Position logic: hamburger mode slides in/out, others use z-index
+          isHamburgerMode 
+            ? `z-[60] shadow-2xl transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}` 
+            : (isMobile && !isCollapsed ? 'z-[60] shadow-2xl transition-all duration-300' : 'z-50 transition-all duration-300')
         }`}
       >
       {/* Header with Logo - Improved Design */}
       <div className="pt-5 pb-4 border-b border-gray-700">
-        {!isCollapsed ? (
+        {(!isCollapsed || isHamburgerMode) ? (
           <div>
             {/* Logo gets dedicated prominent space */}
             <div className="px-3 pb-3">
@@ -186,22 +209,37 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
               </button>
             </div>
             
-            {/* Admin title with collapse button to the right */}
+            {/* Admin title with collapse/close button to the right */}
             <div className="px-3 flex items-center justify-between">
               <H3 className="text-white font-bold opacity-90">Admin</H3>
-              <Button
-                onClick={handleToggle}
-                variant="tertiary"
-                mode="dark"
-                withIcon
-                iconSvg="/assets/icons/ic-arrow-down.svg"
-                iconPosition="right"
-                className="p-2 hover:bg-white hover:bg-opacity-10 rounded-md transform rotate-90"
-                aria-label="Collapse sidebar"
-              />
+              {isHamburgerMode ? (
+                /* Close button for hamburger mode */
+                <button
+                  onClick={closeMenu}
+                  className="p-2 hover:bg-white hover:bg-opacity-10 rounded-md transition-colors flex-shrink-0 ml-2"
+                  aria-label="Close menu"
+                >
+                  <div className="w-6 h-6 flex items-center justify-center relative">
+                    <span className="block w-4 h-0.5 bg-white transform rotate-45 absolute" />
+                    <span className="block w-4 h-0.5 bg-white transform -rotate-45 absolute" />
+                  </div>
+                </button>
+              ) : (
+                /* Collapse button for desktop/tablet */
+                <Button
+                  onClick={handleToggle}
+                  variant="tertiary"
+                  mode="dark"
+                  withIcon
+                  iconSvg="/assets/icons/ic-arrow-down.svg"
+                  iconPosition="right"
+                  className="p-2 hover:bg-white hover:bg-opacity-10 rounded-md transform rotate-90"
+                  aria-label="Collapse sidebar"
+                />
+              )}
             </div>
           </div>
-        ) : (
+        ) : !isHamburgerMode ? (
           <div className="flex flex-col items-center">
             <button 
               onClick={handleLogoClick}
@@ -218,13 +256,21 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
               </div>
             </button>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Navigation Items */}
       <nav className="flex-1 overflow-y-auto">
-        <div className={isCollapsed ? "p-2" : "p-3"}>
-          {sidebarItems.map((item) => {
+        <div className={(isCollapsed && !isHamburgerMode) ? "p-2" : "p-3"}>
+          {sidebarItems
+            .filter(item => {
+              // Hide expand toggle in hamburger mode - not needed since menu slides in/out
+              if (isHamburgerMode && item.id === 'expand-toggle') {
+                return false;
+              }
+              return true;
+            })
+            .map((item) => {
             // Render divider
             if (item.id.startsWith('divider')) {
               return (
@@ -264,13 +310,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
                 disabled={!item.isImplemented}
                 variant="tertiary"
                 mode="dark"
-                fullWidth={!isCollapsed}
+                fullWidth={!(isCollapsed && !isHamburgerMode)}
                 withIcon={!!item.icon}
                 iconSvg={item.icon || undefined}
                 iconPosition="left"
-                className={`mb-1 ${isCollapsed ? 'justify-center items-center px-2 py-2.5 w-12 mx-auto [&_img]:!w-8 [&_img]:!h-8 [&>div]:!transform-none [&>div]:hover:!transform-none [&>div]:!flex [&>div]:!items-center [&>div]:!justify-center' : 'justify-start py-2.5 px-3.5'} rounded-xl h-auto ${getNavigationButtonClasses()} ${iconClasses}`}
+                className={`mb-1 ${(isCollapsed && !isHamburgerMode) ? 'justify-center items-center px-2 py-2.5 w-12 mx-auto [&_img]:!w-8 [&_img]:!h-8 [&>div]:!transform-none [&>div]:hover:!transform-none [&>div]:!flex [&>div]:!items-center [&>div]:!justify-center' : 'justify-start py-2.5 px-3.5'} rounded-xl h-auto ${getNavigationButtonClasses()} ${iconClasses}`}
               >
-                {!isCollapsed && (
+                {(!isCollapsed || isHamburgerMode) && (
                   <>
                     <span className={`text-sm font-medium ml-3 ${!item.isImplemented ? 'opacity-50' : ''}`}>
                       {item.name}
@@ -292,8 +338,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
               </Button>
             );
 
-            // Add tooltip using title attribute when collapsed
-            if (isCollapsed) {
+            // Add tooltip using title attribute when collapsed (but not in hamburger mode)
+            if (isCollapsed && !isHamburgerMode) {
               const buttonWithTooltip = React.cloneElement(buttonElement, {
                 title: item.name,
                 key: item.id
@@ -307,7 +353,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = () => {
       </nav>
 
       {/* Footer */}
-      {!isCollapsed && (
+      {(!isCollapsed || isHamburgerMode) && (
         <div className="p-4 border-t border-gray-700">
           <P3 className="text-gray-400 text-center">
             Admin Panel v2.0

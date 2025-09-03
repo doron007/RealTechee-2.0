@@ -29,7 +29,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   const [userRole, setUserRole] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [tokenError, setTokenError] = useState<boolean>(false);
-  const { isCollapsed, isMobile } = useAdminSidebar();
+  const { isCollapsed, isMobile, isHamburgerMode, isMenuOpen, toggle, closeMenu } = useAdminSidebar();
   
   // Debug information for troubleshooting
   useEffect(() => {
@@ -232,25 +232,53 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
       </Head>
 
       <div className="min-h-screen bg-gray-50 flex">
-        {/* Sidebar */}
-        <AdminSidebar />
+        {/* Sidebar - Always render, internal state controls visibility */}
+        <AdminSidebar 
+          isCollapsed={isCollapsed}
+          isMobile={isMobile}
+          isHamburgerMode={isHamburgerMode}
+          isMenuOpen={isMenuOpen}
+          toggle={toggle}
+          closeMenu={closeMenu}
+        />
 
         {/* Main Content Container - Takes remaining viewport width after sidebar */}
         <div 
-          className="flex-1 flex flex-col min-h-screen overflow-hidden"
+          className={`flex-1 flex flex-col min-h-screen overflow-hidden ${
+            // In hamburger mode, content uses full width when menu is closed
+            isHamburgerMode ? 'w-full' : ''
+          }`}
         >
           {/* Top Div: Title Bar + CTA Buttons - 100% width of parent container */}
           <div className="w-full bg-white shadow-sm border-b border-gray-200 flex-shrink-0 relative z-40">
             <div className="w-full px-4 sm:px-6 py-3 sm:py-4">
               <div className="flex items-center justify-between w-full min-w-0">
-                {/* Left side - Title and user info */}
-                <div className="flex-1 min-w-0 pr-2 lg:pr-4">
-                  <h1 className="text-sm sm:text-lg lg:text-xl font-semibold text-gray-900 mb-1 truncate">
-                    {title}
-                  </h1>
-                  <P2 className="text-gray-600 text-xs sm:text-sm truncate">
-                    Logged in as: {userEmail} ({userRole})
-                  </P2>
+                {/* Left side - Hamburger menu + Title and user info */}
+                <div className="flex items-center flex-1 min-w-0 pr-2 lg:pr-4">
+                  {/* Hamburger Menu Button - Only visible on iPhone */}
+                  {isHamburgerMode && (
+                    <button
+                      onClick={toggle}
+                      className="mr-3 p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                    >
+                      <div className="w-6 h-6 flex flex-col justify-center items-center">
+                        <span className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'}`} />
+                        <span className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
+                        <span className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1' : 'translate-y-1'}`} />
+                      </div>
+                    </button>
+                  )}
+                  
+                  {/* Title and user info */}
+                  <div className="flex-1 min-w-0">
+                    <h1 className="text-sm sm:text-lg lg:text-xl font-semibold text-gray-900 mb-1 truncate">
+                      {title}
+                    </h1>
+                    <P2 className="text-gray-600 text-xs sm:text-sm truncate">
+                      Logged in as: {userEmail} ({userRole})
+                    </P2>
+                  </div>
                 </div>
                 
                 {/* Right side - CTA Actions */}
