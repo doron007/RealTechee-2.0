@@ -33,11 +33,11 @@ export const FormFieldContainer: React.FC<FormFieldContainerProps> = ({
   variant = 'default'
 }) => {
   
-  // Size-based padding classes
+  // Size-based padding classes with mobile optimization
   const sizeClasses = {
-    sm: 'px-4 py-2',     // Small - 8px vertical padding
-    md: 'px-6 py-4',     // Medium (NEW DEFAULT) - 16px vertical padding to match dropdowns
-    lg: 'px-6 py-4'      // Large - 16px vertical padding (same as medium for consistency)
+    sm: 'px-3 py-2 sm:px-4',     // Small - responsive padding for mobile
+    md: 'px-4 py-3 sm:px-6 sm:py-4',     // Medium - mobile-first with 44px touch target
+    lg: 'px-4 py-3 sm:px-6 sm:py-4'      // Large - consistent with medium for mobile
   };
   
   // Variant-based styling
@@ -46,9 +46,9 @@ export const FormFieldContainer: React.FC<FormFieldContainerProps> = ({
     compact: 'flex items-center'
   };
   
-  // Base container styling with error state
-  const baseClasses = "w-full bg-white border rounded";
-  const errorClasses = hasError ? 'border-[#D11919]' : 'border-[#D2D2D4]';
+  // Base container styling with error state and mobile optimization
+  const baseClasses = "w-full bg-white border rounded transition-colors";
+  const errorClasses = hasError ? 'border-[#D11919] focus-within:border-[#D11919]' : 'border-[#D2D2D4] focus-within:border-[#4A90E2]';
   const sizeClass = sizeClasses[size];
   const variantClass = variantClasses[variant];
   

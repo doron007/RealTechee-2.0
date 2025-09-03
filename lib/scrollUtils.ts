@@ -5,12 +5,19 @@
 /**
  * Smoothly scrolls to the top of the page
  * Used when showing success messages or important content
+ * Enhanced for mobile to account for viewport differences
  */
 export const scrollToTop = (): void => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  // Use both window.scrollTo and document.documentElement for better mobile support
+  if (window.scrollTo) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  } else {
+    // Fallback for older browsers
+    document.documentElement.scrollTop = 0;
+  }
 };
 
 /**
@@ -43,6 +50,26 @@ export const scrollToAndFocus = (
   scrollToElement(element, offset);
   
   setTimeout(() => {
-    element.focus();
+    // Enhanced mobile focus with viewport considerations
+    if (element && typeof element.focus === 'function') {
+      element.focus({ preventScroll: true }); // Prevent additional scroll on focus
+    }
   }, focusDelay);
+};
+
+/**
+ * Mobile-optimized scroll to first form field
+ * Helps with UX when forms are below the fold on mobile
+ * @param containerSelector - CSS selector for the form container (default: 'form')
+ * @param offset - Offset from top in pixels for mobile (default: 20 for better mobile UX)
+ */
+export const scrollToFirstFormField = (containerSelector: string = 'form', offset: number = 20): void => {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+  
+  // Find first input, select, or textarea
+  const firstField = container.querySelector('input, select, textarea') as HTMLElement;
+  if (firstField) {
+    scrollToElement(firstField, offset);
+  }
 };

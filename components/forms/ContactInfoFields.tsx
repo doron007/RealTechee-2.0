@@ -71,19 +71,19 @@ export function ContactInfoFields<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* Email and Phone - Side by Side */}
-      <div className="flex gap-5 w-full">
+      {/* Email and Phone - Responsive Layout */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 w-full">
         {/* Email Address */}
         <div className="flex-1">
           <div className="flex flex-col gap-1">
-            <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+            <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
               {finalEmailLabel}
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('email') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('email') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.email` as Path<T>)}
                 type="email"
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
                 required={!optional}
               />
@@ -103,14 +103,14 @@ export function ContactInfoFields<T extends Record<string, any>>({
         {/* Phone Number */}
         <div className="flex-1">
           <div className="flex flex-col gap-1">
-            <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+            <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
               {finalPhoneLabel}
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('phone') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('phone') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.phone` as Path<T>)}
                 type="tel"
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder="Add 10 digits (numbers only) ..."
                 required={!optional}
               />

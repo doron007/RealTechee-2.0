@@ -32,13 +32,13 @@ export function AddressFields<T extends Record<string, any>>({
       {/* Full Address - Full Width */}
       <div className="w-full">
         <div className="flex flex-col gap-1">
-          <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+          <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
             {addressLabel}
           </label>
-          <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('streetAddress') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+          <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('streetAddress') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
             <input
               {...register(`${prefix}.streetAddress` as Path<T>)}
-              className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+              className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
               placeholder=""
               required
             />
@@ -55,18 +55,18 @@ export function AddressFields<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* State, City, ZIP - Three Columns */}
-      <div className="flex gap-5 w-full">
+      {/* State, City, ZIP - Responsive Grid for Mobile */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-5 w-full">
         {/* State */}
-        <div className="flex-1">
+        <div className="col-span-2 sm:col-span-1 order-2 sm:order-1">
           <div className="flex flex-col gap-1">
-            <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+            <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
               State*
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 relative ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 relative ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <select
                 {...register(`${prefix}.state` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
+                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
                 defaultValue="CA"
                 required
               >
@@ -147,15 +147,15 @@ export function AddressFields<T extends Record<string, any>>({
         </div>
 
         {/* City */}
-        <div className="flex-1">
+        <div className="col-span-2 sm:col-span-1 order-1 sm:order-2">
           <div className="flex flex-col gap-1">
-            <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+            <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
               City*
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('city') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('city') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.city` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
                 required
               />
@@ -173,15 +173,15 @@ export function AddressFields<T extends Record<string, any>>({
         </div>
 
         {/* ZIP */}
-        <div className="flex-1">
+        <div className="col-span-2 sm:col-span-1 order-3">
           <div className="flex flex-col gap-1">
-            <label className="text-base font-normal text-[#2A2B2E] leading-[1.6]">
+            <label className="text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6]">
               ZIP*
             </label>
-            <div className={`w-full bg-white border rounded px-6 py-4 flex items-center ${getFieldError('zip') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
+            <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('zip') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.zip` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
                 placeholder=""
                 maxLength={10}
                 required

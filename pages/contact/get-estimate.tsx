@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
 import { CONTACT_CONTENT } from '../../constants/contactContent';
 import { GetEstimateForm } from '../../components/forms/GetEstimateForm';
@@ -712,26 +712,46 @@ const GetEstimate: NextPage = () => {
   };
 
   // Success message component that replaces the form
-  const SuccessMessage = () => (
-    <div className="w-[692px] flex flex-col gap-8 text-center">
-      <div className="flex flex-col items-center gap-6">
-        {/* Success Icon */}
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
+  const SuccessMessage = () => {
+    // Auto-scroll to top on success for mobile visibility
+    useEffect(() => {
+      // Small delay to ensure DOM is ready and form is replaced
+      setTimeout(() => {
+        // Force scroll to absolute top
+        window.scrollTo(0, 0);
+        // Then smooth scroll for visual feedback
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
+        
+        // Also focus on success message for accessibility
+        const successElement = document.getElementById('success-message');
+        if (successElement) {
+          successElement.focus({ preventScroll: true });
+        }
+      }, 200);
+    }, []);
+    
+    return (
+      <div id="success-message" tabIndex={-1} className="w-full max-w-[692px] mx-auto flex flex-col gap-6 sm:gap-8 text-center px-4 sm:px-6 md:px-0 outline-none">
+        <div className="flex flex-col items-center gap-6">
+          {/* Success Icon */}
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center">
+            <svg width="32" height="32" className="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
 
-        {/* Success Message */}
-        <div className="space-y-4">
-          <H2 className="text-[#22C55E]">Request Submitted Successfully!</H2>
-          <P1 className="max-w-lg mx-auto">
-            Thank you for your estimate request. Our team at RealTechee will review your submission and connect back with you within 24 hours to discuss your project and schedule the next steps.
-          </P1>
+          {/* Success Message */}
+          <div className="space-y-3 sm:space-y-4">
+            <H2 className="text-[#22C55E] text-xl sm:text-2xl md:text-3xl">Request Submitted Successfully!</H2>
+            <P1 className="max-w-lg mx-auto text-sm sm:text-base">
+              Thank you for your estimate request. Our team at RealTechee will review your submission and connect back with you within 24 hours to discuss your project and schedule the next steps.
+            </P1>
           
           {/* Request Details */}
           {submissionData.requestId && (
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 max-w-md mx-auto">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 sm:p-4 max-w-md mx-auto">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="font-medium text-gray-600">Request ID:</span>
@@ -753,7 +773,7 @@ const GetEstimate: NextPage = () => {
         </div>
 
         {/* Next Steps */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 w-full max-w-md mx-auto">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 sm:p-6 w-full max-w-md mx-auto">
           <H3 className="text-green-800 mb-3">What happens next?</H3>
           <div className="space-y-2 text-left">
             <div className="flex items-start gap-3">
@@ -772,7 +792,7 @@ const GetEstimate: NextPage = () => {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
           <Button 
             variant="secondary" 
             onClick={() => {
@@ -790,10 +810,11 @@ const GetEstimate: NextPage = () => {
           >
             Return to Homepage
           </Button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Enhanced error message component with better UX
   const ErrorMessage = () => {
@@ -849,19 +870,19 @@ const GetEstimate: NextPage = () => {
     const errorInfo = getErrorInfo(errorDetails);
     
     return (
-      <div className="w-[692px] flex flex-col gap-6">
-        <div className="p-6 bg-red-50 border border-red-200 rounded-lg">
+      <div className="w-full max-w-[692px] mx-auto flex flex-col gap-6 px-4 sm:px-6 md:px-0">
+        <div className="p-4 sm:p-6 bg-red-50 border border-red-200 rounded-lg">
           {/* Error Icon and Header */}
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg width="28" height="28" className="sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none">
                 <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <H3 className="text-red-800 mb-2">
+            <H3 className="text-red-800 mb-2 text-lg sm:text-xl">
               {errorInfo.type === 'auth' ? 'Authentication Required' : 'Estimate Request Failed'}
             </H3>
-            <P1 className="text-red-700 mb-4">
+            <P1 className="text-red-700 mb-3 sm:mb-4 text-sm sm:text-base">
               {errorInfo.message}
             </P1>
           </div>
@@ -886,8 +907,8 @@ const GetEstimate: NextPage = () => {
           </div>
           
           {/* Support Information */}
-          <div className="mt-6 pt-4 border-t border-red-200 text-center">
-            <P1 className="text-red-600 text-sm mb-2">Need immediate assistance?</P1>
+          <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-red-200 text-center">
+            <P1 className="text-red-600 text-xs sm:text-sm mb-2">Need immediate assistance?</P1>
             <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
               <a href="tel:+15551234567" className="text-red-700 hover:text-red-800 font-medium">
                 📞 Call (555) 123-4567
@@ -903,16 +924,29 @@ const GetEstimate: NextPage = () => {
     );
   };
 
-  // Form component with status handling
+  // Form component with status handling and loading overlay
   const formComponent = (() => {
     if (submitStatus === 'success') return <SuccessMessage />;
     if (submitStatus === 'error') return <ErrorMessage />;
     
     return (
-      <GetEstimateForm 
-        onSubmit={handleFormSubmit}
-        isLoading={isSubmitting}
-      />
+      <div className="relative">
+        <GetEstimateForm 
+          onSubmit={handleFormSubmit}
+          isLoading={isSubmitting}
+        />
+        
+        {/* Mobile-optimized loading overlay */}
+        {isSubmitting && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-lg p-6 max-w-sm mx-4 text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+              <H3 className="text-gray-800 mb-2">Submitting your request...</H3>
+              <P1 className="text-gray-600 text-sm">This may take a few seconds</P1>
+            </div>
+          </div>
+        )}
+      </div>
     );
   })();
 

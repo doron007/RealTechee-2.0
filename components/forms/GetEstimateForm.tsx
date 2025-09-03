@@ -305,11 +305,11 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
   }, [errors]);
 
   return (
-    <div className="w-full max-w-[692px] flex flex-col gap-8">
+    <div className="w-full max-w-[692px] flex flex-col gap-6 sm:gap-8">
       <form ref={formRef} onSubmit={handleSubmit((data) => {
         logger.info('handleSubmit called with data:', data);
         onFormSubmit(data);
-      }, onFormError)} className="w-full flex flex-col gap-8">
+      }, onFormError)} className="w-full flex flex-col gap-6 sm:gap-8">
         {/* Who Are You Section - Dynamic Rendering */}
         <DynamicSectionRenderer
           section={getSectionConfig('whoAreYou')!}
@@ -427,7 +427,7 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
 
           {/* Date and Time Fields - Only show when not upload mode */}
           {rtDigitalSelection !== 'upload' && (
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 w-full">
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 w-full">
               {/* Meeting Date */}
               <div className="flex-1">
                 <FormDateInput
