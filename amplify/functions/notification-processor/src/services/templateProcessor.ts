@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
 import { NotificationTemplate } from '../types';
+const { registerHelpers } = require('../utils/handlebarsHelpers');
 
 export interface ProcessedTemplate {
   subject: string;
@@ -9,91 +10,21 @@ export interface ProcessedTemplate {
 
 export class TemplateProcessor {
   constructor() {
-    this.registerHelpers();
+    this.initializeHelpers();
   }
 
-  private registerHelpers(): void {
-    // Register useful Handlebars helpers
+  private initializeHelpers(): void {
+    // Use shared helpers for consistent rendering with Live Preview
+    registerHelpers(Handlebars);
     
-    // Format date helper
-    Handlebars.registerHelper('formatDate', (date: string | Date, format?: string) => {
-      const d = new Date(date);
-      if (format === 'short') {
-        return d.toLocaleDateString();
-      }
-      if (format === 'time') {
-        return d.toLocaleTimeString();
-      }
-      return d.toLocaleString(); // Default format
-    });
-
-    // Uppercase helper
+    // Lambda-specific helpers (more advanced versions)
+    
+    // Uppercase helper (Lambda-specific)
     Handlebars.registerHelper('uppercase', (str: string) => {
       return str ? str.toUpperCase() : '';
     });
 
-    // Conditional equal helper
-    Handlebars.registerHelper('eq', (a: any, b: any) => {
-      return a === b;
-    });
-
-    // Default value helper
-    Handlebars.registerHelper('default', (value: any, defaultValue: any) => {
-      return value || defaultValue;
-    });
-
-    // Urgency color helper
-    Handlebars.registerHelper('getUrgencyColor', (urgency: string) => {
-      switch (urgency?.toLowerCase()) {
-        case 'high': return '#dc2626';
-        case 'medium': return '#d97706';
-        case 'low': return '#059669';
-        default: return '#6b7280';
-      }
-    });
-
-    // Urgency label helper
-    Handlebars.registerHelper('getUrgencyLabel', (urgency: string) => {
-      switch (urgency?.toLowerCase()) {
-        case 'high': return '🔴 HIGH';
-        case 'medium': return '🟡 MEDIUM';
-        case 'low': return '🟢 LOW';
-        default: return '⚪ STANDARD';
-      }
-    });
-
-    // Phone number formatting helper
-    Handlebars.registerHelper('formatPhone', (phone: string) => {
-      if (!phone) return '';
-      // Remove all non-digits
-      const cleaned = phone.replace(/\D/g, '');
-      // Format as (XXX) XXX-XXXX for US numbers
-      if (cleaned.length === 10) {
-        return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
-      }
-      return phone; // Return original if not 10 digits
-    });
-
-    // Join array helper
-    Handlebars.registerHelper('join', (array: any[], separator: string = ', ') => {
-      return Array.isArray(array) ? array.join(separator) : '';
-    });
-
-    // Parse JSON array helper
-    Handlebars.registerHelper('parseJson', (jsonString: string) => {
-      try {
-        return JSON.parse(jsonString || '[]');
-      } catch (error) {
-        return [];
-      }
-    });
-
-    // URL encoding helper for email links
-    Handlebars.registerHelper('encodeURI', (str: string) => {
-      return str ? encodeURIComponent(str) : '';
-    });
-
-    // File links helper - creates HTML links for file arrays (supports new template format)
+    // Override fileLinks with advanced Lambda version
     Handlebars.registerHelper('fileLinks', (jsonString: string, type: string = 'file') => {
       try {
         const files = JSON.parse(jsonString || '[]');
@@ -124,11 +55,13 @@ export class TemplateProcessor {
               <div class="thumb__cap">Document</div>
             </a>`;
           }
-        }).join('');
+        }).join('\n      ');
       } catch (error) {
-        return '<p style="color: #ef4444;">Error loading files</p>';
+        console.error('Error parsing file links:', error);
+        return '';
       }
     });
+
 
     // File list helper for text emails
     Handlebars.registerHelper('fileList', (jsonString: string, type: string = 'file') => {

@@ -56,58 +56,7 @@ import StatusPill from '../../common/ui/StatusPill';
 
 // Handlebars for template preview
 import Handlebars from 'handlebars';
-
-// Helper functions for Handlebars
-const registerHandlebarsHelpers = () => {
-  // Date formatting helper
-  Handlebars.registerHelper('formatDate', (date: string) => {
-    if (!date) return '';
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  });
-
-  // Urgency color helper
-  Handlebars.registerHelper('getUrgencyColor', (urgency: string) => {
-    switch (urgency) {
-      case 'high': return 'dc2626';
-      case 'medium': return 'd97706'; 
-      case 'low': return '16a34a';
-      default: return '6b7280';
-    }
-  });
-
-  // Phone formatting helper
-  Handlebars.registerHelper('formatPhone', (phone: string) => {
-    if (!phone) return '';
-    const cleaned = phone.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    return match ? `(${match[1]}) ${match[2]}-${match[3]}` : phone;
-  });
-
-  // File links helper (for future file upload support)
-  Handlebars.registerHelper('fileLinks', (jsonString: string, type?: string) => {
-    try {
-      const files = JSON.parse(jsonString || '[]');
-      if (!Array.isArray(files) || files.length === 0) return 'No files uploaded';
-      
-      return files.map((file: any) => 
-        `<a href="${file.url}" target="_blank">${file.name}</a>`
-      ).join(', ');
-    } catch {
-      return 'No files uploaded';
-    }
-  });
-
-  // Boolean helper
-  Handlebars.registerHelper('yesNo', (value: boolean) => {
-    return value ? 'Yes' : 'No';
-  });
-};
+import { registerHelpers } from '../../../utils/handlebarsHelpers';
 
 // Sample data for each form type
 const SAMPLE_DATA = {
@@ -183,7 +132,7 @@ const TemplateEditor: React.FC<TemplateEditorProps> = ({
 }) => {
   // Initialize Handlebars helpers
   useEffect(() => {
-    registerHandlebarsHelpers();
+    registerHelpers(Handlebars);
   }, []);
 
   // Parse variables safely - they might come as JSON string from database
