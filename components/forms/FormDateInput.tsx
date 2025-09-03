@@ -53,6 +53,7 @@ export function FormDateInput<T extends Record<string, any>>({
             id={fieldId}
             type="date"
             className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#646469] leading-[1.6] pr-8"
+            style={{ fontSize: 'max(16px, 1rem)' }}
             placeholder={placeholder}
             min={min}
             max={max}

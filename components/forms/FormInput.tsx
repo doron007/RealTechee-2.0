@@ -52,7 +52,8 @@ export function FormInput<T extends Record<string, any>>({
               {...registerProps}
               id={fieldId}
               type={type}
-              className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469] min-h-[24px] sm:min-h-[20px]"
+              className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469] min-h-[24px] sm:min-h-[20px]"
+              style={{ fontSize: 'max(16px, 1rem)' }}
               placeholder={placeholder}
               maxLength={maxLength}
               required={required}

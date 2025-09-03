@@ -67,7 +67,8 @@ export function FormDateTimeInput<T extends Record<string, any>>({
           <input
             {...register(name)}
             type={type}
-            className="w-full bg-transparent border-0 outline-0 text-sm font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469]"
+            className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.4] placeholder:text-[#646469]"
+            style={{ fontSize: 'max(16px, 1rem)' }}
             placeholder={placeholder}
             min={min}
             max={max}

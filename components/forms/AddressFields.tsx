@@ -38,7 +38,8 @@ export function AddressFields<T extends Record<string, any>>({
           <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('streetAddress') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
             <input
               {...register(`${prefix}.streetAddress` as Path<T>)}
-              className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+              className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+              style={{ fontSize: 'max(16px, 1rem)' }}
               placeholder=""
               required
             />
@@ -66,7 +67,8 @@ export function AddressFields<T extends Record<string, any>>({
             <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 relative ${getFieldError('state') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <select
                 {...register(`${prefix}.state` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] appearance-none pr-8"
+                style={{ fontSize: 'max(16px, 1rem)' }}
                 defaultValue="CA"
                 required
               >
@@ -155,7 +157,8 @@ export function AddressFields<T extends Record<string, any>>({
             <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('city') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.city` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                style={{ fontSize: 'max(16px, 1rem)' }}
                 placeholder=""
                 required
               />
@@ -181,7 +184,8 @@ export function AddressFields<T extends Record<string, any>>({
             <div className={`w-full bg-white border rounded px-3 py-3 sm:px-6 sm:py-4 flex items-center ${getFieldError('zip') ? 'border-[#D11919]' : 'border-[#D2D2D4]'}`}>
               <input
                 {...register(`${prefix}.zip` as Path<T>)}
-                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                style={{ fontSize: 'max(16px, 1rem)' }}
                 placeholder=""
                 maxLength={10}
                 required

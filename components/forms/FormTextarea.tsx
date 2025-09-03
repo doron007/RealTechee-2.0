@@ -46,7 +46,8 @@ export function FormTextarea<T extends Record<string, any>>({
           <textarea
             {...register(name)}
             id={fieldId}
-            className="w-full bg-transparent border-0 outline-0 text-sm font-normal text-[#2A2B2E] leading-[1.4] resize-none placeholder:text-[#646469]"
+            className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.4] resize-none placeholder:text-[#646469]"
+            style={{ fontSize: 'max(16px, 1rem)' }}
             placeholder={placeholder}
             rows={rows}
             maxLength={maxLength}

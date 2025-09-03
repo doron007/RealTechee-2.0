@@ -55,6 +55,7 @@ export function ContactInfoFields<T extends Record<string, any>>({
             <input
               {...register(`${prefix}.fullName` as Path<T>)}
               className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+              style={{ fontSize: 'max(16px, 1rem)' }}
               placeholder=""
               required={!optional}
             />
@@ -83,7 +84,8 @@ export function ContactInfoFields<T extends Record<string, any>>({
               <input
                 {...register(`${prefix}.email` as Path<T>)}
                 type="email"
-                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                style={{ fontSize: 'max(16px, 1rem)' }}
                 placeholder=""
                 required={!optional}
               />
@@ -110,7 +112,8 @@ export function ContactInfoFields<T extends Record<string, any>>({
               <input
                 {...register(`${prefix}.phone` as Path<T>)}
                 type="tel"
-                className="w-full bg-transparent border-0 outline-0 text-sm sm:text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                className="w-full bg-transparent border-0 outline-0 text-base font-normal text-[#2A2B2E] leading-[1.6] placeholder:text-[#646469]"
+                style={{ fontSize: 'max(16px, 1rem)' }}
                 placeholder="Add 10 digits (numbers only) ..."
                 required={!optional}
               />

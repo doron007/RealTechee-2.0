@@ -62,7 +62,8 @@ export function FormDropdown<T extends Record<string, any>>({
           <select
             {...register(name)}
             id={fieldId}
-            className="w-full bg-transparent border-0 outline-0 text-sm font-normal leading-[1.4] appearance-none pr-8 text-[#2A2B2E]"
+            className="w-full bg-transparent border-0 outline-0 text-base font-normal leading-[1.4] appearance-none pr-8 text-[#2A2B2E]"
+            style={{ fontSize: 'max(16px, 1rem)' }}
             defaultValue={defaultValue}
             required={required}
           >
