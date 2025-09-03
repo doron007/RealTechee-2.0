@@ -354,15 +354,40 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
 
       const errorField = findFirstErrorField();
       if (errorField) {
-        // Focus the field
-        errorField.focus();
+        // iOS Safari specific handling for focus/validation issues
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         
-        // Scroll to the field with some offset for mobile
-        errorField.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'nearest'
-        });
+        if (isIOS && document.activeElement === errorField) {
+          // Field already has focus but validation message might not be visible
+          // Force blur then refocus to trigger validation display
+          errorField.blur();
+          setTimeout(() => {
+            errorField.focus();
+            errorField.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center',
+              inline: 'nearest'
+            });
+          }, 50);
+        } else {
+          // Standard focus and scroll
+          errorField.focus();
+          errorField.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+          });
+        }
+        
+        // Additional iOS Safari fix: trigger validation message display
+        if (isIOS) {
+          setTimeout(() => {
+            // Force validation message to appear by triggering validity check
+            if (errorField.checkValidity && !errorField.checkValidity()) {
+              errorField.reportValidity();
+            }
+          }, 200);
+        }
       }
     }, 100);
   };
