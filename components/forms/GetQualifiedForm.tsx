@@ -158,17 +158,79 @@ export const GetQualifiedForm: React.FC<GetQualifiedFormProps> = ({
       errors
     });
 
-    // Add scroll behavior to ensure the focused field is visible
+    // Enhanced error handling: find and focus first error field
     setTimeout(() => {
-      const focusedElement = document.activeElement as HTMLElement;
-      if (focusedElement && focusedElement.tagName !== 'BODY') {
-        focusedElement.scrollIntoView({
+      const findFirstErrorField = () => {
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        const fieldMap = new Map();
+        formInputs.forEach((input: any) => {
+          if (input.name) {
+            fieldMap.set(input.name, input);
+          }
+        });
+
+        // Define field priority order for qualification form
+        const fieldPriority = [
+          'contactInfo.fullName',
+          'contactInfo.email',
+          'contactInfo.phone',
+          'address.streetAddress',
+          'address.city',
+          'address.state',
+          'address.zip',
+          'brokerage',
+          'customBrokerage',
+          'licenseNumber',
+          'yearsExperience',
+          'specializations',
+          'avgTransactions',
+          'businessGoals'
+        ];
+
+        // Find first error field in priority order
+        for (const fieldName of fieldPriority) {
+          if (errors[fieldName] || getNestedError(errors, fieldName)) {
+            const element = fieldMap.get(fieldName);
+            if (element) {
+              return element;
+            }
+          }
+        }
+
+        // Fallback: find any error field
+        for (const [fieldName] of Array.from(fieldMap)) {
+          if (errors[fieldName] || getNestedError(errors, fieldName)) {
+            return fieldMap.get(fieldName);
+          }
+        }
+
+        return null;
+      };
+
+      const getNestedError = (errors: any, path: string) => {
+        const keys = path.split('.');
+        let current = errors;
+        for (const key of keys) {
+          if (current && current[key]) {
+            current = current[key];
+          } else {
+            return null;
+          }
+        }
+        return current;
+      };
+
+      const errorField = findFirstErrorField();
+      if (errorField) {
+        errorField.focus();
+        errorField.scrollIntoView({
           behavior: 'smooth',
-          block: 'center'
+          block: 'center',
+          inline: 'nearest'
         });
       }
     }, 100);
-  };
+  };;
 
 
 

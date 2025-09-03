@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Section from '../common/layout/Section';
 import H1 from '../typography/H1';
 import P2 from '../typography/P2';
@@ -17,6 +17,41 @@ interface ContactHeroSectionProps {
 }
 
 export default function ContactHeroSection({ contactType }: ContactHeroSectionProps) {
+  const [isIPhone, setIsIPhone] = useState(false);
+
+  useEffect(() => {
+    const checkIsIPhone = () => {
+      const width = window.innerWidth;
+      const userAgent = window.navigator.userAgent;
+      // Detect iPhone viewport (393px width) or iPhone user agent
+      setIsIPhone(width <= 393 || /iPhone/.test(userAgent));
+    };
+    
+    checkIsIPhone();
+    window.addEventListener('resize', checkIsIPhone);
+    return () => window.removeEventListener('resize', checkIsIPhone);
+  }, []);
+
+  // Get form-specific title for iPhone
+  const getIPhoneTitle = () => {
+    switch (contactType) {
+      case ContactType.ESTIMATE:
+        return 'Estimate Form';
+      case ContactType.INQUIRY:
+        return 'Contact Form';
+      case ContactType.QUALIFIED:
+        return 'Agent Qualification';
+      case ContactType.AFFILIATE:
+        return 'Partner Application';
+      default:
+        return 'Contact';
+    }
+  };
+
+  const title = isIPhone && contactType !== ContactType.MAIN ? getIPhoneTitle() : 'Contact';
+  const showDescription = !isIPhone || contactType === ContactType.MAIN;
+  const showButtons = !isIPhone || contactType === ContactType.MAIN;
+
   return (
     <Section
       id="hero"
@@ -33,16 +68,20 @@ export default function ContactHeroSection({ contactType }: ContactHeroSectionPr
     >
       <div className="flex flex-col items-center text-center gap-4 md:gap-6">
         <H1 className="text-center">
-          Contact
+          {title}
         </H1>
-        <P2 className="text-center">
-          Please choose the best inquiry category below so we can help you best.
-        </P2>
+        {showDescription && (
+          <P2 className="text-center">
+            Please choose the best inquiry category below so we can help you best.
+          </P2>
+        )}
         
-        {/* Button Row */}
-        <div className="flex flex-wrap justify-center items-center gap-5 mt-8">
-          <ContactScenarioSelector currentPage={contactType} />
-        </div>
+        {/* Button Row - Hidden on iPhone for specific forms */}
+        {showButtons && (
+          <div className="flex flex-wrap justify-center items-center gap-5 mt-8">
+            <ContactScenarioSelector currentPage={contactType} />
+          </div>
+        )}
       </div>
     </Section>
   );

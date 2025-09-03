@@ -283,13 +283,85 @@ export const GetEstimateForm: React.FC<GetEstimateFormProps> = ({
       errors
     });
 
-    // Add scroll behavior to ensure the focused field is visible
+    // Enhanced error handling: find and focus first error field
     setTimeout(() => {
-      const focusedElement = document.activeElement as HTMLElement;
-      if (focusedElement && focusedElement.tagName !== 'BODY') {
-        focusedElement.scrollIntoView({
+      const findFirstErrorField = () => {
+        // Get all form input elements
+        const formInputs = document.querySelectorAll('input, select, textarea');
+        
+        // Create a map of field names to DOM elements
+        const fieldMap = new Map();
+        formInputs.forEach((input: any) => {
+          if (input.name) {
+            fieldMap.set(input.name, input);
+          }
+        });
+
+        // Define field priority order (first fields appear first in form)
+        const fieldPriority = [
+          'relationToProperty',
+          'propertyAddress.streetAddress',
+          'propertyAddress.city', 
+          'propertyAddress.state',
+          'propertyAddress.zip',
+          'agentInfo.fullName',
+          'agentInfo.email',
+          'agentInfo.phone',
+          'agentInfo.brokerage',
+          'agentInfo.customBrokerage',
+          'homeownerInfo.fullName',
+          'homeownerInfo.email', 
+          'homeownerInfo.phone',
+          'needFinance',
+          'notes',
+          'requestedVisitDateTime',
+          'requestedVisitTime',
+          'rtDigitalSelection'
+        ];
+
+        // Find first error field in priority order
+        for (const fieldName of fieldPriority) {
+          if (errors[fieldName] || getNestedError(errors, fieldName)) {
+            const element = fieldMap.get(fieldName);
+            if (element) {
+              return element;
+            }
+          }
+        }
+
+        // Fallback: find any error field
+        for (const [fieldName] of Array.from(fieldMap)) {
+          if (errors[fieldName] || getNestedError(errors, fieldName)) {
+            return fieldMap.get(fieldName);
+          }
+        }
+
+        return null;
+      };
+
+      const getNestedError = (errors: any, path: string) => {
+        const keys = path.split('.');
+        let current = errors;
+        for (const key of keys) {
+          if (current && current[key]) {
+            current = current[key];
+          } else {
+            return null;
+          }
+        }
+        return current;
+      };
+
+      const errorField = findFirstErrorField();
+      if (errorField) {
+        // Focus the field
+        errorField.focus();
+        
+        // Scroll to the field with some offset for mobile
+        errorField.scrollIntoView({
           behavior: 'smooth',
-          block: 'center'
+          block: 'center',
+          inline: 'nearest'
         });
       }
     }, 100);
