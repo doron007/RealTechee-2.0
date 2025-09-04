@@ -509,8 +509,17 @@ async function processNotification(notification: NotificationQueue): Promise<voi
       textContent = directContent.email?.text || directContent.email?.html || 'No content';
       smsContent = directContent.sms?.message || textContent.substring(0, 160); // SMS fallback
 
+    } else if (channelsData.email?.subject && channelsData.email?.content) {
+      // Use pre-processed content from channels data (avoids double JSON escaping)
+      console.log('✨ Using pre-processed content from channels data');
+      
+      subject = channelsData.email.subject;
+      htmlContent = channelsData.email.content; // This is already clean HTML
+      textContent = channelsData.sms?.content || htmlContent.replace(/<[^>]*>/g, '').substring(0, 1000);
+      smsContent = channelsData.sms?.content || textContent.substring(0, 160);
+
     } else {
-      // Legacy template-based approach
+      // Legacy template-based approach - reprocess template
       console.log('🔄 Using template-based processing (legacy)');
       
       // Get the template

@@ -1,4 +1,4 @@
-import { SESClient, SendEmailCommand, GetSendQuotaCommand } from '@aws-sdk/client-ses';
+import { SESClient, SendEmailCommand, SendRawEmailCommand, GetSendQuotaCommand } from '@aws-sdk/client-ses';
 import { SecureConfigClient } from '../utils/secureConfigClient';
 import { EventLogger } from '../utils/eventLogger';
 import { SuppressionListService } from '../services/suppressionListService';
@@ -60,6 +60,8 @@ export class SESEmailHandler {
     const config = await this.secureConfigClient.getConfig();
     const fromEmail = from || config.ses.fromEmail;
 
+    // Use AWS SES SendEmailCommand - optimized by AWS for Gmail compatibility
+    // This is simpler and more reliable than manual MIME construction
     const sendEmailCommand = new SendEmailCommand({
       Source: fromEmail,
       Destination: {
@@ -71,17 +73,16 @@ export class SESEmailHandler {
           Charset: 'UTF-8',
         },
         Body: {
-          Html: {
-            Data: htmlContent,
-            Charset: 'UTF-8',
-          },
           Text: {
             Data: textContent,
             Charset: 'UTF-8',
           },
+          Html: {
+            Data: htmlContent,
+            Charset: 'UTF-8',
+          },
         },
       },
-      // Add custom headers for tracking
       Tags: [
         {
           Name: 'source',
@@ -99,7 +100,7 @@ export class SESEmailHandler {
     });
 
     try {
-      console.log(`📧 Sending email via AWS SES to ${to}: ${subject}`);
+      console.log(`📧 Sending email via AWS SES (SendEmailCommand) to ${to}: ${subject}`);
       
       const response = await this.sesClient.send(sendEmailCommand);
       const processingTime = Date.now() - startTime;
@@ -108,7 +109,8 @@ export class SESEmailHandler {
       console.log(`✅ Email sent successfully via SES`, {
         to,
         messageId,
-        processingTimeMs: processingTime
+        processingTimeMs: processingTime,
+        method: 'SendEmailCommand'
       });
 
       // Log email success
