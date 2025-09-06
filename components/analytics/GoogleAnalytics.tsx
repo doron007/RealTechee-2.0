@@ -54,19 +54,8 @@ export const GoogleAnalytics = () => {
   }
 
   if (!GA_MEASUREMENT_ID && !GTM_ID) {
-    console.warn('Google Analytics/GTM ID not configured', {
-      GA_MEASUREMENT_ID,
-      GTM_ID,
-      NODE_ENV: process.env.NODE_ENV,
-      allEnvVars: Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC'))
-    });
     return null;
   }
-
-  console.log('Google Analytics loaded with:', {
-    GA_MEASUREMENT_ID,
-    NODE_ENV: process.env.NODE_ENV
-  });
 
   return (
     <>
