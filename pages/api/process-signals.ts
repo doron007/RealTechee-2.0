@@ -6,7 +6,7 @@
  */
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { signalProcessor } from '../../services/signalProcessor';
+import { signalProcessor } from '../../services/notifications/signalProcessor';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {

@@ -65,12 +65,12 @@ export const prefetchQueries = {
   projects: () => queryClient.prefetchQuery({
     queryKey: queryKeys.projects,
     // We'll implement this in the enhanced service
-    queryFn: () => import('../services/enhancedProjectsService').then(m => m.enhancedProjectsService.getFullyEnhancedProjects()),
+    queryFn: () => import('../services/business/enhancedProjectsService').then(m => m.enhancedProjectsService.getFullyEnhancedProjects()),
   }),
   
   analytics: () => queryClient.prefetchQuery({
     queryKey: queryKeys.analyticsOverview,
     // We'll implement this in the analytics service
-    queryFn: () => import('../services/analyticsService').then(m => m.analyticsService.getOverviewMetrics()),
+    queryFn: () => import('../services/analytics/analyticsService').then(m => m.analyticsService.getOverviewMetrics()),
   }),
 };

@@ -11,7 +11,7 @@ import ProgressiveProjectCard from './ProgressiveProjectCard';
 import StatusPill from '../../common/ui/StatusPill';
 import ArchiveConfirmationDialog from '../common/ArchiveConfirmationDialog';
 import { H1, P2 } from '../../typography';
-import { type FullyEnhancedProject } from '../../../services/enhancedProjectsService';
+import { type FullyEnhancedProject } from '../../../services/business/enhancedProjectsService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 import { AdvancedSearchField } from '../common/AdvancedSearchDialog';
 import { useProjectsQuery, useProjectMutations } from '../../../hooks/useProjectsQuery';

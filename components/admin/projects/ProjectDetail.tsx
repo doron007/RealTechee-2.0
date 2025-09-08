@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { projectsAPI, optimizedProjectsAPI, quotesAPI, requestsAPI } from '../../../utils/amplifyAPI';
-import { enhancedProjectsService } from '../../../services/enhancedProjectsService';
+import { enhancedProjectsService } from '../../../services/business/enhancedProjectsService';
 import { useUnsavedChanges } from '../../../hooks/useUnsavedChanges';
 import { useNotification } from '../../../contexts/NotificationContext';
 import RestoreChangesDialog from '../../common/dialogs/RestoreChangesDialog';

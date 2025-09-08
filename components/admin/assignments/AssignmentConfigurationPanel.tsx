@@ -13,7 +13,7 @@ import {
   Territory,
   RolePermissions,
   RoleAssignmentRules
-} from '../../../services/flexibleAssignmentService';
+} from '../../../services/admin/flexibleAssignmentService';
 import {
   Tabs,
   Tab,

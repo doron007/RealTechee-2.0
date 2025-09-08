@@ -48,7 +48,7 @@ import {
 } from 'recharts';
 import dayjs from 'dayjs';
 import { H1, H2, H3, P1, P2 } from '../../typography';
-import { analyticsService } from '../../../services/analyticsService';
+import { analyticsService } from '../../../services/analytics/analyticsService';
 import { queryKeys } from '../../../lib/queryClient';
 import { formatCurrencyFull } from '../../../utils/formatUtils';
 import AdvancedFilters, { type AnalyticsFilters } from './AdvancedFilters';

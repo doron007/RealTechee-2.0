@@ -14,7 +14,7 @@ import { createProperties, createContacts, createAffiliates, updateContacts } fr
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { signalEmitter } from '../../services/signalEmitter';
+import { signalEmitter } from '../../services/notifications/signalEmitter';
 import { client } from '../../utils/amplifyAPI';
 
 const Affiliate: NextPage = () => {

@@ -3,7 +3,7 @@ import { generateClient } from 'aws-amplify/api';
 import { H3, H4, P2 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import Button from '../../common/buttons/Button';
-import { notificationRetryService } from '../../../services/notificationRetryService';
+import { notificationRetryService } from '../../../services/notifications/notificationRetryService';
 import {
   Card,
   CardContent,

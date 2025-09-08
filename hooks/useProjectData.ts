@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { optimizedProjectsAPI } from '../utils/amplifyAPI';
-import { enhancedProjectsService } from '../services/enhancedProjectsService';
+import { enhancedProjectsService } from '../services/business/enhancedProjectsService';
 import { Project } from '../types/projects';
 import { Milestone } from '../components/projects/MilestonesList';
 import { Payment } from '../components/projects/PaymentList';

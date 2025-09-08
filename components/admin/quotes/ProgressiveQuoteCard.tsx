@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { H4, H5, H6, P2, P3 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
-import { type FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
+import { type FullyEnhancedQuote } from '../../../services/business/enhancedQuotesService';
 
 // Progressive disclosure card component with three states: collapsed, basic, full
 type CardState = 'collapsed' | 'basic' | 'full';

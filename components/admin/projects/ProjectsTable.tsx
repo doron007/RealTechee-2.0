@@ -12,8 +12,8 @@ import { H3, H4, H5, H6, P1, P2, P3 } from '../../typography';
 import StatusPill from '../../common/ui/StatusPill';
 import ImageModal from '../../common/ui/ImageModal';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
-import { projectsService, type EnhancedProject } from '../../../services/projectsService';
-import { enhancedProjectsService, type FullyEnhancedProject } from '../../../services/enhancedProjectsService';
+import { projectsService, type EnhancedProject } from '../../../services/business/projectsService';
+import { enhancedProjectsService, type FullyEnhancedProject } from '../../../services/business/enhancedProjectsService';
 import { memoryMonitor } from '../../../utils/memoryMonitor';
 
 interface ProjectsTableProps {

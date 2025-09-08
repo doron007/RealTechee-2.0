@@ -35,7 +35,7 @@ import {
   Schedule as ScheduleIcon,
   Source as SourceIcon
 } from '@mui/icons-material';
-import { leadLifecycleService, type ArchivalRequest, type ArchivalResult, type ArchivalReason } from '../../../services/leadLifecycleService';
+import { leadLifecycleService, type ArchivalRequest, type ArchivalResult, type ArchivalReason } from '../../../services/business/leadLifecycleService';
 import { createLogger } from '../../../utils/logger';
 
 const logger = createLogger('LeadArchivalDialog');

@@ -11,8 +11,8 @@ import {
   Territory,
   WorkloadRebalanceRequest,
   TerritoryAssignmentRequest
-} from '../../../services/workloadBalancingService';
-import { assignmentService, AssignmentMetrics } from '../../../services/assignmentService';
+} from '../../../services/admin/workloadBalancingService';
+import { assignmentService, AssignmentMetrics } from '../../../services/admin/assignmentService';
 import {
   Grid,
   Box,

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { enhancedRequestsService } from '../services/enhancedRequestsService';
+import { enhancedRequestsService } from '../services/business/enhancedRequestsService';
 import { queryKeys, invalidateQueries } from '../lib/queryClient';
 import { useNotification } from '../contexts/NotificationContext';
 

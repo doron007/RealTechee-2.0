@@ -11,7 +11,7 @@ import ProgressiveRequestCard from './ProgressiveRequestCard';
 import StatusPill from '../../common/ui/StatusPill';
 import ArchiveConfirmationDialog from '../common/ArchiveConfirmationDialog';
 import { H1, P2 } from '../../typography';
-import { type FullyEnhancedRequest } from '../../../services/enhancedRequestsService';
+import { type FullyEnhancedRequest } from '../../../services/business/enhancedRequestsService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 import { AdvancedSearchField } from '../common/AdvancedSearchDialog';
 import { useRequestsQuery, useRequestMutations } from '../../../hooks/useRequestsQuery';

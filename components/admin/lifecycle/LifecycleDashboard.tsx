@@ -42,9 +42,9 @@ import {
   Speed as SpeedIcon,
   Star as StarIcon
 } from '@mui/icons-material';
-import { leadLifecycleService, type LeadLifecycleMetrics, type LeadExpirationCheck } from '../../../services/leadLifecycleService';
-import { leadScoringService } from '../../../services/leadScoringService';
-import { analyticsService } from '../../../services/analyticsService';
+import { leadLifecycleService, type LeadLifecycleMetrics, type LeadExpirationCheck } from '../../../services/business/leadLifecycleService';
+import { leadScoringService } from '../../../services/analytics/leadScoringService';
+import { analyticsService } from '../../../services/analytics/analyticsService';
 import LeadReactivationWorkflow from './LeadReactivationWorkflow';
 import { createLogger } from '../../../utils/logger';
 

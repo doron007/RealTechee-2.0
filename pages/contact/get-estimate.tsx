@@ -13,8 +13,8 @@ import { createProperties, createContacts, createRequests, updateContacts } from
 import { listProperties, listContacts } from '../../queries';
 import { auditWithUser } from '../../lib/auditLogger';
 import { getRecordOwner } from '../../lib/userContext';
-import { signalEmitter } from '../../services/signalEmitter';
-import { assignmentService } from '../../services/assignmentService';
+import { signalEmitter } from '../../services/notifications/signalEmitter';
+import { assignmentService } from '../../services/admin/assignmentService';
 import { client } from '../../utils/amplifyAPI';
 
 const GetEstimate: NextPage = () => {

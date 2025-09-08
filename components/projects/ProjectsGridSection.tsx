@@ -7,7 +7,7 @@ import { optimizedProjectsAPI } from '../../utils/amplifyAPI';
 import { Project, ProjectFilter } from '../../types/projects';
 import { createLogger } from '../../utils/logger';
 import { useProjectImagePreload } from '../../hooks/useImagePreload';
-import { enhancedProjectsService } from '../../services/enhancedProjectsService';
+import { enhancedProjectsService } from '../../services/business/enhancedProjectsService';
 
 // No need for fallback data - we'll use the CSV data from projectsService
 

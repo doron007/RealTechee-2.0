@@ -4,7 +4,7 @@ import BaseModal from './BaseModal';
 import { H4, P3 } from '../../typography';
 import { propertiesAPI } from '../../../utils/amplifyAPI';
 // Dynamic import to avoid loading in main bundle
-import type { PropertyDuplicateMatch } from '../../../services/dataValidationService';
+import type { PropertyDuplicateMatch } from '../../../services/core/dataValidationService';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface Property {
@@ -198,7 +198,7 @@ const PropertyModal: React.FC<PropertyModalProps> = ({
     // Advanced validation using validation service
     try {
       // Dynamic import to avoid loading in main bundle
-      const { dataValidationService } = await import('../../../services/dataValidationService');
+      const { dataValidationService } = await import('../../../services/core/dataValidationService');
       const validationResult = await dataValidationService.validateProperty(formData, property?.id);
       
       if (validationResult.duplicates.length > 0) {

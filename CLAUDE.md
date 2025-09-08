@@ -73,6 +73,19 @@ git checkout production && git merge staging && git push origin production
 
 ## 📋 **ARCHITECTURE GUIDELINES**
 
+### **Service Layer Organization** (Updated September 2025)
+Services are now organized in logical directories for better maintainability:
+```
+services/
+├── core/               # Base services and utilities
+├── business/           # Domain-specific business logic  
+├── interfaces/         # Type definitions and contracts
+├── notifications/      # All notification-related services
+├── admin/              # Admin-specific services
+├── analytics/          # Analytics and tracking services
+└── integrations/       # External service integrations (future)
+```
+
 ### **Component Priority (COO: Component-Oriented Output)**
 1. **Existing Components** - Always use what's already built
 2. **Typography System** - H1-H6, P1-P3 with semantic hierarchy

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { quotesAPI, quoteItemsAPI, projectPaymentTermsAPI, requestsAPI, projectsAPI } from '../../../utils/amplifyAPI';
-import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
+import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/business/enhancedQuotesService';
 
 interface Quote {
   id: string;

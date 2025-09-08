@@ -72,10 +72,18 @@ Dynamic environment configuration with no hardcoded IDs:
 
 ```
 ├── /components/          # React components (feature-based organization)
-├── /app/                 # Next.js 13+ App Router pages and API routes
+├── /app/                 # Next.js 13+ App Router pages and API routes  
+├── /pages/               # Next.js pages and API routes
 ├── /public/              # Static assets and media files
 ├── /styles/              # Global CSS and styling files
-├── /utils/               # Utility functions and service layers
+├── /utils/               # Utility functions and helpers
+├── /services/            # 🔧 Business logic organized by domain:
+│   ├── /core/            #   - Base services and utilities
+│   ├── /business/        #   - Domain-specific business logic
+│   ├── /notifications/   #   - All notification-related services  
+│   ├── /admin/           #   - Admin-specific services
+│   ├── /analytics/       #   - Analytics and tracking services
+│   └── /interfaces/      #   - Type definitions and contracts
 ├── /scripts/             # Development, testing, and deployment automation
 ├── /amplify/             # AWS Amplify Gen 2 backend configuration
 ├── /tests/               # Unit and integration tests

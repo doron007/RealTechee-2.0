@@ -11,21 +11,20 @@ module.exports = {
   
   // Test file patterns
   testMatch: [
-    '<rootDir>/src/__tests__/comprehensive/**/*.test.ts',
-    '<rootDir>/src/__tests__/comprehensive/**/*.spec.ts'
+    '<rootDir>/tests/**/*.test.ts',
+    '<rootDir>/tests/**/*.spec.ts'
   ],
   
   // Module name mapping
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
-    '^@/__tests__/(.*)$': '<rootDir>/src/__tests__/$1',
     '^@/repositories/(.*)$': '<rootDir>/repositories/$1',
     '^@/services/(.*)$': '<rootDir>/services/$1'
   },
   
   // Setup files
   setupFilesAfterEnv: [
-    '<rootDir>/src/__tests__/setup-comprehensive.ts'
+    '<rootDir>/jest.setup.js'
   ],
   
   // Transform configuration

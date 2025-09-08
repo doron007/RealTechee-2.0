@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { H3, H4, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
-import { projectManagerService, type ProjectManager, type MeetingDetails } from '../../../services/projectManagerService';
-import { meetingNotificationService, type MeetingNotificationPayload } from '../../../services/meetingNotificationService';
-import { taskManagementService } from '../../../services/taskManagementService';
+import { projectManagerService, type ProjectManager, type MeetingDetails } from '../../../services/business/projectManagerService';
+import { meetingNotificationService, type MeetingNotificationPayload } from '../../../services/notifications/meetingNotificationService';
+import { taskManagementService } from '../../../services/admin/taskManagementService';
 import { requestsAPI, contactsAPI } from '../../../utils/amplifyAPI';
 
 interface MeetingSchedulerProps {

@@ -11,7 +11,7 @@ import StatusPill from '../../common/ui/StatusPill';
 import ArchiveConfirmationDialog from '../common/ArchiveConfirmationDialog';
 import { H1, P2 } from '../../typography';
 import { quotesAPI } from '../../../utils/amplifyAPI';
-import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/enhancedQuotesService';
+import { enhancedQuotesService, FullyEnhancedQuote } from '../../../services/business/enhancedQuotesService';
 import { formatCurrencyFull, formatDateShort } from '../../../utils/formatUtils';
 import { AdvancedSearchField } from '../common/AdvancedSearchDialog';
 import { useNotification } from '../../../contexts/NotificationContext';

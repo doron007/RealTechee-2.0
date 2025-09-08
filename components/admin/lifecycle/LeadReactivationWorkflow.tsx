@@ -40,9 +40,9 @@ import {
   Info as InfoIcon
 } from '@mui/icons-material';
 import { requestsAPI, backOfficeAssignToAPI } from '../../../utils/amplifyAPI';
-import { leadLifecycleService, type ReactivationRequest, type ReactivationResult } from '../../../services/leadLifecycleService';
-import { assignmentService } from '../../../services/assignmentService';
-import { leadScoringService } from '../../../services/leadScoringService';
+import { leadLifecycleService, type ReactivationRequest, type ReactivationResult } from '../../../services/business/leadLifecycleService';
+import { assignmentService } from '../../../services/admin/assignmentService';
+import { leadScoringService } from '../../../services/analytics/leadScoringService';
 import { createLogger } from '../../../utils/logger';
 
 const logger = createLogger('LeadReactivationWorkflow');

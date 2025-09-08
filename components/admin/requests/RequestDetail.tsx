@@ -8,13 +8,15 @@ import { ErrorMessage } from '@hookform/error-message';
 import { H1, H2, H3, H4, P1, P2, P3 } from '../../typography';
 import Button from '../../common/buttons/Button';
 import { requestsAPI, quotesAPI, projectsAPI, getBackOfficeProductsAPI, contactsAPI, propertiesAPI } from '../../../utils/amplifyAPI';
-import { enhancedRequestsService } from '../../../services/enhancedRequestsService';
-import { assignmentService, type AEProfile } from '../../../services/assignmentService';
-import { requestStatusService, type RequestStatus } from '../../../services/requestStatusService';
-import { quoteCreationService } from '../../../services/quoteCreationService';
-import { enhancedCaseService } from '../../../services/enhancedCaseService';
-import { caseManagementService } from '../../../services/caseManagementService';
-import { requestWorkflowService, REQUEST_STATUSES } from '../../../services/requestWorkflowService';
+import { enhancedRequestsService } from '../../../services/business/enhancedRequestsService';
+import { assignmentService } from '../../../services/admin/assignmentService';
+import type { AEProfile } from '../../../services/admin/assignmentService';
+import { requestStatusService } from '../../../services/business/requestStatusService';
+import type { RequestStatus } from '../../../services/business/requestStatusService';
+import { quoteCreationService } from '../../../services/business/quoteCreationService';
+import { enhancedCaseService } from '../../../services/business/enhancedCaseService';
+import { caseManagementService } from '../../../services/business/caseManagementService';
+import { requestWorkflowService, REQUEST_STATUSES } from '../../../services/business/requestWorkflowService';
 import ContactModal from '../../common/modals/ContactModal';
 import PropertyModal from '../../common/modals/PropertyModal';
 import { MeetingScheduler } from '../meetings';
@@ -23,8 +25,8 @@ import { FileUploadField } from '../../forms/FileUploadField';
 import LeadArchivalDialog from './LeadArchivalDialog';
 import LeadReactivationWorkflow from '../lifecycle/LeadReactivationWorkflow';
 import MediaPreviewModal from './MediaPreviewModal';
-import type { Contact as ContactType, Property as PropertyType } from '../../../services/dataValidationService';
-import type { MeetingDetails } from '../../../services/projectManagerService';
+import type { Contact as ContactType, Property as PropertyType } from '../../../services/core/dataValidationService';
+import type { MeetingDetails } from '../../../services/business/projectManagerService';
 import {
   type EnhancedRequest,
   type CaseOverview,

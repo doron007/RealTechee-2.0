@@ -90,7 +90,6 @@ const AdminDashboard: React.FC = () => {
       // Calculate project stats using actual status data (filter out archived)
       const allProjects = projectsResult.success ? projectsResult.data : [];
       const projects = allProjects.filter((p: any) => p.status !== 'Archived' && p.archived !== 'true');
-      console.log(`📊 Projects: ${allProjects.length} total, ${projects.length} non-archived`);
       
       const projectStats = {
         total: projects.length,
@@ -104,7 +103,6 @@ const AdminDashboard: React.FC = () => {
       // Calculate quote stats using actual status data (filter out archived)
       const allQuotes = quotesResult.success ? quotesResult.data : [];
       const quotes = allQuotes.filter((q: any) => q.status !== 'Archived' && q.archived !== 'true');
-      console.log(`📊 Quotes: ${allQuotes.length} total, ${quotes.length} non-archived`);
       
       const quoteStats = {
         total: quotes.length,
@@ -118,7 +116,6 @@ const AdminDashboard: React.FC = () => {
       // Calculate request stats using actual status data (filter out archived)
       const allRequests = requestsResult.success ? requestsResult.data : [];
       const requests = allRequests.filter((r: any) => r.status !== 'Archived' && r.archived !== 'true');
-      console.log(`📊 Requests: ${allRequests.length} total, ${requests.length} non-archived`);
       
       const requestStats = {
         total: requests.length,

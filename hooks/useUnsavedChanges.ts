@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
-import { sessionStorageService, UnsavedChangesData } from '../services/sessionStorageService';
+import { sessionStorageService, UnsavedChangesData } from '../services/core/sessionStorageService';
 import { useNotification } from '../contexts/NotificationContext';
 
 export interface UseUnsavedChangesOptions {

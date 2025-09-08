@@ -11,20 +11,17 @@ module.exports = {
   
   // Test file patterns
   testMatch: [
-    '<rootDir>/src/__tests__/backend/**/*.test.ts',
-    '<rootDir>/src/__tests__/isolation/**/*.test.ts',
-    '<rootDir>/src/__tests__/integration/**/*.test.ts'
+    '<rootDir>/tests/**/*.test.ts'
   ],
   
   // Module name mapping for absolute imports
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@/__tests__/(.*)$': '<rootDir>/src/__tests__/$1'
+    '^@/(.*)$': '<rootDir>/$1'
   },
   
   // Setup files
   setupFilesAfterEnv: [
-    '<rootDir>/src/__tests__/setup-backend.ts'
+    '<rootDir>/jest.setup.js'
   ],
   
   // Transform configuration
@@ -54,14 +51,12 @@ module.exports = {
   // Coverage configuration
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/repositories/**/*.ts',
-    'src/services/**/*.ts',
     'utils/**/*.ts',
     'services/**/*.ts',
-    '!src/**/*.d.ts',
-    '!src/**/__tests__/**',
-    '!src/**/*.test.ts',
-    '!src/**/*.test.tsx',
+    '!**/*.d.ts',
+    '!**/__tests__/**',
+    '!**/*.test.ts',
+    '!**/*.test.tsx',
     '!utils/testDataUtils.ts',
     '!utils/environmentTest.ts'
   ],
@@ -84,23 +79,11 @@ module.exports = {
       lines: 85,
       statements: 85
     },
-    './src/repositories/': {
+    './services/': {
       branches: 85,
       functions: 90,
       lines: 90,
       statements: 90
-    },
-    './src/services/': {
-      branches: 85,
-      functions: 90,
-      lines: 90,
-      statements: 90
-    },
-    './src/api/hooks/': {
-      branches: 80,
-      functions: 85,
-      lines: 85,
-      statements: 85
     }
   },
   

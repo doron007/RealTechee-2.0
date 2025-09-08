@@ -12,7 +12,7 @@ import {
   AssigneeSkillProfile,
   SkillMatchRequest,
   SkillMatchResult
-} from '../../../services/skillManagementService';
+} from '../../../services/admin/skillManagementService';
 import {
   Tabs,
   Tab,

@@ -3,7 +3,7 @@ import { createNotificationQueue } from '../mutations';
 import { GetEstimatePayload } from '../amplify/functions/notification-processor/src/types';
 import { type Schema } from '../amplify/data/resource';
 import { UserService, type UserProfile } from './userService';
-import { FormNotificationIntegration } from '../services/formNotificationIntegration';
+import { FormNotificationIntegration } from '../services/notifications/formNotificationIntegration';
 
 // Initialize Amplify GraphQL client with API key for anonymous access
 const client = generateClient<any>({

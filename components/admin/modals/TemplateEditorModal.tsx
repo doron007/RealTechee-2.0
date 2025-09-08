@@ -17,7 +17,7 @@ import {
 import BaseModal from '../../common/modals/BaseModal';
 import { H4, H5, P2 } from '../../typography';
 import { TemplateItem, NotificationTemplateChannel } from '../../../types/notifications';
-import { ClientTemplateProcessor } from '../../../services/clientTemplateProcessor';
+import { ClientTemplateProcessor } from '../../../services/notifications/clientTemplateProcessor';
 
 interface TemplateEditorModalProps {
   open: boolean;
