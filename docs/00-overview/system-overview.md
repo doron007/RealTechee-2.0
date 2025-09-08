@@ -72,7 +72,7 @@ Production Environment Architecture (us-west-1)
 │                     Data & Storage Layer                       │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
 │  │   DynamoDB      │  │   Amazon S3     │  │ Amazon Cognito  │ │
-│  │   26+ Tables    │  │   File Storage  │  │   User Pools    │ │
+│  │   43 Tables     │  │   File Storage  │  │   User Pools    │ │
 │  │   Auto-scaling  │  │   CloudFront    │  │   8 Role Groups │ │
 │  │   Point-in-time │  │   WebP/AVIF     │  │   MFA Ready     │ │
 │  │   Recovery      │  │   Optimization  │  │                 │ │
@@ -192,7 +192,7 @@ External Integrations:
 
 ## Data Architecture & Infrastructure
 
-### Production Database Schema (26+ Tables)
+### Production Database Schema (43 Tables)
 **Table Naming Pattern**: `TableName-<dynamic-backend-suffix>-NONE` (historic static example `aqnqdrctpzfwfjwyxxsmu6peoq` before dynamic refactor)
 
 ```

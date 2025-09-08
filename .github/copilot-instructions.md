@@ -9,7 +9,7 @@ Enforce dual COO: **props-only styling** + **! duplicate comps** for scalable li
 ````instructions
 # RealTechee 2.0 – Unified Copilot Session Instructions (COO + Production Architecture)
 
-VERSION: 2025-08-05  
+VERSION: 2025-09-08  
 SOURCE OF TRUTH: CLAUDE.md (auto-synced summary here)  
 PRIORITY: Enforce COO (Component-Oriented Output) + Strict TypeScript + Production Safety  
 
@@ -51,7 +51,19 @@ SubContent -> P3
 
 ---
 
-## 2. Existing Component Inventory (Use First)
+## 2. Service Layer Organization (September 2025)
+Services organized in logical directories for better maintainability:
+- `/core/` - Base services and utilities (3 services)
+- `/business/` - Domain-specific business logic (13 services) 
+- `/admin/` - Admin-specific services (5 services)
+- `/notifications/` - All notification services (8 services)
+- `/analytics/` - Analytics and tracking (3 services)
+- `/interfaces/` - Type definitions and contracts
+- `/integrations/` - External service integrations (future)
+
+Database: 43 data models with comprehensive business entity coverage
+
+## 3. Existing Component Inventory (Use First)
 Typography: H1 H2 H3 H4 H5 H6 P1 P2 P3  
 UI: Card (default|feature|dealBreaker|step) Button (primary|secondary|tertiary) FeatureCard BenefitCard OptionCard BenefitBlock TestimonialCard StatItem SliderNavBar StatusPill TagLabel Tooltip  
 Forms: FormInput FormTextarea FormDropdown FormDateInput FormFileUpload  
@@ -63,7 +75,7 @@ Use MUI/MUI-X only if no existing custom component satisfies requirement.
 
 ---
 
-## 3. Amplify Gen 2 Standards
+## 4. Amplify Gen 2 Standards
 Structure:  
 amplify/backend.ts  
 amplify/auth/resource.ts  
@@ -82,8 +94,8 @@ npx ampx sandbox
 Backup before schema mutation: ./scripts/backup-data.sh  
 
 Multi-branch single Amplify app (d200k2wsaf8th3):  
-main + staging share (*-fvn7t5hbobaxjklhrqzdl4ac34-*)  
-production isolated (*-aqnqdrctpzfwfjwyxxsmu6peoq-*)  
+development: (*-fvn7t5hbobaxjklhrqzdl4ac34-*) - local sandbox  
+production isolated: (*-dynamic-backend-suffix-*) - fully operational with 1,449+ records  
 
 Promotion Flow:
 git checkout staging && git merge main && git push origin staging  
@@ -92,7 +104,7 @@ git checkout production && git merge staging && git push origin production
 
 ---
 
-## 4. Production Safeguards
+## 5. Production Safeguards
 Before schema changes:
 1. Run ./scripts/backup-data.sh
 2. Provide decision block

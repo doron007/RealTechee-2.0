@@ -75,7 +75,7 @@ RealTechee 2.0 leverages a modern, cloud-native technology stack designed for sc
 - **Amazon DynamoDB** - NoSQL database
   - Single-digit millisecond latency
   - Automatic scaling and high availability
-  - 26+ data models with complex relationships
+  - 43 data models with complex relationships
   - Time-to-Live (TTL) for automated data cleanup
   - Global secondary indexes for efficient querying
 

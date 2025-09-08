@@ -11,7 +11,7 @@ Welcome to the comprehensive documentation for **RealTechee 2.0**, a sophisticat
 RealTechee 2.0 is a full-stack, cloud-native platform built on **AWS Amplify Gen 2** with a **Next.js** frontend, showcasing:
 
 - **11 Business Domains** with clear service boundaries
-- **26+ Data Models** with complex relationships  
+- **43 Data Models** with complex relationships  
 - **Multi-role Authentication** with AWS Cognito
 - **Event-driven Architecture** with Lambda functions
 - **Multi-channel Communication** system
