@@ -61,7 +61,7 @@ export default function Hero(props: HeroProps) {
           </Button>
           <Button
             variant="tertiary"
-            href="/contact/contact-us"
+            href="/contact"
             text="Get in touch"
             underline={true}
           />

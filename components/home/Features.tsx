@@ -134,7 +134,7 @@ export default function Features(props: FeaturesProps) {
               <div className={`mt-4 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <Button
                   variant="primary"
-                  href="/contact/contact-us"
+                  href="/contact"
                   //withIcon={true}
                   //iconPosition="right"
                   text="Learn More"

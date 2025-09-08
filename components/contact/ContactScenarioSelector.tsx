@@ -28,7 +28,7 @@ const CONTACT_SCENARIOS: ContactScenarioOption[] = [
     id: 'inquiry',
     title: 'Contact Us',
     description: 'Standard contact us form for general questions',
-    href: '/contact/contact-us',
+    href: '/contact',
     isDefault: false
   },
   {
@@ -58,7 +58,7 @@ export default function ContactScenarioSelector({
     
     const path = router.asPath;
     if (path.includes('get-estimate')) return 'estimate';
-    if (path.includes('contact-us')) return 'inquiry';
+    if (path === '/contact') return 'inquiry';
     if (path.includes('get-qualified')) return 'qualified';
     if (path.includes('affiliate')) return 'affiliate';
     return null;

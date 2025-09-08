@@ -195,7 +195,7 @@ export const productCategories: ProductCategory[] = [
  * Common contact options data for reuse
  */
 export const contactOptions: ProductCategory[] = [
-  { href: "/contact/contact-us", text: "Contact Us" },
+  { href: "/contact", text: "Contact Us" },
   { href: "/contact/get-estimate", text: "Get Estimate" },
   { href: "/contact/get-qualified", text: "Get Qualified" },
   { href: "/contact/affiliate", text: "Become an Affiliate" }

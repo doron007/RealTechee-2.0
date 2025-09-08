@@ -452,7 +452,7 @@ test.describe('Complete User Journeys - End-to-End Workflows', () => {
     // === PHASE 1: INITIAL CONTACT ===
     console.log('Phase 1: Initial contact form...');
     
-    await page.goto('/contact/contact-us');
+    await page.goto('/contact');
     await page.waitForLoadState('networkidle');
     
     await expect(page.locator('form')).toBeVisible();

@@ -8,7 +8,7 @@ const { test, expect } = require('@playwright/test');
 test.describe('iPhone Auto-Zoom Prevention Test', () => {
   const FORMS = [
     { name: 'Get Estimate', url: '/contact/get-estimate' },
-    { name: 'Contact Us', url: '/contact/contact-us' },
+    { name: 'Contact Us', url: '/contact' },
     { name: 'Get Qualified', url: '/contact/get-qualified' },
     { name: 'Affiliate', url: '/contact/affiliate' }
   ];

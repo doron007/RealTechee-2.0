@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import type { NextPage } from 'next';
 import { useState, useEffect } from 'react';
-import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../../components/contact';
-import { CONTACT_CONTENT } from '../../constants/contactContent';
-import { GeneralInquiryForm, InquirySuccessMessage, FormErrorMessage } from '../../components/forms';
-import { useFormSubmission } from '../../hooks';
-import Button from '../../components/common/buttons/Button';
-import H2 from '../../components/typography/H2';
-import H3 from '../../components/typography/H3';
-import P1 from '../../components/typography/P1';
-import logger from '../../lib/logger';
-import { createProperties, createContacts, createContactUs, updateContacts } from '../../mutations';
-import { listProperties, listContacts } from '../../queries';
-import { auditWithUser } from '../../lib/auditLogger';
-import { getRecordOwner } from '../../lib/userContext';
-import { signalEmitter } from '../../services/notifications/signalEmitter';
-import { client } from '../../utils/amplifyAPI';
+import { ContactHeroSection, ContactContentSection, ContactMapSection, ContactType } from '../components/contact';
+import { CONTACT_CONTENT } from '../constants/contactContent';
+import { GeneralInquiryForm, InquirySuccessMessage, FormErrorMessage } from '../components/forms';
+import { useFormSubmission } from '../hooks';
+import Button from '../components/common/buttons/Button';
+import H2 from '../components/typography/H2';
+import H3 from '../components/typography/H3';
+import P1 from '../components/typography/P1';
+import logger from '../lib/logger';
+import { createProperties, createContacts, createContactUs, updateContacts } from '../mutations';
+import { listProperties, listContacts } from '../queries';
+import { auditWithUser } from '../lib/auditLogger';
+import { getRecordOwner } from '../lib/userContext';
+import { signalEmitter } from '../services/notifications/signalEmitter';
+import { client } from '../utils/amplifyAPI';
 
 const ContactUs: NextPage = () => {
   const content = CONTACT_CONTENT[ContactType.INQUIRY];
@@ -464,8 +464,8 @@ const ContactUs: NextPage = () => {
           <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-red-200 text-center">
             <P1 className="text-red-600 text-xs sm:text-sm mb-2">Need immediate assistance?</P1>
             <div className="flex flex-col sm:flex-row gap-2 justify-center text-sm">
-              <a href="tel:+15551234567" className="text-red-700 hover:text-red-800 font-medium">
-                📞 Call (555) 123-4567
+              <a href="tel:+18054193114" className="text-red-700 hover:text-red-800 font-medium">
+                📞 Call (805) 419-3114
               </a>
               <span className="hidden sm:inline text-red-400">•</span>
               <a href="mailto:info@realtechee.com" className="text-red-700 hover:text-red-800 font-medium">

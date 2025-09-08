@@ -86,7 +86,7 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/privacy-policy"
+                    href="/privacy"
                     text="Privacy Policy"
                     size="sm"
                     textSize="sm"
@@ -154,7 +154,7 @@ export default function Footer(props: FooterProps) {
                 <div className="mb-1">
                   <Button
                     variant="tertiary"
-                    href="/contact/contact-us"
+                    href="/contact"
                     text="Contact Us"
                     size="sm"
                     textSize="sm"
@@ -258,15 +258,6 @@ export default function Footer(props: FooterProps) {
                       textSize="sm"
                     />
                   </div>
-                  <div className="mb-0.5">
-                    <Button
-                      variant="tertiary"
-                      href="/privacy-policy"
-                      text="Privacy Policy"
-                      size="sm"
-                      textSize="sm"
-                    />
-                  </div>
                 </div>
               </div>
               
@@ -329,7 +320,7 @@ export default function Footer(props: FooterProps) {
                   <div className="mb-0.5">
                     <Button
                       variant="tertiary"
-                      href="/contact/contact-us"
+                      href="/contact"
                       text="Contact Us"
                       size="sm"
                       textSize="sm"
@@ -372,7 +363,7 @@ export default function Footer(props: FooterProps) {
         <div className="mt-10 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
           <div className="mb-4 sm:mb-0 text-center sm:text-left">
             <P3 className="text-gray-600">
-              &copy; {currentYear} RealTechee. All rights reserved.
+              Copyright &copy; {currentYear} RealTechee Inc. All Rights Reserved | <Link href="/terms" className="hover:text-gray-800 underline">Terms and Conditions</Link> | <Link href="/privacy" className="hover:text-gray-800 underline">Privacy Policy</Link>
             </P3>
             <P3 className="text-gray-400 text-xs">
               Version {version}

@@ -63,12 +63,12 @@ test.describe('User Story 2: Contact Us form submission', () => {
     await expect(contactDropdown).toBeVisible({ timeout: 10000 });
     await contactDropdown.hover();
 
-    const contactUsLink = page.locator('a[href="/contact/contact-us"]').first();
+    const contactUsLink = page.locator('a[href="/contact"]').first();
     await expect(contactUsLink).toBeVisible({ timeout: 5000 });
     await contactUsLink.click();
 
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveURL('/contact/contact-us');
+    await expect(page).toHaveURL('/contact');
     console.log('✅ Successfully navigated to Contact Us form');
 
     // ====================

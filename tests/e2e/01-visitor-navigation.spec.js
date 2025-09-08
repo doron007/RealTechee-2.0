@@ -89,7 +89,7 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     await page.waitForTimeout(200);
     
     // Test "Contact Us" link
-    const contactUsLink = page.locator('a[href="/contact/contact-us"]').first();
+    const contactUsLink = page.locator('a[href="/contact"]').first();
     await expect(contactUsLink).toBeVisible();
     await contactUsLink.click();
     await page.waitForLoadState('networkidle');
@@ -397,7 +397,95 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     console.log('✅ Standalone navigation links verified - tested key functional pages');
     
     // ========================================
-    // 4. CTA BUTTON VALIDATION
+    // 4. NEW PAGES VALIDATION (Privacy, Terms, Products Index)
+    // ========================================
+    
+    console.log('Testing newly created pages for Google indexing...');
+    
+    // Test Privacy Policy page
+    await page.goto('/privacy');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveTitle(/Privacy Policy.*RealTechee/i);
+    await expect(page.locator('h1')).toContainText('Privacy Policy');
+    await expect(page.getByText('RealTechee Inc. and Subsidiaries').first()).toBeVisible();
+    await expect(page.locator('h2:has-text("Information We Collect")')).toBeVisible();
+    await expect(page.getByText('privacy@realtechee.com')).toBeVisible();
+    await page.screenshot({ path: 'tests/e2e/screenshots/privacy-policy.png', fullPage: true });
+    console.log('✅ Privacy Policy page validated - content and branding confirmed');
+    
+    // Test Terms of Use page
+    await page.goto('/terms');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveTitle(/Terms of Use.*RealTechee/i);
+    await expect(page.locator('h1')).toContainText('Terms of Use');
+    await expect(page.getByText('RealTechee Inc.').first()).toBeVisible();
+    await expect(page.locator('h2:has-text("Binding Contractual Terms")')).toBeVisible();
+    await expect(page.getByText('legal@realtechee.com')).toBeVisible();
+    await page.screenshot({ path: 'tests/e2e/screenshots/terms-of-use.png', fullPage: true });
+    console.log('✅ Terms of Use page validated - content and branding confirmed');
+    
+    // Test Products Index page
+    await page.goto('/products');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveTitle(/Products.*Services.*RealTechee/i);
+    await expect(page.locator('h1')).toContainText('Our Products & Services');
+    
+    // Verify product cards are present and clickable
+    const productCards = page.locator('a[href^="/products/"]');
+    const productCount = await productCards.count();
+    console.log(`Found ${productCount} product cards on products index page`);
+    
+    // Test each product card link
+    const expectedProducts = [
+      { href: '/products/sellers', text: 'For Sellers' },
+      { href: '/products/buyers', text: 'For Buyers' },
+      { href: '/products/kitchen-and-bath', text: 'Kitchen & Bath' },
+      { href: '/products/commercial', text: 'Commercial' },
+      { href: '/products/architects-and-designers', text: 'Architects' }
+    ];
+    
+    for (const product of expectedProducts) {
+      const productLink = page.locator(`a[href="${product.href}"]`).first();
+      await expect(productLink).toBeVisible();
+      console.log(`✅ Product link verified: ${product.href}`);
+    }
+    
+    // Test clicking on first product card to ensure navigation works
+    if (productCount > 0) {
+      const firstProduct = productCards.first();
+      await firstProduct.click();
+      await page.waitForLoadState('networkidle');
+      
+      // Should now be on a product-specific page
+      const productUrl = page.url();
+      console.log(`Navigated to product page: ${productUrl}`);
+      
+      if (productUrl.includes('/products/')) {
+        await expect(page.locator('h1')).toBeVisible();
+        console.log('✅ Product detail navigation successful');
+      }
+      
+      // Return to products index
+      await page.goto('/products');
+      await page.waitForLoadState('networkidle');
+    }
+    
+    // Test CTA buttons on products page
+    const ctaButtons = page.locator('button, a').filter({ hasText: /Get an Estimate|Contact Us|Learn More/ });
+    const ctaCount = await ctaButtons.count();
+    console.log(`Found ${ctaCount} CTA buttons on products page`);
+    
+    await page.screenshot({ path: 'tests/e2e/screenshots/products-index.png', fullPage: true });
+    console.log('✅ Products index page validated - all product links functional');
+    
+    // Return to homepage for next tests
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    
+    console.log('✅ New pages validation completed - all pages ready for Google indexing');
+    
+    // ========================================
+    // 5. CTA BUTTON VALIDATION
     // ========================================
     
     console.log('Testing CTA buttons...');
@@ -433,7 +521,7 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     console.log(`✅ Found ${buttonCount} "Get an Estimate" buttons on homepage - CTA coverage verified`);
     
     // ========================================
-    // 5. IMAGE LOAD VALIDATION
+    // 6. IMAGE LOAD VALIDATION
     // ========================================
     
     console.log('Validating image loads...');
@@ -459,7 +547,7 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     }
     
     // ========================================
-    // 6. FINAL VALIDATION
+    // 7. FINAL VALIDATION
     // ========================================
     
     console.log('Final homepage validation...');
@@ -474,6 +562,55 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     await expect(productsButton).toBeVisible();
     await expect(contactButton).toBeVisible();
     await expect(loginLink).toBeVisible();
+    
+    // ========================================
+    // FOOTER LINKS VALIDATION (Google Indexing Critical)
+    // ========================================
+    
+    console.log('Validating footer links for Google indexing...');
+    
+    // Scroll to footer to make links visible
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(500);
+    
+    // Test Privacy Policy link in footer (should now point to /privacy)
+    const footerPrivacyLink = page.locator('footer a[href="/privacy"]').first();
+    await expect(footerPrivacyLink).toBeVisible();
+    await footerPrivacyLink.click();
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL('/privacy');
+    await expect(page.locator('h1')).toContainText('Privacy Policy');
+    console.log('✅ Footer Privacy Policy link correctly points to /privacy');
+    
+    // Return to homepage and scroll to footer again
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(500);
+    
+    // Verify no broken /privacy-policy links exist
+    const brokenPrivacyLinks = page.locator('a[href="/privacy-policy"]');
+    const brokenCount = await brokenPrivacyLinks.count();
+    if (brokenCount > 0) {
+      console.warn(`⚠️ Found ${brokenCount} broken privacy-policy links that should be /privacy`);
+    } else {
+      console.log('✅ No broken /privacy-policy links found');
+    }
+    
+    // Test Contact link in footer (should point to /contact)
+    const footerContactLink = page.locator('footer a[href="/contact"]').first();
+    await expect(footerContactLink).toBeVisible();
+    await footerContactLink.click();
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL('/contact');
+    await expect(page.locator('h1')).toBeVisible();
+    console.log('✅ Footer Contact link correctly points to /contact');
+    
+    // Return to homepage
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    
+    console.log('✅ Footer links validated for Google indexing compliance');
     
     // Check for console errors (excluding known warnings)
     const logs = [];

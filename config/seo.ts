@@ -40,7 +40,7 @@ export const SITE_CONFIG = {
     twitter: 'https://twitter.com/realtechee'
   },
   contact: {
-    phone: '+1-555-123-4567',
+    phone: '+1-805-419-3114',
     email: 'info@realtechee.com',
     address: {
       street: '123 Tech Avenue',
@@ -136,6 +136,81 @@ export const PAGE_SEO: Record<string, SEOPageConfig> = {
         addressCountry: SITE_CONFIG.contact.address.country
       },
       sameAs: Object.values(SITE_CONFIG.social)
+    }
+  },
+  
+  privacy: {
+    title: 'Privacy Policy - RealTechee | Data Protection & Privacy Rights',
+    description: 'Learn how RealTechee protects your personal information and privacy in our real estate technology platform. Comprehensive privacy policy and data handling practices.',
+    keywords: [
+      'privacy policy',
+      'data protection',
+      'privacy rights',
+      'personal information',
+      'data security',
+      'real estate privacy'
+    ],
+    canonicalUrl: `${SITE_CONFIG.domain}/privacy`,
+    openGraph: {
+      title: 'Privacy Policy - RealTechee',
+      description: 'Learn how we protect your privacy and personal information',
+      type: 'website'
+    },
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Privacy Policy',
+      description: 'RealTechee privacy policy and data protection practices'
+    }
+  },
+  
+  terms: {
+    title: 'Terms of Use - RealTechee | Service Agreement & Legal Terms',
+    description: 'Terms of Use and Service Agreement for RealTechee\'s real estate technology platform and services. Legal terms and conditions for platform usage.',
+    keywords: [
+      'terms of use',
+      'service agreement',
+      'legal terms',
+      'terms of service',
+      'platform agreement',
+      'user agreement'
+    ],
+    canonicalUrl: `${SITE_CONFIG.domain}/terms`,
+    openGraph: {
+      title: 'Terms of Use - RealTechee',
+      description: 'Terms of service and legal agreements for our platform',
+      type: 'website'
+    },
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Terms of Use',
+      description: 'RealTechee terms of service and legal agreements'
+    }
+  },
+  
+  products: {
+    title: 'Products & Services - RealTechee | Real Estate Technology Solutions',
+    description: 'Explore RealTechee\'s comprehensive real estate technology solutions for sellers, buyers, professionals, and commercial clients. Advanced property services for all needs.',
+    keywords: [
+      'real estate products',
+      'property services',
+      'real estate solutions',
+      'property technology',
+      'real estate tools',
+      'property services'
+    ],
+    canonicalUrl: `${SITE_CONFIG.domain}/products`,
+    openGraph: {
+      title: 'Products & Services - RealTechee',
+      description: 'Comprehensive real estate technology solutions for all your property needs',
+      type: 'website'
+    },
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Products & Services',
+      description: 'RealTechee comprehensive real estate technology solutions'
     }
   },
   
@@ -300,8 +375,57 @@ export const PAGE_SEO: Record<string, SEOPageConfig> = {
         }
       }
     }
+  },
+
+  'about': {
+    title: 'About RealTechee - Our History, Mission & Values | Real Estate Technology Leaders',
+    description: 'Learn about RealTechee\'s mission, history, and values. Discover how we\'re transforming the real estate industry with innovative technology solutions for agents, buyers, and sellers.',
+    keywords: [
+      'about realtechee',
+      'real estate technology company',
+      'property valuation experts',
+      'real estate innovation',
+      'company history',
+      'real estate mission',
+      'property technology leaders',
+      'renovation estimate experts'
+    ],
+    canonicalUrl: `${SITE_CONFIG.domain}/about`,
+    openGraph: {
+      title: 'About RealTechee - Real Estate Technology Leaders',
+      description: 'Learn about our mission to transform the real estate industry with innovative property technology solutions.',
+      type: 'website',
+      images: [{
+        url: `${SITE_CONFIG.domain}/assets/images/og-about.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'About RealTechee - Real Estate Technology Company'
+      }]
+    },
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: 'About RealTechee',
+      description: 'Company information, mission, and values of RealTechee',
+      mainEntity: {
+        '@type': 'Organization',
+        name: SITE_CONFIG.name,
+        url: SITE_CONFIG.domain,
+        description: SITE_CONFIG.description,
+        foundingDate: '2020',
+        industry: 'Real Estate Technology',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: SITE_CONFIG.contact.address.street,
+          addressLocality: SITE_CONFIG.contact.address.city,
+          addressRegion: SITE_CONFIG.contact.address.state,
+          postalCode: SITE_CONFIG.contact.address.zipCode,
+          addressCountry: SITE_CONFIG.contact.address.country
+        }
+      }
+    }
   }
-};
+};;
 
 // Generate meta tags for a specific page
 export const generateMetaTags = (pageKey: string, customMeta?: Partial<SEOPageConfig>) => {

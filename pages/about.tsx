@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import type { NextPage } from 'next';
+import SEOHead from '../components/seo/SEOHead';
 import { 
   HeroSection,
   HistorySection,
@@ -14,15 +14,13 @@ import { CtaSection } from '../components/common/sections';
 
 const About: NextPage = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Head>
-        <title>About RealTechee - Our History, Mission & Values</title>
-        <meta name="description" content="Learn about RealTechee's mission, history, and values. Discover how we're transforming the real estate industry with innovative technology solutions." />
-        <link rel="icon" href="/favicon_white.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
-      <main className="flex-grow">
+    <>
+      <SEOHead
+        pageKey="about"
+        customTitle="About RealTechee - Our History, Mission & Values"
+        customDescription="Learn about RealTechee's mission, history, and values. Discover how we're transforming the real estate industry with innovative technology solutions."
+      />
+      <div>
         {/* Hero Section */}
         <HeroSection />
         
@@ -51,8 +49,8 @@ const About: NextPage = () => {
           buttonText="Get Started Today"
           buttonLink="/contact/get-estimate"
         />
-      </main>
-    </div>
+      </div>
+    </>
   );
 };
 
