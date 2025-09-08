@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import OptimizedImage from '../common/ui/OptimizedImage';
 import { 
   Box, 
@@ -112,7 +112,7 @@ const ThumbnailScroll = styled(Box)(({ theme }) => ({
   overflowX: 'auto',
   display: 'flex',
   gap: '8px', // gap-2 to match original
-  padding: '4px 0', // py-1 equivalent
+  padding: '4px 4px 4px 4px', // Add left/right padding to prevent clipping
   
   // Custom scrollbar styling
   '&::-webkit-scrollbar': {
@@ -204,9 +204,37 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const thumbnailScrollRef = useRef<HTMLDivElement>(null);
+  const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
+  // Scroll selected thumbnail into view when currentImageIndex changes
+  useEffect(() => {
+    if (thumbnailScrollRef.current && thumbnailRefs.current[currentImageIndex]) {
+      const scrollContainer = thumbnailScrollRef.current;
+      const selectedThumbnail = thumbnailRefs.current[currentImageIndex];
+      
+      if (selectedThumbnail) {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const thumbnailRect = selectedThumbnail.getBoundingClientRect();
+        
+        // Calculate if thumbnail is out of view
+        const isLeftOfView = thumbnailRect.left < containerRect.left;
+        const isRightOfView = thumbnailRect.right > containerRect.right;
+        
+        if (isLeftOfView || isRightOfView) {
+          // Scroll to center the thumbnail in view
+          const scrollLeft = selectedThumbnail.offsetLeft - (scrollContainer.clientWidth / 2) + (selectedThumbnail.clientWidth / 2);
+          scrollContainer.scrollTo({
+            left: scrollLeft,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [currentImageIndex]);
   
   // No images to display
   if (!images || images.length === 0) {
@@ -319,10 +347,13 @@ const ProjectImageGalleryMUI: React.FC<ProjectImageGalleryMUIProps> = ({ images 
       {/* Thumbnails Navigation - separate from main container like original */}
       {images.length > 1 && (
         <ThumbnailContainer>
-          <ThumbnailScroll>
+          <ThumbnailScroll ref={thumbnailScrollRef}>
             {images.map((img, idx) => (
               <ThumbnailButton
                 key={idx}
+                ref={(el) => {
+                  thumbnailRefs.current[idx] = el as HTMLDivElement | null;
+                }}
                 isSelected={idx === currentImageIndex}
                 onClick={() => handleThumbnailClick(idx)}
               >
