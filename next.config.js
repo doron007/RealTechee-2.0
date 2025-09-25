@@ -5,6 +5,20 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/contact/contact-us',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/privacy-policy',
+        destination: '/privacy',
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     // Fix 504 Gateway Timeout issues on Amplify
     imgOptTimeoutInSeconds: 30, // Increased from 7s default to handle large S3 images
