@@ -156,3 +156,11 @@ backend.reputationMonitor.resources.lambda.addToRolePolicy(
 // EventBridge scheduling is now handled via Amplify Gen 2 in the function definition
 // All environments (sandbox, staging, production) will have automated processing
 // Schedule: every 2 minutes for consistent processing across environments
+
+// API Key Rotation: Override logical ID to recover from deleted key
+// Per AWS Amplify Gen 2 documentation for rotating expired/deleted API keys
+// Step 1: Deploy with override to create new key
+// Step 2: Remove override and deploy again to use default logical ID
+backend.data.resources.cfnResources.cfnApiKey?.overrideLogicalId(
+  `recoverApiKey${new Date().getTime()}`
+);
