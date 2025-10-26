@@ -1231,11 +1231,9 @@ const schema = a.schema({
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'userPool',
-    apiKeyAuthorizationMode: {
-      expiresInDays: 365,
-      description: 'API Key renewed 2025-10-26'
-    }
+    defaultAuthorizationMode: 'userPool'
+    // API keys managed manually via AWS CLI + environment variables
+    // CloudFormation no longer manages API keys to avoid state conflicts
   }
 });
 
