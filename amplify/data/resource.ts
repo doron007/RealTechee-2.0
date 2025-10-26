@@ -765,7 +765,7 @@ const SignalNotificationHooks = a.model({
 const NotificationTemplate = a.model({
   // Form identification
   name: a.string().required(),
-  formType: a.string(), // 'contact-us', 'get-estimate', 'get-qualified', 'affiliate'
+  formType: a.string(), // 'contact', 'get-estimate', 'get-qualified', 'affiliate'
   
   // Email content (HTML + subject)
   emailSubject: a.string().required(),
@@ -1233,7 +1233,8 @@ export const data = defineData({
   authorizationModes: {
     defaultAuthorizationMode: 'userPool',
     apiKeyAuthorizationMode: {
-      expiresInDays: 30
+      expiresInDays: 365,
+      description: 'API Key renewed 2025-10-26'
     }
   }
 });
