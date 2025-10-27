@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "appsync:ListGraphqlApis",
+        "appsync:ListApiKeys"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sns:Publish"
+      ],
+      "Resource": "arn:aws:sns:us-west-1:403266990862:realtechee-api-key-expiration-alerts"
+    }
+  ]
+}
