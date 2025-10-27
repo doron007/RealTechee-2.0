@@ -95,7 +95,7 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveTitle(/Contact/i);
     await expect(page.locator('h1')).toBeVisible();
-    await page.screenshot({ path: 'tests/e2e/screenshots/contact-us.png', fullPage: true });
+    await page.screenshot({ path: 'tests/e2e/screenshots/contact.png', fullPage: true });
     
     // Return to homepage
     await page.goto('/');
@@ -587,15 +587,6 @@ test.describe('User Story 1: First-time visitor comprehensive navigation', () =>
     await page.waitForLoadState('networkidle');
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
-    
-    // Verify no broken /privacy-policy links exist
-    const brokenPrivacyLinks = page.locator('a[href="/privacy-policy"]');
-    const brokenCount = await brokenPrivacyLinks.count();
-    if (brokenCount > 0) {
-      console.warn(`⚠️ Found ${brokenCount} broken privacy-policy links that should be /privacy`);
-    } else {
-      console.log('✅ No broken /privacy-policy links found');
-    }
     
     // Test Contact link in footer (should point to /contact)
     const footerContactLink = page.locator('footer a[href="/contact"]').first();

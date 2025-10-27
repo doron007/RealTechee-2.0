@@ -134,7 +134,7 @@ test.describe('User Story 2: Contact Us form submission', () => {
     if (!successFound) {
       // Take debug screenshot if no success message found
       await page.screenshot({ 
-        path: `tests/e2e/screenshots/contact-us-debug-${testSession}.png`,
+        path: `tests/e2e/screenshots/contact-debug-${testSession}.png`,
         fullPage: true 
       });
       throw new Error('No success message found after form submission');
@@ -142,7 +142,7 @@ test.describe('User Story 2: Contact Us form submission', () => {
 
     // Take success screenshot
     await page.screenshot({ 
-      path: `tests/e2e/screenshots/contact-us-success-${testSession}.png`,
+      path: `tests/e2e/screenshots/contact-success-${testSession}.png`,
       fullPage: true 
     });
 

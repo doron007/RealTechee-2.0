@@ -1,0 +1,10 @@
+{
+  "name": "api-key-monitor",
+  "version": "1.0.0",
+  "description": "Lambda function to monitor AWS AppSync API key expiration",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-appsync": "^3.x",
+    "@aws-sdk/client-sns": "^3.x"
+  }
+}
