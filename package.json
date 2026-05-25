@@ -92,7 +92,7 @@
     "@mui/material": "^7.1.0",
     "@mui/x-date-pickers": "^8.8.0",
     "@next/bundle-analyzer": "^15.4.2",
-    "@parcel/watcher": "^2.5.1",
+    "@parcel/watcher": "^2.5.6",
     "@sendgrid/mail": "^8.1.5",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.83.0",

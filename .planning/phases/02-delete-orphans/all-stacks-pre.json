@@ -1,0 +1,812 @@
+[
+    {
+        "Name": "amplify-d2basdqti48ssd-master-branch-8919ba-amplifyDataTodoNestedStackTodoNestedStackR-3S5E8142TGJO",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T01:33:36.074000+00:00"
+    },
+    {
+        "Name": "amplify-d2basdqti48ssd-master-branch-8919ba-amplifyDataAmplifyTableManagerNestedStackA-DUZLZBOSNZ2G",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T01:32:17.993000+00:00"
+    },
+    {
+        "Name": "amplify-d2basdqti48ssd-master-branch-8919ba5de1-data7552DF31-13PW0C70TIXVD",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-10-15T01:32:12.041000+00:00"
+    },
+    {
+        "Name": "amplify-d2basdqti48ssd-master-branch-8919ba5de1-auth179371D7-13NHI8H96I0D7",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T01:31:37.268000+00:00"
+    },
+    {
+        "Name": "amplify-d2basdqti48ssd-master-branch-8919ba5de1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-10-15T01:31:33.787000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheen8n-doron-sandbox-8bdb6ed-amplifyDataTodoNestedStackTodoNestedStackR-W1AOTEFI5SBE",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T00:23:25.402000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheen8n-doron-sandbox-8bdb6ed-amplifyDataAmplifyTableManagerNestedStackA-U4IJ0PHSVRTY",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T00:22:07.210000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheen8n-doron-sandbox-8bdb6ede52-data7552DF31-6CF4ZZKMO7CX",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T00:22:01.292000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheen8n-doron-sandbox-8bdb6ede52-auth179371D7-1E71YKJSJRJH6",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T00:21:26.802000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheen8n-doron-sandbox-8bdb6ede52",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-10-15T00:21:24.056000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestStatusHistoryNestedStack-5J8JAIPQRNHS",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.961000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestInformationItemsNestedSt-IROSHOPSCPO1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.920000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestAssignmentsNestedStackRe-1DY1K8KY4HLJH",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.894000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestWorkflowStatesNestedStac-A4H299W188TV",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.881000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestScopeItemsNestedStackReq-1N5JK75OLZ93W",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.876000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestNotesNestedStackRequestN-R9BB481O56EW",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-09-03T16:34:23.849000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestWorkflowStatesNestedStac-171I1HTQEHKCG",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:16.138000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestScopeItemsNestedStackReq-1UYDSBUJEFX8O",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:14.699000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestInformationItemsNestedSt-1KSXRWE8JT67T",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:14.645000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestNotesNestedStackRequestN-1DPMNNIFUMHDZ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:14.620000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestAssignmentsNestedStackRe-1ERHBCTJ67GRQ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:14.613000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestStatusHistoryNestedStack-JH2404RCGS7A",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-31T21:59:14.565000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestScopeItemsNestedStackReq-R0747EMDPMX4",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.923000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestInformationItemsNestedSt-1QF5T0JT2MRJW",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.871000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestWorkflowStatesNestedStac-12JP3KQIAGHKH",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.859000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestAssignmentsNestedStackRe-1M5XJE4LKMBG5",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.834000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestNotesNestedStackRequestN-1KZL9313VDA2A",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.794000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestStatusHistoryNestedStack-1UXKCXQ4G52LG",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-30T19:05:30.728000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataSignalNotificationHooksNestedSt-V0N1IYO0M29T",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-20T04:45:31.232000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataSignalEventsNestedStackSignalEv-1LCZ5D1IOIZL9",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-20T04:45:31.199000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataSignalEventsNestedStackSignalEv-WLXCMKG4K9B9",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-20T03:48:02.593000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataSignalNotificationHooksNestedSt-1G4Z0ZRHJOMWK",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-20T03:48:02.547000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataSignalNotificationHooksNestedSt-12RVQVCA7LGLR",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-14T21:44:56.871000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataSignalEventsNestedStackSignalEv-EURV9LXPUZWG",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-08-14T21:44:56.812000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e-function1351588B-RTDZFQP3DR0F",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:46:14.879000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataConnectionStackNestedStackConne-V45P54NBN8RH",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:45:27.346000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataSESReputationMetricsNestedStack-59QY99ODS9XR",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.129000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataAffiliatesNestedStackAffiliates-EA2YSSBUQBR",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.090000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataSecureConfigNestedStackSecureCo-A3IVPK2DULC3",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.034000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataProjectPaymentTermsNestedStackP-RYQNF9RAFZJN",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.030000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataMemberSignatureNestedStackMembe-E4JPX9AM84B3",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.022000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeNotificationsNestedSt-E4X1ECZ4HE7B",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.019000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataPropertiesNestedStackProperties-D2A5ISCVJHFN",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.016000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataProjectsNestedStackProjectsNest-1OI75CNNN3MKI",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.014000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataContactUsNestedStackContactUsNe-WJNB9ZCNS0DL",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.008000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeAssignToNestedStackBa-173E7FY3NS47B",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:09.008000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeRequestStatusesNested-RB4HN2AXGZVA",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.998000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataNotificationQueueNestedStackNot-10NST7HUYYPLZ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.996000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataAuthNestedStackAuthNestedStackR-KQJO5TZDS7I1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.996000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataContactAuditLogNestedStackConta-1EBFL1HH795SV",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.995000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataRequestsNestedStackRequestsNest-169OOM818W7HT",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.995000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataContactsNestedStackContactsNest-IN8I7X3F3I8W",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.984000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataNotificationEventsNestedStackNo-U4MS1SV6EFWW",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.981000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeQuoteStatusesNestedSt-L2ZZDEIWKGTQ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.979000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeBrokerageNestedStackB-F8WFJ6MEL48J",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.976000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataPendingAppoitmentsNestedStackPe-1FMZ71WS4Q1H3",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.975000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataProjectMilestonesNestedStackPro-MGG5HK16IIQD",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.971000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeBookingStatusesNested-YWDGFI03NRU3",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.970000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataAuditLogNestedStackAuditLogNest-1A3EHOAWOR1VW",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.959000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataNotificationTemplateNestedStack-78MUMNLAQGWP",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.953000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeRoleTypesNestedStackB-212CX7931YI3",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.952000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataProjectPermissionsNestedStackPr-MWIOP0XPN6YY",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.951000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataAppPreferencesNestedStackAppPre-E6OPWHEL19T9",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.946000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataeSignatureDocumentsNestedStacke-1KGC32WVZ9DO1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.941000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeProjectStatusesNested-1OICWV0IXU0H6",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.931000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataQuotesNestedStackQuotesNestedSt-7T9EIK427YV",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.930000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataBackOfficeProductsNestedStackBa-LT18I8MPL05K",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.930000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataProjectCommentsNestedStackProje-170A4XK9NMTQV",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.924000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataLegalNestedStackLegalNestedStac-1CMB9SEHAB3XM",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.923000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataEmailSuppressionListNestedStack-1TT14DW86KDH4",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.914000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataQuoteItemsNestedStackQuoteItems-1TQZ42C0QA37X",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:44:08.884000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dc-amplifyDataAmplifyTableManagerNestedStackA-1U9LV4VCP45G8",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:42:50.569000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e-storage0EC3F24A-Y0QT0BI90A6T",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:42:43.523000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e-data7552DF31-1TA8XY3VFCJKJ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:42:43.496000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e-auth179371D7-1WA616LSNR3YP",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:41:08.544000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T21:41:04.840000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d429917d-function1351588B-1JQQ5ZCCZEN17",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:56:12.768000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataConnectionStackNestedStackConne-LOJHYZUPWM7",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:55:36.200000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataSESReputationMetricsNestedStack-1LNC51F7PP1BX",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.101000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataNotificationTemplateNestedStack-E5IW7FGC7Q46",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.059000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataPropertiesNestedStackProperties-10WGRWUCQF8XQ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.024000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataProjectsNestedStackProjectsNest-115RQ5TBVN7QI",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.016000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeRoleTypesNestedStackB-1UQC436PQ5CG9",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.016000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataPendingAppoitmentsNestedStackPe-13PZ8C0LU0220",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.011000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataProjectCommentsNestedStackProje-YHLCVTAN0B5M",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.009000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeProjectStatusesNested-2CDBU101PY2E",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.004000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataSecureConfigNestedStackSecureCo-LZOE22QQITOG",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:34.001000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataAffiliatesNestedStackAffiliates-U0WG4OL8G72O",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.998000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataContactsNestedStackContactsNest-1K0IFRQH2NI21",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.998000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeBrokerageNestedStackB-1XVGCIUXATLJP",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.994000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataQuoteItemsNestedStackQuoteItems-1M3XAX7GN4F7E",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.987000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataRequestsNestedStackRequestsNest-OMDARFI8HGKD",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.987000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataQuotesNestedStackQuotesNestedSt-1B09X44SZCDXB",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.987000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataAppPreferencesNestedStackAppPre-1HUSC6M1Z2DO4",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.978000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeAssignToNestedStackBa-1UIYLW3W8LOBK",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.978000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataMemberSignatureNestedStackMembe-J9JTSEM4E4WE",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.977000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataNotificationEventsNestedStackNo-1QSB1C471C9E2",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.973000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeBookingStatusesNested-YVML0XB8W20H",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.972000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataLegalNestedStackLegalNestedStac-INNVEOD09972",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.971000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeRequestStatusesNested-1C8JQDI19U1I1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.969000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataProjectMilestonesNestedStackPro-ZUTNX2EZKYIN",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.968000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataAuthNestedStackAuthNestedStackR-1359GIOYDXNKN",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.962000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataeSignatureDocumentsNestedStacke-1V07R6UDNQF9W",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.952000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataProjectPaymentTermsNestedStackP-1RRLHOLB3TFHO",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.949000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeProductsNestedStackBa-18S9KF6BA1B6I",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.943000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataNotificationQueueNestedStackNot-D0HGWBVJ6M4R",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.939000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataContactUsNestedStackContactUsNe-PGWI0UHI3RQ2",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.934000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataProjectPermissionsNestedStackPr-1GGVJ59VLBLJR",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.922000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataAuditLogNestedStackAuditLogNest-16KFWZW7O9N9R",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.922000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeQuoteStatusesNestedSt-1LXG7I54UE5FV",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.920000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataContactAuditLogNestedStackConta-L8VZI9NMM4EG",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.917000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataEmailSuppressionListNestedStack-15USWLF0M0ZFR",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.912000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataBackOfficeNotificationsNestedSt-1B9G5CWXXZ1B",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:54:33.891000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d42-amplifyDataAmplifyTableManagerNestedStackA-137S19YHB5Y6",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:53:15.754000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d429917d-data7552DF31-1A376F3K7WV0X",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:53:09.276000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d429917d-storage0EC3F24A-123ILC257J5EN",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:53:09.134000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d429917d-auth179371D7-11SFECGI8XYAX",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:51:34.263000+00:00"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-staging-branch-11d429917d",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-11T20:51:30.966000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataSESReputationMetricsNestedStack-14V6Y5JHCSPA",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-04T16:49:55.974000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataEmailSuppressionListNestedStack-13ISGFE2IFQ5G",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-08-04T16:49:55.940000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-production-sandbox-70796fa803-auth179371D7-BYY33TQSAUO3",
+        "Status": "CREATE_COMPLETE",
+        "Created": "2025-07-22T05:18:21.917000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataAppPreferencesNestedStackAppPre-JVJJ0E6TTAN1",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-07-22T01:21:45.255000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataSecureConfigNestedStackSecureCo-144JHYUZGVNBL",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-07-22T01:21:45.195000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataNotificationEventsNestedStackNo-3GZE5NSXS7KJ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-07-22T01:21:45.148000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-648934873b-function1351588B-LAD05RKU9LEU",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:22:30.100000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataConnectionStackNestedStackConne-1DGJKZX1BW8NJ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:21:54.394000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataContactAuditLogNestedStackConta-DR9811GXHZ1Z",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:53.594000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataQuoteItemsNestedStackQuoteItems-1WR4I0DO879Y7",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.200000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataProjectPermissionsNestedStackPr-1H7UQ2KFG6NQJ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.200000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataPendingAppoitmentsNestedStackPe-1AIHXX9CV0OU0",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.182000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeAssignToNestedStackBa-10ZEM8HED5N3G",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.163000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeBrokerageNestedStackB-2T0IXJPY1DO6",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.150000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeRequestStatusesNested-1B2R6SLXWQ7YB",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.144000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeBookingStatusesNested-1NFT9VMZ4KO4U",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.141000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataProjectCommentsNestedStackProje-B4JU7CJPX7V6",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.140000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeQuoteStatusesNestedSt-DJBSPNWSEOA4",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.140000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeProjectStatusesNested-3JMZQEDC8JVZ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.138000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataProjectMilestonesNestedStackPro-15H3A2Q3HAYWP",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.136000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataNotificationQueueNestedStackNot-V8K3TK04NP3T",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.135000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataQuotesNestedStackQuotesNestedSt-ZRP3EL94XF6B",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.133000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeNotificationsNestedSt-1EO5GDINYMI79",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.128000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeRoleTypesNestedStackB-BJLUYSPYGTMS",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.127000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataeSignatureDocumentsNestedStacke-1QWU30TRC45AK",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.118000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataProjectPaymentTermsNestedStackP-4LNMR0LMZVKG",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.116000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataAuditLogNestedStackAuditLogNest-5ROKKTQEXYRT",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.115000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataAuthNestedStackAuthNestedStackR-1PQCEOPFHN0L6",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.103000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataProjectsNestedStackProjectsNest-139NMLD2X7U2L",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.094000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataContactUsNestedStackContactUsNe-1M6KANRC8QNST",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.093000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataContactsNestedStackContactsNest-LGDBQR8PMA1M",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.091000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataPropertiesNestedStackProperties-25QS66VPG8HL",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.085000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataBackOfficeProductsNestedStackBa-TKSUITRBA43I",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.085000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataMemberSignatureNestedStackMembe-EELH7YI5DZ20",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.074000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataAffiliatesNestedStackAffiliates-HEU4I2FUIPEE",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.074000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataRequestsNestedStackRequestsNest-1P7UX4BUNL1M",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.073000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataLegalNestedStackLegalNestedStac-12LEIABP9V34P",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.042000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataNotificationTemplateNestedStack-O8UBNGRL6XQA",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:20:52.031000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-64893-amplifyDataAmplifyTableManagerNestedStackA-1IRZFOOOR1SOX",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:19:33.708000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-648934873b-data7552DF31-1WJ04QEP6WCUJ",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:19:26.665000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-648934873b-storage0EC3F24A-H4JGF4E19BAY",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:19:26.589000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-648934873b-auth179371D7-1GPDHG7K9Q9JH",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:18:24.640000+00:00"
+    },
+    {
+        "Name": "amplify-realtecheeclone-doron-sandbox-648934873b",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-29T02:18:15.620000+00:00"
+    },
+    {
+        "Name": "CDKToolkit",
+        "Status": "UPDATE_COMPLETE",
+        "Created": "2025-06-08T21:45:21.483000+00:00"
+    }
+]

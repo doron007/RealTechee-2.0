@@ -43,8 +43,11 @@ const amplifyConfig = {
   } : {}
 };
 
-// Configure Amplify with environment-based configuration
-Amplify.configure(amplifyConfig);
+// Configure Amplify with the raw Gen2 outputs (matches pages/_app.tsx).
+// The amplifyConfig variable above uses a hybrid Gen1/Gen2 shape that breaks the
+// Gen2 typed data client's model registry — leaving Quotes/Requests/etc undefined
+// on client.models even though they are present in model_introspection.
+Amplify.configure(outputs);
 
 // Debug: Log environment configuration on initialization
 if (typeof window !== 'undefined') {

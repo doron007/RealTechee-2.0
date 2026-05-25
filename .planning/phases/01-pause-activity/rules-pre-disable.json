@@ -1,0 +1,68 @@
+[
+    {
+        "Name": "amplify-d200k2wsaf8th3-pr-notificationprocessorlamb-uHpgZylNyvr0",
+        "Schedule": "cron(*/2 * * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-pr-notificationprocessorlamb-uHpgZylNyvr0"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-pr-reputationmonitorlambdasc-Nj2AMPIpCH7X",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-pr-reputationmonitorlambdasc-Nj2AMPIpCH7X"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-pr-statusprocessorlambdasche-eeChCuBZf5sk",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-pr-statusprocessorlambdasche-eeChCuBZf5sk"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-st-notificationprocessorlamb-g7xJrE8eqnVK",
+        "Schedule": "cron(*/2 * * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-st-notificationprocessorlamb-g7xJrE8eqnVK"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-st-reputationmonitorlambdasc-OvWcMdE4pQBa",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-st-reputationmonitorlambdasc-OvWcMdE4pQBa"
+    },
+    {
+        "Name": "amplify-d200k2wsaf8th3-st-statusprocessorlambdasche-73MxZ9Twyu9V",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-d200k2wsaf8th3-st-statusprocessorlambdasche-73MxZ9Twyu9V"
+    },
+    {
+        "Name": "amplify-realtecheeclone-d-notificationprocessorlamb-PwxziD1zPVqA",
+        "Schedule": "cron(*/2 * * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-realtecheeclone-d-notificationprocessorlamb-PwxziD1zPVqA"
+    },
+    {
+        "Name": "amplify-realtecheeclone-d-reputationmonitorlambdasc-PnIgaBeMDMsu",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-realtecheeclone-d-reputationmonitorlambdasc-PnIgaBeMDMsu"
+    },
+    {
+        "Name": "amplify-realtecheeclone-d-statusprocessorlambdasche-mliHaz0wG4Tc",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/amplify-realtecheeclone-d-statusprocessorlambdasche-mliHaz0wG4Tc"
+    },
+    {
+        "Name": "notification-processor-schedule",
+        "Schedule": "rate(5 minutes)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/notification-processor-schedule"
+    },
+    {
+        "Name": "realtechee-daily-api-key-check",
+        "Schedule": "cron(0 0 * * ? *)",
+        "State": "ENABLED",
+        "Arn": "arn:aws:events:us-west-1:403266990862:rule/realtechee-daily-api-key-check"
+    }
+]

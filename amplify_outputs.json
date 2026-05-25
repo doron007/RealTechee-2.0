@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "us-west-1_5pFbWcwtU",
+    "user_pool_id": "us-west-1_Co4fUV2m2",
     "aws_region": "us-west-1",
-    "user_pool_client_id": "4pdj4qp05o47a0g42cqlt99ccs",
-    "identity_pool_id": "us-west-1:eea1986d-7984-48d4-8e69-4d3b8afc4851",
+    "user_pool_client_id": "3jaeadnhbpof92kdp70hur8o7s",
+    "identity_pool_id": "us-west-1:1801c6d9-25d3-408b-91b8-06b52b258cf3",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -67,9 +67,9 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://yq2katnwbbeqjecywrptfgecwa.appsync-api.us-west-1.amazonaws.com/graphql",
+    "url": "https://btf7pxa56bhbhczjddp2cdssl4.appsync-api.us-west-1.amazonaws.com/graphql",
     "aws_region": "us-west-1",
-    "api_key": "da2-ixuofep625ge7famggthwwq5fi",
+    "api_key": "da2-crokdhhnuvfn3k4jy6kp2brapm",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
       "API_KEY",
@@ -8926,11 +8926,11 @@
   },
   "storage": {
     "aws_region": "us-west-1",
-    "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu",
+    "bucket_name": "amplify-realtecheeclone-r-realtecheeuseruploadsbuc-ursmqr4aw6tp",
     "buckets": [
       {
         "name": "RealTecheeUserUploads",
-        "bucket_name": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu",
+        "bucket_name": "amplify-realtecheeclone-r-realtecheeuseruploadsbuc-ursmqr4aw6tp",
         "aws_region": "us-west-1",
         "paths": {
           "public/*": {
@@ -8957,12 +8957,5 @@
       }
     ]
   },
-  "version": "1.4",
-  "custom": {
-    "notificationProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-notificationprocessorlam-sLgeFvCfN0xX",
-    "userAdminArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-do-useradminlambda0B2D5BDC-PxJhVxRHwhMc",
-    "statusProcessorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-statusprocessorlambda74B-EStB9mbWvKcp",
-    "sesBounceHandlerArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-sesbouncehandlerlambda83-hlq20dpVIObe",
-    "reputationMonitorArn": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-reputationmonitorlambda4-phYADQv2RGqF"
-  }
+  "version": "1.4"
 }

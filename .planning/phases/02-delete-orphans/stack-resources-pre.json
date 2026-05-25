@@ -1,0 +1,54 @@
+{
+    "StackResourceSummaries": [
+        {
+            "LogicalResourceId": "CDKMetadata",
+            "PhysicalResourceId": "505d1760-548f-11f0-a8f4-064d81151363",
+            "ResourceType": "AWS::CDK::Metadata",
+            "LastUpdatedTimestamp": "2025-08-11T05:00:43.139000+00:00",
+            "ResourceStatus": "UPDATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "LogicalResourceId": "auth179371D7",
+            "PhysicalResourceId": "arn:aws:cloudformation:us-west-1:403266990862:stack/amplify-realtecheeclone-doron-sandbox-648934873b-auth179371D7-1GPDHG7K9Q9JH/55cc1520-548f-11f0-b735-067ec1d3f4d7",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "LastUpdatedTimestamp": "2025-09-04T03:38:27.270000+00:00",
+            "ResourceStatus": "UPDATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "LogicalResourceId": "data7552DF31",
+            "PhysicalResourceId": "arn:aws:cloudformation:us-west-1:403266990862:stack/amplify-realtecheeclone-doron-sandbox-648934873b-data7552DF31-1WJ04QEP6WCUJ/7abd7ae0-548f-11f0-b70f-02a72487da39",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "LastUpdatedTimestamp": "2025-09-04T03:38:26.882000+00:00",
+            "ResourceStatus": "UPDATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "LogicalResourceId": "function1351588B",
+            "PhysicalResourceId": "arn:aws:cloudformation:us-west-1:403266990862:stack/amplify-realtecheeclone-doron-sandbox-648934873b-function1351588B-LAD05RKU9LEU/e81ce670-548f-11f0-bcc1-023bd4c13e4d",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "LastUpdatedTimestamp": "2025-09-04T03:38:16.295000+00:00",
+            "ResourceStatus": "UPDATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "LogicalResourceId": "storage0EC3F24A",
+            "PhysicalResourceId": "arn:aws:cloudformation:us-west-1:403266990862:stack/amplify-realtecheeclone-doron-sandbox-648934873b-storage0EC3F24A-H4JGF4E19BAY/7ab76060-548f-11f0-b531-02407b22b695",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "LastUpdatedTimestamp": "2025-09-04T03:38:06.088000+00:00",
+            "ResourceStatus": "UPDATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}

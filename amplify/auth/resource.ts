@@ -1,5 +1,5 @@
 import { defineAuth } from '@aws-amplify/backend'
-import { postConfirmationHandler } from '../functions/post-confirmation/resource'
+// import { postConfirmationHandler } from '../functions/post-confirmation/resource' // temp disabled for data-restore deploy
 
 export const auth = defineAuth({
   loginWith: {
@@ -47,8 +47,6 @@ export const auth = defineAuth({
       mutable: true
     }
   },
-  groups: ['super_admin', 'admin', 'accounting', 'srm', 'agent', 'homeowner', 'provider', 'guest'],
-  triggers: {
-    postConfirmation: postConfirmationHandler
-  }
+  groups: ['super_admin', 'admin', 'accounting', 'srm', 'agent', 'homeowner', 'provider', 'guest']
+  // triggers: { postConfirmation: postConfirmationHandler }  // temp disabled for data-restore deploy
 })

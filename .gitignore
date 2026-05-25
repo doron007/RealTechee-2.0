@@ -113,3 +113,6 @@ dev-server.pid
 /tests/e2e/archive/
 /playwright-report/
 /test-results/
+
+# Playwright MCP runtime artifacts (per-session snapshots + console logs)
+.playwright-mcp/

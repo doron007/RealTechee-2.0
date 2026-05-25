@@ -1,0 +1,38 @@
+{
+  "evidence_method": "AppSync API ID = AppSync API ID per nested-stack RequestScopeItems resolver lookups",
+  "mappings": {
+    "yk6ecaswg5aehjn3ev76xzpbfe": {
+      "environment": "production",
+      "stack_root": "amplify-d200k2wsaf8th3-production-branch-dcd66e486e",
+      "cognito_user_pool": "us-west-1_UKszK3GQb",
+      "s3_user_uploads": "amplify-d200k2wsaf8th3-pr-realtecheeuseruploadsbuc-u5mq35rhcrmj",
+      "ddb_table_count": 43,
+      "disposition": "PRESERVE — this is real production"
+    },
+    "irgzgwsfnzba3fqtum5k2eyp4m": {
+      "environment": "staging",
+      "stack_root": "amplify-d200k2wsaf8th3-staging-branch-11d429917d",
+      "cognito_user_pool": "us-west-1_NeGfFuVD7 (confirmed via PostConfirmation lambda name d200k2wsaf8th3-st)",
+      "s3_user_uploads": "amplify-d200k2wsaf8th3-st-realtecheeuseruploadsbuc-lollpnfn8hd5",
+      "ddb_table_count": 43,
+      "disposition": "DELETE in Phase 3"
+    },
+    "fvn7t5hbobaxjklhrqzdl4ac34": {
+      "environment": "realtecheeclone-sandbox (ORPHAN)",
+      "stack_root": "amplify-realtecheeclone-doron-sandbox-648934873b",
+      "cognito_user_pool": "us-west-1_5pFbWcwtU",
+      "s3_user_uploads": "amplify-realtecheeclone-d-realtecheeuseruploadsbuc-hrccg1lkyuvu",
+      "ddb_table_count": 43,
+      "disposition": "DELETE in Phase 2 (orphan)"
+    }
+  },
+  "production_runtime_verification": {
+    "method": "curl https://www.realtechee.com/_next/static/chunks/pages/_app-*.js | grep cognito",
+    "found": "us-west-1_UKszK3GQb",
+    "found_identity_pool": "us-west-1:52b0f8c0-...",
+    "conclusion": "amplify_outputs.json in repo references the stale sandbox pool 5pFbWcwtU; deployed runtime uses UKszK3GQb"
+  },
+  "extra_buckets_noted": [
+    "amplify-realtecheeclone-p-realtecheeuseruploadsbuc-mwrkzxdvttii (no matching CFN stack found in active list; likely from a partially-deleted 'realtecheeclone-prod' deployment generation — proceed with delete as planned)"
+  ]
+}

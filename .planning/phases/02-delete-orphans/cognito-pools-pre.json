@@ -1,0 +1,54 @@
+{
+    "UserPools": [
+        {
+            "Id": "us-west-1_1eQCIgm5h",
+            "Name": "amplifyAuthUserPool4BA7F805-J4Xg9VvWSZ7K",
+            "LambdaConfig": {
+                "PostConfirmation": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-p-postconfirmationhandlerl-axnYxS4G3MC9"
+            },
+            "LastModifiedDate": "2025-07-21T22:18:53.204000-07:00",
+            "CreationDate": "2025-07-21T22:18:53.204000-07:00"
+        },
+        {
+            "Id": "us-west-1_5pFbWcwtU",
+            "Name": "amplifyAuthUserPool4BA7F805-vMMlvj3X2dEi",
+            "LambdaConfig": {
+                "PostConfirmation": "arn:aws:lambda:us-west-1:403266990862:function:amplify-realtecheeclone-d-postconfirmationhandlerl-KSieNrTnLfAS"
+            },
+            "LastModifiedDate": "2025-06-30T08:31:05.958000-07:00",
+            "CreationDate": "2025-06-28T19:18:28.748000-07:00"
+        },
+        {
+            "Id": "us-west-1_NeGfFuVD7",
+            "Name": "amplifyAuthUserPool4BA7F805-jWucXhb8Akn5",
+            "LambdaConfig": {
+                "PostConfirmation": "arn:aws:lambda:us-west-1:403266990862:function:amplify-d200k2wsaf8th3-st-postconfirmationhandlerl-jnj1XV9UhuYm"
+            },
+            "LastModifiedDate": "2025-08-11T13:52:05.439000-07:00",
+            "CreationDate": "2025-08-11T13:52:05.439000-07:00"
+        },
+        {
+            "Id": "us-west-1_UKszK3GQb",
+            "Name": "amplifyAuthUserPool4BA7F805-TDXdGpjnRN6u",
+            "LambdaConfig": {
+                "PostConfirmation": "arn:aws:lambda:us-west-1:403266990862:function:amplify-d200k2wsaf8th3-pr-postconfirmationhandlerl-Bdj8BF52ZC5k"
+            },
+            "LastModifiedDate": "2025-08-11T14:41:39.385000-07:00",
+            "CreationDate": "2025-08-11T14:41:39.385000-07:00"
+        },
+        {
+            "Id": "us-west-1_fLtUjZYOt",
+            "Name": "amplifyAuthUserPool4BA7F805-gHMzFyu5JoY7",
+            "LambdaConfig": {},
+            "LastModifiedDate": "2025-10-14T17:21:30.758000-07:00",
+            "CreationDate": "2025-10-14T17:21:30.758000-07:00"
+        },
+        {
+            "Id": "us-west-1_xsnVCuXmu",
+            "Name": "amplifyAuthUserPool4BA7F805-gC4uFyvJMf4t",
+            "LambdaConfig": {},
+            "LastModifiedDate": "2025-10-14T18:31:40.490000-07:00",
+            "CreationDate": "2025-10-14T18:31:40.490000-07:00"
+        }
+    ]
+}
